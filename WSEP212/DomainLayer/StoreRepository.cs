@@ -6,5 +6,7 @@ namespace WSEP212.DomainLayer
 {
     class StoreRepository
     {
+        //singelton
+        LinkedList<Store> stores;
     }
 }

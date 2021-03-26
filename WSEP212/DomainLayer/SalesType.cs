@@ -4,9 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class UserRepository
+    class SalesType
     {
-        //singelton
-        LinkedList<User> users;
     }
 }

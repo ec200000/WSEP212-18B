@@ -6,5 +6,26 @@ namespace WSEP212.DomainLayer
 {
     interface IUserManagerFacade
     {
+        public bool register(String userName, String password);
+        public bool login(String userName, String password);
+        public bool logout(String userName);
+
+        public bool addItemToShoppingCart(String userName, int storeID, int itemID);
+        public bool removeItemFromShoppingCart(String userName, int storeID, int itemID);
+        //edit item in shopping cart is equal to -> remove + add
+        public bool purchaseItems(String userName); //later
+        public bool openStore(String userName, String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
+        public bool itemReview(String userName, String review, int itemID, int storeID);
+        public bool addItemToStorage(String userName, int storeID, Item item, int quantity);
+        public bool removeItemFromStorage(String userName, int storeID, Item item);
+        public bool editItemDetails(String userName, int storeID, Item item);
+        public bool appointStoreManager(String userName, String managerName, int storeID); //the store manager will receive default permissions(4.9)
+        public bool appointStoreOwner(String userName, String storeOwnerName, int storeID);
+        public bool editManagerPermissions(String userName, String managerName, LinkedList<Permissions> permissions);
+        public bool removeStoreManager(String userName, String managerName, int storeID);
+        public Dictionary<String, LinkedList<Permissions>> getOfficialsInformation(String userName, int storeID);
+        public LinkedList<PurchaseInfo> getStorePurchaseHistory(String userName, int storeID); //all the purchases of the store that I manage/own
+        public Dictionary<String, LinkedList<PurchaseInfo>> getUsersPurchaseHistory();
+        public Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory();
     }
 }

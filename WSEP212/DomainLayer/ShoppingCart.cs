@@ -6,6 +6,9 @@ namespace WSEP212.DomainLayer
 {
     class ShoppingCart
     {
-        LinkedList<ShoppingBag> shoppingBags;
+        public LinkedList<ShoppingBag> shoppingBags { get; set; }
+
+        public bool addItemToShoppingBag(int storeID, int itemID);
+        public bool removeItemFromShoppingBag(int storeID, int itemID);
     }
 }

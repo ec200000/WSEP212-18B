@@ -6,5 +6,6 @@ namespace WSEP212.DomainLayer
 {
     interface PaymentInterface
     {
+        //singelton
     }
 }

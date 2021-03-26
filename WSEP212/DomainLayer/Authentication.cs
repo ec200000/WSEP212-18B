@@ -6,5 +6,6 @@ namespace WSEP212.DomainLayer
 {
     class Authentication
     {
+        //Authentication will be singelton
     }
 }

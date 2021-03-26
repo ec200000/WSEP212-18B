@@ -6,5 +6,6 @@ namespace WSEP212.DomainLayer
 {
     interface DeliveryInterface
     {
+        //DeliveryInterface will be singelton
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class GuestBuyerState
+    class GuestBuyerState : UserState
     {
+        public GuestBuyerState(User user);
     }
 }
