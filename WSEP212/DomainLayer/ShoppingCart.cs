@@ -6,5 +6,6 @@ namespace WSEP212.DomainLayer
 {
     class ShoppingCart
     {
+        LinkedList<ShoppingBag> shoppingBags;
     }
 }

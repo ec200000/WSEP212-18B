@@ -6,5 +6,6 @@ namespace WSEP212.DomainLayer
 {
     class Store
     {
+        Storage storage;
     }
 }
