@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace WSEP212.DomainLayer
         public User seller { get; set; }
         public Store store { get; set; }
         public User grantor { get; set; }
-        public List<Permissions> permissions { get; set; }
+        public ConcurrentBag<Permissions> permissions { get; set; }
 
     }
 }

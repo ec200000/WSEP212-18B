@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,6 +8,6 @@ namespace WSEP212.DomainLayer
     class UserRepository
     {
         //singelton
-        LinkedList<User> users;
+        ConcurrentBag<User> users;
     }
 }

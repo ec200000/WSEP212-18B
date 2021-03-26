@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,8 +12,8 @@ namespace WSEP212.DomainLayer
         public String userName { get; set; }
         public UserState state { get; }
         public ShoppingCart shoppingCart { get; set; }
-        public LinkedList<PurchaseInfo> purchases { get; set; }
-        public LinkedList<SellerPermissions> sellerPermissions { get; set; }
+        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
+        public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
 
         public void changeState(UserState state);
 
@@ -31,12 +32,12 @@ namespace WSEP212.DomainLayer
         public bool editItemDetails(int storeID, Item item);
         public bool appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
         public bool appointStoreOwner(String storeOwnerName, int storeID);
-        public bool editManagerPermissions(String managerName, LinkedList<Permissions> permissions);
+        public bool editManagerPermissions(String managerName, ConcurrentBag<Permissions> permissions);
         public bool removeStoreManager(String managerName, int storeID);
-        public Dictionary<String, LinkedList<Permissions>> getOfficialsInformation(int storeID);
-        public LinkedList<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
-        public Dictionary<String, LinkedList<PurchaseInfo>> getUsersPurchaseHistory();
-        public Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory();
+        public ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID);
+        public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
+        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
+        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();
 
     }
 }
