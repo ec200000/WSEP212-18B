@@ -49,17 +49,32 @@ namespace WSEP212.DomainLayer
             return removeItem;
         }
 
+        // Changes the quantity of item in a shopping bag
+        // If the operation was successful, remove the shopping bag if it is empty
+        public bool changeItemQuantityInShoppingBag(int storeID, int itemID, int quantity)
+        {
+            ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
+            bool changeQuantity = false;
+
+            if (shoppingBag != null)
+            {
+                changeQuantity = shoppingBag.changeItemQuantity(itemID, quantity);
+                if(changeQuantity)
+                {
+                    removeShoppingBagIfEmpty(shoppingBag);
+                }
+            }
+            return changeQuantity;
+        }
+
         // Returns the store's shopping bag
         // If the shopping bag does not exist, create a new shopping bag for the relevent store
         // If the store does not exist/active we will return null 
         private ShoppingBag getStoreShoppingBag(int storeID)
         {
-            ShoppingBag shoppingBag;
-            shoppingBags.TryGetValue(storeID, out shoppingBag);
-
-            if (shoppingBag != null)
+            if (shoppingBags.ContainsKey(storeID))
             {
-                return shoppingBag;
+                return shoppingBags[storeID];
             }
             else
             {
