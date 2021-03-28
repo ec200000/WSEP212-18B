@@ -89,6 +89,54 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
+        // Apply the sales policy on a list of items
+        // The function will return the price after discount for each of the items
+        public LinkedList<int> applySalesPolicy(Dictionary<int, int> items)
+        {
+            
+        }
+
+        // Apply the purchase policy on a list of items and their type of purchase
+        // The function will return if the purchase can be made
+        public bool applyPurchasePolicy(Dictionary<int, int> items)
+        {
+
+        }
+
+        // Purchase items from a store if all items are available in storage
+        // The purchase of the items updates the quantity of the items in storage
+        public bool purchaseItemsIfAvailable(Dictionary<int, int> items)
+        {
+            Dictionary<int, int> updatedItems = new Dictionary<int, int>();
+
+            foreach (KeyValuePair<int, int> item in items)
+            {
+                int itemID = item.Key;
+                int quantity = item.Value;
+                if (isAvailableInStorage(itemID, quantity))   // maybe lock the storage now
+                {
+                    changeItemQuantity(itemID, -1 * quantity);
+                    updatedItems.Add(itemID, quantity);
+                }
+                else
+                {
+                    rollBackPurchase(updatedItems);   // if at least one of the items not available, the purchase is canceled
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // In case the purchase is canceled (payment is not made / system collapses) -
+        // the items that were supposed to be purchased return to the store
+        public void rollBackPurchase(Dictionary<int, int> items)
+        {
+            foreach (KeyValuePair<int, int> item in items)
+            {
+                changeItemQuantity(item.Key, item.Value);
+            }
+        }
+
         public bool addNewStoreSeller(SellerPermissions sellerPermissions); //add to list
         public bool addNewPurchase(PurchaseInfo purchase); //add to list
     }
