@@ -77,7 +77,7 @@ namespace WSEP212.DomainLayer
         // remove the shopping bag from the shopping cart if it is empty
         private void removeShoppingBagIfEmpty(ShoppingBag shoppingBag)
         {
-            if(shoppingBag.items.IsEmpty)
+            if(shoppingBag.items.Count == 0)
             {
                 int storeID = shoppingBag.store.storeID;
                 shoppingBags.Remove(storeID);

@@ -15,6 +15,10 @@ namespace WSEP212.DomainLayer
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
         public ConcurrentBag<SellerPermissions> sellersPermissions { get; set; }
 
+        public Item getItemIfAvailable(int itemID)
+        {
+
+        }
         public bool addItem(Item item, int quantity);
         public bool removeItem(Item item);
         public bool changeItemQuantity(Item item, int numOfItems);
