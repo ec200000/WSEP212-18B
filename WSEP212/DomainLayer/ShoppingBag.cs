@@ -25,19 +25,25 @@ namespace WSEP212.DomainLayer
         // quantity is the number of the same item to add
         public bool addItem(int itemID, int quantity)
         {
-            if(store.isAvailableInStorage(itemID, quantity))
+            bool addedItem = false;
+            if (quantity > 0)
             {
-                if(items.ContainsKey(itemID))
+                if (items.ContainsKey(itemID))
                 {
-                    items[itemID] += quantity;
+                    int updatedQuantity = items[itemID] + quantity;
+                    if (store.isAvailableInStorage(itemID, updatedQuantity))
+                    {
+                        items[itemID] = updatedQuantity;
+                        addedItem = true;
+                    }
                 }
-                else
+                else if (store.isAvailableInStorage(itemID, quantity))
                 {
                     items.Add(itemID, quantity);   // adding item with quantity 
+                    addedItem = true;
                 }
-                return true;
             }
-            return false;
+            return addedItem;
         }
 
         // Removes the item from the shopping bag if it exists
@@ -53,21 +59,30 @@ namespace WSEP212.DomainLayer
         }
 
         // Changes the quantity of item in the bag if the item is in the bag and available in the store
-        public bool changeItemQuantity(int itemID, int quantity)
+        public bool changeItemQuantity(int itemID, int updatedQuantity)
         {
-            if(quantity == 0)
+            if(updatedQuantity == 0)
             {
                 return removeItem(itemID);
             }
-            else if(items.ContainsKey(itemID))  // check if item in the shopping bag
-            {
-                if(store.isAvailableInStorage(itemID, quantity))   // check if item available in store
+            else if(updatedQuantity > 0) 
+            { 
+                if (items.ContainsKey(itemID))  // check if item in the shopping bag
                 {
-                    items[itemID] = quantity;
-                    return true;
+                    if (store.isAvailableInStorage(itemID, updatedQuantity))   // check if item available in store
+                    {
+                        items[itemID] = updatedQuantity;
+                        return true;
+                    }
                 }
             }
             return false;
+        }
+
+        // Removes all the items in the shopping bag
+        public void clearShoppingBag()
+        {
+            items.Clear();
         }
 
     }

@@ -15,7 +15,7 @@ namespace WSEP212.DomainLayer
 
         public User(String userName)
         {
-
+            this.userName = userName;
         }
 
         public void changeState(UserState state)

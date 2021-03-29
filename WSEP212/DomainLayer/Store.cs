@@ -55,10 +55,14 @@ namespace WSEP212.DomainLayer
         }
 
         // Add new item to the store with his personal details
-        public bool addItemToStorage(String itemName, String description, double price, String category, int quantity)
+        public bool addItemToStorage(Item item)
         {
-            Item item = new Item(quantity, itemName, description, price, category);
-            return storage.TryAdd(item.itemID, item);
+            int itemID = item.itemID;
+            if(!storage.ContainsKey(itemID))
+            {
+                return storage.TryAdd(itemID, item);
+            }
+            return false;
         }
 
         // Remove item from the store

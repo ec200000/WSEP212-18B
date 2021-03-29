@@ -98,5 +98,11 @@ namespace WSEP212.DomainLayer
                 shoppingBags.Remove(storeID);
             }
         }
+
+        // Removes all the shopping bags in the shopping cart
+        public void clearShoppingCart()
+        {
+            shoppingBags.Clear();
+        }
     }
 }

@@ -9,11 +9,12 @@ namespace WSEP212.DomainLayer
     {
         //singelton
         private static StoreRepository storeRepositoryInstance;
-        public ConcurrentBag<Store> stores { get; set; }
+        // A data structure associated with a store ID and its store
+        public ConcurrentDictionary<int, Store> stores { get; set; }
 
         private StoreRepository()
         {
-            this.stores = new ConcurrentBag<Store>();
+            this.stores = new ConcurrentDictionary<int, Store>();
         }
 
         public static StoreRepository getInstance()
@@ -25,16 +26,33 @@ namespace WSEP212.DomainLayer
             return storeRepositoryInstance;
         }
 
+        public bool addStore(Store store)
+        {
+            int storeID = store.storeID;
+            if(!stores.ContainsKey(storeID))
+            {
+                return stores.TryAdd(storeID, store);
+            }
+            return false;
+        }
+
+        public bool removeStore(int storeID)
+        {
+            if (stores.ContainsKey(storeID))
+            {
+                return stores.TryRemove(storeID, out _);
+            }
+            return false;
+        }
+
         public Store getStore(int storeID)
         {
-            foreach (Store store in stores)
+            if(stores.ContainsKey(storeID))
             {
-                if(storeID == store.storeID)
-                {
-                    return store;
-                }
+                return stores[storeID];
             }
             return null;
         }
+
     }
 }

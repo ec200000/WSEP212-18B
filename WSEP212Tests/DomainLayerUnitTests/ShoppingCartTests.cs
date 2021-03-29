@@ -6,28 +6,28 @@ using System.Text;
 
 namespace WSEP212.DomainLayer.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ShoppingCartTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ShoppingCartTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void addItemToShoppingBagTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void removeItemFromShoppingBagTest()
         {
             Assert.Fail();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void changeItemQuantityInShoppingBagTest()
         {
             Assert.Fail();

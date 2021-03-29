@@ -25,11 +25,14 @@ namespace WSEP212.DomainLayer
         // If there is one, return it, else, create new permission
         public static SellerPermissions getSellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissions)
         {
-            foreach (SellerPermissions sellerPermission in seller.sellerPermissions)
+            if (seller.sellerPermissions != null)
             {
-                if (store.Equals(sellerPermission.store))
+                foreach (SellerPermissions sellerPermission in seller.sellerPermissions)
                 {
-                    return sellerPermission;
+                    if (store.Equals(sellerPermission.store))
+                    {
+                        return sellerPermission;
+                    }
                 }
             }
             return new SellerPermissions(seller, store, grantor, permissions);
