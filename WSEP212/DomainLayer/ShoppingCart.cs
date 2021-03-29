@@ -13,16 +13,16 @@ namespace WSEP212.DomainLayer
             this.shoppingBags = new Dictionary<int, ShoppingBag>();
         }
 
-        // Adds a item to a store's shopping bag if the store and the item exists 
+        // Adds a quantity items to a store's shopping bag if the store and the item exists 
         // If the operation fails, remove the shopping bag if it is empty
-        public bool addItemToShoppingBag(int storeID, int itemID)
+        public bool addItemToShoppingBag(int storeID, int itemID, int quantity)
         {
             ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
             bool addItem = false;
 
             if (shoppingBag != null)
             {
-                addItem = shoppingBag.addItem(itemID);
+                addItem = shoppingBag.addItem(itemID, quantity);
                 if(!addItem)
                 {
                     removeShoppingBagIfEmpty(shoppingBag);

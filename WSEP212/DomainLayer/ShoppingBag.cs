@@ -15,18 +15,19 @@ namespace WSEP212.DomainLayer
             this.items = new Dictionary<int, int>();
         }
 
-        // Adds one item to the shopping bag if the item exist and available in the store
-        public bool addItem(int itemID)
+        // Adds item to the shopping bag if the item exist and available in the store
+        // quantity is the number of the same item to add
+        public bool addItem(int itemID, int quantity)
         {
-            if(store.isAvailableInStorage(itemID, 1))
+            if(store.isAvailableInStorage(itemID, quantity))
             {
                 if(items.ContainsKey(itemID))
                 {
-                    items[itemID] += 1;
+                    items[itemID] += quantity;
                 }
                 else
                 {
-                    items.Add(itemID, 1);   // adding item with quantity 1
+                    items.Add(itemID, quantity);   // adding item with quantity 
                 }
                 return true;
             }
