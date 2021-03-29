@@ -14,7 +14,7 @@ namespace WSEP212.DomainLayer
         public String itemName { get; set; }
         public String description { get; set; }
         // A data structure associated with a user name and his review 
-        public ConcurrentDictionary<String,String> review { get; set; }
+        public ConcurrentDictionary<String, LinkedList<String>> reviews { get; set; }
         public double price { get; set; }
         public String category { get; set; }
 
@@ -25,9 +25,26 @@ namespace WSEP212.DomainLayer
             this.quantity = quantity;
             this.itemName = itemName;
             this.description = description;
-            this.review = new ConcurrentDictionary<string, string>();
+            this.reviews = new ConcurrentDictionary<string, LinkedList<string>>();
             this.price = price;
             this.category = category;
         }
+
+        // Add new review about an item
+        public bool addReview(String username, String review)   
+        {
+            if(reviews.ContainsKey(username))
+            {
+                reviews[username].AddFirst(review);
+                return true;
+            }
+            else
+            {
+                LinkedList<String> newUserReviews = new LinkedList<string>();
+                newUserReviews.AddFirst(review);
+                return reviews.TryAdd(username, newUserReviews);
+            }
+        }
+
     }
 }

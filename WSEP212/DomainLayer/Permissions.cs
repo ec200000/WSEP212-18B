@@ -6,6 +6,7 @@ namespace WSEP212.DomainLayer
 {
     enum Permissions
     {
+        AllPermissions,
         StorageManagment,
         AppointStoreManager,
         AppointStoreOwner,

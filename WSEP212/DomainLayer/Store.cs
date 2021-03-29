@@ -15,18 +15,27 @@ namespace WSEP212.DomainLayer
         public int storeID { get; set; }
         public SalesPolicy salesPolicy { get; set; }
         public PurchasePolicy purchasePolicy { get; set; }
-        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
-        public ConcurrentBag<SellerPermissions> sellersPermissions { get; set; }
+        public ConcurrentBag<PurchaseInfo> purchasesHistory { get; set; }
+        // A data structure associated with a user name and seller permissions
+        public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
 
-        public Store(SalesPolicy salesPolicy, PurchasePolicy purchasePolicy)
+        public Store(SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
             storeCounter++;
             this.salesPolicy = salesPolicy;
             this.purchasePolicy = purchasePolicy;
-            this.purchases = new ConcurrentBag<PurchaseInfo>();
-            // seller permissions ??
+            this.purchasesHistory = new ConcurrentBag<PurchaseInfo>();
+
+            // create the founder seller permissions
+            LinkedList<Permissions> founderPermissions = new LinkedList<Permissions>();
+            founderPermissions.AddFirst(Permissions.AllPermissions);   // founder has all permisiions
+
+            SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder, this, null, founderPermissions);
+
+            this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
+            this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
         }
 
         // Check if the item exist and available in the store
@@ -137,7 +146,43 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public bool addNewStoreSeller(SellerPermissions sellerPermissions); //add to list
-        public bool addNewPurchase(PurchaseInfo purchase); //add to list
+        // Adds a new store seller for this store
+        public bool addNewStoreSeller(SellerPermissions sellerPermissions)
+        {
+            String sellerUserName = sellerPermissions.seller.userName;
+            if (!storeSellersPermissions.ContainsKey(sellerUserName))
+            {
+                return storeSellersPermissions.TryAdd(sellerUserName, sellerPermissions);
+            }
+            return false;
+        }
+
+        // Removes a store seller from this store
+        public bool removeStoreSeller(String sellerUserName)
+        {
+            if (storeSellersPermissions.ContainsKey(sellerUserName))
+            {
+                return storeSellersPermissions.TryRemove(sellerUserName, out _);
+            }
+            return false;
+        }
+
+        // Returns information about all the store official (store owner and manager) in the store
+        public Dictionary<User, LinkedList<Permissions>> getStoreOfficialsInfo()
+        {
+            Dictionary<User, LinkedList<Permissions>> officialsInfo = new Dictionary<User, LinkedList<Permissions>>();
+            foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
+            {
+                SellerPermissions seller = sellerEntry.Value;
+                officialsInfo.Add(seller.seller, seller.permissions);
+            }
+            return officialsInfo;
+        }
+
+        // Add purchase made by user in the store
+        public void addNewPurchase(PurchaseInfo purchase)
+        {
+            purchasesHistory.Add(purchase);
+        }
     }
 }
