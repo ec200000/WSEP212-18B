@@ -2,7 +2,7 @@
 
 namespace WSEP212.DomainLayer
 {
-    class ShoppingCart
+    public class ShoppingCart
     {
         // A data structure associated with a store ID and its shopping cart for a customer
         // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping cart
@@ -92,7 +92,7 @@ namespace WSEP212.DomainLayer
         // remove the shopping bag from the shopping cart if it is empty
         private void removeShoppingBagIfEmpty(ShoppingBag shoppingBag)
         {
-            if(shoppingBag.items.Count == 0)
+            if(shoppingBag.isEmpty())
             {
                 int storeID = shoppingBag.store.storeID;
                 shoppingBags.Remove(storeID);

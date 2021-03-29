@@ -2,7 +2,7 @@
 
 namespace WSEP212.DomainLayer
 {
-    class ShoppingBag
+    public class ShoppingBag
     {
         public Store store { get; set; }
         // A data structure associated with a item ID and its quantity - more effective when there will be a sales policy
@@ -13,6 +13,12 @@ namespace WSEP212.DomainLayer
         {
             this.store = store;
             this.items = new Dictionary<int, int>();
+        }
+
+        // return true if the shopping bag is empty
+        public bool isEmpty()
+        {
+            return items.Count == 0;
         }
 
         // Adds item to the shopping bag if the item exist and available in the store

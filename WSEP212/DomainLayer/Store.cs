@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class Store
+    public class Store
     {
         // static counter for the storeIDs of diffrent stores
         private static int storeCounter = 1;
@@ -13,6 +13,7 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a item ID and its item
         public ConcurrentDictionary<int, Item> storage { get; set; }
         public int storeID { get; set; }
+        public bool activeStore { get; set; }
         public SalesPolicy salesPolicy { get; set; }
         public PurchasePolicy purchasePolicy { get; set; }
         public ConcurrentBag<PurchaseInfo> purchasesHistory { get; set; }
@@ -24,6 +25,7 @@ namespace WSEP212.DomainLayer
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
             storeCounter++;
+            this.activeStore = true;
             this.salesPolicy = salesPolicy;
             this.purchasePolicy = purchasePolicy;
             this.purchasesHistory = new ConcurrentBag<PurchaseInfo>();
@@ -102,14 +104,14 @@ namespace WSEP212.DomainLayer
         // The function will return the price after discount for each of the items
         public LinkedList<int> applySalesPolicy(Dictionary<int, int> items)
         {
-            
+            return null;
         }
 
         // Apply the purchase policy on a list of items and their type of purchase
         // The function will return if the purchase can be made
         public bool applyPurchasePolicy(Dictionary<int, int> items)
         {
-
+            return false;
         }
 
         // Purchase items from a store if all items are available in storage
@@ -174,7 +176,7 @@ namespace WSEP212.DomainLayer
             foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
             {
                 SellerPermissions seller = sellerEntry.Value;
-                officialsInfo.Add(seller.seller, seller.permissions);
+                officialsInfo.Add(seller.seller, seller.permissionsInStore);
             }
             return officialsInfo;
         }

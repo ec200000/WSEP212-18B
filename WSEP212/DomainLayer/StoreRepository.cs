@@ -5,16 +5,17 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class StoreRepository
+    public class StoreRepository
     {
         //singelton
         private static StoreRepository storeRepositoryInstance;
-        private ConcurrentBag<Store> stores;
+        public ConcurrentBag<Store> stores { get; set; }
 
         private StoreRepository()
         {
             this.stores = new ConcurrentBag<Store>();
         }
+
         public static StoreRepository getInstance()
         {
             if (storeRepositoryInstance == null)

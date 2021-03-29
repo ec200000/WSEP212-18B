@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class PurchaseInfo
+    public class PurchaseInfo
     {
         public int storeID { get; set; }
         public String userName { get; set; }

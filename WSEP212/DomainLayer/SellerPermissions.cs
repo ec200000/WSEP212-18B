@@ -5,20 +5,20 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class SellerPermissions
+    public class SellerPermissions
     {
         public User seller { get; set; }
         public Store store { get; set; }
         public User grantor { get; set; }
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
-        public LinkedList<Permissions> permissions { get; set; }
+        public LinkedList<Permissions> permissionsInStore { get; set; }
 
-        private SellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissions)
+        private SellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissionsInStore)
         {
             this.seller = seller;
             this.store = store;
             this.grantor = grantor;
-            this.permissions = permissions;
+            this.permissionsInStore = permissionsInStore;
         }
 
         // Checks that there is no other permission for this seller and store

@@ -4,8 +4,11 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class SystemManagerState : LoggedBuyerState
+    public class SystemManagerState : LoggedBuyerState
     {
-        public SystemManagerState(User user);
+        public SystemManagerState(User user): base(user)
+        {
+
+        }
     }
 }

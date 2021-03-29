@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class Item
+    public class Item
     {
         private static int itemCounter = 1;
 

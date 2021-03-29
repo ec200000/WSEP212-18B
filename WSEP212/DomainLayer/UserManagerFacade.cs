@@ -4,11 +4,13 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class UserManagerFacade
+    public class UserManagerFacade
     {
-        public User user { get; set; }
 
-        public UserManagerFacade() { }
+        public UserManagerFacade()
+        {
+
+        }
 
 
     }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    interface DeliveryInterface
+    public interface DeliveryInterface
     {
         //DeliveryInterface will be singelton
     }

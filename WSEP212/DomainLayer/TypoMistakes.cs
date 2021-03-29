@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class TypoMistakes
+    public class TypoMistakes
     {
         //singelton
     }

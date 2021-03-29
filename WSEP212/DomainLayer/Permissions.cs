@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    enum Permissions
+    public enum Permissions
     {
         AllPermissions,
         StorageManagment,

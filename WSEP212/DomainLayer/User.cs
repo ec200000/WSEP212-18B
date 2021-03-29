@@ -5,39 +5,119 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class User
+    public class User
     {
-        public User(String userName);
-        
         public String userName { get; set; }
-        public UserState state { get; }
+        public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
         public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
 
-        public void changeState(UserState state);
+        public User(String userName)
+        {
 
-        public bool register(String userName, String password);
-        public bool login(String userName, String password);
-        public bool logout(String userName);
+        }
 
-        public bool addItemToShoppingCart(int storeID, int itemID);
-        public bool removeItemFromShoppingCart(int storeID, int itemID);
+        public void changeState(UserState state)
+        {
+
+        }
+
+        public bool register(String userName, String password)
+        {
+            return false;
+        }
+
+        public bool login(String userName, String password)
+        {
+            return false;
+        }
+
+        public bool logout(String userName)
+        {
+            return false;
+        }
+
+        public bool addItemToShoppingCart(int storeID, int itemID)
+        {
+            return false;
+        }
+
+        public bool removeItemFromShoppingCart(int storeID, int itemID)
+        {
+            return false;
+
+        }
         //edit item in shopping cart is equal to -> remove + add
-        public bool purchaseItems(); //later
-        public bool openStore(String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
-        public bool itemReview(String review, int itemID, int storeID);
-        public bool addItemToStorage(int storeID, Item item, int quantity);
-        public bool removeItemFromStorage(int storeID, Item item);
-        public bool editItemDetails(int storeID, Item item);
-        public bool appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
-        public bool appointStoreOwner(String storeOwnerName, int storeID);
-        public bool editManagerPermissions(String managerName, ConcurrentBag<Permissions> permissions);
-        public bool removeStoreManager(String managerName, int storeID);
-        public ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID);
-        public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
-        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
-        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();
+        public bool purchaseItems() //later
+        {
+            return false;
+        }
+
+        public bool openStore(String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        {
+            return false;
+        }
+
+        public bool itemReview(String review, int itemID, int storeID)
+        {
+            return false;
+        }
+
+        public bool addItemToStorage(int storeID, Item item, int quantity)
+        {
+            return false;
+        }
+
+        public bool removeItemFromStorage(int storeID, Item item)
+        {
+            return false;
+        }
+
+        public bool editItemDetails(int storeID, Item item)
+        {
+            return false;
+        }
+
+        public bool appointStoreManager(String managerName, int storeID) //the store manager will receive default permissions(4.9)
+        {
+            return false;
+        }
+
+        public bool appointStoreOwner(String storeOwnerName, int storeID)
+        {
+            return false;
+        }
+
+        public bool editManagerPermissions(String managerName, ConcurrentBag<Permissions> permissions)
+        {
+            return false;
+        }
+
+        public bool removeStoreManager(String managerName, int storeID)
+        {
+            return false;
+        }
+
+        public ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        {
+            return null;
+        }
+
+        public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID) //all the purchases of the store that I manage/own
+        {
+            return null;
+        }
+
+        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
+        {
+            return null;
+        }
+
+        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
+        {
+            return null;
+        }
 
     }
 }
