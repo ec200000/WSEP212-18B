@@ -23,6 +23,8 @@ namespace WSEP212.DomainLayer
             this.state = state;
         }
 
+        // params: string username, string password
+        // returns: bool
         public void register(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
@@ -32,78 +34,130 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
-        public bool login(String userName, String password)
+
+        // params: string username, string password
+        // returns: bool
+        public void login(Object list)
         {
             return state.login(userName, password);
         }
-        public bool logout(String userName)
+
+        // params: string username
+        // returns: bool
+        public void logout(Object list)
         {
             return state.logout(userName);
         }
 
-        public bool addItemToShoppingCart(int storeID, int itemID)
+        // params: int storeID, int itemID
+        // returns: bool
+        public void addItemToShoppingCart(Object list)
         {
             return state.addItemToShoppingCart(storeID, itemID);
         }
-        public bool removeItemFromShoppingCart(int storeID, int itemID)
+
+        // params: int storeID, int itemID
+        // returns: bool
+        public void removeItemFromShoppingCart(Object list)
         {
             return state.removeItemFromShoppingCart(storeID, itemID);
         }
         //edit item in shopping cart is equal to -> remove + add
-        public bool purchaseItems() //later
+
+        // params: ?
+        // returns: bool
+        public void purchaseItems() //later
         {
             return state.purchaseItems();
         }
 
-        public bool openStore(String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        // params: String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy
+        // returns: bool
+        public void openStore(Object list)
         {
             return state.openStore(storeName, purchasePolicy, salesPolicy);
         }
-        public bool itemReview(String review, int itemID, int storeID)
+
+        // params: String review, int itemID, int storeID
+        // returns: bool
+        public void itemReview(Object list)
         {
             return state.itemReview(review, itemID, storeID);
         }
-        public bool addItemToStorage(int storeID, Item item, int quantity)
+
+        // params: int storeID, Item item, int quantity
+        // returns: bool
+        public void addItemToStorage(Object list)
         {
             return state.addItemToStorage(storeID, item, quantity);
         }
-        public bool removeItemFromStorage(int storeID, Item item)
+
+        // params: int storeID, Item item
+        // returns: bool
+        public void removeItemFromStorage(Object list)
         {
             return state.removeItemFromStorage(storeID, item);
         }
-        public bool editItemDetails(int storeID, Item item)
+
+        // params: int storeID, Item item
+        // returns:  bool
+        public void editItemDetails(Object list)
         {
             return state.editItemDetails(storeID, item);
         }
-        public bool appointStoreManager(String managerName, int storeID) //the store manager will receive default permissions(4.9)
+
+        // params: String managerName, int storeID
+        // returns: bool
+        public void appointStoreManager(Object list) //the store manager will receive default permissions(4.9)
         {
             return state.appointStoreManager(managerName, storeID);
         }
-        public bool appointStoreOwner(String storeOwnerName, int storeID)
+
+        // params: String storeOwnerName, int storeID
+        // returns: 
+        public void appointStoreOwner(Object list)
         {
             return state.appointStoreOwner(storeOwnerName, storeID);
         }
-        public bool editManagerPermissions(String managerName, LinkedList<Permissions> permissions)
+
+        // params: String managerName, LinkedList<Permissions> permissions
+        // returns: bool
+        public void editManagerPermissions(Object list)
         {
             return state.editManagerPermissions(managerName, permissions);
         }
-        public bool removeStoreManager(String managerName, int storeID)
+
+        // params: String managerName, int storeID
+        // returns: bool
+        public void removeStoreManager(Object list)
         {
             return state.removeStoreManager(managerName, storeID);
         }
-        public Dictionary<String, LinkedList<Permissions>> getOfficialsInformation(int storeID)
+
+        // params: int storeID
+        // returns: Dictionary<String, LinkedList<Permissions>>
+        public void getOfficialsInformation(Object list)
         {
             return state.getOfficialsInformation(storeID);
         }
-        public LinkedList<PurchaseInfo> getStorePurchaseHistory(int storeID) //all the purchases of the store that I manage/own
+
+        // params: int storeID
+        // returns: LinkedList<PurchaseInfo>
+        public void getStorePurchaseHistory(Object list) //all the purchases of the store that I manage/own
         {
             return state.getStorePurchaseHistory(storeID);
         }
-        public Dictionary<String, LinkedList<PurchaseInfo>> getUsersPurchaseHistory()
+
+        // params: NONE
+        // returns: Dictionary<String, LinkedList<PurchaseInfo>>
+        public void getUsersPurchaseHistory(Object list)
         {
             return state.getUsersPurchaseHistory();
         }
-        public Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory()
+
+        // params: NONE
+        // returns: Dictionary<int, LinkedList<PurchaseInfo>>
+        public void getStoresPurchaseHistory(Object list)
         {
             return state.getStoresPurchaseHistory();
         }
