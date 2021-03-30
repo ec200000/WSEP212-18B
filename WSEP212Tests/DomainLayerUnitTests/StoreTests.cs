@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WSEP212.DomainLayer;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace WSEP212.DomainLayer.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class StoreTests
     {
         private Store store;
@@ -33,7 +30,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.Fail();
         }*/
 
-        [TestMethod()]
+        [TestMethod]
         public void isAvailableInStorageTest()
         {
             bool available = store.isAvailableInStorage(soda.itemID, 2);
@@ -45,7 +42,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.IsFalse(available);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void addItemToStorageTest()
         {
             Item bag = new Item(40, "nike bag", "sport bag", 220, "bag");
@@ -69,7 +66,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.IsFalse(added);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void removeItemFromStorageTest()
         {
             Item cola = new Item(40, "cola", "lot of sugar", 7, "drink");
@@ -82,7 +79,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.IsFalse(store.isAvailableInStorage(bisli.itemID, 1));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void changeItemQuantityTest()
         {
             store.changeItemQuantity(soda.itemID, 4);
@@ -93,7 +90,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.IsFalse(changed);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void editItemTest()
         {
             store.editItem(soda.itemID,"soda-stream", "great drink", 1000.0, "drink");
@@ -123,7 +120,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.Fail();
         }*/
 
-        [TestMethod()]
+        [TestMethod]
         public void purchaseItemsIfAvailableTest()
         {
             Item oliveOil = new Item(10, "olive-oil", "from olive", 50, "oil");
@@ -139,7 +136,7 @@ namespace WSEP212.DomainLayer.Tests
             Assert.IsFalse(failedPurchase);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void rollBackPurchaseTest()
         {
             Item oliveOil = new Item(10, "olive-oil", "from olive", 50, "oil");

@@ -90,12 +90,12 @@ namespace WSEP212.DomainLayer
             }
             return false;
         }
+
         public Item getItemById(int itemID)
         {
-            foreach(KeyValuePair<int, Item> item in storage)
+            if(storage.ContainsKey(itemID))
             {
-                if (item.Key.Equals(itemID))
-                    return item.Value;
+                return storage[itemID];
             }
             return null;
         }
