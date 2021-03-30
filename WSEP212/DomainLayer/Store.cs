@@ -57,6 +57,8 @@ namespace WSEP212.DomainLayer
         // Add new item to the store with his personal details
         public bool addItemToStorage(Item item)
         {
+            if (item.itemName == "" || item.price <= 0 || item.category == "" || item.quantity < 0)
+                return false;
             int itemID = item.itemID;
             if(!storage.ContainsKey(itemID))
             {
@@ -88,10 +90,21 @@ namespace WSEP212.DomainLayer
             }
             return false;
         }
+        public Item getItemById(int itemID)
+        {
+            foreach(KeyValuePair<int, Item> item in storage)
+            {
+                if (item.Key.Equals(itemID))
+                    return item.Value;
+            }
+            return null;
+        }
 
         // edit the personal details of an item
         public bool editItem(int itemID, String itemName, String description, double price, String category)
         {
+            if (itemName == "" || price < 0 || category == "")
+                return false;
             if (storage.ContainsKey(itemID))
             {
                 Item item = storage[itemID];
