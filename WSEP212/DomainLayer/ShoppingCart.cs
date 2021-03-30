@@ -13,19 +13,27 @@ namespace WSEP212.DomainLayer
             this.shoppingBags = new Dictionary<int, ShoppingBag>();
         }
 
+        // return true if the shopping cart is empty
+        public bool isEmpty()
+        {
+            return shoppingBags.Count == 0;
+        }
+
         // Adds a quantity items to a store's shopping bag if the store and the item exists 
         // If the operation fails, remove the shopping bag if it is empty
         public bool addItemToShoppingBag(int storeID, int itemID, int quantity)
         {
-            ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
             bool addItem = false;
-
-            if (shoppingBag != null)
+            if (quantity > 0)
             {
-                addItem = shoppingBag.addItem(itemID, quantity);
-                if(!addItem)
+                ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
+                if (shoppingBag != null)
                 {
-                    removeShoppingBagIfEmpty(shoppingBag);
+                    addItem = shoppingBag.addItem(itemID, quantity);
+                    if (!addItem)
+                    {
+                        removeShoppingBagIfEmpty(shoppingBag);
+                    }
                 }
             }
             return addItem;
@@ -51,20 +59,28 @@ namespace WSEP212.DomainLayer
 
         // Changes the quantity of item in a shopping bag
         // If the operation was successful, remove the shopping bag if it is empty
-        public bool changeItemQuantityInShoppingBag(int storeID, int itemID, int quantity)
+        public bool changeItemQuantityInShoppingBag(int storeID, int itemID, int updatedQuantity)
         {
-            ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
             bool changeQuantity = false;
-
-            if (shoppingBag != null)
+            if (updatedQuantity >= 0)
             {
-                changeQuantity = shoppingBag.changeItemQuantity(itemID, quantity);
-                if(changeQuantity)
+                ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
+                if (shoppingBag != null)
                 {
-                    removeShoppingBagIfEmpty(shoppingBag);
+                    changeQuantity = shoppingBag.changeItemQuantity(itemID, updatedQuantity);
+                    if (changeQuantity)
+                    {
+                        removeShoppingBagIfEmpty(shoppingBag);
+                    }
                 }
             }
             return changeQuantity;
+        }
+
+        // Removes all the shopping bags in the shopping cart
+        public void clearShoppingCart()
+        {
+            shoppingBags.Clear();
         }
 
         // Returns the store's shopping bag
@@ -97,12 +113,6 @@ namespace WSEP212.DomainLayer
                 int storeID = shoppingBag.store.storeID;
                 shoppingBags.Remove(storeID);
             }
-        }
-
-        // Removes all the shopping bags in the shopping cart
-        public void clearShoppingCart()
-        {
-            shoppingBags.Clear();
         }
     }
 }

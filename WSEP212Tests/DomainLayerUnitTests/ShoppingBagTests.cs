@@ -16,8 +16,8 @@ namespace WSEP212.DomainLayer.Tests
             Item item = new Item(500, "black masks", "protects against infection of covid-19", 10, "health");
             storeItem = item;
             shoppingBagStore.addItemToStorage(item);
-
             StoreRepository.getInstance().addStore(shoppingBagStore);
+            shoppingBag = new ShoppingBag(shoppingBagStore);
         }
 
         [TestCleanup]
@@ -29,8 +29,8 @@ namespace WSEP212.DomainLayer.Tests
         [TestMethod]
         public void ShoppingBagTest()
         {
-            shoppingBag = new ShoppingBag(shoppingBagStore);
             Assert.IsTrue(shoppingBag.isEmpty());
+            Assert.AreEqual(shoppingBagStore, shoppingBag.store);
         }
 
         [TestMethod]
@@ -106,10 +106,25 @@ namespace WSEP212.DomainLayer.Tests
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
             Assert.AreEqual(3, quantity);   // same as previous quantity, no need to change it
 
+            Assert.IsFalse(shoppingBag.changeItemQuantity(itemID, -1));   // should fail because it is not possible to add a item with negative quantity
+            Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
+            Assert.AreEqual(3, quantity);   // same as previous quantity, no need to change it
+
             Assert.IsTrue(shoppingBag.changeItemQuantity(itemID, 0));
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));   // item with quantity 0 doesnt need to be in the shopping bag
 
             Assert.IsFalse(shoppingBag.changeItemQuantity(-1, 10));   // should fail because there is no such item ID
+        }
+
+        [TestMethod]
+        public void clearShoppingBagTest()
+        {
+            int itemID = storeItem.itemID;
+            shoppingBag.addItem(itemID, 5);
+            Assert.IsFalse(shoppingBag.isEmpty());   // should not be empty - 5 items
+
+            shoppingBag.clearShoppingBag();
+            Assert.IsTrue(shoppingBag.isEmpty());   // should be empty after clearing the shopping bag
         }
     }
 }
