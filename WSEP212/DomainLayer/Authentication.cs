@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class Authentication
+    public class Authentication
     {
         //Authentication will be singelton
     }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class SalesPolicy
+    public class SalesPolicy
     {
     }
 }
