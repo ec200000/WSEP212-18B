@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    interface PaymentInterface
+    public interface PaymentInterface
     {
         //singelton
     }

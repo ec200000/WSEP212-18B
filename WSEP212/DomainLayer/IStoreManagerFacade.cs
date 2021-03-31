@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    interface IStoreManagerFacade
+    public interface IStoreManagerFacade
     {
         public bool addItem(int storeID, Item item, int quantity);
         public bool removeItem(int storeID, Item item);

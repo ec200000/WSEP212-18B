@@ -1,4 +1,5 @@
 ﻿using System;
+using WSEP212.DomainLayer;
 
 namespace WSEP212
 {
@@ -6,7 +7,7 @@ namespace WSEP212
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

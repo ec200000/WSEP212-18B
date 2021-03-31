@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    interface IUserManagerFacade
+    public interface IUserManagerFacade
     {
         public bool register(String userName, String password);
         public bool login(String userName, String password);

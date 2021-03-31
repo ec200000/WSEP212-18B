@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class UserRepository
+    public class UserRepository
     {
         //singelton
-        ConcurrentBag<User> users;
+        public ConcurrentBag<User> users { get; set; }
     }
 }
