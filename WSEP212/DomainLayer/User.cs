@@ -17,8 +17,6 @@ namespace WSEP212.DomainLayer
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
         public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
-        public LinkedList<PurchaseInfo> purchases { get; set; }
-        public LinkedList<SellerPermissions> sellerPermissions { get; set; }
         public String address { get; set; }
 
         public void changeState(UserState state)
@@ -69,7 +67,7 @@ namespace WSEP212.DomainLayer
 
         // params: ?
         // returns: bool
-        public void purchaseItems() //later
+        public void purchaseItems(Object list) //later
         {
             return state.purchaseItems();
         }
