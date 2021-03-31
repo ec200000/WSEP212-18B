@@ -14,7 +14,7 @@ namespace WSEP212.DomainLayer
             this.user = user;
         }
 
-        public abstract bool register(String userName, String password);
+        public abstract bool register(String userName, String password, String address);
         public abstract bool login(String userName, String password);
         public abstract bool logout(String userName);
 

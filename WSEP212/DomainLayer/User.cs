@@ -24,14 +24,15 @@ namespace WSEP212.DomainLayer
             this.state = state;
         }
 
-        // params: string username, string password
+        // params: string username, string password, string address
         // returns: bool
         public void register(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
             String username = (String)param.parameters[0];
             String password = (String)param.parameters[1];
-            bool res = state.register(username, password);
+            String address = (String)param.parameters[2];
+            bool res = state.register(username, password, address);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }

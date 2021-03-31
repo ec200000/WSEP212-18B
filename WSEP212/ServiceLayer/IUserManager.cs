@@ -6,7 +6,7 @@ using WSEP212.DomainLayer;
 
 namespace WSEP212.ServiceLayer
 {
-    interface IUserManager
+    public interface IUserManager
     {
         public bool register(String userName, String password);
         public bool login(String userName, String password);
