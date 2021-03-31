@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.ServiceLayer
 {
-    class UserManager
+    public class UserManager
     {
     }
 }
