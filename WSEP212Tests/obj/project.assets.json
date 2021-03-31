@@ -5733,24 +5733,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\שגיב משיח\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\shell\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212Tests\\WSEP212Tests.csproj",
+      "projectUniqueName": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212Tests\\WSEP212Tests.csproj",
       "projectName": "WSEP212Tests",
-      "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212Tests\\WSEP212Tests.csproj",
-      "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
-      "outputPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212Tests\\obj\\",
+      "projectPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212Tests\\WSEP212Tests.csproj",
+      "packagesPath": "C:\\Users\\shell\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212Tests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\shell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5764,8 +5759,8 @@
         "netcoreapp3.1": {
           "targetAlias": ".NETCoreApp,Version=v3.1",
           "projectReferences": {
-            "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-              "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+            "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+              "projectPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
           }
         }

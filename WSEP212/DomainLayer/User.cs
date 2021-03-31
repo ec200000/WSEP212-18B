@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class User
+    public class User
     {
         public User(String userName)
         {

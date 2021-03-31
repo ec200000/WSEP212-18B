@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    abstract class UserState
+    public abstract class UserState
     {
         public User user { get; set; }
 

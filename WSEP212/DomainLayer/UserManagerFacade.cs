@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace WSEP212.DomainLayer
 {
-    class UserManagerFacade : IUserManagerFacade
+    public class UserManagerFacade : IUserManagerFacade
     {
         public User user { get; set; }
 
