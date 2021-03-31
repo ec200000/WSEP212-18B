@@ -42,7 +42,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }
