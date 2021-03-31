@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace WSEP212.DomainLayer
 {
-    class UserManagerFacade : IUserManagerFacade
+    public class UserManagerFacade : IUserManagerFacade
     {
         public User user { get; set; }
 
@@ -14,7 +14,7 @@ namespace WSEP212.DomainLayer
 
         public bool register(string userName, string password) //the result will be held in the ThreadParameters Object
         {
-            Object[] paramsList = { userName, password };
+            Object[] paramsList = { userName, password};
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.register, threadParameters); //creating the job
@@ -142,9 +142,9 @@ namespace WSEP212.DomainLayer
             return (bool)threadParameters.result;
         }
 
-        public bool editManagerPermissions(string userName, string managerName, ConcurrentBag<Permissions> permissions)
+        public bool editManagerPermissions(string userName, string managerName, ConcurrentBag<Permissions> permissions, int storeID)
         {
-            Object[] paramsList = { userName, managerName, permissions };
+            Object[] paramsList = { userName, managerName, permissions, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.editManagerPermissions, threadParameters); //creating the job

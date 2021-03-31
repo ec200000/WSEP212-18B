@@ -11,16 +11,17 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a store ID and its store
         public ConcurrentDictionary<int, Store> stores { get; set; }
 
-        private StoreRepository()
-        {
-            this.stores = new ConcurrentDictionary<int, Store>();
-        }
-
         private static readonly Lazy<StoreRepository> lazy
         = new Lazy<StoreRepository>(() => new StoreRepository());
 
-        public static StoreRepository Instance
-            => lazy.Value;
+        public static StoreRepository getInstance()
+        {
+            if (storeRepositoryInstance == null)
+            {
+                storeRepositoryInstance = new StoreRepository();
+            }
+            return storeRepositoryInstance;
+        }
 
         public bool addStore(Store store)
         {
@@ -49,6 +50,26 @@ namespace WSEP212.DomainLayer
             }
             return null;
         }
+        public ConcurrentBag<Store> getAllStores()
+        {
+            ConcurrentBag<Store> allStores = new ConcurrentBag<Store>();
+            foreach(KeyValuePair<int,Store> store in stores)
+            {
+                allStores.Add(store.Value);
+            }
+            return allStores;
+        }
 
+        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getAllStoresPurchsesHistory()
+        {
+            ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>();
+            ConcurrentBag<Store> allStores = getAllStores();
+            foreach(Store store in allStores)
+            {
+                storesPurchasesHistory.TryAdd(store.storeID, store.purchasesHistory);
+            }
+            return storesPurchasesHistory;
+
+        }
     }
 }

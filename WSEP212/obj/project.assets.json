@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\ec200\\.nuget\\packages\\": {}
+    "C:\\Users\\shell\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "projectUniqueName": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
       "projectName": "WSEP212",
-      "projectPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-      "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\obj\\",
+      "projectPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "packagesPath": "C:\\Users\\shell\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\shell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
