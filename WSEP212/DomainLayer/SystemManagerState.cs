@@ -67,27 +67,12 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool login(string userName, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool logout(string userName)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool openStore(string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
             throw new NotImplementedException();
         }
 
         public override bool purchaseItems(string address)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool register(string userName, string password)
         {
             throw new NotImplementedException();
         }

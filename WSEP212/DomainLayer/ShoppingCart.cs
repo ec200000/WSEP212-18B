@@ -94,7 +94,7 @@ namespace WSEP212.DomainLayer
             }
             else
             {
-                Store store = StoreRepository.getInstance().getStore(storeID);
+                Store store = StoreRepository.Instance.getStore(storeID);
                 ShoppingBag newShoppingBag = null;
                 if (store != null)
                 {

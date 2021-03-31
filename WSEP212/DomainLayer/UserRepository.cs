@@ -13,7 +13,10 @@ namespace WSEP212.DomainLayer
         public static UserRepository Instance
             => lazy.Value;
 
-        private UserRepository() { }
+        private UserRepository() {
+            users = new ConcurrentDictionary<User, bool>();
+            usersInfo = new ConcurrentDictionary<string, string>();
+        }
         public ConcurrentDictionary<User,bool> users { get; set; }
         public ConcurrentDictionary<String,String> usersInfo { get; set; }
 
@@ -43,7 +46,12 @@ namespace WSEP212.DomainLayer
                 }
             }
             if(users.TryGetValue(user, out oldStatus))
-                return users.TryUpdate(user,status, oldStatus);
+            {
+                if(oldStatus != status)
+                    return users.TryUpdate(user, status, oldStatus);
+                return false;
+            }
+                
             return false;
         }
 

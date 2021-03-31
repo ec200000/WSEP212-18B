@@ -68,7 +68,12 @@ namespace WSEP212.DomainLayer
 
         public override bool login(string userName, string password)
         {
-            return UserRepository.Instance.changeUserLoginStatus(user, true, password);
+            if(UserRepository.Instance.changeUserLoginStatus(UserRepository.Instance.findUserByUserName(userName), true, password))
+            {
+                user.changeState(new LoggedBuyerState(user));
+                return true;
+            }
+            return false;
         }
 
         public override bool logout(string userName)

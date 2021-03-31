@@ -26,7 +26,7 @@ namespace WSEP212.DomainLayer
         {
             string passwordToValidateHash = encryptPassword(passwordToValidate);
 
-            return passwordToValidate.Equals(userPassword);
+            return passwordToValidateHash.Equals(userPassword);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace WSEP212.DomainLayer
 {
-    class ThreadParameters
+    public class ThreadParameters
     {
         public EventWaitHandle eventWaitHandle = new ManualResetEvent(false); //the handler (notification if finished)
 

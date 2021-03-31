@@ -34,8 +34,8 @@ namespace WSEP212.DomainLayer
             this.storeName = storeName;
 
             // create the founder seller permissions
-            LinkedList<Permissions> founderPermissions = new LinkedList<Permissions>();
-            founderPermissions.AddFirst(Permissions.AllPermissions);   // founder has all permisiions
+            ConcurrentBag<Permissions> founderPermissions = new ConcurrentBag<Permissions>();
+            founderPermissions.Add(Permissions.AllPermissions);   // founder has all permisiions
 
             SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder, this, null, founderPermissions);
 

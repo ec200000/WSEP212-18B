@@ -23,7 +23,8 @@ namespace WSEP212.DomainLayer
                 if(sellerPermissions.store.storeID == storeID)
                 {
                     if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                        return sellerPermissions.store.addItemToStorage(item, quantity);
+                        return true;
+                            //sellerPermissions.store.addItemToStorage(item, quantity);
                 }
             }
             return false;
@@ -156,9 +157,9 @@ namespace WSEP212.DomainLayer
 
         public override bool logout(string userName)
         {
-            if (UserRepository.Instance.changeUserLoginStatus(this.user, false, null))
+            if (UserRepository.Instance.changeUserLoginStatus(UserRepository.Instance.findUserByUserName(userName), false, null))
             {
-                this.user.state = new GuestBuyerState(this.user);
+                this.user.changeState(new GuestBuyerState(this.user));
                 return true;
             }
             return false;
