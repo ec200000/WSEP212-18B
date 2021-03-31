@@ -14,14 +14,8 @@ namespace WSEP212.DomainLayer
         private static readonly Lazy<StoreRepository> lazy
         = new Lazy<StoreRepository>(() => new StoreRepository());
 
-        public static StoreRepository getInstance()
-        {
-            if (storeRepositoryInstance == null)
-            {
-                storeRepositoryInstance = new StoreRepository();
-            }
-            return storeRepositoryInstance;
-        }
+        public static StoreRepository Instance
+            => lazy.Value;
 
         public bool addStore(Store store)
         {
