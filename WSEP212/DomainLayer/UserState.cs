@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,11 +30,11 @@ namespace WSEP212.DomainLayer
         public abstract bool editItemDetails(int storeID, Item item);
         public abstract bool appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
         public abstract bool appointStoreOwner(String storeOwnerName, int storeID);
-        public abstract bool editManagerPermissions(String managerName, LinkedList<Permissions> permissions);
+        public abstract bool editManagerPermissions(String managerName, ConcurrentBag<Permissions> permissions);
         public abstract bool removeStoreManager(String managerName, int storeID);
-        public abstract Dictionary<String, LinkedList<Permissions>> getOfficialsInformation(int storeID);
-        public abstract LinkedList<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
-        public abstract Dictionary<String, LinkedList<PurchaseInfo>> getUsersPurchaseHistory();
-        public abstract Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory();
+        public abstract ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID);
+        public abstract ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
+        public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
+        public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();
     }
 }

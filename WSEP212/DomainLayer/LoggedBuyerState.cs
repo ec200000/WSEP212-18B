@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -36,27 +37,27 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editManagerPermissions(string managerName, LinkedList<Permissions> permissions)
+        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions)
         {
             throw new NotImplementedException();
         }
 
-        public override Dictionary<string, LinkedList<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }
 
-        public override LinkedList<PurchaseInfo> getStorePurchaseHistory(int storeID)
+        public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
         {
             throw new NotImplementedException();
         }
 
-        public override Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
         }
 
-        public override Dictionary<string, LinkedList<PurchaseInfo>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
         }
