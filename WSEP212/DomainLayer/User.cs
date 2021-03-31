@@ -9,7 +9,11 @@ namespace WSEP212.DomainLayer
     {
         public User(String userName)
         {
-
+            this.userName = userName;
+            this.shoppingCart = new ShoppingCart();
+            this.purchases = new ConcurrentBag<PurchaseInfo>();
+            this.sellerPermissions = new ConcurrentBag<SellerPermissions>();
+            this.state = new GuestBuyerState(this);
         }
 
         public String userName { get; set; }
@@ -17,7 +21,6 @@ namespace WSEP212.DomainLayer
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
         public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
-        public String address { get; set; }
 
         public void changeState(UserState state)
         {
@@ -31,8 +34,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             String username = (String)param.parameters[0];
             String password = (String)param.parameters[1];
-            String address = (String)param.parameters[2];
-            bool res = state.register(username, password, address);
+            object res = state.register(username, password);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -44,7 +46,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             String username = (String)param.parameters[0];
             String password = (String)param.parameters[1];
-            bool res = state.login(username, password);
+            object res = state.login(username, password);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -55,7 +57,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             String username = (String)param.parameters[0];
-            bool res = state.logout(username);
+            object res = state.logout(username);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -67,7 +69,8 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             int itemID = (int)param.parameters[1];
-            bool res = state.addItemToShoppingCart(storeID, itemID);
+            int quantity = (int)param.parameters[2];
+            object res = state.addItemToShoppingCart(storeID, itemID, quantity);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -79,7 +82,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             int itemID = (int)param.parameters[1];
-            bool res = state.removeItemFromShoppingCart(storeID, itemID);
+            object res = state.removeItemFromShoppingCart(storeID, itemID);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -90,7 +93,8 @@ namespace WSEP212.DomainLayer
         public void purchaseItems(Object list) //later
         {
             ThreadParameters param = (ThreadParameters)list;
-            bool res = state.purchaseItems();
+            String address = (String)param.parameters[0];
+            object res = state.purchaseItems(address);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -103,7 +107,7 @@ namespace WSEP212.DomainLayer
             String storeName = (String)param.parameters[0];
             PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[1];
             SalesPolicy salesPolicy = (SalesPolicy)param.parameters[2];
-            bool res = state.openStore(storeName, purchasePolicy, salesPolicy);
+            object res = state.openStore(storeName, purchasePolicy, salesPolicy);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -116,7 +120,7 @@ namespace WSEP212.DomainLayer
             String review = (String)param.parameters[0];
             int itemID = (int)param.parameters[1];
             int storeID = (int)param.parameters[2];
-            bool res = state.itemReview(review, itemID, storeID);
+            object res = state.itemReview(review, itemID, storeID);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -129,7 +133,7 @@ namespace WSEP212.DomainLayer
             int storeID = (int)param.parameters[0];
             Item item = (Item)param.parameters[1];
             int quantity = (int)param.parameters[2];
-            bool res = state.addItemToStorage(storeID, item, quantity);
+            object res = state.addItemToStorage(storeID, item, quantity);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -141,7 +145,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             Item item = (Item)param.parameters[1];
-            bool res = state.removeItemFromStorage(storeID, item);
+            object res = state.removeItemFromStorage(storeID, item);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -153,7 +157,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             Item item = (Item)param.parameters[1];
-            bool res = state.editItemDetails(storeID, item);
+            object res = state.editItemDetails(storeID, item);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -165,7 +169,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[1];
             String managerName = (String)param.parameters[0];
-            bool res = state.appointStoreManager(managerName, storeID);
+            object res = state.appointStoreManager(managerName, storeID);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -177,19 +181,20 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[1];
             String storeOwnerName = (String)param.parameters[0];
-            bool res = state.appointStoreOwner(storeOwnerName, storeID);
+            object res = state.appointStoreOwner(storeOwnerName, storeID);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
 
-        // params: String managerName, ConcurrentBag<Permissions> permissions
+        // params: String managerName, ConcurrentBag<Permissions> permissions, int storeID
         // returns: bool
         public void editManagerPermissions(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
             String managerName = (String)param.parameters[0];
             ConcurrentBag<Permissions> permissions = (ConcurrentBag<Permissions>)param.parameters[1];
-            bool res = state.editManagerPermissions(managerName, permissions);
+            int storeID = (int)param.parameters[2];
+            object res = state.editManagerPermissions(managerName, permissions, storeID);
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
@@ -201,7 +206,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             String managerName = (String)param.parameters[0];
             int storeID = (int)param.parameters[1];
-            bool res = state.removeStoreManager(managerName, storeID);
+            object res = state.removeStoreManager(managerName, storeID);
             param.result = res;
             param.eventWaitHandle.Set();
         }
@@ -212,7 +217,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            ConcurrentDictionary<String, ConcurrentBag<Permissions>> res = state.getOfficialsInformation(storeID);
+            object res = state.getOfficialsInformation(storeID);
             param.result = res;
             param.eventWaitHandle.Set();
         }
@@ -223,7 +228,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            ConcurrentBag<PurchaseInfo> res = state.getStorePurchaseHistory(storeID);
+            object res = state.getStorePurchaseHistory(storeID);
             param.result = res;
             param.eventWaitHandle.Set();
         }
@@ -233,7 +238,7 @@ namespace WSEP212.DomainLayer
         public void getUsersPurchaseHistory(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
-            ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> res = state.getUsersPurchaseHistory();
+            object res = state.getUsersPurchaseHistory();
             param.result = res;
             param.eventWaitHandle.Set();
         }
@@ -243,7 +248,7 @@ namespace WSEP212.DomainLayer
         public void getStoresPurchaseHistory(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
-            ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> res = state.getStoresPurchaseHistory();
+            object res = state.getStoresPurchaseHistory();
             param.result = res;
             param.eventWaitHandle.Set();
         }

@@ -11,9 +11,9 @@ namespace WSEP212.DomainLayer
         {
         }
 
-        public override bool addItemToShoppingCart(int storeID, int itemID)
+        public override bool addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
-            throw new NotImplementedException();
+            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
         public override bool addItemToStorage(int storeID, Item item, int quantity)
@@ -36,12 +36,12 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions)
+        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }
@@ -63,12 +63,12 @@ namespace WSEP212.DomainLayer
 
         public override bool itemReview(string review, int itemID, int storeID)
         {
-            throw new NotImplementedException();
+            return StoreRepository.Instance.getStore(storeID).getItemById(itemID).addReview(this.user.userName, review);
         }
 
         public override bool login(string userName, string password)
         {
-            throw new NotImplementedException();
+            return UserRepository.Instance.changeUserLoginStatus(user, true, password);
         }
 
         public override bool logout(string userName)
@@ -81,19 +81,21 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool purchaseItems()
+        public override bool purchaseItems(string address)
         {
             throw new NotImplementedException();
         }
 
-        public override bool register(string userName, string password, string address)
+        public override bool register(string userName, string password)
         {
-            throw new NotImplementedException();
+            User user = new User(userName);
+            return UserRepository.Instance.insertNewUser(user, password);
         }
 
         public override bool removeItemFromShoppingCart(int storeID, int itemID)
         {
-            throw new NotImplementedException();
+            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+
         }
 
         public override bool removeItemFromStorage(int storeID, Item item)

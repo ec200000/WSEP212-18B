@@ -14,18 +14,26 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         private UserRepository() { }
-        public ConcurrentBag<User> users { get; set; }
+        public ConcurrentDictionary<User, bool> users { get; set; } //<user, if he is logged>
         public ConcurrentDictionary<String,String> usersInfo { get; set; }
 
         public bool insertNewUser(User newUser,String password)
         {
-            users.Add(newUser);
+            users.TryAdd(newUser, false);
             return true;
+        }
+
+        public bool changeUserLoginStatus(User user, bool status, String password)
+        {
+            bool oldStatus;
+            if (users.TryGetValue(user, out oldStatus))
+                return users.TryUpdate(user, status, oldStatus);
+            return false;
         }
 
         public bool removeUser(User userToRemove)
         {
-            return users.TryTake(out userToRemove);
+            return users.TryRemove(userToRemove, out _);
         }
 
         public bool updateUser(User userToUpdate)

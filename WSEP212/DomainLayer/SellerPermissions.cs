@@ -11,9 +11,9 @@ namespace WSEP212.DomainLayer
         public Store store { get; set; }
         public User grantor { get; set; }
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
-        public LinkedList<Permissions> permissionsInStore { get; set; }
+        public ConcurrentBag<Permissions> permissionsInStore { get; set; }
 
-        private SellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissionsInStore)
+        private SellerPermissions(User seller, Store store, User grantor, ConcurrentBag<Permissions> permissionsInStore)
         {
             this.seller = seller;
             this.store = store;
@@ -23,7 +23,7 @@ namespace WSEP212.DomainLayer
 
         // Checks that there is no other permission for this seller and store
         // If there is one, return it, else, create new permission
-        public static SellerPermissions getSellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissions)
+        public static SellerPermissions getSellerPermissions(User seller, Store store, User grantor, ConcurrentBag<Permissions> permissions)
         {
             if (seller.sellerPermissions != null)
             {
