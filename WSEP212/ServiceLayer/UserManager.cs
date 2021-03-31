@@ -8,70 +8,68 @@ namespace WSEP212.ServiceLayer
 {
     public class UserManager : IUserManager
     {
-        public UserManagerFacade userManagerFacade { get; set; }
-
         public UserManager() { }
 
         public bool register(String userName, String password)
         {
-            return userManagerFacade.register(userName, password);
+            return UserManagerFacade.Instance.register(userName, password);
         }
         public bool login(String userName, String password)
         {
-            return userManagerFacade.login(userName, password);
+            return UserManagerFacade.Instance.login(userName, password);
         }
         public bool logout(String userName)
         {
-            return userManagerFacade.logout(userName);
+            return UserManagerFacade.Instance.logout(userName);
         }
 
         public bool addItemToShoppingCart(String userName, int storeID, int itemID)
         {
-            return userManagerFacade.addItemToShoppingCart(userName, storeID, itemID);
+            return UserManagerFacade.Instance.addItemToShoppingCart(userName, storeID, itemID);
         }
         public bool removeItemFromShoppingCart(String userName, int storeID, int itemID)
         {
-            return userManagerFacade.removeItemFromShoppingCart(userName, storeID, itemID);
+            return UserManagerFacade.Instance.removeItemFromShoppingCart(userName, storeID, itemID);
         }
 
         public bool purchaseItems(String userName)
         {
-            return userManagerFacade.purchaseItems(userName);
+            return UserManagerFacade.Instance.purchaseItems(userName);
         }
         public bool openStore(String userName, String storeName, String purchasePolicy, String salesPolicy)
         {
             PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy);
             SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy);
-            return userManagerFacade.openStore(userName, storeName, newPurchasePolicy, newSalesPolicy);
+            return UserManagerFacade.Instance.openStore(userName, storeName, newPurchasePolicy, newSalesPolicy);
         }
         public bool itemReview(String userName, String review, int itemID, int storeID)
         {
-            return userManagerFacade.itemReview(userName, review, itemID, storeID);
+            return UserManagerFacade.Instance.itemReview(userName, review, itemID, storeID);
         }
         public bool addItemToStorage(String userName, int storeID, ItemDTO item, int quantity)
         {
             Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return userManagerFacade.addItemToStorage(userName, storeID, newItem, quantity);
+            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem, quantity);
         }
         public bool removeItemFromStorage(String userName, int storeID, ItemDTO item)
         {
             Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return userManagerFacade.removeItemFromStorage(userName, storeID, newItem);
+            return UserManagerFacade.Instance.removeItemFromStorage(userName, storeID, newItem);
         }
         public bool editItemDetails(String userName, int storeID, ItemDTO item)
         {
             Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return userManagerFacade.editItemDetails(userName, storeID, newItem);
+            return UserManagerFacade.Instance.editItemDetails(userName, storeID, newItem);
         }
         public bool appointStoreManager(String userName, String managerName, int storeID)
         {
-            return userManagerFacade.appointStoreManager(userName, managerName, storeID);
+            return UserManagerFacade.Instance.appointStoreManager(userName, managerName, storeID);
         }
         public bool appointStoreOwner(String userName, String storeOwnerName, int storeID)
         {
-            return userManagerFacade.appointStoreOwner(userName, storeOwnerName, storeID);
+            return UserManagerFacade.Instance.appointStoreOwner(userName, storeOwnerName, storeID);
         }
-        public bool editManagerPermissions(String userName, String managerName, ConcurrentBag<int> permissions)
+        public bool editManagerPermissions(String userName, String managerName, ConcurrentBag<int> permissions, int storeID)
         {
             ConcurrentBag<Permissions> newPermissions = new ConcurrentBag<Permissions>();
             foreach (int i in permissions)
@@ -79,27 +77,27 @@ namespace WSEP212.ServiceLayer
                 Permissions permission = (Permissions)i;
                 newPermissions.Add(permission);
             }
-            return userManagerFacade.editManagerPermissions(userName, managerName, newPermissions);
+            return UserManagerFacade.Instance.editManagerPermissions(userName, managerName, newPermissions, storeID);
         }
         public bool removeStoreManager(String userName, String managerName, int storeID)
         {
-            return userManagerFacade.removeStoreManager(userName, managerName, storeID);
+            return UserManagerFacade.Instance.removeStoreManager(userName, managerName, storeID);
         }
         public ConcurrentDictionary<String, ConcurrentBag<Permissions>> getOfficialsInformation(String userName, int storeID)
         {
-            return userManagerFacade.getOfficialsInformation(userName, storeID);
+            return UserManagerFacade.Instance.getOfficialsInformation(userName, storeID);
         }
         public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(String userName, int storeID)
         {
-            return userManagerFacade.getStorePurchaseHistory(userName, storeID);
+            return UserManagerFacade.Instance.getStorePurchaseHistory(userName, storeID);
         }
-        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
+        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory(String userName)
         {
-            return userManagerFacade.getUsersPurchaseHistory();
+            return UserManagerFacade.Instance.getUsersPurchaseHistory(userName);
         }
-        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
+        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory(String userName)
         {
-            return userManagerFacade.getStoresPurchaseHistory();
+            return UserManagerFacade.Instance.getStoresPurchaseHistory(userName);
         }
 
     }
