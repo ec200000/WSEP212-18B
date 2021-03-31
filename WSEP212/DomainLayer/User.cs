@@ -222,7 +222,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            ConcurrentBag<Permissions> res = state.getStorePurchaseHistory(storeID);
+            ConcurrentBag<PurchaseInfo> res = state.getStorePurchaseHistory(storeID);
             param.result = res;
             param.eventWaitHandle.Set();
         }
