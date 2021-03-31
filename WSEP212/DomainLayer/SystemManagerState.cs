@@ -54,12 +54,12 @@ namespace WSEP212.DomainLayer
 
         public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
         {
-            throw new NotImplementedException();
+            return StoreRepository.Instance.getAllStoresPurchsesHistory();
         }
 
         public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
         {
-            throw new NotImplementedException();
+            return UserRepository.Instance.getAllUsersPurchaseHistory();
         }
 
         public override bool itemReview(string review, int itemID, int storeID)
