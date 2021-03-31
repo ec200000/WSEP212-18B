@@ -21,5 +21,12 @@ namespace WSEP212.DomainLayer
             String hash = System.Text.Encoding.ASCII.GetString(data);
             return hash;
         }
+
+        public bool validatePassword(String passwordToValidate, String userPassword)
+        {
+            string passwordToValidateHash = encryptPassword(passwordToValidate);
+
+            return passwordToValidate.Equals(userPassword);
+        }
     }
 }

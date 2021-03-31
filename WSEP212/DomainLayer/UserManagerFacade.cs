@@ -14,7 +14,7 @@ namespace WSEP212.DomainLayer
 
         public bool register(string userName, string password) //the result will be held in the ThreadParameters Object
         {
-            Object[] paramsList = { userName, password };
+            Object[] paramsList = { userName, password};
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.register, threadParameters); //creating the job
