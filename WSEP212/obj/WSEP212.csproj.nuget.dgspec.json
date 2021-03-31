@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
+    "C:\\Users\\irisk\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+    "C:\\Users\\irisk\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "projectUniqueName": "C:\\Users\\irisk\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\shell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shell\\source\\repos\\WSEP212-18B\\WSEP212\\obj\\",
+        "projectPath": "C:\\Users\\irisk\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\irisk\\source\\repos\\WSEP212-18B\\WSEP212\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\shell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
