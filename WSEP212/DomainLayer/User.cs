@@ -123,7 +123,7 @@ namespace WSEP212.DomainLayer
             return state.appointStoreOwner(storeOwnerName, storeID);
         }
 
-        // params: String managerName, LinkedList<Permissions> permissions
+        // params: String managerName, ConcurrentBag<Permissions> permissions
         // returns: bool
         public void editManagerPermissions(Object list)
         {
@@ -138,28 +138,28 @@ namespace WSEP212.DomainLayer
         }
 
         // params: int storeID
-        // returns: Dictionary<String, LinkedList<Permissions>>
+        // returns: ConcurrentDictionary<String, ConcurrentBag<Permissions>>
         public void getOfficialsInformation(Object list)
         {
             return state.getOfficialsInformation(storeID);
         }
 
         // params: int storeID
-        // returns: LinkedList<PurchaseInfo>
+        // returns: ConcurrentBag<PurchaseInfo>
         public void getStorePurchaseHistory(Object list) //all the purchases of the store that I manage/own
         {
             return state.getStorePurchaseHistory(storeID);
         }
 
         // params: NONE
-        // returns: Dictionary<String, LinkedList<PurchaseInfo>>
+        // returns: ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>
         public void getUsersPurchaseHistory(Object list)
         {
             return state.getUsersPurchaseHistory();
         }
 
         // params: NONE
-        // returns: Dictionary<int, LinkedList<PurchaseInfo>>
+        // returns: ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>
         public void getStoresPurchaseHistory(Object list)
         {
             return state.getStoresPurchaseHistory();
