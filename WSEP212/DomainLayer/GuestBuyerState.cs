@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class GuestBuyerState : UserState
+    public class GuestBuyerState : UserState
     {
         public GuestBuyerState(User user) : base(user)
         {
@@ -86,7 +86,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool register(string userName, string password)
+        public override bool register(string userName, string password, string address)
         {
             throw new NotImplementedException();
         }
