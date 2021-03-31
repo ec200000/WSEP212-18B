@@ -7,16 +7,22 @@ namespace WSEP212.DomainLayer
 {
     class User
     {
-        public User(String userName);
-        
+        public User(String userName)
+        {
+
+        }
+
         public String userName { get; set; }
-        public UserState state { get; }
+        public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
         public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
         public String address { get; set; }
 
-        public void changeState(UserState state);
+        public void changeState(UserState state)
+        {
+            this.state = state;
+        }
 
         // params: string username, string password
         // returns: bool
