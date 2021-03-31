@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace WSEP212.DomainLayer
         public int storeID { get; set; }
         public String itemName { get; set; }
         public String description { get; set; }
-        public Dictionary<String,String> review { get; set; }
+        public ConcurrentDictionary<String,String> review { get; set; }
         public double price { get; set; }
         public int rank { get; set; }
         public String category { get; set; }

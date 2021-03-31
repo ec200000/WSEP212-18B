@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +15,8 @@ namespace WSEP212.DomainLayer
         public String userName { get; set; }
         public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
+        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
+        public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
         public LinkedList<PurchaseInfo> purchases { get; set; }
         public LinkedList<SellerPermissions> sellerPermissions { get; set; }
         public String address { get; set; }
