@@ -14,7 +14,7 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         private UserRepository() { }
-        public ConcurrentBag<User> users { get; set; }
+        public ConcurrentDictionary<User,bool> users { get; set; }
         public ConcurrentDictionary<String,String> usersInfo { get; set; }
 
         public bool insertNewUser(User newUser,String password)
