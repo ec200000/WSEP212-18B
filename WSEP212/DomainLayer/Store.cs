@@ -13,6 +13,8 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a item ID and its item
         public ConcurrentDictionary<int, Item> storage { get; set; }
         public int storeID { get; set; }
+
+        public string storeName { get; set; }
         public bool activeStore { get; set; }
         public SalesPolicy salesPolicy { get; set; }
         public PurchasePolicy purchasePolicy { get; set; }
@@ -20,7 +22,7 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
 
-        public Store(SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public Store(SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder, string storeName)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
@@ -29,6 +31,7 @@ namespace WSEP212.DomainLayer
             this.salesPolicy = salesPolicy;
             this.purchasePolicy = purchasePolicy;
             this.purchasesHistory = new ConcurrentBag<PurchaseInfo>();
+            this.storeName = storeName;
 
             // create the founder seller permissions
             LinkedList<Permissions> founderPermissions = new LinkedList<Permissions>();
@@ -187,13 +190,13 @@ namespace WSEP212.DomainLayer
         }
 
         // Returns information about all the store official (store owner and manager) in the store
-        public Dictionary<User, LinkedList<Permissions>> getStoreOfficialsInfo()
+        public ConcurrentDictionary<User, ConcurrentBag<Permissions>> getStoreOfficialsInfo()
         {
-            Dictionary<User, LinkedList<Permissions>> officialsInfo = new Dictionary<User, LinkedList<Permissions>>();
+            ConcurrentDictionary<User, ConcurrentBag<Permissions>> officialsInfo = new ConcurrentDictionary<User, ConcurrentBag<Permissions>>();
             foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
             {
                 SellerPermissions seller = sellerEntry.Value;
-                officialsInfo.Add(seller.seller, seller.permissionsInStore);
+                officialsInfo.TryAdd(seller.seller, seller.permissionsInStore);
             }
             return officialsInfo;
         }

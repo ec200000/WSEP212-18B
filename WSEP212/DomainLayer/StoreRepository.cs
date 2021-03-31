@@ -17,8 +17,6 @@ namespace WSEP212.DomainLayer
         public static StoreRepository Instance
             => lazy.Value;
 
-        private StoreRepository() { }
-
         public bool addStore(Store store)
         {
             int storeID = store.storeID;
