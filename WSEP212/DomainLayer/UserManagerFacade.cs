@@ -142,9 +142,9 @@ namespace WSEP212.DomainLayer
             return (bool)threadParameters.result;
         }
 
-        public bool editManagerPermissions(string userName, string managerName, ConcurrentBag<Permissions> permissions)
+        public bool editManagerPermissions(string userName, string managerName, ConcurrentBag<Permissions> permissions, int storeID)
         {
-            Object[] paramsList = { userName, managerName, permissions };
+            Object[] paramsList = { userName, managerName, permissions, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.editManagerPermissions, threadParameters); //creating the job

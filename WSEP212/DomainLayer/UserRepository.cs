@@ -94,5 +94,16 @@ namespace WSEP212.DomainLayer
             }
             return false;
         }
+
+        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getAllUsersPurchaseHistory()
+        {
+            ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> purchaseHistory = new ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>();
+            foreach(KeyValuePair<User,bool> user in users)
+            {
+                if (!purchaseHistory.TryAdd(user.Key.userName, user.Key.purchases))
+                    return null;
+            }
+            return purchaseHistory;
+        }
     }
 }
