@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -13,7 +14,6 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a item ID and its item
         public ConcurrentDictionary<int, Item> storage { get; set; }
         public int storeID { get; set; }
-
         public string storeName { get; set; }
         public bool activeStore { get; set; }
         public SalesPolicy salesPolicy { get; set; }
@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
 
-        public Store(SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder, string storeName)
+        public Store(String storeName, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
@@ -34,8 +34,8 @@ namespace WSEP212.DomainLayer
             this.storeName = storeName;
 
             // create the founder seller permissions
-            ConcurrentBag<Permissions> founderPermissions = new ConcurrentBag<Permissions>();
-            founderPermissions.Add(Permissions.AllPermissions);   // founder has all permisiions
+            ConcurrentLinkedList<Permissions> founderPermissions = new ConcurrentLinkedList<Permissions>();
+            founderPermissions.TryAdd(Permissions.AllPermissions);   // founder has all permisiions
 
             SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder, this, null, founderPermissions);
 
@@ -104,9 +104,9 @@ namespace WSEP212.DomainLayer
         }
 
         // edit the personal details of an item
-        public bool editItem(int itemID, String itemName, String description, double price, String category)
+        public bool editItem(int itemID, String itemName, String description, double price, String category, int quantity)
         {
-            if (itemName == "" || price < 0 || category == "")
+            if (itemName == "" || price < 0 || category == "" || quantity < 0)
                 return false;
             if (storage.ContainsKey(itemID))
             {
@@ -115,9 +115,16 @@ namespace WSEP212.DomainLayer
                 item.description = description;
                 item.price = price;
                 item.category = category;
+                item.quantity = quantity;
                 return true;
             }
             return false;
+        }
+
+        // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
+        public bool purchaseItems(UserType userType, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        {
+
         }
 
         // Apply the sales policy on a list of items
@@ -129,16 +136,16 @@ namespace WSEP212.DomainLayer
 
         // Apply the purchase policy on a list of items and their type of purchase
         // The function will return if the purchase can be made
-        public bool applyPurchasePolicy(Dictionary<int, int> items)
+        public bool applyPurchasePolicy(UserType userType, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-            return false;
+            return purchasePolicy.approveByPurchasePolicy(userType, items, itemsPurchaseType);
         }
 
         // Purchase items from a store if all items are available in storage
         // The purchase of the items updates the quantity of the items in storage
-        public bool purchaseItemsIfAvailable(Dictionary<int, int> items)
+        public bool purchaseItemsIfAvailable(ConcurrentDictionary<int, int> items)
         {
-            Dictionary<int, int> updatedItems = new Dictionary<int, int>();
+            ConcurrentDictionary<int, int> updatedItems = new ConcurrentDictionary<int, int>();
 
             foreach (KeyValuePair<int, int> item in items)
             {
@@ -147,7 +154,7 @@ namespace WSEP212.DomainLayer
                 if (isAvailableInStorage(itemID, quantity))   // maybe lock the storage now
                 {
                     changeItemQuantity(itemID, -1 * quantity);
-                    updatedItems.Add(itemID, quantity);
+                    updatedItems.TryAdd(itemID, quantity);
                 }
                 else
                 {
@@ -160,7 +167,7 @@ namespace WSEP212.DomainLayer
 
         // In case the purchase is canceled (payment is not made / system collapses) -
         // the items that were supposed to be purchased return to the store
-        public void rollBackPurchase(Dictionary<int, int> items)
+        public void rollBackPurchase(ConcurrentDictionary<int, int> items)
         {
             foreach (KeyValuePair<int, int> item in items)
             {
@@ -190,9 +197,9 @@ namespace WSEP212.DomainLayer
         }
 
         // Returns information about all the store official (store owner and manager) in the store
-        public ConcurrentDictionary<User, ConcurrentBag<Permissions>> getStoreOfficialsInfo()
+        public ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getStoreOfficialsInfo()
         {
-            ConcurrentDictionary<User, ConcurrentBag<Permissions>> officialsInfo = new ConcurrentDictionary<User, ConcurrentBag<Permissions>>();
+            ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> officialsInfo = new ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>>();
             foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
             {
                 SellerPermissions seller = sellerEntry.Value;

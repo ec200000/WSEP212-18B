@@ -99,3 +99,9 @@ C:\Users\ec200\source\repos\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WS
 C:\Users\ec200\source\repos\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.dll
 C:\Users\ec200\source\repos\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.pdb
 C:\Users\ec200\source\repos\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.genruntimeconfig.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.csprojAssemblyReference.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.AssemblyInfoInputs.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.AssemblyInfo.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.csproj.CoreCompileInputs.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.pdb

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -10,6 +11,14 @@ namespace WSEP212.DomainLayer
         public LoggedBuyerState(User user) : base(user)
         {
 
+        }
+
+        // return the state of the user
+        // checks if the user is store owner, store manager or none of them
+        public override UserType getUserType()
+        {
+            // check store owner or store manager
+            return UserType.LoggedBuyer;
         }
 
         public override bool addItemToShoppingCart(int storeID, int itemID, int quantity)
@@ -109,7 +118,7 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
             {
@@ -167,7 +176,7 @@ namespace WSEP212.DomainLayer
 
         public override bool openStore(string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
-            return StoreRepository.Instance.addStore(new Store(salesPolicy, purchasePolicy, this.user, storeName));
+            return StoreRepository.Instance.addStore(new Store(storeName, salesPolicy, purchasePolicy, this.user));
         }
 
         public override bool purchaseItems(string address)

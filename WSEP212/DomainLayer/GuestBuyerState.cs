@@ -11,6 +11,11 @@ namespace WSEP212.DomainLayer
         {
         }
 
+        public override UserType getUserType()
+        {
+            return UserType.GuestBuyer;
+        }
+
         public override bool addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
