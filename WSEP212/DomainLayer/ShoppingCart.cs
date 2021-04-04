@@ -78,9 +78,21 @@ namespace WSEP212.DomainLayer
             return changeQuantity;
         }
 
-        public bool purchaseItemsInCart()
+        // purchase all the items in the shopping cart
+        // returns the total price after sales. if the purchase cannot be made returns -1
+        public double purchaseItemsInCart(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-
+            double totalPrice = 0;
+            foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
+            {
+                double shoppingBagPrice = shoppingBag.Value.purchaseItemsInBag(user, itemsPurchaseType);
+                if(shoppingBagPrice < 0)
+                {
+                    return -1;
+                }
+                totalPrice += shoppingBagPrice;
+            }
+            return totalPrice;
         }
 
         // Removes all the shopping bags in the shopping cart

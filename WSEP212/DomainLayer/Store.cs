@@ -122,23 +122,64 @@ namespace WSEP212.DomainLayer
         }
 
         // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
-        public bool purchaseItems(UserType userType, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public double purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-
+            double totalPrice = 0;
+            if(applyPurchasePolicy(buyer, items, itemsPurchaseType))
+            {
+                if(purchaseItemsIfAvailable(items))
+                {
+                    ConcurrentDictionary<int, double> pricesAfterSale = applySalesPolicy(buyer, items);
+                    foreach (KeyValuePair<int, double> itemPrice in pricesAfterSale)
+                    {
+                        int itemQuantity = items[itemPrice.Key];
+                        totalPrice += itemPrice.Value * itemQuantity;
+                    }
+                    return totalPrice;
+                }
+            }
+            return -1;
         }
 
         // Apply the sales policy on a list of items
         // The function will return the price after discount for each of the items
-        public LinkedList<int> applySalesPolicy(Dictionary<int, int> items)
+        // <itemID, price>
+        public ConcurrentDictionary<int, double> applySalesPolicy(User buyer, ConcurrentDictionary<int, int> items)
         {
+            ConcurrentDictionary<Item, int> objItems = getObjItems(items);
+            if (objItems != null)
+            {
+                return salesPolicy.pricesAfterSalePolicy(buyer, objItems);
+            }
             return null;
         }
 
         // Apply the purchase policy on a list of items and their type of purchase
         // The function will return if the purchase can be made
-        public bool applyPurchasePolicy(UserType userType, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public bool applyPurchasePolicy(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-            return purchasePolicy.approveByPurchasePolicy(userType, items, itemsPurchaseType);
+            ConcurrentDictionary<Item, int> objItems = getObjItems(items);
+            if(objItems != null)
+            {
+                return purchasePolicy.approveByPurchasePolicy(buyer, objItems, itemsPurchaseType);
+            }
+            return false;
+        }
+
+        private ConcurrentDictionary<Item, int> getObjItems(ConcurrentDictionary<int, int> items)
+        {
+            ConcurrentDictionary<Item, int> objItems = new ConcurrentDictionary<Item, int>();
+            foreach (KeyValuePair<int, int> item in items)
+            {
+                int itemID = item.Key;
+                if (!storage.ContainsKey(itemID))
+                {
+                    return null;
+                }
+                Item objItem = storage[itemID];
+                objItems.TryAdd(objItem, item.Value);
+            }
+            return objItems;
         }
 
         // Purchase items from a store if all items are available in storage

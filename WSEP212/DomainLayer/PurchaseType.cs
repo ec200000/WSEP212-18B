@@ -7,8 +7,8 @@ namespace WSEP212.DomainLayer
     public enum PurchaseType
     {
         ImmediatePurchase,
-        OfferPurchase,
-        AuctionPurchase,
-        LottryPurchase
+        //OfferPurchase,
+        //AuctionPurchase,
+        //LottryPurchase
     }
 }

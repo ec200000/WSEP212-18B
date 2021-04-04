@@ -78,9 +78,11 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        public bool purchaseItemsInBag(ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        // purchase all the items in the shopping bag
+        // returns the total price after sales. if the purchase cannot be made returns -1
+        public double purchaseItemsInBag(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-            return store.purchaseItemsIfAvailable(items);
+            return store.purchaseItems(user, items, itemsPurchaseType);
         }
 
         // Removes all the items in the shopping bag

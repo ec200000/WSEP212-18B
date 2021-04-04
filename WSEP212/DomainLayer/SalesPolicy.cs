@@ -9,50 +9,44 @@ namespace WSEP212.DomainLayer
     public class SalesPolicy
     {
         public String salesPolicyName { get; set; }
-        public ConcurrentLinkedList<SalesType> saleTypes { get; set; }
-        // ASSUMPTION! If there is a guest on the list then the list also has all the types of users above it
-        public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
-        public ConcurrentLinkedList<SalesPolicyRule> policyRules { get; set; }
+        //public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
+        public ConcurrentLinkedList<PolicyRule> policyRules { get; set; }
 
-        public SalesPolicy(String salesPolicyName, ConcurrentLinkedList<SalesType> saleTypes, ConcurrentLinkedList<UserType> allowedUsers, ConcurrentLinkedList<SalesPolicyRule> policyRules)
+        public SalesPolicy(String salesPolicyName, ConcurrentLinkedList<PolicyRule> policyRules)
         {
             this.salesPolicyName = salesPolicyName;
-            this.saleTypes = saleTypes;
-            this.allowedUsers = allowedUsers;
             this.policyRules = policyRules;
         }
 
-        // checks that the user can buy in the store
-        // checks that the purchase type is allowed in the store
+        // checks that the user can get sales
         // checks all the other rules of the store policy
-        public bool approveBySalesPolicy(UserType userType, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, SalesType> itemsSaleType)
+        // returns the price of each item after sales
+        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(User user, ConcurrentDictionary<Item, int> items)
         {
-            // type of user is approved
-            if (allowedUsers.Contains(userType))
+            ConcurrentDictionary<int, double> pricesAfterSale = new ConcurrentDictionary<int, double>();
+            foreach (KeyValuePair<Item, int> item in items)
             {
-                // checks that all type of purchase are fine
-                foreach (KeyValuePair<int, PurchaseType> purchaseType in itemsPurchaseType)
-                {
-                    if (!purchaseRoutes.Contains(purchaseType.Value))
-                    {
-                        return false;
-                    }
-                }
+                pricesAfterSale.TryAdd(item.Key.itemID, item.Key.price);
+            }
 
+            // checks the user can purchase in the store
+            if (true)
+            {
                 // checks other rules
-                Node<PurchasePolicyRule> ruleNode = policyRules.First;
+                Node<PolicyRule> ruleNode = policyRules.First;
                 while (ruleNode != null)
                 {
-                    if (!ruleNode.Value.applyRule(userType, items, itemsPurchaseType))
+                    if (!ruleNode.Value.applyRule(user, items))
                     {
-                        return false;
+                        return pricesAfterSale;
                     }
                     ruleNode = ruleNode.Next;
                 }
 
-                return true;
+                // apply sales for items - for now there is no sales
+                return pricesAfterSale;
             }
-            return false;
+            return pricesAfterSale;
         }
     }
 }
