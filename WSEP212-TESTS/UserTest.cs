@@ -14,6 +14,42 @@ namespace WSEP212_TESTS
             this.user = new User("check name");
         }
 
+        public bool registerAndLogin()
+        {
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = user.userName;
+            list[1] = "1234";
+            parameters.parameters = list;
+            user.register(parameters);
+            if ((bool)parameters.result)
+            {
+                ThreadParameters parameters2 = new ThreadParameters();
+                object[] list2 = new object[2];
+                list2[0] = user.userName;
+                list2[1] = "1234";
+                parameters2.parameters = list2;
+                user.login(parameters2);
+                return (bool)parameters2.result;
+            }
+            return false;
+        }
+
+        public bool logout()
+        {
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[1];
+            list[0] = user.userName;
+            parameters.parameters = list;
+            user.logout(parameters);
+            return (bool)parameters.result;
+        }
+
+        public void switchToSystemManager()
+        {
+            user.changeState(new SystemManagerState(this.user));
+        }
+
         [TestCleanup]
         public void testClean()
         {
@@ -68,7 +104,8 @@ namespace WSEP212_TESTS
             list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
-            if ((bool)parameters.result){
+            if ((bool)parameters.result)
+            {
                 ThreadParameters parameters2 = new ThreadParameters();
                 object[] list2 = new object[2];
                 list2[0] = user.userName;
@@ -121,20 +158,23 @@ namespace WSEP212_TESTS
             list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
-            ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[2];
-            list2[0] = user.userName;
-            list2[1] = "1234";
-            parameters2.parameters = list2;
-            user.login(parameters2);
             if ((bool)parameters.result)
             {
-                ThreadParameters parameters3 = new ThreadParameters();
-                object[] list3 = new object[1];
-                list3[0] = user.userName;
-                parameters3.parameters = list3;
-                user.logout(parameters3);
-                Assert.IsTrue((bool)parameters3.result);
+                ThreadParameters parameters2 = new ThreadParameters();
+                object[] list2 = new object[2];
+                list2[0] = user.userName;
+                list2[1] = "1234";
+                parameters2.parameters = list2;
+                user.login(parameters2);
+                if ((bool)parameters2.result)
+                {
+                    ThreadParameters parameters3 = new ThreadParameters();
+                    object[] list3 = new object[1];
+                    list3[0] = user.userName;
+                    parameters3.parameters = list3;
+                    user.logout(parameters3);
+                    Assert.IsTrue((bool)parameters3.result);
+                }
             }
 
             ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
@@ -143,6 +183,41 @@ namespace WSEP212_TESTS
             parameters4.parameters = list4;
             user.logout(parameters4);
             Assert.IsTrue(typeof(NotImplementedException).IsInstanceOfType(parameters4.result));
+        }
+
+        [TestMethod]
+        public void TestAddItemToShoppingCart() // wrong password
+        {
+            if (registerAndLogin())
+            {
+                Item item = new Item(2, "shoko", "taim retzah!", 12, "milk products");
+                Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
+                StoreRepository.Instance.addStore(store);
+                store.addItemToStorage(item);
+                ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
+                object[] list = new object[1];
+                list[0] = user.userName;
+                parameters4.parameters = list;
+                user.logout(parameters4);
+            }
+            
+        }
+
+        [TestMethod]
+        public void TestRemoveItemFromShoppingCart() // wrong password
+        {
+            if (registerAndLogin())
+            {
+                Item item = new Item(2, "shoko", "taim retzah!", 12, "milk products");
+                Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
+                StoreRepository.Instance.addStore(store);
+                store.addItemToStorage(item);
+                ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
+                object[] list = new object[1];
+                list[0] = user.userName;
+                parameters4.parameters = list;
+                user.logout(parameters4);
+            }
         }
     }
 }
