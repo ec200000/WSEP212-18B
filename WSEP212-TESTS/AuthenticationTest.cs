@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NuGet.Frameworks;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS
@@ -29,6 +30,7 @@ namespace WSEP212_TESTS
             String encPass1 = this.authentication.encryptPassword(password);
             String encPass2 = this.authentication.encryptPassword(password);
             Assert.AreEqual(encPass1, encPass2);
+            Assert.IsTrue(true);
         }
 
     }

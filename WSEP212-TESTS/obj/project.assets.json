@@ -5739,11 +5739,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
       "projectName": "WSEP212-TESTS",
-      "projectPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
       "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
+      "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5760,8 +5760,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-              "projectPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+            "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+              "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
           }
         }

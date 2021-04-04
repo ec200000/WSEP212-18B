@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sk3KtDe7rw5zCMyILkuew631g3wZ4XDTN46RoiabGVuP97fyjJfKDptpm6CHlWWsblHWmWIWDNFGaASNXZb1Kw==",
+  "dgSpecHash": "Da7NhUlr8HJX8Z97OCg7Vv7jbAt7GXPCuB2hh7QESmioeYpDYX7pDA0CtIKcixOlEa9NjJi/hWiYKDy/6YdFkg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+  "projectFilePath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ec200\\.nuget\\packages\\coverlet.collector\\1.3.0\\coverlet.collector.1.3.0.nupkg.sha512",
     "C:\\Users\\ec200\\.nuget\\packages\\microsoft.codecoverage\\16.7.1\\microsoft.codecoverage.16.7.1.nupkg.sha512",

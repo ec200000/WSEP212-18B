@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
       "projectName": "WSEP212",
-      "projectPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
       "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\obj\\",
+      "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
