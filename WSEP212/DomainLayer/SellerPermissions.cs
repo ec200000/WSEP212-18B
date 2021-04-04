@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -27,12 +28,17 @@ namespace WSEP212.DomainLayer
         {
             if (seller.sellerPermissions != null)
             {
-                foreach (SellerPermissions sellerPermission in seller.sellerPermissions)
+                Node<SellerPermissions> sellerPermissions = seller.sellerPermissions.First;
+                while(sellerPermissions.Value != null)
                 {
-                    if (store.Equals(sellerPermission.store))
+                    if (sellerPermissions.Value.store != null)
                     {
-                        return sellerPermission;
+                        if (store.Equals(sellerPermissions.Value.store))
+                        {
+                            return sellerPermissions.Value;
+                        }
                     }
+                    sellerPermissions = sellerPermissions.Next;
                 }
             }
             return new SellerPermissions(seller, store, grantor, permissions);

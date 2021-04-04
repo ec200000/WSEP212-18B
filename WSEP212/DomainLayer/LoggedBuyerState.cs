@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -19,23 +20,27 @@ namespace WSEP212.DomainLayer
 
         public override bool addItemToStorage(int storeID, Item item)
         {
-            foreach(SellerPermissions sellerPermissions in this.user.sellerPermissions){
-                if(sellerPermissions.store.storeID == storeID)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
+            {
+                if(sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                            return sellerPermissions.store.addItemToStorage(item);
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
+                            return sellerPermissions.Value.store.addItemToStorage(item);
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
         public override bool appointStoreManager(string managerName, int storeID)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreManager))
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreManager))
                     {
                         User seller = UserRepository.Instance.findUserByUserName(managerName);
                         User grantor = this.user;
@@ -43,21 +48,23 @@ namespace WSEP212.DomainLayer
                         ConcurrentBag<Permissions> pers = new ConcurrentBag<Permissions>();
                         pers.Add(Permissions.GetOfficialsInformation);
                         SellerPermissions permissions = SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                        sellerPermissions.store.addNewStoreSeller(permissions);
+                        sellerPermissions.Value.store.addNewStoreSeller(permissions);
                         return true;
                     }
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
         public override bool appointStoreOwner(string storeOwnerName, int storeID)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreOwner))
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreOwner))
                     {
                         User seller = UserRepository.Instance.findUserByUserName(storeOwnerName);
                         User grantor = this.user;
@@ -65,71 +72,81 @@ namespace WSEP212.DomainLayer
                         ConcurrentBag<Permissions> pers = new ConcurrentBag<Permissions>();
                         pers.Add(Permissions.AllPermissions);
                         SellerPermissions permissions = SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                        sellerPermissions.store.addNewStoreSeller(permissions);
+                        sellerPermissions.Value.store.addNewStoreSeller(permissions);
                         return true;
                     }
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
         public override bool editItemDetails(int storeID, Item item)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                        return sellerPermissions.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category); //TODO: EDIT QUANTITY
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
+                        return sellerPermissions.Value.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category); //TODO: EDIT QUANTITY
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
         public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.EditManagmentPermissions))
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.EditManagmentPermissions))
                     {
-                        foreach (SellerPermissions managerPermissions in UserRepository.Instance.findUserByUserName(managerName).sellerPermissions)
+                        Node<SellerPermissions> managerPermissions = UserRepository.Instance.findUserByUserName(managerName).sellerPermissions.First;
+                        while(managerPermissions.Value != null)
                         {
-                            if (sellerPermissions.store.storeID == storeID)
+                            if (managerPermissions.Value.store.storeID == storeID)
                             {
-                                sellerPermissions.permissionsInStore = permissions;
+                                managerPermissions.Value.permissionsInStore = permissions;
                                 return true;
                             }
                         }
                     }
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
         public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.GetOfficialsInformation))
-                        return sellerPermissions.store.getStoreOfficialsInfo();
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.GetOfficialsInformation))
+                        return sellerPermissions.Value.store.getStoreOfficialsInfo();
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return null;
         }
 
         public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.GetOfficialsInformation))
-                        return sellerPermissions.store.purchasesHistory;
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.GetOfficialsInformation))
+                        return sellerPermissions.Value.store.purchasesHistory;
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return null;
         }
@@ -187,35 +204,40 @@ namespace WSEP212.DomainLayer
 
         public override bool removeItemFromStorage(int storeID, Item item)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                        return sellerPermissions.store.removeItemFromStorage(item.itemID);
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
+                        return sellerPermissions.Value.store.removeItemFromStorage(item.itemID);
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
         public override bool removeStoreManager(string managerName, int storeID)
         {
-            foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.EditManagmentPermissions))
+                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.EditManagmentPermissions))
                     {
-                        foreach (SellerPermissions managerPermissions in UserRepository.Instance.findUserByUserName(managerName).sellerPermissions)
+                        Node<SellerPermissions> managerPermissions = UserRepository.Instance.findUserByUserName(managerName).sellerPermissions.First;
+                        while(managerPermissions.Value != null)
                         {
-                            if (sellerPermissions.store.storeID == storeID)
+                            if (managerPermissions.Value.store.storeID == storeID)
                             {
-                                sellerPermissions.permissionsInStore = null;
+                                managerPermissions.Value.permissionsInStore = null;
                                 return true;
                             }
                         }
                     }
                 }
+                sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }

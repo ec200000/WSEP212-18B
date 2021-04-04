@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace WSEP212.ConcurrentLinkedList
@@ -84,7 +86,7 @@ namespace WSEP212.ConcurrentLinkedList
         /// <summary>
         /// Determines whether the <see cref="ConcurrentLinkedList{T}"/> contains the specified key.
         /// </summary>
-        public bool GetAT(int i)
+        public object GetAT(int i)
         {
             var current = _first;
             int counter = 0;
@@ -95,7 +97,7 @@ namespace WSEP212.ConcurrentLinkedList
                     var state = current.State;
                     if (state != NodeState.INV)
                     {
-                        return state == NodeState.INS || state == NodeState.DAT;
+                        return current.Value;
                     }
                 }
 
@@ -103,7 +105,7 @@ namespace WSEP212.ConcurrentLinkedList
                 counter++;
             }
 
-            return false;
+            return null;
         }
 
         private static bool HelpInsert(Node<T> node, T value)
@@ -250,5 +252,6 @@ namespace WSEP212.ConcurrentLinkedList
             var threadState = _threads[threadId];
             return threadState.Pending && threadState.Phase <= phase;
         }
+
     }
 }
