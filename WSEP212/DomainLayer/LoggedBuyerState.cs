@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 
@@ -33,7 +34,7 @@ namespace WSEP212.DomainLayer
             {
                 if(sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
                             return sellerPermissions.Value.store.addItemToStorage(item);
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -48,7 +49,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreManager))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.AppointStoreManager))
                     {
                         User seller = UserRepository.Instance.findUserByUserName(managerName);
                         User grantor = this.user;
@@ -75,7 +76,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreOwner))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.AppointStoreOwner))
                     {
                         User seller = UserRepository.Instance.findUserByUserName(storeOwnerName);
                         User grantor = this.user;
@@ -95,6 +96,8 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
+        
+
         public override bool editItemDetails(int storeID, Item item)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
@@ -102,7 +105,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
                         return sellerPermissions.Value.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category, item.quantity); 
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -117,7 +120,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.EditManagmentPermissions))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.EditManagmentPermissions))
                     {
                         Node<SellerPermissions> managerPermissions = UserRepository.Instance.findUserByUserName(managerName).sellerPermissions.First;
                         while(managerPermissions.Value != null)
@@ -142,7 +145,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.GetOfficialsInformation))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
                         return sellerPermissions.Value.store.getStoreOfficialsInfo();
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -157,7 +160,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.GetOfficialsInformation))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
                         return sellerPermissions.Value.store.purchasesHistory;
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -223,7 +226,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
                         return sellerPermissions.Value.store.removeItemFromStorage(item.itemID);
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -238,7 +241,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
-                    if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.EditManagmentPermissions))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.EditManagmentPermissions))
                     {
                         Node<SellerPermissions> managerPermissions = UserRepository.Instance.findUserByUserName(managerName).sellerPermissions.First;
                         while(managerPermissions.Value != null)

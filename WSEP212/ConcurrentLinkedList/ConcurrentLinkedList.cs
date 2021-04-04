@@ -83,44 +83,7 @@ namespace WSEP212.ConcurrentLinkedList
 
             return false;
         }
-
-        /// <summary>
-        /// Determines whether the <see cref="ConcurrentLinkedList{T}"/> contains the specified key.
-        /// </summary>
-        public object GetAT(int i)
-        {
-            var current = _first;
-            int counter = 0;
-            while (current != null)
-            {
-                if (current.Value == null || counter == i)
-                {
-                    var state = current.State;
-                    if (state != NodeState.INV)
-                    {
-                        return current.Value;
-                    }
-                }
-
-                current = current.Next;
-                counter++;
-            }
-
-            return null;
-        }
         
-        public T[] ToArray() {
-            T[] result = new T[size];
-            var index = 0;
-            var node = First;
-            while (node != null) {
-                result[index] = node.Value;
-                node = node.Next;
-            }
-
-            return result;
-        }
-
         private static bool HelpInsert(Node<T> node, T value)
         {
             var previous = node;
