@@ -190,15 +190,22 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                Item item = new Item(2, "shoko", "taim retzah!", 12, "milk products");
+                Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
                 Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
                 StoreRepository.Instance.addStore(store);
                 store.addItemToStorage(item);
-                ThreadParameters parameters4 = new ThreadParameters();
-                object[] list = new object[1];
-                list[0] = user.userName;
-                parameters4.parameters = list;
-                user.logout(parameters4);
+                int storeID = store.storeID;
+                int itemID = item.itemID;
+                int quantity = 2;
+                ThreadParameters parameters = new ThreadParameters();
+                object[] list = new object[3];
+                list[0] = storeID;
+                list[1] = itemID;
+                list[2] = quantity;
+                parameters.parameters = list;
+                user.addItemToShoppingCart(parameters);
+                Assert.IsTrue((bool)parameters.result);
+                Assert.AreEqual(1, user.shoppingCart.shoppingBags[storeID].items.Count);
             }
         }
 
@@ -207,15 +214,31 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                Item item = new Item(2, "shoko", "taim retzah!", 12, "milk products");
+                Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
                 Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
                 StoreRepository.Instance.addStore(store);
                 store.addItemToStorage(item);
-                ThreadParameters parameters4 = new ThreadParameters();
-                object[] list = new object[1];
-                list[0] = user.userName;
-                parameters4.parameters = list;
-                user.logout(parameters4);
+                int storeID = store.storeID;
+                int itemID = item.itemID;
+                int quantity = 2;
+                ThreadParameters parameters = new ThreadParameters();
+                object[] list = new object[3];
+                list[0] = storeID;
+                list[1] = itemID;
+                list[2] = quantity;
+                parameters.parameters = list;
+                user.addItemToShoppingCart(parameters);
+                if ((bool) parameters.result)
+                {
+                    ThreadParameters parameters2 = new ThreadParameters();
+                    object[] list2 = new object[2];
+                    list2[0] = storeID;
+                    list2[1] = itemID;
+                    parameters2.parameters = list2;
+                    user.removeItemFromShoppingCart(parameters2);
+                    Assert.IsTrue((bool)parameters2.result);
+                    Assert.AreEqual(0, user.shoppingCart.shoppingBags.Count);
+                }
             }
         }
     }
