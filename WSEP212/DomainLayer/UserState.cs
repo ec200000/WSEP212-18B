@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -33,7 +34,7 @@ namespace WSEP212.DomainLayer
         public abstract bool appointStoreOwner(String storeOwnerName, int storeID);
         public abstract bool editManagerPermissions(String managerName, ConcurrentBag<Permissions> permissions, int storeID);
         public abstract bool removeStoreManager(String managerName, int storeID);
-        public abstract ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID);
+        public abstract ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
         public abstract ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
         public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
         public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();

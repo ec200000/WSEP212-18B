@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -42,7 +43,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }

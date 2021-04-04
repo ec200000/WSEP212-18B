@@ -16,7 +16,9 @@ namespace WSEP212_TESTS
         [TestInitialize]
         public void Initialize()
         {
-            store = new Store("Mega", new SalesPolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), new User("admin"));
+            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
+            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
+            this.store = new Store("Mega", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
             this.soda = new Item(3, "soda-stream", "great drink", 150, "drink");
             store.addItemToStorage(soda);
             StoreRepository.Instance.addStore(store);
@@ -27,12 +29,6 @@ namespace WSEP212_TESTS
         {
             StoreRepository.Instance.removeStore(store.storeID);
         }
-
-        /*[TestMethod()]
-        public void StoreTest()
-        {
-            Assert.Fail();
-        }*/
 
         [TestMethod]
         public void isAvailableInStorageTest()
@@ -97,18 +93,18 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void editItemTest()
         {
-            store.editItem(soda.itemID,"soda-stream", "great drink", 1000.0, "drink");
+            store.editItem(soda.itemID,"soda-stream", "great drink", 1000.0, "drink", 3);
             double price = store.getItemById(soda.itemID).price;
             Assert.AreEqual(1000.0, price);
             Item tesla = new Item(3, "tesla-3", "great car", 150000, "car");
-            bool edited = store.editItem(tesla.itemID,"tesla-3", "nice car", 200000, "car");
+            bool edited = store.editItem(tesla.itemID,"tesla-3", "nice car", 200000, "car", 5);
             Assert.IsFalse(edited);
             store.addItemToStorage(tesla);
-            edited = store.editItem(tesla.itemID, "tesla-3", "nice car", 200000, "");
+            edited = store.editItem(tesla.itemID, "tesla-3", "nice car", 200000, "", 5);
             Assert.IsFalse(edited);
-            edited = store.editItem(tesla.itemID, "", "nice car", 200000, "car");
+            edited = store.editItem(tesla.itemID, "", "nice car", 200000, "car", 5);
             Assert.IsFalse(edited);
-            edited = store.editItem(tesla.itemID, "tesla-3", "nice car", -200000, "car");
+            edited = store.editItem(tesla.itemID, "tesla-3", "nice car", -200000, "car", 5);
             Assert.IsFalse(edited);
         }
 
@@ -129,13 +125,13 @@ namespace WSEP212_TESTS
         {
             Item oliveOil = new Item(10, "olive-oil", "from olive", 50, "oil");
             store.addItemToStorage(oliveOil);
-            Dictionary<int, int> items = new Dictionary<int, int>();
-            items.Add(soda.itemID, 1);
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(soda.itemID, 1);
             bool successfulPurchase = store.purchaseItemsIfAvailable(items);
             Assert.IsTrue(successfulPurchase);
-            Dictionary<int, int> badQuantityItems = new Dictionary<int, int>();
-            badQuantityItems.Add(oliveOil.itemID, 11);
-            badQuantityItems.Add(soda.itemID, soda.quantity+1);
+            ConcurrentDictionary<int, int> badQuantityItems = new ConcurrentDictionary<int, int>();
+            badQuantityItems.TryAdd(oliveOil.itemID, 11);
+            badQuantityItems.TryAdd(soda.itemID, soda.quantity+1);
             bool failedPurchase = store.purchaseItemsIfAvailable(badQuantityItems);
             Assert.IsFalse(failedPurchase);
         }
@@ -145,9 +141,9 @@ namespace WSEP212_TESTS
         {
             Item oliveOil = new Item(10, "olive-oil", "from olive", 50, "oil");
             store.addItemToStorage(oliveOil);
-            Dictionary<int, int> items = new Dictionary<int, int>();
-            items.Add(oliveOil.itemID, 1);
-            items.Add(soda.itemID, 1);
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(oliveOil.itemID, 1);
+            items.TryAdd(soda.itemID, 1);
             int oilQuantity = store.getItemById(oliveOil.itemID).quantity;
             int sodaQuantity = store.getItemById(soda.itemID).quantity;
             store.rollBackPurchase(items);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS
@@ -16,8 +17,10 @@ namespace WSEP212_TESTS
         [TestInitialize]
         public void beforeTests()
         {
-            SalesPolicy salesPolicy = new SalesPolicy("DEFAULT");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT");
+            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
+            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
+            SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
             User user = new User("admin");
 
             storeA = new Store("SUPER PHARAM", salesPolicy, purchasePolicy, user);
