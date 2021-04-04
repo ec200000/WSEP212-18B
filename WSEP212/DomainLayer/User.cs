@@ -2,11 +2,18 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class User
     {
+        public String userName { get; set; }
+        public UserState state { get; set; }
+        public ShoppingCart shoppingCart { get; set; }
+        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
+        public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
+
         public User(String userName)
         {
             this.userName = userName;
@@ -15,12 +22,6 @@ namespace WSEP212.DomainLayer
             this.sellerPermissions = new ConcurrentBag<SellerPermissions>();
             this.state = new GuestBuyerState(this);
         }
-
-        public String userName { get; set; }
-        public UserState state { get; set; }
-        public ShoppingCart shoppingCart { get; set; }
-        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
-        public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
 
         public void changeState(UserState state)
         {
