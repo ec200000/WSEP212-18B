@@ -6,7 +6,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class StoreRepositoryTests
     {
         private Store store;
@@ -30,6 +30,7 @@ namespace WSEP212.DomainLayer.Tests
         public void removeStoreTest()
         {
             int storeID = this.store.storeID;
+            StoreRepository.getInstance().addStore(store);
             bool removeStoreBool1 = StoreRepository.getInstance().removeStore(storeID);
             Assert.IsTrue(removeStoreBool1);
             bool removeStoreBool2 = StoreRepository.getInstance().removeStore(storeID);
