@@ -194,13 +194,12 @@ namespace WSEP212_TESTS
                 Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
                 StoreRepository.Instance.addStore(store);
                 store.addItemToStorage(item);
-                ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
+                ThreadParameters parameters4 = new ThreadParameters();
                 object[] list = new object[1];
                 list[0] = user.userName;
                 parameters4.parameters = list;
                 user.logout(parameters4);
             }
-            
         }
 
         [TestMethod]
@@ -212,7 +211,7 @@ namespace WSEP212_TESTS
                 Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
                 StoreRepository.Instance.addStore(store);
                 store.addItemToStorage(item);
-                ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
+                ThreadParameters parameters4 = new ThreadParameters();
                 object[] list = new object[1];
                 list[0] = user.userName;
                 parameters4.parameters = list;

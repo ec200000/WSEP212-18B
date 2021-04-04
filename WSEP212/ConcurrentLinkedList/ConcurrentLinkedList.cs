@@ -11,6 +11,7 @@ namespace WSEP212.ConcurrentLinkedList
         private Node<T> _first;
         private readonly Node<T> _dummy;
         private readonly ConcurrentDictionary<int, ThreadState<T>> _threads;
+        public int size;
 
         public ConcurrentLinkedList()
         {
@@ -18,6 +19,7 @@ namespace WSEP212.ConcurrentLinkedList
             _dummy = new Node<T>();
             _threads = new ConcurrentDictionary<int, ThreadState<T>>();
             _first = new Node<T>(default(T), NodeState.REM, -1);
+            size = 0;
         }
 
         /// <summary>
@@ -37,6 +39,8 @@ namespace WSEP212.ConcurrentLinkedList
                 node.State = NodeState.INV;
             }
 
+            if (insertionResult) size++;
+
             return insertionResult;
         }
 
@@ -50,6 +54,7 @@ namespace WSEP212.ConcurrentLinkedList
             Enlist(node);
             var removeResult = HelpRemove(node, value, out result);
             node.State = NodeState.INV;
+            if (removeResult) size--;
             return removeResult;
         }
 
@@ -71,6 +76,31 @@ namespace WSEP212.ConcurrentLinkedList
                 }
 
                 current = current.Next;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the <see cref="ConcurrentLinkedList{T}"/> contains the specified key.
+        /// </summary>
+        public bool GetAT(int i)
+        {
+            var current = _first;
+            int counter = 0;
+            while (current != null)
+            {
+                if (current.Value == null || counter == i)
+                {
+                    var state = current.State;
+                    if (state != NodeState.INV)
+                    {
+                        return state == NodeState.INS || state == NodeState.DAT;
+                    }
+                }
+
+                current = current.Next;
+                counter++;
             }
 
             return false;
