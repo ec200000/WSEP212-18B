@@ -105,7 +105,7 @@ namespace WSEP212.DomainLayer
 
         // edit the personal details of an item
         public bool editItem(int itemID, String itemName, String description, double price, String category)
-        {
+        { //TODO: ADD QUANTITY TO SIGNATURE
             if (itemName == "" || price < 0 || category == "")
                 return false;
             if (storage.ContainsKey(itemID))

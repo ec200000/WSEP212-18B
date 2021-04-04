@@ -16,7 +16,7 @@ namespace WSEP212.DomainLayer
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
-        public override bool addItemToStorage(int storeID, Item item, int quantity)
+        public override bool addItemToStorage(int storeID, Item item)
         {
             throw new NotImplementedException();
         }
@@ -88,7 +88,7 @@ namespace WSEP212.DomainLayer
 
         public override bool purchaseItems(string address)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //TODO: IMPLEMENT
         }
 
         public override bool register(string userName, string password)

@@ -17,14 +17,13 @@ namespace WSEP212.DomainLayer
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
-        public override bool addItemToStorage(int storeID, Item item, int quantity)
+        public override bool addItemToStorage(int storeID, Item item)
         {
             foreach(SellerPermissions sellerPermissions in this.user.sellerPermissions){
                 if(sellerPermissions.store.storeID == storeID)
                 {
                     if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                        return true;
-                            //sellerPermissions.store.addItemToStorage(item, quantity);
+                            return sellerPermissions.store.addItemToStorage(item);
                 }
             }
             return false;
@@ -37,7 +36,7 @@ namespace WSEP212.DomainLayer
                 if (sellerPermissions.store.storeID == storeID)
                 {
                     if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AppointStoreManager))
-                    { //only GetOfficialsInformation
+                    {
                         User seller = UserRepository.Instance.findUserByUserName(managerName);
                         User grantor = this.user;
                         Store store = StoreRepository.Instance.getStore(storeID);
@@ -81,7 +80,7 @@ namespace WSEP212.DomainLayer
                 if (sellerPermissions.store.storeID == storeID)
                 {
                     if (Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                        return sellerPermissions.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category);
+                        return sellerPermissions.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category); //TODO: EDIT QUANTITY
                 }
             }
             return false;
@@ -137,12 +136,12 @@ namespace WSEP212.DomainLayer
 
         public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
         {
-            throw new NotImplementedException(); //only in system manager
+            throw new NotImplementedException();
         }
 
         public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
         {
-            throw new NotImplementedException(); //only in system manager
+            throw new NotImplementedException();
         }
 
         public override bool itemReview(string review, int itemID, int storeID)
@@ -172,7 +171,7 @@ namespace WSEP212.DomainLayer
 
         public override bool purchaseItems(string address)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //TODO: COMPLETE
         }
 
         public override bool register(string userName, string password)
@@ -186,7 +185,7 @@ namespace WSEP212.DomainLayer
 
         }
 
-        public override bool removeItemFromStorage(int storeID, Item item) //TODO: check if we can change signature
+        public override bool removeItemFromStorage(int storeID, Item item)
         {
             foreach (SellerPermissions sellerPermissions in this.user.sellerPermissions)
             {

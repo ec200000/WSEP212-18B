@@ -17,7 +17,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool addItemToStorage(int storeID, Item item, int quantity)
+        public override bool addItemToStorage(int storeID, Item item)
         {
             throw new NotImplementedException();
         }

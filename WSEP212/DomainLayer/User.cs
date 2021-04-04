@@ -196,11 +196,10 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             Item item = (Item)param.parameters[1];
-            int quantity = (int)param.parameters[2];
             object res;
             try
             {
-                res = state.addItemToStorage(storeID, item, quantity);
+                res = state.addItemToStorage(storeID, item);
             }
             catch (NotImplementedException)
             {

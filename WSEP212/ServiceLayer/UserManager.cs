@@ -46,10 +46,10 @@ namespace WSEP212.ServiceLayer
         {
             return UserManagerFacade.Instance.itemReview(userName, review, itemID, storeID);
         }
-        public bool addItemToStorage(String userName, int storeID, ItemDTO item, int quantity)
+        public bool addItemToStorage(String userName, int storeID, ItemDTO item)
         {
             Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem, quantity);
+            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem);
         }
         public bool removeItemFromStorage(String userName, int storeID, ItemDTO item)
         {
