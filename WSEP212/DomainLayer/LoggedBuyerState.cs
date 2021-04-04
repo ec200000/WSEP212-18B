@@ -53,11 +53,14 @@ namespace WSEP212.DomainLayer
                         User seller = UserRepository.Instance.findUserByUserName(managerName);
                         User grantor = this.user;
                         Store store = StoreRepository.Instance.getStore(storeID);
-                        ConcurrentBag<Permissions> pers = new ConcurrentBag<Permissions>();
-                        pers.Add(Permissions.GetOfficialsInformation);
-                        SellerPermissions permissions = SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                        sellerPermissions.Value.store.addNewStoreSeller(permissions);
-                        return true;
+                        ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
+                        if (pers.TryAdd(Permissions.GetOfficialsInformation))
+                        {
+                            SellerPermissions permissions =
+                                SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
+                            sellerPermissions.Value.store.addNewStoreSeller(permissions);
+                            return true;
+                        }
                     }
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -77,11 +80,14 @@ namespace WSEP212.DomainLayer
                         User seller = UserRepository.Instance.findUserByUserName(storeOwnerName);
                         User grantor = this.user;
                         Store store = StoreRepository.Instance.getStore(storeID);
-                        ConcurrentBag<Permissions> pers = new ConcurrentBag<Permissions>();
-                        pers.Add(Permissions.AllPermissions);
-                        SellerPermissions permissions = SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                        sellerPermissions.Value.store.addNewStoreSeller(permissions);
-                        return true;
+                        ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
+                        if (pers.TryAdd(Permissions.AllPermissions))
+                        {
+                            SellerPermissions permissions =
+                                SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
+                            sellerPermissions.Value.store.addNewStoreSeller(permissions);
+                            return true;
+                        }
                     }
                 }
                 sellerPermissions = sellerPermissions.Next;
@@ -97,14 +103,14 @@ namespace WSEP212.DomainLayer
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
                     if (Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.AllPermissions) || Array.Exists(sellerPermissions.Value.permissionsInStore.ToArray(), element => element == Permissions.StorageManagment))
-                        return sellerPermissions.Value.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category); //TODO: EDIT QUANTITY
+                        return sellerPermissions.Value.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category, item.quantity); 
                 }
                 sellerPermissions = sellerPermissions.Next;
             }
             return false;
         }
 
-        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
+        public override bool editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)

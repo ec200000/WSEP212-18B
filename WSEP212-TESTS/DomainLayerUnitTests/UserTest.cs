@@ -191,7 +191,7 @@ namespace WSEP212_TESTS
             if (registerAndLogin())
             {
                 Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
-                Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
+                Store store = new Store("store", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), this.user);
                 StoreRepository.Instance.addStore(store);
                 store.addItemToStorage(item);
                 int storeID = store.storeID;
@@ -215,7 +215,7 @@ namespace WSEP212_TESTS
             if (registerAndLogin())
             {
                 Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
-                Store store = new Store(new SalesPolicy("default"), new PurchasePolicy("default"), this.user, "cool store");
+                Store store = new Store("store", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), this.user);
                 StoreRepository.Instance.addStore(store);
                 store.addItemToStorage(item);
                 int storeID = store.storeID;

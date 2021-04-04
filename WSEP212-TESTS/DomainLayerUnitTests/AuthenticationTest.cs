@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using NuGet.Frameworks;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS
@@ -11,16 +8,11 @@ namespace WSEP212_TESTS
     class AuthenticationTest
     {
         Authentication authentication;
+        
         [TestInitialize]
         public void testInit()
         {
             this.authentication = Authentication.Instance;
-        }
-
-        [TestCleanup]
-        public void testClean()
-        {
-            
         }
 
         [TestMethod]

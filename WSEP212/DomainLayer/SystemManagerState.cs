@@ -38,7 +38,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
+        public override bool editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
         }

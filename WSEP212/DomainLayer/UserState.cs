@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
         public abstract bool editItemDetails(int storeID, Item item);
         public abstract bool appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
         public abstract bool appointStoreOwner(String storeOwnerName, int storeID);
-        public abstract bool editManagerPermissions(String managerName, ConcurrentBag<Permissions> permissions, int storeID);
+        public abstract bool editManagerPermissions(String managerName, ConcurrentLinkedList<Permissions> permissions, int storeID);
         public abstract bool removeStoreManager(String managerName, int storeID);
         public abstract ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
         public abstract ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own

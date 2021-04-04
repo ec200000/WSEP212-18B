@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -106,6 +107,18 @@ namespace WSEP212.ConcurrentLinkedList
             }
 
             return null;
+        }
+        
+        public T[] ToArray() {
+            T[] result = new T[size];
+            var index = 0;
+            var node = First;
+            while (node != null) {
+                result[index] = node.Value;
+                node = node.Next;
+            }
+
+            return result;
         }
 
         private static bool HelpInsert(Node<T> node, T value)

@@ -196,8 +196,8 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void addNewPurchaseTest()
         {
-            Dictionary<int, int> items = new Dictionary<int, int>();
-            items.Add(soda.itemID, 1);
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(soda.itemID, 1);
             store.addNewPurchase(new PurchaseInfo(this.store.storeID, "admin", items, 15, System.DateTime.Now));
             Assert.IsTrue(true);
             //Assert.IsTrue(add);
