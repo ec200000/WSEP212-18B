@@ -13,6 +13,14 @@ namespace WSEP212.DomainLayer
 
         }
 
+        // return the state of the user
+        // checks if the user is store owner, store manager or none of them
+        public override UserType getUserType()
+        {
+            // check store owner or store manager
+            return UserType.LoggedBuyer;
+        }
+
         public override bool addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
@@ -121,7 +129,7 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)
@@ -183,7 +191,7 @@ namespace WSEP212.DomainLayer
 
         public override bool openStore(string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
-            return StoreRepository.Instance.addStore(new Store(salesPolicy, purchasePolicy, this.user, storeName));
+            return StoreRepository.Instance.addStore(new Store(storeName, salesPolicy, purchasePolicy, this.user));
         }
 
         public override bool purchaseItems(string address)

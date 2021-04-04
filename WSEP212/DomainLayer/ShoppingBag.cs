@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace WSEP212.DomainLayer
 {
@@ -7,12 +8,12 @@ namespace WSEP212.DomainLayer
         public Store store { get; set; }
         // A data structure associated with a item ID and its quantity - more effective when there will be a sales policy
         // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping bag
-        public Dictionary<int, int> items { get; set; }
+        public ConcurrentDictionary<int, int> items { get; set; }
 
         public ShoppingBag(Store store)
         {
             this.store = store;
-            this.items = new Dictionary<int, int>();
+            this.items = new ConcurrentDictionary<int, int>();
         }
 
         // return true if the shopping bag is empty
@@ -39,8 +40,7 @@ namespace WSEP212.DomainLayer
                 }
                 else if (store.isAvailableInStorage(itemID, quantity))
                 {
-                    items.Add(itemID, quantity);   // adding item with quantity 
-                    addedItem = true;
+                    addedItem = items.TryAdd(itemID, quantity);   // adding item with quantity 
                 }
             }
             return addedItem;
@@ -52,8 +52,7 @@ namespace WSEP212.DomainLayer
         {
             if(items.ContainsKey(itemID))
             {
-                items.Remove(itemID);
-                return true;
+                return items.TryRemove(itemID, out _);
             }
             return false;
         }
@@ -77,6 +76,13 @@ namespace WSEP212.DomainLayer
                 }
             }
             return false;
+        }
+
+        // purchase all the items in the shopping bag
+        // returns the total price after sales. if the purchase cannot be made returns -1
+        public double purchaseItemsInBag(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        {
+            return store.purchaseItems(user, items, itemsPurchaseType);
         }
 
         // Removes all the items in the shopping bag

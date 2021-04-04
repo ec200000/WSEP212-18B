@@ -4,10 +4,11 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    public enum SalesType
+    public enum UserType
     {
-        VisibleSale,
-        //ConditionalSale,
-        //HiddenSale
+        GuestBuyer,
+        LoggedBuyer,
+        StoreOwner,
+        StoreManager
     }
 }

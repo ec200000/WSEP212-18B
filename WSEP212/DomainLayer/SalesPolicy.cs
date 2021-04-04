@@ -1,16 +1,52 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class SalesPolicy
     {
-        private string salesPolicy;
+        public String salesPolicyName { get; set; }
+        //public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
+        public ConcurrentLinkedList<PolicyRule> policyRules { get; set; }
 
-        public SalesPolicy(string salesPolicy)
+        public SalesPolicy(String salesPolicyName, ConcurrentLinkedList<PolicyRule> policyRules)
         {
-            this.salesPolicy = salesPolicy;
+            this.salesPolicyName = salesPolicyName;
+            this.policyRules = policyRules;
+        }
+
+        // checks that the user can get sales
+        // checks all the other rules of the store policy
+        // returns the price of each item after sales
+        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(User user, ConcurrentDictionary<Item, int> items)
+        {
+            ConcurrentDictionary<int, double> pricesAfterSale = new ConcurrentDictionary<int, double>();
+            foreach (KeyValuePair<Item, int> item in items)
+            {
+                pricesAfterSale.TryAdd(item.Key.itemID, item.Key.price);
+            }
+
+            // checks the user can purchase in the store
+            if (true)
+            {
+                // checks other rules
+                Node<PolicyRule> ruleNode = policyRules.First;
+                while (ruleNode != null)
+                {
+                    if (!ruleNode.Value.applyRule(user, items))
+                    {
+                        return pricesAfterSale;
+                    }
+                    ruleNode = ruleNode.Next;
+                }
+
+                // apply sales for items - for now there is no sales
+                return pricesAfterSale;
+            }
+            return pricesAfterSale;
         }
     }
 }
