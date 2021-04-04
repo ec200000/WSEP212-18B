@@ -200,3 +200,5 @@ C:\Users\מיר\Documents\store_sec_b\WSEP212Tests\bin\Debug\.netcoreapp,version
 C:\Users\מיר\Documents\store_sec_b\WSEP212Tests\bin\Debug\.netcoreapp,version=v3.1\WSEP212.pdb
 C:\Users\מיר\Documents\store_sec_b\WSEP212Tests\obj\Debug\.netcoreapp,version=v3.1\WSEP212Tests.csproj.CopyComplete
 C:\Users\מיר\Documents\store_sec_b\WSEP212Tests\obj\Debug\.netcoreapp,version=v3.1\WSEP212Tests.genruntimeconfig.cache
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212Tests\obj\Debug\.netcoreapp,version=v3.1\WSEP212Tests.dll
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212Tests\obj\Debug\.netcoreapp,version=v3.1\WSEP212Tests.pdb

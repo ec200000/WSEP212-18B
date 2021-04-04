@@ -9,16 +9,21 @@ namespace WSEP212.DomainLayer.Tests
     [TestClass()]
     public class ItemTests
     {
-        [TestMethod()]
-        public void ItemTest()
+        private Item potato;
+
+        [TestInitialize]
+        public void Initialize()
         {
-            Assert.Fail();
+            this.potato = new Item(5, "potato", "vegetable", 1.5, "vegetables");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void addReviewTest()
         {
-            Assert.Fail();
+            bool review = potato.addReview("admin", "the potato was very tasty!");
+            Assert.IsTrue(review);
+            bool anotherReview = potato.addReview("admin", "5/5!!!");
+            Assert.IsTrue(anotherReview);
         }
     }
 }

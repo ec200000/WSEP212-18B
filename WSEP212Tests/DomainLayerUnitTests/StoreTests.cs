@@ -153,28 +153,45 @@ namespace WSEP212.DomainLayer.Tests
             Assert.AreEqual(sodaQuantity+1, sodaFromStorage.quantity);
         }
 
-        /*[TestMethod()]
+        [TestMethod]
         public void addNewStoreSellerTest()
         {
-            Assert.Fail();
+            LinkedList<Permissions> perms = new LinkedList<Permissions>();
+            perms.AddFirst(Permissions.AllPermissions);
+            SellerPermissions aviTheSeller = new SellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            bool addNewStoreSellerBool1 = store.addNewStoreSeller(aviTheSeller);
+            Assert.IsTrue(addNewStoreSellerBool1);
+            bool addNewStoreSellerBool2 = store.addNewStoreSeller(aviTheSeller);
+            Assert.IsFalse(addNewStoreSellerBool2);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void removeStoreSellerTest()
         {
-            Assert.Fail();
+            bool removeStoreSellerBool1 = store.removeStoreSeller("avi");
+            Assert.IsTrue(addNewStoreSellerBool1);
+            bool removeStoreSellerBool2 = store.removeStoreSeller("avi");
+            Assert.IsFalse(addNewStoreSellerBool1);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void getStoreOfficialsInfoTest()
         {
-            Assert.Fail();
+            Dictionary<User, LinkedList<Permissions>> info = store.getStoreOfficialsInfo();
+            int numOfRecords = info.Count;
+            Assert.AreEqual(numOfRecords, 1);
+            SellerPermissions aviTheSeller = new SellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            store.addNewStoreSeller(aviTheSeller);
+            Assert.AreEqual(numOfRecords, 2);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void addNewPurchaseTest()
         {
-            Assert.Fail();
-        }*/
+            Dictionary<int, int> items = new Dictionary<int, int>();
+            items.Add(soda.itemID, 1);
+            bool add = store.addNewPurchase(new PurchaseInfo(this.store.storeID, "admin", items, 15, System.DateTime.Now));
+            Assert.IsTrue(add);
+        }
     }
 }

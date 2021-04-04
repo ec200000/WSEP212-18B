@@ -37,3 +37,16 @@ C:\Users\מיר\Documents\store_sec_b\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.cs
 C:\Users\מיר\Documents\store_sec_b\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.dll
 C:\Users\מיר\Documents\store_sec_b\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.pdb
 C:\Users\מיר\Documents\store_sec_b\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.genruntimeconfig.cache
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.exe
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.deps.json
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.runtimeconfig.json
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.runtimeconfig.dev.json
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.dll
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.pdb
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csprojAssemblyReference.cache
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.AssemblyInfoInputs.cache
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.AssemblyInfo.cs
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csproj.CoreCompileInputs.cache
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.dll
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.pdb
+C:\Users\talsk\Source\Repos\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.genruntimeconfig.cache

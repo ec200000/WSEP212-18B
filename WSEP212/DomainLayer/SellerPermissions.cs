@@ -13,7 +13,7 @@ namespace WSEP212.DomainLayer
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
         public LinkedList<Permissions> permissionsInStore { get; set; }
 
-        private SellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissionsInStore)
+        public SellerPermissions(User seller, Store store, User grantor, LinkedList<Permissions> permissionsInStore)
         {
             this.seller = seller;
             this.store = store;

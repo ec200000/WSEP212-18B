@@ -9,10 +9,31 @@ namespace WSEP212.DomainLayer.Tests
     [TestClass()]
     public class StoreRepositoryTests
     {
-        [TestMethod()]
-        public void getInstanceTest()
+        private Store store;
+
+        [TestInitialize]
+        public void Initialize()
         {
-            Assert.Fail();
+            this.store = new Store(new SalesPolicy(), new PurchasePolicy(), new User("admin"));
+        }
+
+        [TestMethod]
+        public void addStoreTest()
+        {
+            bool addStoreBool1 = StoreRepository.getInstance().addStore(store);
+            Assert.IsTrue(addStoreBool1);
+            bool addStoreBool2 = StoreRepository.getInstance().addStore(store);
+            Assert.IsFalse(addStoreBool2);
+        }
+
+        [TestMethod]
+        public void removeStoreTest()
+        {
+            int storeID = this.store.storeID;
+            bool removeStoreBool1 = StoreRepository.getInstance().removeStore(storeID);
+            Assert.IsTrue(removeStoreBool1);
+            bool removeStoreBool2 = StoreRepository.getInstance().removeStore(storeID);
+            Assert.IsFalse(removeStoreBool2);
         }
     }
 }
