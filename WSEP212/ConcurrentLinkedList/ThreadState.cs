@@ -1,4 +1,8 @@
-﻿namespace WSEP212.ConcurrentLinkedList
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WSEP212.ConcurrentLinkedList
 {
     internal class ThreadState<T>
     {

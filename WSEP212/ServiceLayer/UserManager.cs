@@ -38,8 +38,8 @@ namespace WSEP212.ServiceLayer
         }
         public bool openStore(String userName, String storeName, String purchasePolicy, String salesPolicy)
         {
-            PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy);
-            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy);
+            PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy, null, null);
+            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy, null);
             return UserManagerFacade.Instance.openStore(userName, storeName, newPurchasePolicy, newSalesPolicy);
         }
         public bool itemReview(String userName, String review, int itemID, int storeID)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace WSEP212.DomainLayer
 {
@@ -6,11 +7,11 @@ namespace WSEP212.DomainLayer
     {
         // A data structure associated with a store ID and its shopping cart for a customer
         // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping cart
-        public Dictionary<int, ShoppingBag> shoppingBags { get; set; }
+        public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
 
         public ShoppingCart()
         {
-            this.shoppingBags = new Dictionary<int, ShoppingBag>();
+            this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
         }
 
         // return true if the shopping cart is empty
@@ -77,6 +78,23 @@ namespace WSEP212.DomainLayer
             return changeQuantity;
         }
 
+        // purchase all the items in the shopping cart
+        // returns the total price after sales. if the purchase cannot be made returns -1
+        public double purchaseItemsInCart(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        {
+            double totalPrice = 0;
+            foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
+            {
+                double shoppingBagPrice = shoppingBag.Value.purchaseItemsInBag(user, itemsPurchaseType);
+                if(shoppingBagPrice < 0)
+                {
+                    return -1;
+                }
+                totalPrice += shoppingBagPrice;
+            }
+            return totalPrice;
+        }
+
         // Removes all the shopping bags in the shopping cart
         public void clearShoppingCart()
         {
@@ -99,7 +117,7 @@ namespace WSEP212.DomainLayer
                 if (store != null)
                 {
                     newShoppingBag = new ShoppingBag(store);
-                    shoppingBags.Add(storeID, newShoppingBag);
+                    shoppingBags.TryAdd(storeID, newShoppingBag);
                 }
                 return newShoppingBag;
             }
@@ -111,7 +129,7 @@ namespace WSEP212.DomainLayer
             if(shoppingBag.isEmpty())
             {
                 int storeID = shoppingBag.store.storeID;
-                shoppingBags.Remove(storeID);
+                shoppingBags.TryRemove(storeID, out _);
             }
         }
     }

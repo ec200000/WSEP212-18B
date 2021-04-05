@@ -12,14 +12,14 @@ namespace WSEP212.DomainLayer
         public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
-        public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
+        public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
 
         public User(String userName)
         {
             this.userName = userName;
             this.shoppingCart = new ShoppingCart();
             this.purchases = new ConcurrentBag<PurchaseInfo>();
-            this.sellerPermissions = new ConcurrentBag<SellerPermissions>();
+            this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
         }
 
@@ -296,7 +296,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             String managerName = (String)param.parameters[0];
-            ConcurrentBag<Permissions> permissions = (ConcurrentBag<Permissions>)param.parameters[1];
+            ConcurrentLinkedList<Permissions> permissions = (ConcurrentLinkedList<Permissions>)param.parameters[1];
             int storeID = (int)param.parameters[2];
             object res;
             try

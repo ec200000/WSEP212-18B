@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -9,6 +10,11 @@ namespace WSEP212.DomainLayer
     {
         public GuestBuyerState(User user) : base(user)
         {
+        }
+
+        public override UserType getUserType()
+        {
+            return UserType.GuestBuyer;
         }
 
         public override bool addItemToShoppingCart(int storeID, int itemID, int quantity)
@@ -36,12 +42,12 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
+        public override bool editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
         }
 
-        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }

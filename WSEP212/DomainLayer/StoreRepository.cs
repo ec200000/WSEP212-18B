@@ -10,13 +10,28 @@ namespace WSEP212.DomainLayer
         //singelton
         // A data structure associated with a store ID and its store
         public ConcurrentDictionary<int, Store> stores { get; set; }
-
-        private static readonly Lazy<StoreRepository> lazy
-        = new Lazy<StoreRepository>(() => new StoreRepository());
-
-        public static StoreRepository Instance
-            => lazy.Value;
-
+        
+        StoreRepository()
+        {
+            stores = new ConcurrentDictionary<int, Store>();
+        }  
+        private static readonly object padlock = new object();  
+        private static StoreRepository instance = null;  
+        public static StoreRepository Instance  
+        {  
+            get  
+            {  
+                lock (padlock)  
+                {  
+                    if (instance == null)  
+                    {  
+                        instance = new StoreRepository();  
+                    }  
+                    return instance;  
+                }  
+            }  
+        }
+        
         public bool addStore(Store store)
         {
             int storeID = store.storeID;
