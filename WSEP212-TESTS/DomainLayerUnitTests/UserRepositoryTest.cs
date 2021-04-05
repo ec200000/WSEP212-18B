@@ -5,7 +5,7 @@ using WSEP212.DomainLayer;
 namespace WSEP212_TESTS
 {
     [TestClass]
-    class UserRepositoryTest
+    public class UserRepositoryTest
     {
         private User user1;
         private User user2;
@@ -130,6 +130,7 @@ namespace WSEP212_TESTS
         {
             PurchaseInfo purchaseInfo = new PurchaseInfo(1, "a", null, 1.2, DateTime.Now);
             User user3 = new User("c");
+            user3.purchases.Add(purchaseInfo);
             UserRepository.Instance.users.TryAdd(user3, false);
             var res = UserRepository.Instance.getAllUsersPurchaseHistory();
             Assert.IsNotNull(res);

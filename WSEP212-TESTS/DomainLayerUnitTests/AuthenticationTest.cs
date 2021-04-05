@@ -5,7 +5,7 @@ using WSEP212.DomainLayer;
 namespace WSEP212_TESTS
 {
     [TestClass]
-    class AuthenticationTest
+    public class AuthenticationTest
     {
         [TestMethod]
         public void encryptPasswordTest()
