@@ -7,22 +7,25 @@ namespace WSEP212_TESTS
     [TestClass]
     class AuthenticationTest
     {
-        Authentication authentication;
-        
-        [TestInitialize]
-        public void testInit()
+        [TestMethod]
+        public void encryptPasswordTest()
         {
-            this.authentication = Authentication.Instance;
+            String password = "abcd";
+            String encPass1 = Authentication.Instance.encryptPassword(password);
+            Assert.AreNotEqual(password,encPass1); //the password is indeed encrypted
+            String encPass2 = Authentication.Instance.encryptPassword(password);
+            Assert.AreEqual(encPass1, encPass2); //encrypting the same password should act the same
         }
 
         [TestMethod]
-        public void TestEncryptTwice()
+        public void validatePassword()
         {
-            String password = "abcd";
-            String encPass1 = this.authentication.encryptPassword(password);
-            String encPass2 = this.authentication.encryptPassword(password);
-            Assert.AreEqual(encPass1, encPass2);
-            Assert.IsTrue(true);
+            String passwordToValidate = "12345";
+            String userPass1 = Authentication.Instance.encryptPassword(passwordToValidate);
+            String userPass2 = Authentication.Instance.encryptPassword("abcd");
+            
+            Assert.IsTrue(Authentication.Instance.validatePassword(passwordToValidate, userPass1));
+            Assert.IsFalse(Authentication.Instance.validatePassword(passwordToValidate,userPass2));
         }
 
     }

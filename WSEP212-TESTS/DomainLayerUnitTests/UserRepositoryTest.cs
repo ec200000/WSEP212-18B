@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS
@@ -79,7 +77,67 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void updateUserTest()
         {
+            PurchaseInfo purchaseInfo = new PurchaseInfo(1, "a", null, 1.2, DateTime.Now);
+            user1.purchases.Add(purchaseInfo); //updating the user
+            UserRepository.Instance.updateUser(user1);
+            Assert.AreEqual(2, UserRepository.Instance.users.Count);
+            bool found = false;
+            foreach (var u in UserRepository.Instance.users.Keys)
+            {
+                if (u.userName.Equals(user1.userName))
+                {
+                    Assert.AreEqual(1, u.purchases.Count);
+                    u.purchases.TryPeek(out var p);
+                    Assert.AreEqual(1.2, p.totalPrice);
+                    found = true;
+                }
+            }
+            if(!found)
+                Assert.IsTrue(false); //didn't find the user to update
+
+            User user3 = new User("c");
+            UserRepository.Instance.updateUser(user3);
+            Assert.AreEqual(2, UserRepository.Instance.users.Count); //shouldn't add the user3 because it's not in the DB
+            var keys = UserRepository.Instance.users.Keys;
+            var res = keys.Contains(user1) && keys.Contains(user2); //no other users were added
             
+            Assert.IsTrue(res);
+        }
+
+        [TestMethod]
+        public void findUserByUserNameTest()
+        {
+            Assert.IsNotNull(UserRepository.Instance.findUserByUserName("b"));
+            Assert.IsNull(UserRepository.Instance.findUserByUserName("k"));
+        }
+
+        [TestMethod]
+        public void getUserPasswordTest()
+        {
+            Assert.IsNotNull(UserRepository.Instance.getUserPassword("b"));
+            Assert.IsNull(UserRepository.Instance.getUserPassword("k"));
+        }
+
+        [TestMethod]
+        public void checkIfUserExistsTest()
+        {
+            Assert.IsTrue(UserRepository.Instance.checkIfUserExists("b"));
+            Assert.IsFalse(UserRepository.Instance.checkIfUserExists("k"));
+        }
+
+        [TestMethod]
+        public void getAllUsersPurchaseHistoryTest()
+        {
+            PurchaseInfo purchaseInfo = new PurchaseInfo(1, "a", null, 1.2, DateTime.Now);
+            User user3 = new User("c");
+            UserRepository.Instance.users.TryAdd(user3, false);
+            var res = UserRepository.Instance.getAllUsersPurchaseHistory();
+            Assert.IsNotNull(res);
+            Assert.AreEqual(3, res.Count); //3 users
+            foreach (var p in res)
+            {
+                Assert.AreEqual(p.Key.Equals("c") ? 1 : 0, p.Value.Count);
+            }
         }
     }
 }
