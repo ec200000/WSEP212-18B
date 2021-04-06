@@ -52,16 +52,19 @@ namespace WSEP212.DomainLayer
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.AppointStoreManager))
                     {
                         User seller = UserRepository.Instance.findUserByUserName(managerName);
-                        User grantor = this.user;
-                        Store store = StoreRepository.Instance.getStore(storeID);
-                        ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
-                        if (pers.TryAdd(Permissions.GetOfficialsInformation))
+                        if (user.state is LoggedBuyerState)
                         {
-                            SellerPermissions permissions =
-                                SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                            if (sellerPermissions.Value.store.addNewStoreSeller(permissions))
+                            User grantor = this.user;
+                            Store store = StoreRepository.Instance.getStore(storeID);
+                            ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
+                            if (pers.TryAdd(Permissions.GetOfficialsInformation))
                             {
-                                return seller.sellerPermissions.TryAdd(permissions);
+                                SellerPermissions permissions =
+                                    SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
+                                if (sellerPermissions.Value.store.addNewStoreSeller(permissions))
+                                {
+                                    return seller.sellerPermissions.TryAdd(permissions);
+                                }
                             }
                         }
                     }
