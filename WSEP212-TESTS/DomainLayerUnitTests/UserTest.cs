@@ -141,15 +141,6 @@ namespace WSEP212_TESTS
                 Assert.IsTrue((bool)parameters2.result);
                 Assert.IsTrue(user.state is LoggedBuyerState);
             }
-
-            ThreadParameters parameters3 = new ThreadParameters(); //the user is already logged in
-            object[] list3 = new object[2];
-            list3[0] = user.userName;
-            list3[1] = "1234";
-            parameters3.parameters = list3;
-            user.login(parameters3);
-            Assert.IsTrue(parameters3.result is NotImplementedException);
-
         }
 
         [TestMethod]
@@ -202,13 +193,6 @@ namespace WSEP212_TESTS
                     Assert.IsTrue((bool)parameters3.result);
                 }
             }
-
-            ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
-            object[] list4 = new object[1];
-            list4[0] = user.userName;
-            parameters4.parameters = list4;
-            user.logout(parameters4);
-            Assert.IsTrue(typeof(NotImplementedException).IsInstanceOfType(parameters4.result));
         }
 
         [TestMethod]
