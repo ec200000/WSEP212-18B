@@ -216,11 +216,11 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Item item = (Item)param.parameters[1];
+            int itemID = (int)param.parameters[1];
             object res;
             try
             {
-                res = state.removeItemFromStorage(storeID, item);
+                res = state.removeItemFromStorage(storeID, itemID);
             }
             catch (NotImplementedException)
             {

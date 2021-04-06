@@ -83,7 +83,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool removeItemFromStorage(int storeID, Item item)
+        public override bool removeItemFromStorage(int storeID, int itemID)
         {
             throw new NotImplementedException();
         }

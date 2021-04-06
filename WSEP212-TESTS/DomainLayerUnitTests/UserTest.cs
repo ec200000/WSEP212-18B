@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS
@@ -44,6 +45,58 @@ namespace WSEP212_TESTS
             user.logout(parameters);
             return (bool)parameters.result;
         }
+        
+        public bool openStore()
+        {
+            String name = "store";
+            SalesPolicy salesPolicy = new SalesPolicy("default", null);
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", null, null);
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[3];
+            list[0] = name;
+            list[1] = purchasePolicy;
+            list[2] = salesPolicy;
+            parameters.parameters = list;
+            user.openStore(parameters);
+            return (bool)parameters.result;
+        }
+        
+        public bool addItemToStorage()
+        {
+            Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = storeID;
+            list[1] = item;
+            parameters.parameters = list;
+            user.addItemToStorage(parameters);
+            return (bool)parameters.result;
+        }
+        
+        public bool addNewUser()
+        {
+            User user2 = new User("new user");
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = user2.userName;
+            list[1] = "1234";
+            parameters.parameters = list;
+            user2.register(parameters);
+            return (bool) parameters.result;
+        }
+        
+        public bool addNewManager()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user";
+            list[1] = storeID;
+            parameters.parameters = list;
+            user.appointStoreManager(parameters);
+            return (bool) parameters.result;
+        }
 
         public void switchToSystemManager()
         {
@@ -55,6 +108,7 @@ namespace WSEP212_TESTS
         {
             UserRepository.Instance.users.Clear();
             UserRepository.Instance.usersInfo.Clear();
+            StoreRepository.Instance.stores.Clear();
         }
 
         [TestMethod]
@@ -186,7 +240,123 @@ namespace WSEP212_TESTS
         }
 
         [TestMethod]
-        public void TestAddItemToShoppingCart() // wrong password
+        public void TestOpenStore()
+        {
+            if (registerAndLogin())
+            {
+                String name = "store";
+                SalesPolicy salesPolicy = new SalesPolicy("default", null);
+                PurchasePolicy purchasePolicy = new PurchasePolicy("default", null, null);
+                ThreadParameters parameters = new ThreadParameters();
+                object[] list = new object[3];
+                list[0] = name;
+                list[1] = purchasePolicy;
+                list[2] = salesPolicy;
+                parameters.parameters = list;
+                user.openStore(parameters);
+                Assert.IsTrue((bool)parameters.result);
+                Assert.AreEqual(1, StoreRepository.Instance.stores.Count);
+            }
+        }
+        
+        [TestMethod]
+        public void TestAddItemToStorage()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
+                    int storeID = 1;
+                    ThreadParameters parameters = new ThreadParameters();
+                    object[] list = new object[2];
+                    list[0] = storeID;
+                    list[1] = item;
+                    parameters.parameters = list;
+                    user.addItemToStorage(parameters);
+                    Assert.IsTrue((bool)parameters.result);
+                    Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestItemReview()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addItemToStorage())
+                    {
+                        String review = "best shoko ever!!";
+                        int storeID = 1;
+                        int itemID = 1;
+                        ThreadParameters parameters = new ThreadParameters();
+                        object[] list = new object[3];
+                        list[0] = review;
+                        list[1] = itemID;
+                        list[2] = storeID;
+                        parameters.parameters = list;
+                        user.itemReview(parameters);
+                        Assert.IsTrue((bool)parameters.result);
+                        Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage[1].reviews.Count);
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestRemoveItemFromStorage()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addItemToStorage())
+                    {
+                        int storeID = 1;
+                        int itemID = 1;
+                        ThreadParameters parameters = new ThreadParameters();
+                        object[] list = new object[2];
+                        list[0] = storeID;
+                        list[1] = itemID;
+                        parameters.parameters = list;
+                        user.removeItemFromStorage(parameters);
+                        Assert.IsTrue((bool)parameters.result);
+                        Assert.AreEqual(0, StoreRepository.Instance.stores[1].storage.Count);
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestEditItemDetails()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addItemToStorage())
+                    {
+                        Item item = StoreRepository.Instance.stores[1].getItemById(1);
+                        item.itemName = "shoko moka";
+                        int storeID = 1;
+                        ThreadParameters parameters = new ThreadParameters();
+                        object[] list = new object[2];
+                        list[0] = storeID;
+                        list[1] = item;
+                        parameters.parameters = list;
+                        user.editItemDetails(parameters);
+                        Assert.IsTrue((bool)parameters.result);
+                        Assert.AreEqual("shoko moka", StoreRepository.Instance.stores[1].storage[1].itemName);
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestAddItemToShoppingCart()
         {
             if (registerAndLogin())
             {
@@ -210,7 +380,7 @@ namespace WSEP212_TESTS
         }
 
         [TestMethod]
-        public void TestRemoveItemFromShoppingCart() // wrong password
+        public void TestRemoveItemFromShoppingCart()
         {
             if (registerAndLogin())
             {
@@ -238,6 +408,107 @@ namespace WSEP212_TESTS
                     user.removeItemFromShoppingCart(parameters2);
                     Assert.IsTrue((bool)parameters2.result);
                     Assert.AreEqual(0, user.shoppingCart.shoppingBags.Count);
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestAppointStoreManager()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addNewUser())
+                    {
+                        int storeID = 1;
+                        ThreadParameters parameters = new ThreadParameters();
+                        object[] list = new object[2];
+                        list[0] = "new user";
+                        list[1] = storeID;
+                        parameters.parameters = list;
+                        user.appointStoreManager(parameters);
+                        Assert.IsTrue((bool)parameters.result);
+                        Assert.AreEqual(2, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestAppointStoreOwner()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addNewUser())
+                    {
+                        int storeID = 1;
+                        ThreadParameters parameters = new ThreadParameters();
+                        object[] list = new object[2];
+                        list[0] = "new user";
+                        list[1] = storeID;
+                        parameters.parameters = list;
+                        user.appointStoreOwner(parameters);
+                        Assert.IsTrue((bool)parameters.result);
+                        Assert.AreEqual(2, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestEditManagerPermissions()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addNewUser())
+                    {
+                        if (addNewManager())
+                        {
+                            int storeID = 1;
+                            ConcurrentLinkedList<Permissions> permissions = new ConcurrentLinkedList<Permissions>();
+                            permissions.TryAdd(Permissions.GetOfficialsInformation);
+                            permissions.TryAdd(Permissions.GetStorePurchaseHistory);
+                            ThreadParameters parameters = new ThreadParameters();
+                            object[] list = new object[3];
+                            list[0] = "new user";
+                            list[1] = permissions;
+                            list[2] = storeID;
+                            parameters.parameters = list;
+                            user.editManagerPermissions(parameters);
+                            Assert.IsTrue((bool)parameters.result);
+                            Assert.AreEqual(permissions, StoreRepository.Instance.stores[1].storeSellersPermissions["new user"].permissionsInStore);
+                        }
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestRemoveStoreManager()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addNewUser())
+                    {
+                        if (addNewManager())
+                        {
+                            int storeID = 1;
+                            ThreadParameters parameters = new ThreadParameters();
+                            object[] list = new object[2];
+                            list[0] = "new user";
+                            list[1] = storeID;
+                            parameters.parameters = list;
+                            user.removeStoreManager(parameters);
+                            Assert.IsTrue((bool) parameters.result);
+                            Assert.AreEqual(1, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);
+                        }
+                    }
                 }
             }
         }

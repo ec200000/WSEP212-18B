@@ -59,8 +59,10 @@ namespace WSEP212.DomainLayer
                         {
                             SellerPermissions permissions =
                                 SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                            sellerPermissions.Value.store.addNewStoreSeller(permissions);
-                            return true;
+                            if (sellerPermissions.Value.store.addNewStoreSeller(permissions))
+                            {
+                                return seller.sellerPermissions.TryAdd(permissions);
+                            }
                         }
                     }
                 }
@@ -86,8 +88,10 @@ namespace WSEP212.DomainLayer
                         {
                             SellerPermissions permissions =
                                 SellerPermissions.getSellerPermissions(seller, store, grantor, pers);
-                            sellerPermissions.Value.store.addNewStoreSeller(permissions);
-                            return true;
+                            if (sellerPermissions.Value.store.addNewStoreSeller(permissions))
+                            {
+                                return seller.sellerPermissions.TryAdd(permissions);
+                            }
                         }
                     }
                 }
@@ -130,6 +134,7 @@ namespace WSEP212.DomainLayer
                                 managerPermissions.Value.permissionsInStore = permissions;
                                 return true;
                             }
+                            managerPermissions = managerPermissions.Next;
                         }
                     }
                 }
@@ -200,7 +205,15 @@ namespace WSEP212.DomainLayer
 
         public override bool openStore(string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
-            return StoreRepository.Instance.addStore(new Store(storeName, salesPolicy, purchasePolicy, this.user));
+            Store store = new Store(storeName, salesPolicy, purchasePolicy, this.user);
+            int storeID = store.storeID;
+            if (StoreRepository.Instance.addStore(store))
+            {
+                return this.user.sellerPermissions.TryAdd(StoreRepository.Instance.stores[storeID]
+                    .storeSellersPermissions[this.user.userName]);
+            }
+
+            return false;
         }
 
         public override bool purchaseItems(string address)
@@ -219,7 +232,7 @@ namespace WSEP212.DomainLayer
 
         }
 
-        public override bool removeItemFromStorage(int storeID, Item item)
+        public override bool removeItemFromStorage(int storeID, int itemID)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)
@@ -227,7 +240,7 @@ namespace WSEP212.DomainLayer
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
-                        return sellerPermissions.Value.store.removeItemFromStorage(item.itemID);
+                        return sellerPermissions.Value.store.removeItemFromStorage(itemID);
                 }
                 sellerPermissions = sellerPermissions.Next;
             }
@@ -248,9 +261,16 @@ namespace WSEP212.DomainLayer
                         {
                             if (managerPermissions.Value.store.storeID == storeID)
                             {
-                                managerPermissions.Value.permissionsInStore = null;
-                                return true;
+                                SellerPermissions result;
+                                if (UserRepository.Instance.findUserByUserName(managerName).sellerPermissions
+                                    .Remove(managerPermissions.Value, out result))
+                                {
+                                    SellerPermissions result2;
+                                    return StoreRepository.Instance.stores[storeID].storeSellersPermissions
+                                        .TryRemove(managerName, out result2);
+                                }
                             }
+                            managerPermissions = managerPermissions.Next;
                         }
                     }
                 }
