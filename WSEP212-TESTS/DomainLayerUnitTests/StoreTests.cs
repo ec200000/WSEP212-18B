@@ -93,11 +93,11 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void editItemTest()
         {
-            store.editItem(soda.itemID,"soda-stream", "great drink", 1000.0, "drink", 3);
+            store.editItem(soda.itemID, "soda-stream", "great drink", 1000.0, "drink", 3);
             double price = store.getItemById(soda.itemID).price;
             Assert.AreEqual(1000.0, price);
             Item tesla = new Item(3, "tesla-3", "great car", 150000, "car");
-            bool edited = store.editItem(tesla.itemID,"tesla-3", "nice car", 200000, "car", 5);
+            bool edited = store.editItem(tesla.itemID, "tesla-3", "nice car", 200000, "car", 5);
             Assert.IsFalse(edited);
             store.addItemToStorage(tesla);
             edited = store.editItem(tesla.itemID, "tesla-3", "nice car", 200000, "", 5);
@@ -108,17 +108,50 @@ namespace WSEP212_TESTS
             Assert.IsFalse(edited);
         }
 
-        /*[TestMethod()]
+        [TestMethod()]
+        public void purchaseItemsTest()
+        {
+            Item oliveOil = new Item(10, "olive-oil", "from olive", 50, "oil");
+            store.addItemToStorage(oliveOil);
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(soda.itemID, 1);
+            items.TryAdd(oliveOil.itemID, 2);
+            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            itemsPurchaseType.TryAdd(soda.itemID, PurchaseType.ImmediatePurchase);
+            itemsPurchaseType.TryAdd(oliveOil.itemID, PurchaseType.ImmediatePurchase);
+            User miki = new User("miki");
+            double totalPrice = store.purchaseItems(miki, items, itemsPurchaseType);
+            Assert.AreEqual(250.0, totalPrice);
+        }
+
+        [TestMethod()]
         public void applySalesPolicyTest()
         {
-            Assert.Fail();
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(soda.itemID, 1);
+            User miki = new User("miki");
+            ConcurrentDictionary<int, double> itemPrices = store.applySalesPolicy(miki, items);
+            double total = 0.0;
+            foreach (KeyValuePair<int, double> item in itemPrices)
+            {
+                total += item.Value;
+            }
+            Assert.AreEqual(150.0, total);
+
         }
 
         [TestMethod()]
         public void applyPurchasePolicyTest()
         {
-            Assert.Fail();
-        }*/
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(soda.itemID, 1);
+            User miki = new User("miki");
+            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            itemsPurchaseType.TryAdd(soda.itemID, PurchaseType.ImmediatePurchase);
+            bool approved = store.applyPurchasePolicy(miki, items, itemsPurchaseType);
+            Assert.IsTrue(approved);
+        }
+
 
         [TestMethod]
         public void purchaseItemsIfAvailableTest()
@@ -131,7 +164,7 @@ namespace WSEP212_TESTS
             Assert.IsTrue(successfulPurchase);
             ConcurrentDictionary<int, int> badQuantityItems = new ConcurrentDictionary<int, int>();
             badQuantityItems.TryAdd(oliveOil.itemID, 11);
-            badQuantityItems.TryAdd(soda.itemID, soda.quantity+1);
+            badQuantityItems.TryAdd(soda.itemID, soda.quantity + 1);
             bool failedPurchase = store.purchaseItemsIfAvailable(badQuantityItems);
             Assert.IsFalse(failedPurchase);
         }
@@ -149,8 +182,8 @@ namespace WSEP212_TESTS
             store.rollBackPurchase(items);
             Item oilFromStorage = store.getItemById(oliveOil.itemID);
             Item sodaFromStorage = store.getItemById(soda.itemID);
-            Assert.AreEqual(oilQuantity+1, oilFromStorage.quantity);
-            Assert.AreEqual(sodaQuantity+1, sodaFromStorage.quantity);
+            Assert.AreEqual(oilQuantity + 1, oilFromStorage.quantity);
+            Assert.AreEqual(sodaQuantity + 1, sodaFromStorage.quantity);
         }
 
         [TestMethod]
@@ -196,8 +229,8 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void addNewPurchaseTest()
         {
-            Dictionary<int, int> items = new Dictionary<int, int>();
-            items.Add(soda.itemID, 1);
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(soda.itemID, 1);
             store.addNewPurchase(new PurchaseInfo(this.store.storeID, "admin", items, 15, System.DateTime.Now));
             Assert.IsTrue(true);
             //Assert.IsTrue(add);
