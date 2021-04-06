@@ -105,5 +105,61 @@ namespace WSEP212_TESTS
             Assert.IsTrue(parameters.result is NotImplementedException);
             Assert.AreEqual(0, StoreRepository.Instance.stores.Count);
         }
+
+        [TestMethod]
+        public void TestAppointStoreOwner()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user";
+            list[1] = storeID;
+            parameters.parameters = list;
+            user1.appointStoreOwner(parameters);
+            Assert.IsTrue(parameters.result is NotImplementedException);
+        }
+
+        [TestMethod]
+        public void TestEditManagerPermissions()
+        {
+            
+            int storeID = 1;
+            ConcurrentLinkedList<Permissions> permissions = new ConcurrentLinkedList<Permissions>();
+            permissions.TryAdd(Permissions.GetOfficialsInformation);
+            permissions.TryAdd(Permissions.GetStorePurchaseHistory);
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[3];
+            list[0] = "new user";
+            list[1] = permissions;
+            list[2] = storeID;
+            parameters.parameters = list;
+            user1.editManagerPermissions(parameters);
+            Assert.IsTrue(parameters.result is NotImplementedException);
+        }
+        
+        [TestMethod]
+        public void TestRemoveStoreManager()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user";
+            list[1] = storeID;
+            parameters.parameters = list;
+            user1.removeStoreManager(parameters);
+            Assert.IsTrue(parameters.result is NotImplementedException);
+        }
+        
+        [TestMethod]
+        public void TestGetOfficialsInformation()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[1];
+            list[0] = storeID;
+            parameters.parameters = list;
+            user1.getOfficialsInformation(parameters);
+            Assert.IsTrue(parameters.result is NotImplementedException);        
+        }
     }
 }
