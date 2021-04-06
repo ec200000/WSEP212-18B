@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 
@@ -17,33 +18,19 @@ namespace WSEP212_TESTS
 
         public bool registerAndLogin()
         {
-            ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
-            list[0] = user.userName;
-            list[1] = "1234";
-            parameters.parameters = list;
-            user.register(parameters);
-            if ((bool)parameters.result)
+            String password = "1234";
+            if (UserRepository.Instance.insertNewUser(this.user, password))
             {
-                ThreadParameters parameters2 = new ThreadParameters();
-                object[] list2 = new object[2];
-                list2[0] = user.userName;
-                list2[1] = "1234";
-                parameters2.parameters = list2;
-                user.login(parameters2);
-                return (bool)parameters2.result;
+                user.changeState(new LoggedBuyerState(user));
+                return true;
             }
             return false;
         }
 
         public bool logout()
         {
-            ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[1];
-            list[0] = user.userName;
-            parameters.parameters = list;
-            user.logout(parameters);
-            return (bool)parameters.result;
+            this.user.changeState(new GuestBuyerState(this.user));
+            return true;
         }
         
         public bool openStore()
@@ -77,13 +64,8 @@ namespace WSEP212_TESTS
         public bool addNewUser()
         {
             User user2 = new User("new user");
-            ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
-            list[0] = user2.userName;
-            list[1] = "1234";
-            parameters.parameters = list;
-            user2.register(parameters);
-            return (bool) parameters.result;
+            String password = "1234";
+            return UserRepository.Instance.insertNewUser(this.user, password);
         }
         
         public bool addNewManager()
@@ -507,6 +489,30 @@ namespace WSEP212_TESTS
                             user.removeStoreManager(parameters);
                             Assert.IsTrue((bool) parameters.result);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);
+                        }
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestGetOfficialsInformation()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addNewUser())
+                    {
+                        if (addNewManager())
+                        {
+                            int storeID = 1;
+                            ThreadParameters parameters = new ThreadParameters();
+                            object[] list = new object[1];
+                            list[0] = storeID;
+                            parameters.parameters = list;
+                            user.getOfficialsInformation(parameters);
+                            Assert.AreEqual(2, ((ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>>)parameters.result).Count);
                         }
                     }
                 }
