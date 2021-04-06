@@ -118,16 +118,6 @@ namespace WSEP212_TESTS
             user.register(parameters);
             Assert.IsTrue((bool)parameters.result);
             Assert.AreEqual(UserRepository.Instance.users.Count, 1);
-
-            User user2 = new User(user.userName); //negative test!
-            ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[2];
-            list2[0] = user.userName;
-            list2[1] = "5678";
-            parameters2.parameters = list2;
-            user.register(parameters2);
-            Assert.IsFalse((bool)parameters2.result);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 1);
         }
 
         [TestMethod]
@@ -149,7 +139,7 @@ namespace WSEP212_TESTS
                 parameters2.parameters = list2;
                 user.login(parameters2);
                 Assert.IsTrue((bool)parameters2.result);
-                Assert.IsTrue(typeof(LoggedBuyerState).IsInstanceOfType(user.state));
+                Assert.IsTrue(user.state is LoggedBuyerState);
             }
 
             ThreadParameters parameters3 = new ThreadParameters(); //the user is already logged in
@@ -158,7 +148,7 @@ namespace WSEP212_TESTS
             list3[1] = "1234";
             parameters3.parameters = list3;
             user.login(parameters3);
-            Assert.IsTrue(typeof(NotImplementedException).IsInstanceOfType(parameters3.result));
+            Assert.IsTrue(parameters3.result is NotImplementedException);
 
         }
 
@@ -180,7 +170,7 @@ namespace WSEP212_TESTS
                 parameters2.parameters = list2;
                 user.login(parameters2);
                 Assert.IsFalse((bool)parameters2.result);
-                Assert.IsTrue(typeof(GuestBuyerState).IsInstanceOfType(user.state));
+                Assert.IsTrue(user.state is GuestBuyerState);
 
             }
         }
