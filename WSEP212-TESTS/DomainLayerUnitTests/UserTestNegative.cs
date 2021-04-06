@@ -265,6 +265,19 @@ namespace WSEP212_TESTS
             user1.appointStoreOwner(parameters);
             Assert.IsTrue(parameters.result is NotImplementedException);
         }
+        
+        [TestMethod]
+        public void TestAppointStoreOwner2()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user"; //non existing user
+            list[1] = storeID;
+            parameters.parameters = list;
+            user2.appointStoreOwner(parameters);
+            Assert.IsFalse((bool)parameters.result);
+        }
 
         [TestMethod]
         public void TestEditManagerPermissions()
@@ -285,6 +298,24 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
+        public void TestEditManagerPermissions2()
+        {
+            
+            int storeID = 1;
+            ConcurrentLinkedList<Permissions> permissions = new ConcurrentLinkedList<Permissions>();
+            permissions.TryAdd(Permissions.GetOfficialsInformation);
+            permissions.TryAdd(Permissions.GetStorePurchaseHistory);
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[3];
+            list[0] = "new user"; //non existing manager
+            list[1] = permissions;
+            list[2] = storeID;
+            parameters.parameters = list;
+            user2.editManagerPermissions(parameters);
+            Assert.IsFalse((bool)parameters.result);
+        }
+        
+        [TestMethod]
         public void TestRemoveStoreManager()
         {
             int storeID = 1;
@@ -298,6 +329,19 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
+        public void TestRemoveStoreManager2()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user"; // non existing manager
+            list[1] = storeID;
+            parameters.parameters = list;
+            user2.removeStoreManager(parameters);
+            Assert.IsFalse((bool)parameters.result);
+        }
+        
+        [TestMethod]
         public void TestGetOfficialsInformation()
         {
             int storeID = 1;
@@ -307,6 +351,18 @@ namespace WSEP212_TESTS
             parameters.parameters = list;
             user1.getOfficialsInformation(parameters);
             Assert.IsTrue(parameters.result is NotImplementedException);        
+        }
+        
+        [TestMethod]
+        public void TestGetOfficialsInformation2()
+        {
+            int storeID = 2; //non existing store
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[1];
+            list[0] = storeID;
+            parameters.parameters = list;
+            user2.getOfficialsInformation(parameters);
+            Assert.IsNull(parameters.result);     
         }
     }
 }
