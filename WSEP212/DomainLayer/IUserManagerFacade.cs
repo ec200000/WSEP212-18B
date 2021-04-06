@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
         public bool openStore(String userName, String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
         public bool itemReview(String userName, String review, int itemID, int storeID);
         public bool addItemToStorage(String userName, int storeID, Item item);
-        public bool removeItemFromStorage(String userName, int storeID, Item item);
+        public bool removeItemFromStorage(String userName, int storeID, int itemID);
         public bool editItemDetails(String userName, int storeID, Item item);
         public bool appointStoreManager(String userName, String managerName, int storeID); //the store manager will receive default permissions(4.9)
         public bool appointStoreOwner(String userName, String storeOwnerName, int storeID);

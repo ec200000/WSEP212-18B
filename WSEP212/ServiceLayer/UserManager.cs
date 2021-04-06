@@ -51,10 +51,9 @@ namespace WSEP212.ServiceLayer
             Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
             return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem);
         }
-        public bool removeItemFromStorage(String userName, int storeID, ItemDTO item)
+        public bool removeItemFromStorage(String userName, int storeID, int itemID)
         {
-            Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return UserManagerFacade.Instance.removeItemFromStorage(userName, storeID, newItem);
+            return UserManagerFacade.Instance.removeItemFromStorage(userName, storeID, itemID);
         }
         public bool editItemDetails(String userName, int storeID, ItemDTO item)
         {

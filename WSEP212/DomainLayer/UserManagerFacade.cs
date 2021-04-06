@@ -151,9 +151,9 @@ namespace WSEP212.DomainLayer
             return (bool)threadParameters.result;
         }
 
-        public bool removeItemFromStorage(string userName, int storeID, Item item)
+        public bool removeItemFromStorage(string userName, int storeID, int itemID)
         {
-            Object[] paramsList = { userName, storeID, item};
+            Object[] paramsList = { userName, storeID, itemID};
             User user = UserRepository.Instance.findUserByUserName(userName);
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
