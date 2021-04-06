@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Threading;
 
-[assembly: InternalsVisibleTo("ConcurrentLinkedList.Tests.Unit")]
+[assembly:InternalsVisibleTo("ConcurrentLinkedList.Tests.Unit")]
 namespace WSEP212.ConcurrentLinkedList
 {
     public class Node<T>
     {
         public T Value;
         public Node<T> Next;
-
+        
         private int _state;
         private readonly bool _isDummy;
 
@@ -36,7 +33,7 @@ namespace WSEP212.ConcurrentLinkedList
             _state = (int)state;
             _isDummy = false;
         }
-
+        
         internal NodeState AtomicCompareAndExchangeState(NodeState value, NodeState compare)
         {
             return (NodeState)Interlocked.CompareExchange(ref _state, (int)value, (int)compare);

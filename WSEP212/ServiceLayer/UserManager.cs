@@ -38,23 +38,22 @@ namespace WSEP212.ServiceLayer
         }
         public bool openStore(String userName, String storeName, String purchasePolicy, String salesPolicy)
         {
-            PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy);
-            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy);
+            PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy, null, null);
+            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy, null);
             return UserManagerFacade.Instance.openStore(userName, storeName, newPurchasePolicy, newSalesPolicy);
         }
         public bool itemReview(String userName, String review, int itemID, int storeID)
         {
             return UserManagerFacade.Instance.itemReview(userName, review, itemID, storeID);
         }
-        public bool addItemToStorage(String userName, int storeID, ItemDTO item, int quantity)
+        public bool addItemToStorage(String userName, int storeID, ItemDTO item)
         {
             Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem, quantity);
+            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem);
         }
-        public bool removeItemFromStorage(String userName, int storeID, ItemDTO item)
+        public bool removeItemFromStorage(String userName, int storeID, int itemID)
         {
-            Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return UserManagerFacade.Instance.removeItemFromStorage(userName, storeID, newItem);
+            return UserManagerFacade.Instance.removeItemFromStorage(userName, storeID, itemID);
         }
         public bool editItemDetails(String userName, int storeID, ItemDTO item)
         {

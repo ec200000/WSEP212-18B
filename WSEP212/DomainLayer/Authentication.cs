@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer
             return hash;
         }
 
-        public bool validatePassword(String passwordToValidate, String userPassword)
+        public bool validatePassword(String passwordToValidate, String userPassword) //the user password is already encrypted
         {
             string passwordToValidateHash = encryptPassword(passwordToValidate);
 

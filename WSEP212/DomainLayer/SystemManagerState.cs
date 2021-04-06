@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool addItemToStorage(int storeID, Item item, int quantity)
+        public override bool addItemToStorage(int storeID, Item item)
         {
             throw new NotImplementedException();
         }
@@ -38,7 +38,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
+        public override bool editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
         }
@@ -83,7 +83,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool removeItemFromStorage(int storeID, Item item)
+        public override bool removeItemFromStorage(int storeID, int itemID)
         {
             throw new NotImplementedException();
         }

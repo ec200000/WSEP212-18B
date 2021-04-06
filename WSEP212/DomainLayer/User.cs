@@ -2,25 +2,26 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class User
     {
+        public String userName { get; set; }
+        public UserState state { get; set; }
+        public ShoppingCart shoppingCart { get; set; }
+        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
+        public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
+
         public User(String userName)
         {
             this.userName = userName;
             this.shoppingCart = new ShoppingCart();
             this.purchases = new ConcurrentBag<PurchaseInfo>();
-            this.sellerPermissions = new ConcurrentBag<SellerPermissions>();
+            this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
         }
-
-        public String userName { get; set; }
-        public UserState state { get; set; }
-        public ShoppingCart shoppingCart { get; set; }
-        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
-        public ConcurrentBag<SellerPermissions> sellerPermissions { get; set; }
 
         public void changeState(UserState state)
         {
@@ -196,11 +197,10 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             Item item = (Item)param.parameters[1];
-            int quantity = (int)param.parameters[2];
             object res;
             try
             {
-                res = state.addItemToStorage(storeID, item, quantity);
+                res = state.addItemToStorage(storeID, item);
             }
             catch (NotImplementedException)
             {
@@ -216,11 +216,11 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Item item = (Item)param.parameters[1];
+            int itemID = (int)param.parameters[1];
             object res;
             try
             {
-                res = state.removeItemFromStorage(storeID, item);
+                res = state.removeItemFromStorage(storeID, itemID);
             }
             catch (NotImplementedException)
             {
@@ -296,7 +296,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             String managerName = (String)param.parameters[0];
-            ConcurrentBag<Permissions> permissions = (ConcurrentBag<Permissions>)param.parameters[1];
+            ConcurrentLinkedList<Permissions> permissions = (ConcurrentLinkedList<Permissions>)param.parameters[1];
             int storeID = (int)param.parameters[2];
             object res;
             try

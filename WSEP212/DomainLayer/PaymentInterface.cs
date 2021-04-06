@@ -6,6 +6,7 @@ namespace WSEP212.DomainLayer
 {
     public interface PaymentInterface
     {
-        //singelton
+        
+        public double purchaseItems(User user, double price);
     }
 }

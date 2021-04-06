@@ -55,7 +55,7 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        //removing completly from the system
+        //removing completely from the system
         public bool removeUser(User userToRemove)
         {
             return users.TryRemove(userToRemove, out _) && usersInfo.TryRemove(userToRemove.userName, out _);

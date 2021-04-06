@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace WSEP212.ConcurrentLinkedList
@@ -9,11 +9,12 @@ namespace WSEP212.ConcurrentLinkedList
     public class ConcurrentLinkedList<T> : IConcurrentLinkedList<T>
     {
         public Node<T> First => _first;
-
+        
         private int _counter;
         private Node<T> _first;
         private readonly Node<T> _dummy;
         private readonly ConcurrentDictionary<int, ThreadState<T>> _threads;
+        public int size;
 
         public ConcurrentLinkedList()
         {
@@ -21,6 +22,7 @@ namespace WSEP212.ConcurrentLinkedList
             _dummy = new Node<T>();
             _threads = new ConcurrentDictionary<int, ThreadState<T>>();
             _first = new Node<T>(default(T), NodeState.REM, -1);
+            size = 0;
         }
 
         /// <summary>
@@ -28,17 +30,19 @@ namespace WSEP212.ConcurrentLinkedList
         /// </summary>
         public bool TryAdd(T value)
         {
-            var node = new Node<T>(value, (int)NodeState.INS, Thread.CurrentThread.ManagedThreadId);
+            var node = new Node<T>(value, (int) NodeState.INS, Thread.CurrentThread.ManagedThreadId);
 
             Enlist(node);
             var insertionResult = HelpInsert(node, value);
-
+            
             var originalValue = node.AtomicCompareAndExchangeState(insertionResult ? NodeState.DAT : NodeState.INV, NodeState.INS);
             if (originalValue != NodeState.INS)
             {
                 HelpRemove(node, value, out _);
                 node.State = NodeState.INV;
             }
+
+            if (insertionResult) size++;
 
             return insertionResult;
         }
@@ -53,6 +57,7 @@ namespace WSEP212.ConcurrentLinkedList
             Enlist(node);
             var removeResult = HelpRemove(node, value, out result);
             node.State = NodeState.INV;
+            if (removeResult) size--;
             return removeResult;
         }
 
@@ -78,7 +83,7 @@ namespace WSEP212.ConcurrentLinkedList
 
             return false;
         }
-
+        
         private static bool HelpInsert(Node<T> node, T value)
         {
             var previous = node;
@@ -223,5 +228,6 @@ namespace WSEP212.ConcurrentLinkedList
             var threadState = _threads[threadId];
             return threadState.Pending && threadState.Phase <= phase;
         }
+
     }
 }

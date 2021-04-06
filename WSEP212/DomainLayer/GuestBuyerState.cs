@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -21,7 +22,7 @@ namespace WSEP212.DomainLayer
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
-        public override bool addItemToStorage(int storeID, Item item, int quantity)
+        public override bool addItemToStorage(int storeID, Item item)
         {
             throw new NotImplementedException();
         }
@@ -41,12 +42,12 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editManagerPermissions(string managerName, ConcurrentBag<Permissions> permissions, int storeID)
+        public override bool editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
         }
 
-        public override ConcurrentDictionary<User, ConcurrentBag<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }
@@ -93,7 +94,7 @@ namespace WSEP212.DomainLayer
 
         public override bool purchaseItems(string address)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //TODO: IMPLEMENT
         }
 
         public override bool register(string userName, string password)
@@ -108,7 +109,7 @@ namespace WSEP212.DomainLayer
 
         }
 
-        public override bool removeItemFromStorage(int storeID, Item item)
+        public override bool removeItemFromStorage(int storeID, int itemID)
         {
             throw new NotImplementedException();
         }
