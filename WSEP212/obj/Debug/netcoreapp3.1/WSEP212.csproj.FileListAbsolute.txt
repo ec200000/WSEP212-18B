@@ -37,3 +37,12 @@ D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויק
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.dll
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\WSEP212.pdb
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.genruntimeconfig.cache
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.dll
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.Sinks.Console.dll
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csproj.CopyComplete
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csproj.CopyComplete

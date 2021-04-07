@@ -193,7 +193,16 @@ namespace WSEP212.DomainLayer
 
         public override bool itemReview(string review, int itemID, int storeID)
         {
-            return StoreRepository.Instance.getStore(storeID).getItemById(itemID).addReview(this.user.userName, review);
+            if (StoreRepository.Instance.getStore(storeID) != null)
+            {
+                if (StoreRepository.Instance.getStore(storeID).getItemById(itemID)!=null)
+                {
+                    return StoreRepository.Instance.getStore(storeID).getItemById(itemID).addReview(this.user.userName, review);
+                }
+
+                return false;
+            }
+            return false;
         }
 
         public override bool login(string userName, string password)
@@ -220,13 +229,12 @@ namespace WSEP212.DomainLayer
                 return this.user.sellerPermissions.TryAdd(StoreRepository.Instance.stores[storeID]
                     .storeSellersPermissions[this.user.userName]);
             }
-
             return false;
         }
 
         public override bool purchaseItems(string address)
         {
-            throw new NotImplementedException(); //TODO: COMPLETE
+            return HandlePurchases.Instance.purchaseItems(this.user, address);
         }
 
         public override bool register(string userName, string password)
@@ -237,7 +245,6 @@ namespace WSEP212.DomainLayer
         public override bool removeItemFromShoppingCart(int storeID, int itemID)
         {
             return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
-
         }
 
         public override bool removeItemFromStorage(int storeID, int itemID)

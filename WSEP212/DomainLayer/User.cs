@@ -244,7 +244,7 @@ namespace WSEP212.DomainLayer
             int quantity = (int)param.parameters[2];
             String itemName = (String)param.parameters[3];
             String description = (String)param.parameters[4];
-            int price = (int)param.parameters[5];
+            double price = (double)param.parameters[5];
             String category = (String)param.parameters[6];
             object res;
             try

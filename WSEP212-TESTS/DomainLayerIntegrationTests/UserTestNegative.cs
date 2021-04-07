@@ -46,7 +46,7 @@ namespace WSEP212_TESTS
             parameters.parameters = list;
             user.register(parameters);
             Assert.IsTrue((bool)parameters.result);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 1);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
             
             User user2 = new User(user.userName); //the user can't register again - already in the system
             ThreadParameters parameters2 = new ThreadParameters();
@@ -56,7 +56,7 @@ namespace WSEP212_TESTS
             parameters2.parameters = list2;
             user.register(parameters2);
             Assert.IsFalse((bool)parameters2.result);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 1);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
         }
 
         [TestMethod]
@@ -111,12 +111,14 @@ namespace WSEP212_TESTS
         public void TestAddItemToStorageUserNotRegistered()
         {
             User u = new User("k"); //the user is not registered to the system
-            Item item = new Item(1, "bamba", "taim retzah!", 12, "milk products");
-            int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
-            list[0] = storeID;
-            list[1] = item;
+            object[] list = new object[6];
+            list[0] = 1;
+            list[1] = 3;
+            list[2] = "shoko";
+            list[3] = "taim retzah!";
+            list[4] = (double)12;
+            list[5] = "milk products";
             parameters.parameters = list;
             u.addItemToStorage(parameters);
             Assert.IsTrue(parameters.result is NotImplementedException);
@@ -127,28 +129,32 @@ namespace WSEP212_TESTS
         public void TestAddItemToStorageUserWithoutStore()
         {
             user1.changeState(new LoggedBuyerState(user1));
-            Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
-            int storeID = 7; //no such store
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
-            list[0] = storeID;
-            list[1] = item;
+            object[] list = new object[6];
+            list[0] = 7;//no such store
+            list[1] = 3;
+            list[2] = "bamba";
+            list[3] = "taim retzah!";
+            list[4] = (double)12;
+            list[5] = "milk products";
             parameters.parameters = list;
             user1.addItemToStorage(parameters);
             Assert.IsFalse((bool)parameters.result);
             Assert.AreEqual(1, StoreRepository.Instance.stores.Count);
-            Assert.AreEqual(0, StoreRepository.Instance.stores[1].storage.Count);
+            Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
         }
         
         [TestMethod]
         public void TestAddExistingItemToStorage()
         {
-            Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
-            int storeID = 1; 
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
-            list[0] = storeID;
-            list[1] = item;
+            object[] list = new object[6];
+            list[0] = 1;
+            list[1] = 3;
+            list[2] = "shoko";
+            list[3] = "taim retzah!";
+            list[4] = (double)12;
+            list[5] = "milk products";
             parameters.parameters = list;
             user2.addItemToStorage(parameters);
             Assert.IsFalse((bool)parameters.result);
@@ -201,7 +207,7 @@ namespace WSEP212_TESTS
             list[1] = itemID;
             list[2] = storeID;
             parameters.parameters = list;
-            user1.itemReview(parameters);
+            user2.itemReview(parameters);
             Assert.IsFalse((bool)parameters.result);
         }
         
@@ -251,6 +257,94 @@ namespace WSEP212_TESTS
             user2.removeItemFromStorage(parameters);
             Assert.IsFalse((bool)parameters.result);
             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
+        }
+        
+        [TestMethod]
+        public void editItemDetailsTestUserNotRegistered()
+        {
+            User u = new User("k"); //the user is not registered to the system
+            Item item = new Item(2,"shoko","milk",8.90,"milk");
+            item.itemName = "shoko moka";
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[7];
+            list[0] = storeID;
+            list[1] = item.itemID;
+            list[2] = item.quantity;
+            list[3] = item.itemName;
+            list[4] = item.description;
+            list[5] = item.price;
+            list[6] = item.category;
+            parameters.parameters = list;
+            u.editItemDetails(parameters);
+            Assert.IsTrue(parameters.result is NotImplementedException);
+        }
+        
+        [TestMethod]
+        public void editItemDetailsTestUserWithoutStore()
+        {
+            user1.changeState(new LoggedBuyerState(user1));
+            int storeID = 6; //no such store
+            Item item = new Item(2,"shoko","milk",8.90,"milk");
+            item.itemName = "shoko moka";
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[7];
+            list[0] = storeID;
+            list[1] = item.itemID;
+            list[2] = item.quantity;
+            list[3] = item.itemName;
+            list[4] = item.description;
+            list[5] = item.price;
+            list[6] = item.category;
+            parameters.parameters = list;
+            user1.editItemDetails(parameters);
+            Assert.IsFalse((bool)parameters.result);
+        }
+
+        [TestMethod]
+        public void editItemDetailsTestUserNoSuchItem()
+        {
+            int storeID = 1;
+            Item item = new Item(2, "shoko", "milk", 8.90, "milk");
+            item.itemName = "shoko moka";
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[7];
+            list[0] = storeID;
+            list[1] = 250;
+            list[2] = item.quantity;
+            list[3] = item.itemName;
+            list[4] = item.description;
+            list[5] = item.price;
+            list[6] = item.category;
+            parameters.parameters = list;
+            user2.editItemDetails(parameters);
+            Assert.IsFalse((bool) parameters.result);
+        }
+
+        [TestMethod]
+        public void TestAppointStoreManager()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user";
+            list[1] = storeID;
+            parameters.parameters = list;
+            user1.appointStoreManager(parameters);
+            Assert.IsTrue(parameters.result is NotImplementedException);
+        }
+        
+        [TestMethod]
+        public void TestAppointStoreManager2()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[2];
+            list[0] = "new user";
+            list[1] = storeID;
+            parameters.parameters = list;
+            user2.appointStoreManager(parameters);
+            Assert.IsFalse((bool)parameters.result);
         }
         
         [TestMethod]

@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using WSEP212.ServiceLayer;
 
 namespace WSEP212.DomainLayer
 {
-    public class UserManagerFacade : IUserManagerFacade
+    public class SystemControllerFacade : ISystemControllerFacade
     {
-        private static readonly Lazy<UserManagerFacade> lazy
-        = new Lazy<UserManagerFacade>(() => new UserManagerFacade());
+        private static readonly Lazy<SystemControllerFacade> lazy
+        = new Lazy<SystemControllerFacade>(() => new SystemControllerFacade());
 
-        public static UserManagerFacade Instance
+        public static SystemControllerFacade Instance
             => lazy.Value;
 
-        private UserManagerFacade() { }
+        private SystemControllerFacade() { }
 
         public bool register(string userName, string password) //the result will be held in the ThreadParameters Object
         {
@@ -24,8 +26,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.register, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if(typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if(threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the register action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -39,8 +43,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.login, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the login action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -54,8 +60,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.logout, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the logout action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -69,8 +77,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.addItemToShoppingCart, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the addItemToShoppingCart action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -84,8 +94,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.removeItemFromShoppingCart, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the removeItemFromShoppingCart action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -99,8 +111,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.purchaseItems, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the purchaseItems action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -114,8 +128,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.openStore, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the openStore action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -129,8 +145,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.itemReview, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the itemReview action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -144,8 +162,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.addItemToStorage, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the addItemToStorage action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -159,8 +179,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.removeItemFromStorage, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the removeItemFromStorage action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -174,8 +196,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.editItemDetails, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the editItemDetails action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -189,8 +213,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.appointStoreManager, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the appointStoreManager action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -204,14 +230,16 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.appointStoreOwner, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the appointStoreOwner action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
         }
 
-        public bool editManagerPermissions(string userName, string managerName, ConcurrentBag<Permissions> permissions, int storeID)
+        public bool editManagerPermissions(string userName, string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             Object[] paramsList = { userName, managerName, permissions, storeID };
             User user = UserRepository.Instance.findUserByUserName(userName);
@@ -219,8 +247,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.editManagerPermissions, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the editManagerPermissions action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
@@ -234,14 +264,16 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.removeStoreManager, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the removeStoreManager action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (bool)threadParameters.result;
         }
 
-        public ConcurrentDictionary<string, ConcurrentBag<Permissions>> getOfficialsInformation(string userName, int storeID)
+        public ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>> getOfficialsInformation(string userName, int storeID)
         {
             Object[] paramsList = { userName, storeID };
             User user = UserRepository.Instance.findUserByUserName(userName);
@@ -249,11 +281,13 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.getOfficialsInformation, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the getOfficialsInformation action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (ConcurrentDictionary<string, ConcurrentBag<Permissions>>)threadParameters.result;
+            return (ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result;
         }
 
         public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(string userName, int storeID)
@@ -264,8 +298,10 @@ namespace WSEP212.DomainLayer
             threadParameters.parameters = paramsList;
             ThreadPool.QueueUserWorkItem(user.getStorePurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the getStorePurchaseHistory action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (ConcurrentBag<PurchaseInfo>)threadParameters.result;
@@ -277,8 +313,10 @@ namespace WSEP212.DomainLayer
             User user = UserRepository.Instance.findUserByUserName(userName);
             ThreadPool.QueueUserWorkItem(user.getUsersPurchaseHistory); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the getUsersPurchaseHistory action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>)threadParameters.result;
@@ -290,8 +328,10 @@ namespace WSEP212.DomainLayer
             User user = UserRepository.Instance.findUserByUserName(userName);
             ThreadPool.QueueUserWorkItem(user.getStoresPurchaseHistory); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
-            if (typeof(NotImplementedException).IsInstanceOfType(threadParameters.result))
+            if (threadParameters.result is NotImplementedException)
             {
+                String errorMsg = "The user " + userName + "cannot perform the getStoresPurchaseHistory action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result;

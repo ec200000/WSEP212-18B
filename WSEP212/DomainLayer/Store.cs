@@ -120,7 +120,7 @@ namespace WSEP212.DomainLayer
         // edit the personal details of an item
         public bool editItem(int itemID, String itemName, String description, double price, String category, int quantity)
         {
-            if (itemName == "" || price <= 0 || category == "" || quantity < 0)
+            if (itemName.Equals("") || price <= 0 || category.Equals("") || quantity < 0)
                 return false;
             // checks that the item exists
             if (storage.ContainsKey(itemID))
@@ -275,6 +275,11 @@ namespace WSEP212.DomainLayer
         public void addNewPurchase(PurchaseInfo purchase)
         {
             purchasesHistory.Add(purchase);
+        }
+
+        public static void resetStoreCounter()
+        {
+            Store.storeCounter = 1;
         }
     }
 }

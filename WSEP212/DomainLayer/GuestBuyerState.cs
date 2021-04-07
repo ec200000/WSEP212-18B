@@ -69,7 +69,7 @@ namespace WSEP212.DomainLayer
 
         public override bool itemReview(string review, int itemID, int storeID)
         {
-            return StoreRepository.Instance.getStore(storeID).getItemById(itemID).addReview(this.user.userName, review);
+            throw new NotImplementedException();
         }
 
         public override bool login(string userName, string password)
