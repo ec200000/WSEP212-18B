@@ -226,7 +226,6 @@ namespace WSEP212.DomainLayer
             int storeID = store.storeID;
             if (StoreRepository.Instance.addStore(store))
             {
-                Console.WriteLine(store.storeID);
                 return this.user.sellerPermissions.TryAdd(StoreRepository.Instance.stores[storeID]
                     .storeSellersPermissions[this.user.userName]);
             }

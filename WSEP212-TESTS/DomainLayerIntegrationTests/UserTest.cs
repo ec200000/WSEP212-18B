@@ -35,6 +35,7 @@ namespace WSEP212_TESTS
         
         public bool openStore()
         {
+            //Store.resetStoreCounter();
             String name = "store";
             SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<PolicyRule>());
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
@@ -597,6 +598,52 @@ namespace WSEP212_TESTS
                             Assert.IsTrue((bool)parameters2.result);
                             Assert.AreEqual(1, this.user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
+                        }
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestGetStoresPurchaseHistory()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addItemToStorage())
+                    {
+                        if (purchaseItems())
+                        {
+                            switchToSystemManager();
+                            ThreadParameters parameters2 = new ThreadParameters();
+                            object[] list2 = new object[0];
+                            parameters2.parameters = list2;
+                            user.getStoresPurchaseHistory(parameters2);
+                            Assert.AreEqual(1, ((ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)parameters2.result).Count);
+                        }
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestGetUsersPurchaseHistory()
+        {
+            if (registerAndLogin())
+            {
+                if (openStore())
+                {
+                    if (addItemToStorage())
+                    {
+                        if (purchaseItems())
+                        {
+                            switchToSystemManager();
+                            ThreadParameters parameters2 = new ThreadParameters();
+                            object[] list2 = new object[0];
+                            parameters2.parameters = list2;
+                            user.getUsersPurchaseHistory(parameters2);
+                            Assert.AreEqual(1, ((ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>)parameters2.result).Count);
                         }
                     }
                 }

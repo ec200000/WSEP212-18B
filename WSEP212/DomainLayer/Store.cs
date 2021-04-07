@@ -276,5 +276,10 @@ namespace WSEP212.DomainLayer
         {
             purchasesHistory.Add(purchase);
         }
+
+        public static void resetStoreCounter()
+        {
+            Store.storeCounter = 1;
+        }
     }
 }
