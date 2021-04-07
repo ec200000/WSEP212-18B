@@ -234,14 +234,14 @@ namespace WSEP212_TESTS
                     object[] list = new object[6];
                     list[0] = storeID;
                     list[1] = 3;
-                    list[2] = "shoko";
+                    list[2] = "bamba";
                     list[3] = "taim retzah!";
-                    list[4] = 12.0;
-                    list[5] = "milk products";
+                    list[4] = 1.23;
+                    list[5] = "snacks";
                     parameters.parameters = list;
                     user.addItemToStorage(parameters);
-                    Assert.IsTrue((bool)parameters.result);
                     Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
+                    Assert.IsTrue((bool)parameters.result);
                 }
             }
         }
