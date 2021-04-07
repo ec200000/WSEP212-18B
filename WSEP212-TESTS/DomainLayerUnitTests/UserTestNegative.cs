@@ -46,7 +46,7 @@ namespace WSEP212_TESTS
             parameters.parameters = list;
             user.register(parameters);
             Assert.IsTrue((bool)parameters.result);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 1);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
             
             User user2 = new User(user.userName); //the user can't register again - already in the system
             ThreadParameters parameters2 = new ThreadParameters();
@@ -137,7 +137,7 @@ namespace WSEP212_TESTS
             user1.addItemToStorage(parameters);
             Assert.IsFalse((bool)parameters.result);
             Assert.AreEqual(1, StoreRepository.Instance.stores.Count);
-            Assert.AreEqual(0, StoreRepository.Instance.stores[1].storage.Count);
+            Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
         }
         
         [TestMethod]
