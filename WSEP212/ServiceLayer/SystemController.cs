@@ -11,7 +11,7 @@ namespace WSEP212.ServiceLayer
     public class SystemController : ISystemController
     {
         public SystemController() { }
-
+        
         public bool register(String userName, String password)
         {
             String info = $"Register Event was triggered, with the parameters: " +
@@ -139,6 +139,7 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.getOfficialsInformation(userName, storeID);
         }
+
         public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(String userName, int storeID)
         {
             String info = $"GetStorePurchaseHistory Event was triggered, with the parameters:" +

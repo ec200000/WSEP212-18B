@@ -408,3 +408,8 @@ C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\S
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.Console.dll
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\CoverletSourceRootsMapping
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Microsoft.TestPlatform.AdapterUtilities.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll

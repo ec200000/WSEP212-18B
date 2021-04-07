@@ -34,7 +34,7 @@ namespace WSEP212.DomainLayer
             {
                 // checks other rules
                 Node<PolicyRule> ruleNode = policyRules.First;
-                while (ruleNode != null)
+                while (ruleNode.Value != null)
                 {
                     if (!ruleNode.Value.applyRule(user, items))
                     {

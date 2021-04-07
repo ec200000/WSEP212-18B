@@ -300,12 +300,12 @@ namespace WSEP212_TESTS
             user1.editItemDetails(parameters);
             Assert.IsFalse((bool)parameters.result);
         }
-        
+
         [TestMethod]
         public void editItemDetailsTestUserNoSuchItem()
         {
             int storeID = 1;
-            Item item = new Item(2,"shoko","milk",8.90,"milk");
+            Item item = new Item(2, "shoko", "milk", 8.90, "milk");
             item.itemName = "shoko moka";
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[7];
@@ -318,47 +318,9 @@ namespace WSEP212_TESTS
             list[6] = item.category;
             parameters.parameters = list;
             user2.editItemDetails(parameters);
-            Assert.IsFalse((bool)parameters.result); 
+            Assert.IsFalse((bool) parameters.result);
         }
-        
-        [TestMethod]
-        public void AddItemToShoppingCartTestUserNotRegistered()
-        {
-            User u = new User("k"); //the user is not registered to the system
-            Store store = new Store("store", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), u);
-            StoreRepository.Instance.addStore(store);
-            int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products");
-            int storeID = store.storeID;
-            int quantity = 2;
-            ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
-            list[0] = storeID;
-            list[1] = itemID;
-            list[2] = quantity;
-            parameters.parameters = list;
-            u.addItemToShoppingCart(parameters);
-            Assert.IsTrue(parameters.result is NotImplementedException);
-        }
-        
-        [TestMethod]
-        public void RemoveItemFromShoppingCartTestUserNotRegistered()
-        {
-            User u = new User("k"); //the user is not registered to the system
-            Store store = new Store("store", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), u);
-            StoreRepository.Instance.addStore(store);
-            int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products");
-            int storeID = store.storeID;
-            int quantity = 2;
-            ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
-            list[0] = storeID;
-            list[1] = itemID;
-            list[2] = quantity;
-            parameters.parameters = list;
-            u.addItemToShoppingCart(parameters);
-            Assert.IsTrue(parameters.result is NotImplementedException);
-        }
-        
+
         [TestMethod]
         public void TestAppointStoreManager()
         {
