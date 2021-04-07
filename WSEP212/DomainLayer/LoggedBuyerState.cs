@@ -110,7 +110,7 @@ namespace WSEP212.DomainLayer
 
         
 
-        public override bool editItemDetails(int storeID, Item item)
+        public override bool editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)
@@ -118,7 +118,7 @@ namespace WSEP212.DomainLayer
                 if (sellerPermissions.Value.store.storeID == storeID)
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
-                        return sellerPermissions.Value.store.editItem(item.itemID,item.itemName,item.description,item.price,item.category, item.quantity); 
+                        return sellerPermissions.Value.store.editItem(itemID, itemName, description, price, category, quantity); 
                 }
                 sellerPermissions = sellerPermissions.Next;
             }

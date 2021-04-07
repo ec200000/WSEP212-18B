@@ -47,13 +47,13 @@ namespace WSEP212_TESTS
             int itemID = store.addItemToStorage(40, "nike bag", "sport bag", 220, "bag");
             Assert.IsTrue(itemID > 0);
             itemID = store.addItemToStorage(60, "bisli", "monosodium glutamate", -4.8, "snack");
-            Assert.Equals(-1, itemID);
+            Assert.IsTrue(itemID < 0);
             itemID = store.addItemToStorage(60, "", "monosodium glutamate", 4.8, "snack");
-            Assert.Equals(-1, itemID);
+            Assert.IsTrue(itemID < 0);
             itemID = store.addItemToStorage(-1, "bisli", "monosodium glutamate", 4.8, "snack");
-            Assert.Equals(-1, itemID);
+            Assert.IsTrue(itemID < 0);
             itemID = store.addItemToStorage(1, "bisli", "monosodium glutamate", 4.8, "");
-            Assert.Equals(-1, itemID);
+            Assert.IsTrue(itemID < 0);
         }
 
         [TestMethod]
@@ -87,7 +87,7 @@ namespace WSEP212_TESTS
             Assert.AreEqual(1000.0, price);
             int teslaID = store.addItemToStorage(3, "tesla-3", "great car", 150000, "car");
             bool edited = store.editItem(teslaID, "tesla-3", "nice car", 200000, "car", 5);
-            Assert.IsFalse(edited);   
+            Assert.IsTrue(edited);   
             edited = store.editItem(teslaID, "tesla-3", "nice car", 200000, "", 5);
             Assert.IsFalse(edited);
             edited = store.editItem(teslaID, "", "nice car", 200000, "car", 5);

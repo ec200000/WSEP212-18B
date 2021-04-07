@@ -11,8 +11,8 @@ namespace WSEP212.ServiceLayer
 {
     interface IStoreManager
     {
-        public bool addItem(int storeID, int quantity, String itemName, String description, double price, String category);
-        public bool removeItem(int storeID, int itemId);
+        public bool addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
+        public bool removeItemFromStorage(int storeID, int itemId);
         public bool changeItemQuantity(int storeID, int itemId, int numOfItems);
         public bool editItem(int storeID, int itemId, String itemName, String description, double price, String category, int quantity);
         public bool addNewStoreSeller(int storeID, String sellerName, int storeId, String grantorName, ConcurrentLinkedList<String> permissionsList);

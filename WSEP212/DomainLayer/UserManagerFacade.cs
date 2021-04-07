@@ -136,9 +136,9 @@ namespace WSEP212.DomainLayer
             return (bool)threadParameters.result;
         }
 
-        public bool addItemToStorage(string userName, int storeID, Item item)
+        public bool addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category)
         {
-            Object[] paramsList = { userName, storeID, item };
+            Object[] paramsList = { storeID, quantity, itemName, description, price, category };
             User user = UserRepository.Instance.findUserByUserName(userName);
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;

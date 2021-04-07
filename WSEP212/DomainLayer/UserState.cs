@@ -29,7 +29,7 @@ namespace WSEP212.DomainLayer
         public abstract bool itemReview(String review, int itemID, int storeID);
         public abstract bool addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
         public abstract bool removeItemFromStorage(int storeID, int itemID);
-        public abstract bool editItemDetails(int storeID, Item item);
+        public abstract bool editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category);
         public abstract bool appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
         public abstract bool appointStoreOwner(String storeOwnerName, int storeID);
         public abstract bool editManagerPermissions(String managerName, ConcurrentLinkedList<Permissions> permissions, int storeID);

@@ -48,8 +48,7 @@ namespace WSEP212.ServiceLayer
         }
         public bool addItemToStorage(String userName, int storeID, ItemDTO item)
         {
-            Item newItem = new Item(item.quantity, item.itemName, item.description, item.price, item.category);
-            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, newItem);
+            return UserManagerFacade.Instance.addItemToStorage(userName, storeID, item.quantity, item.itemName, item.description, item.price, item.category);
         }
         public bool removeItemFromStorage(String userName, int storeID, int itemID)
         {

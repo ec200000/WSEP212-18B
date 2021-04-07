@@ -50,12 +50,15 @@ namespace WSEP212_TESTS
         
         public bool addItemToStorage()
         {
-            Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
             int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
+            object[] list = new object[6];
             list[0] = storeID;
-            list[1] = item;
+            list[1] = 3;
+            list[2] = "shoko";
+            list[3] = "taim retzah!";
+            list[4] = 12.0;
+            list[5] = "milk products";
             parameters.parameters = list;
             user.addItemToStorage(parameters);
             return (bool)parameters.result;
@@ -222,12 +225,15 @@ namespace WSEP212_TESTS
             {
                 if (openStore())
                 {
-                    Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
                     int storeID = 1;
                     ThreadParameters parameters = new ThreadParameters();
-                    object[] list = new object[2];
+                    object[] list = new object[6];
                     list[0] = storeID;
-                    list[1] = item;
+                    list[1] = 3;
+                    list[2] = "shoko";
+                    list[3] = "taim retzah!";
+                    list[4] = 12.0;
+                    list[5] = "milk products";
                     parameters.parameters = list;
                     user.addItemToStorage(parameters);
                     Assert.IsTrue((bool)parameters.result);
@@ -299,9 +305,14 @@ namespace WSEP212_TESTS
                         item.itemName = "shoko moka";
                         int storeID = 1;
                         ThreadParameters parameters = new ThreadParameters();
-                        object[] list = new object[2];
+                        object[] list = new object[7];
                         list[0] = storeID;
-                        list[1] = item;
+                        list[1] = item.itemID;
+                        list[2] = item.quantity;
+                        list[3] = item.itemName;
+                        list[4] = item.description;
+                        list[5] = item.price;
+                        list[6] = item.category;
                         parameters.parameters = list;
                         user.editItemDetails(parameters);
                         Assert.IsTrue((bool)parameters.result);
@@ -316,12 +327,10 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
                 Store store = new Store("store", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), this.user);
                 StoreRepository.Instance.addStore(store);
-                store.addItemToStorage(item);
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products");
                 int storeID = store.storeID;
-                int itemID = item.itemID;
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[3];
@@ -340,12 +349,10 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
                 Store store = new Store("store", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), this.user);
                 StoreRepository.Instance.addStore(store);
-                store.addItemToStorage(item);
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products");
                 int storeID = store.storeID;
-                int itemID = item.itemID;
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[3];
