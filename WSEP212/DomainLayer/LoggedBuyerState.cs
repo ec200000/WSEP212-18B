@@ -234,6 +234,8 @@ namespace WSEP212.DomainLayer
 
         public override bool purchaseItems(string address)
         {
+            if (address == null)
+                return false;
             return HandlePurchases.Instance.purchaseItems(this.user, address);
         }
 

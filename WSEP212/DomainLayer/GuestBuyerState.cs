@@ -94,7 +94,9 @@ namespace WSEP212.DomainLayer
 
         public override bool purchaseItems(string address)
         {
-            throw new NotImplementedException(); //TODO: IMPLEMENT
+            if (address == null)
+                return false;
+            return HandlePurchases.Instance.purchaseItems(this.user, address);
         }
 
         public override bool register(string userName, string password)

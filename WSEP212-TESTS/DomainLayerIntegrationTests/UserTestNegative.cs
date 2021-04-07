@@ -458,5 +458,32 @@ namespace WSEP212_TESTS
             user2.getOfficialsInformation(parameters);
             Assert.IsNull(parameters.result);     
         }
+
+        [TestMethod]
+        public void purchaseItemsTestUserWithEmptyCart()
+        {
+            string address = "moshe levi 3 beer sheva";
+            ThreadParameters parameters2 = new ThreadParameters();
+            object[] list2 = new object[1];
+            list2[0] = address;
+            parameters2.parameters = list2;
+            user2.purchaseItems(parameters2);
+            Assert.IsFalse((bool)parameters2.result);
+            Assert.AreEqual(0, this.user2.purchases.Count);
+            Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
+        }
+        
+        [TestMethod]
+        public void purchaseItemsTestNoAddressWasGiven()
+        {
+            ThreadParameters parameters2 = new ThreadParameters();
+            object[] list2 = new object[1];
+            list2[0] = null;
+            parameters2.parameters = list2;
+            user2.purchaseItems(parameters2);
+            Assert.IsFalse((bool)parameters2.result);
+            Assert.AreEqual(0, this.user2.purchases.Count);
+            Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
+        }
     }
 }

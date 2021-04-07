@@ -533,7 +533,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestPurchaseItems()
+        public void TestPurchaseItemsLoggedUser()
         {
             if (registerAndLogin())
             {
@@ -565,6 +565,41 @@ namespace WSEP212_TESTS
                         }
                     }
                 }
+            }
+        }
+        
+        [TestMethod]
+        public void TestPurchaseItemsGuestUser()
+        {
+            User user2 = new User("abcd");
+            user2.changeState(new LoggedBuyerState(user2));
+            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<PolicyRule>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
+            Store store = new Store("abba", salesPolicy,purchasePolicy,user2);
+            Item item = new Item(14, "water", "yum", 0.43, "drinks");
+            store.storage.TryAdd(1, item);
+            StoreRepository.Instance.stores.TryAdd(1, store);
+            int storeID = 1;
+            int itemID = 1;
+            int quantity = 2;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[3];
+            list[0] = storeID;
+            list[1] = itemID;
+            list[2] = quantity;
+            parameters.parameters = list;
+            user.addItemToShoppingCart(parameters);
+            if ((bool) parameters.result)
+            {
+                string address = "moshe levi 3 beer sheva";
+                ThreadParameters parameters2 = new ThreadParameters();
+                object[] list2 = new object[1];
+                list2[0] = address;
+                parameters2.parameters = list2;
+                user.purchaseItems(parameters2);
+                Assert.IsTrue((bool)parameters2.result);
+                Assert.AreEqual(1, this.user.purchases.Count);
+                Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
             }
         }
         
