@@ -301,6 +301,8 @@ C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\W
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.csproj.CoreCompileInputs.cache
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.csproj.CopyComplete
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.genruntimeconfig.cache
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\CoverletSourceRootsMapping
+C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Microsoft.TestPlatform.AdapterUtilities.dll
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.csprojAssemblyReference.cache
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.AssemblyInfoInputs.cache
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\netcoreapp3.1\WSEP212-TESTS.AssemblyInfo.cs
