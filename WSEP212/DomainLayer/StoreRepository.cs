@@ -78,7 +78,6 @@ namespace WSEP212.DomainLayer
                 storesPurchasesHistory.TryAdd(store.storeID, store.purchasesHistory);
             }
             return storesPurchasesHistory;
-
         }
     }
 }

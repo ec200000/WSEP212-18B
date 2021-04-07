@@ -196,11 +196,15 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Item item = (Item)param.parameters[1];
+            int quantity = (int)param.parameters[1];
+            String itemName = (String)param.parameters[2];
+            String description = (String)param.parameters[3];
+            double price = (double)param.parameters[4];
+            String category = (String)param.parameters[5];
             object res;
             try
             {
-                res = state.addItemToStorage(storeID, item);
+                res = state.addItemToStorage(storeID, quantity, itemName, description, price, category);
             }
             catch (NotImplementedException)
             {
@@ -236,11 +240,16 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Item item = (Item)param.parameters[1];
+            int itemID = (int)param.parameters[1];
+            int quantity = (int)param.parameters[2];
+            String itemName = (String)param.parameters[3];
+            String description = (String)param.parameters[4];
+            int price = (int)param.parameters[5];
+            String category = (String)param.parameters[6];
             object res;
             try
             {
-                res = state.editItemDetails(storeID, item);
+                res = state.editItemDetails(storeID, itemID, quantity, itemName, description, price, category);
             }
             catch (NotImplementedException)
             {

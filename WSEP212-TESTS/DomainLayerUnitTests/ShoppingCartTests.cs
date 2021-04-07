@@ -10,8 +10,8 @@ namespace WSEP212_TESTS
     {
         private Store storeA;
         private Store storeB;
-        private Item itemA;
-        private Item itemB;
+        private int itemAID;
+        private int itemBID;
         private ShoppingCart shoppingCart;
 
         [TestInitialize]
@@ -25,10 +25,8 @@ namespace WSEP212_TESTS
 
             storeA = new Store("SUPER PHARAM", salesPolicy, purchasePolicy, user);
             storeB = new Store("SUPER PHARAM", salesPolicy, purchasePolicy, user);
-            itemA = new Item(500, "black masks", "protects against infection of covid-19", 10, "health");
-            itemB = new Item(50, "black masks", "protects against infection of covid-19", 10, "health");
-            storeA.addItemToStorage(itemA);
-            storeB.addItemToStorage(itemB);
+            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health");
+            itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, "health");
 
             StoreRepository.Instance.addStore(storeA);
             StoreRepository.Instance.addStore(storeB);
@@ -53,7 +51,7 @@ namespace WSEP212_TESTS
         public void isEmptyTest()
         {
             Assert.IsTrue(shoppingCart.isEmpty());
-            shoppingCart.addItemToShoppingBag(storeA.storeID, itemA.itemID, 5);
+            shoppingCart.addItemToShoppingBag(storeA.storeID, itemAID, 5);
             Assert.IsFalse(shoppingCart.isEmpty());
 
             shoppingCart.clearShoppingCart();
@@ -62,8 +60,8 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void addItemToShoppingBagTest()
         {
-            int storeAID = storeA.storeID, itemAID = itemA.itemID;
-            int storeBID = storeB.storeID, itemBID = itemB.itemID;
+            int storeAID = storeA.storeID;
+            int storeBID = storeB.storeID;
 
             Assert.IsFalse(shoppingCart.addItemToShoppingBag(-1, itemAID, 5));   // should fail because there is no such store ID
             Assert.IsTrue(shoppingCart.isEmpty());
@@ -92,8 +90,8 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void removeItemFromShoppingBagTest()
         {
-            int storeAID = storeA.storeID, itemAID = itemA.itemID;
-            int storeBID = storeB.storeID, itemBID = itemB.itemID;
+            int storeAID = storeA.storeID;
+            int storeBID = storeB.storeID;
             shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10);
             shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20);
 
@@ -117,7 +115,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void changeItemQuantityInShoppingBagTest()
         {
-            int storeID = storeA.storeID, itemID = itemA.itemID;
+            int storeID = storeA.storeID, itemID = itemAID;
             shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
 
             Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(-1, itemID, 5));   // should fail because there is no such store ID
@@ -143,7 +141,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void clearShoppingCartTest()
         {
-            int storeID = storeA.storeID, itemID = itemA.itemID;
+            int storeID = storeA.storeID, itemID = itemAID;
             shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
             Assert.IsFalse(shoppingCart.isEmpty());   // should not be empty - 1 shopping bag with 10 items
 

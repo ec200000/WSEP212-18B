@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
-        public override bool addItemToStorage(int storeID, Item item)
+        public override bool addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +37,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override bool editItemDetails(int storeID, Item item)
+        public override bool editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
         }

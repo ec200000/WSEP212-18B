@@ -46,7 +46,7 @@ namespace WSEP212.DomainLayer
                 // apply sales for items - for now there is no sales
                 return pricesAfterSale;
             }
-            return pricesAfterSale;
+            //return pricesAfterSale;
         }
     }
 }

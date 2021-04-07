@@ -9,7 +9,7 @@ namespace WSEP212_TESTS
     public class ShoppingBagTests
     {
         private Store shoppingBagStore;
-        private Item storeItem;
+        private int storeItemID;
         private ShoppingBag shoppingBag;
 
         [TestInitialize]
@@ -18,9 +18,7 @@ namespace WSEP212_TESTS
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             shoppingBagStore = new Store("SUPER PHARAM", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
-            Item item = new Item(500, "black masks", "protects against infection of covid-19", 10, "health");
-            storeItem = item;
-            shoppingBagStore.addItemToStorage(item);
+            storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health");
             StoreRepository.Instance.addStore(shoppingBagStore);
             shoppingBag = new ShoppingBag(shoppingBagStore);
         }
@@ -42,8 +40,7 @@ namespace WSEP212_TESTS
         public void isEmptyTest()
         {
             Assert.IsTrue(shoppingBag.isEmpty());
-            int itemID = storeItem.itemID;
-            shoppingBag.addItem(itemID, 2);
+            shoppingBag.addItem(storeItemID, 2);
             Assert.IsFalse(shoppingBag.isEmpty());
 
             shoppingBag.clearShoppingBag();
@@ -52,7 +49,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void addItemTest()
         {
-            int itemID = storeItem.itemID;
+            int itemID = storeItemID;
 
             Assert.IsTrue(shoppingBag.addItem(itemID, 5));
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out int quantity));
@@ -83,7 +80,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void removeItemTest()
         {
-            int itemID = storeItem.itemID;
+            int itemID = storeItemID;
 
             Assert.IsFalse(shoppingBag.removeItem(itemID));   // should fail because there is no such item ID in the shopping bag
             Assert.IsFalse(shoppingBag.removeItem(-1));   // should fail because there is no such item ID
@@ -96,7 +93,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void changeItemQuantityTest()
         {
-            int itemID = storeItem.itemID;
+            int itemID = storeItemID;
             shoppingBag.addItem(itemID, 5);
 
             Assert.IsTrue(shoppingBag.changeItemQuantity(itemID, 10));
@@ -124,7 +121,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void clearShoppingBagTest()
         {
-            int itemID = storeItem.itemID;
+            int itemID = storeItemID;
             shoppingBag.addItem(itemID, 5);
             Assert.IsFalse(shoppingBag.isEmpty());   // should not be empty - 5 items
 

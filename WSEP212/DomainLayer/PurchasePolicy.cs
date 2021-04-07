@@ -48,7 +48,7 @@ namespace WSEP212.DomainLayer
                 }
                 return true;
             }
-            return false;
+            //return false;
         }
     }
 }

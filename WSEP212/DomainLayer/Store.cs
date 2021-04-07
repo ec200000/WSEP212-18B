@@ -58,16 +58,29 @@ namespace WSEP212.DomainLayer
         }
 
         // Add new item to the store with his personal details
-        public bool addItemToStorage(Item item)
+        // if the item has the same name, category and price we treat the product as an existing product
+        // the quantity of an existing product will update
+        // returns the itemID of the item, otherwise -1
+        public int addItemToStorage(int quantity, String itemName, String description, double price, String category)
         {
-            if (item.itemName == "" || item.price <= 0 || item.category == "" || item.quantity < 0)
-                return false;
-            int itemID = item.itemID;
-            if(!storage.ContainsKey(itemID))
+            if(quantity <= 0 || price <= 0 || itemName.Equals("") || category.Equals(""))
             {
-                return storage.TryAdd(itemID, item);
+                return -1;
             }
-            return false;
+            // checks that the item not already exist
+            foreach (KeyValuePair<int,Item> pairItem in storage)
+            {
+                Item item = pairItem.Value;
+                if(item.itemName.Equals(itemName) && item.category.Equals(category) && item.price == price)   // the item already exist
+                {
+                    item.quantity += quantity;
+                    return pairItem.Key;
+                }
+            }
+            // item not exist - add new item to storage
+            Item newItem = new Item(quantity, itemName, description, price, category);
+            storage.TryAdd(newItem.itemID, newItem);
+            return newItem.itemID;
         }
 
         // Remove item from the store
@@ -94,6 +107,7 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
+        // returns the obj Item that corresponds to the requested ID number
         public Item getItemById(int itemID)
         {
             if(storage.ContainsKey(itemID))
@@ -106,8 +120,9 @@ namespace WSEP212.DomainLayer
         // edit the personal details of an item
         public bool editItem(int itemID, String itemName, String description, double price, String category, int quantity)
         {
-            if (itemName == "" || price < 0 || category == "" || quantity < 0)
+            if (itemName == "" || price <= 0 || category == "" || quantity < 0)
                 return false;
+            // checks that the item exists
             if (storage.ContainsKey(itemID))
             {
                 Item item = storage[itemID];
@@ -214,6 +229,13 @@ namespace WSEP212.DomainLayer
             {
                 changeItemQuantity(item.Key, item.Value);
             }
+        }
+
+        // Deliver all the items to the address
+        // returns true if the delivery done successfully
+        public bool deliverItems(String address, ConcurrentDictionary<int, int> items)
+        {
+            return DeliverySystem.Instance.deliverItems(address, items);
         }
 
         // Adds a new store seller for this store
