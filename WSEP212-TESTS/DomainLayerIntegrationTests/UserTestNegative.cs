@@ -56,7 +56,7 @@ namespace WSEP212_TESTS
             parameters2.parameters = list2;
             user.register(parameters2);
             Assert.IsFalse((bool)parameters2.result);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 1);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
         }
 
         [TestMethod]
@@ -137,7 +137,7 @@ namespace WSEP212_TESTS
             user1.addItemToStorage(parameters);
             Assert.IsFalse((bool)parameters.result);
             Assert.AreEqual(1, StoreRepository.Instance.stores.Count);
-            Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
+            Assert.AreEqual(0, StoreRepository.Instance.stores[1].storage.Count);
         }
         
         [TestMethod]

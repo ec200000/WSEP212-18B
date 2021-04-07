@@ -3,18 +3,19 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using WSEP212.ServiceLayer;
 
 namespace WSEP212.DomainLayer
 {
-    public class UserManagerFacade : IUserManagerFacade
+    public class SystemControllerFacade : ISystemControllerFacade
     {
-        private static readonly Lazy<UserManagerFacade> lazy
-        = new Lazy<UserManagerFacade>(() => new UserManagerFacade());
+        private static readonly Lazy<SystemControllerFacade> lazy
+        = new Lazy<SystemControllerFacade>(() => new SystemControllerFacade());
 
-        public static UserManagerFacade Instance
+        public static SystemControllerFacade Instance
             => lazy.Value;
 
-        private UserManagerFacade() { }
+        private SystemControllerFacade() { }
 
         public bool register(string userName, string password) //the result will be held in the ThreadParameters Object
         {

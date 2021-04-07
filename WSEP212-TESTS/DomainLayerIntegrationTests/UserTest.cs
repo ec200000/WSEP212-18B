@@ -93,6 +93,10 @@ namespace WSEP212_TESTS
         {
             UserRepository.Instance.users.Clear();
             UserRepository.Instance.usersInfo.Clear();
+            foreach (Store store in StoreRepository.Instance.stores.Values)
+            {
+                store.storage.Clear();
+            }
             StoreRepository.Instance.stores.Clear();
         }
 
