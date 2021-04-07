@@ -19,23 +19,26 @@ namespace WSEP212.DomainLayer
         private StoreManagerFacade() { }
 
 
-        public bool addItem(int storeID, int quantity, String itemName, String description, double price, String category)
+        public bool addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
-            Item item = new Item(quantity, itemName, description, price, category);
-            return StoreRepository.Instance.getStore(storeID).addItemToStorage(item);
+            return StoreRepository.Instance.getStore(storeID).addItemToStorage(quantity, itemName, description, price, category) > 0;
         }
-        public bool removeItem(int storeID, int itemId)
+
+        public bool removeItemFromStorage(int storeID, int itemId)
         {
             return StoreRepository.Instance.getStore(storeID).removeItemFromStorage(itemId);
         }
+
         public bool changeItemQuantity(int storeID, int itemId, int numOfItems)
         {
             return StoreRepository.Instance.getStore(storeID).changeItemQuantity(itemId, numOfItems);
         }
+
         public bool editItem(int storeID, int itemId, String itemName, String description, double price, String category, int quantity)
         {
             return StoreRepository.Instance.getStore(storeID).editItem(itemId, itemName, description, price, category, quantity);
         }
+
         public bool addNewStoreSeller(int storeID, String sellerName, int storeId, String grantorName, ConcurrentLinkedList<String> permissionsList)
         {
             ConcurrentLinkedList<Permissions> sellerPerm = new ConcurrentLinkedList<Permissions>();
@@ -83,6 +86,7 @@ namespace WSEP212.DomainLayer
             SellerPermissions sellerPermission = SellerPermissions.getSellerPermissions(seller, store, grantor, sellerPerm);
             return store.addNewStoreSeller(sellerPermission);
         }
+
         public void addNewPurchase(int storeID, String userName, ConcurrentDictionary<int, int> items, double totalPrice, DateTime dateOfPurchase)
         {
             Store store = StoreRepository.Instance.getStore(storeID);

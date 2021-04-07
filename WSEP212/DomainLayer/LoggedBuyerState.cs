@@ -27,7 +27,7 @@ namespace WSEP212.DomainLayer
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
-        public override bool addItemToStorage(int storeID, Item item)
+        public override bool addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)
@@ -35,7 +35,7 @@ namespace WSEP212.DomainLayer
                 if(sellerPermissions.Value.store.storeID == storeID)
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
-                            return sellerPermissions.Value.store.addItemToStorage(item);
+                            return sellerPermissions.Value.store.addItemToStorage(quantity, itemName, description, price, category) > 0;
                 }
                 sellerPermissions = sellerPermissions.Next;
             }

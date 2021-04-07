@@ -24,3 +24,9 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.AssemblyInfo.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csproj.CoreCompileInputs.cache
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.genruntimeconfig.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csprojAssemblyReference.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.AssemblyInfoInputs.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.AssemblyInfo.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.csproj.CoreCompileInputs.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\netcoreapp3.1\WSEP212.pdb
