@@ -18,7 +18,6 @@ namespace WSEP212_TESTS
             UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
-            
         }
 
         [TestCleanup]
@@ -107,15 +106,15 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void findUserByUserNameTest()
         {
-            Assert.IsNotNull(UserRepository.Instance.findUserByUserName("b"));
-            Assert.IsNull(UserRepository.Instance.findUserByUserName("k"));
+            Assert.IsTrue(UserRepository.Instance.findUserByUserName("b").getTag());
+            Assert.IsFalse(UserRepository.Instance.findUserByUserName("k").getTag());
         }
 
         [TestMethod]
         public void getUserPasswordTest()
         {
-            Assert.IsNotNull(UserRepository.Instance.getUserPassword("b"));
-            Assert.IsNull(UserRepository.Instance.getUserPassword("k"));
+            Assert.IsTrue(UserRepository.Instance.getUserPassword("b").getTag());
+            Assert.IsFalse(UserRepository.Instance.getUserPassword("k").getTag());
         }
 
         [TestMethod]

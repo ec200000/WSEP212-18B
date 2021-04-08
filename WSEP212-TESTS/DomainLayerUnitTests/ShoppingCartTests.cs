@@ -24,8 +24,8 @@ namespace WSEP212_TESTS
             PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
             User user = new User("admin");
 
-            RegularResult<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);
-            RegularResult<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Holon", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Holon", salesPolicy, purchasePolicy, user);
             storeA = StoreRepository.Instance.getStore(addStoreARes.getValue()).getValue();
             storeB = StoreRepository.Instance.getStore(addStoreBRes.getValue()).getValue();
 
