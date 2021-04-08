@@ -8,7 +8,6 @@ namespace WSEP212.DomainLayer
     public class ShoppingCart
     {
         // A data structure associated with a store ID and its shopping cart for a customer
-        // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping cart
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
 
         public ShoppingCart()
@@ -82,27 +81,32 @@ namespace WSEP212.DomainLayer
         }
 
         // purchase all the items in the shopping cart
-        // returns the total price after sales. if the purchase cannot be made returns -1
-        public ResultWithValue<double> purchaseItemsInCart(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        // returns the total price after sales for each store. if the purchase cannot be made returns null
+        public ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsInCart(User user, ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> itemsPurchaseType)
         {
             if(isEmpty())
             {
-                return new FailureWithValue<double>("Purchase Cannot Be Made When The Shopping Cart Is Empty", -1);
+                return new FailureWithValue<ConcurrentDictionary<int, double>>("Purchase Cannot Be Made When The Shopping Cart Is Empty", null);
             }
             else
             {
-                double totalPrice = 0;
+                ConcurrentDictionary<int, double> bagsFinalPrices = new ConcurrentDictionary<int, double>();
                 ResultWithValue<double> shoppingBagPriceRes;
                 foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
                 {
-                    shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag(user, itemsPurchaseType);
-                    if (!shoppingBagPriceRes.getTag())
+                    int storeID = shoppingBag.Value.store.storeID;
+                    if (itemsPurchaseType.TryGetValue(storeID, out ConcurrentDictionary<int, PurchaseType> bagItemsPurchaseType))
                     {
-                        return shoppingBagPriceRes;
+                        shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag(user, bagItemsPurchaseType);
+                        if (!shoppingBagPriceRes.getTag())
+                        {
+                            return new FailureWithValue<ConcurrentDictionary<int, double>>(shoppingBagPriceRes.getMessage(), null);
+                        }
+                        bagsFinalPrices.TryAdd(storeID, shoppingBagPriceRes.getValue());
                     }
-                    totalPrice += shoppingBagPriceRes.getValue();
+                    return new FailureWithValue<ConcurrentDictionary<int, double>>("No Purchase Type Was Selected For One Or More Of The Shopping Bag Items", null);
                 }
-                return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
+                return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", bagsFinalPrices);
             }
         }
 

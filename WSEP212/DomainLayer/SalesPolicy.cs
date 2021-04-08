@@ -37,7 +37,7 @@ namespace WSEP212.DomainLayer
                 Node<PolicyRule> ruleNode = policyRules.First;
                 while (ruleNode.Value != null)
                 {
-                    Result<Object> ruleRes = ruleNode.Value.applyRule(user, items);
+                    RegularResult ruleRes = ruleNode.Value.applyRule(user, items);
                     if (!ruleRes.getTag())
                     {
                         return pricesAfterSale;

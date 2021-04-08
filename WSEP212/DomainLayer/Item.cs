@@ -34,18 +34,17 @@ namespace WSEP212.DomainLayer
         }
 
         // Add new review about an item
-        public bool addReview(String username, String review)   
+        public void addReview(String username, String review)   
         {
             if(reviews.ContainsKey(username))
             {
                 reviews[username].AddFirst(review);
-                return true;
             }
             else
             {
                 LinkedList<String> newUserReviews = new LinkedList<string>();
                 newUserReviews.AddFirst(review);
-                return reviews.TryAdd(username, newUserReviews);
+                reviews.TryAdd(username, newUserReviews);
             }
         }
 

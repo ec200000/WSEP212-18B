@@ -26,7 +26,7 @@ namespace WSEP212.DomainLayer
         //edit item in shopping cart is equal to -> remove + add
         public abstract RegularResult purchaseItems(string address); //later
     
-        public abstract RegularResult openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
+        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
         public abstract RegularResult itemReview(String review, int itemID, int storeID);
         public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
         public abstract RegularResult removeItemFromStorage(int storeID, int itemID);
@@ -35,7 +35,7 @@ namespace WSEP212.DomainLayer
         public abstract RegularResult appointStoreOwner(String storeOwnerName, int storeID);
         public abstract RegularResult editManagerPermissions(String managerName, ConcurrentLinkedList<Permissions> permissions, int storeID);
         public abstract RegularResult removeStoreManager(String managerName, int storeID);
-        public abstract ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
+        public abstract ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
         public abstract ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
         public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
         public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();

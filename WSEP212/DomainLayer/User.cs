@@ -154,12 +154,13 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             String storeName = (String)param.parameters[0];
-            PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[1];
-            SalesPolicy salesPolicy = (SalesPolicy)param.parameters[2];
+            String storeAdress = (String)param.parameters[1];
+            PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[2];
+            SalesPolicy salesPolicy = (SalesPolicy)param.parameters[3];
             object res;
             try
             {
-                res = state.openStore(storeName, purchasePolicy, salesPolicy);
+                res = state.openStore(storeName, storeAdress, purchasePolicy, salesPolicy);
             }
             catch (NotImplementedException)
             {

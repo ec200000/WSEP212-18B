@@ -285,14 +285,25 @@ namespace WSEP212.DomainLayer
             return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
         }
 
-        // Returns information about all the store official (store owner and manager) in the store
-        public ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getStoreOfficialsInfo()
+        // checks if the user is seller in this store
+        // if he is, returns his seller permissions in the store
+        public ResultWithValue<SellerPermissions> getStoreSellerPermissions(String userName)
         {
-            ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> officialsInfo = new ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>>();
+            if(storeSellersPermissions.ContainsKey(userName))
+            {
+                return new OkWithValue<SellerPermissions>("The User Is Seller In This Store", storeSellersPermissions[userName]);
+            }
+            return new FailureWithValue<SellerPermissions>("The User Is Not Seller In This Store", null);
+        }
+
+        // Returns information about all the store official (store owner and manager) in the store
+        public ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getStoreOfficialsInfo()
+        {
+            ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> officialsInfo = new ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>();
             foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
             {
                 SellerPermissions seller = sellerEntry.Value;
-                officialsInfo.TryAdd(seller.seller, seller.permissionsInStore);
+                officialsInfo.TryAdd(seller.seller.userName, seller.permissionsInStore);
             }
             return officialsInfo;
         }

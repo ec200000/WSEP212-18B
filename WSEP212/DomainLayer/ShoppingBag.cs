@@ -96,6 +96,13 @@ namespace WSEP212.DomainLayer
         // returns the total price after sales. if the purchase cannot be made returns -1
         public ResultWithValue<double> purchaseItemsInBag(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
+            foreach (KeyValuePair<int, int> item in items)
+            {
+                if(!itemsPurchaseType.ContainsKey(item.Key))
+                {
+                    return new FailureWithValue<double>("No Purchase Type Was Selected For One Or More Of The Items", -1);
+                }
+            }
             return store.purchaseItems(user, items, itemsPurchaseType);
         }
 

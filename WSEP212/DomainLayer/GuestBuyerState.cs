@@ -48,7 +48,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override ConcurrentDictionary<User, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
         }
@@ -94,7 +94,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
         }
 
-        public override RegularResult openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
             throw new NotImplementedException();
         }
