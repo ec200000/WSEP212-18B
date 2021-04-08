@@ -18,21 +18,12 @@ namespace WSEP212.DomainLayer
             stores = new ConcurrentDictionary<int, Store>();
         }  
         private static readonly object padlock = new object();  
-        private static StoreRepository instance = null;  
-        public static StoreRepository Instance  
-        {  
-            get  
-            {  
-                lock (padlock)  
-                {  
-                    if (instance == null)  
-                    {  
-                        instance = new StoreRepository();  
-                    }  
-                    return instance;  
-                }  
-            }  
-        }
+        private static readonly Lazy<StoreRepository> lazy
+            = new Lazy<StoreRepository>(() => new StoreRepository());
+
+        public static StoreRepository Instance
+            => lazy.Value;
+
         
         public ResultWithValue<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
