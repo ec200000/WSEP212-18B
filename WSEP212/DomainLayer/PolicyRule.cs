@@ -8,6 +8,6 @@ namespace WSEP212.DomainLayer
 {
     public interface PolicyRule
     {
-        public Result<Object> applyRule(User user, ConcurrentDictionary<Item, int> items);
+        public RegularResult applyRule(User user, ConcurrentDictionary<Item, int> items);
     }
 }

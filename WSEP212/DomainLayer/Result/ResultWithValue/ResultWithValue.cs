@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer.Result
 {
-    public interface Result<T>
+    public interface ResultWithValue<T>
     {
         public bool getTag();
         public String getMessage();

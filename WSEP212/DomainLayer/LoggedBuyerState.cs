@@ -23,12 +23,12 @@ namespace WSEP212.DomainLayer
             return UserType.LoggedBuyer;
         }
 
-        public override bool addItemToShoppingCart(int storeID, int itemID, int quantity)
+        public override RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
         }
 
-        public override bool addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
+        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)
@@ -36,14 +36,17 @@ namespace WSEP212.DomainLayer
                 if(sellerPermissions.Value.store.storeID == storeID)
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
-                            return sellerPermissions.Value.store.addItemToStorage(quantity, itemName, description, price, category) > 0;
+                    {
+                        return sellerPermissions.Value.store.addItemToStorage(quantity, itemName, description, price, category);
+                    }
+                    return new FailureWithValue<int>("The User Has No Permission To Add Item To This Store", -1);
                 }
                 sellerPermissions = sellerPermissions.Next;
             }
-            return false;
+            return new FailureWithValue<int>("The User Is Not Store Seller Of This Store", -1);
         }
 
-        public override bool appointStoreManager(string managerName, int storeID)
+        public override RegularResult appointStoreManager(String managerName, int storeID)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while(sellerPermissions.Value != null)
@@ -52,11 +55,11 @@ namespace WSEP212.DomainLayer
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.AppointStoreManager))
                     {
-                        User seller = UserRepository.Instance.findUserByUserName(managerName);
-                        if (user.state is LoggedBuyerState)
+                        ResultWithValue<User> sellerRes = UserRepository.Instance.findUserByUserName(managerName);
+                        if (user.state is LoggedBuyerState)  // need to change to checks if the seller is subscriber
                         {
                             User grantor = this.user;
-                            Store store = StoreRepository.Instance.getStore(storeID);
+                            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
                             ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
                             if (pers.TryAdd(Permissions.GetOfficialsInformation))
                             {
@@ -68,12 +71,13 @@ namespace WSEP212.DomainLayer
                                 }
                             }
                         }
-                        return false;
+                        return new Failure("A Guest Cannot Be Appointed To Be A Store Manager");
                     }
+                    return new Failure("The User Has No Permission To Appoint Store Manager To This Store");
                 }
                 sellerPermissions = sellerPermissions.Next;
             }
-            return false;
+            return new Failure("The User Is Not Store Seller Of This Store");
         }
 
         public override bool appointStoreOwner(string storeOwnerName, int storeID)

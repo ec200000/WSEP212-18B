@@ -26,11 +26,11 @@ namespace WSEP212.DomainLayer
 
         // Adds item to the shopping bag if the item exist and available in the store
         // quantity is the number of the same item to add
-        public Result<Object> addItem(int itemID, int quantity)
+        public RegularResult addItem(int itemID, int quantity)
         {
             if (quantity > 0)
             {
-                Result<Object> itemAvailableRes;
+                RegularResult itemAvailableRes;
                 if (items.ContainsKey(itemID))
                 {
                     int updatedQuantity = items[itemID] + quantity;
@@ -38,7 +38,7 @@ namespace WSEP212.DomainLayer
                     if (itemAvailableRes.getTag())
                     {
                         items[itemID] = updatedQuantity;
-                        return new Ok<Object>("The Item Was Successfully Added To The Shopping Bag", null);
+                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
                     }
                     return itemAvailableRes;
                 }
@@ -48,28 +48,28 @@ namespace WSEP212.DomainLayer
                     if (itemAvailableRes.getTag())
                     {
                         items.TryAdd(itemID, quantity);   // adding item with quantity
-                        return new Ok<Object>("The Item Was Successfully Added To The Shopping Bag", null);
+                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
                     }
                     return itemAvailableRes;
                 }
             }
-            return new Failure<Object>("Cannot Add A Item To The Shopping Bag With A Non-Positive Quantity", null);
+            return new Failure("Cannot Add A Item To The Shopping Bag With A Non-Positive Quantity");
         }
 
         // Removes the item from the shopping bag if it exists
         // If the item has n quantity in the basket, all the n will be deleted
-        public Result<Object> removeItem(int itemID)
+        public RegularResult removeItem(int itemID)
         {
             if(items.ContainsKey(itemID))
             {
                 items.TryRemove(itemID, out _);
-                return new Ok<Object>("The Item Was Successfully Removed From The Shopping Bag", null);
+                return new Ok("The Item Was Successfully Removed From The Shopping Bag");
             }
-            return new Failure<Object>("The Item Is Not Exist In The Shopping Bag", null);
+            return new Failure("The Item Is Not Exist In The Shopping Bag");
         }
 
         // Changes the quantity of item in the bag if the item is in the bag and available in the store
-        public Result<Object> changeItemQuantity(int itemID, int updatedQuantity)
+        public RegularResult changeItemQuantity(int itemID, int updatedQuantity)
         {
             if(updatedQuantity == 0)
             {
@@ -79,22 +79,22 @@ namespace WSEP212.DomainLayer
             { 
                 if (items.ContainsKey(itemID))  // check if item in the shopping bag
                 {
-                    Result<Object> itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
+                    RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
                     if (itemAvailableRes.getTag())   // check if item available in store
                     {
                         items[itemID] = updatedQuantity;
-                        return new Ok<Object>("Item Quantity Was Successfully Changed In The Shopping Bag", null);
+                        return new Ok("Item Quantity Was Successfully Changed In The Shopping Bag");
                     }
                     return itemAvailableRes;
                 }
-                return new Failure<Object>("The Item Is Not Exist In The Shopping Bag", null);
+                return new Failure("The Item Is Not Exist In The Shopping Bag");
             }
-            return new Failure<Object>("Cannot Change Item Quantity To A Non-Positive Number", null);
+            return new Failure("Cannot Change Item Quantity To A Non-Positive Number");
         }
 
         // purchase all the items in the shopping bag
         // returns the total price after sales. if the purchase cannot be made returns -1
-        public Result<double> purchaseItemsInBag(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public ResultWithValue<double> purchaseItemsInBag(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
             return store.purchaseItems(user, items, itemsPurchaseType);
         }

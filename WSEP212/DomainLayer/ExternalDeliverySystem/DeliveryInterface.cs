@@ -8,6 +8,6 @@ namespace WSEP212.DomainLayer
 {
     public interface DeliveryInterface
     {
-        public Result<Object> deliverItems(String address, ConcurrentDictionary<int, int> items);
+        public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items);
     }
 }

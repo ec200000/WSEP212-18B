@@ -13,10 +13,10 @@ namespace WSEP212.DomainLayer
         public static DeliverySystem Instance
             => lazy.Value;
 
-        public Result<Object> deliverItems(String address, ConcurrentDictionary<int, int> items)
+        public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
             // deliver the items to the address
-            return new Ok<Object>("The Delivery Has Been Done Successfully", null);
+            return new Ok("The Delivery Has Been Done Successfully");
         }
     }
 }

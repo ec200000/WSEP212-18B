@@ -34,18 +34,18 @@ namespace WSEP212.DomainLayer
             }  
         }
         
-        public Result<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public ResultWithValue<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
             if(isExistingStore(storeName, storeAddress))
             {
-                return new Failure<int>("The Store Already Exist In The Store Repository", -1);
+                return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
             }
             else
             {
                 Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
                 int storeID = store.storeID;
                 stores.TryAdd(storeID, store);
-                return new Ok<int>("The Store Was Added To The Store Repository Successfully", storeID);
+                return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
             }
         }
 
@@ -62,23 +62,23 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        public Result<Object> removeStore(int storeID)
+        public RegularResult removeStore(int storeID)
         {
             if (stores.ContainsKey(storeID))
             {
                 stores.TryRemove(storeID, out _);
-                return new Ok<Object>("The Store Was Removed From The Store Repository Successfully", null);
+                return new Ok("The Store Was Removed From The Store Repository Successfully");
             }
-            return new Failure<Object>("The Store Is Not Exist In The Store Repository", null);
+            return new Failure("The Store Is Not Exist In The Store Repository");
         }
 
-        public Result<Store> getStore(int storeID)
+        public ResultWithValue<Store> getStore(int storeID)
         {
             if(stores.ContainsKey(storeID))
             {
-                return new Ok<Store>("The Store Was Found In The Repository Successfully", stores[storeID]);
+                return new OkWithValue<Store>("The Store Was Found In The Store Repository Successfully", stores[storeID]);
             }
-            return new Failure<Store>("The Store Is Not Exist In The Store Repository", null);
+            return new FailureWithValue<Store>("The Store Is Not Exist In The Store Repository", null);
         }
 
         public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getAllStoresPurchsesHistory()

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace WSEP212.DomainLayer.Result
 {
-    class Failure<T> : Result<T>
+    public class FailureWithValue<T> : ResultWithValue<T>
     {
         private String message;
         private T value;
 
-        public Failure(String message, T value)
+        public FailureWithValue(String message, T value)
         {
             this.message = message;
             this.value = value;

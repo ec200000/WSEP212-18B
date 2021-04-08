@@ -2,15 +2,13 @@
 
 namespace WSEP212.DomainLayer.Result
 {
-    class Ok<T> : Result<T>
+    public class Ok : RegularResult
     {
         private String message;
-        private T value;
 
-        public Ok(String message, T value)
+        public Ok(String message)
         {
             this.message = message;
-            this.value = value;
         }
 
         public bool getTag()
@@ -20,11 +18,6 @@ namespace WSEP212.DomainLayer.Result
         public String getMessage()
         {
             return this.message;
-        }
-
-        public T getValue()
-        {
-            return this.value;
         }
     }
 }
