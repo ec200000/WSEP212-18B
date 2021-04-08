@@ -2,6 +2,7 @@
 using System;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212_TESTS
 {
@@ -21,7 +22,7 @@ namespace WSEP212_TESTS
             UserRepository.Instance.users.TryAdd(user2, true);
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             
-            Store store2 = new Store("t", new SalesPolicy("default", null), new PurchasePolicy("default", null,null), user2);
+            Store store2 = new Store("t", "bb", new SalesPolicy("default", null), new PurchasePolicy("default", null,null), user2);
             Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
             store2.storage.TryAdd(1, item);
             StoreRepository.Instance.stores.TryAdd(1,store2);
@@ -45,7 +46,7 @@ namespace WSEP212_TESTS
             list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
-            Assert.IsTrue((bool)parameters.result);
+            Assert.IsTrue(((RegularResult)parameters.result).getTag());
             Assert.AreEqual(UserRepository.Instance.users.Count, 3);
             
             User user2 = new User(user.userName); //the user can't register again - already in the system
@@ -55,7 +56,7 @@ namespace WSEP212_TESTS
             list2[1] = "5678";
             parameters2.parameters = list2;
             user.register(parameters2);
-            Assert.IsFalse((bool)parameters2.result);
+            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
             Assert.AreEqual(UserRepository.Instance.users.Count, 3);
         }
 
@@ -79,7 +80,7 @@ namespace WSEP212_TESTS
             list3[0] = user2.userName;
             parameters3.parameters = list3;
             user2.logout(parameters3);
-            Assert.IsTrue((bool)parameters3.result);
+            Assert.IsTrue(((RegularResult)parameters3.result).getTag());
 
             ThreadParameters parameters4 = new ThreadParameters(); //the user is already logged out
             object[] list4 = new object[1];
@@ -94,13 +95,15 @@ namespace WSEP212_TESTS
         {
             User u = new User("k"); //the user is not registered to the system
             String name = "store";
+            String address = "holon";
             SalesPolicy salesPolicy = new SalesPolicy("default", null);
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", null, null);
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = name;
-            list[1] = purchasePolicy;
-            list[2] = salesPolicy;
+            list[1] = address;
+            list[2] = purchasePolicy;
+            list[3] = salesPolicy;
             parameters.parameters = list;
             u.openStore(parameters);
             Assert.IsTrue(parameters.result is NotImplementedException);
@@ -139,7 +142,7 @@ namespace WSEP212_TESTS
             list[5] = "milk products";
             parameters.parameters = list;
             user1.addItemToStorage(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((ResultWithValue<int>)parameters.result).getTag());
             Assert.AreEqual(1, StoreRepository.Instance.stores.Count);
             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
         }
@@ -157,7 +160,7 @@ namespace WSEP212_TESTS
             list[5] = "milk products";
             parameters.parameters = list;
             user2.addItemToStorage(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((ResultWithValue<int>)parameters.result).getTag());
             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
         }
         
@@ -192,7 +195,7 @@ namespace WSEP212_TESTS
             list[2] = storeID;
             parameters.parameters = list;
             user1.itemReview(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -208,7 +211,7 @@ namespace WSEP212_TESTS
             list[2] = storeID;
             parameters.parameters = list;
             user2.itemReview(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -239,7 +242,7 @@ namespace WSEP212_TESTS
             list[1] = itemID;
             parameters.parameters = list;
             user1.removeItemFromStorage(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
                     
         }
@@ -255,7 +258,7 @@ namespace WSEP212_TESTS
             list[1] = itemID;
             parameters.parameters = list;
             user2.removeItemFromStorage(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage.Count);
         }
         
@@ -298,7 +301,7 @@ namespace WSEP212_TESTS
             list[6] = item.category;
             parameters.parameters = list;
             user1.editItemDetails(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
 
         [TestMethod]
@@ -318,7 +321,7 @@ namespace WSEP212_TESTS
             list[6] = item.category;
             parameters.parameters = list;
             user2.editItemDetails(parameters);
-            Assert.IsFalse((bool) parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
 
         [TestMethod]
@@ -344,7 +347,7 @@ namespace WSEP212_TESTS
             list[1] = storeID;
             parameters.parameters = list;
             user2.appointStoreManager(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -370,7 +373,7 @@ namespace WSEP212_TESTS
             list[1] = storeID;
             parameters.parameters = list;
             user2.appointStoreOwner(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
 
         [TestMethod]
@@ -406,7 +409,7 @@ namespace WSEP212_TESTS
             list[2] = storeID;
             parameters.parameters = list;
             user2.editManagerPermissions(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -432,7 +435,7 @@ namespace WSEP212_TESTS
             list[1] = storeID;
             parameters.parameters = list;
             user2.removeStoreManager(parameters);
-            Assert.IsFalse((bool)parameters.result);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
         }
         
         [TestMethod]

@@ -2,6 +2,7 @@
 using System;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212_TESTS
 {
@@ -15,27 +16,35 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            this.store = new Store("Mega", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            this.store = StoreRepository.Instance.getStore(storeIdRes.getValue()).getValue();
+        }
+
+        [TestCleanup]
+        public void afterTests()
+        {
+            StoreRepository.Instance.removeStore(store.storeID);
         }
 
         [TestMethod]
         public void addStoreTest()
         {
-            bool addStoreBool1 = StoreRepository.Instance.addStore(store);
-            Assert.IsTrue(addStoreBool1);
-            bool addStoreBool2 = StoreRepository.Instance.addStore(store);
-            Assert.IsFalse(addStoreBool2);
+            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
+            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            Assert.IsTrue(addStoreBool.getTag());
+            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            Assert.IsFalse(addStoreBool.getTag());
         }
 
         [TestMethod]
         public void removeStoreTest()
         {
             int storeID = this.store.storeID;
-            StoreRepository.Instance.addStore(store);
-            bool removeStoreBool1 = StoreRepository.Instance.removeStore(storeID);
-            Assert.IsTrue(removeStoreBool1);
-            bool removeStoreBool2 = StoreRepository.Instance.removeStore(storeID);
-            Assert.IsFalse(removeStoreBool2);
+            RegularResult removeStoreBool = StoreRepository.Instance.removeStore(storeID);
+            Assert.IsTrue(removeStoreBool.getTag());
+            removeStoreBool = StoreRepository.Instance.removeStore(storeID);
+            Assert.IsFalse(removeStoreBool.getTag());
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212_TESTS
 {
@@ -23,13 +24,13 @@ namespace WSEP212_TESTS
             PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
             User user = new User("admin");
 
-            storeA = new Store("SUPER PHARAM", salesPolicy, purchasePolicy, user);
-            storeB = new Store("SUPER PHARAM", salesPolicy, purchasePolicy, user);
-            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health");
-            itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, "health");
+            ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Holon", salesPolicy, purchasePolicy, user);
+            storeA = StoreRepository.Instance.getStore(addStoreARes.getValue()).getValue();
+            storeB = StoreRepository.Instance.getStore(addStoreBRes.getValue()).getValue();
 
-            StoreRepository.Instance.addStore(storeA);
-            StoreRepository.Instance.addStore(storeB);
+            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
+            itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, "health").getValue();
 
             shoppingCart = new ShoppingCart();
         }
@@ -63,24 +64,24 @@ namespace WSEP212_TESTS
             int storeAID = storeA.storeID;
             int storeBID = storeB.storeID;
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(-1, itemAID, 5));   // should fail because there is no such store ID
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(-1, itemAID, 5).getTag());   // should fail because there is no such store ID
             Assert.IsTrue(shoppingCart.isEmpty());
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemBID, 5));   // should fail because there is no such item ID in the store
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemBID, 5).getTag());   // should fail because there is no such item ID in the store
             Assert.IsTrue(shoppingCart.isEmpty());
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 600));   // should fail because there is no enough of the item in storage
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 600).getTag());   // should fail because there is no enough of the item in storage
             Assert.IsTrue(shoppingCart.isEmpty());
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, -1));   // should fail because it is not possible to add a item with negative quantity
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, -1).getTag());   // should fail because it is not possible to add a item with negative quantity
             Assert.IsTrue(shoppingCart.isEmpty());
 
-            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10));
+            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10).getTag());
             Assert.IsTrue(shoppingCart.shoppingBags.ContainsKey(storeAID));
             Assert.IsTrue(shoppingCart.shoppingBags[storeAID].items.ContainsKey(itemAID));
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeAID].items[itemAID]);
 
-            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20));
+            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20).getTag());
             Assert.AreEqual(2, shoppingCart.shoppingBags.Count);
             Assert.IsTrue(shoppingCart.shoppingBags.ContainsKey(storeBID));
             Assert.IsTrue(shoppingCart.shoppingBags[storeBID].items.ContainsKey(itemBID));
@@ -95,20 +96,20 @@ namespace WSEP212_TESTS
             shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10);
             shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20);
 
-            Assert.IsFalse(shoppingCart.removeItemFromShoppingBag(-1, itemAID));   // should fail because there is no such store ID
+            Assert.IsFalse(shoppingCart.removeItemFromShoppingBag(-1, itemAID).getTag());   // should fail because there is no such store ID
             Assert.IsFalse(shoppingCart.shoppingBags[storeAID].isEmpty());
             Assert.IsFalse(shoppingCart.shoppingBags[storeBID].isEmpty());
 
-            Assert.IsFalse(shoppingCart.removeItemFromShoppingBag(storeAID, itemBID));   // should fail because there is no such item ID in the store
+            Assert.IsFalse(shoppingCart.removeItemFromShoppingBag(storeAID, itemBID).getTag());   // should fail because there is no such item ID in the store
             Assert.IsFalse(shoppingCart.shoppingBags[storeAID].isEmpty());
             Assert.IsFalse(shoppingCart.shoppingBags[storeBID].isEmpty());
 
-            Assert.IsTrue(shoppingCart.removeItemFromShoppingBag(storeAID, itemAID));
+            Assert.IsTrue(shoppingCart.removeItemFromShoppingBag(storeAID, itemAID).getTag());
             Assert.AreEqual(1, shoppingCart.shoppingBags.Count);
             Assert.IsFalse(shoppingCart.shoppingBags.ContainsKey(storeAID));
             Assert.IsFalse(shoppingCart.shoppingBags[storeBID].isEmpty());
 
-            Assert.IsTrue(shoppingCart.removeItemFromShoppingBag(storeBID, itemBID));
+            Assert.IsTrue(shoppingCart.removeItemFromShoppingBag(storeBID, itemBID).getTag());
             Assert.IsTrue(shoppingCart.isEmpty());
         }
 
@@ -118,22 +119,22 @@ namespace WSEP212_TESTS
             int storeID = storeA.storeID, itemID = itemAID;
             shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
 
-            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(-1, itemID, 5));   // should fail because there is no such store ID
+            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(-1, itemID, 5).getTag());   // should fail because there is no such store ID
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
 
-            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, -1, 5));    // should fail because there is no such item ID in the store
+            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, -1, 5).getTag());    // should fail because there is no such item ID in the store
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
 
-            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 600));   // should fail because there is no enough of the item in storage
+            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 600).getTag());   // should fail because there is no enough of the item in storage
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
 
-            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, -1));   // should fail because -1 is not a valid quantity
+            Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, -1).getTag());   // should fail because -1 is not a valid quantity
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
 
-            Assert.IsTrue(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 5)); 
+            Assert.IsTrue(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 5).getTag()); 
             Assert.AreEqual(5, shoppingCart.shoppingBags[storeID].items[itemID]);
 
-            Assert.IsTrue(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 0));
+            Assert.IsTrue(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 0).getTag());
             Assert.IsFalse(shoppingCart.shoppingBags.ContainsKey(storeID));
             Assert.IsTrue(shoppingCart.isEmpty());
         }

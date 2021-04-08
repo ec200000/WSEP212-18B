@@ -412,3 +412,8 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\M
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\CoverletSourceRootsMapping
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Microsoft.TestPlatform.AdapterUtilities.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll

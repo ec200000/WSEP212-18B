@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -20,39 +21,43 @@ namespace WSEP212.DomainLayer
         public ConcurrentDictionary<User,bool> users { get; set; }
         public ConcurrentDictionary<String,String> usersInfo { get; set; }
 
-        public bool insertNewUser(User newUser,String password)
+        public RegularResult insertNewUser(User newUser,String password)
         {
             if(checkIfUserExists(newUser.userName))
             {
-                return false; //user is already in the system
+                return new Failure("User Name Already Exists In The System");
             }
-            users.TryAdd(newUser,false);
+            users.TryAdd(newUser, false);
             usersInfo.TryAdd(newUser.userName, Authentication.Instance.encryptPassword(password));
-            return true;
+            return new Ok("Registration To The System Was Successful");
         }
 
         //status is true: register -> login, otherwise: login -> logout
-        public bool changeUserLoginStatus(User user, bool status, String passwordToValidate)
+        public RegularResult changeUserLoginStatus(User user, bool status, String passwordToValidate)
         {
             bool oldStatus;
             if(status) //need to verify it's password
             {
-                string userPassword = getUserPassword(user.userName);
-                if(userPassword != null) //found password in DB
+                ResultWithValue<String> userPasswordRes = getUserPassword(user.userName);
+                if(userPasswordRes.getTag()) //found password in DB
                 {
-                    bool res = Authentication.Instance.validatePassword(passwordToValidate, userPassword);
-                    if (!res) //the password that we are validating does not match to the password in the DB
-                        return false;
+                    bool res = Authentication.Instance.validatePassword(passwordToValidate, userPasswordRes.getValue());
+                    if (!res)  //the password that we are validating does not match to the password in the DB
+                    {
+                        return new Failure("The Password Entered Is Incorrect, Please Try Again");
+                    }
                 }
             }
             if(users.TryGetValue(user, out oldStatus))
             {
                 if(oldStatus != status)
-                    return users.TryUpdate(user, status, oldStatus);
-                return false;
+                {
+                    users.TryUpdate(user, status, oldStatus);
+                    return new Ok("User Change Login Status Successfully");
+                }
+                return new Failure("The User Is Already In The Same Login Status");
             }
-                
-            return false;
+            return new Failure("System Fails To Find The Login Status Of The User");
         }
 
         //removing completely from the system
@@ -73,24 +78,24 @@ namespace WSEP212.DomainLayer
 
         //<param>: String userName
         //<returns>: If found -> user returned, otherwise null is returned
-        public User findUserByUserName(String userName)
+        public ResultWithValue<User> findUserByUserName(String userName)
         {
             foreach (KeyValuePair<User,bool> user in users)
             {
                 if(user.Key.userName.Equals(userName))
                 {
-                    return user.Key;
+                    return new OkWithValue<User>("The User Was Found In The User Repository Successfully", user.Key);
                 }
             }
-            return null;
+            return new FailureWithValue<User>("The User Name Not Exist In The User Repository", null);
         }
 
-        public string getUserPassword(string userName)
+        public ResultWithValue<String> getUserPassword(string userName)
         {
-            string password;
+            String password;
             if (usersInfo.TryGetValue(userName, out password))
-                return password;
-            return null;
+                return new OkWithValue<String>("User Password Successfully Found", password);
+            return new FailureWithValue<String>("User Password Not Found", null);
         }
 
         public bool checkIfUserExists(string userName)

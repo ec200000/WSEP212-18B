@@ -20,10 +20,13 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void addReviewTest()
         {
-            bool review = potato.addReview("admin", "the potato was very tasty!");
-            Assert.IsTrue(review);
-            bool anotherReview = potato.addReview("admin", "5/5!!!");
-            Assert.IsTrue(anotherReview);
+            potato.addReview("admin", "the potato was very tasty!");
+            Assert.IsTrue(potato.reviews.ContainsKey("admin"));
+            Assert.AreEqual("the potato was very tasty!", potato.reviews["admin"].First.Value);
+            potato.addReview("admin", "5/5!!!");
+            Assert.IsTrue(potato.reviews.ContainsKey("admin"));
+            Assert.AreEqual("5/5!!!", potato.reviews["admin"].First.Value);
+            Assert.AreEqual("the potato was very tasty!", potato.reviews["admin"].Last.Value);
         }
     }
 }
