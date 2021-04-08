@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -220,16 +221,15 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        public override bool openStore(string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public override Result<int> openStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy)
         {
-            Store store = new Store(storeName, salesPolicy, purchasePolicy, this.user);
-            int storeID = store.storeID;
-            if (StoreRepository.Instance.addStore(store))
+            Result<int> addStoreRes = StoreRepository.Instance.addStore(storeName, storeAddress, salesPolicy, purchasePolicy, this.user);
+            if (addStoreRes.getTag())
             {
                 return this.user.sellerPermissions.TryAdd(StoreRepository.Instance.stores[storeID]
                     .storeSellersPermissions[this.user.userName]);
             }
-            return false;
+            return addStoreRes;
         }
 
         public override bool purchaseItems(string address)

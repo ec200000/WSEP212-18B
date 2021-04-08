@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -32,50 +34,59 @@ namespace WSEP212.DomainLayer
             }  
         }
         
-        public bool addStore(Store store)
+        public Result<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
-            int storeID = store.storeID;
-            if(!stores.ContainsKey(storeID))
+            if(isExistingStore(storeName, storeAddress))
             {
-                return stores.TryAdd(storeID, store);
+                return new Failure<int>("The Store Already Exist In The Store Repository", -1);
+            }
+            else
+            {
+                Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
+                int storeID = store.storeID;
+                stores.TryAdd(storeID, store);
+                return new Ok<int>("The Store Was Added To The Store Repository Successfully", storeID);
+            }
+        }
+
+        private bool isExistingStore(String storeName, String storeAddress)
+        {
+            foreach (KeyValuePair<int, Store> storePair in stores)
+            {
+                Store store = storePair.Value;
+                if (store.storeName.Equals(storeName) && store.storeAddress.Equals(storeAddress))
+                {
+                    return true;
+                }
             }
             return false;
         }
 
-        public bool removeStore(int storeID)
+        public Result<Object> removeStore(int storeID)
         {
             if (stores.ContainsKey(storeID))
             {
-                return stores.TryRemove(storeID, out _);
+                stores.TryRemove(storeID, out _);
+                return new Ok<Object>("The Store Was Removed From The Store Repository Successfully", null);
             }
-            return false;
+            return new Failure<Object>("The Store Is Not Exist In The Store Repository", null);
         }
 
-        public Store getStore(int storeID)
+        public Result<Store> getStore(int storeID)
         {
             if(stores.ContainsKey(storeID))
             {
-                return stores[storeID];
+                return new Ok<Store>("The Store Was Found In The Repository Successfully", stores[storeID]);
             }
-            return null;
-        }
-        public ConcurrentBag<Store> getAllStores()
-        {
-            ConcurrentBag<Store> allStores = new ConcurrentBag<Store>();
-            foreach(KeyValuePair<int,Store> store in stores)
-            {
-                allStores.Add(store.Value);
-            }
-            return allStores;
+            return new Failure<Store>("The Store Is Not Exist In The Store Repository", null);
         }
 
         public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getAllStoresPurchsesHistory()
         {
             ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>();
-            ConcurrentBag<Store> allStores = getAllStores();
-            foreach(Store store in allStores)
+            foreach(KeyValuePair<int, Store> storePair in stores)
             {
-                storesPurchasesHistory.TryAdd(store.storeID, store.purchasesHistory);
+                storesPurchasesHistory.TryAdd(storePair.Key, storePair.Value.purchasesHistory);
             }
             return storesPurchasesHistory;
         }

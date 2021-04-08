@@ -15,7 +15,8 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a item ID and its item
         public ConcurrentDictionary<int, Item> storage { get; set; }
         public int storeID { get; set; }
-        public string storeName { get; set; }
+        public String storeName { get; set; }
+        public String storeAddress { get; set; }
         public bool activeStore { get; set; }
         public SalesPolicy salesPolicy { get; set; }
         public PurchasePolicy purchasePolicy { get; set; }
@@ -23,7 +24,7 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
 
-        public Store(String storeName, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public Store(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
@@ -33,6 +34,7 @@ namespace WSEP212.DomainLayer
             this.purchasePolicy = purchasePolicy;
             this.purchasesHistory = new ConcurrentBag<PurchaseInfo>();
             this.storeName = storeName;
+            this.storeAddress = storeAddress;
 
             // create the founder seller permissions
             ConcurrentLinkedList<Permissions> founderPermissions = new ConcurrentLinkedList<Permissions>();

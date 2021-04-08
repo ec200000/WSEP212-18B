@@ -1,5 +1,7 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -22,77 +24,86 @@ namespace WSEP212.DomainLayer
 
         // Adds a quantity items to a store's shopping bag if the store and the item exists 
         // If the operation fails, remove the shopping bag if it is empty
-        public bool addItemToShoppingBag(int storeID, int itemID, int quantity)
+        public Result<Object> addItemToShoppingBag(int storeID, int itemID, int quantity)
         {
-            bool addItem = false;
             if (quantity > 0)
             {
-                ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
-                if (shoppingBag != null)
+                Result<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+                if (shoppingBagRes.getTag())
                 {
-                    addItem = shoppingBag.addItem(itemID, quantity);
-                    if (!addItem)
+                    Result<Object> addItemRes = shoppingBagRes.getValue().addItem(itemID, quantity);
+                    if (!addItemRes.getTag())
                     {
-                        removeShoppingBagIfEmpty(shoppingBag);
+                        removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                     }
+                    return addItemRes;
                 }
+                return new Failure<Object>(shoppingBagRes.getMessage(), null);
             }
-            return addItem;
+            return new Failure<Object>("Cannot Add A Item To The Shopping Bag With A Non-Positive Quantity", null);
         }
 
         // Removes a item from a store's shopping bag if the store and the item exists 
         // If the operation was successful, remove the shopping bag if it is empty
-        public bool removeItemFromShoppingBag(int storeID, int itemID)
+        public Result<Object> removeItemFromShoppingBag(int storeID, int itemID)
         {
-            ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
-            bool removeItem = false;
-
-            if (shoppingBag != null)
+            Result<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+            if (shoppingBagRes.getTag())
             {
-                removeItem = shoppingBag.removeItem(itemID);
-                if (removeItem)
+                Result<Object> removeItemRes = shoppingBagRes.getValue().removeItem(itemID);
+                if (removeItemRes.getTag())
                 {
-                    removeShoppingBagIfEmpty(shoppingBag);
+                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                 }
+                return removeItemRes;
             }
-            return removeItem;
+            return new Failure<Object>(shoppingBagRes.getMessage(), null);
         }
 
         // Changes the quantity of item in a shopping bag
         // If the operation was successful, remove the shopping bag if it is empty
-        public bool changeItemQuantityInShoppingBag(int storeID, int itemID, int updatedQuantity)
+        public Result<Object> changeItemQuantityInShoppingBag(int storeID, int itemID, int updatedQuantity)
         {
-            bool changeQuantity = false;
             if (updatedQuantity >= 0)
             {
-                ShoppingBag shoppingBag = getStoreShoppingBag(storeID);
-                if (shoppingBag != null)
+                Result<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+                if (shoppingBagRes.getTag())
                 {
-                    changeQuantity = shoppingBag.changeItemQuantity(itemID, updatedQuantity);
-                    if (changeQuantity)
+                    Result<Object> changeQuantityRes = shoppingBagRes.getValue().changeItemQuantity(itemID, updatedQuantity);
+                    if (changeQuantityRes.getTag())
                     {
-                        removeShoppingBagIfEmpty(shoppingBag);
+                        removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                     }
+                    return changeQuantityRes;
                 }
+                return new Failure<Object>(shoppingBagRes.getMessage(), null);
             }
-            return changeQuantity;
+            return new Failure<Object>("Cannot Change Item Quantity To A Non-Positive Number", null);
         }
 
         // purchase all the items in the shopping cart
         // returns the total price after sales. if the purchase cannot be made returns -1
-        public double purchaseItemsInCart(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public Result<double> purchaseItemsInCart(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-            double totalPrice = 0;
-            foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
+            if(isEmpty())
             {
-                double shoppingBagPrice = shoppingBag.Value.purchaseItemsInBag(user, itemsPurchaseType);
-                if(shoppingBagPrice < 0)
-                {
-                    return -1;
-                }
-                totalPrice += shoppingBagPrice;
+                return new Failure<double>("Purchase Cannot Be Made When The Shopping Cart Is Empty", -1);
             }
-            return totalPrice;
+            else
+            {
+                double totalPrice = 0;
+                Result<double> shoppingBagPriceRes;
+                foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
+                {
+                    shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag(user, itemsPurchaseType);
+                    if (!shoppingBagPriceRes.getTag())
+                    {
+                        return shoppingBagPriceRes;
+                    }
+                    totalPrice += shoppingBagPriceRes.getValue();
+                }
+                return new Ok<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
+            }
         }
 
         // Removes all the shopping bags in the shopping cart
@@ -104,22 +115,22 @@ namespace WSEP212.DomainLayer
         // Returns the store's shopping bag
         // If the shopping bag does not exist, create a new shopping bag for the relevent store
         // If the store does not exist/active we will return null 
-        private ShoppingBag getStoreShoppingBag(int storeID)
+        private Result<ShoppingBag> getStoreShoppingBag(int storeID)
         {
             if (shoppingBags.ContainsKey(storeID))
             {
-                return shoppingBags[storeID];
+                return new Ok<ShoppingBag>("Returns An Existing Shopping Bag", shoppingBags[storeID]);
             }
             else
             {
-                Store store = StoreRepository.Instance.getStore(storeID);
-                ShoppingBag newShoppingBag = null;
-                if (store != null)
+                Result<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+                if (storeRes.getTag())
                 {
-                    newShoppingBag = new ShoppingBag(store);
+                    ShoppingBag newShoppingBag = new ShoppingBag(storeRes.getValue());
                     shoppingBags.TryAdd(storeID, newShoppingBag);
+                    return new Ok<ShoppingBag>("Returns A New Shopping Bag", newShoppingBag);
                 }
-                return newShoppingBag;
+                return new Failure<ShoppingBag>(storeRes.getMessage(), null);
             }
         }
 

@@ -19,9 +19,9 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            this.store = new Store("Mega", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            Result<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            this.store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             this.sodaID = store.addItemToStorage(3, "soda-stream", "great drink", 150, "drink").getValue();
-            StoreRepository.Instance.addStore(store);
         }
 
         [TestCleanup]
