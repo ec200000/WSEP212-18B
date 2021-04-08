@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -16,66 +18,66 @@ namespace WSEP212.DomainLayer
             stores = new ConcurrentDictionary<int, Store>();
         }  
         private static readonly object padlock = new object();  
-        private static StoreRepository instance = null;  
-        public static StoreRepository Instance  
-        {  
-            get  
-            {  
-                lock (padlock)  
-                {  
-                    if (instance == null)  
-                    {  
-                        instance = new StoreRepository();  
-                    }  
-                    return instance;  
-                }  
-            }  
-        }
+        private static readonly Lazy<StoreRepository> lazy
+            = new Lazy<StoreRepository>(() => new StoreRepository());
+
+        public static StoreRepository Instance
+            => lazy.Value;
+
         
-        public bool addStore(Store store)
+        public ResultWithValue<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
-            int storeID = store.storeID;
-            if(!stores.ContainsKey(storeID))
+            if(isExistingStore(storeName, storeAddress))
             {
-                return stores.TryAdd(storeID, store);
+                return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
+            }
+            else
+            {
+                Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
+                int storeID = store.storeID;
+                stores.TryAdd(storeID, store);
+                return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
+            }
+        }
+
+        private bool isExistingStore(String storeName, String storeAddress)
+        {
+            foreach (KeyValuePair<int, Store> storePair in stores)
+            {
+                Store store = storePair.Value;
+                if (store.storeName.Equals(storeName) && store.storeAddress.Equals(storeAddress))
+                {
+                    return true;
+                }
             }
             return false;
         }
 
-        public bool removeStore(int storeID)
+        public RegularResult removeStore(int storeID)
         {
             if (stores.ContainsKey(storeID))
             {
-                return stores.TryRemove(storeID, out _);
+                stores.TryRemove(storeID, out _);
+                return new Ok("The Store Was Removed From The Store Repository Successfully");
             }
-            return false;
+            return new Failure("The Store Is Not Exist In The Store Repository");
         }
 
-        public Store getStore(int storeID)
+        public ResultWithValue<Store> getStore(int storeID)
         {
             if(stores.ContainsKey(storeID))
             {
-                return stores[storeID];
+                return new OkWithValue<Store>("The Store Was Found In The Store Repository Successfully", stores[storeID]);
             }
-            return null;
-        }
-        public ConcurrentBag<Store> getAllStores()
-        {
-            ConcurrentBag<Store> allStores = new ConcurrentBag<Store>();
-            foreach(KeyValuePair<int,Store> store in stores)
-            {
-                allStores.Add(store.Value);
-            }
-            return allStores;
+            return new FailureWithValue<Store>("The Store Is Not Exist In The Store Repository", null);
         }
 
         public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getAllStoresPurchsesHistory()
         {
             ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>();
-            ConcurrentBag<Store> allStores = getAllStores();
-            foreach(Store store in allStores)
+            foreach(KeyValuePair<int, Store> storePair in stores)
             {
-                storesPurchasesHistory.TryAdd(store.storeID, store.purchasesHistory);
+                storesPurchasesHistory.TryAdd(storePair.Key, storePair.Value.purchasesHistory);
             }
             return storesPurchasesHistory;
         }
