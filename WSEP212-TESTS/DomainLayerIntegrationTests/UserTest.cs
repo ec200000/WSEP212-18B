@@ -577,10 +577,10 @@ namespace WSEP212_TESTS
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
             Store store = new Store("abba", salesPolicy,purchasePolicy,user2);
             Item item = new Item(14, "water", "yum", 0.43, "drinks");
-            store.storage.TryAdd(1, item);
+            store.storage.TryAdd(item.itemID, item);
             StoreRepository.Instance.stores.TryAdd(1, store);
             int storeID = 1;
-            int itemID = 1;
+            int itemID = item.itemID;
             int quantity = 2;
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[3];
