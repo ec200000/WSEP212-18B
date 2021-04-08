@@ -32,17 +32,17 @@ namespace WSEP212.DomainLayer
         // returns: bool
         public void register(Object list)
         {
-            ThreadParameters param = (ThreadParameters)list;
-            String username = (String)param.parameters[0];
-            String password = (String)param.parameters[1];
+            ThreadParameters param = (ThreadParameters)list; // getting the thread parameters object for the function
+            String username = (String)param.parameters[0]; // getting the first argument
+            String password = (String)param.parameters[1]; // getting the second argument
             object res;
             try
             {
-                res = state.register(username, password);
+                res = state.register(username, password);  // calling the function of the user's state
             }
             catch (NotImplementedException)
             {
-                res = new NotImplementedException();
+                res = new NotImplementedException(); // instead of throwing an exception here
             }
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done

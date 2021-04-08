@@ -27,14 +27,14 @@ namespace WSEP212.DomainLayer
 
         private bool externalPurchase(double amount, User user)
         {
-            return Math.Abs(amount - PaymentSystem.Instance.purchaseItems(user, amount)) < 0.01;
+            return Math.Abs(amount - PaymentSystem.Instance.purchaseItems(user, amount)) < 0.01; // checking the user was charged in the correct amount
         }
 
         private void rollback(User user)
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.store.rollBackPurchase(shoppingBag.items);
+                shoppingBag.store.rollBackPurchase(shoppingBag.items); // if the purchase failed
             }
         }
 
@@ -43,7 +43,7 @@ namespace WSEP212.DomainLayer
             ConcurrentDictionary<int, PurchaseType> purchaseTypes = new ConcurrentDictionary<int, PurchaseType>();
             foreach (int itemID in shoppingBag.items.Keys)
             {
-                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase); // getting the purchase types for each item
             }
             return purchaseTypes;
         }
@@ -52,7 +52,7 @@ namespace WSEP212.DomainLayer
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                double bagPrice = shoppingBag.purchaseItemsInBag(user, getBagPurchaseTypes(shoppingBag));
+                double bagPrice = shoppingBag.purchaseItemsInBag(user, getBagPurchaseTypes(shoppingBag)); // the total of the prices in the bag
                 PurchaseInfo purchaseInfo = new PurchaseInfo(shoppingBag.store.storeID, user.userName,
                     shoppingBag.items, bagPrice, DateTime.Now);
                 user.purchases.Add(purchaseInfo);
@@ -64,16 +64,16 @@ namespace WSEP212.DomainLayer
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.store.deliverItems(address, shoppingBag.items);
+                shoppingBag.store.deliverItems(address, shoppingBag.items); // getting the deliveries for each bag
             }
         }
 
         public bool purchaseItems(User user, String address)
         {
-            double total = calculatePurchaseTotal(user);
+            double total = calculatePurchaseTotal(user); // calculating the total amount
             if (externalPurchase(total, user))
             {
-                createPurchaseInfos(user);
+                createPurchaseInfos(user); 
                 callDeliverySystem(user, address);
                 return true;
             }
