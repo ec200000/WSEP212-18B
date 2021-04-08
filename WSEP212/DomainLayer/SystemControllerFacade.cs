@@ -22,15 +22,16 @@ namespace WSEP212.DomainLayer
         public RegularResult register(string userName, string password) //the result will be held in the ThreadParameters Object
         {
             ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
-            if (!userRes.getTag())
+            if (userRes.getTag()) //found user
             {
-                return new Failure(userRes.getMessage());
+                return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
             }
 
             Object[] paramsList = { userName, password };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(userRes.getValue().register, threadParameters); //creating the job
+            User newUser = new User(userName);
+            ThreadPool.QueueUserWorkItem(newUser.register, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if(threadParameters.result is NotImplementedException)
             {
