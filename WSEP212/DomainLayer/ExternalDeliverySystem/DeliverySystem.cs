@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -12,10 +13,10 @@ namespace WSEP212.DomainLayer
         public static DeliverySystem Instance
             => lazy.Value;
 
-        public bool deliverItems(String address, ConcurrentDictionary<int, int> items)
+        public Result<Object> deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
             // deliver the items to the address
-            return true;
+            return new Ok<Object>("The Delivery Has Been Done Successfully", null);
         }
     }
 }

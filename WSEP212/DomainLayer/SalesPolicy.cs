@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -29,14 +30,15 @@ namespace WSEP212.DomainLayer
                 pricesAfterSale.TryAdd(item.Key.itemID, item.Key.price);
             }
 
-            // checks the user can purchase in the store
+            // checks the user can get sales in the store
             if (true)
             {
                 // checks other rules
                 Node<PolicyRule> ruleNode = policyRules.First;
                 while (ruleNode.Value != null)
                 {
-                    if (!ruleNode.Value.applyRule(user, items))
+                    Result<Object> ruleRes = ruleNode.Value.applyRule(user, items);
+                    if (!ruleRes.getTag())
                     {
                         return pricesAfterSale;
                     }

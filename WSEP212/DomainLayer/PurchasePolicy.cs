@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -23,7 +24,7 @@ namespace WSEP212.DomainLayer
         // checks that the user can buy in the store
         // checks that the purchase type is allowed in the store
         // checks all the other rules of the store policy
-        public bool approveByPurchasePolicy(User user, ConcurrentDictionary<Item, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public Result<Object> approveByPurchasePolicy(User user, ConcurrentDictionary<Item, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
             // checks the user can purchase in the store
             if(true)
@@ -33,20 +34,21 @@ namespace WSEP212.DomainLayer
                 {
                     if(!purchaseRoutes.Contains(purchaseType.Value))
                     {
-                        return false;
+                        return new Failure<Object>("One Or More Of The Selected Purchase Types Are Not Supported In This Store", null);
                     }
                 }
                 // checks other rules
                 Node<PolicyRule> ruleNode = policyRules.First;
                 while(ruleNode.Value != null)
                 {
-                    if(!ruleNode.Value.applyRule(user, items))
+                    Result<Object> ruleRes = ruleNode.Value.applyRule(user, items);
+                    if (!ruleRes.getTag())
                     {
-                        return false;
+                        return ruleRes;
                     }
                     ruleNode = ruleNode.Next;
                 }
-                return true;
+                return new Ok<Object>("The Purchase Was Approved By The Store's Purchase Policy", null);
             }
             //return false;
         }
