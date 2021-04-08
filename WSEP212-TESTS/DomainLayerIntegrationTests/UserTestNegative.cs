@@ -471,7 +471,7 @@ namespace WSEP212_TESTS
             list2[0] = address;
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
-            Assert.IsFalse((bool)parameters2.result);
+            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
         }
@@ -484,7 +484,7 @@ namespace WSEP212_TESTS
             list2[0] = null;
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
-            Assert.IsFalse((bool)parameters2.result);
+            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
         }

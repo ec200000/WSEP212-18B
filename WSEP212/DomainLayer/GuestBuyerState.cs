@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -112,8 +113,6 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult purchaseItems(String address)
         {
-            if (address == null) // checking the user entered an addresss
-                return false;
             return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
         }
 

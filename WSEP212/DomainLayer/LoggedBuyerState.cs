@@ -247,7 +247,7 @@ namespace WSEP212.DomainLayer
             ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
             if (findUserRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, null);
+                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), false, null);
                 if (loginStateRes.getTag())
                 {
                     this.user.changeState(new GuestBuyerState(this.user));
