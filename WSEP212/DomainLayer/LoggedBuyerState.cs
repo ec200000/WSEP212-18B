@@ -61,7 +61,7 @@ namespace WSEP212.DomainLayer
                     {
                         // checking if the user have the needed permissions
                         User seller = UserRepository.Instance.findUserByUserName(managerName);
-                        if (user.state is LoggedBuyerState)
+                        if (seller!=null) // the user is registered
                         {
                             User grantor = this.user; // appoints the user
                             Store store = StoreRepository.Instance.getStore(storeID); 
@@ -98,7 +98,7 @@ namespace WSEP212.DomainLayer
                     {
                         // checking if the user have the needed permissions
                         User seller = UserRepository.Instance.findUserByUserName(storeOwnerName);
-                        if (user.state is LoggedBuyerState)
+                        if (seller!=null) // the user is registered
                         {
                             User grantor = this.user; // appoints the user
                             Store store = StoreRepository.Instance.getStore(storeID);
@@ -120,8 +120,6 @@ namespace WSEP212.DomainLayer
             }
             return false;
         }
-
-        
 
         public override bool editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
         {
