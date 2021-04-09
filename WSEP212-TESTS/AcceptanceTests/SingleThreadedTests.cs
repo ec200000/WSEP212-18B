@@ -13,6 +13,7 @@ namespace WSEP212_TESTS.AcceptanceTests
     {
         private User user1;
         private User user2;
+        private User user3;
         private User systemManager;
         private Store store;
         private Item item;
@@ -25,11 +26,15 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             user1 = new User("a"); //guest
             user2 = new User("b"); //logged
+            user3 = new User("r"); //logged
             user2.changeState(new LoggedBuyerState(user2));
+            user3.changeState(new LoggedBuyerState(user2));
             UserRepository.Instance.users.TryAdd(user1, false);
             UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
+            UserRepository.Instance.users.TryAdd(user3, true);
+            UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
             
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
@@ -273,6 +278,91 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             controller.addItemToStorage("a", store.storeID, itemDto);//guest user - can't perform this action
             
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void removeItemFromStorageTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+            ItemDTO itemDto = new ItemDTO(store.storeID, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+            
+            ResultWithValue<int> res = controller.addItemToStorage("b", store.storeID, itemDto);
+            Assert.IsTrue(res.getTag());
+            Assert.AreNotEqual(-1,res.getValue());
+            itemDto.itemID = res.getValue();
+            Assert.AreEqual(1, store.storage.Count);
+            
+            RegularResult result = controller.removeItemFromStorage("b", store.storeID, itemDto.itemID);
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(0, store.storage.Count);
+            
+            result = controller.removeItemFromStorage("b", store.storeID, -1); //no such item
+            Assert.IsFalse(result.getTag());
+            Assert.AreEqual(0, store.storage.Count);
+            
+            result = controller.removeItemFromStorage("b", -1, item.itemID); //no such store
+            Assert.IsFalse(result.getTag());
+            Assert.AreEqual(2, StoreRepository.Instance.stores.Count);
+            
+            controller.removeItemFromStorage("a", store.storeID, itemDto.itemID);//guest user - can't perform this action
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void editItemDetailsTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+            ItemDTO itemDto = new ItemDTO(store.storeID, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+            
+            ResultWithValue<int> res = controller.addItemToStorage("b", store.storeID, itemDto);
+            Assert.IsTrue(res.getTag());
+            Assert.AreNotEqual(-1,res.getValue());
+            itemDto.itemID = res.getValue();
+            Assert.AreEqual(1, store.storage.Count);
+
+            itemDto.price = 7.9;
+            RegularResult result = controller.editItemDetails("b", store.storeID, itemDto);
+            Assert.IsTrue(res.getTag());
+            Assert.AreEqual(7.9, StoreRepository.Instance.stores[store.storeID].storage[itemDto.itemID].price);
+            
+            result = controller.editItemDetails("b", store.storeID, null);
+            Assert.IsFalse(result.getTag());
+
+            controller.editItemDetails("a", store.storeID, itemDto); //guest user - can't perform this action
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void appointStoreManagerTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+
+            RegularResult res = controller.appointStoreManager("b", "r", store.storeID);
+            Assert.IsTrue(res.getTag());
+            Assert.IsTrue(user3.sellerPermissions.size == 1); //new seller permission was added
+            
+            res = controller.appointStoreManager("b", "r", -1);
+            Assert.IsFalse(res.getTag());
+            Assert.IsTrue(user3.sellerPermissions.size == 1); 
+            
+            res = controller.appointStoreManager("b", "no such user", store.storeID);
+            Assert.IsFalse(res.getTag());
+            
+            controller.appointStoreManager("a", "r", store.storeID); //cant perform this action
+            Assert.IsFalse(true);
+
         }
     }
 }

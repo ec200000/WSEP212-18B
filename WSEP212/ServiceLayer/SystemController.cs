@@ -98,6 +98,10 @@ namespace WSEP212.ServiceLayer
 
         public RegularResult editItemDetails(String userName, int storeID, ItemDTO item)
         {
+            if (item == null)
+            {
+                return new Failure("Item is null");
+            }
             String info = $"EditItemDetails Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
