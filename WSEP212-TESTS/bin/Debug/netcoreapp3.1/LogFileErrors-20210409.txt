@@ -1,0 +1,30 @@
+2021-04-09 19:46:24.746 +03:00 [Error] The user bcannot perform the login action!
+
+2021-04-09 19:46:24.751 +03:00 [Error] The user acannot perform the logout action!
+
+2021-04-09 19:46:24.787 +03:00 [Error] The user acannot perform the openStore action!
+
+2021-04-09 19:46:24.802 +03:00 [Error] The user acannot perform the itemReview action!
+
+2021-04-09 19:46:24.810 +03:00 [Error] The user acannot perform the addItemToStorage action!
+
+2021-04-09 19:46:24.818 +03:00 [Error] The user acannot perform the removeItemFromStorage action!
+
+2021-04-09 19:46:24.824 +03:00 [Error] The user acannot perform the editItemDetails action!
+
+2021-04-09 19:46:24.833 +03:00 [Error] The user acannot perform the appointStoreManager action!
+
+2021-04-09 19:46:24.840 +03:00 [Error] The user acannot perform the appointStoreManager action!
+
+2021-04-09 19:46:24.850 +03:00 [Error] The user acannot perform the editManagerPermissions action!
+
+2021-04-09 19:46:24.860 +03:00 [Error] The user acannot perform the removeStoreManager action!
+
+2021-04-09 19:46:24.870 +03:00 [Error] The user acannot perform the getOfficialsInformation action!
+
+2021-04-09 19:46:24.883 +03:00 [Error] The user acannot perform the getStorePurchaseHistory action!
+
+2021-04-09 19:46:24.891 +03:00 [Error] The user bcannot perform the getUsersPurchaseHistory action!
+
+2021-04-09 19:46:24.901 +03:00 [Error] The user acannot perform the getStoresPurchaseHistory action!
+
