@@ -413,9 +413,12 @@ namespace WSEP212_TESTS.AcceptanceTests
             ConcurrentLinkedList<int> newPermissions = new ConcurrentLinkedList<int>();
             newPermissions.TryAdd((int)Permissions.AppointStoreManager);
             newPermissions.TryAdd((int)Permissions.RemoveStoreManager);
+            Console.WriteLine(newPermissions.size);
             res = controller.editManagerPermissions("b", "r", newPermissions, store.storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
-            Assert.IsTrue(user3.sellerPermissions.size == 2);
+            Assert.AreEqual(1, user3.sellerPermissions.size);
+            Assert.AreEqual(2,user3.sellerPermissions.First.Value.permissionsInStore.size);
             Node<Permissions> per = user3.sellerPermissions.First.Value.permissionsInStore.First;
             Assert.AreEqual(Permissions.AppointStoreManager, per.Value);
             per = per.Next;

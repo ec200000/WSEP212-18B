@@ -130,7 +130,7 @@ namespace WSEP212.ServiceLayer
             
             ConcurrentLinkedList<Permissions> newPermissions = new ConcurrentLinkedList<Permissions>();
             Node<Int32> permission = permissions.First;
-            while(permission != null)
+            while(permission.Next != null)
             {
                 permissionsStr += $"{permission.Value}, ";
                 newPermissions.TryAdd((Permissions)permission.Value);
