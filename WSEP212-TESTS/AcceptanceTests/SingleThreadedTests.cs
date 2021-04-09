@@ -60,8 +60,13 @@ namespace WSEP212_TESTS.AcceptanceTests
             StoreRepository.Instance.stores.Clear();
             user1.purchases.Clear();
             user2.purchases.Clear();
+            user3.purchases.Clear();
             user1.shoppingCart.shoppingBags.Clear();
             user2.shoppingCart.shoppingBags.Clear();
+            user3.shoppingCart.shoppingBags.Clear();
+            user1.sellerPermissions = null;
+            user2.sellerPermissions = null;
+            user3.sellerPermissions = null;
         }
 
         [TestMethod]
@@ -352,6 +357,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult res = controller.appointStoreManager("b", "r", store.storeID);
             Assert.IsTrue(res.getTag());
             Assert.IsTrue(user3.sellerPermissions.size == 1); //new seller permission was added
+            Assert.AreEqual(Permissions.GetOfficialsInformation, user3.sellerPermissions.First.Value.permissionsInStore.First.Value);
             
             res = controller.appointStoreManager("b", "r", -1);
             Assert.IsFalse(res.getTag());
@@ -363,6 +369,66 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.appointStoreManager("a", "r", store.storeID); //cant perform this action
             Assert.IsFalse(true);
 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void appointStoreOwnerTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+
+            RegularResult res = controller.appointStoreOwner("b", "r", -1);
+            Assert.IsFalse(res.getTag());
+            Assert.IsTrue(user3.sellerPermissions.size == 0);
+            
+            res = controller.appointStoreOwner("b", "no such user", store.storeID);
+            Assert.IsFalse(res.getTag());
+            
+            res = controller.appointStoreOwner("b", "r", store.storeID);
+            Assert.IsTrue(res.getTag());
+            Console.WriteLine($"the size is: {user3.sellerPermissions.size}");
+            Assert.IsTrue(user3.sellerPermissions.size == 1); //new seller permission was added - all permissions was given
+            Assert.AreEqual(Permissions.AllPermissions, user3.sellerPermissions.First.Value.permissionsInStore.First.Value);
+            
+            controller.appointStoreManager("a", "r", store.storeID); //cant perform this action
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void editManagerPermissionsTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+
+            RegularResult res = controller.appointStoreManager("b", "r", store.storeID);
+            Assert.IsTrue(res.getTag());
+            
+            //r is store manager with only GetOfficialsInformation permission
+            ConcurrentLinkedList<int> newPermissions = new ConcurrentLinkedList<int>();
+            newPermissions.TryAdd((int)Permissions.AppointStoreManager);
+            newPermissions.TryAdd((int)Permissions.RemoveStoreManager);
+            res = controller.editManagerPermissions("b", "r", newPermissions, store.storeID);
+            Assert.IsTrue(res.getTag());
+            Assert.IsTrue(user3.sellerPermissions.size == 2);
+            Node<Permissions> per = user3.sellerPermissions.First.Value.permissionsInStore.First;
+            Assert.AreEqual(Permissions.AppointStoreManager, per.Value);
+            per = per.Next;
+            Assert.AreEqual(Permissions.RemoveStoreManager, per.Value);
+            
+            res = controller.editManagerPermissions("b", "no such user", newPermissions, store.storeID);
+            Assert.IsFalse(res.getTag());
+            
+            res = controller.editManagerPermissions("b", "r", new ConcurrentLinkedList<int>(), -1);
+            Assert.IsFalse(res.getTag());
+            
+            controller.editManagerPermissions("a", "r", newPermissions, store.storeID); //no permission to do so
+            Assert.IsFalse(true);
         }
     }
 }
