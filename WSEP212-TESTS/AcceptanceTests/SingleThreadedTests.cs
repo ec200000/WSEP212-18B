@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
@@ -25,17 +26,22 @@ namespace WSEP212_TESTS.AcceptanceTests
             UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
-            
+            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
+            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
+            SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
             store = new Store("t",
                 "bb",
-                new SalesPolicy("default",
-                    new ConcurrentLinkedList<PolicyRule>()),
-                new PurchasePolicy("default",
-                    new ConcurrentLinkedList<PurchaseType>(),
-                    new ConcurrentLinkedList<PolicyRule>()),
+                salesPolicy,
+                purchasePolicy,
                 user2);
             item = new Item(30, "shoko", "taim retzah!", 12, "milk products");
+            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            itemsPurchaseType.TryAdd(item.itemID, PurchaseType.ImmediatePurchase);
             store.storage.TryAdd(item.itemID, item);
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(item.itemID, 1);
+            store.applyPurchasePolicy(user2, items, itemsPurchaseType);
             StoreRepository.Instance.stores.TryAdd(store.storeID,store);
         }
         
@@ -169,6 +175,43 @@ namespace WSEP212_TESTS.AcceptanceTests
             Console.WriteLine(result.getMessage());
             Assert.IsTrue(result.getTag());
             Assert.AreEqual(user2.purchases.Count, 1);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void openStoreTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> result = controller.openStore("b",store.storeName,store.storeAddress,"DEFAULT","DEFAULT"); 
+            Assert.IsFalse(result.getTag()); //store already exists
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
+            
+            result = controller.openStore(null,store.storeName,store.storeAddress,"DEFAULT","DEFAULT"); 
+            Assert.IsFalse(result.getTag()); //null user name
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
+            
+            controller.openStore("b",null,store.storeAddress,"DEFAULT","DEFAULT"); 
+            Assert.IsFalse(result.getTag()); //null store name
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
+            
+            controller.openStore("b",store.storeName,null,"DEFAULT","DEFAULT"); 
+            Assert.IsFalse(result.getTag()); //null address
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
+            
+            controller.openStore("b",store.storeName,store.storeAddress,null,"DEFAULT"); 
+            Assert.IsFalse(result.getTag()); //null purchase policy
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
+            
+            controller.openStore("b",store.storeName,store.storeAddress,"DEFAULT",null); 
+            Assert.IsFalse(result.getTag()); //null sales policy
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
+            
+            controller.openStore("b","HAMAMA","Ashdod","DEFAULT","DEFAULT"); 
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(StoreRepository.Instance.stores.Count, 2);
+            
+            ResultWithValue<int> res = controller.openStore("a","gg", "kk", "default", "default"); //guest cant open
+            Assert.IsFalse(true); //should throw exception - if its here, nothing was thrown
         }
     }
 }
