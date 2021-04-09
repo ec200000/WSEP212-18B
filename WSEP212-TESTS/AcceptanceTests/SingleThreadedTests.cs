@@ -194,8 +194,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(result.getTag());
             Assert.AreEqual(user2.purchases.Count, 0);
             
-            result = controller.purchaseItems("b","ashdod"); 
-            Console.WriteLine(result.getMessage());
+            result = controller.purchaseItems("b","ashdod");
             Assert.IsTrue(result.getTag());
             Assert.AreEqual(user2.purchases.Count, 1);
         }
