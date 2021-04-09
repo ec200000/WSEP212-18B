@@ -78,6 +78,10 @@ namespace WSEP212.ServiceLayer
 
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item)
         {
+            if (item == null)
+            {
+                return new FailureWithValue<int>("Item is null", -1);
+            }
             String info = $"AddItemToStorage Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
