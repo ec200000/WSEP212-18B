@@ -564,5 +564,52 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = controller.getUsersPurchaseHistory("b"); //only system manager can perform this action
             Assert.IsFalse(true);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void getStoresPurchaseHistory()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> result = controller.openStore("b","HAMAMA","Ashdod","DEFAULT","DEFAULT"); 
+            Assert.IsTrue(result.getTag());
+            int storeId = result.getValue();
+            
+            ItemDTO itemDto1 = new ItemDTO(storeId, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+            
+            result = controller.addItemToStorage("b", storeId, itemDto1);
+            Assert.IsTrue(result.getTag());
+            itemDto1.itemID = result.getValue();
+            
+            result = controller.openStore("b","SuperDuper","Ashdod","DEFAULT","DEFAULT"); 
+            Assert.IsTrue(result.getTag());
+            int storeId2 = result.getValue();
+            
+            ItemDTO itemDto2 = new ItemDTO(storeId2, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+
+            result = controller.addItemToStorage("b", storeId2, itemDto2);
+            Assert.IsTrue(result.getTag());
+            itemDto2.itemID = result.getValue();
+            
+            RegularResult res = controller.addItemToShoppingCart("b",storeId, itemDto1.itemID, 2); 
+            Assert.IsTrue(res.getTag());
+            
+            res = controller.addItemToShoppingCart("b",storeId2, itemDto2.itemID, 11);
+            Assert.IsTrue(res.getTag());
+            
+            res = controller.purchaseItems("b","ashdod");
+            Assert.IsTrue(res.getTag());
+
+            ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>> finalRes =
+                controller.getStoresPurchaseHistory(systemManager.userName);
+            Assert.IsTrue(finalRes.getTag());
+            Assert.AreEqual(3, finalRes.getValue().Count);
+            Assert.AreEqual(1, finalRes.getValue()[storeId].Count);
+            Assert.AreEqual(1, finalRes.getValue()[storeId2].Count);
+            
+            controller.getStoresPurchaseHistory("a"); //no permission to do so
+            Assert.IsFalse(true);
+        }
     }
 }
