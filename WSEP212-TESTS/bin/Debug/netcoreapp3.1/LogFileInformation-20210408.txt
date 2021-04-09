@@ -1,6 +1,168 @@
-2021-04-08 22:06:03.372 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+2021-04-08 23:23:20.158 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
 
-2021-04-08 22:07:32.521 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+2021-04-08 23:23:20.178 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
 
-2021-04-08 22:09:05.320 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+2021-04-08 23:27:01.187 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:27:01.212 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:27:01.214 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:27:01.217 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:29:43.362 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:29:43.403 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:29:43.406 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:29:43.408 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:30:05.506 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:30:05.528 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:30:05.530 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:30:05.531 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:32:14.343 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:32:14.368 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:32:14.370 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:32:14.372 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:32:14.375 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:32:14.377 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:37:57.249 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:37:57.274 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:37:57.276 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:37:57.278 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:37:57.286 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:37:57.287 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:37:57.305 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 83, item ID: 78
+
+2021-04-08 23:38:57.168 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:38:57.190 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:38:57.193 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:38:57.194 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:38:57.198 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:38:57.199 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:38:57.203 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 83, item ID: 78
+
+2021-04-08 23:41:16.849 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:41:16.877 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:41:16.879 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:41:16.881 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:41:16.885 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:41:16.886 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:41:16.889 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 83, item ID: 78
+
+2021-04-08 23:41:40.078 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:41:40.104 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:41:40.107 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:41:40.109 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:41:40.114 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:41:40.115 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:41:40.119 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 83, item ID: 78
+
+2021-04-08 23:42:04.829 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:42:04.852 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:42:04.858 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:42:04.860 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:42:04.865 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:42:04.867 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:42:04.871 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 83, item ID: 78
+
+2021-04-08 23:42:28.892 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:43:32.154 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 23:43:32.183 +03:00 [Information] Register Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:43:32.188 +03:00 [Information] Login Event was triggered, with the parameters: user name: a, password: 123 
+
+2021-04-08 23:43:32.190 +03:00 [Information] Login Event was triggered, with the parameters: user name: b, password: 123456 
+
+2021-04-08 23:43:32.194 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-08 23:43:32.196 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-08 23:43:32.200 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 83, item ID: 78
+
+2021-04-08 23:44:36.669 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:53:53.593 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:55:04.378 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:55:04.408 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 1, item ID: 1
+
+2021-04-08 23:55:04.409 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:55:26.193 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:55:26.219 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 1, item ID: 1
+
+2021-04-08 23:55:26.221 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:56:02.395 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:56:02.421 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 1, item ID: 1
+
+2021-04-08 23:56:02.423 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:57:18.641 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:57:18.699 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 1, item ID: 1
+
+2021-04-08 23:57:18.701 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:57:18.708 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: -1
+
+2021-04-08 23:57:18.710 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: -1, item ID: 1
+
+2021-04-08 23:57:33.989 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:57:34.017 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 1, item ID: 1
+
+2021-04-08 23:57:34.019 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
+2021-04-08 23:57:34.022 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: -1
+
+2021-04-08 23:57:34.023 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: -1, item ID: 1
 
