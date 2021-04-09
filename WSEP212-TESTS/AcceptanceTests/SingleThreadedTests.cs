@@ -70,11 +70,11 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemController controller = new SystemController();
             RegularResult result = controller.register("abcd", "1234");
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
             
             RegularResult result2 = controller.register("a", "123");
             Assert.IsFalse(result2.getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
         }
         
         [TestMethod]
@@ -86,7 +86,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(result.getTag());
             UserRepository.Instance.users.TryGetValue(user1, out var res); //is saved as logged in
             Assert.IsTrue(res);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 2);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
             
             RegularResult result2 = controller.login("b", "123456"); //already logged
             //should  throw exception
@@ -102,7 +102,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(result.getTag());
             UserRepository.Instance.users.TryGetValue(user2, out var res); //is saved as logged out
             Assert.IsFalse(res);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 2);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
             
             RegularResult result2 = controller.logout("a"); //not logged in
             //should  throw exception
