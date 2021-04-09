@@ -206,6 +206,7 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult itemReview(String review, int itemID, int storeID)
         {
+            if(review==null) return new Failure("Review Is Null");
             ResultWithValue<Store> getStoreRes = StoreRepository.Instance.getStore(storeID);
             if (getStoreRes.getTag())
             {

@@ -88,6 +88,7 @@ namespace WSEP212.DomainLayer
 
         public RegularResult purchaseItems(User user, String address)
         {
+            if(address == null) return new Failure("address is null!");
             ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
             if(pricePerStoreRes.getTag())
             {

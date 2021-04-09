@@ -164,7 +164,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Console.WriteLine($"before: {user1.shoppingCart.shoppingBags.Count}");
             result = controller.removeItemFromShoppingCart("a",store.storeID, item.itemID); //nothing in the cart
             Assert.IsFalse(result.getTag());
-            Assert.AreEqual(user1.shoppingCart.shoppingBags.Count, 0);
+            Assert.AreEqual(user1.shoppingCart.shoppingBags.Count, 1);
         }
         
         [TestMethod]
@@ -202,23 +202,23 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(result.getTag()); //null user name
             Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
             
-            controller.openStore("b",null,store.storeAddress,"DEFAULT","DEFAULT"); 
+            result = controller.openStore("b",null,store.storeAddress,"DEFAULT","DEFAULT"); 
             Assert.IsFalse(result.getTag()); //null store name
             Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
             
-            controller.openStore("b",store.storeName,null,"DEFAULT","DEFAULT"); 
+            result = controller.openStore("b",store.storeName,null,"DEFAULT","DEFAULT"); 
             Assert.IsFalse(result.getTag()); //null address
             Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
             
-            controller.openStore("b",store.storeName,store.storeAddress,null,"DEFAULT"); 
+            result = controller.openStore("b",store.storeName,store.storeAddress,null,"DEFAULT"); 
             Assert.IsFalse(result.getTag()); //null purchase policy
             Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
             
-            controller.openStore("b",store.storeName,store.storeAddress,"DEFAULT",null); 
+            result = controller.openStore("b",store.storeName,store.storeAddress,"DEFAULT",null); 
             Assert.IsFalse(result.getTag()); //null sales policy
             Assert.AreEqual(StoreRepository.Instance.stores.Count, 1);
             
-            controller.openStore("b","HAMAMA","Ashdod","DEFAULT","DEFAULT"); 
+            result = controller.openStore("b","HAMAMA","Ashdod","DEFAULT","DEFAULT"); 
             Assert.IsTrue(result.getTag());
             Assert.AreEqual(StoreRepository.Instance.stores.Count, 2);
             
@@ -227,6 +227,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
         public void itemReviewTest()
         {
             SystemController controller = new SystemController();

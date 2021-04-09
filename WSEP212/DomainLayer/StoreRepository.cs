@@ -31,6 +31,11 @@ namespace WSEP212.DomainLayer
             {
                 return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
             }
+            else if (storeName == null || storeAddress == null || salesPolicy == null || purchasePolicy == null ||
+                     storeFounder == null)
+            {
+                return new FailureWithValue<int>("The Store Has Null Element(s)", -1);
+            }
             else
             {
                 Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
@@ -45,9 +50,12 @@ namespace WSEP212.DomainLayer
             foreach (KeyValuePair<int, Store> storePair in stores)
             {
                 Store store = storePair.Value;
-                if (store.storeName.Equals(storeName) && store.storeAddress.Equals(storeAddress))
+                if (store != null && store.storeName!=null && store.storeAddress!=null)
                 {
-                    return true;
+                    if (store.storeName.Equals(storeName) && store.storeAddress.Equals(storeAddress))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
