@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.Result;
 using WSEP212.ServiceLayer;
@@ -25,10 +26,17 @@ namespace WSEP212_TESTS.AcceptanceTests
             UserRepository.Instance.users.TryAdd(user2, true);
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             
-            store = new Store("t", "bb", new SalesPolicy("default", null), new PurchasePolicy("default", null,null), user2);
+            store = new Store("t",
+                "bb",
+                new SalesPolicy("default",
+                    new ConcurrentLinkedList<PolicyRule>()),
+                new PurchasePolicy("default",
+                    new ConcurrentLinkedList<PurchaseType>(),
+                    new ConcurrentLinkedList<PolicyRule>()),
+                user2);
             item = new Item(30, "shoko", "taim retzah!", 12, "milk products");
-            store.storage.TryAdd(1, item);
-            StoreRepository.Instance.stores.TryAdd(1,store);
+            store.storage.TryAdd(item.itemID, item);
+            StoreRepository.Instance.stores.TryAdd(store.storeID,store);
         }
         
         [TestCleanup]
@@ -37,6 +45,10 @@ namespace WSEP212_TESTS.AcceptanceTests
             UserRepository.Instance.users.Clear();
             UserRepository.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
+            user1.purchases.Clear();
+            user2.purchases.Clear();
+            user1.shoppingCart.shoppingBags.Clear();
+            user2.shoppingCart.shoppingBags.Clear();
         }
 
         [TestMethod]
@@ -96,6 +108,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             result = controller.addItemToShoppingCart("a",store.storeID, item.itemID, 8); //guest user
             Assert.IsTrue(result.getTag());
             Assert.AreEqual(user1.shoppingCart.shoppingBags.Count, 1);
+            user1.shoppingCart.shoppingBags.Clear();
             
             result = controller.addItemToShoppingCart("b",store.storeID, item.itemID, 100); //over quantity
             Assert.IsFalse(result.getTag());
@@ -107,7 +120,55 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             result = controller.addItemToShoppingCart("b",-1, item.itemID, 1); //store doest not exists
             Assert.IsFalse(result.getTag());
+            Assert.AreEqual(user2.shoppingCart.shoppingBags.Count, 0);
+        }
+        
+        [TestMethod]
+        public void removeItemFromShoppingCartTest()
+        {
+            SystemController controller = new SystemController();
+            RegularResult result = controller.addItemToShoppingCart("b",store.storeID, item.itemID, 2);//adding an item
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(user2.shoppingCart.shoppingBags.Count, 1);
+            
+            result = controller.removeItemFromShoppingCart("b",-1, item.itemID); //wrong store id
+            Assert.IsFalse(result.getTag());
+            Assert.AreEqual(user2.shoppingCart.shoppingBags.Count, 1);
+            
+            result = controller.removeItemFromShoppingCart("b",store.storeID, -1); //wrong item id
+            Assert.IsFalse(result.getTag());
+            Assert.AreEqual(user2.shoppingCart.shoppingBags.Count, 1);
+            
+            result = controller.removeItemFromShoppingCart("b",store.storeID, item.itemID); //removing it
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(user2.shoppingCart.shoppingBags.Count, 0);
+            
+            Console.WriteLine($"before: {user1.shoppingCart.shoppingBags.Count}");
+            result = controller.removeItemFromShoppingCart("a",store.storeID, item.itemID); //nothing in the cart
+            Assert.IsFalse(result.getTag());
+            Assert.AreEqual(user1.shoppingCart.shoppingBags.Count, 0);
+        }
+        
+        [TestMethod]
+        public void purchaseItemsTest()
+        {
+            SystemController controller = new SystemController();
+            RegularResult result = controller.addItemToShoppingCart("b",store.storeID, item.itemID, 2);//adding an item
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(user2.shoppingCart.shoppingBags.Count, 1);
+            
+            result = controller.purchaseItems("a","beer sheva"); //nothing in the cart
+            Assert.IsFalse(result.getTag());
+            Assert.AreEqual(user1.purchases.Count, 0);
+            
+            result = controller.purchaseItems("b",null); //wrong item id
+            Assert.IsFalse(result.getTag());
             Assert.AreEqual(user2.purchases.Count, 0);
+            
+            result = controller.purchaseItems("b","ashdod"); 
+            Console.WriteLine(result.getMessage());
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(user2.purchases.Count, 1);
         }
     }
 }
