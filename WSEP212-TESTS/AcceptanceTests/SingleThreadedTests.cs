@@ -230,29 +230,25 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void itemReviewTest()
         {
             SystemController controller = new SystemController();
-            RegularResult result = controller.itemReview("b","wow",item.itemID,store.storeID); //logged
             RegularResult res = controller.addItemToShoppingCart("b", store.storeID, item.itemID, 2);
             Assert.IsTrue(res.getTag());
             res = controller.purchaseItems("b", "ashdod");
             Assert.IsTrue(res.getTag());
+            RegularResult result = controller.itemReview("b","wow",item.itemID,store.storeID); //logged
             Assert.IsTrue(result.getTag()); 
             Assert.AreEqual(item.reviews.Count, 1);
-            
-            result = controller.itemReview("a","boo",item.itemID,store.storeID); //guest
-            res = controller.addItemToShoppingCart("a", store.storeID, item.itemID, 2);
-            Assert.IsTrue(res.getTag());
-            res = controller.purchaseItems("a", "ashdod");
-            Assert.IsTrue(res.getTag());
-            Assert.IsTrue(result.getTag()); 
-            Assert.AreEqual(item.reviews.Count, 2);
-            
+
             result = controller.itemReview(null,"boo",item.itemID,store.storeID); 
             Assert.IsFalse(result.getTag());
-            Assert.AreEqual(item.reviews.Count, 2);
+            Assert.AreEqual(item.reviews.Count, 1);
             
             result = controller.itemReview("b",null,item.itemID,store.storeID);
             Assert.IsFalse(result.getTag()); 
-            Assert.AreEqual(item.reviews.Count, 2);
+            Assert.AreEqual(item.reviews.Count, 1);
+            
+            controller.itemReview("a","boo",item.itemID,store.storeID); //guest user can't perform this action
+            Assert.IsFalse(true);
+            
         }
 
         [TestMethod]
@@ -432,6 +428,39 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             controller.editManagerPermissions("a", "r", newPermissions, store.storeID); //no permission to do so
             Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void removeStoreManagerTest()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+
+            RegularResult res = controller.appointStoreManager("b", "r", store.storeID);
+            Assert.IsTrue(res.getTag()); //r is now a store manager
+
+            res = controller.removeStoreManager("b", "no such user", store.storeID);
+            Assert.IsFalse(res.getTag());
+            
+            res = controller.removeStoreManager("b", "r", -1);
+            Assert.IsFalse(res.getTag());
+            
+            res = controller.removeStoreManager("b", "r", store.storeID);
+            Assert.IsTrue(res.getTag());
+            Assert.AreEqual(0, user3.sellerPermissions.size);
+            
+            controller.removeStoreManager("a", "r", store.storeID); //no permission to do so
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void getOfficialsInformationTest()
+        {
+            
         }
     }
 }
