@@ -28,14 +28,16 @@ namespace WSEP212_TESTS.AcceptanceTests
             user2 = new User("b"); //logged
             user3 = new User("r"); //logged
             user2.changeState(new LoggedBuyerState(user2));
-            user3.changeState(new LoggedBuyerState(user2));
+            user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user1, false);
             UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             UserRepository.Instance.users.TryAdd(user3, true);
             UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
-            
+            UserRepository.Instance.users.TryAdd(systemManager, true);
+            UserRepository.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
+
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
