@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
+    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
   },
   "projects": {
-    "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
+        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

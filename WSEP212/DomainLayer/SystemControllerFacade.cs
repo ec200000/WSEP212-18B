@@ -141,7 +141,8 @@ namespace WSEP212.DomainLayer
             Object[] paramsList = { address };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(userRes.getValue().purchaseItems, threadParameters); //creating the job
+            User user = userRes.getValue();
+            ThreadPool.QueueUserWorkItem(user.purchaseItems, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {

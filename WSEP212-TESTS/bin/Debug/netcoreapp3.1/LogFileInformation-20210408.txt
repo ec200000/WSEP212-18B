@@ -1,0 +1,6 @@
+2021-04-08 22:06:03.372 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 22:07:32.521 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
+2021-04-08 22:09:05.320 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd, password: 1234 
+
