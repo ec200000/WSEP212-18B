@@ -391,6 +391,10 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
+            if (threadParameters.result == null)
+            {
+                return new FailureWithValue<ConcurrentBag<PurchaseInfo>>("Cannot perform this action!", null);
+            }
             return new OkWithValue<ConcurrentBag<PurchaseInfo>>("Get Store Purchase History Successfully", (ConcurrentBag<PurchaseInfo>)threadParameters.result);
         }
 
@@ -403,7 +407,7 @@ namespace WSEP212.DomainLayer
             }
 
             ThreadParameters threadParameters = new ThreadParameters();
-            ThreadPool.QueueUserWorkItem(userRes.getValue().getUsersPurchaseHistory); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getUsersPurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -423,7 +427,7 @@ namespace WSEP212.DomainLayer
             }
 
             ThreadParameters threadParameters = new ThreadParameters();
-            ThreadPool.QueueUserWorkItem(userRes.getValue().getStoresPurchaseHistory); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getStoresPurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {

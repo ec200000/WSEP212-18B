@@ -179,6 +179,7 @@ namespace WSEP212.DomainLayer
 
         public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
         {
+            if (!StoreRepository.Instance.stores.ContainsKey(storeID)) return null;
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
             while(sellerPermissions.Value != null)
             {

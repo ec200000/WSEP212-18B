@@ -35,6 +35,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             UserRepository.Instance.users.TryAdd(user3, true);
             UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
+            UserRepository.Instance.users.TryAdd(systemManager, true);
+            UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("78910"));
             
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
@@ -55,18 +57,27 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestCleanup]
         public void testClean()
         {
+            foreach (var u in UserRepository.Instance.users)
+            {
+                u.Key.purchases.Clear();
+                u.Key.shoppingCart.shoppingBags.Clear();
+                u.Key.sellerPermissions = null;
+            }
             UserRepository.Instance.users.Clear();
             UserRepository.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
             user1.purchases.Clear();
             user2.purchases.Clear();
             user3.purchases.Clear();
+            systemManager.purchases.Clear();
             user1.shoppingCart.shoppingBags.Clear();
             user2.shoppingCart.shoppingBags.Clear();
             user3.shoppingCart.shoppingBags.Clear();
+            systemManager.shoppingCart.shoppingBags.Clear();
             user1.sellerPermissions = null;
             user2.sellerPermissions = null;
             user3.sellerPermissions = null;
+            systemManager.sellerPermissions = null;
         }
 
         [TestMethod]
@@ -75,11 +86,11 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemController controller = new SystemController();
             RegularResult result = controller.register("abcd", "1234");
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 5);
             
             RegularResult result2 = controller.register("a", "123");
             Assert.IsFalse(result2.getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 5);
         }
         
         [TestMethod]
@@ -91,7 +102,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(result.getTag());
             UserRepository.Instance.users.TryGetValue(user1, out var res); //is saved as logged in
             Assert.IsTrue(res);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
             
             RegularResult result2 = controller.login("b", "123456"); //already logged
             //should  throw exception
@@ -107,7 +118,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(result.getTag());
             UserRepository.Instance.users.TryGetValue(user2, out var res); //is saved as logged out
             Assert.IsFalse(res);
-            Assert.AreEqual(UserRepository.Instance.users.Count, 3);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
             
             RegularResult result2 = controller.logout("a"); //not logged in
             //should  throw exception
@@ -461,7 +472,97 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ExpectedException(typeof(NotImplementedException))]
         public void getOfficialsInformationTest()
         {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "deault", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+
+            RegularResult res = controller.appointStoreManager("b", "r", store.storeID);
+            Assert.IsTrue(res.getTag()); //r is now a store manager
+
+            ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> result =
+                controller.getOfficialsInformation("b", store.storeID);
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(2, result.getValue().Count); //only store owner b and store manager r
             
+            result = controller.getOfficialsInformation("r", store.storeID); //as store manager r has permission to perform this action
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(2, result.getValue().Count); //only store owner b and store manager r
+            
+            controller.getOfficialsInformation("a", store.storeID); //guest user - no permissions to do so
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void getStorePurchaseHistory()
+        {
+            SystemController controller = new SystemController();
+            ResultWithValue<int> storeId = controller.openStore("b", "HAMAMA", "Beer Sheva", "default", "default");
+            Assert.IsTrue(storeId.getTag());
+            Store store = StoreRepository.Instance.stores[storeId.getValue()];
+            
+            ItemDTO itemDto1 = new ItemDTO(store.storeID, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+            ItemDTO itemDto2 = new ItemDTO(store.storeID, 65, "bamba", "best with bisli",
+                new ConcurrentDictionary<string, string>(), 1.14, "snacks");
+            
+            ResultWithValue<int> res = controller.addItemToStorage("b", store.storeID, itemDto1);
+            Assert.IsTrue(res.getTag());
+            itemDto1.itemID = res.getValue();
+            
+            res = controller.addItemToStorage("b", store.storeID, itemDto2);
+            Assert.IsTrue(res.getTag());
+            itemDto2.itemID = res.getValue();
+            
+            RegularResult result = controller.addItemToShoppingCart("b",store.storeID, itemDto1.itemID, 2); //logged user
+            Assert.IsTrue(result.getTag());
+            
+            result = controller.addItemToShoppingCart("b",store.storeID, itemDto2.itemID, 2); //logged user
+            Assert.IsTrue(result.getTag());
+
+            result = controller.purchaseItems("b", "ashdod");
+            Assert.IsTrue(result.getTag());
+
+            ResultWithValue<ConcurrentBag<PurchaseInfo>> res2 = controller.getStorePurchaseHistory("b", store.storeID);
+            Assert.IsTrue(res2.getTag());
+            Assert.AreEqual(1,res2.getValue().Count);
+            
+            res2 = controller.getStorePurchaseHistory("b", -1);
+            Assert.IsFalse(res2.getTag());
+            Assert.IsNull(res2.getValue());
+
+            controller.getStorePurchaseHistory("a", store.storeID); //no permission to do so
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void getUsersPurchaseHistoryTest()
+        {
+            SystemController controller = new SystemController();
+            RegularResult result = controller.addItemToShoppingCart("b",store.storeID, item.itemID, 2);
+            Assert.IsTrue(result.getTag());
+            
+            result = controller.purchaseItems("b","beer sheva");
+            Assert.IsTrue(result.getTag());
+            
+            result = controller.addItemToShoppingCart("r",store.storeID, item.itemID, 2);
+            Assert.IsTrue(result.getTag());
+            
+            result = controller.purchaseItems("r","ashdod");
+            Assert.IsTrue(result.getTag());
+
+            ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>> res =
+                controller.getUsersPurchaseHistory(systemManager.userName);
+            Console.WriteLine(res.getMessage());
+            Assert.IsTrue(res.getTag());
+            Assert.AreEqual(4, res.getValue().Count); //4 users - but only 2 of them actually baught something
+            Assert.AreEqual(1, res.getValue()["b"].Count);
+            Assert.AreEqual(1, res.getValue()["r"].Count);
+            
+            res = controller.getUsersPurchaseHistory("b"); //only system manager can perform this action
+            Assert.IsFalse(true);
         }
     }
 }
