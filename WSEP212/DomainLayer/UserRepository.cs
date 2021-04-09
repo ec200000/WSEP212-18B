@@ -8,6 +8,8 @@ namespace WSEP212.DomainLayer
 {
     public class UserRepository
     {
+        private readonly object insertLock = new object();
+        private readonly object changeStatusLock = new object();
         private static readonly Lazy<UserRepository> lazy
         = new Lazy<UserRepository>(() => new UserRepository());
 
@@ -23,13 +25,16 @@ namespace WSEP212.DomainLayer
 
         public RegularResult insertNewUser(User newUser,String password)
         {
-            if(checkIfUserExists(newUser.userName))
+            lock (insertLock)
             {
-                return new Failure("User Name Already Exists In The System");
+                if(checkIfUserExists(newUser.userName))
+                {
+                    return new Failure("User Name Already Exists In The System");
+                }
+                users.TryAdd(newUser, false);
+                usersInfo.TryAdd(newUser.userName, Authentication.Instance.encryptPassword(password));
+                return new Ok("Registration To The System Was Successful");
             }
-            users.TryAdd(newUser, false);
-            usersInfo.TryAdd(newUser.userName, Authentication.Instance.encryptPassword(password));
-            return new Ok("Registration To The System Was Successful");
         }
 
         //status is true: register -> login, otherwise: login -> logout
@@ -48,16 +53,21 @@ namespace WSEP212.DomainLayer
                     }
                 }
             }
-            if(users.TryGetValue(user, out oldStatus))
+
+            lock (changeStatusLock)
             {
-                if(oldStatus != status)
+                if(users.TryGetValue(user, out oldStatus))
                 {
-                    users.TryUpdate(user, status, oldStatus);
-                    return new Ok("User Change Login Status Successfully");
+                    if(oldStatus != status)
+                    {
+                        users.TryUpdate(user, status, oldStatus);
+                        return new Ok("User Change Login Status Successfully");
+                    }
+                    return new Failure("The User Is Already In The Same Login Status");
                 }
-                return new Failure("The User Is Already In The Same Login Status");
+                return new Failure("System Fails To Find The Login Status Of The User");
             }
-            return new Failure("System Fails To Find The Login Status Of The User");
+            
         }
 
         //removing completely from the system

@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
@@ -74,30 +75,177 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void registerTest()
         {
-            Thread[] threads = new Thread[2];
+            SystemController systemController = new SystemController();
+            Thread t1 = new Thread(() => systemController.register("iris","12345"));
+            Thread t2 = new Thread(() => systemController.register("iris","12345"));
+            Thread t3 = new Thread(() => systemController.register("itay","12345"));
 
-            for (int i = 0; i < threads.Length; i++)
-            {
-                //threads[i] = new Thread(DoSomeWork());
-            }
+            t1.Start();
+            t2.Start();
+            t3.Start();
 
-            foreach(Thread thread in threads)
-            {
-                thread.Start();
-            }
-
-            foreach(Thread thread in threads)
-            {
-                thread.Join();
-            }
-            SystemController controller = new SystemController();
-            RegularResult result = controller.register("abcd", "1234");
-            Assert.IsTrue(result.getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
+            t1.Join();
+            t2.Join();
+            t3.Join();
             
-            RegularResult result2 = controller.register("a", "123");
-            Assert.IsFalse(result2.getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 4);
+            Assert.AreEqual(6, UserRepository.Instance.users.Count); //4 is from test init, 2 from now
+            Assert.AreEqual(6, UserRepository.Instance.usersInfo.Count); //4 is from test init, 2 from now
+            Assert.IsNotNull(UserRepository.Instance.findUserByUserName("iris"));
+            Assert.IsNotNull(UserRepository.Instance.findUserByUserName("itay"));
+        }
+
+        [TestMethod]
+        public void loginTest()
+        {
+            SystemController systemController = new SystemController();
+            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
+            Thread t1 = new Thread(() =>
+            {
+                try
+                {
+                    res1 = systemController.login("a", "123");
+                }
+                catch (NotImplementedException e)
+                {
+                    res1 = new Failure("not implemented exception");
+                }
+                
+            });
+            Thread t2 = new Thread(() =>
+            {
+                try
+                {
+                    res2 = systemController.login("a", "123");
+                }
+                catch (NotImplementedException e)
+                {
+                    res2 = new Failure("not implemented exception");
+                }
+            });
+
+            t1.Start();
+            t2.Start();
+
+            t1.Join();
+            t2.Join();
+
+            Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
+            Assert.AreEqual(4, UserRepository.Instance.users.Count);
+            Assert.AreEqual(4, UserRepository.Instance.usersInfo.Count);
+            Assert.IsTrue(UserRepository.Instance.users[user1]);
+        }
+
+        [TestMethod]
+        public void logout()
+        {
+            SystemController systemController = new SystemController();
+            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            Thread t1 = new Thread(() =>
+            {
+                try
+                {
+                    res1 = systemController.logout("a");
+                }
+                catch (NotImplementedException e)
+                {
+                    res1 = new Failure("not implemented exception");
+                }
+                
+            });
+            Thread t2 = new Thread(() =>
+            {
+                try
+                {
+                    res2 = systemController.logout("b");
+                }
+                catch (NotImplementedException e)
+                {
+                    res2 = new Failure("not implemented exception");
+                }
+            });
+            Thread t3 = new Thread(() =>
+            {
+                try
+                {
+                    res3 = systemController.logout("b");
+                }
+                catch (NotImplementedException e)
+                {
+                    res3 = new Failure("not implemented exception");
+                }
+            });
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+            
+            t1.Join();
+            t2.Join();
+            t3.Join();
+            
+            Assert.IsFalse(res1.getTag()); //the user is a guest user - can't logout
+            Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
+            Assert.AreEqual(4, UserRepository.Instance.users.Count);
+            Assert.AreEqual(4, UserRepository.Instance.usersInfo.Count);
+            Assert.IsFalse(UserRepository.Instance.users[user2]);
+        }
+
+        [TestMethod]
+        public void addItemToStorageTest()
+        {
+            SystemController systemController = new SystemController();
+            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            
+            Thread t1 = new Thread(() =>
+            {
+                try
+                {
+                    res1 = systemController.addItemToShoppingCart("a",store.storeID, item.itemID, 2);
+                }
+                catch (NotImplementedException e)
+                {
+                    res1 = new Failure("not implemented exception");
+                }
+                
+            });
+            Thread t2 = new Thread(() =>
+            {
+                try
+                {
+                    //trying to take the remaining of the product
+                    res2 = systemController.addItemToShoppingCart("b",store.storeID, item.itemID, 28);
+                }
+                catch (NotImplementedException e)
+                {
+                    res2 = new Failure("not implemented exception");
+                }
+            });
+            Thread t3 = new Thread(() =>
+            {
+                try
+                {
+                    res3 = systemController.addItemToShoppingCart("r",store.storeID, item.itemID, 58);
+                }
+                catch (NotImplementedException e)
+                {
+                    res3 = new Failure("not implemented exception");
+                }
+            });
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+            
+            t1.Join();
+            t2.Join();
+            t3.Join();
+            
+            Assert.IsTrue(res1.getTag()); 
+            Assert.IsTrue(res2.getTag()); 
+            Assert.IsFalse(res3.getTag());
+            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("b").getValue().shoppingCart.shoppingBags.Count);
+            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("a").getValue().shoppingCart.shoppingBags.Count);
+            Assert.AreEqual(0, UserRepository.Instance.findUserByUserName("r").getValue().shoppingCart.shoppingBags.Count);
         }
     }
 }

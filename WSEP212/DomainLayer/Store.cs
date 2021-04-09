@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.Result;
 
@@ -9,6 +10,7 @@ namespace WSEP212.DomainLayer
 {
     public class Store
     {
+        private readonly object itemInStorageLock = new object();
         // static counter for the storeIDs of diffrent stores
         private static int storeCounter = 1;
 
@@ -49,16 +51,20 @@ namespace WSEP212.DomainLayer
         // Check if the item exist and available in the store
         public RegularResult isAvailableInStorage(int itemID, int quantity)
         {
-            if(storage.ContainsKey(itemID))   // checks if item exist in the store
+            lock (itemInStorageLock)
             {
-                Item item = storage[itemID];
-                if (quantity <= item.quantity)   // checks if there is enough of the item in stock
+                if(storage.ContainsKey(itemID))   // checks if item exist in the store
                 {
-                    return new Ok("The Item Is Available In The Store Storage");
+                    Item item = storage[itemID];
+                    if (quantity <= item.quantity)   // checks if there is enough of the item in stock
+                    {
+                        Console.WriteLine($"Thread with id: {Thread.CurrentThread.ManagedThreadId}, quantity: {quantity}, item.quantity: {item.quantity}");
+                        return new Ok("The Item Is Available In The Store Storage");
+                    }
+                    return new Failure("The Item Is Not Available In The Store Storage At The Moment");
                 }
-                return new Failure("The Item Is Not Available In The Store Storage At The Moment");
+                return new Failure("Item Not Exist In Storage");
             }
-            return new Failure("Item Not Exist In Storage");
         }
 
         // Add new item to the store with his personal details
