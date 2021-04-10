@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -127,6 +128,17 @@ namespace WSEP212.DomainLayer
                     return null;
             }
             return purchaseHistory;
+        }
+
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseInfo(string userName)
+        {
+            User u = findUserByUserName(userName).getValue();
+            if (u.state is LoggedBuyerState)
+            {
+                return new OkWithValue<ConcurrentBag<PurchaseInfo>>("ok", u.purchases);
+            }
+
+            return new FailureWithValue<ConcurrentBag<PurchaseInfo>>("the user is not registered to the system", null);
         }
     }
 }

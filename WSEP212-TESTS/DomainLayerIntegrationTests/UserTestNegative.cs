@@ -70,6 +70,14 @@ namespace WSEP212_TESTS
             parameters3.parameters = list3;
             user2.login(parameters3);
             Assert.IsTrue(parameters3.result is NotImplementedException);
+            
+            parameters3 = new ThreadParameters(); //wrong user name
+            list3 = new object[2];
+            list3[0] = "no such user";
+            list3[1] = "123456";
+            parameters3.parameters = list3;
+            user1.login(parameters3);
+            Assert.IsFalse(((RegularResult)parameters3.result).getTag());
         }
 
         [TestMethod]

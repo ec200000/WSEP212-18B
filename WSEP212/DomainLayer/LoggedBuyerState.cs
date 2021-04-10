@@ -69,9 +69,9 @@ namespace WSEP212.DomainLayer
             {
                 return new Failure(sellerRes.getMessage());
             }
-            // check the manager is logged buyer - if he is subscriber in the system
-            // TOTO HERE
-            // return new Failure("A Guest Cannot Be Appointed To Be A Store Manager");
+
+            if (sellerRes.getValue() == null)// check the manager is logged buyer - if he is subscriber in the system
+                return new Failure("A Guest Cannot Be Appointed To Be A Store Manager");
 
             // checks if the user has the permissions for appointing store manager
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, permission);
@@ -144,6 +144,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if(storeSellerRes.getTag())
                 {
+                    if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                        return new Failure("Can't edit store's owner permissions!");
                     storeSellerRes.getValue().permissionsInStore = permissions;
                     return new Ok("Edit Manager Permissions Successfully");
                 }
@@ -326,6 +328,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if (storeSellerRes.getTag())
                 {
+                    if (storeSellerRes.getValue().grantor != this.user)
+                        return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
                     RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().seller.userName);
                     if(removeFromStoreRes.getTag())

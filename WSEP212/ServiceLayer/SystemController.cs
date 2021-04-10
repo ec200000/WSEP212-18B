@@ -187,5 +187,25 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getStoresPurchaseHistory(userName);
         }
 
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
+        {
+            return UserRepository.Instance.getUserPurchaseInfo(userName);
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation()
+        {
+            return new OkWithValue<ConcurrentDictionary<int, Store>>("ok", StoreRepository.Instance.stores);
+        }
+        
+        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation() 
+        {
+           // return new OkWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>>("ok", StoreRepository.Instance.getItemsInformation());
+           throw new NotImplementedException();
+        }
+
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItems() //receiving FilterDTO TODO: add to interface
+        {
+            throw new NotImplementedException();
+        }
     }
 }

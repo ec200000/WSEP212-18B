@@ -92,6 +92,18 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(result2.getTag());
             Assert.AreEqual(UserRepository.Instance.users.Count, 5);
         }
+
+        [TestMethod]
+        public void checkInitialSystem()
+        {
+            bool found = false;
+            foreach (var u in UserRepository.Instance.users.Keys)
+            {
+                if (u.state is SystemManagerState)
+                    found = true;
+            }
+            Assert.IsTrue(found);
+        }
         
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException), "user that is logged in, can perform this action again")]
@@ -366,6 +378,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(user3.sellerPermissions.size == 1); //new seller permission was added
             Assert.AreEqual(Permissions.GetOfficialsInformation, user3.sellerPermissions.First.Value.permissionsInStore.First.Value);
             
+            res = controller.appointStoreManager("b", "r", store.storeID);
+            Assert.IsFalse(res.getTag());
+            
             res = controller.appointStoreManager("b", "r", -1);
             Assert.IsFalse(res.getTag());
             Assert.IsTrue(user3.sellerPermissions.size == 1); 
@@ -400,6 +415,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(user3.sellerPermissions.size == 1); //new seller permission was added - all permissions was given
             Assert.AreEqual(Permissions.AllPermissions, user3.sellerPermissions.First.Value.permissionsInStore.First.Value);
             
+            res = controller.appointStoreOwner("b", "r", store.storeID);
+            Assert.IsFalse(res.getTag());
+            
             controller.appointStoreManager("a", "r", store.storeID); //cant perform this action
             Assert.IsFalse(true);
         }
@@ -420,9 +438,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             ConcurrentLinkedList<int> newPermissions = new ConcurrentLinkedList<int>();
             newPermissions.TryAdd((int)Permissions.AppointStoreManager);
             newPermissions.TryAdd((int)Permissions.RemoveStoreManager);
-            Console.WriteLine(newPermissions.size);
             res = controller.editManagerPermissions("b", "r", newPermissions, store.storeID);
-            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(1, user3.sellerPermissions.size);
             Assert.AreEqual(2,user3.sellerPermissions.First.Value.permissionsInStore.size);
