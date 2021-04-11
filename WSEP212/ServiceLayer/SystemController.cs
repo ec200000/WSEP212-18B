@@ -232,5 +232,21 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.searchItemsByKeyWords(filter.minPrice, filter.maxPrice, filter.category, keyWords);
         }
+
+        public RegularResult loginAsSystemManager(string userName, string password)
+        {
+            String info = $"LoginAsSystemManager Event was triggered, with the parameters: " +
+                          $"user name: {userName}, password: {password} ";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.loginAsSystemManager(userName, password);
+        }
+
+        public ResultWithValue<ShoppingCart> viewShoppingCart(string userName)
+        {
+            String info = $"ViewShoppingCart Event was triggered, with the parameter: " +
+                          $"user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.viewShoppingCart(userName);
+        }
     }
 }

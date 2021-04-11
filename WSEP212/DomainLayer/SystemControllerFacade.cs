@@ -439,6 +439,39 @@ namespace WSEP212.DomainLayer
             return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
         }
 
+        public RegularResult loginAsSystemManager(string userName, string password)
+        {
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { userName, password };
+            ThreadParameters threadParameters = new ThreadParameters();
+            threadParameters.parameters = paramsList;
+            ThreadPool.QueueUserWorkItem(userRes.getValue().loginAsSystemManager, threadParameters); //creating the job
+            threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+            if (threadParameters.result is NotImplementedException)
+            {
+                String errorMsg = "The user " + userName + "cannot perform the login action!";
+                Logger.Instance.writeErrorEventToLog(errorMsg);
+                throw new NotImplementedException(); //there is no permission to perform this task
+            }
+            return (RegularResult)threadParameters.result;
+        }
+
+        public ResultWithValue<ShoppingCart> viewShoppingCart(string userName)
+        {
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new FailureWithValue<ShoppingCart>(userRes.getMessage(), null);
+            }
+
+            return new OkWithValue<ShoppingCart>("Found user with shopping cart",userRes.getValue().shoppingCart);
+        }
+
         public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
         {
             return UserRepository.Instance.getUserPurchaseHistory(userName);

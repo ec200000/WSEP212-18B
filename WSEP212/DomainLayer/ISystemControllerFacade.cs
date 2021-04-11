@@ -30,5 +30,8 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(String userName, int storeID); //all the purchases of the store that I manage/own
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>> getUsersPurchaseHistory(String userName);
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>> getStoresPurchaseHistory(String userName);
+        
+        public RegularResult loginAsSystemManager(string userName, string password);
+        public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
     }
 }
