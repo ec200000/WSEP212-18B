@@ -209,21 +209,21 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getItemsInStoresInformation();
         }
 
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByCategory(FilterItemsDTO filter, string category) //receiving FilterDTO
+        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByCategory(FilterItemsDTO filter, string category) //receiving FilterDTO
         {
             String info = $"SearchItemsByCategory Event was triggered"; 
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.searchItemsByCategory(filter.minPrice, filter.maxPrice, filter.category, category);
         }
         
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByName(FilterItemsDTO filter, string name)
+        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(FilterItemsDTO filter, string name)
         {
             String info = $"SearchItemsByName Event was triggered"; 
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.searchItemsByName(filter.minPrice, filter.maxPrice, filter.category, name);
         }
         
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByKeyWords(FilterItemsDTO filter, string keyWords)
+        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(FilterItemsDTO filter, string keyWords)
         {
             String info = $"SearchItemsByKeyWords Event was triggered"; 
             Logger.Instance.writeInformationEventToLog(info);

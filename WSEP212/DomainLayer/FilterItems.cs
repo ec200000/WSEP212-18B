@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.ServiceLayer;
 
@@ -24,7 +25,7 @@ namespace WSEP212.DomainLayer
             this.category = category;
         }
 
-        public void filterItems(ConcurrentLinkedList<Item> items)
+        public void filterItems(ConcurrentDictionary<Item, int> items)
         {
             if(minPrice != Double.MinValue || maxPrice != Double.MaxValue)
             {
@@ -36,33 +37,29 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        private void filterItemsByPriceRange(ConcurrentLinkedList<Item> items)
+        private void filterItemsByPriceRange(ConcurrentDictionary<Item, int> items)
         {
-            Node<Item> itemNode = items.First;
-            while (itemNode.Value != null)
+            foreach (Item item in items.Keys)
             {
-                if (itemNode.Value.price < minPrice)
+                if (item.price < minPrice)
                 {
-                    items.Remove(itemNode.Value, out _);
+                    items.TryRemove(item, out _);
                 }
-                else if(itemNode.Value.price > maxPrice)
+                else if(item.price > maxPrice)
                 {
-                    items.Remove(itemNode.Value, out _);
+                    items.TryRemove(item, out _);
                 }
-                itemNode = itemNode.Next;
             }
         }
 
-        private void filterItemsByCategory(ConcurrentLinkedList<Item> items)
+        private void filterItemsByCategory(ConcurrentDictionary<Item, int> items)
         {
-            Node<Item> itemNode = items.First;
-            while (itemNode.Value != null)
+            foreach (Item item in items.Keys)
             {
-                if (!itemNode.Value.category.Equals(category))
+                if (!item.category.Equals(category))
                 {
-                    items.Remove(itemNode.Value, out _);
+                    items.TryRemove(item, out _);
                 }
-                itemNode = itemNode.Next;
             }
         }
     }

@@ -633,33 +633,33 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemController controller = new SystemController();
 
             FilterItemsDTO filter = new FilterItemsDTO();
-            ResultWithValue<ConcurrentLinkedList<Item>> result =
+            ResultWithValue<ConcurrentDictionary<Item, int>> result =
                 controller.searchItemsByName(filter, "shoko");
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(1, result.getValue().size); 
+            Assert.AreEqual(1, result.getValue().Count); 
             
             result = controller.searchItemsByCategory(filter, "milk products"); 
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(1, result.getValue().size);
+            Assert.AreEqual(1, result.getValue().Count);
             
             result = controller.searchItemsByKeyWords(filter, "taim"); 
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(1, result.getValue().size);
+            Assert.AreEqual(1, result.getValue().Count);
             
             result = controller.searchItemsByKeyWords(filter, "iphone");
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(0, result.getValue().size);
+            Assert.AreEqual(0, result.getValue().Count);
 
             filter.category = "iphone";
             result = controller.searchItemsByName(filter, "shoko");
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(0, result.getValue().size); 
+            Assert.AreEqual(0, result.getValue().Count); 
             
             filter.category = null;
             filter.maxPrice = 10;
             result = controller.searchItemsByName(filter, "shoko");
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(0, result.getValue().size); 
+            Assert.AreEqual(0, result.getValue().Count); 
         }
         
         [TestMethod]

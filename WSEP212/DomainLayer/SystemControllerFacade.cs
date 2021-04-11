@@ -454,28 +454,28 @@ namespace WSEP212.DomainLayer
             return new OkWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>>("ok", StoreRepository.Instance.getStoresAndItemsInfo());
         }
 
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByCategory(double filterMinPrice, double filterMaxPrice, string filterCategory, string category)
+        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByCategory(double filterMinPrice, double filterMaxPrice, string filterCategory, string category)
         {
             FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
-            ConcurrentLinkedList<Item> list = StoreRepository.Instance.searchItemByCategory(category);
+            ConcurrentDictionary<Item, int> list = StoreRepository.Instance.searchItemByCategory(category);
             filter.filterItems(list);
-            return new OkWithValue<ConcurrentLinkedList<Item>>("ok", list);
+            return new OkWithValue<ConcurrentDictionary<Item, int>>("ok", list);
         }
 
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByName(double filterMinPrice, double filterMaxPrice, string filterCategory, string name)
+        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(double filterMinPrice, double filterMaxPrice, string filterCategory, string name)
         {
             FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
-            ConcurrentLinkedList<Item> list = StoreRepository.Instance.searchItemByName(name);
+            ConcurrentDictionary<Item, int> list = StoreRepository.Instance.searchItemByName(name);
             filter.filterItems(list);
-            return new OkWithValue<ConcurrentLinkedList<Item>>("ok", list);
+            return new OkWithValue<ConcurrentDictionary<Item, int>>("ok", list);
         }
 
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByKeyWords(double filterMinPrice, double filterMaxPrice, string filterCategory, string keyWords)
+        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(double filterMinPrice, double filterMaxPrice, string filterCategory, string keyWords)
         {
             FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
-            ConcurrentLinkedList<Item> list = StoreRepository.Instance.searchItemByKeyWords(keyWords);
+            ConcurrentDictionary<Item, int> list = StoreRepository.Instance.searchItemByKeyWords(keyWords);
             filter.filterItems(list);
-            return new OkWithValue<ConcurrentLinkedList<Item>>("ok", StoreRepository.Instance.searchItemByKeyWords(keyWords));
+            return new OkWithValue<ConcurrentDictionary<Item, int>>("ok", list);
         }
     }
 }
