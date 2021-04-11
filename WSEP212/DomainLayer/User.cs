@@ -13,8 +13,10 @@ namespace WSEP212.DomainLayer
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInfo> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
+        
+        public bool isSystemManager { get; set; }
 
-        public User(String userName)
+        public User(String userName, bool isSystemManager = false)
         {
             this.userName = userName;
             this.shoppingCart = new ShoppingCart();

@@ -240,6 +240,11 @@ namespace WSEP212.DomainLayer
             // already logged in
         }
 
+        public override RegularResult loginAsSystemManager(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public override RegularResult logout(String userName)
         {
             ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
