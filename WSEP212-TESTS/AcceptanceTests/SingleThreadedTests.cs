@@ -661,5 +661,28 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(result.getTag());
             Assert.AreEqual(0, result.getValue().size); 
         }
+        
+        [TestMethod]
+        public void getStoresInformationTest()
+        {
+            SystemController controller = new SystemController();
+            
+            ResultWithValue<ConcurrentDictionary<int, Store>> result =
+                controller.getStoresInformation();
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(1, result.getValue().Count);
+        }
+        
+        [TestMethod]
+        public void getItemsInStoresInformationTest()
+        {
+            SystemController controller = new SystemController();
+
+            ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> result =
+                controller.getItemsInStoresInformation();
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(1, result.getValue().Count);
+            Assert.AreEqual(1, result.getValue()[store].size);
+        }
     }
 }
