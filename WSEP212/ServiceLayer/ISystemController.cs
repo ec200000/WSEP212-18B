@@ -4,31 +4,34 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.DomainLayer;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.ServiceLayer
 {
     public interface ISystemController
     {
-        public bool register(String userName, String password);
-        public bool login(String userName, String password);
-        public bool logout(String userName);
+        public RegularResult register(String userName, String password);
+        public RegularResult login(String userName, String password);
+        public RegularResult logout(String userName);
 
-        public bool addItemToShoppingCart(String userName, int storeID, int itemID);
-        public bool removeItemFromShoppingCart(String userName, int storeID, int itemID);
+        public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity);
+        public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         //edit item in shopping cart is equal to -> remove + add
-        public bool purchaseItems(String userName); //later
-        public bool openStore(String userName, String storeName, String purchasePolicy, String salesPolicy);
-        public bool itemReview(String userName, String review, int itemID, int storeID);
-        public bool addItemToStorage(String userName, int storeID, ItemDTO item);
-        public bool removeItemFromStorage(String userName, int storeID, int itemID);
-        public bool editItemDetails(String userName, int storeID, ItemDTO item);
-        public bool appointStoreManager(String userName, String managerName, int storeID); //the store manager will receive default permissions(4.9)
-        public bool appointStoreOwner(String userName, String storeOwnerName, int storeID);
-        public bool editManagerPermissions(String userName, String managerName, ConcurrentLinkedList<Int32> permissions, int storeID);
-        public bool removeStoreManager(String userName, String managerName, int storeID);
-        public ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(String userName, int storeID);
-        public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(String userName, int storeID); //all the purchases of the store that I manage/own
-        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory(String userName);
-        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory(String userName);
+        public RegularResult purchaseItems(String userName, String address);
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, String purchasePolicy, String salesPolicy);
+        public RegularResult itemReview(String userName, String review, int itemID, int storeID);
+        public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item);
+        public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);
+        public RegularResult editItemDetails(String userName, int storeID, ItemDTO item);
+        public RegularResult appointStoreManager(String userName, String managerName, int storeID); //the store manager will receive default permissions(4.9)
+        public RegularResult appointStoreOwner(String userName, String storeOwnerName, int storeID);
+        public RegularResult editManagerPermissions(String userName, String managerName, ConcurrentLinkedList<Int32> permissions, int storeID);
+        public RegularResult removeStoreManager(String userName, String managerName, int storeID);
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(String userName, int storeID);
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(String userName, int storeID); //all the purchases of the store that I manage/own
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>> getUsersPurchaseHistory(String userName);
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>> getStoresPurchaseHistory(String userName);
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName);
+        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation();
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ServiceLayer;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -18,13 +19,19 @@ namespace WSEP212.DomainLayer
 
         private SystemControllerFacade() { }
 
-        public bool register(string userName, string password) //the result will be held in the ThreadParameters Object
+        public RegularResult register(string userName, string password) //the result will be held in the ThreadParameters Object
         {
-            Object[] paramsList = { userName, password};
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (userRes.getTag()) //found user
+            {
+                return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
+            }
+
+            Object[] paramsList = { userName, password };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.register, threadParameters); //creating the job
+            User newUser = new User(userName);
+            ThreadPool.QueueUserWorkItem(newUser.register, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if(threadParameters.result is NotImplementedException)
             {
@@ -32,16 +39,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool login(string userName, string password)
+        public RegularResult login(string userName, string password)
         {
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
             Object[] paramsList = { userName, password };
-            User user = UserRepository.Instance.findUserByUserName(userName);
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.login, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().login, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -49,16 +61,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool logout(string userName)
+        public RegularResult logout(string userName)
         {
-            Object[] paramsList = { userName};
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { userName };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.logout, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().logout, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -66,16 +83,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool addItemToShoppingCart(string userName, int storeID, int itemID)
+        public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity)
         {
-            Object[] paramsList = { userName, storeID, itemID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { storeID, itemID, quantity };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.addItemToShoppingCart, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().addItemToShoppingCart, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -83,16 +105,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool removeItemFromShoppingCart(string userName, int storeID, int itemID)
+        public RegularResult removeItemFromShoppingCart(string userName, int storeID, int itemID)
         {
-            Object[] paramsList = { userName, storeID, itemID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { storeID, itemID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.removeItemFromShoppingCart, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().removeItemFromShoppingCart, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -100,15 +127,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool purchaseItems(string userName)
+        public RegularResult purchaseItems(String userName, String address)
         {
-            Object[] paramsList = { userName };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { address };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
+            User user = userRes.getValue();
             ThreadPool.QueueUserWorkItem(user.purchaseItems, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
@@ -117,16 +150,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool openStore(string userName, string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
-            Object[] paramsList = { userName, storeName, purchasePolicy, salesPolicy };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if(!userRes.getTag())
+            {
+                return new FailureWithValue<int>(userRes.getMessage(), -1);
+            }
+
+            Object[] paramsList = { storeName, storeAddress, purchasePolicy, salesPolicy };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.openStore, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().openStore, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -134,16 +172,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (ResultWithValue<int>)threadParameters.result;
         }
 
-        public bool itemReview(string userName, string review, int itemID, int storeID)
+        public RegularResult itemReview(string userName, string review, int itemID, int storeID)
         {
-            Object[] paramsList = { userName, review, itemID, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { review, itemID, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.itemReview, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().itemReview, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -151,16 +194,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category)
+        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category)
         {
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new FailureWithValue<int>(userRes.getMessage(), -1);
+            }
+
             Object[] paramsList = { storeID, quantity, itemName, description, price, category };
-            User user = UserRepository.Instance.findUserByUserName(userName);
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.addItemToStorage, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().addItemToStorage, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -168,16 +216,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (ResultWithValue<int>)threadParameters.result;
         }
 
-        public bool removeItemFromStorage(string userName, int storeID, int itemID)
+        public RegularResult removeItemFromStorage(string userName, int storeID, int itemID)
         {
-            Object[] paramsList = { userName, storeID, itemID};
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { storeID, itemID};
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.removeItemFromStorage, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().removeItemFromStorage, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -185,16 +238,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool editItemDetails(string userName, int storeID, Item item)
+        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
         {
-            Object[] paramsList = { userName, storeID, item };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { storeID, itemID, quantity, itemName, description, price, category };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.editItemDetails, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().editItemDetails, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -202,16 +260,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool appointStoreManager(string userName, string managerName, int storeID)
+        public RegularResult appointStoreManager(string userName, string managerName, int storeID)
         {
-            Object[] paramsList = { userName, managerName, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { managerName, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.appointStoreManager, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().appointStoreManager, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -219,16 +282,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool appointStoreOwner(string userName, string storeOwnerName, int storeID)
+        public RegularResult appointStoreOwner(string userName, string storeOwnerName, int storeID)
         {
-            Object[] paramsList = { userName, storeOwnerName, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { storeOwnerName, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.appointStoreOwner, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().appointStoreOwner, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -236,16 +304,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool editManagerPermissions(string userName, string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
+        public RegularResult editManagerPermissions(string userName, string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
-            Object[] paramsList = { userName, managerName, permissions, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { managerName, permissions, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.editManagerPermissions, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().editManagerPermissions, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -253,16 +326,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public bool removeStoreManager(string userName, string managerName, int storeID)
+        public RegularResult removeStoreManager(string userName, string managerName, int storeID)
         {
-            Object[] paramsList = { userName, managerName, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+
+            Object[] paramsList = { managerName, storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.removeStoreManager, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().removeStoreManager, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -270,16 +348,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (bool)threadParameters.result;
+            return (RegularResult)threadParameters.result;
         }
 
-        public ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>> getOfficialsInformation(string userName, int storeID)
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(string userName, int storeID)
         {
-            Object[] paramsList = { userName, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>>(userRes.getMessage(), null);
+            }
+
+            Object[] paramsList = { storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.getOfficialsInformation, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getOfficialsInformation, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -287,16 +370,21 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result;
+            return new OkWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>>("Get Officials Information Successfully", (ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result);
         }
 
-        public ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(string userName, int storeID)
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(string userName, int storeID)
         {
-            Object[] paramsList = { userName, storeID };
-            User user = UserRepository.Instance.findUserByUserName(userName);
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentBag<PurchaseInfo>>(userRes.getMessage(), null);
+            }
+
+            Object[] paramsList = { storeID };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(user.getStorePurchaseHistory, threadParameters); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getStorePurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -304,14 +392,23 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (ConcurrentBag<PurchaseInfo>)threadParameters.result;
+            if (threadParameters.result == null)
+            {
+                return new FailureWithValue<ConcurrentBag<PurchaseInfo>>("Cannot perform this action!", null);
+            }
+            return new OkWithValue<ConcurrentBag<PurchaseInfo>>("Get Store Purchase History Successfully", (ConcurrentBag<PurchaseInfo>)threadParameters.result);
         }
 
-        public ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>> getUsersPurchaseHistory(String userName)
         {
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>>(userRes.getMessage(), null);
+            }
+
             ThreadParameters threadParameters = new ThreadParameters();
-            User user = UserRepository.Instance.findUserByUserName(userName);
-            ThreadPool.QueueUserWorkItem(user.getUsersPurchaseHistory); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getUsersPurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -319,14 +416,19 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>)threadParameters.result;
+            return new OkWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
         }
 
-        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>> getStoresPurchaseHistory(String userName)
         {
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!userRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>(userRes.getMessage(), null);
+            }
+
             ThreadParameters threadParameters = new ThreadParameters();
-            User user = UserRepository.Instance.findUserByUserName(userName);
-            ThreadPool.QueueUserWorkItem(user.getStoresPurchaseHistory); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getStoresPurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -334,7 +436,7 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
-            return (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result;
+            return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
         }
     }
 }

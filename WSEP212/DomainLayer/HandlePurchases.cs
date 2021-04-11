@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Threading;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -15,26 +17,31 @@ namespace WSEP212.DomainLayer
             
         }
 
-        private double calculatePurchaseTotal(User user)
+        // returns the total price after sales for each store. if the purchase cannot be made returns null
+        private ResultWithValue<ConcurrentDictionary<int, double>> calculatePurchaseTotal(User user)
         {
-            ConcurrentDictionary<int, PurchaseType> purchaseTypes = new ConcurrentDictionary<int, PurchaseType>();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> purchaseTypes = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>>();
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                getBagPurchaseTypes(shoppingBag);
+                purchaseTypes.TryAdd(shoppingBag.store.storeID, getBagPurchaseTypes(shoppingBag));
             }
             return user.shoppingCart.purchaseItemsInCart(user, purchaseTypes);
         }
 
-        private bool externalPurchase(double amount, User user)
+        private RegularResult externalPurchase(double amount, User user)
         {
-            return Math.Abs(amount - PaymentSystem.Instance.purchaseItems(user, amount)) < 0.01;
+            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(user, amount)) < 0.01)
+            {
+                return new Ok("Payment Charged Successfully");
+            }
+            return new Failure("Payment Charged Failed");
         }
 
         private void rollback(User user)
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.store.rollBackPurchase(shoppingBag.items);
+                shoppingBag.store.rollBackPurchase(shoppingBag.items); // if the purchase failed
             }
         }
 
@@ -43,45 +50,80 @@ namespace WSEP212.DomainLayer
             ConcurrentDictionary<int, PurchaseType> purchaseTypes = new ConcurrentDictionary<int, PurchaseType>();
             foreach (int itemID in shoppingBag.items.Keys)
             {
-                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase); // getting the purchase types for each item
             }
             return purchaseTypes;
         }
 
-        private void createPurchaseInfos(User user)
+        private RegularResult createPurchaseInfos(User user, ConcurrentDictionary<int, double> pricePerStore)
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                double bagPrice = shoppingBag.purchaseItemsInBag(user, getBagPurchaseTypes(shoppingBag));
-                PurchaseInfo purchaseInfo = new PurchaseInfo(shoppingBag.store.storeID, user.userName,
-                    shoppingBag.items, bagPrice, DateTime.Now);
-                user.purchases.Add(purchaseInfo);
-                shoppingBag.store.addNewPurchase(purchaseInfo);
+                int storeID = shoppingBag.store.storeID;
+                if(pricePerStore.ContainsKey(storeID))
+                {
+                    PurchaseInfo purchaseInfo = new PurchaseInfo(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
+                    user.purchases.Add(purchaseInfo);
+                    shoppingBag.store.addNewPurchase(purchaseInfo);
+                }
+                else
+                {
+                    return new Failure("The Final Price For The Store Does Not Exist");
+                }
             }
+            return new Ok("All Purchase Histories Has Been Successfully Added");
         }
 
-        private void callDeliverySystem(User user, String address)
+        private RegularResult callDeliverySystem(User user, String address)
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.store.deliverItems(address, shoppingBag.items);
+                RegularResult deliverRes = shoppingBag.store.deliverItems(address, shoppingBag.items);
+                if(!deliverRes.getTag())
+                {
+                    return deliverRes;
+                }
             }
+            return new Ok("All Items Deliver To The User Successfully");
         }
 
-        public bool purchaseItems(User user, String address)
+        public RegularResult purchaseItems(User user, String address)
         {
-            double total = calculatePurchaseTotal(user);
-            if (externalPurchase(total, user))
+            if(address == null) return new Failure("address is null!");
+            ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
+            if(pricePerStoreRes.getTag())
             {
-                createPurchaseInfos(user);
-                callDeliverySystem(user, address);
-                return true;
-            }
-            else
-            {
+                // calculate total price for all stores
+                double totalPrice = 0;
+                foreach (double price in pricePerStoreRes.getValue().Values)
+                {
+                    totalPrice += price;
+                }
+
+                RegularResult externalPurchaseRes = externalPurchase(totalPrice, user);
+                if (externalPurchaseRes.getTag())
+                {
+                    RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
+                    if(purchaseInfosRes.getTag())
+                    {
+                        RegularResult deliveryRes = callDeliverySystem(user, address);
+                        if(deliveryRes.getTag())
+                        {
+                            user.shoppingCart.clearShoppingCart();
+                            return new Ok("Purchase Completed Successfully!");
+                        }
+                        rollback(user);
+                        return deliveryRes;
+                    }
+                    rollback(user);
+                    return purchaseInfosRes;
+                }
                 rollback(user);
-                return false;
+                return externalPurchaseRes;
             }
+            return new Failure(pricePerStoreRes.getMessage());
+
+            
         }
     }
 }

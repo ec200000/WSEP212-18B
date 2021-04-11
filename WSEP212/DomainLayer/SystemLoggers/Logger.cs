@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Serilog;
 
 namespace WSEP212.DomainLayer
@@ -17,7 +18,7 @@ namespace WSEP212.DomainLayer
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.RollingFile("LogFileInformation.txt", shared: true,
-                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}{NewLine}") //writing the error to the same file
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}{NewLine}") //writing the info to the same file
                 .CreateLogger();
 
             Log.Information(info);

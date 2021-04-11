@@ -1,0 +1,2 @@
+2021-04-08 23:46:46.774 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 1, item ID: 1
+
