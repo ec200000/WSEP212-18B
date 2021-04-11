@@ -582,7 +582,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
-        public void getStoresPurchaseHistory()
+        public void getStoresPurchaseHistoryTest()
         {
             SystemController controller = new SystemController();
             ResultWithValue<int> result = controller.openStore("b","HAMAMA","Ashdod","DEFAULT","DEFAULT"); 
@@ -625,6 +625,41 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             controller.getStoresPurchaseHistory("a"); //no permission to do so
             Assert.IsFalse(true);
+        }
+        
+        [TestMethod]
+        public void searchItemsTest()
+        {
+            SystemController controller = new SystemController();
+
+            FilterItemsDTO filter = new FilterItemsDTO();
+            ResultWithValue<ConcurrentLinkedList<Item>> result =
+                controller.searchItemsByName(filter, "shoko");
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(1, result.getValue().size); 
+            
+            result = controller.searchItemsByCategory(filter, "milk products"); 
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(1, result.getValue().size);
+            
+            result = controller.searchItemsByKeyWords(filter, "taim"); 
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(1, result.getValue().size);
+            
+            result = controller.searchItemsByKeyWords(filter, "iphone");
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(0, result.getValue().size);
+
+            filter.category = "iphone";
+            result = controller.searchItemsByName(filter, "shoko");
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(0, result.getValue().size); 
+            
+            filter.category = null;
+            filter.maxPrice = 10;
+            result = controller.searchItemsByName(filter, "shoko");
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(0, result.getValue().size); 
         }
     }
 }

@@ -187,25 +187,47 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getStoresPurchaseHistory(userName);
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(String userName)
         {
-            return UserRepository.Instance.getUserPurchaseInfo(userName);
+            String info = $"GetUserPurchaseHistory Event was triggered, with the parameter:" +
+                          $"user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getUserPurchaseHistory(userName);
         }
 
         public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation()
         {
-            return new OkWithValue<ConcurrentDictionary<int, Store>>("ok", StoreRepository.Instance.stores);
+            String info = $"GetStoresInformation Event was triggered";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getStoresInformation();
         }
         
         public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation() 
         {
-           // return new OkWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>>("ok", StoreRepository.Instance.getItemsInformation());
-           throw new NotImplementedException();
+            String info = $"GetItemsInStoresInformation Event was triggered"; 
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getItemsInStoresInformation();
         }
 
-        public ResultWithValue<ConcurrentLinkedList<Item>> searchItems() //receiving FilterDTO TODO: add to interface
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByCategory(FilterItemsDTO filter, string category) //receiving FilterDTO
         {
-            throw new NotImplementedException();
+            String info = $"GetItemsInStoresInformation Event was triggered"; 
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.searchItemsByCategory(filter.minPrice, filter.maxPrice, filter.category, category);
+        }
+        
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByName(FilterItemsDTO filter, string name)
+        {
+            String info = $"GetItemsInStoresInformation Event was triggered"; 
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.searchItemsByName(filter.minPrice, filter.maxPrice, filter.category, name);
+        }
+        
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByKeyWords(FilterItemsDTO filter, string keyWords)
+        {
+            String info = $"GetItemsInStoresInformation Event was triggered"; 
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.searchItemsByKeyWords(filter.minPrice, filter.maxPrice, filter.category, keyWords);
         }
     }
 }

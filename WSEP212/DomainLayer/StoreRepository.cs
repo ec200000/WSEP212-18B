@@ -123,7 +123,7 @@ namespace WSEP212.DomainLayer
         public ConcurrentLinkedList<Item> searchItemByKeyWords(String keyWords)
         {
             ConcurrentLinkedList<Item> itemsByKeyWords = new ConcurrentLinkedList<Item>();
-            String[] words = keyWords.Split(null);   // split key words by space
+            String[] words = keyWords.Split(' ');   // split key words by space
 
             foreach (Store store in stores.Values)
             {
@@ -131,7 +131,7 @@ namespace WSEP212.DomainLayer
                 {
                     foreach (String word in words)
                     {
-                        if (item.category.Equals(word) || item.description.Contains(word) || item.itemName.Contains(word))
+                        if (item.category.Equals(word) || item.description.Contains(word) || item.itemName.Contains(word) || item.category.Contains(word))
                         {
                             itemsByKeyWords.TryAdd(item);
                             break;

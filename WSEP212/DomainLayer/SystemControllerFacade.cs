@@ -438,5 +438,44 @@ namespace WSEP212.DomainLayer
             }
             return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
         }
+
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
+        {
+            return UserRepository.Instance.getUserPurchaseHistory(userName);
+        }
+        
+        public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation()
+        {
+            return new OkWithValue<ConcurrentDictionary<int, Store>>("ok", StoreRepository.Instance.stores);
+        }
+        
+        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation()
+        {
+            return new OkWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>>("ok", StoreRepository.Instance.getStoresAndItemsInfo());
+        }
+
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByCategory(double filterMinPrice, double filterMaxPrice, string filterCategory, string category)
+        {
+            FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
+            ConcurrentLinkedList<Item> list = StoreRepository.Instance.searchItemByCategory(category);
+            filter.filterItems(list);
+            return new OkWithValue<ConcurrentLinkedList<Item>>("ok", list);
+        }
+
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByName(double filterMinPrice, double filterMaxPrice, string filterCategory, string name)
+        {
+            FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
+            ConcurrentLinkedList<Item> list = StoreRepository.Instance.searchItemByName(name);
+            filter.filterItems(list);
+            return new OkWithValue<ConcurrentLinkedList<Item>>("ok", list);
+        }
+
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItemsByKeyWords(double filterMinPrice, double filterMaxPrice, string filterCategory, string keyWords)
+        {
+            FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
+            ConcurrentLinkedList<Item> list = StoreRepository.Instance.searchItemByKeyWords(keyWords);
+            filter.filterItems(list);
+            return new OkWithValue<ConcurrentLinkedList<Item>>("ok", StoreRepository.Instance.searchItemByKeyWords(keyWords));
+        }
     }
 }

@@ -16,6 +16,13 @@ namespace WSEP212.DomainLayer
             this.maxPrice = filterItemsDTO.maxPrice;
             this.category = filterItemsDTO.category;
         }
+        
+        public FilterItems(double minPrice, double maxPrice, String category)
+        {
+            this.minPrice = minPrice;
+            this.maxPrice = maxPrice;
+            this.category = category;
+        }
 
         public void filterItems(ConcurrentLinkedList<Item> items)
         {
@@ -34,7 +41,6 @@ namespace WSEP212.DomainLayer
             Node<Item> itemNode = items.First;
             while (itemNode.Value != null)
             {
-                itemNode = itemNode.Next;
                 if (itemNode.Value.price < minPrice)
                 {
                     items.Remove(itemNode.Value, out _);
@@ -43,6 +49,7 @@ namespace WSEP212.DomainLayer
                 {
                     items.Remove(itemNode.Value, out _);
                 }
+                itemNode = itemNode.Next;
             }
         }
 
@@ -51,11 +58,11 @@ namespace WSEP212.DomainLayer
             Node<Item> itemNode = items.First;
             while (itemNode.Value != null)
             {
-                itemNode = itemNode.Next;
                 if (!itemNode.Value.category.Equals(category))
                 {
                     items.Remove(itemNode.Value, out _);
                 }
+                itemNode = itemNode.Next;
             }
         }
     }

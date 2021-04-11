@@ -130,7 +130,7 @@ namespace WSEP212.DomainLayer
             return purchaseHistory;
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseInfo(string userName)
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
         {
             User u = findUserByUserName(userName).getValue();
             if (u.state is LoggedBuyerState)
