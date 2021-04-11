@@ -21,12 +21,6 @@ namespace WSEP212.DomainLayer
             return UserType.LoggedBuyer;
         }
 
-        public override RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
-        {
-            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
-            // adding a quantity of the item to the shopping bag that belongs to the store id
-        }
-
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
@@ -274,19 +268,9 @@ namespace WSEP212.DomainLayer
             return addStoreRes;
         }
 
-        public override RegularResult purchaseItems(string address)
-        {
-            return HandlePurchases.Instance.purchaseItems(this.user, address);
-        }
-
         public override RegularResult register(string userName, string password)
         {
             throw new NotImplementedException();
-        }
-
-        public override RegularResult removeItemFromShoppingCart(int storeID, int itemID)
-        {
-            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
         }
 
         public override RegularResult removeItemFromStorage(int storeID, int itemID)

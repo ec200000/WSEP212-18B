@@ -7,7 +7,7 @@ namespace WSEP212
     {
         static void Main(string[] args)
         {
-            
+
         }
     }
 }

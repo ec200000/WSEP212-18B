@@ -21,11 +21,23 @@ namespace WSEP212.DomainLayer
         public abstract RegularResult login(String userName, String password);
         public abstract RegularResult logout(String userName);
 
-        public abstract RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity);
-        public abstract RegularResult removeItemFromShoppingCart(int storeID, int itemID);
-        //edit item in shopping cart is equal to -> remove + add
-        public abstract RegularResult purchaseItems(string address); //later
-    
+        public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
+        {
+            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            // adding a quantity of the item to the shopping bag that belongs to the store id
+        }
+
+        public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
+        {
+            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+
+        }
+
+        public RegularResult purchaseItems(string address)
+        {
+            return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
+        }
+
         public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
         public abstract RegularResult itemReview(String review, int itemID, int storeID);
         public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);

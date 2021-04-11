@@ -85,6 +85,63 @@ namespace WSEP212.DomainLayer
             return new FailureWithValue<Store>("The Store Is Not Exist In The Store Repository", null);
         }
 
+        // returns all items that contains that string in their name
+        public ConcurrentLinkedList<Item> searchItemByName(String itemName)
+        {
+            ConcurrentLinkedList<Item> itemsByName = new ConcurrentLinkedList<Item>();
+            foreach (Store store in stores.Values)
+            {
+                foreach (Item item in store.storage.Values)
+                {
+                    if(item.itemName.Contains(itemName))
+                    {
+                        itemsByName.TryAdd(item);
+                    }
+                }
+            }
+            return itemsByName;
+        }
+
+        // returns all items that belong to the category
+        public ConcurrentLinkedList<Item> searchItemByCategory(String itemCategory)
+        {
+            ConcurrentLinkedList<Item> itemsByCategory = new ConcurrentLinkedList<Item>();
+            foreach (Store store in stores.Values)
+            {
+                foreach (Item item in store.storage.Values)
+                {
+                    if (item.category.Equals(itemCategory))
+                    {
+                        itemsByCategory.TryAdd(item);
+                    }
+                }
+            }
+            return itemsByCategory;
+        }
+
+        // returns all items that belong to the category, name or description
+        public ConcurrentLinkedList<Item> searchItemByKeyWords(String keyWords)
+        {
+            ConcurrentLinkedList<Item> itemsByKeyWords = new ConcurrentLinkedList<Item>();
+            String[] words = keyWords.Split(null);   // split key words by space
+
+            foreach (Store store in stores.Values)
+            {
+                foreach (Item item in store.storage.Values)
+                {
+                    foreach (String word in words)
+                    {
+                        if (item.category.Equals(word) || item.description.Contains(word) || item.itemName.Contains(word))
+                        {
+                            itemsByKeyWords.TryAdd(item);
+                            break;
+                        }
+                    }
+                }
+            }
+            return itemsByKeyWords;
+        }
+
         public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getAllStoresPurchsesHistory()
         {
             ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>();
@@ -93,6 +150,22 @@ namespace WSEP212.DomainLayer
                 storesPurchasesHistory.TryAdd(storePair.Key, storePair.Value.purchasesHistory);
             }
             return storesPurchasesHistory;
+        }
+
+        // returns all the stores in the system with their items
+        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getStoresAndItemsInfo()
+        {
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> storesItemsInfo = new ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>();
+            foreach (Store store in stores.Values)
+            {
+                ConcurrentLinkedList<Item> itemsInfo = new ConcurrentLinkedList<Item>();
+                foreach (Item item in store.storage.Values)
+                {
+                    itemsInfo.TryAdd(item);
+                }
+                storesItemsInfo.TryAdd(store, itemsInfo);
+            }
+            return storesItemsInfo;
         }
     }
 }

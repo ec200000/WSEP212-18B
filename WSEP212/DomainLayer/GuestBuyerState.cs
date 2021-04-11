@@ -19,12 +19,6 @@ namespace WSEP212.DomainLayer
             return UserType.GuestBuyer;
         }
 
-        public override RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
-        {
-            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
-            // adding a quantity of the item to the shopping bag that belongs to the store id
-        }
-
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
@@ -112,21 +106,10 @@ namespace WSEP212.DomainLayer
             // only logged buyers can do that
         }
 
-        public override RegularResult purchaseItems(String address)
-        {
-            return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
-        }
-
         public override RegularResult register(String userName, String password)
         {
             User user = new User(userName);
             return UserRepository.Instance.insertNewUser(user, password);
-        }
-
-        public override RegularResult removeItemFromShoppingCart(int storeID, int itemID)
-        {
-            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
-
         }
 
         public override RegularResult removeItemFromStorage(int storeID, int itemID)

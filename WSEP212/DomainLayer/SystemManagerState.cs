@@ -14,11 +14,6 @@ namespace WSEP212.DomainLayer
 
         }
 
-        public override RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
-        {
-            throw new NotImplementedException();
-        }
-
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
@@ -70,16 +65,6 @@ namespace WSEP212.DomainLayer
         }
 
         public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegularResult purchaseItems(string address)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegularResult removeItemFromShoppingCart(int storeID, int itemID)
         {
             throw new NotImplementedException();
         }
