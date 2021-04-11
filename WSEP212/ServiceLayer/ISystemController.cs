@@ -44,5 +44,8 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(FilterItemsDTO filter, string name); // USE CASE 2.6
         public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(FilterItemsDTO filter,
             string keyWords); // USE CASE 2.6
+
+        public RegularResult loginAsSystemManager(string userName, string password);
+        public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
     }
 }

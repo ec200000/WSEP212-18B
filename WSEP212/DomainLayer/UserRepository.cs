@@ -26,6 +26,17 @@ namespace WSEP212.DomainLayer
         
         public ConcurrentDictionary<User, bool> systemManagers { get; set; }
 
+        public RegularResult changeSystemManagerStatus(string userName, string password, bool status)
+        {
+            foreach (var u in users)
+            {
+                if (u.Key.userName.Equals(userName) && u.Key.isSystemManager)
+                {
+                    return changeUserLoginStatus(u.Key, status, password);
+                }
+            }
+            return new Failure($"The user {userName} is not a system manager!");
+        }
         public RegularResult insertNewUser(User newUser,String password)
         {
             lock (insertLock)
