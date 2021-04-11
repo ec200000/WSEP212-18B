@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Threading;
 using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -40,7 +41,7 @@ namespace WSEP212.DomainLayer
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.store.rollBackPurchase(shoppingBag.items);
+                shoppingBag.store.rollBackPurchase(shoppingBag.items); // if the purchase failed
             }
         }
 
@@ -49,7 +50,7 @@ namespace WSEP212.DomainLayer
             ConcurrentDictionary<int, PurchaseType> purchaseTypes = new ConcurrentDictionary<int, PurchaseType>();
             foreach (int itemID in shoppingBag.items.Keys)
             {
-                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase); // getting the purchase types for each item
             }
             return purchaseTypes;
         }
@@ -88,6 +89,7 @@ namespace WSEP212.DomainLayer
 
         public RegularResult purchaseItems(User user, String address)
         {
+            if(address == null) return new Failure("address is null!");
             ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
             if(pricePerStoreRes.getTag())
             {

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.Result;
 
@@ -21,56 +22,67 @@ namespace WSEP212.DomainLayer
         public override RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            // adding a quantity of the item to the shopping bag that belongs to the store id
         }
 
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override RegularResult appointStoreManager(string managerName, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override RegularResult appointStoreOwner(string storeOwnerName, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override RegularResult editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
+            // only system managers can do that
         }
 
         public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
+            // only system managers can do that
         }
 
         public override RegularResult itemReview(string review, int itemID, int storeID)
         {
             throw new NotImplementedException();
+            // only logged buyers can do that
         }
 
         public override RegularResult login(string userName, string password)
@@ -91,17 +103,18 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult logout(String userName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
         public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
             throw new NotImplementedException();
+            // only logged buyers can do that
         }
 
         public override RegularResult purchaseItems(String address)
         {
-            throw new NotImplementedException(); //TODO: IMPLEMENT
+            return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
         }
 
         public override RegularResult register(String userName, String password)
@@ -119,11 +132,13 @@ namespace WSEP212.DomainLayer
         public override RegularResult removeItemFromStorage(int storeID, int itemID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override RegularResult removeStoreManager(string managerName, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
     }
 }

@@ -11,10 +11,15 @@ namespace WSEP212_TESTS
     public class UserTest
     {
         User user;
+        private User user3;
         [TestInitialize]
         public void testInit()
         {
             this.user = new User("check name");
+            user3 = new User("b"); //logged
+            user3.changeState(new LoggedBuyerState(user3));
+            UserRepository.Instance.users.TryAdd(user3, true);
+            UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
         }
 
         public bool registerAndLogin()
@@ -53,6 +58,25 @@ namespace WSEP212_TESTS
             
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
+        
+        public int openStore2()
+        {
+            //Store.resetStoreCounter();
+            String name = "store";
+            String address = "holon";
+            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<PolicyRule>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[4];
+            list[0] = name;
+            list[1] = address;
+            list[2] = purchasePolicy;
+            list[3] = salesPolicy;
+            parameters.parameters = list;
+            user3.openStore(parameters);
+            
+            return ((ResultWithValue<int>)parameters.result).getValue();
+        }
 
         public int addItemToStorage()
         {
@@ -67,6 +91,22 @@ namespace WSEP212_TESTS
             list[5] = "milk products";
             parameters.parameters = list;
             user.addItemToStorage(parameters);
+            return ((ResultWithValue<int>)parameters.result).getValue();
+        }
+        
+        public int addItemToStorage2()
+        {
+            int storeID = 1;
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[6];
+            list[0] = storeID;
+            list[1] = 3;
+            list[2] = "shoko";
+            list[3] = "taim retzah!";
+            list[4] = 12.0;
+            list[5] = "milk products";
+            parameters.parameters = list;
+            user3.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
         
@@ -156,7 +196,7 @@ namespace WSEP212_TESTS
             parameters.parameters = list;
             user.register(parameters);
             Assert.IsTrue(((RegularResult)parameters.result).getTag());
-            Assert.AreEqual(UserRepository.Instance.users.Count, 1);
+            Assert.AreEqual(UserRepository.Instance.users.Count, 2);
         }
 
         [TestMethod]
@@ -539,7 +579,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestPurchaseItems()
+        public void TestPurchaseItemsLoggedUser()
         {
             if (registerAndLogin())
             {
@@ -569,6 +609,39 @@ namespace WSEP212_TESTS
                             Assert.AreEqual(1, this.user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestPurchaseItemsGuestUser()
+        {
+            int storeID = openStore2();
+            if (storeID > 0)
+            {
+                int itemID = addItemToStorage2();
+                if (itemID > 0)
+                {
+                    int quantity = 2;
+                    ThreadParameters parameters = new ThreadParameters();
+                    object[] list = new object[3];
+                    list[0] = storeID;
+                    list[1] = itemID;
+                    list[2] = quantity;
+                    parameters.parameters = list;
+                    user.addItemToShoppingCart(parameters);
+                    if ((bool) parameters.result)
+                    {
+                        string address = "moshe levi 3 beer sheva";
+                        ThreadParameters parameters2 = new ThreadParameters();
+                        object[] list2 = new object[1];
+                        list2[0] = address;
+                        parameters2.parameters = list2;
+                        user.purchaseItems(parameters2);
+                        Assert.IsTrue((bool)parameters2.result);
+                        Assert.AreEqual(1, this.user.purchases.Count);
+                        Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                     }
                 }
             }

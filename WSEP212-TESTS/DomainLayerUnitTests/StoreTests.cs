@@ -21,7 +21,7 @@ namespace WSEP212_TESTS
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
             this.store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
-            this.sodaID = store.addItemToStorage(3, "soda-stream", "great drink", 150, "drink").getValue();
+            this.sodaID = this.store.addItemToStorage(3, "soda-stream", "great drink", 150, "drink").getValue();
         }
 
         [TestCleanup]

@@ -22,15 +22,16 @@ namespace WSEP212.DomainLayer
         public RegularResult register(string userName, string password) //the result will be held in the ThreadParameters Object
         {
             ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
-            if (!userRes.getTag())
+            if (userRes.getTag()) //found user
             {
-                return new Failure(userRes.getMessage());
+                return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
             }
 
             Object[] paramsList = { userName, password };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(userRes.getValue().register, threadParameters); //creating the job
+            User newUser = new User(userName);
+            ThreadPool.QueueUserWorkItem(newUser.register, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if(threadParameters.result is NotImplementedException)
             {
@@ -140,7 +141,8 @@ namespace WSEP212.DomainLayer
             Object[] paramsList = { address };
             ThreadParameters threadParameters = new ThreadParameters();
             threadParameters.parameters = paramsList;
-            ThreadPool.QueueUserWorkItem(userRes.getValue().purchaseItems, threadParameters); //creating the job
+            User user = userRes.getValue();
+            ThreadPool.QueueUserWorkItem(user.purchaseItems, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -390,6 +392,10 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
+            if (threadParameters.result == null)
+            {
+                return new FailureWithValue<ConcurrentBag<PurchaseInfo>>("Cannot perform this action!", null);
+            }
             return new OkWithValue<ConcurrentBag<PurchaseInfo>>("Get Store Purchase History Successfully", (ConcurrentBag<PurchaseInfo>)threadParameters.result);
         }
 
@@ -402,7 +408,7 @@ namespace WSEP212.DomainLayer
             }
 
             ThreadParameters threadParameters = new ThreadParameters();
-            ThreadPool.QueueUserWorkItem(userRes.getValue().getUsersPurchaseHistory); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getUsersPurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
@@ -422,7 +428,7 @@ namespace WSEP212.DomainLayer
             }
 
             ThreadParameters threadParameters = new ThreadParameters();
-            ThreadPool.QueueUserWorkItem(userRes.getValue().getStoresPurchaseHistory); //creating the job
+            ThreadPool.QueueUserWorkItem(userRes.getValue().getStoresPurchaseHistory, threadParameters); //creating the job
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {

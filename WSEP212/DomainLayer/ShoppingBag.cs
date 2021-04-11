@@ -30,28 +30,16 @@ namespace WSEP212.DomainLayer
         {
             if (quantity > 0)
             {
-                RegularResult itemAvailableRes;
-                if (items.ContainsKey(itemID))
+                int addition = items.ContainsKey(itemID) ? items[itemID] : 0; 
+                int updatedQuantity = addition + quantity;
+                RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
+                if (itemAvailableRes.getTag())
                 {
-                    int updatedQuantity = items[itemID] + quantity;
-                    itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
-                    if (itemAvailableRes.getTag())
-                    {
-                        items[itemID] = updatedQuantity;
-                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
-                    }
-                    return itemAvailableRes;
+                    items[itemID] = updatedQuantity;
+                    return new Ok("The Item Was Successfully Added To The Shopping Bag");
                 }
-                else 
-                {
-                    itemAvailableRes = store.isAvailableInStorage(itemID, quantity);
-                    if (itemAvailableRes.getTag())
-                    {
-                        items.TryAdd(itemID, quantity);   // adding item with quantity
-                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
-                    }
-                    return itemAvailableRes;
-                }
+                return itemAvailableRes;
+                
             }
             return new Failure("Cannot Add A Item To The Shopping Bag With A Non-Positive Quantity");
         }

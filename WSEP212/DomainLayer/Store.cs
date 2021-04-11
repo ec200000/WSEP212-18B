@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.Result;
 
@@ -9,6 +10,10 @@ namespace WSEP212.DomainLayer
 {
     public class Store
     {
+        private readonly object itemInStorageLock = new object();
+        private readonly object purchaseItemsLock = new object();
+        private readonly object addStoreSellerLock = new object();
+        
         // static counter for the storeIDs of diffrent stores
         private static int storeCounter = 1;
 
@@ -49,16 +54,19 @@ namespace WSEP212.DomainLayer
         // Check if the item exist and available in the store
         public RegularResult isAvailableInStorage(int itemID, int quantity)
         {
-            if(storage.ContainsKey(itemID))   // checks if item exist in the store
+            lock (itemInStorageLock)
             {
-                Item item = storage[itemID];
-                if (quantity <= item.quantity)   // checks if there is enough of the item in stock
+                if(storage.ContainsKey(itemID))   // checks if item exist in the store
                 {
-                    return new Ok("The Item Is Available In The Store Storage");
+                    Item item = storage[itemID];
+                    if (quantity <= item.quantity)   // checks if there is enough of the item in stock
+                    {
+                        return new Ok("The Item Is Available In The Store Storage");
+                    }
+                    return new Failure("The Item Is Not Available In The Store Storage At The Moment");
                 }
-                return new Failure("The Item Is Not Available In The Store Storage At The Moment");
+                return new Failure("Item Not Exist In Storage");
             }
-            return new Failure("Item Not Exist In Storage");
         }
 
         // Add new item to the store with his personal details
@@ -218,31 +226,33 @@ namespace WSEP212.DomainLayer
         public RegularResult purchaseItemsIfAvailable(ConcurrentDictionary<int, int> items)
         {
             ConcurrentDictionary<int, int> updatedItems = new ConcurrentDictionary<int, int>();
-
-            foreach (KeyValuePair<int, int> item in items)
+            lock (purchaseItemsLock)
             {
-                int itemID = item.Key;
-                int quantity = item.Value;
-                RegularResult itemAvailableRes = isAvailableInStorage(itemID, quantity);
-                if (itemAvailableRes.getTag())   // maybe lock the storage now
+                foreach (KeyValuePair<int, int> item in items)
                 {
-                    RegularResult changeQuantityRes = changeItemQuantity(itemID, -1 * quantity);
-                    if(changeQuantityRes.getTag())
+                    int itemID = item.Key;
+                    int quantity = item.Value;
+                    RegularResult itemAvailableRes = isAvailableInStorage(itemID, quantity);
+                    if (itemAvailableRes.getTag())   // maybe lock the storage now
                     {
-                        updatedItems.TryAdd(itemID, quantity);
+                        RegularResult changeQuantityRes = changeItemQuantity(itemID, -1 * quantity);
+                        if(changeQuantityRes.getTag())
+                        {
+                            updatedItems.TryAdd(itemID, quantity);
+                        }
+                        else
+                        {
+                            return new Failure("One Or More Of The " + changeQuantityRes.getMessage());
+                        }
                     }
                     else
                     {
-                        return new Failure("One Or More Of The " + changeQuantityRes.getMessage());
+                        rollBackPurchase(updatedItems);   // if at least one of the items not available, the purchase is canceled
+                        return new Failure("One Or More Of " + itemAvailableRes.getMessage());
                     }
                 }
-                else
-                {
-                    rollBackPurchase(updatedItems);   // if at least one of the items not available, the purchase is canceled
-                    return new Failure("One Or More Of " + itemAvailableRes.getMessage());
-                }
+                return new Ok("All Items Are Available In The Store's Storage");
             }
-            return new Ok("All Items Are Available In The Store's Storage");
         }
 
         // In case the purchase is canceled (payment is not made / system collapses) -
@@ -265,13 +275,16 @@ namespace WSEP212.DomainLayer
         // Adds a new store seller for this store
         public RegularResult addNewStoreSeller(SellerPermissions sellerPermissions)
         {
-            String sellerUserName = sellerPermissions.seller.userName;
-            if (!storeSellersPermissions.ContainsKey(sellerUserName))
+            lock (addStoreSellerLock)
             {
-                storeSellersPermissions.TryAdd(sellerUserName, sellerPermissions);
-                return new Ok("The New Store Seller Added To The Store Successfully");
+                String sellerUserName = sellerPermissions.seller.userName;
+                if (!storeSellersPermissions.ContainsKey(sellerUserName))
+                {
+                    storeSellersPermissions.TryAdd(sellerUserName, sellerPermissions);
+                    return new Ok("The New Store Seller Added To The Store Successfully");
+                }
+                return new Failure("The Store Seller Is Already Defined As A Seller In This Store");
             }
-            return new Failure("The Store Seller Is Already Defined As A Seller In This Store");
         }
 
         // Removes a store seller from this store

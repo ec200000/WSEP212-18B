@@ -24,14 +24,15 @@ namespace WSEP212.DomainLayer
         public override RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            // adding a quantity of the item to the shopping bag that belongs to the store id
         }
 
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
             while(sellerPermissions.Value != null)
             {
-                if(sellerPermissions.Value.store.storeID == storeID)
+                if(sellerPermissions.Value.store.storeID == storeID) // if the user works at the store
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
                     {
@@ -39,7 +40,7 @@ namespace WSEP212.DomainLayer
                     }
                     return new FailureWithValue<int>("The User Has No Permission To Add Item To This Store", -1);
                 }
-                sellerPermissions = sellerPermissions.Next;
+                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return new FailureWithValue<int>("The User Is Not Store Seller Of This Store", -1);
         }
@@ -68,9 +69,9 @@ namespace WSEP212.DomainLayer
             {
                 return new Failure(sellerRes.getMessage());
             }
-            // check the manager is logged buyer - if he is subscriber in the system
-            // TOTO HERE
-            // return new Failure("A Guest Cannot Be Appointed To Be A Store Manager");
+
+            if (sellerRes.getValue() == null)// check the manager is logged buyer - if he is subscriber in the system
+                return new Failure("A Guest Cannot Be Appointed To Be A Store Manager");
 
             // checks if the user has the permissions for appointing store manager
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, permission);
@@ -97,7 +98,7 @@ namespace WSEP212.DomainLayer
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
             while (sellerPermissions.Value != null)
             {
-                if (sellerPermissions.Value.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID) // if the user works at the store
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(permission))
                     {
@@ -105,7 +106,7 @@ namespace WSEP212.DomainLayer
                     }
                     return new Failure("The User Has No Permission To Edit Store Manager Permissions");
                 }
-                sellerPermissions = sellerPermissions.Next;
+                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return new Failure("The User Is Not Store Seller Of This Store");
         }
@@ -143,6 +144,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if(storeSellerRes.getTag())
                 {
+                    if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                        return new Failure("Can't edit store's owner permissions!");
                     storeSellerRes.getValue().permissionsInStore = permissions;
                     return new Ok("Edit Manager Permissions Successfully");
                 }
@@ -163,30 +166,31 @@ namespace WSEP212.DomainLayer
 
         public override ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
             while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.Value.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID) // if the user works at the store
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
-                        return sellerPermissions.Value.store.getStoreOfficialsInfo();
+                        return sellerPermissions.Value.store.getStoreOfficialsInfo(); // getting all users permissions
                 }
-                sellerPermissions = sellerPermissions.Next;
+                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return null;
         }
 
         public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
         {
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
+            if (!StoreRepository.Instance.stores.ContainsKey(storeID)) return null;
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
             while(sellerPermissions.Value != null)
             {
-                if (sellerPermissions.Value.store.storeID == storeID)
+                if (sellerPermissions.Value.store.storeID == storeID) // if the user works at the store
                 {
                     if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
-                        return sellerPermissions.Value.store.purchasesHistory;
+                        return sellerPermissions.Value.store.purchasesHistory; // getting the store's purchase history
                 }
-                sellerPermissions = sellerPermissions.Next;
+                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return null;
         }
@@ -194,15 +198,18 @@ namespace WSEP212.DomainLayer
         public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
+            // only system managers can do that
         }
 
         public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
+            // only system managers can do that
         }
 
         public override RegularResult itemReview(String review, int itemID, int storeID)
         {
+            if(review==null) return new Failure("Review Is Null");
             ResultWithValue<Store> getStoreRes = StoreRepository.Instance.getStore(storeID);
             if (getStoreRes.getTag())
             {
@@ -236,6 +243,7 @@ namespace WSEP212.DomainLayer
         public override RegularResult login(String userName, String password)
         {
             throw new NotImplementedException();
+            // already logged in
         }
 
         public override RegularResult logout(String userName)
@@ -243,7 +251,7 @@ namespace WSEP212.DomainLayer
             ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
             if (findUserRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, null);
+                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), false, null);
                 if (loginStateRes.getTag())
                 {
                     this.user.changeState(new GuestBuyerState(this.user));
@@ -320,6 +328,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if (storeSellerRes.getTag())
                 {
+                    if (storeSellerRes.getValue().grantor != this.user)
+                        return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
                     RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().seller.userName);
                     if(removeFromStoreRes.getTag())

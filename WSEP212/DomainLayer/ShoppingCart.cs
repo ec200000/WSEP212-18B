@@ -34,6 +34,7 @@ namespace WSEP212.DomainLayer
                     if (!addItemRes.getTag())
                     {
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                        return new Failure("Could not add items to the shopping bag!");
                     }
                     return addItemRes;
                 }
@@ -104,7 +105,8 @@ namespace WSEP212.DomainLayer
                         }
                         bagsFinalPrices.TryAdd(storeID, shoppingBagPriceRes.getValue());
                     }
-                    return new FailureWithValue<ConcurrentDictionary<int, double>>("No Purchase Type Was Selected For One Or More Of The Shopping Bag Items", null);
+                    else 
+                        return new FailureWithValue<ConcurrentDictionary<int, double>>("No Purchase Type Was Selected For One Or More Of The Shopping Bag Items", null);
                 }
                 return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", bagsFinalPrices);
             }

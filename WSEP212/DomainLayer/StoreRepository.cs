@@ -9,6 +9,7 @@ namespace WSEP212.DomainLayer
 {
     public class StoreRepository
     {
+        private readonly object storeExistsLock = new object();
         //singelton
         // A data structure associated with a store ID and its store
         public ConcurrentDictionary<int, Store> stores { get; set; }
@@ -18,34 +19,34 @@ namespace WSEP212.DomainLayer
             stores = new ConcurrentDictionary<int, Store>();
         }  
         private static readonly object padlock = new object();  
-        private static StoreRepository instance = null;  
-        public static StoreRepository Instance  
-        {  
-            get  
-            {  
-                lock (padlock)  
-                {  
-                    if (instance == null)  
-                    {  
-                        instance = new StoreRepository();  
-                    }  
-                    return instance;  
-                }  
-            }  
-        }
+        private static readonly Lazy<StoreRepository> lazy
+            = new Lazy<StoreRepository>(() => new StoreRepository());
+
+        public static StoreRepository Instance
+            => lazy.Value;
+
         
         public ResultWithValue<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
-            if(isExistingStore(storeName, storeAddress))
+            if (storeName == null || storeAddress == null || salesPolicy == null || purchasePolicy == null ||
+                storeFounder == null)
             {
-                return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
+                return new FailureWithValue<int>("The Store Has Null Element(s)", -1);
             }
-            else
+
+            lock (storeExistsLock)
             {
-                Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
-                int storeID = store.storeID;
-                stores.TryAdd(storeID, store);
-                return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
+                if(isExistingStore(storeName, storeAddress))
+                {
+                    return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
+                }
+                else
+                {
+                    Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
+                    int storeID = store.storeID;
+                    stores.TryAdd(storeID, store);
+                    return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
+                }
             }
         }
 
@@ -54,9 +55,12 @@ namespace WSEP212.DomainLayer
             foreach (KeyValuePair<int, Store> storePair in stores)
             {
                 Store store = storePair.Value;
-                if (store.storeName.Equals(storeName) && store.storeAddress.Equals(storeAddress))
+                if (store != null && store.storeName!=null && store.storeAddress!=null)
                 {
-                    return true;
+                    if (store.storeName.Equals(storeName) && store.storeAddress.Equals(storeAddress))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

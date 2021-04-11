@@ -63,8 +63,12 @@ namespace WSEP212.ServiceLayer
             String info = $"OpenStore Event was triggered, with the parameter:" +
                           $"user name: {userName}, store name: {storeName}, purchase policy: {purchasePolicy}, sales policy: {salesPolicy}";
             Logger.Instance.writeInformationEventToLog(info);
-            PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy, null, null);
-            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy, null);
+            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
+            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
+            PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy,
+                purchaseRoutes,
+                new ConcurrentLinkedList<PolicyRule>());
+            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy, new ConcurrentLinkedList<PolicyRule>());
             return SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy, newSalesPolicy);
         }
 
@@ -78,6 +82,10 @@ namespace WSEP212.ServiceLayer
 
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item)
         {
+            if (item == null)
+            {
+                return new FailureWithValue<int>("Item is null", -1);
+            }
             String info = $"AddItemToStorage Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
@@ -94,6 +102,10 @@ namespace WSEP212.ServiceLayer
 
         public RegularResult editItemDetails(String userName, int storeID, ItemDTO item)
         {
+            if (item == null)
+            {
+                return new Failure("Item is null");
+            }
             String info = $"EditItemDetails Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
@@ -122,7 +134,7 @@ namespace WSEP212.ServiceLayer
             
             ConcurrentLinkedList<Permissions> newPermissions = new ConcurrentLinkedList<Permissions>();
             Node<Int32> permission = permissions.First;
-            while(permission != null)
+            while(permission.Next != null)
             {
                 permissionsStr += $"{permission.Value}, ";
                 newPermissions.TryAdd((Permissions)permission.Value);
@@ -175,5 +187,25 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getStoresPurchaseHistory(userName);
         }
 
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
+        {
+            return UserRepository.Instance.getUserPurchaseInfo(userName);
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation()
+        {
+            return new OkWithValue<ConcurrentDictionary<int, Store>>("ok", StoreRepository.Instance.stores);
+        }
+        
+        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation() 
+        {
+           // return new OkWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>>("ok", StoreRepository.Instance.getItemsInformation());
+           throw new NotImplementedException();
+        }
+
+        public ResultWithValue<ConcurrentLinkedList<Item>> searchItems() //receiving FilterDTO TODO: add to interface
+        {
+            throw new NotImplementedException();
+        }
     }
 }
