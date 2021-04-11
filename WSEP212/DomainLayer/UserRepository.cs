@@ -23,6 +23,8 @@ namespace WSEP212.DomainLayer
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
         public ConcurrentDictionary<String,String> usersInfo { get; set; }
+        
+        public ConcurrentDictionary<User, bool> systemManagers { get; set; }
 
         public RegularResult insertNewUser(User newUser,String password)
         {
