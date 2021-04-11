@@ -22,7 +22,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestInitialize]
         public void testInit()
         {
-            systemManager = new User("big manager"); //system manager
+            systemManager = new User("big manager", true); //system manager
             systemManager.changeState(new SystemManagerState(systemManager));
             
             user1 = new User("a"); //guest
