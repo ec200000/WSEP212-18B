@@ -211,21 +211,24 @@ namespace WSEP212.ServiceLayer
 
         public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByCategory(FilterItemsDTO filter, string category) //receiving FilterDTO
         {
-            String info = $"SearchItemsByCategory Event was triggered"; 
+            String info = $"SearchItemsByCategory Event was triggered, with the parameters:" +
+                          $"minimal price: {filter.minPrice}, maximal price: {filter.maxPrice}, category: {filter.category}, category: {category}"; 
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.searchItemsByCategory(filter.minPrice, filter.maxPrice, filter.category, category);
         }
         
         public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(FilterItemsDTO filter, string name)
         {
-            String info = $"SearchItemsByName Event was triggered"; 
+            String info = $"SearchItemsByName Event was triggered, with the parameters:" +
+                          $"minimal price: {filter.minPrice}, maximal price: {filter.maxPrice}, category: {filter.category}, name: {name}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.searchItemsByName(filter.minPrice, filter.maxPrice, filter.category, name);
         }
         
         public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(FilterItemsDTO filter, string keyWords)
         {
-            String info = $"SearchItemsByKeyWords Event was triggered"; 
+            String info = $"SearchItemsByKeyWords Event was triggered, with the parameters:" +
+                          $"minimal price: {filter.minPrice}, maximal price: {filter.maxPrice}, category: {filter.category}, key words: {keyWords}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.searchItemsByKeyWords(filter.minPrice, filter.maxPrice, filter.category, keyWords);
         }
