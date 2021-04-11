@@ -416,6 +416,26 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set();
         }
+        
+        // params: string username, string password
+        // returns: bool
+        public void loginAsSystemManager(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            String username = (String)param.parameters[0];
+            String password = (String)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.loginAsSystemManager(username, password);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
 
     }
 }
