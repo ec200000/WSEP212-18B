@@ -7,7 +7,7 @@ using WSEP212.DomainLayer.Result;
 namespace WSEP212_TESTS
 {
     [TestClass]
-    public class UserTestNegative
+    public class UserStoreTestsNegative
     {
         private User user1;
         private User user2;
@@ -346,7 +346,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestAppointStoreManager2()
+        public void TestAppointStoreManagerUnregistered()
         {
             int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
@@ -372,7 +372,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestAppointStoreOwner2()
+        public void TestAppointStoreOwnerNonExisting()
         {
             int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
@@ -403,7 +403,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestEditManagerPermissions2()
+        public void TestEditManagerPermissionsNonExisting()
         {
             
             int storeID = 1;
@@ -434,7 +434,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestRemoveStoreManager2()
+        public void TestRemoveStoreManagerNonExisting()
         {
             int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
@@ -459,7 +459,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestGetOfficialsInformation2()
+        public void TestGetOfficialsInformationNonExisting()
         {
             int storeID = 2; //non existing store
             ThreadParameters parameters = new ThreadParameters();
