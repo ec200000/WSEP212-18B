@@ -176,6 +176,15 @@ namespace WSEP212_TESTS
         }
 
         [TestMethod]
+        public void deliverItemsTest()
+        {
+            Assert.IsFalse(store.deliverItems("Holon", new ConcurrentDictionary<int, int>()).getTag());
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(sodaID, 10);
+            Assert.IsTrue(store.deliverItems("Holon", items).getTag());
+        }
+
+        [TestMethod]
         public void addNewStoreSellerTest()
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
@@ -199,6 +208,19 @@ namespace WSEP212_TESTS
             Assert.IsTrue(removeStoreSellerBool1.getTag());
             RegularResult removeStoreSellerBool2 = store.removeStoreSeller("avi");
             Assert.IsFalse(removeStoreSellerBool2.getTag());
+        }
+
+        [TestMethod]
+        public void getStoreSellerPermissionsTest()
+        {
+            ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
+            perms.TryAdd(Permissions.AllPermissions);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            store.addNewStoreSeller(aviTheSeller);
+
+            ResultWithValue<SellerPermissions> result = store.getStoreSellerPermissions("avi");
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(aviTheSeller, result.getValue());
         }
 
         [TestMethod]

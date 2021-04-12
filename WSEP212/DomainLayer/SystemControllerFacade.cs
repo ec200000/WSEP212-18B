@@ -477,38 +477,15 @@ namespace WSEP212.DomainLayer
             return UserRepository.Instance.getUserPurchaseHistory(userName);
         }
         
-        public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation()
+        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation()
         {
-            return new OkWithValue<ConcurrentDictionary<int, Store>>("ok", StoreRepository.Instance.stores);
-        }
-        
-        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation()
-        {
-            return new OkWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>>("ok", StoreRepository.Instance.getStoresAndItemsInfo());
+            return StoreRepository.Instance.getStoresAndItemsInfo();
         }
 
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByCategory(double filterMinPrice, double filterMaxPrice, string filterCategory, string category)
+        public ConcurrentDictionary<Item, int> searchItems(SearchItemsDTO searchItemsDTO)
         {
-            FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
-            ConcurrentDictionary<Item, int> list = StoreRepository.Instance.searchItemByCategory(category);
-            filter.filterItems(list);
-            return new OkWithValue<ConcurrentDictionary<Item, int>>("ok", list);
-        }
-
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(double filterMinPrice, double filterMaxPrice, string filterCategory, string name)
-        {
-            FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
-            ConcurrentDictionary<Item, int> list = StoreRepository.Instance.searchItemByName(name);
-            filter.filterItems(list);
-            return new OkWithValue<ConcurrentDictionary<Item, int>>("ok", list);
-        }
-
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(double filterMinPrice, double filterMaxPrice, string filterCategory, string keyWords)
-        {
-            FilterItems filter = new FilterItems(filterMinPrice, filterMaxPrice, filterCategory);
-            ConcurrentDictionary<Item, int> list = StoreRepository.Instance.searchItemByKeyWords(keyWords);
-            filter.filterItems(list);
-            return new OkWithValue<ConcurrentDictionary<Item, int>>("ok", list);
+            SearchItems search = new SearchItems(searchItemsDTO);
+            return StoreRepository.Instance.searchItem(search);
         }
     }
 }

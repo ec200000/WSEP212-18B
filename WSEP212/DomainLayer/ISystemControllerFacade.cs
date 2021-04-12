@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer;
 
 namespace WSEP212.DomainLayer
 {
@@ -33,5 +34,8 @@ namespace WSEP212.DomainLayer
         
         public RegularResult loginAsSystemManager(string userName, string password);
         public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
+        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName);
+        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation();
+        public ConcurrentDictionary<Item, int> searchItems(SearchItemsDTO searchItemsDTO);
     }
 }

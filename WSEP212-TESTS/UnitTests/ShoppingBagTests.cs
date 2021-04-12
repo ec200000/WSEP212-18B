@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.Result;
@@ -117,6 +118,20 @@ namespace WSEP212_TESTS
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));   // item with quantity 0 doesnt need to be in the shopping bag
 
             Assert.IsFalse(shoppingBag.changeItemQuantity(-1, 10).getTag());   // should fail because there is no such item ID
+        }
+
+        [TestMethod]
+        public void purchaseItemsInBagTest()
+        {
+            int itemID = storeItemID;
+            shoppingBag.addItem(itemID, 5);
+            User user = new User("admin");
+            ConcurrentDictionary<int, PurchaseType> purchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            purchaseType.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+
+            ResultWithValue<double> result = shoppingBag.purchaseItemsInBag(user, purchaseType);
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(10 * 5, result.getValue());
         }
 
         [TestMethod]

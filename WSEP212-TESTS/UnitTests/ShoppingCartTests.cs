@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.Result;
@@ -137,6 +138,26 @@ namespace WSEP212_TESTS
             Assert.IsTrue(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 0).getTag());
             Assert.IsFalse(shoppingCart.shoppingBags.ContainsKey(storeID));
             Assert.IsTrue(shoppingCart.isEmpty());
+        }
+
+        [TestMethod]
+        public void purchaseItemsInCartTest()
+        {
+            shoppingCart.addItemToShoppingBag(storeA.storeID, itemAID, 3);
+            shoppingCart.addItemToShoppingBag(storeB.storeID, itemBID, 5);
+            User user = new User("admin");
+            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> purchaseTypes = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>>();
+            ConcurrentDictionary<int, PurchaseType> purchaseTypeA = new ConcurrentDictionary<int, PurchaseType>();
+            purchaseTypeA.TryAdd(itemAID, PurchaseType.ImmediatePurchase);
+            ConcurrentDictionary<int, PurchaseType> purchaseTypeB = new ConcurrentDictionary<int, PurchaseType>();
+            purchaseTypeB.TryAdd(itemBID, PurchaseType.ImmediatePurchase);
+            purchaseTypes.TryAdd(storeA.storeID, purchaseTypeA);
+            purchaseTypes.TryAdd(storeB.storeID, purchaseTypeB);
+
+            ResultWithValue<ConcurrentDictionary<int, double>> result = shoppingCart.purchaseItemsInCart(user, purchaseTypes);
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(10 * 3, result.getValue()[storeA.storeID]);
+            Assert.AreEqual(10 * 5, result.getValue()[storeB.storeID]);
         }
 
         [TestMethod]

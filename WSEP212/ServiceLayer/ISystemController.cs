@@ -37,13 +37,8 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>
             getStoresPurchaseHistory(String userName); // USE CASE 6.4.2
         public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName); // USE CASE 3.7
-        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation(); // USE CASE 2.5
-        public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation(); // USE CASE 2.5
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByCategory(FilterItemsDTO filter,
-            string category); // USE CASE 2.6
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(FilterItemsDTO filter, string name); // USE CASE 2.6
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(FilterItemsDTO filter,
-            string keyWords); // USE CASE 2.6
+        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation(); // USE CASE 2.5
+        public ConcurrentDictionary<Item, int> searchItems(String itemName, String keyWords, double minPrice, double maxPrice, String category); // USE CASE 2.6
 
         public RegularResult loginAsSystemManager(string userName, string password);
         public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);

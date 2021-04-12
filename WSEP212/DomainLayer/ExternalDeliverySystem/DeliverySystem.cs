@@ -15,6 +15,10 @@ namespace WSEP212.DomainLayer
 
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
+            if(items.IsEmpty)
+            {
+                return new Failure("Can Not Deliver Zero Items");
+            }
             // deliver the items to the address
             return new Ok("The Delivery Has Been Done Successfully");
         }
