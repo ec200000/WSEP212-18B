@@ -7,7 +7,7 @@ using WSEP212.DomainLayer.Result;
 namespace WSEP212_TESTS
 {
     [TestClass]
-    public class UserTestNegative
+    public class UserStoreTestsNegative
     {
         private User user1;
         private User user2;

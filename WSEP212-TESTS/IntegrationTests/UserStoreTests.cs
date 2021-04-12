@@ -8,7 +8,7 @@ using WSEP212.DomainLayer.Result;
 namespace WSEP212_TESTS
 {
     [TestClass]
-    public class UserTest
+    public class UserStoreTests
     {
         User user;
         private User user3;
