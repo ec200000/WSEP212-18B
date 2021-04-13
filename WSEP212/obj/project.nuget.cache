@@ -1,8 +1,27 @@
 {
   "version": 2,
-  "dgSpecHash": "3s9zyB97q8dDG6Iu7+3cWoayXB0l0YNulOvUWZnxAegVfi2z2bB5ewnY1rWHnvYF8XCPx36vD3RfI5M71Nzt5A==",
+  "dgSpecHash": "F9vDmTgHhjRS6No3cXKe5hT0nNzX7jQj3uxc5ypkN21bKwuqflCkZEI69hhSiV1lhZbhkBDExuYS5/pGDXhSnA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ec200\\source\\repos\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ec200\\.nuget\\packages\\microsoft.netcore.platforms\\1.0.1\\microsoft.netcore.platforms.1.0.1.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\microsoft.netcore.targets\\1.0.1\\microsoft.netcore.targets.1.0.1.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\serilog\\2.10.1-dev-01285\\serilog.2.10.1-dev-01285.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\serilog.sinks.file\\3.2.0\\serilog.sinks.file.3.2.0.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\serilog.sinks.rollingfile\\3.3.1-dev-00771\\serilog.sinks.rollingfile.3.3.1-dev-00771.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.io\\4.1.0\\system.io.4.1.0.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.io.filesystem\\4.0.1\\system.io.filesystem.4.0.1.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.io.filesystem.primitives\\4.0.1\\system.io.filesystem.primitives.4.0.1.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.reflection\\4.1.0\\system.reflection.4.1.0.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.reflection.primitives\\4.0.1\\system.reflection.primitives.4.0.1.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.runtime\\4.1.0\\system.runtime.4.1.0.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.runtime.handles\\4.0.1\\system.runtime.handles.4.0.1.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.runtime.interopservices\\4.1.0\\system.runtime.interopservices.4.1.0.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.text.encoding\\4.0.11\\system.text.encoding.4.0.11.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.text.encoding.extensions\\4.0.11\\system.text.encoding.extensions.4.0.11.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.threading\\4.0.11\\system.threading.4.0.11.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.threading.tasks\\4.0.11\\system.threading.tasks.4.0.11.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\system.threading.timer\\4.0.1\\system.threading.timer.4.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

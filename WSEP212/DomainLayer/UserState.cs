@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    abstract class UserState
+    public abstract class UserState
     {
         public User user { get; set; }
 
@@ -13,27 +16,42 @@ namespace WSEP212.DomainLayer
             this.user = user;
         }
 
-        public abstract bool register(String userName, String password);
-        public abstract bool login(String userName, String password);
-        public abstract bool logout(String userName);
+        public abstract UserType getUserType();
+        public abstract RegularResult register(String userName, String password);
+        public abstract RegularResult login(String userName, String password);
+        
+        public abstract RegularResult loginAsSystemManager(String userName, String password);
+        public abstract RegularResult logout(String userName);
 
-        public abstract bool addItemToShoppingCart(int storeID, int itemID);
-        public abstract bool removeItemFromShoppingCart(int storeID, int itemID);
-        //edit item in shopping cart is equal to -> remove + add
-        public abstract bool purchaseItems(); //later
-    
-        public abstract bool openStore(String storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
-        public abstract bool itemReview(String review, int itemID, int storeID);
-        public abstract bool addItemToStorage(int storeID, Item item, int quantity);
-        public abstract bool removeItemFromStorage(int storeID, Item item);
-        public abstract bool editItemDetails(int storeID, Item item);
-        public abstract bool appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
-        public abstract bool appointStoreOwner(String storeOwnerName, int storeID);
-        public abstract bool editManagerPermissions(String managerName, LinkedList<Permissions> permissions);
-        public abstract bool removeStoreManager(String managerName, int storeID);
-        public abstract Dictionary<String, LinkedList<Permissions>> getOfficialsInformation(int storeID);
-        public abstract LinkedList<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
-        public abstract Dictionary<String, LinkedList<PurchaseInfo>> getUsersPurchaseHistory();
-        public abstract Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory();
+        public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
+        {
+            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            // adding a quantity of the item to the shopping bag that belongs to the store id
+        }
+
+        public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
+        {
+            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+
+        }
+
+        public RegularResult purchaseItems(string address)
+        {
+            return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
+        }
+
+        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
+        public abstract RegularResult itemReview(String review, int itemID, int storeID);
+        public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
+        public abstract RegularResult removeItemFromStorage(int storeID, int itemID);
+        public abstract RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category);
+        public abstract RegularResult appointStoreManager(String managerName, int storeID); //the store manager will receive default permissions(4.9)
+        public abstract RegularResult appointStoreOwner(String storeOwnerName, int storeID);
+        public abstract RegularResult editManagerPermissions(String managerName, ConcurrentLinkedList<Permissions> permissions, int storeID);
+        public abstract RegularResult removeStoreManager(String managerName, int storeID);
+        public abstract ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
+        public abstract ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
+        public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
+        public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();
     }
 }

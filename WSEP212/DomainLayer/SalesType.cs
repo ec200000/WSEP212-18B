@@ -4,7 +4,10 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class SalesType
+    public enum SalesType
     {
+        VisibleSale,
+        //ConditionalSale,
+        //HiddenSale
     }
 }

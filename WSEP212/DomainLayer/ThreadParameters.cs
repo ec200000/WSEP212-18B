@@ -5,12 +5,12 @@ using System.Threading;
 
 namespace WSEP212.DomainLayer
 {
-    class ThreadParameters
+    public class ThreadParameters
     {
-        public EventWaitHandle eventWaitHandle = new ManualResetEvent(false);
+        public EventWaitHandle eventWaitHandle = new ManualResetEvent(false); //the handler (notification if finished)
 
-        public Object result;
+        public Object result; //the result of the action
 
-        public Object[] parameters;
+        public Object[] parameters; //the parameters of the function
     }
 }

@@ -4,7 +4,11 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    class PurchaseType
+    public enum PurchaseType
     {
+        ImmediatePurchase,
+        //OfferPurchase,
+        //AuctionPurchase,
+        //LottryPurchase
     }
 }

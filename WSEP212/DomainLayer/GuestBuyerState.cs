@@ -1,108 +1,143 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    class GuestBuyerState : UserState
+    public class GuestBuyerState : UserState
     {
         public GuestBuyerState(User user) : base(user)
         {
         }
 
-        public override bool addItemToShoppingCart(int storeID, int itemID)
+        public override UserType getUserType()
         {
-            throw new NotImplementedException();
+            return UserType.GuestBuyer;
         }
 
-        public override bool addItemToStorage(int storeID, Item item, int quantity)
+        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override bool appointStoreManager(string managerName, int storeID)
+        public override RegularResult appointStoreManager(string managerName, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override bool appointStoreOwner(string storeOwnerName, int storeID)
+        public override RegularResult appointStoreOwner(string storeOwnerName, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override bool editItemDetails(int storeID, Item item)
+        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override bool editManagerPermissions(string managerName, LinkedList<Permissions> permissions)
+        public override RegularResult editManagerPermissions(string managerName, ConcurrentLinkedList<Permissions> permissions, int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override Dictionary<string, LinkedList<Permissions>> getOfficialsInformation(int storeID)
+        public override ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override LinkedList<PurchaseInfo> getStorePurchaseHistory(int storeID)
+        public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override Dictionary<int, LinkedList<PurchaseInfo>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
+            // only system managers can do that
         }
 
-        public override Dictionary<string, LinkedList<PurchaseInfo>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
+            // only system managers can do that
         }
 
-        public override bool itemReview(string review, int itemID, int storeID)
+        public override RegularResult itemReview(string review, int itemID, int storeID)
         {
             throw new NotImplementedException();
+            // only logged buyers can do that
         }
 
-        public override bool login(string userName, string password)
+        public override RegularResult login(string userName, string password)
         {
-            throw new NotImplementedException();
+            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
+            if(findUserRes.getTag())
+            {
+                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
+                if(loginStateRes.getTag())
+                {
+                    user.changeState(new LoggedBuyerState(user));
+                    return new Ok("The User Has Successfully Logged In");
+                }
+                return loginStateRes;
+            }
+            return new Failure(findUserRes.getMessage());
         }
 
-        public override bool logout(string userName)
+        public override RegularResult loginAsSystemManager(string userName, string password)
         {
-            throw new NotImplementedException();
+            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
+            if(findUserRes.getTag())
+            {
+                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
+                if(loginStateRes.getTag())
+                {
+                    user.changeState(new SystemManagerState(user));
+                    return new Ok("The User Has Successfully Logged In");
+                }
+                return loginStateRes;
+            }
+            return new Failure(findUserRes.getMessage());
         }
 
-        public override bool openStore(string storeName, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public override RegularResult logout(String userName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
-        public override bool purchaseItems()
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
         {
             throw new NotImplementedException();
+            // only logged buyers can do that
         }
 
-        public override bool register(string userName, string password)
+        public override RegularResult register(String userName, String password)
         {
-            throw new NotImplementedException();
+            User user = new User(userName);
+            return UserRepository.Instance.insertNewUser(user, password);
         }
 
-        public override bool removeItemFromShoppingCart(int storeID, int itemID)
+        public override RegularResult removeItemFromStorage(int storeID, int itemID)
         {
             throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override bool removeItemFromStorage(int storeID, Item item)
+        public override RegularResult removeStoreManager(string managerName, int storeID)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool removeStoreManager(string managerName, int storeID)
-        {
-            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
     }
 }
