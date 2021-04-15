@@ -5,6 +5,8 @@
     <RootNamespace>WSEP212_TESTS</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
