@@ -317,6 +317,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if (storeSellerRes.getTag())
                 {
+                    if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                        return new Failure("You can't remove a store owner!");
                     if (storeSellerRes.getValue().grantor != this.user)
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
