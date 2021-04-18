@@ -51,7 +51,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             storeID = controller.openStore("b", "store23", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.appointStoreManager("b", "abcde", storeID);
         }
-
         
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
