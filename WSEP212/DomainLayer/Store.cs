@@ -28,6 +28,8 @@ namespace WSEP212.DomainLayer
         public ConcurrentBag<PurchaseInfo> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
+        
+        public DeliveryInterface deliverySystem { get; set; }
 
         public Store(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
@@ -49,6 +51,8 @@ namespace WSEP212.DomainLayer
 
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
+            
+            this.deliverySystem = DeliverySystem.Instance;
         }
 
         // Check if the item exist and available in the store
