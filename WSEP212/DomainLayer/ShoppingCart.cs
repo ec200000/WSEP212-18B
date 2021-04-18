@@ -92,6 +92,7 @@ namespace WSEP212.DomainLayer
             else
             {
                 ConcurrentDictionary<int, double> bagsFinalPrices = new ConcurrentDictionary<int, double>();
+                ConcurrentDictionary<int, ShoppingBag> rollBackBags = new ConcurrentDictionary<int, ShoppingBag>();
                 ResultWithValue<double> shoppingBagPriceRes;
                 foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
                 {
@@ -101,14 +102,30 @@ namespace WSEP212.DomainLayer
                         shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag(user, bagItemsPurchaseType);
                         if (!shoppingBagPriceRes.getTag())
                         {
+                            rollBackItemsInBags(rollBackBags);   // cancel the previous shopping cart items
                             return new FailureWithValue<ConcurrentDictionary<int, double>>(shoppingBagPriceRes.getMessage(), null);
                         }
                         bagsFinalPrices.TryAdd(storeID, shoppingBagPriceRes.getValue());
+                        rollBackBags.TryAdd(shoppingBag.Key, shoppingBag.Value);
                     }
-                    else 
+                    else
+                    {
+                        rollBackItemsInBags(rollBackBags);   // cancel the previous shopping cart items
                         return new FailureWithValue<ConcurrentDictionary<int, double>>("No Purchase Type Was Selected For One Or More Of The Shopping Bag Items", null);
+                    }
                 }
                 return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", bagsFinalPrices);
+            }
+        }
+
+        // cancel the purchase in the other store - returns the items back to storage
+        private void rollBackItemsInBags(ConcurrentDictionary<int, ShoppingBag> shoppingBagsToRollBack)
+        {
+            ConcurrentDictionary<int, int> shoppingBagItems;
+            foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBagsToRollBack)
+            {
+                shoppingBagItems = shoppingBag.Value.items;
+                shoppingBag.Value.store.rollBackPurchase(shoppingBagItems);
             }
         }
 

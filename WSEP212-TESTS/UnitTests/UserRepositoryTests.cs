@@ -37,13 +37,17 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void changeUserLoginStatusTest()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, false, "123");
-            UserRepository.Instance.users.TryGetValue(user1, out var res1);
-            Assert.IsFalse(res1);
-
             UserRepository.Instance.changeUserLoginStatus(user1, true, "123"); //register -> login
             UserRepository.Instance.users.TryGetValue(user1, out var res3); 
             Assert.IsTrue(res3);
+        }
+
+        [TestMethod]
+        public void changeUserLoginStatusTestFails()
+        {
+            UserRepository.Instance.changeUserLoginStatus(user1, false, "123");
+            UserRepository.Instance.users.TryGetValue(user1, out var res1);
+            Assert.IsFalse(res1);
             
             UserRepository.Instance.changeUserLoginStatus(user2, false, null); //login -> logout
             UserRepository.Instance.users.TryGetValue(user2, out var res4); 

@@ -82,9 +82,40 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void registerTest()
         {
             SystemController systemController = new SystemController();
-            Thread t1 = new Thread(() => systemController.register("iris","12345"));
-            Thread t2 = new Thread(() => systemController.register("iris","12345"));
-            Thread t3 = new Thread(() => systemController.register("itay","12345"));
+            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            Thread t1 = new Thread(() =>
+            {
+                try
+                {
+                    res1 = systemController.register("iris", "12345");
+                }
+                catch (NotImplementedException)
+                {
+                    res1 = new Failure("not implemented exception");
+                }
+            });
+            Thread t2 = new Thread(() =>
+            {
+                try
+                {
+                    res2 = systemController.register("iris", "12345");
+                }
+                catch (NotImplementedException)
+                {
+                    res2 = new Failure("not implemented exception");
+                }
+            });
+            Thread t3 = new Thread(() =>
+            {
+                try
+                {
+                    res3 = systemController.register("itay", "12345");
+                }
+                catch (NotImplementedException)
+                {
+                    res3 = new Failure("not implemented exception");
+                }
+            });
 
             t1.Start();
             t2.Start();
@@ -93,11 +124,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             t1.Join();
             t2.Join();
             t3.Join();
-            
-            Assert.AreEqual(6, UserRepository.Instance.users.Count); //4 is from test init, 2 from now
-            //Assert.AreEqual(6, Authentication.Instance.usersInfo.Count); //4 is from test init, 2 from now
-            Assert.IsNotNull(UserRepository.Instance.findUserByUserName("iris"));
-            Assert.IsNotNull(UserRepository.Instance.findUserByUserName("itay"));
+
+            Assert.IsTrue(res3.getTag());
+            Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
         }
 
         [TestMethod]

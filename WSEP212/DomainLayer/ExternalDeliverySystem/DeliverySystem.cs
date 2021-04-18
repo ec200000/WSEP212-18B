@@ -4,7 +4,7 @@ using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    class DeliverySystem : DeliveryInterface
+    public class DeliverySystem : DeliveryInterface
     {
         //singelton
         private static readonly Lazy<DeliverySystem> lazy

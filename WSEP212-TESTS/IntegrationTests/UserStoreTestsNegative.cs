@@ -492,6 +492,7 @@ namespace WSEP212_TESTS
             Assert.IsFalse(((RegularResult)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
+            Assert.AreEqual(0,user2.shoppingCart.shoppingBags.Count);
         }
     }
 }

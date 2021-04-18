@@ -13,8 +13,10 @@ namespace WSEP212.DomainLayer
         public static HandlePurchases Instance
             => lazy.Value;
 
+        public PaymentInterface paymentSystem { get; set; }
+
         private HandlePurchases() {
-            
+            paymentSystem = PaymentSystem.Instance;
         }
 
         // returns the total price after sales for each store. if the purchase cannot be made returns null
@@ -30,7 +32,7 @@ namespace WSEP212.DomainLayer
 
         private RegularResult externalPurchase(double amount, User user)
         {
-            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(amount)) < 0.01)
+            if(Math.Abs(amount - paymentSystem.paymentCharge(amount)) < 0.01)
             {
                 return new Ok("Payment Charged Successfully");
             }
@@ -122,8 +124,6 @@ namespace WSEP212.DomainLayer
                 return externalPurchaseRes;
             }
             return new Failure(pricePerStoreRes.getMessage());
-
-            
         }
     }
 }
