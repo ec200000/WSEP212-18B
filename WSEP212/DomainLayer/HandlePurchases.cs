@@ -30,7 +30,7 @@ namespace WSEP212.DomainLayer
 
         private RegularResult externalPurchase(double amount, User user)
         {
-            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(user, amount)) < 0.01)
+            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(amount)) < 0.01)
             {
                 return new Ok("Payment Charged Successfully");
             }

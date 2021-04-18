@@ -136,9 +136,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
 
             Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
-            Assert.AreEqual(4, UserRepository.Instance.users.Count);
-            Assert.AreEqual(4, Authentication.Instance.usersInfo.Count);
-            Assert.IsTrue(UserRepository.Instance.users[user1]);
         }
 
         [TestMethod]
@@ -191,9 +188,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             Assert.IsFalse(res1.getTag()); //the user is a guest user - can't logout
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
-            Assert.AreEqual(4, UserRepository.Instance.users.Count);
-            Assert.AreEqual(4, Authentication.Instance.usersInfo.Count);
-            Assert.IsFalse(UserRepository.Instance.users[user2]);
         }
 
         [TestMethod]
@@ -248,9 +242,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(res1.getTag()); 
             Assert.IsTrue(res2.getTag()); 
             Assert.IsFalse(res3.getTag());
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("b").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("a").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(0, UserRepository.Instance.findUserByUserName("r").getValue().shoppingCart.shoppingBags.Count);
         }
 
         [TestMethod]
@@ -312,9 +303,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(res1.getTag()); 
             Assert.IsFalse(res2.getTag()); 
             Assert.IsFalse(res3.getTag());
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("b").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(0, UserRepository.Instance.findUserByUserName("a").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("r").getValue().shoppingCart.shoppingBags.Count);
         }
 
         [TestMethod]
@@ -376,11 +364,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             //only b or r will be able to purchase the items because they are taking the last products
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
             Assert.IsTrue(res1.getTag());
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("a").getValue().purchases.Count);
-            Assert.IsTrue( (UserRepository.Instance.findUserByUserName("b").getValue().purchases.Count == 1 &&
-                            UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 0) 
-                           || (UserRepository.Instance.findUserByUserName("b").getValue().purchases.Count == 0 &&
-                      UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 1));
         }
 
         [TestMethod]
@@ -435,7 +418,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(res1.getTag()); //a is guest user - no permission to perform this action
             //b and r trying to open a store with the same name in the same place - only one will be able to perform this action
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
-            Assert.AreEqual(2, StoreRepository.Instance.stores.Count); //one is already created, another one is created now
         }
 
         [TestMethod]
@@ -477,10 +459,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
             
             Assert.IsTrue((res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag()));
-            Assert.IsTrue(UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 0 ||
-                          UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 1
-                );
-            Assert.IsFalse(StoreRepository.Instance.getStore(store.storeID).getValue().storage.ContainsKey(item.itemID));
         }
 
         [TestMethod]
@@ -530,10 +508,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
             
             Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag()));//only one
-            Assert.AreEqual(Permissions.GetOfficialsInformation,
-                UserRepository.Instance.findUserByUserName("r")
-                    .getValue()
-                    .sellerPermissions.First.Value.permissionsInStore.First.Value);
         }
     }
 }
