@@ -5,7 +5,7 @@ using WSEP212.DomainLayer;
 namespace WSEP212_TESTS
 {
     [TestClass]
-    public class UserRepoAndAuthTests
+    public class UserRepositoryTest
     {
         private User user1;
         private User user2;
@@ -15,29 +15,23 @@ namespace WSEP212_TESTS
             user1 = new User("a");
             user2 = new User("b");
             UserRepository.Instance.users.TryAdd(user1, false);
-            Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
-            Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
         }
 
         [TestCleanup]
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            Authentication.Instance.usersInfo.Clear();
         }
 
         [TestMethod]
         public void insertNewUserTest()
         {
             User newUser = new User("iris");
-            Authentication.Instance.insertNewUser(newUser, "12345");
+            UserRepository.Instance.insertNewUser(newUser, "12345");
             Assert.AreEqual(3, UserRepository.Instance.users.Count);
-            Assert.AreEqual(3, Authentication.Instance.usersInfo.Count);
             UserRepository.Instance.users.TryGetValue(newUser, out var res);
             Assert.IsFalse(res);
-            Authentication.Instance.usersInfo.TryGetValue("iris", out var pass);
-            Assert.AreNotEqual("12345", pass); //should be encrypted
         }
 
         [TestMethod]
@@ -65,12 +59,10 @@ namespace WSEP212_TESTS
         {
             UserRepository.Instance.removeUser(user1); //removing existing user
             Assert.AreEqual(1, UserRepository.Instance.users.Count);
-            Assert.AreEqual(1, Authentication.Instance.usersInfo.Count);
 
             User u = new User("c");
             UserRepository.Instance.removeUser(u); //removing user that do not exists
             Assert.AreEqual(1, UserRepository.Instance.users.Count);
-            Assert.AreEqual(1, Authentication.Instance.usersInfo.Count);
         }
 
         [TestMethod]
@@ -120,8 +112,8 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void checkIfUserExistsTest()
         {
-            Assert.IsTrue(Authentication.Instance.checkIfUserExists("b"));
-            Assert.IsFalse(Authentication.Instance.checkIfUserExists("k"));
+            Assert.IsTrue(UserRepository.Instance.checkIfUserExists("b"));
+            Assert.IsFalse(UserRepository.Instance.checkIfUserExists("k"));
         }
 
         [TestMethod]
@@ -139,27 +131,5 @@ namespace WSEP212_TESTS
                 Assert.AreEqual(p.Key.Equals("c") ? 1 : 0, p.Value.Count);
             }
         }
-        
-        [TestMethod]
-        public void encryptPasswordTest()
-        {
-            String password = "abcd";
-            String encPass1 = Authentication.Instance.encryptPassword(password);
-            Assert.AreNotEqual(password,encPass1); //the password is indeed encrypted
-            String encPass2 = Authentication.Instance.encryptPassword(password);
-            Assert.AreEqual(encPass1, encPass2); //encrypting the same password should act the same
-        }
-
-        [TestMethod]
-        public void validatePassword()
-        {
-            String passwordToValidate = "12345";
-            String userPass1 = Authentication.Instance.encryptPassword(passwordToValidate);
-            String userPass2 = Authentication.Instance.encryptPassword("abcd");
-            
-            Assert.IsTrue(Authentication.Instance.validatePassword(passwordToValidate, userPass1));
-            Assert.IsFalse(Authentication.Instance.validatePassword(passwordToValidate,userPass2));
-        }
-
     }
 }

@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
-using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class Authentication
     {
-        private readonly object insertLock = new object();
+        private ConcurrentDictionary<String,String> usersInfo { get; set; }
         private static readonly Lazy<Authentication> lazy
-        = new Lazy<Authentication>(() => new Authentication());
+            = new Lazy<Authentication>(() => new Authentication());
 
         public static Authentication Instance
             => lazy.Value;
 
-        public ConcurrentDictionary<String,String> usersInfo { get; set; }
-
-        private Authentication()
-        {
-            usersInfo = new ConcurrentDictionary<string, string>();
-        }
+        private Authentication() { usersInfo = new ConcurrentDictionary<string, string>();}
 
         public String encryptPassword(String password)
         {
@@ -36,29 +28,20 @@ namespace WSEP212.DomainLayer
 
             return passwordToValidateHash.Equals(userPassword);
         }
-        
-        public RegularResult insertNewUser(User newUser,String password)
+
+        public void insertUserInfo(string userName, string password)
         {
-            lock (insertLock)
-            {
-                if(checkIfUserExists(newUser.userName))
-                {
-                    return new Failure("User Name Already Exists In The System");
-                }
-                UserRepository.Instance.users.TryAdd(newUser, false);
-                usersInfo.TryAdd(newUser.userName, Authentication.Instance.encryptPassword(password));
-                return new Ok("Registration To The System Was Successful");
-            }
+            usersInfo.TryAdd(userName, encryptPassword(password));
         }
-        
-        public bool checkIfUserExists(string userName)
+
+        public bool removeUserInfo(string userName)
         {
-            foreach( KeyValuePair<String,String> userInfo in usersInfo)
-            {
-                if (userInfo.Key.Equals(userName))
-                    return true;
-            }
-            return false;
+            return usersInfo.TryRemove(userName, out _);
+        }
+
+        public String getUserPassword(string userName)
+        {
+            return usersInfo.TryGetValue(userName, out var password) ? password : null;
         }
     }
 }

@@ -25,6 +25,17 @@ namespace WSEP212.DomainLayer
             Log.CloseAndFlush();
         }
         
+        public void writeWarningEventToLog(String info)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.RollingFile("LogFileWarnings.txt", shared: true,
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}{NewLine}") //writing the error to the same file
+                .CreateLogger();
+
+            Log.Warning(info);
+            Log.CloseAndFlush();
+        }
+        
         public void writeErrorEventToLog(String info)
         {
             Log.Logger = new LoggerConfiguration()
