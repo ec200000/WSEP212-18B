@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WSEP212.DomainLayer.Result
+namespace WSEP212.ServiceLayer.Result
 {
     public class OkWithValue<T> : ResultWithValue<T>
     {

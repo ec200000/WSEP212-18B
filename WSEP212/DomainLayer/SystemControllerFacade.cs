@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ServiceLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212.DomainLayer

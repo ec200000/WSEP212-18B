@@ -4,7 +4,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 
 namespace WSEP212_TESTS.AcceptanceTests

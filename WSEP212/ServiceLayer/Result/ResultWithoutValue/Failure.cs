@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WSEP212.DomainLayer.Result
+namespace WSEP212.ServiceLayer.Result
 {
-    public class Ok : RegularResult
+    public class Failure : RegularResult
     {
         private String message;
 
-        public Ok(String message)
+        public Failure(String message)
         {
             this.message = message;
         }
 
         public bool getTag()
         {
-            return true;
+            return false;
         }
+
         public String getMessage()
         {
             return this.message;
