@@ -85,61 +85,21 @@ namespace WSEP212.DomainLayer
             return new FailureWithValue<Store>("The Store Is Not Exist In The Store Repository", null);
         }
 
-        // returns all items that contains that string in their name
-        public ConcurrentDictionary<Item, int> searchItemByName(String itemName)
+        // returns all items that match the user's search settings
+        public ConcurrentDictionary<Item, int> searchItem(SearchItems searchItems)
         {
-            ConcurrentDictionary<Item, int> itemsByName = new ConcurrentDictionary<Item, int>();
+            ConcurrentDictionary<Item, int> items = new ConcurrentDictionary<Item, int>();
             foreach (Store store in stores.Values)
             {
                 foreach (Item item in store.storage.Values)
                 {
-                    if(item.itemName.Contains(itemName))
+                    if(searchItems.matchSearchSettings(item))
                     {
-                        itemsByName.TryAdd(item, store.storeID);
+                        items.TryAdd(item, store.storeID);
                     }
                 }
             }
-            return itemsByName;
-        }
-
-        // returns all items that belong to the category
-        public ConcurrentDictionary<Item, int> searchItemByCategory(String itemCategory)
-        {
-            ConcurrentDictionary<Item, int> itemsByCategory = new ConcurrentDictionary<Item, int>();
-            foreach (Store store in stores.Values)
-            {
-                foreach (Item item in store.storage.Values)
-                {
-                    if (item.category.Equals(itemCategory))
-                    {
-                        itemsByCategory.TryAdd(item, store.storeID);
-                    }
-                }
-            }
-            return itemsByCategory;
-        }
-
-        // returns all items that belong to the category, name or description
-        public ConcurrentDictionary<Item, int> searchItemByKeyWords(String keyWords)
-        {
-            ConcurrentDictionary<Item, int> itemsByKeyWords = new ConcurrentDictionary<Item, int>();
-            String[] words = keyWords.Split(' ');   // split key words by space
-
-            foreach (Store store in stores.Values)
-            {
-                foreach (Item item in store.storage.Values)
-                {
-                    foreach (String word in words)
-                    {
-                        if (item.category.Equals(word) || item.description.Contains(word) || item.itemName.Contains(word) || item.category.Contains(word))
-                        {
-                            itemsByKeyWords.TryAdd(item, store.storeID);
-                            break;
-                        }
-                    }
-                }
-            }
-            return itemsByKeyWords;
+            return items;
         }
 
         public ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getAllStoresPurchsesHistory()

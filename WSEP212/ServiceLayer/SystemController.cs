@@ -194,43 +194,21 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.getUserPurchaseHistory(userName);
         }
-
-        public ResultWithValue<ConcurrentDictionary<int, Store>> getStoresInformation()
-        {
-            String info = $"GetStoresInformation Event was triggered";
-            Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.getStoresInformation();
-        }
         
-        public ResultWithValue<ConcurrentDictionary<Store, ConcurrentLinkedList<Item>>> getItemsInStoresInformation() 
+        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation() 
         {
             String info = $"GetItemsInStoresInformation Event was triggered"; 
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.getItemsInStoresInformation();
         }
 
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByCategory(FilterItemsDTO filter, string category) //receiving FilterDTO
+        public ConcurrentDictionary<Item, int> searchItems(String itemName = "", String keyWords = "", double minPrice = Double.MinValue, double maxPrice = Double.MaxValue, String category = "")
         {
             String info = $"SearchItemsByCategory Event was triggered, with the parameters:" +
-                          $"minimal price: {filter.minPrice}, maximal price: {filter.maxPrice}, category: {filter.category}, category: {category}"; 
+                          $"item name: {itemName}, key words: {keyWords}, meminimal price: {minPrice}, maximal price: {maxPrice}, category: {category}"; 
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.searchItemsByCategory(filter.minPrice, filter.maxPrice, filter.category, category);
-        }
-        
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByName(FilterItemsDTO filter, string name)
-        {
-            String info = $"SearchItemsByName Event was triggered, with the parameters:" +
-                          $"minimal price: {filter.minPrice}, maximal price: {filter.maxPrice}, category: {filter.category}, name: {name}";
-            Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.searchItemsByName(filter.minPrice, filter.maxPrice, filter.category, name);
-        }
-        
-        public ResultWithValue<ConcurrentDictionary<Item, int>> searchItemsByKeyWords(FilterItemsDTO filter, string keyWords)
-        {
-            String info = $"SearchItemsByKeyWords Event was triggered, with the parameters:" +
-                          $"minimal price: {filter.minPrice}, maximal price: {filter.maxPrice}, category: {filter.category}, key words: {keyWords}";
-            Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.searchItemsByKeyWords(filter.minPrice, filter.maxPrice, filter.category, keyWords);
+            SearchItemsDTO searchItemsDTO = new SearchItemsDTO(itemName, keyWords, minPrice, maxPrice, category);
+            return SystemControllerFacade.Instance.searchItems(searchItemsDTO);
         }
 
         public RegularResult loginAsSystemManager(string userName, string password)

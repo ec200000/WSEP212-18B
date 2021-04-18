@@ -49,7 +49,7 @@ namespace WSEP212.DomainLayer
             return appointStoreSeller(storeOwnerName, storeID, Permissions.AllPermissions);
         }
 
-        private RegularResult appointStoreSeller(string sellerName, int storeID, Permissions permission)
+        private RegularResult appointStoreSeller(string sellerName, int storeID, Permissions appointeepermission)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -68,12 +68,16 @@ namespace WSEP212.DomainLayer
                 return new Failure("A Guest Cannot Be Appointed To Be A Store Manager");
 
             // checks if the user has the permissions for appointing store manager
-            RegularResult hasPermissionRes = hasPermissionInStore(storeID, permission);
+            RegularResult hasPermissionRes;
+            if(appointeepermission.Equals(Permissions.AllPermissions))
+                hasPermissionRes = hasPermissionInStore(storeID, Permissions.AppointStoreOwner);
+           else
+                hasPermissionRes = hasPermissionInStore(storeID, Permissions.AppointStoreManager);
             if(hasPermissionRes.getTag())
             {
                 User grantor = this.user;
                 ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
-                pers.TryAdd(permission);  // new seller permissions
+                pers.TryAdd(appointeepermission);  // new seller permissions
                 SellerPermissions permissions = SellerPermissions.getSellerPermissions(sellerRes.getValue(), storeRes.getValue(), grantor, pers);
                 RegularResult addSellerRes = storeRes.getValue().addNewStoreSeller(permissions);
                 if (addSellerRes.getTag())
@@ -317,6 +321,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if (storeSellerRes.getTag())
                 {
+                    if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                        return new Failure("You can't remove a store owner!");
                     if (storeSellerRes.getValue().grantor != this.user)
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
