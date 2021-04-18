@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WSEP212.ServiceLayer
+namespace WSEP212.ServiceLayer.ServiceObjectsDTO
 {
     public class ItemDTO
     {

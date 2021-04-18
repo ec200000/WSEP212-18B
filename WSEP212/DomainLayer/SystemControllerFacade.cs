@@ -4,7 +4,7 @@ using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using WSEP212.ServiceLayer;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 using WSEP212.DomainLayer.Result;
 
 namespace WSEP212.DomainLayer
