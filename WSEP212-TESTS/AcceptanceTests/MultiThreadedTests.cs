@@ -98,7 +98,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    systemController.register("iris", "12345");
+                    res2 = systemController.register("iris", "12345");
                 }
                 catch (NotImplementedException)
                 {

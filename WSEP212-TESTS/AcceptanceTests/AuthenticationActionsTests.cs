@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 
