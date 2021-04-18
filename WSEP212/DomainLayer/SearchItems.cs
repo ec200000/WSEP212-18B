@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
-using WSEP212.ServiceLayer;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212.DomainLayer
 {

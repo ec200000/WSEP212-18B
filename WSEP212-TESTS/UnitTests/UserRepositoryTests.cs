@@ -15,16 +15,13 @@ namespace WSEP212_TESTS
             user1 = new User("a");
             user2 = new User("b");
             UserRepository.Instance.users.TryAdd(user1, false);
-            UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
-            UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
         }
 
         [TestCleanup]
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            UserRepository.Instance.usersInfo.Clear();
         }
 
         [TestMethod]
@@ -33,11 +30,8 @@ namespace WSEP212_TESTS
             User newUser = new User("iris");
             UserRepository.Instance.insertNewUser(newUser, "12345");
             Assert.AreEqual(3, UserRepository.Instance.users.Count);
-            Assert.AreEqual(3, UserRepository.Instance.usersInfo.Count);
             UserRepository.Instance.users.TryGetValue(newUser, out var res);
             Assert.IsFalse(res);
-            UserRepository.Instance.usersInfo.TryGetValue("iris", out var pass);
-            Assert.AreNotEqual("12345", pass); //should be encrypted
         }
 
         [TestMethod]
@@ -46,11 +40,7 @@ namespace WSEP212_TESTS
             UserRepository.Instance.changeUserLoginStatus(user1, false, "123");
             UserRepository.Instance.users.TryGetValue(user1, out var res1);
             Assert.IsFalse(res1);
-            
-            UserRepository.Instance.changeUserLoginStatus(user1, true, "723"); //wrong password
-            UserRepository.Instance.users.TryGetValue(user1, out var res2); 
-            Assert.IsFalse(res2);
-            
+
             UserRepository.Instance.changeUserLoginStatus(user1, true, "123"); //register -> login
             UserRepository.Instance.users.TryGetValue(user1, out var res3); 
             Assert.IsTrue(res3);
@@ -65,12 +55,10 @@ namespace WSEP212_TESTS
         {
             UserRepository.Instance.removeUser(user1); //removing existing user
             Assert.AreEqual(1, UserRepository.Instance.users.Count);
-            Assert.AreEqual(1, UserRepository.Instance.usersInfo.Count);
 
             User u = new User("c");
             UserRepository.Instance.removeUser(u); //removing user that do not exists
             Assert.AreEqual(1, UserRepository.Instance.users.Count);
-            Assert.AreEqual(1, UserRepository.Instance.usersInfo.Count);
         }
 
         [TestMethod]
@@ -108,13 +96,6 @@ namespace WSEP212_TESTS
         {
             Assert.IsTrue(UserRepository.Instance.findUserByUserName("b").getTag());
             Assert.IsFalse(UserRepository.Instance.findUserByUserName("k").getTag());
-        }
-
-        [TestMethod]
-        public void getUserPasswordTest()
-        {
-            Assert.IsTrue(UserRepository.Instance.getUserPassword("b").getTag());
-            Assert.IsFalse(UserRepository.Instance.getUserPassword("k").getTag());
         }
 
         [TestMethod]

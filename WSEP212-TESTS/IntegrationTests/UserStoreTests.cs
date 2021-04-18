@@ -3,7 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TESTS
 {
@@ -19,7 +19,6 @@ namespace WSEP212_TESTS
             user3 = new User("b"); //logged
             user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user3, true);
-            UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
         }
 
         public bool registerAndLogin()
@@ -164,7 +163,6 @@ namespace WSEP212_TESTS
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            UserRepository.Instance.usersInfo.Clear();
             foreach (Store store in StoreRepository.Instance.stores.Values)
             {
                 store.storage.Clear();

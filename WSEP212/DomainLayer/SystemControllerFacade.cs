@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ServiceLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212.DomainLayer
 {
@@ -35,8 +36,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if(threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the register action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the register action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -57,8 +58,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the login action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the login action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -79,8 +80,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the logout action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the logout action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -101,8 +102,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the addItemToShoppingCart action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the addItemToShoppingCart action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -123,8 +124,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the removeItemFromShoppingCart action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the removeItemFromShoppingCart action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -146,8 +147,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the purchaseItems action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the purchaseItems action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -168,8 +169,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the openStore action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the openStore action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (ResultWithValue<int>)threadParameters.result;
@@ -190,8 +191,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the itemReview action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the itemReview action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -212,8 +213,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the addItemToStorage action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the addItemToStorage action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (ResultWithValue<int>)threadParameters.result;
@@ -234,8 +235,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the removeItemFromStorage action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the removeItemFromStorage action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -256,8 +257,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the editItemDetails action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the editItemDetails action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -278,8 +279,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the appointStoreManager action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the appointStoreManager action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -300,8 +301,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the appointStoreOwner action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the appointStoreOwner action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -322,8 +323,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the editManagerPermissions action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the editManagerPermissions action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -344,8 +345,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the removeStoreManager action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the removeStoreManager action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;
@@ -366,8 +367,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the getOfficialsInformation action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the getOfficialsInformation action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return new OkWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>>("Get Officials Information Successfully", (ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result);
@@ -388,8 +389,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the getStorePurchaseHistory action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the getStorePurchaseHistory action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             if (threadParameters.result == null)
@@ -412,8 +413,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the getUsersPurchaseHistory action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the getUsersPurchaseHistory action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return new OkWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
@@ -432,8 +433,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the getStoresPurchaseHistory action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the getStoresPurchaseHistory action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
@@ -454,8 +455,8 @@ namespace WSEP212.DomainLayer
             threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
             if (threadParameters.result is NotImplementedException)
             {
-                String errorMsg = "The user " + userName + "cannot perform the login action!";
-                Logger.Instance.writeErrorEventToLog(errorMsg);
+                String errorMsg = "The user " + userName + " cannot perform the login action!";
+                Logger.Instance.writeWarningEventToLog(errorMsg);
                 throw new NotImplementedException(); //there is no permission to perform this task
             }
             return (RegularResult)threadParameters.result;

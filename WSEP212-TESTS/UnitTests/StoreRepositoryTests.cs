@@ -3,7 +3,8 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212_TESTS
 {
@@ -69,15 +70,15 @@ namespace WSEP212_TESTS
         {
             int storeID = this.store.storeID;
 
-            SearchItems searchItemsByName = new SearchItems(new WSEP212.ServiceLayer.SearchItemsDTO("masks", "", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByName = new SearchItems(new SearchItemsDTO("masks", "", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByName = StoreRepository.Instance.searchItem(searchItemsByName);
             Assert.AreEqual(2, itemsByName.Count);
 
-            SearchItems searchItemsByName2 = new SearchItems(new WSEP212.ServiceLayer.SearchItemsDTO("white", "", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByName2 = new SearchItems(new SearchItemsDTO("white", "", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByName2 = StoreRepository.Instance.searchItem(searchItemsByName2);
             Assert.AreEqual(1, itemsByName2.Count);
 
-            SearchItems searchItemsByKeyWords = new SearchItems(new WSEP212.ServiceLayer.SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByKeyWords = StoreRepository.Instance.searchItem(searchItemsByKeyWords);
             Assert.AreEqual(2, itemsByKeyWords.Count);
         }

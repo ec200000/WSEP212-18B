@@ -6,6 +6,6 @@ namespace WSEP212.DomainLayer
 {
     public interface PaymentInterface
     {
-        public double paymentCharge(User user, double price);
+        public double paymentCharge(double price);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -30,7 +30,7 @@ namespace WSEP212.DomainLayer
 
         private RegularResult externalPurchase(double amount, User user)
         {
-            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(user, amount)) < 0.01)
+            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(amount)) < 0.01)
             {
                 return new Ok("Payment Charged Successfully");
             }

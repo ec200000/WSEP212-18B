@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "objHUpJLcEvIxRHjIFUkD/2n7Ngst6tgsgznG8PTniWnEboMXkTQ+v3RDuKrzCTr+J0UqJC0OZ88XD8wFbSR1g==",
+  "dgSpecHash": "07X91a0J38JziPnqwIHVFlauXWiwGQiBItUqk2OqC3WdouxmFIfqA3tey8tWwE3X9S2iZHxEzK1G5Q5CgQagmw==",
   "success": true,
   "projectFilePath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\coverlet.collector\\3.0.3\\coverlet.collector.3.0.3.nupkg.sha512",
+    "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\1.1.0\\microsoft.aspnetcore.cryptography.internal.1.1.0.nupkg.sha512",
+    "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\1.1.0\\microsoft.aspnetcore.cryptography.keyderivation.1.1.0.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.codecoverage\\16.10.0-release-20210330-02\\microsoft.codecoverage.16.10.0-release-20210330-02.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.net.test.sdk\\16.10.0-release-20210330-02\\microsoft.net.test.sdk.16.10.0-release-20210330-02.nupkg.sha512",
@@ -96,5 +98,12 @@
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

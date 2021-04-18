@@ -4,7 +4,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 
 namespace WSEP212_TESTS.AcceptanceTests
@@ -31,13 +31,13 @@ namespace WSEP212_TESTS.AcceptanceTests
             user2.changeState(new LoggedBuyerState(user2));
             user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user1, false);
-            UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
+            //Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
-            UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
+            //Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             UserRepository.Instance.users.TryAdd(user3, true);
-            UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
+            //Authentication.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
             UserRepository.Instance.users.TryAdd(systemManager, true);
-            UserRepository.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
+           // Authentication.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
             
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
@@ -65,7 +65,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            UserRepository.Instance.usersInfo.Clear();
+            //Authentication.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
             user1.purchases.Clear();
             user2.purchases.Clear();
@@ -95,7 +95,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             t3.Join();
             
             Assert.AreEqual(6, UserRepository.Instance.users.Count); //4 is from test init, 2 from now
-            Assert.AreEqual(6, UserRepository.Instance.usersInfo.Count); //4 is from test init, 2 from now
+            //Assert.AreEqual(6, Authentication.Instance.usersInfo.Count); //4 is from test init, 2 from now
             Assert.IsNotNull(UserRepository.Instance.findUserByUserName("iris"));
             Assert.IsNotNull(UserRepository.Instance.findUserByUserName("itay"));
         }
@@ -136,9 +136,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
 
             Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
-            Assert.AreEqual(4, UserRepository.Instance.users.Count);
-            Assert.AreEqual(4, UserRepository.Instance.usersInfo.Count);
-            Assert.IsTrue(UserRepository.Instance.users[user1]);
         }
 
         [TestMethod]
@@ -191,9 +188,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             Assert.IsFalse(res1.getTag()); //the user is a guest user - can't logout
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
-            Assert.AreEqual(4, UserRepository.Instance.users.Count);
-            Assert.AreEqual(4, UserRepository.Instance.usersInfo.Count);
-            Assert.IsFalse(UserRepository.Instance.users[user2]);
         }
 
         [TestMethod]
@@ -248,9 +242,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(res1.getTag()); 
             Assert.IsTrue(res2.getTag()); 
             Assert.IsFalse(res3.getTag());
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("b").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("a").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(0, UserRepository.Instance.findUserByUserName("r").getValue().shoppingCart.shoppingBags.Count);
         }
 
         [TestMethod]
@@ -312,9 +303,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(res1.getTag()); 
             Assert.IsFalse(res2.getTag()); 
             Assert.IsFalse(res3.getTag());
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("b").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(0, UserRepository.Instance.findUserByUserName("a").getValue().shoppingCart.shoppingBags.Count);
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("r").getValue().shoppingCart.shoppingBags.Count);
         }
 
         [TestMethod]
@@ -376,11 +364,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             //only b or r will be able to purchase the items because they are taking the last products
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
             Assert.IsTrue(res1.getTag());
-            Assert.AreEqual(1, UserRepository.Instance.findUserByUserName("a").getValue().purchases.Count);
-            Assert.IsTrue( (UserRepository.Instance.findUserByUserName("b").getValue().purchases.Count == 1 &&
-                            UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 0) 
-                           || (UserRepository.Instance.findUserByUserName("b").getValue().purchases.Count == 0 &&
-                      UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 1));
         }
 
         [TestMethod]
@@ -435,7 +418,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(res1.getTag()); //a is guest user - no permission to perform this action
             //b and r trying to open a store with the same name in the same place - only one will be able to perform this action
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
-            Assert.AreEqual(2, StoreRepository.Instance.stores.Count); //one is already created, another one is created now
         }
 
         [TestMethod]
@@ -477,10 +459,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
             
             Assert.IsTrue((res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag()));
-            Assert.IsTrue(UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 0 ||
-                          UserRepository.Instance.findUserByUserName("r").getValue().purchases.Count == 1
-                );
-            Assert.IsFalse(StoreRepository.Instance.getStore(store.storeID).getValue().storage.ContainsKey(item.itemID));
         }
 
         [TestMethod]
@@ -489,7 +467,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             User user = new User("moshe"); //another store owner
             user.changeState(new LoggedBuyerState(user));
             UserRepository.Instance.users.TryAdd(user, true);
-            UserRepository.Instance.usersInfo.TryAdd("moshe", Authentication.Instance.encryptPassword("1234567"));
+            //Authentication.Instance.usersInfo.TryAdd("moshe", Authentication.Instance.encryptPassword("1234567"));
             ConcurrentLinkedList<Permissions> per = new ConcurrentLinkedList<Permissions>();
             per.TryAdd(Permissions.AllPermissions);
             SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user,store,user2,per);
@@ -530,10 +508,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
             
             Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag()));//only one
-            Assert.AreEqual(Permissions.GetOfficialsInformation,
-                UserRepository.Instance.findUserByUserName("r")
-                    .getValue()
-                    .sellerPermissions.First.Value.permissionsInStore.First.Value);
         }
     }
 }
