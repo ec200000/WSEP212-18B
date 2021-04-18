@@ -172,6 +172,7 @@ namespace WSEP212.DomainLayer
                         }
                         return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
                     }
+                    rollBackPurchase(items);
                     return new FailureWithValue<double>(pricesAfterSaleRes.getMessage(), -1);
                 }
                 return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
@@ -233,7 +234,7 @@ namespace WSEP212.DomainLayer
                     int itemID = item.Key;
                     int quantity = item.Value;
                     RegularResult itemAvailableRes = isAvailableInStorage(itemID, quantity);
-                    if (itemAvailableRes.getTag())   // maybe lock the storage now
+                    if (itemAvailableRes.getTag())
                     {
                         RegularResult changeQuantityRes = changeItemQuantity(itemID, -1 * quantity);
                         if(changeQuantityRes.getTag())
@@ -242,6 +243,7 @@ namespace WSEP212.DomainLayer
                         }
                         else
                         {
+                            rollBackPurchase(updatedItems);   // if at least one of the items not available, the purchase is canceled
                             return new Failure("One Or More Of The " + changeQuantityRes.getMessage());
                         }
                     }

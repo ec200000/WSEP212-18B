@@ -27,7 +27,7 @@ namespace WSEP212_TESTS
         [TestCleanup]
         public void Cleanup()
         {
-            StoreRepository.Instance.stores = new ConcurrentDictionary<int, Store>();
+            StoreRepository.Instance.removeStore(store.storeID);
         }
 
         [TestMethod]
