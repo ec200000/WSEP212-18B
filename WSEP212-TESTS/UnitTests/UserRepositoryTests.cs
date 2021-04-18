@@ -40,11 +40,7 @@ namespace WSEP212_TESTS
             UserRepository.Instance.changeUserLoginStatus(user1, false, "123");
             UserRepository.Instance.users.TryGetValue(user1, out var res1);
             Assert.IsFalse(res1);
-            
-            UserRepository.Instance.changeUserLoginStatus(user1, true, "723"); //wrong password
-            UserRepository.Instance.users.TryGetValue(user1, out var res2); 
-            Assert.IsFalse(res2);
-            
+
             UserRepository.Instance.changeUserLoginStatus(user1, true, "123"); //register -> login
             UserRepository.Instance.users.TryGetValue(user1, out var res3); 
             Assert.IsTrue(res3);
@@ -100,13 +96,6 @@ namespace WSEP212_TESTS
         {
             Assert.IsTrue(UserRepository.Instance.findUserByUserName("b").getTag());
             Assert.IsFalse(UserRepository.Instance.findUserByUserName("k").getTag());
-        }
-
-        [TestMethod]
-        public void getUserPasswordTest()
-        {
-            Assert.IsTrue(UserRepository.Instance.getUserPassword("b").getTag());
-            Assert.IsFalse(UserRepository.Instance.getUserPassword("k").getTag());
         }
 
         [TestMethod]

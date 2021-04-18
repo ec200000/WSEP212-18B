@@ -45,7 +45,7 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<String> userPasswordRes = getUserPassword(user.userName);
                 if(userPasswordRes.getTag()) //found password in DB
                 {
-                    bool res = Authentication.Instance.validatePassword(passwordToValidate, userPasswordRes.getValue());
+                    bool res = Authentication.Instance.validatePassword(userPasswordRes.getValue(),passwordToValidate);
                     if (!res)  //the password that we are validating does not match to the password in the DB
                     {
                         return new Failure("The Password Entered Is Incorrect, Please Try Again");
