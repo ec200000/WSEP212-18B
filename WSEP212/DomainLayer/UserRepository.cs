@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
