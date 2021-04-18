@@ -31,13 +31,13 @@ namespace WSEP212_TESTS.AcceptanceTests
             user2.changeState(new LoggedBuyerState(user2));
             user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user1, false);
-            UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
+            Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
-            UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
+            Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             UserRepository.Instance.users.TryAdd(user3, true);
-            UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
+            Authentication.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
             UserRepository.Instance.users.TryAdd(systemManager, true);
-            UserRepository.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
+            Authentication.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
             
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
@@ -65,7 +65,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            UserRepository.Instance.usersInfo.Clear();
+            Authentication.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
             user1.purchases.Clear();
             user2.purchases.Clear();
@@ -95,7 +95,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             t3.Join();
             
             Assert.AreEqual(6, UserRepository.Instance.users.Count); //4 is from test init, 2 from now
-            Assert.AreEqual(6, UserRepository.Instance.usersInfo.Count); //4 is from test init, 2 from now
+            Assert.AreEqual(6, Authentication.Instance.usersInfo.Count); //4 is from test init, 2 from now
             Assert.IsNotNull(UserRepository.Instance.findUserByUserName("iris"));
             Assert.IsNotNull(UserRepository.Instance.findUserByUserName("itay"));
         }
@@ -137,7 +137,7 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
             Assert.AreEqual(4, UserRepository.Instance.users.Count);
-            Assert.AreEqual(4, UserRepository.Instance.usersInfo.Count);
+            Assert.AreEqual(4, Authentication.Instance.usersInfo.Count);
             Assert.IsTrue(UserRepository.Instance.users[user1]);
         }
 
@@ -192,7 +192,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(res1.getTag()); //the user is a guest user - can't logout
             Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
             Assert.AreEqual(4, UserRepository.Instance.users.Count);
-            Assert.AreEqual(4, UserRepository.Instance.usersInfo.Count);
+            Assert.AreEqual(4, Authentication.Instance.usersInfo.Count);
             Assert.IsFalse(UserRepository.Instance.users[user2]);
         }
 
@@ -489,7 +489,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             User user = new User("moshe"); //another store owner
             user.changeState(new LoggedBuyerState(user));
             UserRepository.Instance.users.TryAdd(user, true);
-            UserRepository.Instance.usersInfo.TryAdd("moshe", Authentication.Instance.encryptPassword("1234567"));
+            Authentication.Instance.usersInfo.TryAdd("moshe", Authentication.Instance.encryptPassword("1234567"));
             ConcurrentLinkedList<Permissions> per = new ConcurrentLinkedList<Permissions>();
             per.TryAdd(Permissions.AllPermissions);
             SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user,store,user2,per);

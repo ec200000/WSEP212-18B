@@ -30,13 +30,13 @@ namespace WSEP212_TESTS.AcceptanceTests
             user2.changeState(new LoggedBuyerState(user2));
             user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user1, false);
-            UserRepository.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
+            Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
-            UserRepository.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
+            Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             UserRepository.Instance.users.TryAdd(user3, true);
-            UserRepository.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
+            Authentication.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
             UserRepository.Instance.users.TryAdd(systemManager, true);
-            UserRepository.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
+            Authentication.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
             
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
@@ -64,7 +64,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 u.Key.sellerPermissions = null;
             }
             UserRepository.Instance.users.Clear();
-            UserRepository.Instance.usersInfo.Clear();
+            Authentication.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
             user1.purchases.Clear();
             user2.purchases.Clear();
