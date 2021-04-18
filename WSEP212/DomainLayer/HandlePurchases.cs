@@ -124,8 +124,6 @@ namespace WSEP212.DomainLayer
                 return externalPurchaseRes;
             }
             return new Failure(pricePerStoreRes.getMessage());
-
-            
         }
     }
 }
