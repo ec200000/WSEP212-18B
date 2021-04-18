@@ -19,13 +19,12 @@ namespace WSEP212_TESTS
             user3 = new User("b"); //logged
             user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user3, true);
-            Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
         }
 
         public bool registerAndLogin()
         {
             String password = "1234";
-            RegularResult insertUserRes = Authentication.Instance.insertNewUser(this.user, password);
+            RegularResult insertUserRes = UserRepository.Instance.insertNewUser(this.user, password);
             if (insertUserRes.getTag())
             {
                 user.changeState(new LoggedBuyerState(user));
@@ -114,7 +113,7 @@ namespace WSEP212_TESTS
         {
             User user2 = new User("new user");
             String password = "1234";
-            return Authentication.Instance.insertNewUser(this.user, password).getTag();
+            return UserRepository.Instance.insertNewUser(this.user, password).getTag();
         }
         
         public bool addNewManager()
@@ -164,7 +163,6 @@ namespace WSEP212_TESTS
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            Authentication.Instance.usersInfo.Clear();
             foreach (Store store in StoreRepository.Instance.stores.Values)
             {
                 store.storage.Clear();

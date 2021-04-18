@@ -18,9 +18,7 @@ namespace WSEP212_TESTS
             user2 = new User("b"); //logged
             user2.changeState(new LoggedBuyerState(user2));
             UserRepository.Instance.users.TryAdd(user1, false);
-            Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
             UserRepository.Instance.users.TryAdd(user2, true);
-            Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             
             Store store2 = new Store("t", "bb", new SalesPolicy("default", null), new PurchasePolicy("default", null,null), user2);
             Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
@@ -32,7 +30,6 @@ namespace WSEP212_TESTS
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            Authentication.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
         }
 

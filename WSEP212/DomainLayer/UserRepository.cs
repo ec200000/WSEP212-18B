@@ -9,7 +9,7 @@ namespace WSEP212.DomainLayer
 {
     public class UserRepository
     {
-        
+        private readonly object insertLock = new object();
         private readonly object changeStatusLock = new object();
         private static readonly Lazy<UserRepository> lazy
         = new Lazy<UserRepository>(() => new UserRepository());
@@ -19,25 +19,22 @@ namespace WSEP212.DomainLayer
 
         private UserRepository() {
             users = new ConcurrentDictionary<User, bool>();
-           
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
-        
-        
-        public ConcurrentDictionary<User, bool> systemManagers { get; set; }
 
-        public RegularResult changeSystemManagerStatus(string userName, string password, bool status)
+        public RegularResult insertNewUser(User newUser,String password)
         {
-            foreach (var u in users)
+            lock (insertLock)
             {
-                if (u.Key.userName.Equals(userName) && u.Key.isSystemManager)
+                if(checkIfUserExists(newUser.userName))
                 {
-                    return changeUserLoginStatus(u.Key, status, password);
+                    return new Failure("User Name Already Exists In The System");
                 }
+                users.TryAdd(newUser, false);
+                Authentication.Instance.insertUserInfo(newUser.userName, password);
+                return new Ok("Registration To The System Was Successful");
             }
-            return new Failure($"The user {userName} is not a system manager!");
         }
-        
 
         //status is true: register -> login, otherwise: login -> logout
         public RegularResult changeUserLoginStatus(User user, bool status, String passwordToValidate)
@@ -48,7 +45,7 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<String> userPasswordRes = getUserPassword(user.userName);
                 if(userPasswordRes.getTag()) //found password in DB
                 {
-                    bool res = Authentication.Instance.validatePassword(passwordToValidate, userPasswordRes.getValue());
+                    bool res = Authentication.Instance.validatePassword(userPasswordRes.getValue(),passwordToValidate);
                     if (!res)  //the password that we are validating does not match to the password in the DB
                     {
                         return new Failure("The Password Entered Is Incorrect, Please Try Again");
@@ -75,7 +72,7 @@ namespace WSEP212.DomainLayer
         //removing completely from the system
         public bool removeUser(User userToRemove)
         {
-            return users.TryRemove(userToRemove, out _) && Authentication.Instance.usersInfo.TryRemove(userToRemove.userName, out _);
+            return users.TryRemove(userToRemove, out _) && Authentication.Instance.removeUserInfo(userToRemove.userName);
         }
 
         public bool updateUser(User userToUpdate)
@@ -105,9 +102,19 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<String> getUserPassword(string userName)
         {
             String password;
-            if (Authentication.Instance.usersInfo.TryGetValue(userName, out password))
+            if ((password = Authentication.Instance.getUserPassword(userName)) != null)
                 return new OkWithValue<String>("User Password Successfully Found", password);
             return new FailureWithValue<String>("User Password Not Found", null);
+        }
+
+        public bool checkIfUserExists(string userName)
+        {
+            foreach( KeyValuePair<User,bool> pair in users)
+            {
+                if (pair.Key.userName.Equals(userName))
+                    return true;
+            }
+            return false;
         }
 
         public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getAllUsersPurchaseHistory()
