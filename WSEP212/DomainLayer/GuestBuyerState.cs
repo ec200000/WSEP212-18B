@@ -125,7 +125,7 @@ namespace WSEP212.DomainLayer
         public override RegularResult register(String userName, String password)
         {
             User user = new User(userName);
-            return UserRepository.Instance.insertNewUser(user, password);
+            return Authentication.Instance.insertNewUser(user, password);
         }
 
         public override RegularResult removeItemFromStorage(int storeID, int itemID)

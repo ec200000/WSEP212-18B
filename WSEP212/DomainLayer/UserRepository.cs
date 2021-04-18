@@ -9,7 +9,7 @@ namespace WSEP212.DomainLayer
 {
     public class UserRepository
     {
-        private readonly object insertLock = new object();
+        
         private readonly object changeStatusLock = new object();
         private static readonly Lazy<UserRepository> lazy
         = new Lazy<UserRepository>(() => new UserRepository());
@@ -19,10 +19,10 @@ namespace WSEP212.DomainLayer
 
         private UserRepository() {
             users = new ConcurrentDictionary<User, bool>();
-            usersInfo = new ConcurrentDictionary<string, string>();
+           
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
-        public ConcurrentDictionary<String,String> usersInfo { get; set; }
+        
         
         public ConcurrentDictionary<User, bool> systemManagers { get; set; }
 
@@ -37,19 +37,7 @@ namespace WSEP212.DomainLayer
             }
             return new Failure($"The user {userName} is not a system manager!");
         }
-        public RegularResult insertNewUser(User newUser,String password)
-        {
-            lock (insertLock)
-            {
-                if(checkIfUserExists(newUser.userName))
-                {
-                    return new Failure("User Name Already Exists In The System");
-                }
-                users.TryAdd(newUser, false);
-                usersInfo.TryAdd(newUser.userName, Authentication.Instance.encryptPassword(password));
-                return new Ok("Registration To The System Was Successful");
-            }
-        }
+        
 
         //status is true: register -> login, otherwise: login -> logout
         public RegularResult changeUserLoginStatus(User user, bool status, String passwordToValidate)
@@ -87,7 +75,7 @@ namespace WSEP212.DomainLayer
         //removing completely from the system
         public bool removeUser(User userToRemove)
         {
-            return users.TryRemove(userToRemove, out _) && usersInfo.TryRemove(userToRemove.userName, out _);
+            return users.TryRemove(userToRemove, out _) && Authentication.Instance.usersInfo.TryRemove(userToRemove.userName, out _);
         }
 
         public bool updateUser(User userToUpdate)
@@ -117,19 +105,9 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<String> getUserPassword(string userName)
         {
             String password;
-            if (usersInfo.TryGetValue(userName, out password))
+            if (Authentication.Instance.usersInfo.TryGetValue(userName, out password))
                 return new OkWithValue<String>("User Password Successfully Found", password);
             return new FailureWithValue<String>("User Password Not Found", null);
-        }
-
-        public bool checkIfUserExists(string userName)
-        {
-            foreach( KeyValuePair<String,String> userInfo in usersInfo)
-            {
-                if (userInfo.Key.Equals(userName))
-                    return true;
-            }
-            return false;
         }
 
         public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getAllUsersPurchaseHistory()
