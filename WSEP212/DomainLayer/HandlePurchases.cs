@@ -14,9 +14,11 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         public PaymentInterface paymentSystem { get; set; }
+        public DeliveryInterface deliverySystem { get; set; }
 
         private HandlePurchases() {
             paymentSystem = PaymentSystem.Instance;
+            deliverySystem = DeliverySystem.Instance;
         }
 
         // returns the total price after sales for each store. if the purchase cannot be made returns null
@@ -43,7 +45,7 @@ namespace WSEP212.DomainLayer
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.store.rollBackPurchase(shoppingBag.items); // if the purchase failed
+                shoppingBag.rollBackItems(); // if the purchase failed
             }
         }
 
@@ -76,17 +78,18 @@ namespace WSEP212.DomainLayer
             return new Ok("All Purchase Histories Has Been Successfully Added");
         }
 
+        // Deliver all the items to the address
+        // returns true if the delivery done successfully
         private RegularResult callDeliverySystem(User user, String address)
         {
+            ConcurrentDictionary<int, int> allItems = new ConcurrentDictionary<int, int>();
+            int indexToAppend = 0;
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                RegularResult deliverRes = shoppingBag.store.deliverItems(address, shoppingBag.items);
-                if(!deliverRes.getTag())
-                {
-                    return deliverRes;
-                }
+                shoppingBag.items.ToArray().CopyTo(allItems.ToArray(), indexToAppend);
+                indexToAppend += shoppingBag.items.Count;
             }
-            return new Ok("All Items Deliver To The User Successfully");
+            return deliverySystem.deliverItems(address, allItems);
         }
 
         public RegularResult purchaseItems(User user, String address)

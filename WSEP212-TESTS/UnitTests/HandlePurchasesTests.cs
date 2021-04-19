@@ -96,7 +96,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestPurchaseItemsPaymentMock()
+        public void TestPurchaseWithFailingPaymentMock()
         {
             if (registerAndLogin())
             {
@@ -121,7 +121,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestPurchaseItemDeliveryMock()
+        public void TestPurchaseWithFailingDeliveryMock()
         {
             if (registerAndLogin())
             {
@@ -133,7 +133,7 @@ namespace WSEP212_TESTS
                     {
                         if (addItemToShoppingCart())
                         {
-                            StoreRepository.Instance.stores[storeID].deliverySystem = DeliverySystemMock.Instance;
+                            HandlePurchases.Instance.deliverySystem = DeliverySystemMock.Instance;
                             RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsFalse(res.getTag());
                             Assert.AreEqual(user.purchases.Count, 0);
@@ -146,7 +146,7 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
-        public void TestPurchaseItem()
+        public void TestSuccessfulPurchase()
         {
             if (registerAndLogin())
             {

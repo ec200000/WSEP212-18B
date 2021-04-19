@@ -94,6 +94,12 @@ namespace WSEP212.DomainLayer
             return store.purchaseItems(user, items, itemsPurchaseType);
         }
 
+        // roll back purchase - returns all the items in the bag to the store
+        public void rollBackItems()
+        {
+            store.rollBackPurchase(items);
+        }
+
         // Removes all the items in the shopping bag
         public void clearShoppingBag()
         {

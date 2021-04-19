@@ -121,11 +121,9 @@ namespace WSEP212.DomainLayer
         // cancel the purchase in the other store - returns the items back to storage
         private void rollBackItemsInBags(ConcurrentDictionary<int, ShoppingBag> shoppingBagsToRollBack)
         {
-            ConcurrentDictionary<int, int> shoppingBagItems;
             foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBagsToRollBack)
             {
-                shoppingBagItems = shoppingBag.Value.items;
-                shoppingBag.Value.store.rollBackPurchase(shoppingBagItems);
+                shoppingBag.Value.rollBackItems();
             }
         }
 
