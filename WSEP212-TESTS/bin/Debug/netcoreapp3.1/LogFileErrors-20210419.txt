@@ -894,3 +894,79 @@
 
 2021-04-19 17:48:53.656 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
 
+2021-04-19 17:57:21.190 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.196 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.201 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.205 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.209 +03:00 [Error] In AddItemToShoppingCart function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.212 +03:00 [Error] In AddItemToShoppingCart function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.248 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.255 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.258 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.261 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.267 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.272 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.275 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.279 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.282 +03:00 [Error] In RemoveItemFromStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.288 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.292 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.296 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:57:21.300 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.611 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.618 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.624 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.629 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.651 +03:00 [Error] In AddItemToShoppingCart function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.657 +03:00 [Error] In AddItemToShoppingCart function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.705 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.710 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.714 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.718 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.725 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.731 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.735 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.739 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.742 +03:00 [Error] In RemoveItemFromStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.750 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.755 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.759 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-04-19 17:58:35.765 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+

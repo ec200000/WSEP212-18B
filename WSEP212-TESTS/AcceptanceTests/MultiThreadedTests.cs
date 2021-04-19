@@ -22,18 +22,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestInitialize]
         public void testInit()
         {
-            
-            /*user2.changeState(new LoggedBuyerState(user2));
-            user3.changeState(new LoggedBuyerState(user3));
-            UserRepository.Instance.users.TryAdd(user1, false);
-            //Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
-            UserRepository.Instance.users.TryAdd(user2, true);
-            //Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
-            UserRepository.Instance.users.TryAdd(user3, true);
-            //Authentication.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
-            // UserRepository.Instance.users.TryAdd(systemManager, true);
-           // Authentication.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
-            */
             SystemController systemController = new SystemController();
             systemController.register("lol", "123456");
             systemController.register("mol", "1234");
@@ -42,41 +30,18 @@ namespace WSEP212_TESTS.AcceptanceTests
             Console.WriteLine(res.getMessage());
             res = systemController.login("mol", "1234");
             Console.WriteLine(res.getMessage());
-            //systemController.login("a", "1234");
-            //ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            //purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            //SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
-            //PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
             ResultWithValue<int> val = systemController.openStore("mol", "t", "bb", "DEFAULT", "DEFAULT");
             ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, string>(),12, "milk products");
             ResultWithValue<int> val2 = systemController.addItemToStorage("mol", val.getValue(), item);
             this.storeID = val.getValue();
             this.itemID = val2.getValue();
-            //store = new Store("t","bb",salesPolicy,purchasePolicy,user2);
-
-            /*
-            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
-            itemsPurchaseType.TryAdd(item.itemID, PurchaseType.ImmediatePurchase);
-            store.storage.TryAdd(item.itemID, item);
-            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
-            items.TryAdd(item.itemID, 1);
-            store.applyPurchasePolicy(user2, items, itemsPurchaseType);
-            
-            ConcurrentLinkedList<Permissions> per = new ConcurrentLinkedList<Permissions>();
-            per.TryAdd(Permissions.AllPermissions);
-            SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user2,store,null,per);
-            store.addNewStoreSeller(sellerPermissions);
-            user2.sellerPermissions.TryAdd(sellerPermissions);
-            StoreRepository.Instance.stores.TryAdd(store.storeID, store);*/
         }
         
         [TestCleanup]
         public void testClean()
         {
             UserRepository.Instance.users.Clear();
-            //Authentication.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
-
         }
 
         [TestMethod]
@@ -84,50 +49,54 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
-            Thread t1 = new Thread(() =>
+            for (int i = 0; i < 3; i++)
             {
-                try
+                Thread t1 = new Thread(() =>
                 {
-                    res1 = systemController.register("iris", "12345");
-                }
-                catch (NotImplementedException)
+                    try
+                    {
+                        res1 = systemController.register("iris"+i, "12345");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res1 = new Failure("not implemented exception");
+                    }
+                });
+                Thread t2 = new Thread(() =>
                 {
-                    res1 = new Failure("not implemented exception");
-                }
-            });
-            Thread t2 = new Thread(() =>
-            {
-                try
+                    try
+                    {
+                        res2 = systemController.register("iris"+i, "12345");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res2 = new Failure("not implemented exception");
+                    }
+                });
+                Thread t3 = new Thread(() =>
                 {
-                    res2 = systemController.register("iris", "12345");
-                }
-                catch (NotImplementedException)
-                {
-                    res2 = new Failure("not implemented exception");
-                }
-            });
-            Thread t3 = new Thread(() =>
-            {
-                try
-                {
-                    res3 = systemController.register("itay", "12345");
-                }
-                catch (NotImplementedException)
-                {
-                    res3 = new Failure("not implemented exception");
-                }
-            });
+                    try
+                    {
+                        res3 = systemController.register("itay"+i, "12345");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res3 = new Failure("not implemented exception");
+                    }
+                });
 
-            t1.Start();
-            t2.Start();
-            t3.Start();
+                t1.Start();
+                t2.Start();
+                t3.Start();
 
-            t1.Join();
-            t2.Join();
-            t3.Join();
+                t1.Join();
+                t2.Join();
+                t3.Join();
 
-            Assert.IsTrue(res3.getTag());
-            Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
+                Assert.IsTrue(res3.getTag());
+                Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
+            }
+            
         }
 
         [TestMethod]
@@ -135,38 +104,42 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
-
-            Thread t1 = new Thread(() =>
+            for (int i = 0; i < 3; i++)
             {
-                try
+                Thread t1 = new Thread(() =>
                 {
-                    res1 = systemController.login("pol", "123");
-                }
-                catch (NotImplementedException)
-                {
-                    res1 = new Failure("not implemented exception");
-                }
-            });
+                    try
+                    {
+                        res1 = systemController.login("pol", "123");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res1 = new Failure("not implemented exception");
+                    }
+                });
             
-            Thread t2 = new Thread(() =>
-            {
-                try
+                Thread t2 = new Thread(() =>
                 {
-                    res2 = systemController.login("pol", "123");
-                }
-                catch (NotImplementedException)
-                {
-                    res2 = new Failure("not implemented exception");
-                }
-            });
+                    try
+                    {
+                        res2 = systemController.login("pol", "123");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res2 = new Failure("not implemented exception");
+                    }
+                });
 
-            t1.Start();
-            t2.Start();
+                t1.Start();
+                t2.Start();
 
-            t1.Join();
-            t2.Join();
+                t1.Join();
+                t2.Join();
 
-            Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
+                Assert.IsTrue((!res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag())); //only one can be successful
+                systemController.logout("pol");
+            }
+            systemController.login("pol", "123");
         }
 
         [TestMethod]
@@ -174,51 +147,55 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
-            Thread t1 = new Thread(() =>
+            for (int i = 0; i < 3; i++)
             {
-                try
+                Thread t1 = new Thread(() =>
                 {
-                    res1 = systemController.logout("a");
-                }
-                catch (NotImplementedException)
-                {
-                    res1 = new Failure("not implemented exception");
-                }
+                    try
+                    {
+                        res1 = systemController.logout("a");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res1 = new Failure("not implemented exception");
+                    }
                 
-            });
-            Thread t2 = new Thread(() =>
-            {
-                try
+                });
+                Thread t2 = new Thread(() =>
                 {
-                    res2 = systemController.logout("mol");
-                }
-                catch (NotImplementedException)
+                    try
+                    {
+                        res2 = systemController.logout("mol");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res2 = new Failure("not implemented exception");
+                    }
+                });
+                Thread t3 = new Thread(() =>
                 {
-                    res2 = new Failure("not implemented exception");
-                }
-            });
-            Thread t3 = new Thread(() =>
-            {
-                try
-                {
-                    res3 = systemController.logout("mol");
-                }
-                catch (NotImplementedException)
-                {
-                    res3 = new Failure("not implemented exception");
-                }
-            });
+                    try
+                    {
+                        res3 = systemController.logout("mol");
+                    }
+                    catch (NotImplementedException)
+                    {
+                        res3 = new Failure("not implemented exception");
+                    }
+                });
 
-            t1.Start();
-            t2.Start();
-            t3.Start();
+                t1.Start();
+                t2.Start();
+                t3.Start();
             
-            t1.Join();
-            t2.Join();
-            t3.Join();
+                t1.Join();
+                t2.Join();
+                t3.Join();
             
-            Assert.IsFalse(res1.getTag()); //the user is a guest user - can't logout
-            Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
+                Assert.IsFalse(res1.getTag()); //the user is a guest user - can't logout
+                Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
+                systemController.login("mol", "1234");
+            }
         }
 
         [TestMethod]
@@ -500,18 +477,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemController systemController = new SystemController();
             systemController.register("moshe", "123");
             systemController.login("moshe", "123");
-            /*User user = new User("moshe"); //another store owner
-            user.changeState(new LoggedBuyerState(user));
-            UserRepository.Instance.users.TryAdd(user, true);
-            //Authentication.Instance.usersInfo.TryAdd("moshe", Authentication.Instance.encryptPassword("1234567"));
-            ConcurrentLinkedList<Permissions> per = new ConcurrentLinkedList<Permissions>();
-            per.TryAdd(Permissions.AllPermissions);*/
+
             systemController.appointStoreOwner("mol", "moshe", storeID);
-            //SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user,store,user2,per);
-            //store.addNewStoreSeller(sellerPermissions);
-            //user.sellerPermissions.TryAdd(sellerPermissions);
-            
-            //SystemController systemController = new SystemController();
+
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
