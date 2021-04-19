@@ -6,29 +6,24 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
     [TestClass]
     public class MultiThreadedTests
     {
-        private User user1;
-        private User user2;
-        private User user3;
-        private User systemManager;
-        private Store store;
-        private Item item;
+
+        private int storeID;
+
+        private int itemID;
+        //private Item item;
         
         [TestInitialize]
         public void testInit()
         {
-            systemManager = new User("big manager", true); //system manager
-            systemManager.changeState(new SystemManagerState(systemManager));
             
-            user1 = new User("a"); //guest
-            user2 = new User("b"); //logged
-            user3 = new User("r"); //logged
-            user2.changeState(new LoggedBuyerState(user2));
+            /*user2.changeState(new LoggedBuyerState(user2));
             user3.changeState(new LoggedBuyerState(user3));
             UserRepository.Instance.users.TryAdd(user1, false);
             //Authentication.Instance.usersInfo.TryAdd("a", Authentication.Instance.encryptPassword("123"));
@@ -36,16 +31,30 @@ namespace WSEP212_TESTS.AcceptanceTests
             //Authentication.Instance.usersInfo.TryAdd("b", Authentication.Instance.encryptPassword("123456"));
             UserRepository.Instance.users.TryAdd(user3, true);
             //Authentication.Instance.usersInfo.TryAdd("r", Authentication.Instance.encryptPassword("1234"));
-            UserRepository.Instance.users.TryAdd(systemManager, true);
+            // UserRepository.Instance.users.TryAdd(systemManager, true);
            // Authentication.Instance.usersInfo.TryAdd("big manager", Authentication.Instance.encryptPassword("78910"));
-            
-            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
-            store = new Store("t","bb",salesPolicy,purchasePolicy,user2);
-            
-            item = new Item(30, "shoko", "taim retzah!", 12, "milk products");
+            */
+            SystemController systemController = new SystemController();
+            systemController.register("lol", "123456");
+            systemController.register("mol", "1234");
+            systemController.register("pol", "123");
+            RegularResult res = systemController.login("lol", "123456");
+            Console.WriteLine(res.getMessage());
+            res = systemController.login("mol", "1234");
+            Console.WriteLine(res.getMessage());
+            //systemController.login("a", "1234");
+            //ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
+            //purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
+            //SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
+            //PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
+            ResultWithValue<int> val = systemController.openStore("mol", "t", "bb", "DEFAULT", "DEFAULT");
+            ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, string>(),12, "milk products");
+            ResultWithValue<int> val2 = systemController.addItemToStorage("mol", val.getValue(), item);
+            this.storeID = val.getValue();
+            this.itemID = val2.getValue();
+            //store = new Store("t","bb",salesPolicy,purchasePolicy,user2);
+
+            /*
             ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
             itemsPurchaseType.TryAdd(item.itemID, PurchaseType.ImmediatePurchase);
             store.storage.TryAdd(item.itemID, item);
@@ -58,7 +67,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user2,store,null,per);
             store.addNewStoreSeller(sellerPermissions);
             user2.sellerPermissions.TryAdd(sellerPermissions);
-            StoreRepository.Instance.stores.TryAdd(store.storeID, store);
+            StoreRepository.Instance.stores.TryAdd(store.storeID, store);*/
         }
         
         [TestCleanup]
@@ -67,15 +76,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             UserRepository.Instance.users.Clear();
             //Authentication.Instance.usersInfo.Clear();
             StoreRepository.Instance.stores.Clear();
-            user1.purchases.Clear();
-            user2.purchases.Clear();
-            user3.purchases.Clear();
-            user1.shoppingCart.shoppingBags.Clear();
-            user2.shoppingCart.shoppingBags.Clear();
-            user3.shoppingCart.shoppingBags.Clear();
-            user1.sellerPermissions = null;
-            user2.sellerPermissions = null;
-            user3.sellerPermissions = null;
+
         }
 
         [TestMethod]
@@ -134,23 +135,24 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
+
             Thread t1 = new Thread(() =>
             {
                 try
                 {
-                    res1 = systemController.login("a", "123");
+                    res1 = systemController.login("pol", "123");
                 }
                 catch (NotImplementedException)
                 {
                     res1 = new Failure("not implemented exception");
                 }
-                
             });
+            
             Thread t2 = new Thread(() =>
             {
                 try
                 {
-                    res2 = systemController.login("a", "123");
+                    res2 = systemController.login("pol", "123");
                 }
                 catch (NotImplementedException)
                 {
@@ -188,7 +190,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.logout("b");
+                    res2 = systemController.logout("mol");
                 }
                 catch (NotImplementedException)
                 {
@@ -199,7 +201,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.logout("b");
+                    res3 = systemController.logout("mol");
                 }
                 catch (NotImplementedException)
                 {
@@ -229,7 +231,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",store.storeID, item.itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
                 }
                 catch (NotImplementedException)
                 {
@@ -241,7 +243,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("b",store.storeID, item.itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
                 }
                 catch (NotImplementedException)
                 {
@@ -252,7 +254,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("r",store.storeID, item.itemID, 58);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 58);
                 }
                 catch (NotImplementedException)
                 {
@@ -283,9 +285,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",store.storeID, item.itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
                     if (res1.getTag())
-                        res1 = systemController.removeItemFromShoppingCart("a", store.storeID, item.itemID);
+                        res1 = systemController.removeItemFromShoppingCart("a", storeID, itemID);
                 }
                 catch (NotImplementedException)
                 {
@@ -297,9 +299,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("b",store.storeID, item.itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
                     if (res2.getTag())
-                        res2 = systemController.removeItemFromShoppingCart("b", store.storeID, -1);
+                        res2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
                 }
                 catch (NotImplementedException)
                 {
@@ -310,9 +312,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("r",store.storeID, item.itemID, 12);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12);
                     if(res3.getTag())
-                        res3 = systemController.removeItemFromShoppingCart("r", -1, item.itemID);
+                        res3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
                         
                 }
                 catch (NotImplementedException)
@@ -344,7 +346,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",store.storeID, item.itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
                     if (res1.getTag())
                         res1 = systemController.purchaseItems("a", "ashdod");
                 }
@@ -358,9 +360,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("b",store.storeID, item.itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
                     if (res2.getTag())
-                        res2 = systemController.purchaseItems("b", "ness ziona");
+                        res2 = systemController.purchaseItems("mol", "ness ziona");
                 }
                 catch (NotImplementedException)
                 {
@@ -371,9 +373,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("r",store.storeID, item.itemID, 28);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
                     if(res3.getTag())
-                        res3 = systemController.purchaseItems("r", "holon");
+                        res3 = systemController.purchaseItems("lol", "holon");
 
                 }
                 catch (NotImplementedException)
@@ -417,7 +419,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.openStore("b", "HAMAMA", "ashdod", "DEFAULT", "DEFAULT");
+                    res2 = systemController.openStore("mol", "HAMAMA", "ashdod", "DEFAULT", "DEFAULT");
                 }
                 catch (NotImplementedException)
                 {
@@ -428,7 +430,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.openStore("r", "HAMAMA", "ashdod", "DEFAULT", "DEFAULT");
+                    res3 = systemController.openStore("lol", "HAMAMA", "ashdod", "DEFAULT", "DEFAULT");
                 }
                 catch (NotImplementedException)
                 {
@@ -459,7 +461,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.removeItemFromStorage("b", store.storeID, item.itemID);
+                    res1 = systemController.removeItemFromStorage("mol", storeID, itemID);
                 }
                 catch (NotImplementedException)
                 {
@@ -471,9 +473,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("r",store.storeID, item.itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
                     if (res2.getTag())
-                        res2 = systemController.purchaseItems("r", "ness ziona");
+                        res2 = systemController.purchaseItems("lol", "ness ziona");
                 }
                 catch (NotImplementedException)
                 {
@@ -486,31 +488,37 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             t1.Join();
             t2.Join();
-            
+
+            Console.WriteLine(res1.getMessage());
+            Console.WriteLine(res2.getMessage());
             Assert.IsTrue((res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag()));
         }
 
         [TestMethod]
         public void selectTheSameUserToBeAManager()
         {
-            User user = new User("moshe"); //another store owner
+            SystemController systemController = new SystemController();
+            systemController.register("moshe", "123");
+            systemController.login("moshe", "123");
+            /*User user = new User("moshe"); //another store owner
             user.changeState(new LoggedBuyerState(user));
             UserRepository.Instance.users.TryAdd(user, true);
             //Authentication.Instance.usersInfo.TryAdd("moshe", Authentication.Instance.encryptPassword("1234567"));
             ConcurrentLinkedList<Permissions> per = new ConcurrentLinkedList<Permissions>();
-            per.TryAdd(Permissions.AllPermissions);
-            SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user,store,user2,per);
-            store.addNewStoreSeller(sellerPermissions);
-            user.sellerPermissions.TryAdd(sellerPermissions);
+            per.TryAdd(Permissions.AllPermissions);*/
+            systemController.appointStoreOwner("mol", "moshe", storeID);
+            //SellerPermissions sellerPermissions = SellerPermissions.getSellerPermissions(user,store,user2,per);
+            //store.addNewStoreSeller(sellerPermissions);
+            //user.sellerPermissions.TryAdd(sellerPermissions);
             
-            SystemController systemController = new SystemController();
+            //SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
             {
                 try
                 {
-                    res1 = systemController.appointStoreManager("b", "r", store.storeID);
+                    res1 = systemController.appointStoreManager("mol", "lol", storeID);
                 }
                 catch (NotImplementedException)
                 {
@@ -522,7 +530,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.appointStoreManager("moshe", "r", store.storeID);
+                    res2 = systemController.appointStoreManager("moshe", "lol", storeID);
                 }
                 catch (NotImplementedException)
                 {

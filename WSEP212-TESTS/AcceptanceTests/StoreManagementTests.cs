@@ -17,8 +17,9 @@ namespace WSEP212_TESTS.AcceptanceTests
 
         public void testInit()
         {
-            controller.register("a", "123");
+            //controller.register("a", "123");
             controller.register("b", "123456");
+            controller.register("r", "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
@@ -70,7 +71,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = controller.appointStoreManager("b", "no such user", storeID);
             Assert.IsFalse(res.getTag());
             
-            controller.appointStoreManager("a", "r", storeID); //cant perform this action
+            controller.appointStoreManager("moon", "r", storeID); //cant perform this action
             Assert.IsFalse(true);
 
         }
@@ -94,7 +95,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = controller.appointStoreOwner("b", "w", storeID);
             Assert.IsFalse(res.getTag());
             
-            controller.appointStoreOwner("a", "w", storeID); //cant perform this action
+            controller.appointStoreOwner("moon", "w", storeID); //cant perform this action
             Assert.IsFalse(true);
         }
 
@@ -117,7 +118,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = controller.editManagerPermissions("b", "abc", new ConcurrentLinkedList<int>(), -1);
             Assert.IsFalse(res.getTag());
 
-            controller.editManagerPermissions("a", "r", newPermissions, storeID); //no permission to do so
+            controller.editManagerPermissions("moon", "r", newPermissions, storeID); //no permission to do so
             Assert.IsFalse(true);
         }
 
@@ -137,7 +138,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = controller.removeStoreManager("b", "abcd", storeID);
             Assert.IsTrue(res.getTag());
             
-            controller.removeStoreManager("a", "abcd", storeID); //no permission to do so
+            controller.removeStoreManager("moon", "abcd", storeID); //no permission to do so
             Assert.IsFalse(true);
         }
 
@@ -151,7 +152,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             Assert.IsTrue(controller.getOfficialsInformation("abcde", storeID).getTag());
             
-            controller.getOfficialsInformation("a", storeID); //guest user - no permissions to do so
+            controller.getOfficialsInformation("moon", storeID); //guest user - no permissions to do so
             Assert.IsFalse(true);
         }
     }

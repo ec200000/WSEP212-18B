@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 
-        public RegularResult insertNewUser(User newUser,String password)
+        public RegularResult insertNewUser(User newUser, String password)
         {
             lock (insertLock)
             {
@@ -32,6 +32,19 @@ namespace WSEP212.DomainLayer
                 }
                 users.TryAdd(newUser, false);
                 Authentication.Instance.insertUserInfo(newUser.userName, password);
+                return new Ok("Registration To The System Was Successful");
+            }
+        }
+        
+        public RegularResult addLoginUser(User newUser)
+        {
+            lock (insertLock)
+            {
+                if(checkIfUserExists(newUser.userName))
+                {
+                    return new Failure("User Name Already Exists In The System");
+                }
+                users.TryAdd(newUser, true);
                 return new Ok("Registration To The System Was Successful");
             }
         }
