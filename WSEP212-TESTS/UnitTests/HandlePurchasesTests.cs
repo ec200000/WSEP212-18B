@@ -147,8 +147,8 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID1 = openStore("Store1", "Holon");
-                int storeID2 = openStore("Store2", "Ashdod");
+                int storeID1 = openStore("Store3", "Holon");
+                int storeID2 = openStore("Store4", "Ashdod");
                 if (storeID1 > 0 && storeID2 > 0)
                 {
                     int itemID1 = addItemToStorage(storeID1, "shoko tnova", 10, "taim!", 10.0, "milk items");
@@ -159,6 +159,7 @@ namespace WSEP212_TESTS
                         bool addItem2 = addItemToShoppingCart(storeID2, itemID2, 2);
                         if (addItem1 && addItem2)
                         {
+                            HandlePurchases.Instance.paymentSystem = PaymentSystem.Instance;
                             RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsTrue(res.getTag());
                             Assert.AreEqual(user.purchases.Count, 2);

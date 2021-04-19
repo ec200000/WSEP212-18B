@@ -53,3 +53,5 @@ C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Microso
 C:\Users\irisk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll

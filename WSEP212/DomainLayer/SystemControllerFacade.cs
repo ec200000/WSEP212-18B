@@ -207,16 +207,18 @@ namespace WSEP212.DomainLayer
         {
             try
             {
+                User user;
                 ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
-                if(!userRes.getTag())
+                if (!userRes.getTag())
                 {
-                    return new FailureWithValue<int>(userRes.getMessage(), -1);
+                    user = new User(userName);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
                 }
-
+                else user = userRes.getValue();
                 Object[] paramsList = { storeName, storeAddress, purchasePolicy, salesPolicy };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                ThreadPool.QueueUserWorkItem(userRes.getValue().openStore, threadParameters); //creating the job
+                ThreadPool.QueueUserWorkItem(user.openStore, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {
@@ -229,7 +231,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In OpenStore function, the error is: {e.Message}");
-                return new FailureWithValue<int>(e.Message,-1);
+                return new FailureWithValue<int>(e.Message, -1);
             }
         }
 

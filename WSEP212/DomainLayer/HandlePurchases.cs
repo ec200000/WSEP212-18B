@@ -14,11 +14,10 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         public PaymentInterface paymentSystem { get; set; }
-        public DeliveryInterface deliverySystem { get; set; }
 
-        private HandlePurchases() {
+        private HandlePurchases()
+        {
             paymentSystem = PaymentSystem.Instance;
-            deliverySystem = DeliverySystem.Instance;
         }
 
         // returns the total price after sales for each store. if the purchase cannot be made returns null
@@ -34,7 +33,7 @@ namespace WSEP212.DomainLayer
 
         private RegularResult externalPurchase(double amount, User user)
         {
-            if(Math.Abs(amount - paymentSystem.paymentCharge(amount)) < 0.01)
+            if (Math.Abs(amount - paymentSystem.paymentCharge(amount)) < 0.01)
             {
                 return new Ok("Payment Charged Successfully");
             }
@@ -45,7 +44,7 @@ namespace WSEP212.DomainLayer
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.rollBackItems(); // if the purchase failed
+                shoppingBag.store.rollBackPurchase(shoppingBag.items); // if the purchase failed
             }
         }
 
@@ -64,7 +63,7 @@ namespace WSEP212.DomainLayer
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
                 int storeID = shoppingBag.store.storeID;
-                if(pricePerStore.ContainsKey(storeID))
+                if (pricePerStore.ContainsKey(storeID))
                 {
                     PurchaseInfo purchaseInfo = new PurchaseInfo(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
                     user.purchases.Add(purchaseInfo);
@@ -78,25 +77,24 @@ namespace WSEP212.DomainLayer
             return new Ok("All Purchase Histories Has Been Successfully Added");
         }
 
-        // Deliver all the items to the address
-        // returns true if the delivery done successfully
         private RegularResult callDeliverySystem(User user, String address)
         {
-            ConcurrentDictionary<int, int> allItems = new ConcurrentDictionary<int, int>();
-            int indexToAppend = 0;
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                shoppingBag.items.ToArray().CopyTo(allItems.ToArray(), indexToAppend);
-                indexToAppend += shoppingBag.items.Count;
+                RegularResult deliverRes = shoppingBag.store.deliverItems(address, shoppingBag.items);
+                if (!deliverRes.getTag())
+                {
+                    return deliverRes;
+                }
             }
-            return deliverySystem.deliverItems(address, allItems);
+            return new Ok("All Items Deliver To The User Successfully");
         }
 
         public RegularResult purchaseItems(User user, String address)
         {
-            if(address == null) return new Failure("address is null!");
+            if (address == null) return new Failure("address is null!");
             ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
-            if(pricePerStoreRes.getTag())
+            if (pricePerStoreRes.getTag())
             {
                 // calculate total price for all stores
                 double totalPrice = 0;
@@ -109,10 +107,10 @@ namespace WSEP212.DomainLayer
                 if (externalPurchaseRes.getTag())
                 {
                     RegularResult deliveryRes = callDeliverySystem(user, address);
-                    if(deliveryRes.getTag())
+                    if (deliveryRes.getTag())
                     {
                         RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
-                        if(purchaseInfosRes.getTag())
+                        if (purchaseInfosRes.getTag())
                         {
                             user.shoppingCart.clearShoppingCart();
                             return new Ok("Purchase Completed Successfully!");
