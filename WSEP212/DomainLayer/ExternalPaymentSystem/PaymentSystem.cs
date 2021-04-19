@@ -12,6 +12,10 @@ namespace WSEP212.DomainLayer
 
         public static PaymentSystem Instance
             => lazy.Value;
+        
+        private PaymentSystem() {
+           
+        }
 
         public double paymentCharge(double price)
         {

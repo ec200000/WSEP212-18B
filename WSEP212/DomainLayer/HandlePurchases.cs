@@ -36,7 +36,7 @@ namespace WSEP212.DomainLayer
             {
                 return new Ok("Payment Charged Successfully");
             }
-            return new Failure("Payment Charged Failed");
+            return new Failure("Payment Charge Failed");
         }
 
         private void rollback(User user)
@@ -105,20 +105,20 @@ namespace WSEP212.DomainLayer
                 RegularResult externalPurchaseRes = externalPurchase(totalPrice, user);
                 if (externalPurchaseRes.getTag())
                 {
-                    RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
-                    if(purchaseInfosRes.getTag())
+                    RegularResult deliveryRes = callDeliverySystem(user, address);
+                    if(deliveryRes.getTag())
                     {
-                        RegularResult deliveryRes = callDeliverySystem(user, address);
-                        if(deliveryRes.getTag())
+                        RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
+                        if(purchaseInfosRes.getTag())
                         {
                             user.shoppingCart.clearShoppingCart();
                             return new Ok("Purchase Completed Successfully!");
                         }
                         rollback(user);
-                        return deliveryRes;
+                        return purchaseInfosRes;
                     }
                     rollback(user);
-                    return purchaseInfosRes;
+                    return deliveryRes;
                 }
                 rollback(user);
                 return externalPurchaseRes;

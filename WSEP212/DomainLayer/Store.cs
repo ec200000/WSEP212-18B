@@ -275,7 +275,7 @@ namespace WSEP212.DomainLayer
         // returns true if the delivery done successfully
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
-            return DeliverySystem.Instance.deliverItems(address, items);
+            return this.deliverySystem.deliverItems(address, items);
         }
 
         // Adds a new store seller for this store

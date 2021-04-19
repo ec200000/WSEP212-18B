@@ -12,6 +12,10 @@ namespace WSEP212.DomainLayer
 
         public static DeliverySystem Instance
             => lazy.Value;
+        
+        private DeliverySystem() {
+           
+        }
 
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {

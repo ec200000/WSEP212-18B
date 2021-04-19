@@ -8,10 +8,10 @@ namespace WSEP212_TESTS
     public class DeliverySystemMock: DeliveryInterface
     {
         //singelton
-        private static readonly Lazy<DeliverySystem> lazy
-            = new Lazy<DeliverySystem>(() => new DeliverySystem());
+        private static readonly Lazy<DeliverySystemMock> lazy
+            = new Lazy<DeliverySystemMock>(() => new DeliverySystemMock());
 
-        public static DeliverySystem Instance
+        public static DeliverySystemMock Instance
             => lazy.Value;
 
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)

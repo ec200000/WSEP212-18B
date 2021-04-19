@@ -6,15 +6,15 @@ namespace WSEP212_TESTS
     public class PaymentSystemMock : PaymentInterface
     {
         //singelton
-        private static readonly Lazy<PaymentSystem> lazy
-            = new Lazy<PaymentSystem>(() => new PaymentSystem());
+        private static readonly Lazy<PaymentSystemMock> lazy
+            = new Lazy<PaymentSystemMock>(() => new PaymentSystemMock());
 
-        public static PaymentSystem Instance
+        public static PaymentSystemMock Instance
             => lazy.Value;
 
         public double paymentCharge(double price)
         {
-            return 0; //charging in the listed price
+            return 30000; //charging in the listed price
         }
     }
 }
