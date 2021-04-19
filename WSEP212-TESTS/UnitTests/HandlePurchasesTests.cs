@@ -45,13 +45,12 @@ namespace WSEP212_TESTS
             return true;
         }
         
-        public int openStore()
+        public int openStore(String name, String address)
         {
-            //Store.resetStoreCounter();
-            String name = "store";
-            String address = "holon";
+            ConcurrentLinkedList<PurchaseType> purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
+            purchaseTypes.TryAdd(PurchaseType.ImmediatePurchase);
             SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<PolicyRule>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", purchaseTypes, new ConcurrentLinkedList<PolicyRule>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -60,31 +59,26 @@ namespace WSEP212_TESTS
             list[3] = salesPolicy;
             parameters.parameters = list;
             user.openStore(parameters);
-            
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
         
-        public int addItemToStorage()
+        public int addItemToStorage(int storeID, String itemName, int quantity, String description, double price, String category)
         {
-            int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[6];
             list[0] = storeID;
-            list[1] = 3;
-            list[2] = "shoko";
-            list[3] = "taim retzah!";
-            list[4] = 12.0;
-            list[5] = "milk products";
+            list[1] = quantity;
+            list[2] = itemName;
+            list[3] = description;
+            list[4] = price;
+            list[5] = category;
             parameters.parameters = list;
             user.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
         
-        public bool addItemToShoppingCart()
+        public bool addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
-            int storeID = 1;
-            int itemID = 1;
-            int quantity = 2;
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[3];
             list[0] = storeID;
@@ -100,13 +94,13 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = openStore();
+                int storeID = openStore("Store1", "Holon");
                 if (storeID > 0)
                 {
-                    int itemID = addItemToStorage();
+                    int itemID = addItemToStorage(storeID, "shoko", 10, "taim!", 10.0, "milk items");
                     if (itemID > 0)
                     {
-                        if (addItemToShoppingCart())
+                        if (addItemToShoppingCart(storeID, itemID, 2))
                         {
                             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
                             RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
@@ -114,6 +108,7 @@ namespace WSEP212_TESTS
                             Assert.AreEqual(user.purchases.Count, 0);
                             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
                             Assert.AreEqual(StoreRepository.Instance.stores[storeID].purchasesHistory.Count, 0);
+                            Assert.AreEqual(StoreRepository.Instance.stores[storeID].storage[itemID].quantity, 10);
                         }
                     }
                 }
@@ -125,20 +120,22 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = openStore();
+                int storeID = openStore("Store1", "Holon");
                 if (storeID > 0)
                 {
-                    int itemID = addItemToStorage();
+                    int itemID = addItemToStorage(storeID, "shoko", 10, "taim!", 10.0, "milk items");
                     if (itemID > 0)
                     {
-                        if (addItemToShoppingCart())
+                        if (addItemToShoppingCart(storeID, itemID, 2))
                         {
-                            HandlePurchases.Instance.deliverySystem = DeliverySystemMock.Instance;
+                            HandlePurchases.Instance.paymentSystem = PaymentSystem.Instance;
+                            StoreRepository.Instance.stores[storeID].deliverySystem = DeliverySystemMock.Instance;
                             RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsFalse(res.getTag());
                             Assert.AreEqual(user.purchases.Count, 0);
                             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
                             Assert.AreEqual(StoreRepository.Instance.stores[storeID].purchasesHistory.Count, 0);
+                            Assert.AreEqual(StoreRepository.Instance.stores[storeID].storage[itemID].quantity, 10);
                         }
                     }
                 }
@@ -150,23 +147,31 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = openStore();
-                if (storeID > 0)
+                int storeID1 = openStore("Store1", "Holon");
+                int storeID2 = openStore("Store2", "Ashdod");
+                if (storeID1 > 0 && storeID2 > 0)
                 {
-                    int itemID = addItemToStorage();
-                    if (itemID > 0)
+                    int itemID1 = addItemToStorage(storeID1, "shoko tnova", 10, "taim!", 10.0, "milk items");
+                    int itemID2 = addItemToStorage(storeID2, "shoko tara", 10, "taim!", 9.5, "milk items");
+                    if (itemID1 > 0 && itemID2 > 0)
                     {
-                        if (addItemToShoppingCart())
+                        bool addItem1 = addItemToShoppingCart(storeID1, itemID1, 2);
+                        bool addItem2 = addItemToShoppingCart(storeID2, itemID2, 2);
+                        if (addItem1 && addItem2)
                         {
                             RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsTrue(res.getTag());
-                            Assert.AreEqual(user.purchases.Count, 1);
+                            Assert.AreEqual(user.purchases.Count, 2);
                             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 0);
-                            Assert.AreEqual(StoreRepository.Instance.stores[storeID].purchasesHistory.Count, 1);
+                            Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 1);
+                            Assert.AreEqual(StoreRepository.Instance.stores[storeID2].purchasesHistory.Count, 1);
+                            Assert.AreEqual(StoreRepository.Instance.stores[storeID1].storage[itemID1].quantity, 8);
+                            Assert.AreEqual(StoreRepository.Instance.stores[storeID2].storage[itemID2].quantity, 8);
                         }
                     }
                 }
             }
         }
+
     }
 }

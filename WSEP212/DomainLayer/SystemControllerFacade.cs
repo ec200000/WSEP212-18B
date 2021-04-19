@@ -45,7 +45,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Register function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -75,7 +75,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Login function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -105,7 +105,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Logout function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -135,7 +135,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In AddItemToShoppingCart function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -165,7 +165,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In RemoveItemFromShoppingCart function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -196,7 +196,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In PurchaseItems function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -226,7 +226,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (ResultWithValue<int>)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In OpenStore function, the error is: {e.Message}");
                 return new FailureWithValue<int>(e.Message,-1);
@@ -256,7 +256,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In ItemReview function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -286,7 +286,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (ResultWithValue<int>)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In AddItemToStorage function, the error is: {e.Message}");
                 return new FailureWithValue<int>(e.Message,-1);
@@ -316,7 +316,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In RemoveItemFromStorage function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -348,7 +348,7 @@ namespace WSEP212.DomainLayer
 
                 return (RegularResult) threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In EditItemDetails function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -378,7 +378,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In AppointStoreManager function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -408,7 +408,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In AppointStoreOwner function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -438,7 +438,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In EditManagerPermissions function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -468,7 +468,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In RemoveStoreManager function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -498,7 +498,7 @@ namespace WSEP212.DomainLayer
                 }
                 return new OkWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>>("Get Officials Information Successfully", (ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetOfficialsInformation function, the error is: {e.Message}");
                 return new FailureWithValue<ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>>(e.Message, null);
@@ -532,7 +532,7 @@ namespace WSEP212.DomainLayer
                 }
                 return new OkWithValue<ConcurrentBag<PurchaseInfo>>("Get Store Purchase History Successfully", (ConcurrentBag<PurchaseInfo>)threadParameters.result);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetStorePurchaseHistory function, the error is: {e.Message}");
                 return new FailureWithValue<ConcurrentBag<PurchaseInfo>>(e.Message, null);
@@ -560,7 +560,7 @@ namespace WSEP212.DomainLayer
                 }
                 return new OkWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetUsersPurchaseHistory function, the error is: {e.Message}");
                 return new FailureWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>>(e.Message, null);
@@ -588,7 +588,7 @@ namespace WSEP212.DomainLayer
                 }
                 return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)threadParameters.result);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetStoresPurchaseHistory function, the error is: {e.Message}");
                 return new FailureWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>(e.Message, null);
@@ -618,7 +618,7 @@ namespace WSEP212.DomainLayer
                 }
                 return (RegularResult)threadParameters.result;
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In LoginAsSystemManager function, the error is: {e.Message}");
                 return new Failure(e.Message);
@@ -637,7 +637,7 @@ namespace WSEP212.DomainLayer
 
                 return new OkWithValue<ShoppingCart>("Found user with shopping cart",userRes.getValue().shoppingCart);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In ViewShoppingCart function, the error is: {e.Message}");
                 return new FailureWithValue<ShoppingCart>(e.Message, null);
@@ -650,7 +650,7 @@ namespace WSEP212.DomainLayer
             {
                 return UserRepository.Instance.getUserPurchaseHistory(userName);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetUserPurchaseHistory function, the error is: {e.Message}");
                 return new FailureWithValue<ConcurrentBag<PurchaseInfo>>(e.Message, null);
@@ -664,7 +664,7 @@ namespace WSEP212.DomainLayer
             {
                 return StoreRepository.Instance.getStoresAndItemsInfo();
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetItemsInStoresInformation function, the error is: {e.Message}");
                 return null;
@@ -679,7 +679,7 @@ namespace WSEP212.DomainLayer
                 SearchItems search = new SearchItems(searchItemsDTO);
                 return StoreRepository.Instance.searchItem(search);
             }
-            catch (Exception e)
+            catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In SearchItems function, the error is: {e.Message}");
                 return null;
