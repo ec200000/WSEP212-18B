@@ -5462,3 +5462,259 @@
 
 2021-04-19 13:48:57.458 +03:00 [Information] EditItemDetails Event was triggered, with the parameters:user name: a, store ID: 118, item ID: 115
 
+2021-04-19 13:55:53.155 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.181 +03:00 [Information] Register Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.188 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd
+
+2021-04-19 13:55:53.194 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.195 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.196 +03:00 [Information] Register Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.196 +03:00 [Information] Login Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.204 +03:00 [Information] Login Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.208 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.209 +03:00 [Information] Register Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.210 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-19 13:55:53.215 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-04-19 13:55:53.215 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-04-19 13:55:53.215 +03:00 [Information] Register Event was triggered, with the parameters: user name: itay
+
+2021-04-19 13:55:53.230 +03:00 [Information] Login Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.230 +03:00 [Information] Login Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.241 +03:00 [Information] Logout Event was triggered, with the parameter: user name: a
+
+2021-04-19 13:55:53.241 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-19 13:55:53.241 +03:00 [Information] Logout Event was triggered, with the parameter: user name: b
+
+2021-04-19 13:55:53.245 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: r, store ID: 99, item ID: 103
+
+2021-04-19 13:55:53.245 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 99, item ID: 103
+
+2021-04-19 13:55:53.245 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 99, item ID: 103
+
+2021-04-19 13:55:53.248 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 100, item ID: 104
+
+2021-04-19 13:55:53.248 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: r, store ID: 100, item ID: 104
+
+2021-04-19 13:55:53.248 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 100, item ID: 104
+
+2021-04-19 13:55:53.250 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: b, store ID: 100, item ID: -1
+
+2021-04-19 13:55:53.250 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: a, store ID: 100, item ID: 104
+
+2021-04-19 13:55:53.250 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: r, store ID: -1, item ID: 104
+
+2021-04-19 13:55:53.253 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 101, item ID: 105
+
+2021-04-19 13:55:53.253 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 101, item ID: 105
+
+2021-04-19 13:55:53.253 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: r, store ID: 101, item ID: 105
+
+2021-04-19 13:55:53.254 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: r
+
+2021-04-19 13:55:53.254 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: b
+
+2021-04-19 13:55:53.257 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: a, store name: no, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.261 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: r, store ID: 104, item ID: 107
+
+2021-04-19 13:55:53.261 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: b, store ID: 104, item ID: 107
+
+2021-04-19 13:55:53.262 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: r
+
+2021-04-19 13:55:53.265 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: moshe, store ID: 105, manager name: r
+
+2021-04-19 13:55:53.267 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.277 +03:00 [Information] Register Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.287 +03:00 [Information] Login Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.296 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: b, store name: store1, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.297 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: b, store ID: 106, item ID: 0
+
+2021-04-19 13:55:53.298 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 106, item ID: 109
+
+2021-04-19 13:55:53.299 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 106, item ID: 109
+
+2021-04-19 13:55:53.299 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 106, item ID: 109
+
+2021-04-19 13:55:53.300 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 106, item ID: -1
+
+2021-04-19 13:55:53.300 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: -1, item ID: 109
+
+2021-04-19 13:55:53.301 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: b, store name: store2, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.302 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: b, store ID: 107, item ID: 0
+
+2021-04-19 13:55:53.303 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: b, store ID: 107, item ID: 110
+
+2021-04-19 13:55:53.304 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 107, item ID: 110
+
+2021-04-19 13:55:53.304 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: b, store ID: -1, item ID: 110
+
+2021-04-19 13:55:53.305 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: b, store ID: 107, item ID: -1
+
+2021-04-19 13:55:53.306 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: b, store ID: 107, item ID: 110
+
+2021-04-19 13:55:53.307 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: a, store ID: 107, item ID: 110
+
+2021-04-19 13:55:53.307 +03:00 [Information] RemoveItemFromShoppingCart Event was triggered, with the parameters:user name: a, store ID: 107, item ID: 110
+
+2021-04-19 13:55:53.309 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-04-19 13:55:53.309 +03:00 [Information] Register Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.310 +03:00 [Information] Login Event was triggered, with the parameters: user name: b
+
+2021-04-19 13:55:53.312 +03:00 [Information] Register Event was triggered, with the parameters: user name: w
+
+2021-04-19 13:55:53.319 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: b, store name: store20, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.320 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: -1, store owner name: w
+
+2021-04-19 13:55:53.321 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: 108, store owner name: no such user
+
+2021-04-19 13:55:53.322 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: 108, store owner name: w
+
+2021-04-19 13:55:53.322 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: 108, store owner name: w
+
+2021-04-19 13:55:53.323 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: a, store ID: 108, store owner name: w
+
+2021-04-19 13:55:53.325 +03:00 [Information] Register Event was triggered, with the parameters: user name: abc
+
+2021-04-19 13:55:53.334 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: b, store name: store21, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.334 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: 109, manager name: abc
+
+2021-04-19 13:55:53.337 +03:00 [Information] EditManagerPermissions Event was triggered, with the parameters:user name: b, store ID: 109, manager name: abc,permissions: 5, 3, 
+
+2021-04-19 13:55:53.338 +03:00 [Information] EditManagerPermissions Event was triggered, with the parameters:user name: b, store ID: 109, manager name: no such user,permissions: 5, 3, 
+
+2021-04-19 13:55:53.339 +03:00 [Information] EditManagerPermissions Event was triggered, with the parameters:user name: b, store ID: -1, manager name: abc,permissions: 
+
+2021-04-19 13:55:53.339 +03:00 [Information] EditManagerPermissions Event was triggered, with the parameters:user name: a, store ID: 109, manager name: r,permissions: 5, 3, 
+
+2021-04-19 13:55:53.341 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcd
+
+2021-04-19 13:55:53.348 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: b, store name: store22, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.348 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: 110, manager name: abcd
+
+2021-04-19 13:55:53.349 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: b, store ID: 110, manager name: no such user
+
+2021-04-19 13:55:53.350 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: b, store ID: -1, manager name: abcd
+
+2021-04-19 13:55:53.351 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: b, store ID: 110, manager name: abcd
+
+2021-04-19 13:55:53.352 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: a, store ID: 110, manager name: abcd
+
+2021-04-19 13:55:53.354 +03:00 [Information] Register Event was triggered, with the parameters: user name: abcde
+
+2021-04-19 13:55:53.361 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: b, store name: store23, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.362 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: b, store ID: 111, manager name: abcde
+
+2021-04-19 13:55:53.363 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: b, store ID: 111
+
+2021-04-19 13:55:53.364 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: abcde, store ID: 111
+
+2021-04-19 13:55:53.366 +03:00 [Information] Register Event was triggered, with the parameters: user name: user
+
+2021-04-19 13:55:53.374 +03:00 [Information] Login Event was triggered, with the parameters: user name: user
+
+2021-04-19 13:55:53.381 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.382 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: 112, item ID: 0
+
+2021-04-19 13:55:53.382 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: user, store ID: 112, item ID: 111
+
+2021-04-19 13:55:53.383 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: a
+
+2021-04-19 13:55:53.384 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: user
+
+2021-04-19 13:55:53.384 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: user
+
+2021-04-19 13:55:53.388 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store2, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.389 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: -1, item ID: 0
+
+2021-04-19 13:55:53.390 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store2, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.391 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: , store name: store2, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.391 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: , purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.392 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store2, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.393 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store2, purchase policy: , sales policy: DEFAULT
+
+2021-04-19 13:55:53.393 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store2, purchase policy: DEFAULT, sales policy: 
+
+2021-04-19 13:55:53.394 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: HAMAMA, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.394 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: a, store name: gg, purchase policy: default, sales policy: default
+
+2021-04-19 13:55:53.396 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store3, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.397 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: 114, item ID: 0
+
+2021-04-19 13:55:53.398 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: user, store ID: 114, item ID: 112
+
+2021-04-19 13:55:53.398 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: user, store ID: 114, item ID: 112
+
+2021-04-19 13:55:53.399 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: user
+
+2021-04-19 13:55:53.400 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: user, review: wow, store ID: 114, item ID: 112
+
+2021-04-19 13:55:53.403 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: , review: boo, store ID: 114, item ID: 112
+
+2021-04-19 13:55:53.404 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: user, review: , store ID: 114, item ID: 112
+
+2021-04-19 13:55:53.404 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: a, review: boo, store ID: 114, item ID: 112
+
+2021-04-19 13:55:53.407 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store4, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.408 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: HAMAMA, purchase policy: deault, sales policy: default
+
+2021-04-19 13:55:53.409 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: 115, item ID: 0
+
+2021-04-19 13:55:53.409 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: 115, item ID: 0
+
+2021-04-19 13:55:53.410 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: a, store ID: 115, item ID: 0
+
+2021-04-19 13:55:53.412 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store5, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.413 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: 117, item ID: 0
+
+2021-04-19 13:55:53.414 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: user, store ID: 117, item ID: 114
+
+2021-04-19 13:55:53.415 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: user, store ID: 117, item ID: -1
+
+2021-04-19 13:55:53.416 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: user, store ID: -1, item ID: 114
+
+2021-04-19 13:55:53.417 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: a, store ID: 117, item ID: 114
+
+2021-04-19 13:55:53.419 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: user, store name: store6, purchase policy: DEFAULT, sales policy: DEFAULT
+
+2021-04-19 13:55:53.421 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: user, store ID: 118, item ID: 0
+
+2021-04-19 13:55:53.422 +03:00 [Information] EditItemDetails Event was triggered, with the parameters:user name: user, store ID: 118, item ID: 115
+
+2021-04-19 13:55:53.423 +03:00 [Information] EditItemDetails Event was triggered, with the parameters:user name: a, store ID: 118, item ID: 115
+

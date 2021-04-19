@@ -624,3 +624,31 @@
 
 2021-04-19 13:48:57.468 +03:00 [Warning] The user a cannot perform the editItemDetails action!
 
+2021-04-19 13:55:53.206 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-04-19 13:55:53.211 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-04-19 13:55:53.242 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-19 13:55:53.258 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-04-19 13:55:53.310 +03:00 [Warning] The user b cannot perform the login action!
+
+2021-04-19 13:55:53.324 +03:00 [Warning] The user a cannot perform the appointStoreOwner action!
+
+2021-04-19 13:55:53.340 +03:00 [Warning] The user a cannot perform the editManagerPermissions action!
+
+2021-04-19 13:55:53.353 +03:00 [Warning] The user a cannot perform the removeStoreManager action!
+
+2021-04-19 13:55:53.364 +03:00 [Warning] The user abcde cannot perform the getOfficialsInformation action!
+
+2021-04-19 13:55:53.395 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-04-19 13:55:53.405 +03:00 [Warning] The user a cannot perform the itemReview action!
+
+2021-04-19 13:55:53.411 +03:00 [Warning] The user a cannot perform the addItemToStorage action!
+
+2021-04-19 13:55:53.417 +03:00 [Warning] The user a cannot perform the removeItemFromStorage action!
+
+2021-04-19 13:55:53.424 +03:00 [Warning] The user a cannot perform the editItemDetails action!
+
