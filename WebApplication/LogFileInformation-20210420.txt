@@ -14,3 +14,7 @@
 
 2021-04-20 20:29:22.063 +03:00 [Information] Register Event was triggered, with the parameters: user name: hii
 
+2021-04-20 20:31:17.594 +03:00 [Information] Register Event was triggered, with the parameters: user name: abbc
+
+2021-04-20 20:31:24.641 +03:00 [Information] Register Event was triggered, with the parameters: user name: abbc
+

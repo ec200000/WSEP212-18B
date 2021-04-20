@@ -1,0 +1,36 @@
+﻿@page
+@using WSEP212.DomainLayer
+@using WSEP212.ConcurrentLinkedList
+@model WebApplication.Views.Home.StoresInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    @if (Model != null & Model.stores != null)
+    {
+        foreach(KeyValuePair<Store, ConcurrentLinkedList<Item>> dictValue in Model.stores)
+        {
+           ViewData["key"] = dictValue.Key;
+        }
+    }
+    
+    <ul>
+    @foreach (Store std in ViewData["key"] as IList<Store>)
+    {
+        <li>
+            @std.storeName
+        </li>
+    }
+    </ul>
+</div>
+</body>
+</html>
