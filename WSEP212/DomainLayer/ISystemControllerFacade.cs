@@ -27,6 +27,7 @@ namespace WSEP212.DomainLayer
         public RegularResult appointStoreOwner(String userName, String storeOwnerName, int storeID);
         public RegularResult editManagerPermissions(String userName, String managerName, ConcurrentLinkedList<Permissions> permissions, int storeID);
         public RegularResult removeStoreManager(String userName, String managerName, int storeID);
+        public RegularResult removeStoreOwner(String userName, String ownerName, int storeID);
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(String userName, int storeID);
         public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(String userName, int storeID); //all the purchases of the store that I manage/own
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>> getUsersPurchaseHistory(String userName);

@@ -30,6 +30,7 @@ namespace WSEP212.ServiceLayer
         public RegularResult editManagerPermissions(String userName, String managerName,
             ConcurrentLinkedList<Int32> permissions, int storeID); // USE CASE 4.6, 5.1
         public RegularResult removeStoreManager(String userName, String managerName, int storeID); // USE CASE 4.7
+        public RegularResult removeStoreOwner(String userName, String ownerName, int storeID); // USE CASE 4.4
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(
             String userName, int storeID); // USE CASE 4.9
         public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(String userName, int storeID); // USE CASE 4.11

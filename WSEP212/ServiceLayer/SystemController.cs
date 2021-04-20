@@ -171,6 +171,14 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.removeStoreManager(userName, managerName, storeID);
         }
+        
+        public RegularResult removeStoreOwner(String userName, String ownerName, int storeID)
+        {
+            String info = $"RemoveStoreManager Event was triggered, with the parameters:" +
+                          $"user name: {userName}, store ID: {storeID}, manager name: {ownerName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.removeStoreManager(userName, ownerName, storeID);
+        }
 
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(String userName, int storeID)
         {

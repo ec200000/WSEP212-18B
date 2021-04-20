@@ -525,6 +525,40 @@ namespace WSEP212.DomainLayer
                 return new Failure(e.Message);
             }
         }
+        
+        public RegularResult removeStoreOwner(string userName, string ownerName, int storeID)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { ownerName, storeID };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.removeStoreManager, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the removeStoreManager action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In RemoveStoreManager function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
 
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(string userName, int storeID)
         {
