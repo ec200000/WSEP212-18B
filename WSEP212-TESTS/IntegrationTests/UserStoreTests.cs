@@ -329,6 +329,38 @@ namespace WSEP212_TESTS
                     int itemID = addItemToStorage();
                     if (itemID > 0)
                     {
+                        if (addItemToShoppingCart())
+                        {
+                            if (purchaseItems())
+                            {
+                                String review = "best shoko ever!!";
+                                ThreadParameters parameters = new ThreadParameters();
+                                object[] list = new object[3];
+                                list[0] = review;
+                                list[1] = itemID;
+                                list[2] = storeID;
+                                parameters.parameters = list;
+                                user.itemReview(parameters);
+                                Assert.IsTrue(((RegularResult)parameters.result).getTag());
+                                Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage[1].reviews.Count);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        [TestMethod]
+        public void TestItemReviewNoPurchase()
+        {
+            if (registerAndLogin())
+            {
+                int storeID = openStore();
+                if (storeID > 0) 
+                {
+                    int itemID = addItemToStorage();
+                    if (itemID > 0)
+                    {
                         String review = "best shoko ever!!";
                         ThreadParameters parameters = new ThreadParameters();
                         object[] list = new object[3];
@@ -337,7 +369,7 @@ namespace WSEP212_TESTS
                         list[2] = storeID;
                         parameters.parameters = list;
                         user.itemReview(parameters);
-                        Assert.IsTrue((bool)parameters.result);
+                        Assert.IsFalse(((RegularResult)parameters.result).getTag());
                         Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage[1].reviews.Count);
                     }
                 }
@@ -361,7 +393,7 @@ namespace WSEP212_TESTS
                         list[1] = itemID;
                         parameters.parameters = list;
                         user.removeItemFromStorage(parameters);
-                        Assert.IsTrue((bool)parameters.result);
+                        Assert.IsTrue(((RegularResult)parameters.result).getTag());
                         Assert.AreEqual(0, StoreRepository.Instance.stores[1].storage.Count);
                     }
                 }
@@ -392,7 +424,7 @@ namespace WSEP212_TESTS
                         list[6] = item.category;
                         parameters.parameters = list;
                         user.editItemDetails(parameters);
-                        Assert.IsTrue((bool)parameters.result);
+                        Assert.IsTrue(((RegularResult)parameters.result).getTag());
                         Assert.AreEqual("shoko moka", StoreRepository.Instance.stores[1].storage[1].itemName);
                     }
                 }
@@ -467,7 +499,7 @@ namespace WSEP212_TESTS
                         list[1] = storeID;
                         parameters.parameters = list;
                         user.appointStoreManager(parameters);
-                        Assert.IsTrue((bool)parameters.result);
+                        Assert.IsTrue(((RegularResult)parameters.result).getTag());
                         Assert.AreEqual(2, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);
                     }
                 }
@@ -490,7 +522,7 @@ namespace WSEP212_TESTS
                         list[1] = storeID;
                         parameters.parameters = list;
                         user.appointStoreOwner(parameters);
-                        Assert.IsTrue((bool)parameters.result);
+                        Assert.IsTrue(((RegularResult)parameters.result).getTag());
                         Assert.AreEqual(2, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);                    }
                 }
             }
@@ -518,7 +550,7 @@ namespace WSEP212_TESTS
                             list[2] = storeID;
                             parameters.parameters = list;
                             user.editManagerPermissions(parameters);
-                            Assert.IsTrue((bool)parameters.result);
+                            Assert.IsTrue(((RegularResult)parameters.result).getTag());
                             Assert.AreEqual(permissions, StoreRepository.Instance.stores[1].storeSellersPermissions["new user"].permissionsInStore);
                         }
                     }
@@ -544,7 +576,7 @@ namespace WSEP212_TESTS
                             list[1] = storeID;
                             parameters.parameters = list;
                             user.removeStoreManager(parameters);
-                            Assert.IsTrue((bool) parameters.result);
+                            Assert.IsTrue(((RegularResult)parameters.result).getTag());
                             Assert.AreEqual(1, StoreRepository.Instance.stores[1].storeSellersPermissions.Count);
                         }
                     }
@@ -595,7 +627,7 @@ namespace WSEP212_TESTS
                         list[2] = quantity;
                         parameters.parameters = list;
                         user.addItemToShoppingCart(parameters);
-                        if ((bool) parameters.result)
+                        if (((RegularResult)parameters.result).getTag())
                         {
                             string address = "moshe levi 3 beer sheva";
                             ThreadParameters parameters2 = new ThreadParameters();
@@ -603,7 +635,7 @@ namespace WSEP212_TESTS
                             list2[0] = address;
                             parameters2.parameters = list2;
                             user.purchaseItems(parameters2);
-                            Assert.IsTrue((bool)parameters2.result);
+                            Assert.IsTrue(((RegularResult)parameters2.result).getTag());
                             Assert.AreEqual(1, this.user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }
@@ -629,7 +661,7 @@ namespace WSEP212_TESTS
                     list[2] = quantity;
                     parameters.parameters = list;
                     user.addItemToShoppingCart(parameters);
-                    if ((bool) parameters.result)
+                    if (((RegularResult)parameters.result).getTag())
                     {
                         string address = "moshe levi 3 beer sheva";
                         ThreadParameters parameters2 = new ThreadParameters();
@@ -637,7 +669,7 @@ namespace WSEP212_TESTS
                         list2[0] = address;
                         parameters2.parameters = list2;
                         user.purchaseItems(parameters2);
-                        Assert.IsTrue((bool)parameters2.result);
+                        Assert.IsTrue(((RegularResult)parameters2.result).getTag());
                         Assert.AreEqual(1, this.user.purchases.Count);
                         Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                     }
@@ -664,7 +696,7 @@ namespace WSEP212_TESTS
                         list[2] = quantity;
                         parameters.parameters = list;
                         user.addItemToShoppingCart(parameters);
-                        if ((bool) parameters.result)
+                        if (((RegularResult)parameters.result).getTag())
                         {
                             string address = "moshe levi 3 beer sheva";
                             ThreadParameters parameters2 = new ThreadParameters();
@@ -672,7 +704,7 @@ namespace WSEP212_TESTS
                             list2[0] = address;
                             parameters2.parameters = list2;
                             user.purchaseItems(parameters2);
-                            Assert.IsTrue((bool)parameters2.result);
+                            Assert.IsTrue(((RegularResult)parameters2.result).getTag());
                             Assert.AreEqual(1, this.user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }

@@ -22,11 +22,10 @@ namespace WSEP212_TESTS
         {
             potato.addReview("admin", "the potato was very tasty!");
             Assert.IsTrue(potato.reviews.ContainsKey("admin"));
-            Assert.AreEqual("the potato was very tasty!", potato.reviews["admin"].First.Value);
+            Assert.AreEqual("the potato was very tasty!", potato.reviews["admin"].reviews.First.Value);
             potato.addReview("admin", "5/5!!!");
             Assert.IsTrue(potato.reviews.ContainsKey("admin"));
-            Assert.AreEqual("5/5!!!", potato.reviews["admin"].First.Value);
-            Assert.AreEqual("the potato was very tasty!", potato.reviews["admin"].Last.Value);
+            Assert.AreEqual("5/5!!!", potato.reviews["admin"].reviews.First.Value);
         }
     }
 }
