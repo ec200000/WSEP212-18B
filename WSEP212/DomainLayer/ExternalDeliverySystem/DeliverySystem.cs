@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    class DeliverySystem : DeliveryInterface
+    public class DeliverySystem : DeliveryInterface
     {
         //singelton
         private static readonly Lazy<DeliverySystem> lazy
@@ -12,6 +12,10 @@ namespace WSEP212.DomainLayer
 
         public static DeliverySystem Instance
             => lazy.Value;
+        
+        private DeliverySystem() {
+           
+        }
 
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {

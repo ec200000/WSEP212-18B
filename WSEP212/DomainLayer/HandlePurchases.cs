@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -13,8 +13,11 @@ namespace WSEP212.DomainLayer
         public static HandlePurchases Instance
             => lazy.Value;
 
-        private HandlePurchases() {
-            
+        public PaymentInterface paymentSystem { get; set; }
+
+        private HandlePurchases()
+        {
+            paymentSystem = PaymentSystem.Instance;
         }
 
         // returns the total price after sales for each store. if the purchase cannot be made returns null
@@ -30,11 +33,11 @@ namespace WSEP212.DomainLayer
 
         private RegularResult externalPurchase(double amount, User user)
         {
-            if(Math.Abs(amount - PaymentSystem.Instance.paymentCharge(user, amount)) < 0.01)
+            if (Math.Abs(amount - paymentSystem.paymentCharge(amount)) < 0.01)
             {
                 return new Ok("Payment Charged Successfully");
             }
-            return new Failure("Payment Charged Failed");
+            return new Failure("Payment Charge Failed");
         }
 
         private void rollback(User user)
@@ -60,7 +63,7 @@ namespace WSEP212.DomainLayer
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
                 int storeID = shoppingBag.store.storeID;
-                if(pricePerStore.ContainsKey(storeID))
+                if (pricePerStore.ContainsKey(storeID))
                 {
                     PurchaseInfo purchaseInfo = new PurchaseInfo(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
                     user.purchases.Add(purchaseInfo);
@@ -79,7 +82,7 @@ namespace WSEP212.DomainLayer
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
                 RegularResult deliverRes = shoppingBag.store.deliverItems(address, shoppingBag.items);
-                if(!deliverRes.getTag())
+                if (!deliverRes.getTag())
                 {
                     return deliverRes;
                 }
@@ -89,9 +92,9 @@ namespace WSEP212.DomainLayer
 
         public RegularResult purchaseItems(User user, String address)
         {
-            if(address == null) return new Failure("address is null!");
+            if (address == null) return new Failure("address is null!");
             ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
-            if(pricePerStoreRes.getTag())
+            if (pricePerStoreRes.getTag())
             {
                 // calculate total price for all stores
                 double totalPrice = 0;
@@ -103,27 +106,25 @@ namespace WSEP212.DomainLayer
                 RegularResult externalPurchaseRes = externalPurchase(totalPrice, user);
                 if (externalPurchaseRes.getTag())
                 {
-                    RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
-                    if(purchaseInfosRes.getTag())
+                    RegularResult deliveryRes = callDeliverySystem(user, address);
+                    if (deliveryRes.getTag())
                     {
-                        RegularResult deliveryRes = callDeliverySystem(user, address);
-                        if(deliveryRes.getTag())
+                        RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
+                        if (purchaseInfosRes.getTag())
                         {
                             user.shoppingCart.clearShoppingCart();
                             return new Ok("Purchase Completed Successfully!");
                         }
                         rollback(user);
-                        return deliveryRes;
+                        return purchaseInfosRes;
                     }
                     rollback(user);
-                    return purchaseInfosRes;
+                    return deliveryRes;
                 }
                 rollback(user);
                 return externalPurchaseRes;
             }
             return new Failure(pricePerStoreRes.getMessage());
-
-            
         }
     }
 }

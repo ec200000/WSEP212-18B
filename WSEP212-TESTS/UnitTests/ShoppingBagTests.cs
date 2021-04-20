@@ -3,7 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TESTS
 {
@@ -67,6 +67,14 @@ namespace WSEP212_TESTS
 
             shoppingBag.removeItem(itemID);
 
+            shoppingBag.clearShoppingBag();
+        }
+
+        [TestMethod]
+        public void addItemTestFail()
+        {
+            int itemID = storeItemID;
+            
             Assert.IsFalse(shoppingBag.addItem(-1, 5).getTag());   // should fail because there is no such item ID
             Assert.IsFalse(shoppingBag.items.ContainsKey(-1));
 
@@ -76,7 +84,6 @@ namespace WSEP212_TESTS
             Assert.IsFalse(shoppingBag.addItem(itemID, -5).getTag());   // should fail because it is not possible to add a item with negative quantity
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));
 
-            shoppingBag.clearShoppingBag();
         }
 
         [TestMethod]
@@ -104,10 +111,17 @@ namespace WSEP212_TESTS
 
             Assert.IsTrue(shoppingBag.changeItemQuantity(itemID, 3).getTag());
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
-            Assert.AreEqual(3, quantity);
+            Assert.AreEqual(3, quantity); 
+        }
 
+        [TestMethod]
+        public void changeItemQuantityTestFail()
+        {
+            int itemID = storeItemID;
+            shoppingBag.addItem(itemID, 3);
+            
             Assert.IsFalse(shoppingBag.changeItemQuantity(itemID, 1000).getTag());   // should fail because there is no enough of the item in storage
-            Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
+            Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out int quantity));
             Assert.AreEqual(3, quantity);   // same as previous quantity, no need to change it
 
             Assert.IsFalse(shoppingBag.changeItemQuantity(itemID, -1).getTag());   // should fail because it is not possible to add a item with negative quantity

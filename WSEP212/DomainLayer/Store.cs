@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -28,6 +28,7 @@ namespace WSEP212.DomainLayer
         public ConcurrentBag<PurchaseInfo> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
+        public DeliveryInterface deliverySystem { get; set; }
 
         public Store(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
@@ -49,6 +50,8 @@ namespace WSEP212.DomainLayer
 
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
+            
+            this.deliverySystem = DeliverySystem.Instance;
         }
 
         // Check if the item exist and available in the store
@@ -172,6 +175,7 @@ namespace WSEP212.DomainLayer
                         }
                         return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
                     }
+                    rollBackPurchase(items);
                     return new FailureWithValue<double>(pricesAfterSaleRes.getMessage(), -1);
                 }
                 return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
@@ -233,7 +237,7 @@ namespace WSEP212.DomainLayer
                     int itemID = item.Key;
                     int quantity = item.Value;
                     RegularResult itemAvailableRes = isAvailableInStorage(itemID, quantity);
-                    if (itemAvailableRes.getTag())   // maybe lock the storage now
+                    if (itemAvailableRes.getTag())
                     {
                         RegularResult changeQuantityRes = changeItemQuantity(itemID, -1 * quantity);
                         if(changeQuantityRes.getTag())
@@ -242,6 +246,7 @@ namespace WSEP212.DomainLayer
                         }
                         else
                         {
+                            rollBackPurchase(updatedItems);   // if at least one of the items not available, the purchase is canceled
                             return new Failure("One Or More Of The " + changeQuantityRes.getMessage());
                         }
                     }
@@ -269,7 +274,7 @@ namespace WSEP212.DomainLayer
         // returns true if the delivery done successfully
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
-            return DeliverySystem.Instance.deliverItems(address, items);
+            return this.deliverySystem.deliverItems(address, items);
         }
 
         // Adds a new store seller for this store

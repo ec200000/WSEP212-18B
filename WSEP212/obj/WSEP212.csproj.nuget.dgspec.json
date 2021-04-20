@@ -40,6 +40,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
             "Serilog": {
               "target": "Package",
               "version": "[2.10.1-dev-01285, )"

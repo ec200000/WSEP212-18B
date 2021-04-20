@@ -5,7 +5,8 @@ using System.Text;
 using Microsoft.VisualBasic.CompilerServices;
 using WSEP212.DomainLayer;
 using WSEP212.ConcurrentLinkedList;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212.ServiceLayer
 {
@@ -16,14 +17,14 @@ namespace WSEP212.ServiceLayer
         public RegularResult register(String userName, String password)
         {
             String info = $"Register Event was triggered, with the parameters: " +
-                          $"user name: {userName}, password: {password} ";
+                          $"user name: {userName}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.register(userName, password);
         }
         public RegularResult login(String userName, String password)
         {
             String info = $"Login Event was triggered, with the parameters: " +
-                          $"user name: {userName}, password: {password} ";
+                          $"user name: {userName}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.login(userName, password);
         }

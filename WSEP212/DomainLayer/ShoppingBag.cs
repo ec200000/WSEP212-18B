@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using WSEP212.DomainLayer.Result;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -92,6 +92,12 @@ namespace WSEP212.DomainLayer
                 }
             }
             return store.purchaseItems(user, items, itemsPurchaseType);
+        }
+
+        // roll back purchase - returns all the items in the bag to the store
+        public void rollBackItems()
+        {
+            store.rollBackPurchase(items);
         }
 
         // Removes all the items in the shopping bag
