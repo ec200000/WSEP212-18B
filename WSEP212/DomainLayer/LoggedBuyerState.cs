@@ -343,5 +343,49 @@ namespace WSEP212.DomainLayer
             }
             return hasPermissionRes;
         }
+        
+        public override RegularResult removeStoreOwner(string ownerName, int storeID)
+        {
+            // checks manager exists
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(ownerName);
+            if (!userRes.getTag())
+            {
+                return new Failure(userRes.getMessage());
+            }
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new Failure(storeRes.getMessage());
+            }
+            // checks if the user has the permissions for removing store manager
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.RemoveStoreManager);
+            if (hasPermissionRes.getTag())
+            {
+                // checks the manager is indeed the manager in that store
+                ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, ownerName);
+                if (storeSellerRes.getTag())
+                {
+                    if (!storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                        return new Failure("You can't remove a store manager!");
+                    if (storeSellerRes.getValue().grantor != this.user)
+                        return new Failure("Only who appointed you, can remove you!");
+                    // remove him from the store
+                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().seller.userName);
+                    if(removeFromStoreRes.getTag())
+                    {
+                        if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))
+                        {
+                            userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue(), out _);
+                            return new Ok("Remove Store Owner Successfully");
+                        }
+                        return new Failure("The User Is Not Store Owner In This Store");
+                    }
+                    return removeFromStoreRes;
+                }
+                return new Failure(storeSellerRes.getMessage());
+            }
+            return hasPermissionRes;
+        }
     }
 }
