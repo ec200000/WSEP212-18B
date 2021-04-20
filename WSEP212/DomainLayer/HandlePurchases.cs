@@ -66,7 +66,7 @@ namespace WSEP212.DomainLayer
                 if (pricePerStore.ContainsKey(storeID))
                 {
                     PurchaseInfo purchaseInfo = new PurchaseInfo(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
-                    user.purchases.Add(purchaseInfo);
+                    user.addPurchase(purchaseInfo);
                     shoppingBag.store.addNewPurchase(purchaseInfo);
                 }
                 else

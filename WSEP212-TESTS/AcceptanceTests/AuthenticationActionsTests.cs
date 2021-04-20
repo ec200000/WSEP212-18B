@@ -8,7 +8,7 @@ namespace WSEP212_TESTS.AcceptanceTests
     [TestClass]
     public class AuthenticationActionsTests
     {
-        SystemController controller = new SystemController();
+        SystemController controller = SystemController.Instance;
         
         public void testInit()
         {

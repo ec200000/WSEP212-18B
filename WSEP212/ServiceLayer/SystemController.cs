@@ -12,7 +12,23 @@ namespace WSEP212.ServiceLayer
 {
     public class SystemController : ISystemController
     {
-        public SystemController() { }
+        private static readonly Lazy<SystemController> lazy
+            = new Lazy<SystemController>(() => new SystemController());
+
+        public static SystemController Instance
+            => lazy.Value;
+
+        private SystemController()
+        {
+            try
+            {
+                UserRepository.Instance.createSystemManager();
+            }
+            catch (SystemException e)
+            {
+                Logger.Instance.writeErrorEventToLog(e.Message);
+            }
+        }
         
         public RegularResult register(String userName, String password)
         {

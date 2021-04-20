@@ -22,6 +22,15 @@ namespace WSEP212.DomainLayer
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 
+        public void createSystemManager()
+        {
+            User systemManager = new User("big manager");
+            systemManager.changeState(new SystemManagerState(systemManager));
+            RegularResult res = insertNewUser(systemManager, "123456");
+            if (!res.getTag())
+                throw new SystemException("Couldn't create a system manager");
+        }
+        
         public RegularResult insertNewUser(User newUser, String password)
         {
             lock (insertLock)

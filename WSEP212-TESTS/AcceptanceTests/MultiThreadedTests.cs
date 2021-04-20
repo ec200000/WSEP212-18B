@@ -15,14 +15,14 @@ namespace WSEP212_TESTS.AcceptanceTests
     {
 
         private int storeID;
-
+        SystemController systemController = SystemController.Instance;
         private int itemID;
         //private Item item;
         
         [TestInitialize]
         public void testInit()
         {
-            SystemController systemController = new SystemController();
+            
             systemController.register("lol", "123456");
             systemController.register("mol", "1234");
             systemController.register("pol", "123");
@@ -47,7 +47,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void registerTest()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
             for (int i = 0; i < 3; i++)
             {
@@ -102,7 +101,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void loginTest()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
             for (int i = 0; i < 3; i++)
             {
@@ -145,7 +143,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void logout()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
             for (int i = 0; i < 3; i++)
             {
@@ -201,7 +198,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void addItemToShoppingCartTest()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
@@ -255,7 +251,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void removeItemFromShoppingCart()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
@@ -316,7 +311,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void purchaseItemsTest()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
@@ -377,7 +371,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void openStoreTest()
         {
-            SystemController systemController = new SystemController();
             ResultWithValue<int> res1 = new OkWithValue<int>("ok",-1), res2 = new OkWithValue<int>("ok",-1), res3 = new OkWithValue<int>("ok",-1);
             
             Thread t1 = new Thread(() =>
@@ -431,7 +424,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void deleteItemAndTryToBuyItTest()
         {
-            SystemController systemController = new SystemController();
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
@@ -474,7 +466,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void selectTheSameUserToBeAManager()
         {
-            SystemController systemController = new SystemController();
             systemController.register("moshe", "123");
             systemController.login("moshe", "123");
 
