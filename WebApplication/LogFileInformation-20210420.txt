@@ -1,0 +1,4 @@
+2021-04-20 19:49:57.935 +03:00 [Information] Login Event was triggered, with the parameters: user name: skopas
+
+2021-04-20 19:52:05.020 +03:00 [Information] Register Event was triggered, with the parameters: user name: skopas
+
