@@ -95,7 +95,7 @@ namespace WSEP212.DomainLayer
             }
             // item not exist - add new item to storage
             Item newItem = new Item(quantity, itemName, description, price, category);
-            storage.TryAdd(newItem.itemID, newItem);
+            this.storage.TryAdd(newItem.itemID, newItem);
             return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
         }
 

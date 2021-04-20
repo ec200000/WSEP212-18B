@@ -438,5 +438,15 @@ namespace WSEP212.DomainLayer
             param.eventWaitHandle.Set(); // signal we're done
         }
 
+        public void addPurchase(PurchaseInfo info)
+        {
+            this.purchases.Add(info);
+        }
+        
+        public bool addSellerPermissions(SellerPermissions permissions)
+        {
+            return this.sellerPermissions.TryAdd(permissions);
+        }
+
     }
 }

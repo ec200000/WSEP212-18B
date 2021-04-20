@@ -82,8 +82,9 @@ namespace WSEP212.DomainLayer
                 RegularResult addSellerRes = storeRes.getValue().addNewStoreSeller(permissions);
                 if (addSellerRes.getTag())
                 {
-                    sellerRes.getValue().sellerPermissions.TryAdd(permissions);
-                    return new Ok("The Appointment Of The New Seller To The Store Made Successfully");
+                    if(sellerRes.getValue().addSellerPermissions(permissions))
+                        return new Ok("The Appointment Of The New Seller To The Store Made Successfully");
+                    return new Failure("Could not add seller permission");
                 }
                 return addSellerRes;
             }
@@ -272,7 +273,7 @@ namespace WSEP212.DomainLayer
             {
                 int storeID = addStoreRes.getValue();
                 ResultWithValue<SellerPermissions> sellerPermissionsRes = StoreRepository.Instance.getStore(storeID).getValue().getStoreSellerPermissions(this.user.userName);
-                this.user.sellerPermissions.TryAdd(sellerPermissionsRes.getValue());
+                this.user.addSellerPermissions(sellerPermissionsRes.getValue());
             }
             return addStoreRes;
         }
