@@ -16,7 +16,7 @@ namespace WebApplication2
         public bool ValidateCertificate(X509Certificate2 clientCertificate)
         {
             var pass = Configuration["certificatePassword"];
-            var cert = new X509Certificate2(Path.GetFullPath("server.crt"), "sadna");
+            var cert = new X509Certificate2(Path.GetFullPath("server.crt"), pass);
             if (clientCertificate.Thumbprint == cert.Thumbprint)
             {
                 return true;

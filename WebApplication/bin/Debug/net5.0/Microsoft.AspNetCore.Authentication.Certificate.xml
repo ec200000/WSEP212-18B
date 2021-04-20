@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.Authentication.Certificate</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationDefaults">
+            <summary>
+            Default values related to certificate authentication middleware
+            </summary>
+        </member>
+        <member name="F:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationDefaults.AuthenticationScheme">
+            <summary>
+            The default value used for CertificateAuthenticationOptions.AuthenticationScheme
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationHandler.Events">
+            <summary>
+            The handler calls methods on the events which give the application control at certain points where processing is occurring.
+            If it is not provided a default instance is supplied which does nothing when the methods are called.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationHandler.CreateEventsAsync">
+            <summary>
+            Creates a new instance of the events instance.
+            </summary>
+            <returns>A new instance of the events instance.</returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions">
+            <summary>
+            Options used to configure certificate authentication.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions.AllowedCertificateTypes">
+            <summary>
+            Value indicating the types of certificates accepted by the authentication middleware.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions.ValidateCertificateUse">
+            <summary>
+            Flag indicating whether the client certificate must be suitable for client
+            authentication, either via the Client Authentication EKU, or having no EKUs
+            at all. If the certificate chains to a root CA all certificates in the chain must be validate
+            for the client authentication EKU.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions.ValidateValidityPeriod">
+            <summary>
+            Flag indicating whether the client certificate validity period should be checked.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions.RevocationFlag">
+            <summary>
+            Specifies which X509 certificates in the chain should be checked for revocation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions.RevocationMode">
+            <summary>
+            Specifies conditions under which verification of certificates in the X509 chain should be conducted.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions.Events">
+            <summary>
+            The object provided by the application to process events raised by the certificate authentication middleware.
+            The application may implement the interface fully, or it may create an instance of CertificateAuthenticationEvents
+            and assign delegates only to the events it wants to process.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateTypes">
+            <summary>
+            Enum representing certificate types.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AspNetCore.Authentication.Certificate.CertificateTypes.Chained">
+            <summary>
+            Chained certificates.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AspNetCore.Authentication.Certificate.CertificateTypes.SelfSigned">
+            <summary>
+            SelfSigned certificates.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AspNetCore.Authentication.Certificate.CertificateTypes.All">
+            <summary>
+            All certificates.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationEvents">
+            <summary>
+            This default implementation of the IBasicAuthenticationEvents may be used if the
+            application only needs to override a few of the interface methods.
+            This may be used as a base class or may be instantiated directly.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationEvents.OnAuthenticationFailed">
+            <summary>
+            A delegate assigned to this property will be invoked when the authentication fails.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationEvents.OnCertificateValidated">
+            <summary>
+            A delegate assigned to this property will be invoked when a certificate has passed basic validation, but where custom validation may be needed.
+            </summary>
+            <remarks>
+            You must provide a delegate for this property for authentication to occur.
+            In your delegate you should construct an authentication principal from the user details,
+            attach it to the context.Principal property and finally call context.Success();
+            </remarks>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationEvents.AuthenticationFailed(Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationFailedContext)">
+            <summary>
+            Invoked when a certificate fails authentication.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationEvents.CertificateValidated(Microsoft.AspNetCore.Authentication.Certificate.CertificateValidatedContext)">
+            <summary>
+            Invoked after a certificate has been validated
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationFailedContext">
+            <summary>
+            Context used when a failure occurs.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationFailedContext.#ctor(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Authentication.AuthenticationScheme,Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="context"></param>
+            <param name="scheme"></param>
+            <param name="options"></param>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationFailedContext.Exception">
+            <summary>
+            The exception.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateValidatedContext">
+            <summary>
+            Context used when certificates are being validated.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Certificate.CertificateValidatedContext.#ctor(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Authentication.AuthenticationScheme,Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions)">
+            <summary>
+            Creates a new instance of <see cref="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateValidatedContext"/>.
+            </summary>
+            <param name="context">The HttpContext the validate context applies too.</param>
+            <param name="scheme">The scheme used when the Certificate Authentication handler was registered.</param>
+            <param name="options">The <see cref="T:Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions"/>.</param>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Certificate.CertificateValidatedContext.ClientCertificate">
+            <summary>
+            The certificate to validate.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Certificate.X509Certificate2Extensions">
+            <summary>
+            Extension methods for <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Certificate.X509Certificate2Extensions.IsSelfSigned(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Determines if the certificate is self signed.
+            </summary>
+            <param name="certificate">The <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2"/>.</param>
+            <returns>True if the certificate is self signed.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.CertificateAuthenticationAppBuilderExtensions">
+            <summary>
+            Extension methods to add Certificate authentication capabilities to an HTTP application pipeline.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.CertificateAuthenticationAppBuilderExtensions.AddCertificate(Microsoft.AspNetCore.Authentication.AuthenticationBuilder)">
+            <summary>
+            Adds certificate authentication.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</param>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.CertificateAuthenticationAppBuilderExtensions.AddCertificate(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.String)">
+            <summary>
+            Adds certificate authentication.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</param>
+            <param name="authenticationScheme"></param>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.CertificateAuthenticationAppBuilderExtensions.AddCertificate(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.Action{Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions})">
+            <summary>
+            Adds certificate authentication.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</param>
+            <param name="configureOptions"></param>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.CertificateAuthenticationAppBuilderExtensions.AddCertificate(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.String,System.Action{Microsoft.AspNetCore.Authentication.Certificate.CertificateAuthenticationOptions})">
+            <summary>
+            Adds certificate authentication.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</param>
+            <param name="authenticationScheme"></param>
+            <param name="configureOptions"></param>
+            <returns>The <see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationBuilder"/>.</returns>
+        </member>
+    </members>
+</doc>
