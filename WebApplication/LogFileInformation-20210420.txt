@@ -2,3 +2,15 @@
 
 2021-04-20 19:52:05.020 +03:00 [Information] Register Event was triggered, with the parameters: user name: skopas
 
+2021-04-20 19:59:53.100 +03:00 [Information] Login Event was triggered, with the parameters: user name: skopas
+
+2021-04-20 20:14:02.930 +03:00 [Information] Register Event was triggered, with the parameters: user name: hii
+
+2021-04-20 20:18:41.485 +03:00 [Information] Register Event was triggered, with the parameters: user name: abc
+
+2021-04-20 20:26:45.999 +03:00 [Information] Register Event was triggered, with the parameters: user name: hello
+
+2021-04-20 20:28:27.198 +03:00 [Information] Register Event was triggered, with the parameters: user name: hello
+
+2021-04-20 20:29:22.063 +03:00 [Information] Register Event was triggered, with the parameters: user name: hii
+

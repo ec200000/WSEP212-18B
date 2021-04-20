@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@model WebApplication.Models.SubscribeModel
+
+@using (Html.BeginForm("Subscribe", "Home", FormMethod.Post))
+{
+
+    @Html.TextBoxFor(model => model.UserName)
+    @Html.ValidationMessageFor(model => model.UserName)
+    
+    @Html.PasswordFor(model => model.Password)
+    @Html.ValidationMessageFor(model => model.Password)
+    <button class="w-10 btn btn-lg btn-primary" type="submit">Register</button>
+}
+
+@if (ViewBag.Alert!= null)  
+{  
+    <script type="text/javascript">  
+            window.onload = function() {  
+                alert("@ViewBag.Alert");  
+            };  
+        </script>  
+} 

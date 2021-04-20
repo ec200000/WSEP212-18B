@@ -47,4 +47,5 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Serilog
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Serilog.Sinks.RollingFile.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.pdb
-C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Register.cshtml.g.cs

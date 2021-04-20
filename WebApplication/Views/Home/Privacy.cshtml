@@ -6,23 +6,4 @@
 <p>Use this page to detail your site's privacy policy.</p>
 
 @model WebApplication.Models.SubscribeModel
-
-@using (Html.BeginForm("Subscribe", "Home", FormMethod.Post))
-{
-
-    @Html.TextBoxFor(model => model.UserName)
-    @Html.ValidationMessageFor(model => model.UserName)
-    
-    @Html.TextBoxFor(model => model.Password)
-    @Html.ValidationMessageFor(model => model.Password)
-    <button class="w-10 btn btn-lg btn-primary" type="submit">Register</button>
-}
-
-@if (ViewBag.Alert!= null)  
-{  
-    <script type="text/javascript">  
-            window.onload = function() {  
-                alert("@ViewBag.Alert");  
-            };  
-        </script>  
-} 
+<h2>HELLO: @Model.UserName</h2>

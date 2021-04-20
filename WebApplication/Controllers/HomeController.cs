@@ -30,7 +30,12 @@ namespace WebApplication.Controllers
             return View();
         }
         
-        public IActionResult Contact()
+        public IActionResult Register()
+        {
+            return View();
+        }
+        
+        public IActionResult Login()
         {
             return View();
         }
@@ -50,15 +55,15 @@ namespace WebApplication.Controllers
                 RegularResult res = systemController.register(model.UserName, model.Password);
                 if (res.getTag())
                 {
-                    return View("Contact", model);
+                    return View("Login", model);
                 }
                 if (!res.getTag())
                 {
                     ViewBag.Alert = res.getMessage();
-                    return View("Privacy", model);
+                    return View("Register", model);
                 }
             }
-            return View("Contact", model);
+            return View("Index", model);
         }
     }
 }
