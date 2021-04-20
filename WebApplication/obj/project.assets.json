@@ -1,36 +1,26 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {
-      "coverlet.collector/3.0.3": {
+    "net5.0": {
+      "Microsoft.AspNetCore.Cryptography.Internal/6.0.0-preview.3.21201.13": {
         "type": "package",
-        "build": {
-          "build/netstandard1.0/coverlet.collector.targets": {}
-        }
-      },
-      "Microsoft.AspNetCore.Cryptography.Internal/1.1.0": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.1"
-        },
         "compile": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
         },
         "runtime": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Cryptography.KeyDerivation/1.1.0": {
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/6.0.0-preview.3.21201.13": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.Internal": "1.1.0",
-          "NETStandard.Library": "1.6.1"
+          "Microsoft.AspNetCore.Cryptography.Internal": "6.0.0-preview.3.21201.13"
         },
         "compile": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         },
         "runtime": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         }
       },
       "Microsoft.CodeCoverage/16.10.0-release-20210330-02": {
@@ -42,8 +32,7 @@
           "lib/netcoreapp1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {}
         },
         "build": {
-          "build/netstandard1.0/Microsoft.CodeCoverage.props": {},
-          "build/netstandard1.0/Microsoft.CodeCoverage.targets": {}
+          "build/netstandard1.0/_._": {}
         }
       },
       "Microsoft.CSharp/4.0.1": {
@@ -86,11 +75,10 @@
           "lib/netcoreapp2.1/_._": {}
         },
         "build": {
-          "build/netcoreapp2.1/Microsoft.NET.Test.Sdk.props": {},
-          "build/netcoreapp2.1/Microsoft.NET.Test.Sdk.targets": {}
+          "build/netcoreapp2.1/_._": {}
         },
         "buildMultiTargeting": {
-          "buildMultiTargeting/Microsoft.NET.Test.Sdk.props": {}
+          "buildMultiTargeting/_._": {}
         }
       },
       "Microsoft.NETCore.Platforms/1.1.1": {
@@ -354,7 +342,7 @@
           }
         },
         "build": {
-          "build/netcoreapp2.1/Microsoft.TestPlatform.TestHost.props": {}
+          "build/netcoreapp2.1/_._": {}
         }
       },
       "Microsoft.Win32.Primitives/4.3.0": {
@@ -375,7 +363,7 @@
           "System.Diagnostics.TextWriterTraceListener": "4.3.0"
         },
         "build": {
-          "build/netcoreapp1.0/MSTest.TestAdapter.props": {}
+          "build/netcoreapp1.0/_._": {}
         }
       },
       "MSTest.TestFramework/2.2.4-preview-20210331-02": {
@@ -1743,88 +1731,63 @@
         "runtime": {
           "bin/placeholder/WSEP212.dll": {}
         }
+      },
+      "WSEP212-TESTS/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "MSTest.TestAdapter": "2.2.4-preview-20210331-02",
+          "MSTest.TestFramework": "2.2.4-preview-20210331-02",
+          "Microsoft.CodeCoverage": "16.10.0-release-20210330-02",
+          "Microsoft.NET.Test.Sdk": "16.10.0-release-20210330-02",
+          "System.Runtime": "4.3.1",
+          "WSEP212": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WSEP212-TESTS.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WSEP212-TESTS.dll": {}
+        }
       }
     }
   },
   "libraries": {
-    "coverlet.collector/3.0.3": {
-      "sha512": "PdyhdzG2LK7YUEtccObPql+3OuFODaFNeYayxdPoK1eHb2StZoeQf1WMb16QrKiIdi4fs5Kog8jxXtlZOgAEuA==",
+    "Microsoft.AspNetCore.Cryptography.Internal/6.0.0-preview.3.21201.13": {
+      "sha512": "K2/2WFaiw21Go9tFu1TsQS/pGxGO0NzBtdeLgnMDS2F1QrNrO9saonuQ6RTxwSq3z8pK0ftY9t9pGHjynhEKyQ==",
       "type": "package",
-      "path": "coverlet.collector/3.0.3",
+      "path": "microsoft.aspnetcore.cryptography.internal/6.0.0-preview.3.21201.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "build/netstandard1.0/Microsoft.CSharp.dll",
-        "build/netstandard1.0/Microsoft.DotNet.PlatformAbstractions.dll",
-        "build/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
-        "build/netstandard1.0/Microsoft.Extensions.DependencyInjection.dll",
-        "build/netstandard1.0/Microsoft.Extensions.DependencyModel.dll",
-        "build/netstandard1.0/Microsoft.Extensions.FileSystemGlobbing.dll",
-        "build/netstandard1.0/Microsoft.TestPlatform.CoreUtilities.dll",
-        "build/netstandard1.0/Microsoft.TestPlatform.PlatformAbstractions.dll",
-        "build/netstandard1.0/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll",
-        "build/netstandard1.0/Mono.Cecil.Mdb.dll",
-        "build/netstandard1.0/Mono.Cecil.Pdb.dll",
-        "build/netstandard1.0/Mono.Cecil.Rocks.dll",
-        "build/netstandard1.0/Mono.Cecil.dll",
-        "build/netstandard1.0/Newtonsoft.Json.dll",
-        "build/netstandard1.0/NuGet.Frameworks.dll",
-        "build/netstandard1.0/System.AppContext.dll",
-        "build/netstandard1.0/System.Collections.Immutable.dll",
-        "build/netstandard1.0/System.Dynamic.Runtime.dll",
-        "build/netstandard1.0/System.IO.FileSystem.Primitives.dll",
-        "build/netstandard1.0/System.Linq.Expressions.dll",
-        "build/netstandard1.0/System.Linq.dll",
-        "build/netstandard1.0/System.ObjectModel.dll",
-        "build/netstandard1.0/System.Reflection.Emit.ILGeneration.dll",
-        "build/netstandard1.0/System.Reflection.Emit.Lightweight.dll",
-        "build/netstandard1.0/System.Reflection.Emit.dll",
-        "build/netstandard1.0/System.Reflection.Metadata.dll",
-        "build/netstandard1.0/System.Reflection.TypeExtensions.dll",
-        "build/netstandard1.0/System.Runtime.Serialization.Primitives.dll",
-        "build/netstandard1.0/System.Text.RegularExpressions.dll",
-        "build/netstandard1.0/System.Threading.Tasks.Extensions.dll",
-        "build/netstandard1.0/System.Threading.dll",
-        "build/netstandard1.0/System.Xml.ReaderWriter.dll",
-        "build/netstandard1.0/System.Xml.XDocument.dll",
-        "build/netstandard1.0/coverlet.collector.deps.json",
-        "build/netstandard1.0/coverlet.collector.dll",
-        "build/netstandard1.0/coverlet.collector.pdb",
-        "build/netstandard1.0/coverlet.collector.targets",
-        "build/netstandard1.0/coverlet.core.dll",
-        "build/netstandard1.0/coverlet.core.pdb",
-        "coverlet-icon.png",
-        "coverlet.collector.3.0.3.nupkg.sha512",
-        "coverlet.collector.nuspec"
-      ]
-    },
-    "Microsoft.AspNetCore.Cryptography.Internal/1.1.0": {
-      "sha512": "Oy0pgxQkusvQwIrwbHvGVZhwk59qRVKxcer6HsWw0jCEq2LoQ7mj7x7DovE5ub8UvffLYWx77NMF5uwPtkl8KA==",
-      "type": "package",
-      "path": "microsoft.aspnetcore.cryptography.internal/1.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net451/Microsoft.AspNetCore.Cryptography.Internal.dll",
-        "lib/net451/Microsoft.AspNetCore.Cryptography.Internal.xml",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.Internal.dll",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.Internal.xml",
-        "microsoft.aspnetcore.cryptography.internal.1.1.0.nupkg.sha512",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.AspNetCore.Cryptography.Internal.dll",
+        "lib/net461/Microsoft.AspNetCore.Cryptography.Internal.xml",
+        "lib/net6.0/Microsoft.AspNetCore.Cryptography.Internal.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Cryptography.Internal.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.xml",
+        "microsoft.aspnetcore.cryptography.internal.6.0.0-preview.3.21201.13.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.internal.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Cryptography.KeyDerivation/1.1.0": {
-      "sha512": "cVlVvsH4/9G6AjrlXVO6unCzuFHnDCGRhPJNufOCclxpwImZUdhi+EIh09gSaCJ55gme2/Vn0ycig0cF9gKcbg==",
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/6.0.0-preview.3.21201.13": {
+      "sha512": "V8JrKxBNatKMSudAGhpOcMn9oZDuTkF5YUPvpkr0W0XwHw/jWkxKnKpOcV0H+9ax7LUEbXntgXtgufCIZ/mrAw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.cryptography.keyderivation/1.1.0",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/6.0.0-preview.3.21201.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net451/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
-        "lib/net451/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
-        "microsoft.aspnetcore.cryptography.keyderivation.1.1.0.nupkg.sha512",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+        "lib/net461/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
+        "lib/net6.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
+        "microsoft.aspnetcore.cryptography.keyderivation.6.0.0-preview.3.21201.13.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.keyderivation.nuspec"
       ]
     },
@@ -6288,17 +6251,18 @@
       "type": "project",
       "path": "../WSEP212/WSEP212.csproj",
       "msbuildProject": "../WSEP212/WSEP212.csproj"
+    },
+    "WSEP212-TESTS/1.0.0": {
+      "type": "project",
+      "path": "../WSEP212-TESTS/WSEP212-TESTS.csproj",
+      "msbuildProject": "../WSEP212-TESTS/WSEP212-TESTS.csproj"
     }
   },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": [
-      "MSTest.TestAdapter >= 2.2.4-preview-20210331-02",
-      "MSTest.TestFramework >= 2.2.4-preview-20210331-02",
-      "Microsoft.CodeCoverage >= 16.10.0-release-20210330-02",
-      "Microsoft.NET.Test.Sdk >= 16.10.0-release-20210330-02",
-      "System.Runtime >= 4.3.1",
+    "net5.0": [
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation >= 6.0.0-preview.3.21201.13",
       "WSEP212 >= 1.0.0",
-      "coverlet.collector >= 3.0.3"
+      "WSEP212-TESTS >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -6308,11 +6272,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
-      "projectName": "WSEP212-TESTS",
-      "projectPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "projectUniqueName": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+      "projectName": "WebApplication",
+      "projectPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
       "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
+      "outputPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6323,16 +6287,19 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "netcoreapp3.1"
+        "net5.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net5.0": {
+          "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {
+              "projectPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj"
+            },
             "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
               "projectPath": "C:\\Users\\irisk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
@@ -6346,34 +6313,12 @@
       }
     },
     "frameworks": {
-      "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
+      "net5.0": {
+        "targetAlias": "net5.0",
         "dependencies": {
-          "MSTest.TestAdapter": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
             "target": "Package",
-            "version": "[2.2.4-preview-20210331-02, )"
-          },
-          "MSTest.TestFramework": {
-            "target": "Package",
-            "version": "[2.2.4-preview-20210331-02, )"
-          },
-          "Microsoft.CodeCoverage": {
-            "target": "Package",
-            "version": "[16.10.0-release-20210330-02, )"
-          },
-          "Microsoft.NET.Test.Sdk": {
-            "target": "Package",
-            "version": "[16.10.0-release-20210330-02, )"
-          },
-          "System.Runtime": {
-            "target": "Package",
-            "version": "[4.3.1, )"
-          },
-          "coverlet.collector": {
-            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "[3.0.3, )"
+            "version": "[6.0.0-preview.3.21201.13, )"
           }
         },
         "imports": [
@@ -6387,6 +6332,9 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
