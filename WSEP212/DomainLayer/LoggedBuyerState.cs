@@ -230,7 +230,7 @@ namespace WSEP212.DomainLayer
         {
             foreach (PurchaseInfo purchaseInfo in this.user.purchases)
             {
-                if(purchaseInfo.items.ContainsKey(itemID))
+                if(purchaseInfo.wasItemPurchased(itemID))
                 {
                     return true;
                 }

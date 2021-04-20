@@ -220,6 +220,22 @@ namespace WSEP212_TESTS
         }
         
         [TestMethod]
+        public void itemReviewTestDidntBuyItem()
+        {
+            String review = "best shoko ever!!";
+            int storeID = 1; 
+            int itemID = 1; 
+            ThreadParameters parameters = new ThreadParameters();
+            object[] list = new object[3];
+            list[0] = review;
+            list[1] = itemID;
+            list[2] = storeID;
+            parameters.parameters = list;
+            user2.itemReview(parameters);
+            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+        }
+        
+        [TestMethod]
         public void removeItemFromStorageTestUserNotRegistered()
         {
             User u = new User("k"); //the user is not registered to the system
