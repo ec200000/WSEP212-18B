@@ -21,5 +21,14 @@ namespace WSEP212.DomainLayer
             this.dateOfPurchase = dateOfPurchase;
         }
 
+        public bool wasItemPurchased(int itemID)
+        {
+            if(items.ContainsKey(itemID))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

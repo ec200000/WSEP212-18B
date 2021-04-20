@@ -92,7 +92,7 @@ namespace WSEP212.DomainLayer
                 }
                 return loginStateRes;
             }
-            return new Failure(findUserRes.getMessage());
+            return new Failure("username and password don't match");
         }
 
         public override RegularResult loginAsSystemManager(string userName, string password)
