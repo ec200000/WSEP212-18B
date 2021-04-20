@@ -10,7 +10,7 @@ namespace WSEP212_TESTS.AcceptanceTests
     [TestClass]
     public class StoreTests
     {
-        SystemController controller = new SystemController();
+        SystemController controller = SystemController.Instance;
         int itemID;
         int storeID;
 
