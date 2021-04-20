@@ -139,5 +139,11 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
+        
+        public override RegularResult removeStoreOwner(string ownerName, int storeID)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
     }
 }
