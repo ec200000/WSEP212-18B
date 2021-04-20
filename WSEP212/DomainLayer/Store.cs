@@ -78,7 +78,7 @@ namespace WSEP212.DomainLayer
         // returns the itemID of the item, otherwise -1
         public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, String category)
         {
-            if(quantity <= 0 || price <= 0 || itemName.Equals("") || category.Equals(""))
+            if(price <= 0 || itemName.Equals("") || category.Equals("") || quantity < 0)
             {
                 return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
             }
@@ -88,8 +88,9 @@ namespace WSEP212.DomainLayer
                 Item item = pairItem.Value;
                 if(item.itemName.Equals(itemName) && item.category.Equals(category) && item.price == price)   // the item already exist
                 {
-                    item.quantity += quantity;
-                    return new OkWithValue<int>("The Item Is Already In Storage, The Quantity Of The Item Has Been Updated Accordingly", pairItem.Key);
+                    if(item.setQuantity(quantity))
+                        return new OkWithValue<int>("The Item Is Already In Storage, The Quantity Of The Item Has Been Updated Accordingly", pairItem.Key);
+                    return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
                 }
             }
             // item not exist - add new item to storage
@@ -117,8 +118,10 @@ namespace WSEP212.DomainLayer
             if (storage.ContainsKey(itemID))
             {
                 Item item = storage[itemID];
-                item.quantity += numOfItems;
-                return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
+                if(item.changeQuantity(numOfItems))
+                    return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
+                return new Failure("Item quantity can't be negative");
+                
             }
             return new Failure("Item Is Not Exist In Storage");
         }
@@ -136,7 +139,7 @@ namespace WSEP212.DomainLayer
         // edit the personal details of an item
         public RegularResult editItem(int itemID, String itemName, String description, double price, String category, int quantity)
         {
-            if (itemName.Equals("") || price <= 0 || category.Equals("") || quantity < 0)
+            if (itemName.Equals("") || price <= 0 || category.Equals(""))
                 return new Failure("One Or More Of The New Item Details Are Invalid");
             // checks that the item exists
             if (storage.ContainsKey(itemID))
@@ -146,8 +149,9 @@ namespace WSEP212.DomainLayer
                 item.description = description;
                 item.price = price;
                 item.category = category;
-                item.quantity = quantity;
-                return new Ok("Item Details Have Been Successfully Updated In The Store");
+                if(item.setQuantity(quantity))
+                    return new Ok("Item Details Have Been Successfully Updated In The Store");
+                return new Failure("Item quantity can't be negative");
             }
             return new Failure("Item Not Exist In Storage");
         }

@@ -9,6 +9,8 @@ namespace WSEP212.DomainLayer
     public class Item
     {
         private static int itemCounter = 1;
+        
+        private readonly object quantitylock = new object();
 
         public int itemID { get; set; }   // different item ID for same item in different stores -> example: water is 2 in store A, and 3 in store B
         public int quantity { get; set; }
@@ -46,5 +48,30 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        public bool setQuantity(int quantity)
+        {
+            lock (quantitylock)
+            {
+                if (quantity >= 0)
+                {
+                    this.quantity = quantity;
+                    return true;
+                }
+                return false;
+            }
+        }
+        
+        public bool changeQuantity(int quantity)
+        {
+            lock (quantitylock)
+            {
+                if (this.quantity + quantity >= 0)
+                {
+                    this.quantity += quantity;
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }
