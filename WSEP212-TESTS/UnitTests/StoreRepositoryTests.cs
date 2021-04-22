@@ -20,7 +20,7 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<Sale>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<Sale>()), new User("admin"));
             this.store = StoreRepository.Instance.getStore(storeIdRes.getValue()).getValue();
             itemAID = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
             itemBID = store.addItemToStorage(50, "white masks", "protects against infection of covid-19", 10, "health").getValue();
@@ -37,10 +37,10 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<Sale>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<Sale>()), new User("admin"));
             Assert.IsTrue(addStoreBool.getTag());
             int newStoreID = addStoreBool.getValue();
-            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>()), new User("admin"));
+            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalesPolicy("DEFAULT", new ConcurrentLinkedList<Sale>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<Sale>()), new User("admin"));
             Assert.IsFalse(addStoreBool.getTag());
             StoreRepository.Instance.removeStore(newStoreID);
         }

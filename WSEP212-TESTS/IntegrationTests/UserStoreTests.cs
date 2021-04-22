@@ -44,8 +44,8 @@ namespace WSEP212_TESTS
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<PolicyRule>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
+            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<Sale>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<Sale>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -63,8 +63,8 @@ namespace WSEP212_TESTS
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<PolicyRule>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<PolicyRule>());
+            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<Sale>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<Sale>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;

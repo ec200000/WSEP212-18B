@@ -21,8 +21,8 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<PolicyRule>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<PolicyRule>());
+            SalesPolicy salesPolicy = new SalesPolicy("DEFAULT", new ConcurrentLinkedList<Sale>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<Sale>());
             User user = new User("admin");
 
             ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);

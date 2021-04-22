@@ -11,9 +11,9 @@ namespace WSEP212.DomainLayer
     {
         public String salesPolicyName { get; set; }
         //public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
-        public ConcurrentLinkedList<PolicyRule> policyRules { get; set; }
+        public ConcurrentLinkedList<Sale> policyRules { get; set; }
 
-        public SalesPolicy(String salesPolicyName, ConcurrentLinkedList<PolicyRule> policyRules)
+        public SalesPolicy(String salesPolicyName, ConcurrentLinkedList<Sale> policyRules)
         {
             this.salesPolicyName = salesPolicyName;
             this.policyRules = policyRules;
@@ -34,7 +34,7 @@ namespace WSEP212.DomainLayer
             if (true)
             {
                 // checks other rules
-                Node<PolicyRule> ruleNode = policyRules.First;
+                Node<Sale> ruleNode = policyRules.First;
                 while (ruleNode.Value != null)
                 {
                     RegularResult ruleRes = ruleNode.Value.applyRule(user, items);

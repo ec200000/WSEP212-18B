@@ -84,8 +84,8 @@ namespace WSEP212.ServiceLayer
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy,
                 purchaseRoutes,
-                new ConcurrentLinkedList<PolicyRule>());
-            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy, new ConcurrentLinkedList<PolicyRule>());
+                new ConcurrentLinkedList<Sale>());
+            SalesPolicy newSalesPolicy = new SalesPolicy(salesPolicy, new ConcurrentLinkedList<Sale>());
             return SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy, newSalesPolicy);
         }
 

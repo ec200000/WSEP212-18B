@@ -12,9 +12,9 @@ namespace WSEP212.DomainLayer
         public String purchasePolicyName { get; set; }
         public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
         //public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
-        public ConcurrentLinkedList<PolicyRule> policyRules { get; set; }
+        public ConcurrentLinkedList<Sale> policyRules { get; set; }
 
-        public PurchasePolicy(String purchasePolicyName, ConcurrentLinkedList<PurchaseType> purchaseRoutes, ConcurrentLinkedList<PolicyRule> policyRules)
+        public PurchasePolicy(String purchasePolicyName, ConcurrentLinkedList<PurchaseType> purchaseRoutes, ConcurrentLinkedList<Sale> policyRules)
         {
             this.purchasePolicyName = purchasePolicyName;
             this.purchaseRoutes = purchaseRoutes;
@@ -38,7 +38,7 @@ namespace WSEP212.DomainLayer
                     }
                 }
                 // checks other rules
-                Node<PolicyRule> ruleNode = policyRules.First;
+                Node<Sale> ruleNode = policyRules.First;
                 while(ruleNode.Value != null)
                 {
                     RegularResult ruleRes = ruleNode.Value.applyRule(user, items);
