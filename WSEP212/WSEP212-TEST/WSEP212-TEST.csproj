@@ -19,4 +19,8 @@
       <ProjectReference Include="..\WSEP212\WSEP212.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="obj\Debug\net5.0\WSEP212-TEST.csprojAssemblyReference.cache" />
+    </ItemGroup>
+
 </Project>

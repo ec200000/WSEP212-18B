@@ -11,4 +11,19 @@
       <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.1-dev-00771" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="obj\Debug\net5.0\WSEP212.AssemblyInfoInputs.cache" />
+      <Content Include="obj\Debug\net5.0\WSEP212.assets.cache" />
+      <Content Include="obj\Debug\net5.0\WSEP212.csprojAssemblyReference.cache" />
+      <Content Include="obj\Debug\net5.0\WSEP212.GeneratedMSBuildEditorConfig.editorconfig" />
+      <Content Include="obj\project.assets.json" />
+      <Content Include="obj\project.nuget.cache" />
+      <Content Include="obj\project.packagespec.json" />
+      <Content Include="obj\WSEP212.csproj.nuget.dgspec.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Debug\net5.0\.NETCoreApp,Version=v5.0.AssemblyAttributes.cs" />
+    </ItemGroup>
+
 </Project>
