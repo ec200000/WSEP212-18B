@@ -15,6 +15,8 @@ namespace WebApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        private SubscribeModel model;
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -51,19 +53,20 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                this.model = model;
                 SystemController systemController = SystemController.Instance;
                 RegularResult res = systemController.register(model.UserName, model.Password);
                 if (res.getTag())
                 {
-                    return View("Login", model);
+                    return View("Login");
                 }
                 if (!res.getTag())
                 {
                     ViewBag.Alert = res.getMessage();
-                    return View("Register", model);
+                    return View("Register");
                 }
             }
-            return View("Index", model);
+            return View("Privacy");
         }
     }
 }

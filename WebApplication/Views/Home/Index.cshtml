@@ -5,4 +5,26 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+    @model WebApplication.Models.SubscribeModel
+    
+    @using (Html.BeginForm("Subscribe", "Home", FormMethod.Post))
+    {
+    
+        @Html.TextBoxFor(model => model.UserName)
+        @Html.ValidationMessageFor(model => model.UserName)
+       
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+        <button class="w-10 btn btn-lg btn-primary" type="submit">Submit username</button>
+    }
 </div>
+
+@if (ViewBag.Alert!= null)  
+{  
+    <script type="text/javascript">  
+            window.onload = function() {  
+                alert("@ViewBag.Alert");  
+            };  
+        </script>  
+} 

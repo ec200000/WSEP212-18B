@@ -9,5 +9,6 @@ namespace WebApplication.Models
         
         [Required]
         public string Password { get; set; }
+
     }
 }

@@ -49,3 +49,5 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.pdb
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Register.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StoresInfo.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Index1.cshtml.g.cs
