@@ -12,7 +12,7 @@ namespace WSEP212.DomainLayer
         public String userName { get; set; }
         public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
-        public ConcurrentBag<PurchaseInfo> purchases { get; set; }
+        public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
         
         public bool isSystemManager { get; set; }
@@ -21,7 +21,7 @@ namespace WSEP212.DomainLayer
         {
             this.userName = userName;
             this.shoppingCart = new ShoppingCart();
-            this.purchases = new ConcurrentBag<PurchaseInfo>();
+            this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
         }
@@ -438,7 +438,7 @@ namespace WSEP212.DomainLayer
             param.eventWaitHandle.Set(); // signal we're done
         }
 
-        public void addPurchase(PurchaseInfo info)
+        public void addPurchase(PurchaseInvoice info)
         {
             this.purchases.Add(info);
         }

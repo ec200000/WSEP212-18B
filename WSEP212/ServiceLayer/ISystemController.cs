@@ -33,12 +33,12 @@ namespace WSEP212.ServiceLayer
         public RegularResult removeStoreOwner(String userName, String ownerName, int storeID); // USE CASE 4.4
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(
             String userName, int storeID); // USE CASE 4.9
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(String userName, int storeID); // USE CASE 4.11
-        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>>
+        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getStorePurchaseHistory(String userName, int storeID); // USE CASE 4.11
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>>>
             getUsersPurchaseHistory(String userName); // USE CASE 6.4.1
-        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>>
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>>
             getStoresPurchaseHistory(String userName); // USE CASE 6.4.2
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName); // USE CASE 3.7
+        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(string userName); // USE CASE 3.7
         public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation(); // USE CASE 2.5
         public ConcurrentDictionary<Item, int> searchItems(String itemName, String keyWords, double minPrice, double maxPrice, String category); // USE CASE 2.6
 

@@ -13,12 +13,12 @@ namespace WSEP212.DomainLayer
 
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
         {
             return StoreRepository.Instance.getAllStoresPurchsesHistory();
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
         {
             return UserRepository.Instance.getAllUsersPurchaseHistory();
         }

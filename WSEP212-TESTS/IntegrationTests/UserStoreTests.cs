@@ -731,7 +731,7 @@ namespace WSEP212_TESTS
                             object[] list2 = new object[0];
                             parameters2.parameters = list2;
                             user.getStoresPurchaseHistory(parameters2);
-                            Assert.AreEqual(1, ((ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>)parameters2.result).Count);
+                            Assert.AreEqual(1, ((ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>)parameters2.result).Count);
                         }
                     }
                 }
@@ -756,7 +756,7 @@ namespace WSEP212_TESTS
                             object[] list2 = new object[0];
                             parameters2.parameters = list2;
                             user.getUsersPurchaseHistory(parameters2);
-                            Assert.AreEqual(1, ((ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>)parameters2.result).Count);
+                            Assert.AreEqual(1, ((ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>>)parameters2.result).Count);
                         }
                     }
                 }

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 namespace WSEP212.DomainLayer
 {
-    public class PurchaseInfo
+    public class PurchaseInvoice
     {
         public int storeID { get; set; }
         public String userName { get; set; }
@@ -12,7 +12,7 @@ namespace WSEP212.DomainLayer
         public double totalPrice { get; set; }
         public DateTime dateOfPurchase { get; set; }
 
-        public PurchaseInfo(int storeID, String userName, ConcurrentDictionary<int, int> items, double totalPrice, DateTime dateOfPurchase)
+        public PurchaseInvoice(int storeID, String userName, ConcurrentDictionary<int, int> items, double totalPrice, DateTime dateOfPurchase)
         {
             this.storeID = storeID;
             this.userName = userName;
@@ -23,12 +23,7 @@ namespace WSEP212.DomainLayer
 
         public bool wasItemPurchased(int itemID)
         {
-            if(items.ContainsKey(itemID))
-            {
-                return true;
-            }
-
-            return false;
+            return items.ContainsKey(itemID);
         }
     }
 }

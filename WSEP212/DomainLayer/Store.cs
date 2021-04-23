@@ -25,7 +25,7 @@ namespace WSEP212.DomainLayer
         public bool activeStore { get; set; }
         public SalesPolicy salesPolicy { get; set; }
         public PurchasePolicy purchasePolicy { get; set; }
-        public ConcurrentBag<PurchaseInfo> purchasesHistory { get; set; }
+        public ConcurrentBag<PurchaseInvoice> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
         public DeliveryInterface deliverySystem { get; set; }
@@ -38,7 +38,7 @@ namespace WSEP212.DomainLayer
             this.activeStore = true;
             this.salesPolicy = salesPolicy;
             this.purchasePolicy = purchasePolicy;
-            this.purchasesHistory = new ConcurrentBag<PurchaseInfo>();
+            this.purchasesHistory = new ConcurrentBag<PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
 
@@ -331,7 +331,7 @@ namespace WSEP212.DomainLayer
         }
 
         // Add purchase made by user in the store
-        public void addNewPurchase(PurchaseInfo purchase)
+        public void addNewPurchase(PurchaseInvoice purchase)
         {
             purchasesHistory.Add(purchase);
         }

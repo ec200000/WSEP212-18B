@@ -87,7 +87,7 @@ namespace WSEP212_TESTS
         public void getAllStoresPurchsesHistoryTest()
         {
             int storeID = this.store.storeID;
-            ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
+            ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
             Assert.AreEqual(1, storesPurchases.Count);
             Assert.AreEqual(0, storesPurchases[storeID].Count);
         }

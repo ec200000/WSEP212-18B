@@ -68,7 +68,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void updateUserTest()
         {
-            PurchaseInfo purchaseInfo = new PurchaseInfo(1, "a", null, 1.2, DateTime.Now);
+            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, 1.2, DateTime.Now);
             user1.purchases.Add(purchaseInfo); //updating the user
             UserRepository.Instance.updateUser(user1);
             Assert.AreEqual(2, UserRepository.Instance.users.Count);
@@ -112,7 +112,7 @@ namespace WSEP212_TESTS
         [TestMethod]
         public void getAllUsersPurchaseHistoryTest()
         {
-            PurchaseInfo purchaseInfo = new PurchaseInfo(1, "a", null, 1.2, DateTime.Now);
+            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, 1.2, DateTime.Now);
             User user3 = new User("c");
             user3.purchases.Add(purchaseInfo);
             UserRepository.Instance.users.TryAdd(user3, false);

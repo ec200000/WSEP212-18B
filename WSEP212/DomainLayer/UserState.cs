@@ -51,8 +51,8 @@ namespace WSEP212.DomainLayer
         public abstract RegularResult removeStoreManager(String managerName, int storeID);
         public abstract RegularResult removeStoreOwner(String ownerName, int storeID);
         public abstract ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
-        public abstract ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
-        public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory();
-        public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory();
+        public abstract ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
+        public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory();
+        public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory();
     }
 }

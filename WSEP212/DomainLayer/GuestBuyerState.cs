@@ -55,19 +55,19 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
+        public override ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that

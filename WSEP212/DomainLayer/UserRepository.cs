@@ -139,9 +139,9 @@ namespace WSEP212.DomainLayer
             return false;
         }
 
-        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getAllUsersPurchaseHistory()
+        public ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getAllUsersPurchaseHistory()
         {
-            ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> purchaseHistory = new ConcurrentDictionary<string, ConcurrentBag<PurchaseInfo>>();
+            ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> purchaseHistory = new ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>();
             foreach(KeyValuePair<User,bool> user in users)
             {
                 if (!purchaseHistory.TryAdd(user.Key.userName, user.Key.purchases))
@@ -150,15 +150,15 @@ namespace WSEP212.DomainLayer
             return purchaseHistory;
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(string userName)
+        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(string userName)
         {
             User u = findUserByUserName(userName).getValue();
             if (u.state is LoggedBuyerState)
             {
-                return new OkWithValue<ConcurrentBag<PurchaseInfo>>("ok", u.purchases);
+                return new OkWithValue<ConcurrentBag<PurchaseInvoice>>("ok", u.purchases);
             }
 
-            return new FailureWithValue<ConcurrentBag<PurchaseInfo>>("the user is not registered to the system", null);
+            return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>("the user is not registered to the system", null);
         }
     }
 }

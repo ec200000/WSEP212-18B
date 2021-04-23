@@ -58,16 +58,16 @@ namespace WSEP212.DomainLayer
             return purchaseTypes;
         }
 
-        private RegularResult createPurchaseInfos(User user, ConcurrentDictionary<int, double> pricePerStore)
+        private RegularResult createPurchaseInvoices(User user, ConcurrentDictionary<int, double> pricePerStore)
         {
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
                 int storeID = shoppingBag.store.storeID;
                 if (pricePerStore.ContainsKey(storeID))
                 {
-                    PurchaseInfo purchaseInfo = new PurchaseInfo(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
-                    user.addPurchase(purchaseInfo);
-                    shoppingBag.store.addNewPurchase(purchaseInfo);
+                    PurchaseInvoice purchaseInvoice = new PurchaseInvoice(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
+                    user.addPurchase(purchaseInvoice);
+                    shoppingBag.store.addNewPurchase(purchaseInvoice);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace WSEP212.DomainLayer
                     RegularResult deliveryRes = callDeliverySystem(user, address);
                     if (deliveryRes.getTag())
                     {
-                        RegularResult purchaseInfosRes = createPurchaseInfos(user, pricePerStoreRes.getValue());
+                        RegularResult purchaseInfosRes = createPurchaseInvoices(user, pricePerStoreRes.getValue());
                         if (purchaseInfosRes.getTag())
                         {
                             user.shoppingCart.clearShoppingCart();

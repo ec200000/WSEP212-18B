@@ -242,7 +242,7 @@ namespace WSEP212_TESTS
         {
             ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
             items.TryAdd(sodaID, 1);
-            store.addNewPurchase(new PurchaseInfo(this.store.storeID, "admin", items, 15, System.DateTime.Now));
+            store.addNewPurchase(new PurchaseInvoice(this.store.storeID, "admin", items, 15, System.DateTime.Now));
             Assert.IsTrue(true);
             //Assert.IsTrue(add);
         }

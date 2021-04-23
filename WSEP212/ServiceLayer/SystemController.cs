@@ -188,7 +188,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getOfficialsInformation(userName, storeID);
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getStorePurchaseHistory(String userName, int storeID)
+        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getStorePurchaseHistory(String userName, int storeID)
         {
             String info = $"GetStorePurchaseHistory Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}";
@@ -196,7 +196,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getStorePurchaseHistory(userName, storeID);
         }
 
-        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>>> getUsersPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>>> getUsersPurchaseHistory(String userName)
         {
             String info = $"GetUsersPurchaseHistory Event was triggered, with the parameter:" +
                           $"user name: {userName}";
@@ -204,7 +204,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getUsersPurchaseHistory(userName);
         }
 
-        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>>> getStoresPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>> getStoresPurchaseHistory(String userName)
         {
             String info = $"GetStoresPurchaseHistory Event was triggered, with the parameter:" +
                           $"user name: {userName}";
@@ -212,7 +212,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getStoresPurchaseHistory(userName);
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInfo>> getUserPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(String userName)
         {
             String info = $"GetUserPurchaseHistory Event was triggered, with the parameter:" +
                           $"user name: {userName}";

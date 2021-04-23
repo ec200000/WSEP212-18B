@@ -178,7 +178,7 @@ namespace WSEP212.DomainLayer
             return null;
         }
 
-        public override ConcurrentBag<PurchaseInfo> getStorePurchaseHistory(int storeID)
+        public override ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID)
         {
             if (!StoreRepository.Instance.stores.ContainsKey(storeID)) return null;
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
@@ -194,13 +194,13 @@ namespace WSEP212.DomainLayer
             return null;
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInfo>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInfo>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
@@ -229,7 +229,7 @@ namespace WSEP212.DomainLayer
 
         private bool isPurchasedItem(int itemID)
         {
-            foreach (PurchaseInfo purchaseInfo in this.user.purchases)
+            foreach (PurchaseInvoice purchaseInfo in this.user.purchases)
             {
                 if(purchaseInfo.wasItemPurchased(itemID))
                 {
