@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,6 +25,40 @@ namespace WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+            services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+                .AddCertificate(options => // code from ASP.NET Core sample
+                {
+                    options.AllowedCertificateTypes = CertificateTypes.All;
+                    options.Events = new CertificateAuthenticationEvents
+                    {
+                        OnCertificateValidated = context =>
+                        {
+                            var validationService =
+                                context.HttpContext.RequestServices.GetService<MyCertificateValidationService>();
+ 
+                            if (validationService != null && validationService.ValidateCertificate(context.ClientCertificate))
+                            {
+                                var claims = new[]
+                                {
+                                    new Claim(ClaimTypes.NameIdentifier, context.ClientCertificate.Subject, ClaimValueTypes.String, context.Options.ClaimsIssuer),
+                                    new Claim(ClaimTypes.Name, context.ClientCertificate.Subject, ClaimValueTypes.String, context.Options.ClaimsIssuer)
+                                };
+ 
+                                context.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, context.Scheme.Name));
+                                context.Success();
+                            }
+                            else
+                            {
+                                context.Fail("invalid cert");
+                            }
+ 
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+ 
+            services.AddAuthorization();
             services.AddControllersWithViews();
         }
 
