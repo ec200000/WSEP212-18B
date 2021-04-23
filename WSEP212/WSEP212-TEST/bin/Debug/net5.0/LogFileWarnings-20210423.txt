@@ -1,0 +1,58 @@
+2021-04-23 20:16:56.752 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-04-23 20:16:56.767 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-04-23 20:16:57.213 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-23 20:16:57.214 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-23 20:16:57.250 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-23 20:16:57.261 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-23 20:16:57.281 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-23 20:16:57.281 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-23 20:16:57.736 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-04-23 20:16:58.118 +03:00 [Warning] The user b cannot perform the login action!
+
+2021-04-23 20:16:58.159 +03:00 [Warning] The user moon cannot perform the appointStoreOwner action!
+
+2021-04-23 20:16:58.208 +03:00 [Warning] The user moon cannot perform the editManagerPermissions action!
+
+2021-04-23 20:16:58.236 +03:00 [Warning] The user moon cannot perform the removeStoreManager action!
+
+2021-04-23 20:16:58.279 +03:00 [Warning] The user abcde cannot perform the getOfficialsInformation action!
+
+2021-04-23 20:16:58.373 +03:00 [Warning] The user  cannot perform the openStore action!
+
+2021-04-23 20:17:04.837 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-04-23 20:17:04.853 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-04-23 20:17:05.279 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-23 20:17:05.308 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-23 20:17:05.308 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-23 20:17:05.338 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-23 20:17:05.347 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-23 20:17:05.749 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-04-23 20:17:06.086 +03:00 [Warning] The user b cannot perform the login action!
+
+2021-04-23 20:17:06.157 +03:00 [Warning] The user moon cannot perform the appointStoreOwner action!
+
+2021-04-23 20:17:06.229 +03:00 [Warning] The user moon cannot perform the editManagerPermissions action!
+
+2021-04-23 20:17:06.299 +03:00 [Warning] The user moon cannot perform the removeStoreManager action!
+
+2021-04-23 20:17:06.331 +03:00 [Warning] The user abcde cannot perform the getOfficialsInformation action!
+
+2021-04-23 20:17:06.437 +03:00 [Warning] The user  cannot perform the openStore action!
+
