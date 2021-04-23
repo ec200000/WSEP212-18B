@@ -1,5 +1,0 @@
-C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.csprojAssemblyReference.cache
-C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.AssemblyInfoInputs.cache
-C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.AssemblyInfo.cs
-C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.csproj.CoreCompileInputs.cache
