@@ -10,7 +10,7 @@ namespace WSEP212.DomainLayer
         public String salesPolicyName { get; set; }
         public Sale storeSales { get; set; }
 
-        public SalePolicy(String salesPolicyName, Sale storeSales)
+        public SalePolicy(String salesPolicyName, Sale storeSales = null)
         {
             this.salesPolicyName = salesPolicyName;
             this.storeSales = storeSales;
@@ -23,7 +23,14 @@ namespace WSEP212.DomainLayer
             double itemPriceAfterSale;
             foreach (Item item in items.Keys)
             {
-                itemPriceAfterSale = storeSales.applySaleOnItem(item, purchaseDetails);
+                if(storeSales == null)
+                {
+                    itemPriceAfterSale = item.price;
+                }
+                else
+                {
+                    itemPriceAfterSale = storeSales.applySaleOnItem(item, purchaseDetails);
+                }
                 pricesAfterSale.TryAdd(item.itemID, itemPriceAfterSale);
             }
             return pricesAfterSale;

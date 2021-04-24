@@ -10,66 +10,45 @@ namespace WSEP212_TESTS.AcceptanceTests
     [TestClass]
     public class StoreTests
     {
-        SystemController controller = SystemController.Instance;
-        int itemID;
-        int storeID;
+        public static SystemController controller = SystemController.Instance;
+        public static int itemID;
+        public static int storeID;
 
-        [TestInitialize]
-        public void testInitial()
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
         {
             RegularResult result = controller.register("theuser", "123456");
-        }
-        
-        public void testInit()
-        {
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            Console.WriteLine(storeID);
+        }
+
+        public void testInit()
+        {
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
 
         public void testInit2()
         {
-            controller.login("theuser", "123456");
-            storeID = controller.openStore("theuser", "store2", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            Console.WriteLine(storeID);
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
 
         public void testInit3()
         {
-            controller.login("theuser", "123456");
-            storeID = controller.openStore("theuser", "store3", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            Console.WriteLine(storeID);
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
             RegularResult result = controller.addItemToShoppingCart("theuser", storeID, itemID, 2); //logged user
         }
 
-        public void testInit4()
-        {
-            controller.login("theuser", "123456");
-            ResultWithValue<int> res2 = controller.openStore("theuser", "store4", "somewhere", "DEFAULT", "DEFAULT");
-            storeID = res2.getValue();
-            Console.WriteLine(res2.getTag());
-        }
-
         public void testInit5()
         {
-            controller.login("theuser", "123456");
-            storeID = controller.openStore("theuser", "store5", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            Console.WriteLine(storeID);
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
 
         public void testInit6()
         {
-            controller.login("theuser", "123456");
-            storeID = controller.openStore("theuser", "store6", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            Console.WriteLine(storeID);
         }
 
         [TestMethod]
@@ -117,6 +96,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(result.getTag()); //null sales policy
 
             result = controller.openStore("theuser", "HAMAMA", "Ashdod", "DEFAULT", "DEFAULT");
+            Console.WriteLine(result.getMessage());
             Assert.IsTrue(result.getTag());
             
             controller.logout("theuser");
@@ -156,8 +136,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ExpectedException(typeof(NotImplementedException))]
         public void addItemToStorageTest()
         {
-            testInit4();
-            
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
                 new ConcurrentDictionary<string, string>(), 1.34, "snacks");
 

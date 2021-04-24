@@ -19,7 +19,7 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicy("DEFAULT", new ConcurrentLinkedList<Sale>()), new PurchasePolicy("DEFAULT", purchaseRoutes, new ConcurrentLinkedList<Sale>()), new User("admin"));
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT", new ConcurrentLinkedList<PurchasePredicate>()), new User("admin"));
             this.store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             this.sodaID = this.store.addItemToStorage(3, "soda-stream", "great drink", 150, "drink").getValue();
         }
@@ -116,29 +116,31 @@ namespace WSEP212_TESTS
         [TestMethod()]
         public void applySalesPolicyTest()
         {
-            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
-            items.TryAdd(sodaID, 1);
+            ConcurrentDictionary<Item, int> items = new ConcurrentDictionary<Item, int>();
+            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            items.TryAdd(store.getItemById(sodaID).getValue(), 1);
+            itemsPurchaseType.TryAdd(sodaID, PurchaseType.ImmediatePurchase);
             User miki = new User("miki");
-            ResultWithValue<ConcurrentDictionary<int, double>> itemPrices = store.applySalesPolicy(miki, items);
-            Assert.IsTrue(itemPrices.getTag());
+            PurchaseDetails purchaseDetails = new PurchaseDetails(miki, items, itemsPurchaseType);
+            ConcurrentDictionary<int, double> itemPrices = store.applySalesPolicy(items, purchaseDetails);
             double total = 0.0;
-            foreach (KeyValuePair<int, double> item in itemPrices.getValue())
+            foreach (KeyValuePair<int, double> item in itemPrices)
             {
                 total += item.Value;
             }
             Assert.AreEqual(150.0, total);
-
         }
 
         [TestMethod()]
         public void applyPurchasePolicyTest()
         {
-            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
-            items.TryAdd(sodaID, 1);
+            ConcurrentDictionary<Item, int> items = new ConcurrentDictionary<Item, int>();
+            items.TryAdd(store.getItemById(sodaID).getValue(), 1);
             User miki = new User("miki");
             ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
             itemsPurchaseType.TryAdd(sodaID, PurchaseType.ImmediatePurchase);
-            RegularResult approved = store.applyPurchasePolicy(miki, items, itemsPurchaseType);
+            PurchaseDetails purchaseDetails = new PurchaseDetails(miki, items, itemsPurchaseType);
+            RegularResult approved = store.applyPurchasePolicy(purchaseDetails);
             Assert.IsTrue(approved.getTag());
         }
 

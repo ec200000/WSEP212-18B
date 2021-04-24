@@ -44,8 +44,8 @@ namespace WSEP212_TESTS
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalePolicy salesPolicy = new SalePolicy("default", new ConcurrentLinkedList<Sale>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<Sale>());
+            SalePolicy salesPolicy = new SalePolicy("default");
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -63,8 +63,8 @@ namespace WSEP212_TESTS
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalePolicy salesPolicy = new SalePolicy("default", new ConcurrentLinkedList<Sale>());
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<Sale>());
+            SalePolicy salesPolicy = new SalePolicy("default");
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -279,8 +279,8 @@ namespace WSEP212_TESTS
             {
                 String name = "store";
                 String address = "holon";
-                SalePolicy salesPolicy = new SalePolicy("default", null);
-                PurchasePolicy purchasePolicy = new PurchasePolicy("default", null, null);
+                SalePolicy salesPolicy = new SalePolicy("default");
+                PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[4];
                 list[0] = name;
@@ -436,7 +436,7 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default", null), new PurchasePolicy("default", null, null), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>()), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
@@ -458,7 +458,7 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default", null), new PurchasePolicy("default", null, null), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>()), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
