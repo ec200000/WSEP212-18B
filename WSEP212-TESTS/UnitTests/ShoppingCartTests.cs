@@ -22,7 +22,7 @@ namespace WSEP212_TESTS
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             SalePolicy salesPolicy = new SalePolicy("DEFAULT");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", new ConcurrentLinkedList<PurchasePredicate>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT", new ConcurrentLinkedList<PolicyPredicate>());
             User user = new User("admin");
 
             ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);

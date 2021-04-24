@@ -9,9 +9,9 @@ namespace WSEP212.DomainLayer
     {
         public String purchasePolicyName { get; set; }
         //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
-        public ConcurrentLinkedList<PurchasePredicate> purchasePredicates { get; set; }
+        public ConcurrentLinkedList<PolicyPredicate> purchasePredicates { get; set; }
 
-        public PurchasePolicy(String purchasePolicyName, ConcurrentLinkedList<PurchasePredicate> purchasePredicates)
+        public PurchasePolicy(String purchasePolicyName, ConcurrentLinkedList<PolicyPredicate> purchasePredicates)
         {
             this.purchasePolicyName = purchasePolicyName;
             this.purchasePredicates = purchasePredicates;
@@ -21,7 +21,7 @@ namespace WSEP212.DomainLayer
         public RegularResult approveByPurchasePolicy(PurchaseDetails purchaseDetails)
         {
             // checks rules
-            Node<PurchasePredicate> predicateNode = purchasePredicates.First;
+            Node<PolicyPredicate> predicateNode = purchasePredicates.First;
             while (predicateNode.Value != null)
             {
                 if(!predicateNode.Value.applyPrediacte(purchaseDetails))

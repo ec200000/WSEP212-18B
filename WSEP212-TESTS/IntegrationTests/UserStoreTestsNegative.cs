@@ -20,7 +20,7 @@ namespace WSEP212_TESTS
             UserRepository.Instance.users.TryAdd(user1, false);
             UserRepository.Instance.users.TryAdd(user2, true);
             
-            Store store2 = new Store("t", "bb", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>()), user2);
+            Store store2 = new Store("t", "bb", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>()), user2);
             Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
             store2.storage.TryAdd(1, item);
             StoreRepository.Instance.stores.TryAdd(1,store2);
@@ -38,9 +38,10 @@ namespace WSEP212_TESTS
         {
             User user = new User("c");
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
+            object[] list = new object[3];
             list[0] = user.userName;
-            list[1] = "1234";
+            list[1] = 18;
+            list[2] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             Assert.IsTrue(((RegularResult)parameters.result).getTag());
@@ -48,9 +49,10 @@ namespace WSEP212_TESTS
             
             User user2 = new User(user.userName); //the user can't register again - already in the system
             ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[2];
+            object[] list2 = new object[3];
             list2[0] = user.userName;
-            list2[1] = "5678";
+            list2[1] = 18;
+            list2[2] = "5678";
             parameters2.parameters = list2;
             user.register(parameters2);
             Assert.IsFalse(((RegularResult)parameters2.result).getTag());
@@ -102,7 +104,7 @@ namespace WSEP212_TESTS
             String name = "store";
             String address = "holon";
             SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;

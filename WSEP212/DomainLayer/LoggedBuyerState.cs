@@ -278,7 +278,7 @@ namespace WSEP212.DomainLayer
             return addStoreRes;
         }
 
-        public override RegularResult register(string userName, string password)
+        public override RegularResult register(string userName, int userAge, string password)
         {
             throw new NotImplementedException();
         }

@@ -10,16 +10,17 @@ namespace WSEP212.DomainLayer
     public class User
     {
         public String userName { get; set; }
+        public int userAge { get; set; }
         public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
-        
         public bool isSystemManager { get; set; }
 
-        public User(String userName, bool isSystemManager = false)
+        public User(String userName, int userAge = int.MinValue, bool isSystemManager = false)
         {
             this.userName = userName;
+            this.userAge = userAge;
             this.shoppingCart = new ShoppingCart();
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
@@ -31,17 +32,18 @@ namespace WSEP212.DomainLayer
             this.state = state;
         }
 
-        // params: string username, string password
+        // params: string username, int age, string password
         // returns: bool
         public void register(Object list)
         {
             ThreadParameters param = (ThreadParameters)list; // getting the thread parameters object for the function
             String username = (String)param.parameters[0]; // getting the first argument
-            String password = (String)param.parameters[1]; // getting the second argument
+            int userAge = (int)param.parameters[1]; // getting the second argument
+            String password = (String)param.parameters[2]; // getting the third argument
             object res;
             try
             {
-                res = state.register(username, password);  // calling the function of the user's state
+                res = state.register(username, userAge, password);  // calling the function of the user's state
             }
             catch (NotImplementedException)
             {

@@ -23,9 +23,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void testInit()
         {
             
-            systemController.register("lol", "123456");
-            systemController.register("mol", "1234");
-            systemController.register("pol", "123");
+            systemController.register("lol", 18, "123456");
+            systemController.register("mol", 18, "1234");
+            systemController.register("pol", 18, "123");
             RegularResult res = systemController.login("lol", "123456");
             Console.WriteLine(res.getMessage());
             res = systemController.login("mol", "1234");
@@ -54,7 +54,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     try
                     {
-                        res1 = systemController.register("iris"+i, "12345");
+                        res1 = systemController.register("iris"+i, 18, "12345");
                     }
                     catch (NotImplementedException)
                     {
@@ -65,7 +65,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     try
                     {
-                        res2 = systemController.register("iris"+i, "12345");
+                        res2 = systemController.register("iris"+i, 18, "12345");
                     }
                     catch (NotImplementedException)
                     {
@@ -76,7 +76,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     try
                     {
-                        res3 = systemController.register("itay"+i, "12345");
+                        res3 = systemController.register("itay"+i, 18, "12345");
                     }
                     catch (NotImplementedException)
                     {
@@ -466,7 +466,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void selectTheSameUserToBeAManager()
         {
-            systemController.register("moshe", "123");
+            systemController.register("moshe", 18, "123");
             systemController.login("moshe", "123");
 
             systemController.appointStoreOwner("mol", "moshe", storeID);

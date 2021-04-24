@@ -11,7 +11,7 @@ namespace WSEP212.ServiceLayer
 {
     public interface ISystemController
     {
-        public RegularResult register(String userName, String password); // USE CASE 2.3
+        public RegularResult register(String userName,  int userAge, String password); // USE CASE 2.3
         public RegularResult login(String userName, String password); // USE CASE 2.4
         public RegularResult logout(String userName); // USE CASE 3.1
 

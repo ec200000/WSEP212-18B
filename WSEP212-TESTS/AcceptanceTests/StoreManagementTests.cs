@@ -18,8 +18,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void testInit()
         {
             //controller.register("a", "123");
-            controller.register("b", "123456");
-            controller.register("r", "123456");
+            controller.register("b", 18, "123456");
+            controller.register("r", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
@@ -28,27 +28,27 @@ namespace WSEP212_TESTS.AcceptanceTests
         
         public void testInit2()
         {
-            controller.register("w", "123456");
+            controller.register("w", 18, "123456");
             storeID = controller.openStore("b", "store20", "somewhere", "DEFAULT", "DEFAULT").getValue();
         }
         
         public void testInit3()
         {
-            controller.register("abc", "123456");
+            controller.register("abc", 18, "123456");
             storeID = controller.openStore("b", "store21", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.appointStoreManager("b", "abc", storeID);
         }
         
         public void testInit4()
         {
-            controller.register("abcd", "123456");
+            controller.register("abcd", 18, "123456");
             storeID = controller.openStore("b", "store22", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.appointStoreManager("b", "abcd", storeID);
         }
         
         public void testInit5()
         {
-            controller.register("abcde", "123456");
+            controller.register("abcde", 18, "123456");
             storeID = controller.openStore("b", "store23", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.appointStoreManager("b", "abcde", storeID);
         }

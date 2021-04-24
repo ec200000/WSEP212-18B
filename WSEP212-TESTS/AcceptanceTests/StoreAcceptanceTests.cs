@@ -8,7 +8,7 @@ using WSEP212.ServiceLayer.ServiceObjectsDTO;
 namespace WSEP212_TESTS.AcceptanceTests
 {
     [TestClass]
-    public class StoreTests
+    public class StoreAcceptanceTests
     {
         public static SystemController controller = SystemController.Instance;
         public static int itemID;
@@ -17,7 +17,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
-            RegularResult result = controller.register("theuser", "123456");
+            RegularResult result = controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
         }
@@ -26,29 +26,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
-        }
-
-        public void testInit2()
-        {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
-            itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
-        }
-
-        public void testInit3()
-        {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
-            itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
-            RegularResult result = controller.addItemToShoppingCart("theuser", storeID, itemID, 2); //logged user
-        }
-
-        public void testInit5()
-        {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
-            itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
-        }
-
-        public void testInit6()
-        {
         }
 
         [TestMethod]
@@ -67,15 +44,13 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             result = controller.purchaseItems("theuser", "ashdod");
             Assert.IsTrue(result.getTag());
-
-            controller.logout("theuser");
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void openStoreTest()
         {
-            testInit2();
+            testInit();
 
             ResultWithValue<int> result = controller.openStore("theuser", "store2", "somewhere", "DEFAULT", "DEFAULT");
             Assert.IsFalse(result.getTag()); //store already exists
@@ -104,14 +79,14 @@ namespace WSEP212_TESTS.AcceptanceTests
             ResultWithValue<int> res = controller.openStore("a", "gg", "kk", "default", "default"); //guest cant open
             Assert.IsFalse(true); //should throw exception - if its here, nothing was thrown
             
-            
+            controller.login("theuser", "123456");
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void itemReviewTest()
         {
-            testInit3();
+            testInit();
 
             RegularResult res = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);
             Assert.IsTrue(res.getTag());
@@ -130,6 +105,8 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             controller.itemReview("moon", "boo", itemID, storeID); //guest user can't perform this action
             Assert.IsFalse(true);
+
+            controller.login("theuser", "123456");
         }
 
         [TestMethod]
@@ -144,21 +121,26 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             res = controller.addItemToStorage("theuser", storeID, itemDto); //already in storage
             Assert.IsTrue(res.getTag());
+            int bisliID = res.getValue();
 
             res = controller.addItemToStorage("theuser", storeID, null);
             Assert.IsFalse(res.getTag());
+
+            controller.removeItemFromStorage("theuser", storeID, bisliID);
             
             controller.logout("theuser");
 
             controller.addItemToStorage("moon", storeID, itemDto);//guest user - can't perform this action
             Assert.IsFalse(true);
+
+            controller.login("theuser", "123456");
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void removeItemFromStorageTest()
         {
-            testInit5();
+            testInit();
 
             RegularResult result = controller.removeItemFromStorage("theuser", storeID, itemID);
             Assert.IsTrue(result.getTag());
@@ -171,15 +153,12 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             result = controller.removeItemFromStorage("booo", storeID, itemID);//guest user - can't perform this action
             Assert.IsFalse(result.getTag());
-            
-            controller.logout("theuser");
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void editItemDetailsTest()
         {
-            testInit6();
 
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
                 new ConcurrentDictionary<string, string>(), 1.34, "snacks");
@@ -200,6 +179,8 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             controller.editItemDetails("blue", storeID, itemDto); //guest user - can't perform this action
             Assert.IsFalse(true);
+
+            controller.login("theuser", "123456");
         }
     }
 }

@@ -122,9 +122,9 @@ namespace WSEP212.DomainLayer
             // only logged buyers can do that
         }
 
-        public override RegularResult register(String userName, String password)
+        public override RegularResult register(String userName, int userAge, String password)
         {
-            User user = new User(userName);
+            User user = new User(userName, userAge);
             return UserRepository.Instance.insertNewUser(user, password);
         }
 

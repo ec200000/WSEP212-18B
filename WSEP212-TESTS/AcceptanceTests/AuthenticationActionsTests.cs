@@ -12,18 +12,18 @@ namespace WSEP212_TESTS.AcceptanceTests
         
         public void testInit()
         {
-            controller.register("a", "123");
-            controller.register("b", "123456");
+            controller.register("a", 18, "123");
+            controller.register("b", 18, "123456");
         }
 
         [TestMethod]
         public void registerTest()
         {
             testInit();
-            RegularResult result = controller.register("abcd", "1234");
+            RegularResult result = controller.register("abcd", 18, "1234");
             Assert.IsTrue(result.getTag());
 
-            RegularResult result2 = controller.register("a", "123");
+            RegularResult result2 = controller.register("a", 18, "123");
             Assert.IsFalse(result2.getTag());
         }
         

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    public class ConditioningPredicate : PurchasePredicate
+    public class ConditioningPredicate : PolicyPredicate
     {
-        public SalePredicate onlyIf { get; set; }
+        public PolicyPredicate onlyIf { get; set; }
         public Predicate<PurchaseDetails> then { get; set; }
 
-        public ConditioningPredicate(SalePredicate onlyIf, Predicate<PurchaseDetails> then)
+        public ConditioningPredicate(PolicyPredicate onlyIf, Predicate<PurchaseDetails> then)
         {
             this.onlyIf = onlyIf;
             this.then = then;

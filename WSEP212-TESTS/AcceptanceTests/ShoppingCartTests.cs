@@ -16,8 +16,8 @@ namespace WSEP212_TESTS.AcceptanceTests
 
         public void testInit()
         {
-            controller.register("a", "123");
-            controller.register("b", "123456");
+            controller.register("a", 18, "123");
+            controller.register("b", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
@@ -26,8 +26,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         
         public void testInit2()
         {
-            controller.register("a", "123");
-            controller.register("b", "123456");
+            controller.register("a", 18, "123");
+            controller.register("b", 18, "123456");
             //RegularResult result1 = controller.login("b", "123456");
             storeID = controller.openStore("b", "store2", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");

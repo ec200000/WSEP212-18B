@@ -10,7 +10,7 @@ namespace WSEP212.DomainLayer
 {
     public interface ISystemControllerFacade
     {
-        public RegularResult register(String userName, String password);
+        public RegularResult register(String userName, int userAge, String password);
         public RegularResult login(String userName, String password);
         public RegularResult logout(String userName);
 

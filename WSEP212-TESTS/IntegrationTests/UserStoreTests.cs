@@ -45,7 +45,7 @@ namespace WSEP212_TESTS
             String name = "store";
             String address = "holon";
             SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -64,7 +64,7 @@ namespace WSEP212_TESTS
             String name = "store";
             String address = "holon";
             SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
+            PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -188,9 +188,10 @@ namespace WSEP212_TESTS
         public void TestRegister()
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
+            object[] list = new object[3];
             list[0] = user.userName;
-            list[1] = "1234";
+            list[1] = 18;
+            list[2] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             Assert.IsTrue(((RegularResult)parameters.result).getTag());
@@ -202,9 +203,10 @@ namespace WSEP212_TESTS
         public void TestLogin()
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
+            object[] list = new object[3];
             list[0] = user.userName;
-            list[1] = "1234";
+            list[1] = 18;
+            list[2] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             if (((RegularResult)parameters.result).getTag())
@@ -224,9 +226,10 @@ namespace WSEP212_TESTS
         public void TestLoginWrongPassword() // wrong password
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
+            object[] list = new object[3];
             list[0] = user.userName;
-            list[1] = "1234";
+            list[1] = 18;
+            list[2] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             if (((RegularResult)parameters.result).getTag())
@@ -247,9 +250,10 @@ namespace WSEP212_TESTS
         public void TestLogout()
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[2];
+            object[] list = new object[3];
             list[0] = user.userName;
-            list[1] = "1234";
+            list[1] = 18;
+            list[2] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             if (((RegularResult)parameters.result).getTag())
@@ -280,7 +284,7 @@ namespace WSEP212_TESTS
                 String name = "store";
                 String address = "holon";
                 SalePolicy salesPolicy = new SalePolicy("default");
-                PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>());
+                PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>());
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[4];
                 list[0] = name;
@@ -436,7 +440,7 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>()), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>()), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
@@ -458,7 +462,7 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PurchasePredicate>()), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default", new ConcurrentLinkedList<PolicyPredicate>()), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
