@@ -219,7 +219,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
         {
             try
             {

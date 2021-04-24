@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         //edit item in shopping cart is equal to -> remove + add
         public RegularResult purchaseItems(String userName, String address); 
-        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
         public RegularResult itemReview(String userName, String review, int itemID, int storeID);
         public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);

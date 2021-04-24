@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
@@ -10,47 +8,29 @@ namespace WSEP212.DomainLayer
     public class PurchasePolicy
     {
         public String purchasePolicyName { get; set; }
-        public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
-        //public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
-        public ConcurrentLinkedList<Sale> policyRules { get; set; }
+        //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
+        public ConcurrentLinkedList<PurchasePredicate> purchasePredicates { get; set; }
 
-        public PurchasePolicy(String purchasePolicyName, ConcurrentLinkedList<PurchaseType> purchaseRoutes, ConcurrentLinkedList<Sale> policyRules)
+        public PurchasePolicy(String purchasePolicyName, ConcurrentLinkedList<PurchasePredicate> purchasePredicates)
         {
             this.purchasePolicyName = purchasePolicyName;
-            this.purchaseRoutes = purchaseRoutes;
-            this.policyRules = policyRules;
+            this.purchasePredicates = purchasePredicates;
         }
 
-        // checks that the user can buy in the store
-        // checks that the purchase type is allowed in the store
-        // checks all the other rules of the store policy
-        public RegularResult approveByPurchasePolicy(User user, ConcurrentDictionary<Item, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        // checks all the rules of the store policy
+        public RegularResult approveByPurchasePolicy(PurchaseDetails purchaseDetails)
         {
-            // checks the user can purchase in the store
-            if(true)
+            // checks rules
+            Node<PurchasePredicate> predicateNode = purchasePredicates.First;
+            while (predicateNode.Value != null)
             {
-                // checks that all type of purchase are fine
-                foreach (KeyValuePair<int, PurchaseType> purchaseType in itemsPurchaseType)
+                if(!predicateNode.Value.applyPrediacte(purchaseDetails))
                 {
-                    if(!purchaseRoutes.Contains(purchaseType.Value))
-                    {
-                        return new Failure("One Or More Of The Selected Purchase Types Are Not Supported In This Store");
-                    }
+                    return new Failure("The Purchase Was Not Approved By The Store's Purchase Policy");
                 }
-                // checks other rules
-                Node<Sale> ruleNode = policyRules.First;
-                while(ruleNode.Value != null)
-                {
-                    RegularResult ruleRes = ruleNode.Value.applyRule(user, items);
-                    if (!ruleRes.getTag())
-                    {
-                        return ruleRes;
-                    }
-                    ruleNode = ruleNode.Next;
-                }
-                return new Ok("The Purchase Was Approved By The Store's Purchase Policy");
+                predicateNode = predicateNode.Next;
             }
-            //return false;
+            return new Ok("The Purchase Was Approved By The Store's Purchase Policy");
         }
     }
 }

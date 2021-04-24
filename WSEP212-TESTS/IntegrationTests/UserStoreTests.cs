@@ -44,7 +44,7 @@ namespace WSEP212_TESTS
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<Sale>());
+            SalePolicy salesPolicy = new SalePolicy("default", new ConcurrentLinkedList<Sale>());
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<Sale>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
@@ -63,7 +63,7 @@ namespace WSEP212_TESTS
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<Sale>());
+            SalePolicy salesPolicy = new SalePolicy("default", new ConcurrentLinkedList<Sale>());
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", new ConcurrentLinkedList<PurchaseType>(), new ConcurrentLinkedList<Sale>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
@@ -279,7 +279,7 @@ namespace WSEP212_TESTS
             {
                 String name = "store";
                 String address = "holon";
-                SalesPolicy salesPolicy = new SalesPolicy("default", null);
+                SalePolicy salesPolicy = new SalePolicy("default", null);
                 PurchasePolicy purchasePolicy = new PurchasePolicy("default", null, null);
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[4];
@@ -436,7 +436,7 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default", null), new PurchasePolicy("default", null, null), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
@@ -458,7 +458,7 @@ namespace WSEP212_TESTS
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalesPolicy("default", null), new PurchasePolicy("default", null, null), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default", null), new PurchasePolicy("default", null, null), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;

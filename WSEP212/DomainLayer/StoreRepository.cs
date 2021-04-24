@@ -26,7 +26,7 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         
-        public ResultWithValue<int> addStore(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public ResultWithValue<int> addStore(String storeName, String storeAddress, SalePolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
             if (storeName == null || storeAddress == null || salesPolicy == null || purchasePolicy == null ||
                 storeFounder == null)

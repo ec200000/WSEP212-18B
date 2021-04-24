@@ -49,7 +49,7 @@ namespace WSEP212_TESTS
         {
             ConcurrentLinkedList<PurchaseType> purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
             purchaseTypes.TryAdd(PurchaseType.ImmediatePurchase);
-            SalesPolicy salesPolicy = new SalesPolicy("default", new ConcurrentLinkedList<Sale>());
+            SalePolicy salesPolicy = new SalePolicy("default", new ConcurrentLinkedList<Sale>());
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", purchaseTypes, new ConcurrentLinkedList<Sale>());
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];

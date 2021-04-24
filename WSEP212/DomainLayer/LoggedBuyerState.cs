@@ -266,7 +266,7 @@ namespace WSEP212.DomainLayer
             return new Failure(findUserRes.getMessage());
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
         {
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore(storeName, storeAddress, salesPolicy, purchasePolicy, this.user);
             if (addStoreRes.getTag())

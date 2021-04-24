@@ -40,7 +40,7 @@ namespace WSEP212.DomainLayer
             return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
         }
 
-        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy);
+        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
         public abstract RegularResult itemReview(String review, int itemID, int storeID);
         public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
         public abstract RegularResult removeItemFromStorage(int storeID, int itemID);

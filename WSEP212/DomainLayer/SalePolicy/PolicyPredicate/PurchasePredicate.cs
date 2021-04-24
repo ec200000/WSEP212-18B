@@ -4,10 +4,8 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    public enum SalesType
+    public interface PurchasePredicate
     {
-        VisibleSale,
-        //ConditionalSale,
-        //HiddenSale
+        public bool applyPrediacte(PurchaseDetails purchaseDetails);
     }
 }

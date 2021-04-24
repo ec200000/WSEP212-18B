@@ -116,7 +116,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalesPolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
         {
             throw new NotImplementedException();
             // only logged buyers can do that

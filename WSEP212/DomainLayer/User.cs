@@ -159,7 +159,7 @@ namespace WSEP212.DomainLayer
             String storeName = (String)param.parameters[0];
             String storeAdress = (String)param.parameters[1];
             PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[2];
-            SalesPolicy salesPolicy = (SalesPolicy)param.parameters[3];
+            SalePolicy salesPolicy = (SalePolicy)param.parameters[3];
             object res;
             try
             {

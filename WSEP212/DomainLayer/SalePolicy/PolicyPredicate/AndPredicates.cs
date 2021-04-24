@@ -9,14 +9,14 @@ namespace WSEP212.DomainLayer
     {
         private readonly object applyPredicatesLock = new object();
 
-        public AndPredicates(ConcurrentLinkedList<PolicyPredicate> predicates) : base(predicates) { }
+        public AndPredicates(ConcurrentLinkedList<SalePredicate> predicates) : base(predicates) { }
 
         // return true if all predicates are met, else false
         public override bool applyPrediacte(PurchaseDetails purchaseDetails)
         {
             lock (applyPredicatesLock)
             {
-                Node<PolicyPredicate> predicateNode = predicates.First;
+                Node<SalePredicate> predicateNode = predicates.First;
                 while (predicateNode.Value != null)
                 {
                     if (!predicateNode.Value.applyPrediacte(purchaseDetails))

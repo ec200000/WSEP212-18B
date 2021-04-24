@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    public class SimplePredicate : PolicyPredicate
+    public class SimplePredicate : PurchasePredicate, SalePredicate
     {
         public Predicate<PurchaseDetails> predicate { get; set; }
 

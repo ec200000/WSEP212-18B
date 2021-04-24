@@ -20,7 +20,7 @@ namespace WSEP212_TESTS
             UserRepository.Instance.users.TryAdd(user1, false);
             UserRepository.Instance.users.TryAdd(user2, true);
             
-            Store store2 = new Store("t", "bb", new SalesPolicy("default", null), new PurchasePolicy("default", null,null), user2);
+            Store store2 = new Store("t", "bb", new SalePolicy("default", null), new PurchasePolicy("default", null,null), user2);
             Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
             store2.storage.TryAdd(1, item);
             StoreRepository.Instance.stores.TryAdd(1,store2);
@@ -101,7 +101,7 @@ namespace WSEP212_TESTS
             User u = new User("k"); //the user is not registered to the system
             String name = "store";
             String address = "holon";
-            SalesPolicy salesPolicy = new SalesPolicy("default", null);
+            SalePolicy salesPolicy = new SalePolicy("default", null);
             PurchasePolicy purchasePolicy = new PurchasePolicy("default", null, null);
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];

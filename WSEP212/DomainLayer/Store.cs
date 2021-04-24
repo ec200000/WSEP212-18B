@@ -23,14 +23,14 @@ namespace WSEP212.DomainLayer
         public String storeName { get; set; }
         public String storeAddress { get; set; }
         public bool activeStore { get; set; }
-        public SalesPolicy salesPolicy { get; set; }
+        public SalePolicy salesPolicy { get; set; }
         public PurchasePolicy purchasePolicy { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
         public DeliveryInterface deliverySystem { get; set; }
 
-        public Store(String storeName, String storeAddress, SalesPolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public Store(String storeName, String storeAddress, SalePolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;

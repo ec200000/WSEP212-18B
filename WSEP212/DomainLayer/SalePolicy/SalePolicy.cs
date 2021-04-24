@@ -7,26 +7,24 @@ using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    public class SalesPolicy
+    public class SalePolicy
     {
         public String salesPolicyName { get; set; }
-        //public ConcurrentLinkedList<UserType> allowedUsers { get; set; }
-        public ConcurrentLinkedList<Sale> policyRules { get; set; }
+        public ConcurrentLinkedList<Sale> sales { get; set; }
 
-        public SalesPolicy(String salesPolicyName, ConcurrentLinkedList<Sale> policyRules)
+        public SalePolicy(String salesPolicyName, ConcurrentLinkedList<Sale> sales)
         {
             this.salesPolicyName = salesPolicyName;
-            this.policyRules = policyRules;
+            this.sales = sales;
         }
 
-        // checks that the user can get sales
-        // checks all the other rules of the store policy
         // returns the price of each item after sales
-        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(User user, ConcurrentDictionary<Item, int> items)
+        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
         {
             ConcurrentDictionary<int, double> pricesAfterSale = new ConcurrentDictionary<int, double>();
             foreach (KeyValuePair<Item, int> item in items)
             {
+
                 pricesAfterSale.TryAdd(item.Key.itemID, item.Key.price);
             }
 

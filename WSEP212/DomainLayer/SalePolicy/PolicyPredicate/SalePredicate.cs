@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    public interface PolicyPredicate
+    public interface SalePredicate
     {
         public bool applyPrediacte(PurchaseDetails purchaseDetails);
     }
