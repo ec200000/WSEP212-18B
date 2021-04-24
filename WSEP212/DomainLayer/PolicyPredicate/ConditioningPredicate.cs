@@ -27,7 +27,7 @@ namespace WSEP212.DomainLayer
                 return true;
             }
             // check that the only If is met
-            return onlyIf.applyPrediacte(purchaseDetails))
+            return onlyIf.applyPrediacte(purchaseDetails);
         }
     }
 }

@@ -35,17 +35,8 @@ namespace WSEP212.DomainLayer
         // apply the sale only if the conditional is met and the sale is relevant to this item
         public double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
         {
-            double itemPrice = item.price;
-            // checks if the predicate is met
-            if(this.predicate.applyPrediacte(purchaseDetails))
-            {
-                // checks if the sale is relavent to this item 
-                if (applySaleOn.shouldApplySale(item))
-                {
-                    return itemPrice - ((itemPrice * salePercentage) / 100);
-                }
-            }
-            return itemPrice;
+            int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
+            return item.price - ((item.price * salePercentage) / 100);
         }
     }
 }

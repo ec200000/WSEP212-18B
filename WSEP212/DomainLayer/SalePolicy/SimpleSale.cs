@@ -28,13 +28,8 @@ namespace WSEP212.DomainLayer
 
         public double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
         {
-            double itemPrice = item.price;
-            // checks if the sale is relavent to this item 
-            if (applySaleOn.shouldApplySale(item))
-            {
-                return itemPrice - ((itemPrice * salePercentage) / 100);
-            }
-            return itemPrice;
+            int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
+            return item.price - ((item.price * salePercentage) / 100);
         }
     }
 }

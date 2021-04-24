@@ -31,14 +31,7 @@ namespace WSEP212.DomainLayer
         {
             lock (saleLock)
             {
-                Node<Sale> saleNode = sales.First;
-                int salePercentage = 0;
-                // sum all the sale percentage for this item
-                while (saleNode.Value != null)
-                {
-                    salePercentage += saleNode.Value.getSalePercentageOnItem(item, purchaseDetails);
-                    saleNode = saleNode.Next;
-                }
+                int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
                 // apply all sales on the item
                 return item.price - ((item.price * salePercentage) / 100);
             }

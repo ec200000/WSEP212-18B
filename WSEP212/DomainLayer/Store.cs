@@ -159,10 +159,15 @@ namespace WSEP212.DomainLayer
         // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
         public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
         {
-            double totalPrice = 0;
+            ResultWithValue<ConcurrentDictionary<Item, int>> objItemsRes = getObjItems(items);
+            if (!objItemsRes.getTag())
+            {
+                return new FailureWithValue<double>(objItemsRes.getMessage(), -1);
+            }
+            PurchaseDetails purchaseDetails = new PurchaseDetails(buyer, objItemsRes.getValue(), itemsPurchaseType);
 
             // checks the purchase can be made by the purchase policy
-            RegularResult purchasePolicyRes = applyPurchasePolicy(buyer, items, itemsPurchaseType);
+            RegularResult purchasePolicyRes = applyPurchasePolicy(purchaseDetails);
             if (purchasePolicyRes.getTag())
             {
                 // checks that all the items available in the store storage
@@ -170,17 +175,13 @@ namespace WSEP212.DomainLayer
                 if (availableItemsRes.getTag())
                 {
                     // calculate the price of each item after sales
-                    ResultWithValue<ConcurrentDictionary<int, double>> pricesAfterSaleRes = applySalesPolicy(buyer, items);
-                    if(pricesAfterSaleRes.getTag())
+                    ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(objItemsRes.getValue(), purchaseDetails);
+                    double totalPrice = 0;
+                    foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
                     {
-                        foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes.getValue())
-                        {
-                            totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
-                        }
-                        return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
+                        totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
                     }
-                    rollBackPurchase(items);
-                    return new FailureWithValue<double>(pricesAfterSaleRes.getMessage(), -1);
+                    return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
                 }
                 return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
             }
@@ -190,27 +191,16 @@ namespace WSEP212.DomainLayer
         // Apply the sales policy on a list of items
         // The function will return the price after discount for each of the items
         // <itemID, price>
-        public ResultWithValue<ConcurrentDictionary<int, double>> applySalesPolicy(User buyer, ConcurrentDictionary<int, int> items)
+        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
         {
-            ResultWithValue<ConcurrentDictionary<Item, int>> objItemsRes = getObjItems(items);
-            if (objItemsRes.getTag())
-            {
-                ConcurrentDictionary<int, double> priceAfterSales = salesPolicy.pricesAfterSalePolicy(buyer, objItemsRes.getValue());
-                return new OkWithValue<ConcurrentDictionary<int, double>>("The Sales On The Items Have Been Made Successfully", priceAfterSales);
-            }
-            return new FailureWithValue<ConcurrentDictionary<int, double>>(objItemsRes.getMessage(), null);
+            return salesPolicy.pricesAfterSalePolicy(items, purchaseDetails);
         }
 
         // Apply the purchase policy on a list of items and their type of purchase
         // The function will return if the purchase can be made
-        public RegularResult applyPurchasePolicy(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public RegularResult applyPurchasePolicy(PurchaseDetails purchaseDetails)
         {
-            ResultWithValue<ConcurrentDictionary<Item, int>> objItemsRes = getObjItems(items);
-            if(objItemsRes.getTag())
-            {
-                return purchasePolicy.approveByPurchasePolicy(buyer, objItemsRes.getValue(), itemsPurchaseType);
-            }
-            return new Failure(objItemsRes.getMessage());
+            return purchasePolicy.approveByPurchasePolicy(purchaseDetails);
         }
 
         private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItems(ConcurrentDictionary<int, int> items)
