@@ -116,3 +116,43 @@
 
 2021-04-25 13:52:00.477 +03:00 [Warning] The user moon cannot perform the removeStoreManager action!
 
+2021-04-25 16:25:27.290 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-04-25 16:25:27.330 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-04-25 16:25:27.933 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-25 16:25:27.933 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-25 16:25:27.962 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-25 16:25:27.962 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-25 16:25:27.984 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-04-25 16:25:27.984 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-04-25 16:25:28.091 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-04-25 16:25:28.899 +03:00 [Warning] The user moon cannot perform the addItemToStorage action!
+
+2021-04-25 16:25:28.906 +03:00 [Warning] The user theuser cannot perform the addItemToStorage action!
+
+2021-04-25 16:25:28.912 +03:00 [Warning] The user theuser cannot perform the addItemToStorage action!
+
+2021-04-25 16:25:28.916 +03:00 [Warning] The user theuser cannot perform the addItemToStorage action!
+
+2021-04-25 16:25:28.925 +03:00 [Warning] The user theuser cannot perform the addItemToStorage action!
+
+2021-04-25 16:25:28.986 +03:00 [Warning] The user theuser cannot perform the addItemToStorage action!
+
+2021-04-25 16:25:29.011 +03:00 [Warning] The user b cannot perform the login action!
+
+2021-04-25 16:25:29.042 +03:00 [Warning] The user moon cannot perform the appointStoreOwner action!
+
+2021-04-25 16:25:29.085 +03:00 [Warning] The user moon cannot perform the editManagerPermissions action!
+
+2021-04-25 16:25:29.120 +03:00 [Warning] The user abcde cannot perform the getOfficialsInformation action!
+
+2021-04-25 16:25:29.160 +03:00 [Warning] The user moon cannot perform the removeStoreManager action!
+

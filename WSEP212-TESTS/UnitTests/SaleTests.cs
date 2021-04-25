@@ -136,19 +136,59 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void xorSaleTest()
+        public void xorSaleBothNotMetTest()
         {
             // sale 1
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
-            Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
-            PolicyPredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(25, saleOnCategory, policyPredicate);
-            // sale 2
             ApplySaleOn saleOnStore = new SaleOnAllStore();
-            Sale simpleSale = new SimpleSale(25, saleOnStore);
+            Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() > 10;
+            PolicyPredicate policyPredicate = new SimplePredicate(predicate);
+            Sale conditionalSale = new ConditionalSale(25, saleOnStore, policyPredicate);
+            // sale 2
+            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            Sale simpleSale = new SimpleSale(25, saleOnCategory);
+            // selection rule
+            Predicate<PurchaseDetails> selectionRule = pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale);
 
-            Sale xorSale = new XorSale(conditionalSale, simpleSale, );
-            
+            Sale xorSale = new XorSale(conditionalSale, simpleSale, selectionRule);
+            Assert.AreEqual(10, xorSale.applySaleOnItem(itemB, purchaseDetails));
+        }
+
+        [TestMethod]
+        public void xorSaleOnlyOneMetTest()
+        {
+            // sale 1
+            ApplySaleOn saleOnStore = new SaleOnAllStore();
+            Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() > 10;
+            PolicyPredicate policyPredicate = new SimplePredicate(predicate);
+            Sale conditionalSale = new ConditionalSale(25, saleOnStore, policyPredicate);
+            // sale 2
+            ApplySaleOn saleOnCategory = new SaleOnCategory("milk products");
+            Sale simpleSale = new SimpleSale(25, saleOnCategory);
+            // selection rule
+            Predicate<PurchaseDetails> selectionRule = pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale);
+
+            Sale xorSale = new XorSale(conditionalSale, simpleSale, selectionRule);
+            Assert.AreEqual(7.5, xorSale.applySaleOnItem(itemB, purchaseDetails));
+        }
+
+        [TestMethod]
+        public void xorSaleBothMetTest()
+        {
+            // sale 1
+            ApplySaleOn saleOnStore = new SaleOnAllStore();
+            Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() > 5;
+            PolicyPredicate policyPredicate = new SimplePredicate(predicate);
+            Sale conditionalSale = new ConditionalSale(50, saleOnStore, policyPredicate);
+            // sale 2
+            ApplySaleOn saleOnCategory = new SaleOnCategory("milk products");
+            Sale simpleSale = new SimpleSale(25, saleOnCategory);
+            // selection rule
+            Predicate<PurchaseDetails> selectionRule = pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale);
+
+            Sale xorSale = new XorSale(conditionalSale, simpleSale, selectionRule);
+            // choose the cheapest sale, selection rule
+            Assert.AreEqual(5, xorSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(2, xorSale.applySaleOnItem(itemC, purchaseDetails));
         }
     }
 }
