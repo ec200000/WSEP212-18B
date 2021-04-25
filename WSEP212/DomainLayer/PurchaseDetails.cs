@@ -41,6 +41,16 @@ namespace WSEP212.DomainLayer
             return totalPrice;
         }
 
+        public int numOfItemsInPurchase()
+        {
+            int numOfItems = 0;
+            foreach (int quantity in shoppingBagItems.Values)
+            {
+                numOfItems += quantity;
+            }
+            return numOfItems;
+        }
+
         public bool atLeastNQuantity(int itemID, int itemQuantity)
         {
             foreach (KeyValuePair<Item, int> itemAndQuantity in shoppingBagItems)

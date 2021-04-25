@@ -35,19 +35,23 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void simplePredicateTest()
+        public void simplePredicateMetTest()
         {
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
             SimplePredicate policyPredicate = new SimplePredicate(predicate);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
 
-            predicate = pd => pd.totalPurchasePrice() > 60;
-            policyPredicate = new SimplePredicate(predicate);
-            Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
-
             predicate = pd => pd.atLeastNQuantity(itemC.itemID, 5);
             policyPredicate = new SimplePredicate(predicate);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
+        }
+
+        [TestMethod]
+        public void simplePredicateNotMetTest()
+        {
+            Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
+            SimplePredicate policyPredicate = new SimplePredicate(predicate);
+            Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
 
             predicate = pd => pd.atLeastNQuantity(itemA.itemID, 5);
             policyPredicate = new SimplePredicate(predicate);
@@ -55,7 +59,7 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void conditioningPredicateTest()
+        public void conditioningPredicateMetTest()
         {
             // only if total price > 40 then you can buy 5 or more milk
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
@@ -63,19 +67,22 @@ namespace WSEP212_TESTS.UnitTests
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, then);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
+        }
 
+        [TestMethod]
+        public void conditioningPredicateNotMetTest()
+        {
             // only if total price > 60 then you can buy 5 or more milk
-            predicate = pd => pd.totalPurchasePrice() > 60;
-            onlyif = new SimplePredicate(predicate);
-            then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            policyPredicate = new ConditioningPredicate(onlyif, then);
+            Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
+            PolicyPredicate onlyif = new SimplePredicate(predicate);
+            Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
+            ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, then);
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
         }
 
         [TestMethod]
-        public void composedPredicateTest()
+        public void composedPredicateMetTest()
         {
-            // only if total price > 40 then you can buy 5 or more milk
             Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
             PolicyPredicate sp1 = new SimplePredicate(p1);
             Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
@@ -91,6 +98,26 @@ namespace WSEP212_TESTS.UnitTests
             andPred.TryAdd(orPP);
             PolicyPredicate andPP = new AndPredicates(andPred);
             Assert.IsTrue(andPP.applyPrediacte(purchaseDetails));
+        }
+
+        [TestMethod]
+        public void composedPredicateNotMetTest()
+        {
+            Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
+            PolicyPredicate sp1 = new SimplePredicate(p1);
+            Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
+            PolicyPredicate sp2 = new SimplePredicate(p2);
+            Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
+            PolicyPredicate sp3 = new SimplePredicate(p3);
+            ConcurrentLinkedList<PolicyPredicate> andPred = new ConcurrentLinkedList<PolicyPredicate>();
+            andPred.TryAdd(sp1);
+            andPred.TryAdd(sp2);
+            PolicyPredicate andPP = new AndPredicates(andPred);
+            ConcurrentLinkedList<PolicyPredicate> andPred2 = new ConcurrentLinkedList<PolicyPredicate>();
+            andPred2.TryAdd(sp3);
+            andPred2.TryAdd(andPP);
+            PolicyPredicate andPP2 = new AndPredicates(andPred2);
+            Assert.IsFalse(andPP2.applyPrediacte(purchaseDetails));
         }
     }
 }

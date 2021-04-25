@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WSEP212_TESTS
+namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
     public class ItemTests

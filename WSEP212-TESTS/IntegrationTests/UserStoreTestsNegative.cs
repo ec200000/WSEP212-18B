@@ -4,7 +4,7 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212_TESTS
+namespace WSEP212_TESTS.IntegrationTests
 {
     [TestClass]
     public class UserStoreTestsNegative

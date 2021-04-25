@@ -6,7 +6,7 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
-namespace WSEP212_TESTS
+namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
     public class StoreRepositoryTests

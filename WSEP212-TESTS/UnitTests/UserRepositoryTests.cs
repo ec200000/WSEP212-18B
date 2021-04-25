@@ -2,7 +2,7 @@
 using System;
 using WSEP212.DomainLayer;
 
-namespace WSEP212_TESTS
+namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
     public class UserRepositoryTest
