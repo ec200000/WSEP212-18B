@@ -16,10 +16,4 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
-<<<<<<< HEAD:WebApplication/obj/WebApplication.csproj.nuget.g.props
-  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgNewtonsoft_Json Condition=" '$(PkgNewtonsoft_Json)' == '' ">C:\Users\שגיב משיח\.nuget\packages\newtonsoft.json\9.0.1</PkgNewtonsoft_Json>
-  </PropertyGroup>
-=======
->>>>>>> f4e0bf93f939735e51b49d6fb6e48ea6709c4fa5:WSEP212/WebApplication/obj/WebApplication.csproj.nuget.g.props
 </Project>

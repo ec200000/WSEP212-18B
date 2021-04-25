@@ -79,3 +79,44 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\WebApplication\obj\Debug\net5.0\ref\WebApplication.dll
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.csprojAssemblyReference.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.GeneratedMSBuildEditorConfig.editorconfig
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.AssemblyInfoInputs.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.AssemblyInfo.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.csproj.CoreCompileInputs.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.MvcApplicationPartsAssemblyInfo.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.RazorAssemblyInfo.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.RazorAssemblyInfo.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\ref\WebApplication.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.pdb
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\appsettings.Development.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\appsettings.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.exe
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.deps.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.runtimeconfig.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.runtimeconfig.dev.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\ref\WebApplication.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.pdb
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.Views.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WebApplication.Views.pdb
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Certificate.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\staticwebassets\WebApplication.StaticWebAssets.Manifest.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\staticwebassets\WebApplication.StaticWebAssets.xml
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\scopedcss\bundle\WebApplication.styles.css
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.TagHelpers.input.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.TagHelpers.output.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.RazorCoreGenerate.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.RazorTargetAssemblyInfo.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.RazorTargetAssemblyInfo.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.Views.pdb
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.csproj.CopyComplete
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache

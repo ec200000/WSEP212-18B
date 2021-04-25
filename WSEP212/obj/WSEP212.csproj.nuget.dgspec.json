@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD:WSEP212/obj/WSEP212.csproj.nuget.dgspec.json
     "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
   },
   "projects": {
@@ -13,19 +12,6 @@
         "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
         "outputPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\obj\\",
-=======
-    "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212-18B\\WSEP212\\WSEP212\\WSEP212.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212-18B\\WSEP212\\WSEP212\\WSEP212.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212-18B\\WSEP212\\WSEP212\\WSEP212.csproj",
-        "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212-18B\\WSEP212\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212-18B\\WSEP212\\WSEP212\\obj\\",
->>>>>>> f4e0bf93f939735e51b49d6fb6e48ea6709c4fa5:WSEP212/WSEP212/obj/WSEP212.csproj.nuget.dgspec.json
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

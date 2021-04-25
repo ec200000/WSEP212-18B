@@ -1,4 +1,4 @@
-﻿is_global = true
+is_global = true
 build_property.TargetFramework = net5.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = 
