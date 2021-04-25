@@ -1,0 +1,5 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Cirisk_005CRiderProjects_005CWebApplication2_005CWebApplication2_005Cbin_005CDebug_005Cnet5_002E0_005CMicrosoft_002EAspNetCore_002EAuthentication_002ECertificate_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=532db856_002Da414_002D42aa_002D9d1b_002D75259b1ab97a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;WSEP212-TEST&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\WSEP212-TEST" Presentation="&amp;lt;WSEP212-TEST&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
