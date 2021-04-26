@@ -192,7 +192,22 @@ namespace WebApplication.Controllers
             return arr;
         }
 
-        private int[] itemListToArray(ConcurrentLinkedList<Item> lst)
+        public IActionResult TryShowShoppingCart()
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+
+        public IActionResult TryGetStores(StoreModel model)
         {
             int[] arr = new int[lst.size];
             int i = 0;
