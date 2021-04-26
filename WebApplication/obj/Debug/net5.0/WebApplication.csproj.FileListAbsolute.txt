@@ -178,3 +178,4 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\V
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StoreActions.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Web.config
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemActions.cshtml.g.cs
