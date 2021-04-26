@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Shopping Cart";
+}
+<!DOCTYPE html>
+
+<html>
+<body>
+    @model WebApplication.Models.UserModel
+    <div>
+        @using (Html.BeginForm("TryShowShoppingCart", "Home", FormMethod.Post))
+        {
+
+            
+            <li>
+                <ul></ul>
+            </li>
+            <button class="w-10 btn btn-lg btn-primary" type="submit">Register</button>
+        }
+    </div>
+</body>
+</html>
+
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+} 

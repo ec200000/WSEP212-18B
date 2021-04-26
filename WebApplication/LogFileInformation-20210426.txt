@@ -1,0 +1,60 @@
+2021-04-26 18:04:55.119 +03:00 [Information] Register Event was triggered, with the parameters: user name: 
+
+2021-04-26 18:32:51.116 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:33:01.416 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:33:48.038 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:33:52.782 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:33:55.577 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:34:02.400 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:34:11.470 +03:00 [Information] Register Event was triggered, with the parameters: user name: itay
+
+2021-04-26 18:34:14.635 +03:00 [Information] Login Event was triggered, with the parameters: user name: itay
+
+2021-04-26 18:34:22.189 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: itay
+
+2021-04-26 18:34:27.339 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: itay, store name: 1, purchase policy: 1, sales policy: 1
+
+2021-04-26 18:34:29.115 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: itay
+
+2021-04-26 18:34:32.640 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: itay, store name: 2, purchase policy: 2, sales policy: 2
+
+2021-04-26 18:34:33.680 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: itay
+
+2021-04-26 18:34:44.679 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: 
+
+2021-04-26 18:38:08.060 +03:00 [Information] Register Event was triggered, with the parameters: user name: itay
+
+2021-04-26 18:38:11.780 +03:00 [Information] Login Event was triggered, with the parameters: user name: itay
+
+2021-04-26 18:38:50.369 +03:00 [Information] Logout Event was triggered, with the parameter: user name: 
+
+2021-04-26 18:39:22.114 +03:00 [Information] Register Event was triggered, with the parameters: user name: itay
+
+2021-04-26 18:39:43.672 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-04-26 18:39:53.459 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-04-26 18:39:57.558 +03:00 [Information] Register Event was triggered, with the parameters: user name: 
+
+2021-04-26 18:40:25.685 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:40:32.790 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:40:36.281 +03:00 [Information] Logout Event was triggered, with the parameter: user name: tal
+
+2021-04-26 18:46:18.244 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:46:20.141 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-26 18:46:23.862 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-04-26 18:48:01.409 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-04-26 18:50:22.920 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+

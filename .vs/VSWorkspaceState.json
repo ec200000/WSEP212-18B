@@ -1,10 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\WSEP212",
-    "\\WSEP212-TEST",
-    "\\WSEP212-TEST\\UnitTests"
+    "\\WebApplication",
+    "\\WebApplication\\Views",
+    "\\WebApplication\\Views\\Home",
+    "\\WebApplication\\Views\\Shared",
+    "\\WSEP212"
   ],
-  "SelectedNode": "\\WSEP212.csproj.user",
+  "SelectedNode": "\\WSEP212\\WSEP212.csproj",
   "PreviewInSolutionExplorer": false
 }

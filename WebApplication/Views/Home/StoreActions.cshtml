@@ -12,7 +12,7 @@
 </div>
 <div>
     <select name="storesList" id="storesList">
-            @{ int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");}
+            @{ int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[ ]>("stores");}
             @foreach (var dow in StoresList)
             {
                 <option value="@dow">@dow</option>

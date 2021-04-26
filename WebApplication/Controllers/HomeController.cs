@@ -167,7 +167,22 @@ namespace WebApplication.Controllers
             }
             return arr;
         }
-        
+
+        public IActionResult TryShowShoppingCart()
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+
         public IActionResult TryGetStores(StoreModel model)
         {
             SystemController systemController = SystemController.Instance;
