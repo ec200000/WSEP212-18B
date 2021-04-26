@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -8,7 +9,6 @@ namespace WSEP212.DomainLayer
     {
         // static counter for the predicateIDs
         private static int predicateCounter = 1;
-
         public int predicateID { get; set; }
 
         public PolicyPredicate()
@@ -17,6 +17,10 @@ namespace WSEP212.DomainLayer
             predicateCounter++;
         }
 
+        public abstract PolicyPredicate addNewPredicate(PolicyPredicate newPredicate);
+        public abstract ResultWithValue<PolicyPredicate> removePredicate(int predicateID);
+        public abstract ResultWithValue<PolicyPredicate> editPredicate(int predicateID, PolicyPredicate editedPredicate);
         public abstract bool applyPrediacte(PurchaseDetails purchaseDetails);
+
     }
 }

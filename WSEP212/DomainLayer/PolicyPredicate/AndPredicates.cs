@@ -2,31 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    public class AndPredicates : ComposedPredicates
+    public class AndPredicates : ComposedPredicate
     {
-        private readonly object applyPredicatesLock = new object();
-
-        public AndPredicates(ConcurrentLinkedList<PolicyPredicate> predicates) : base(predicates) { }
+        public AndPredicates(PolicyPredicate firstPredicate, PolicyPredicate secondPredicate) : base(firstPredicate, secondPredicate) { }
 
         // return true if all predicates are met, else false
         public override bool applyPrediacte(PurchaseDetails purchaseDetails)
         {
-            lock (applyPredicatesLock)
+            if(firstPredicate.applyPrediacte(purchaseDetails))
             {
-                Node<PolicyPredicate> predicateNode = predicates.First;
-                while (predicateNode.Value != null)
-                {
-                    if (!predicateNode.Value.applyPrediacte(purchaseDetails))
-                    {
-                        return false;
-                    }
-                    predicateNode = predicateNode.Next;
-                }
-                return true;
+                return secondPredicate.applyPrediacte(purchaseDetails);
             }
+            return false;
         }
     }
 }

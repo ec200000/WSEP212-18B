@@ -65,7 +65,8 @@ namespace WSEP212_TESTS.UnitTests
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
             PolicyPredicate onlyif = new SimplePredicate(predicate);
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, then);
+            PolicyPredicate onlythen = new SimplePredicate(then);
+            ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
         }
 
@@ -76,7 +77,8 @@ namespace WSEP212_TESTS.UnitTests
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
             PolicyPredicate onlyif = new SimplePredicate(predicate);
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, then);
+            PolicyPredicate onlythen = new SimplePredicate(then);
+            ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
         }
 
@@ -89,14 +91,8 @@ namespace WSEP212_TESTS.UnitTests
             PolicyPredicate sp2 = new SimplePredicate(p2);
             Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
             PolicyPredicate sp3 = new SimplePredicate(p3);
-            ConcurrentLinkedList<PolicyPredicate> orPred = new ConcurrentLinkedList<PolicyPredicate>();
-            orPred.TryAdd(sp1);
-            orPred.TryAdd(sp2);
-            PolicyPredicate orPP = new OrPredicates(orPred);
-            ConcurrentLinkedList<PolicyPredicate> andPred = new ConcurrentLinkedList<PolicyPredicate>();
-            andPred.TryAdd(sp3);
-            andPred.TryAdd(orPP);
-            PolicyPredicate andPP = new AndPredicates(andPred);
+            PolicyPredicate orPP = new OrPredicates(sp1, sp2);
+            PolicyPredicate andPP = new AndPredicates(sp3, orPP);
             Assert.IsTrue(andPP.applyPrediacte(purchaseDetails));
         }
 
@@ -109,14 +105,8 @@ namespace WSEP212_TESTS.UnitTests
             PolicyPredicate sp2 = new SimplePredicate(p2);
             Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
             PolicyPredicate sp3 = new SimplePredicate(p3);
-            ConcurrentLinkedList<PolicyPredicate> andPred = new ConcurrentLinkedList<PolicyPredicate>();
-            andPred.TryAdd(sp1);
-            andPred.TryAdd(sp2);
-            PolicyPredicate andPP = new AndPredicates(andPred);
-            ConcurrentLinkedList<PolicyPredicate> andPred2 = new ConcurrentLinkedList<PolicyPredicate>();
-            andPred2.TryAdd(sp3);
-            andPred2.TryAdd(andPP);
-            PolicyPredicate andPP2 = new AndPredicates(andPred2);
+            PolicyPredicate andPP = new AndPredicates(sp1, sp2);
+            PolicyPredicate andPP2 = new AndPredicates(sp3, andPP);
             Assert.IsFalse(andPP2.applyPrediacte(purchaseDetails));
         }
     }

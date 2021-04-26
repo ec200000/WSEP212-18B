@@ -10,14 +10,10 @@ namespace WSEP212.DomainLayer
     {
         public ConcurrentLinkedList<Sale> sales { get; set; }
 
-        public ComposedSales(ConcurrentLinkedList<Sale> sales)
+        public ComposedSales(ConcurrentLinkedList<Sale> sales) : base()
         {
             this.sales = sales;
         }
-
-        public abstract int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails);
-
-        public abstract double applySaleOnItem(Item item, PurchaseDetails purchaseDetails);
 
         public RegularResult addSale(Sale sale)
         {

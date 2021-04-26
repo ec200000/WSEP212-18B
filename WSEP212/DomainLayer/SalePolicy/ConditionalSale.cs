@@ -11,14 +11,14 @@ namespace WSEP212.DomainLayer
         public ApplySaleOn applySaleOn { get; set; }
         public PolicyPredicate predicate { get; set; }
 
-        public ConditionalSale(int salePercentage, ApplySaleOn applySaleOn, PolicyPredicate predicate)
+        public ConditionalSale(int salePercentage, ApplySaleOn applySaleOn, PolicyPredicate predicate) : base()
         {
             this.salePercentage = salePercentage;
             this.applySaleOn = applySaleOn;
             this.predicate = predicate;
         }
 
-        public int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             // checks if the predicate is met
             if (this.predicate.applyPrediacte(purchaseDetails))
@@ -33,7 +33,7 @@ namespace WSEP212.DomainLayer
         }
 
         // apply the sale only if the conditional is met and the sale is relevant to this item
-        public double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
             return item.price - ((item.price * salePercentage) / 100);

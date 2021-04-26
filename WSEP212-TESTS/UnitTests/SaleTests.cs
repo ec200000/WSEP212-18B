@@ -83,10 +83,7 @@ namespace WSEP212_TESTS.UnitTests
             PolicyPredicate sp1 = new SimplePredicate(p1);
             Predicate<PurchaseDetails> p2 = pd => pd.totalPurchasePrice() >= 100;
             PolicyPredicate sp2 = new SimplePredicate(p2);
-            ConcurrentLinkedList<PolicyPredicate> andPred = new ConcurrentLinkedList<PolicyPredicate>();
-            andPred.TryAdd(sp1);
-            andPred.TryAdd(sp2);
-            PolicyPredicate policyPredicate = new AndPredicates(andPred);
+            PolicyPredicate policyPredicate = new AndPredicates(sp1, sp2);
             Sale conditionalSale = new ConditionalSale(50, saleOnCategory, policyPredicate);
             Assert.AreEqual(4.5, conditionalSale.applySaleOnItem(itemA, purchaseDetails));
             Assert.AreEqual(4, conditionalSale.applySaleOnItem(itemC, purchaseDetails));
