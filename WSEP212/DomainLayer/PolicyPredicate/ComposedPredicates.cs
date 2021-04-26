@@ -10,12 +10,10 @@ namespace WSEP212.DomainLayer
     {
         public ConcurrentLinkedList<PolicyPredicate> predicates { get; set; }
 
-        public ComposedPredicates(ConcurrentLinkedList<PolicyPredicate> predicates)
+        public ComposedPredicates(ConcurrentLinkedList<PolicyPredicate> predicates) : base()
         {
             this.predicates = predicates;
         }
-
-        public abstract bool applyPrediacte(PurchaseDetails purchaseDetails);
 
         public RegularResult addPredicate(PolicyPredicate predicate)
         {

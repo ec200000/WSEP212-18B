@@ -19,3 +19,4 @@ D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויק
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\net5.0\ref\WSEP212.dll
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.pdb
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.genruntimeconfig.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.csprojAssemblyReference.cache
