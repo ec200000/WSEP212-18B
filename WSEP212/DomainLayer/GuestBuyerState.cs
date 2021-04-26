@@ -145,5 +145,11 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
+        
+        public override ConcurrentLinkedList<int> getUsersStores()
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
     }
 }

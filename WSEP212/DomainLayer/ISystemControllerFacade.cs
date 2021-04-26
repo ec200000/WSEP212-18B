@@ -38,5 +38,7 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(string userName);
         public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation();
         public ConcurrentDictionary<Item, int> searchItems(SearchItemsDTO searchItemsDTO);
+
+        public ResultWithValue<ConcurrentLinkedList<int>> getUsersStores(String userName);
     }
 }

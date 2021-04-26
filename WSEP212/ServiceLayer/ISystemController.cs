@@ -44,5 +44,7 @@ namespace WSEP212.ServiceLayer
 
         public RegularResult loginAsSystemManager(string userName, string password);
         public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
+
+        public ResultWithValue<ConcurrentLinkedList<int>> getUsersStores(String userName);
     }
 }

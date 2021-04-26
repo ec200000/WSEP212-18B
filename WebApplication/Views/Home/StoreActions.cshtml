@@ -1,0 +1,42 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    <input type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
+</div>
+<div>
+    <select name="storesList" id="storesList">
+            @{ int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");}
+            @foreach (var dow in StoresList)
+            {
+                <option value="@dow">@dow</option>
+            }
+        </select>
+    <input type="button" onclick="location.href='/OpenStore.cshtml';" value="Add Item To Store" />
+</div>
+
+<div>
+   <select name="storesList" id="storesList2">
+               @{ int[] AgeRagne = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");}
+               @foreach (var dow in AgeRagne)
+               {
+                   <option value="@dow">@dow</option>
+               }
+           </select>
+    
+    <select>
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+    </select>
+    
+    <input type="button" onclick="location.href='/OpenStore.cshtml';" value="Remove Item From Store" />
+</div>
+</body>
+</html>

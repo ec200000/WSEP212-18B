@@ -449,6 +449,22 @@ namespace WSEP212.DomainLayer
         {
             return this.sellerPermissions.TryAdd(permissions);
         }
+        
+        public void getUsersStores(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            object res;
+            try
+            {
+                res = state.getUsersStores();
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
 
     }
 }

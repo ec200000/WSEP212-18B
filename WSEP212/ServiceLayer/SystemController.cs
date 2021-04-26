@@ -250,5 +250,12 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.viewShoppingCart(userName);
         }
+        
+        public ResultWithValue<ConcurrentLinkedList<int>> getUsersStores(String userName)
+        {
+            String info = $"Get user's stores Event was triggered, with the parameter: user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getUsersStores(userName);
+        }
     }
 }

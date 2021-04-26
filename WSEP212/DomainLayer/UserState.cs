@@ -54,5 +54,7 @@ namespace WSEP212.DomainLayer
         public abstract ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
         public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory();
         public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory();
+        
+        public abstract ConcurrentLinkedList<int> getUsersStores();
     }
 }

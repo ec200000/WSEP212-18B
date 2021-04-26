@@ -175,3 +175,6 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.pdb
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Logout.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\OpenStore.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StoreActions.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Web.config
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Newtonsoft.Json.dll
