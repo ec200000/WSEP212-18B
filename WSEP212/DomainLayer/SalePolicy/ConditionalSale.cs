@@ -9,9 +9,9 @@ namespace WSEP212.DomainLayer
     {
         public int salePercentage { get; set; }
         public ApplySaleOn applySaleOn { get; set; }
-        public PolicyPredicate predicate { get; set; }
+        public SalePredicate predicate { get; set; }
 
-        public ConditionalSale(int salePercentage, ApplySaleOn applySaleOn, PolicyPredicate predicate) : base()
+        public ConditionalSale(int salePercentage, ApplySaleOn applySaleOn, SalePredicate predicate) : base()
         {
             this.salePercentage = salePercentage;
             this.applySaleOn = applySaleOn;

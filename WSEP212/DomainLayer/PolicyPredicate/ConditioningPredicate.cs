@@ -5,9 +5,16 @@ using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    public class ConditioningPredicate : ComposedPredicate
+    public class ConditioningPredicate : PurchasePredicate
     {
-        public ConditioningPredicate(PolicyPredicate onlyIf, PolicyPredicate then) : base(onlyIf, then) { }
+        public PurchasePredicate onlyIf { get; set; }
+        public PurchasePredicate then { get; set; }
+
+        public ConditioningPredicate(PurchasePredicate onlyIf, PurchasePredicate then)
+        {
+            this.onlyIf = onlyIf;
+            this.then = then;
+        }
 
         // the function will return true on condition that:
         // 1. then predicate is not met for this purchase
@@ -15,15 +22,13 @@ namespace WSEP212.DomainLayer
         // For Example, "You can buy 5 kg onion or more only if you buy apples"
         public override bool applyPrediacte(PurchaseDetails purchaseDetails)
         {
-            // second pred = then
             // the purchase does not contain the predicate
-            if (!secondPredicate.applyPrediacte(purchaseDetails))
+            if (!then.applyPrediacte(purchaseDetails))
             {
                 return true;
             }
-            // first pred = only if
             // check that the only If is met
-            return firstPredicate.applyPrediacte(purchaseDetails);
+            return onlyIf.applyPrediacte(purchaseDetails);
         }
     }
 }

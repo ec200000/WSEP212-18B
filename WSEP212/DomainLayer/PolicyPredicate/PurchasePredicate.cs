@@ -5,21 +5,18 @@ using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    public abstract class PolicyPredicate
+    public abstract class PurchasePredicate
     {
         // static counter for the predicateIDs
         private static int predicateCounter = 1;
         public int predicateID { get; set; }
 
-        public PolicyPredicate()
+        public PurchasePredicate()
         {
             this.predicateID = predicateCounter;
             predicateCounter++;
         }
 
-        public abstract PolicyPredicate addNewPredicate(PolicyPredicate newPredicate);
-        public abstract ResultWithValue<PolicyPredicate> removePredicate(int predicateID);
-        public abstract ResultWithValue<PolicyPredicate> editPredicate(int predicateID, PolicyPredicate editedPredicate);
         public abstract bool applyPrediacte(PurchaseDetails purchaseDetails);
 
     }

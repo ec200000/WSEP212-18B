@@ -10,54 +10,96 @@ namespace WSEP212.DomainLayer
     {
         public String purchasePolicyName { get; set; }
         //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
-        public PolicyPredicate purchasePredicates { get; set; }
+        public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
 
         public PurchasePolicy(String purchasePolicyName)
         {
             this.purchasePolicyName = purchasePolicyName;
-            this.purchasePredicates = null;
+            this.purchasePredicates = new ConcurrentDictionary<int, PurchasePredicate>();
         }
 
         // add new purchase predicate for the store purchase policy
-        // add the predicate to the other predicates by composing then with AND Predicate
-        public void addPurchasePolicyPredicate(PolicyPredicate predicate)
+        // add the predicate to the other predicates by composing them with AND Predicate - done by the build 
+        public RegularResult addPurchasePredicate(SimplePredicate newPredicate)
         {
-            if(purchasePredicates == null)
-                purchasePredicates = predicate;
-            else
-                purchasePredicates = purchasePredicates.addNewPredicate(predicate);
+            int predID = newPredicate.predicateID;
+            if (!purchasePredicates.ContainsKey(predID))
+            {
+                purchasePredicates.TryAdd(predID, newPredicate);
+                return new Ok("The Purchase Predicate Was Added To The Store's Purchase Policy");
+            }
+            return new Failure("The Predicate Is Already Exist In This Store Purchase Policy");
         }
 
         // remove purchase predicate from the store purchase policy
-        public RegularResult removePurchasePolicyPredicate(int predicateID)
+        public RegularResult removePurchasePredicate(int predicateID)
         {
-            ResultWithValue<PolicyPredicate> removeRes = purchasePredicates.removePredicate(predicateID);
-            if(removeRes.getTag())
+            if(purchasePredicates.ContainsKey(predicateID))
             {
-                purchasePredicates = removeRes.getValue();
-                return new Ok(removeRes.getMessage());
+                purchasePredicates.TryRemove(predicateID, out _);
+                return new Ok("The Purchase Predicate Was Removed To The Store's Purchase Policy");
             }
-            return new Failure(removeRes.getMessage());
+            return new Failure("The Predicate Is Not Exist In This Store Purchase Policy");
         }
 
-        // edit purchase predicate details
-        // removes the previous predicate and insert a new one
-        public RegularResult editPurchasePolicyPredicate(int predicateIDToEdit, PolicyPredicate predicateEdited)
+        // compose two predicates by the type of predicate 
+        public RegularResult composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
         {
-            ResultWithValue<PolicyPredicate> editRes = purchasePredicates.editPredicate(predicateIDToEdit, predicateEdited);
-            if (editRes.getTag())
+            if(!purchasePredicates.ContainsKey(firstPredicateID) || !purchasePredicates.ContainsKey(secondPredicateID))
             {
-                purchasePredicates = editRes.getValue();
-                return new Ok(editRes.getMessage());
+                return new Failure("One Or More Of The Predicates Are Not Exist In This Store Purchase Policy");
             }
-            return new Failure(editRes.getMessage());
+            purchasePredicates.TryRemove(firstPredicateID, out PurchasePredicate firstPredicate);
+            purchasePredicates.TryRemove(secondPredicateID, out PurchasePredicate secondPredicate);
+            // composing the two predicates togther
+            PurchasePredicate composedPredicate = null;
+            switch(typeOfComposition)
+            {
+                case PurchasePredicateCompositionType.AndComposition:
+                    composedPredicate = new AndPredicates(firstPredicate, secondPredicate);
+                    break;
+                case PurchasePredicateCompositionType.OrComposition:
+                    composedPredicate = new OrPredicates(firstPredicate, secondPredicate);
+                    break;
+                case PurchasePredicateCompositionType.ConditionalComposition:
+                    composedPredicate = new ConditioningPredicate(firstPredicate, secondPredicate);
+                    break;
+            }
+            purchasePredicates.TryAdd(composedPredicate.predicateID, composedPredicate);
+            return new Ok("The Composed Purchase Predicate Was Added To The Store's Purchase Policy");
+        }
+
+        // uncompose the predicate - split it to the two diffrent prediactes
+        public RegularResult uncomposePurchasePredicate(int predicateID)
+        {
+
+        }
+
+        // builds the purchase policy by all the predicates in the store
+        // build it by composing all predicates with AND composition
+        private PurchasePredicate buildPurchasePolicy()
+        {
+            PurchasePredicate purchasePolicyPredicates = null;
+            foreach (PurchasePredicate predicate in purchasePredicates.Values)
+            {
+                if(purchasePolicyPredicates == null)
+                {
+                    purchasePolicyPredicates = predicate;
+                }
+                else
+                {
+                    purchasePolicyPredicates = new AndPredicates(predicate, purchasePolicyPredicates);
+                }
+            }
+            return purchasePolicyPredicates;
         }
 
         // checks all the rules of the store policy
         public RegularResult approveByPurchasePolicy(PurchaseDetails purchaseDetails)
         {
             // checks rules
-            if (purchasePredicates == null || purchasePredicates.applyPrediacte(purchaseDetails))
+            PurchasePredicate purchasePolicyPredicates = buildPurchasePolicy();
+            if (purchasePolicyPredicates == null || purchasePolicyPredicates.applyPrediacte(purchaseDetails))
             {
                 return new Ok("The Purchase Was Approved By The Store's Purchase Policy");
             }

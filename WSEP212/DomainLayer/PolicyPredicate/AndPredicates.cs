@@ -6,9 +6,16 @@ using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    public class AndPredicates : ComposedPredicate
+    public class AndPredicates : SalePredicate
     {
-        public AndPredicates(PolicyPredicate firstPredicate, PolicyPredicate secondPredicate) : base(firstPredicate, secondPredicate) { }
+        public PurchasePredicate firstPredicate { get; set; }
+        public PurchasePredicate secondPredicate { get; set; }
+
+        public AndPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate)
+        {
+            this.firstPredicate = firstPredicate;
+            this.secondPredicate = secondPredicate;
+        }
 
         // return true if all predicates are met, else false
         public override bool applyPrediacte(PurchaseDetails purchaseDetails)

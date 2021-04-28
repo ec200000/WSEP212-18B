@@ -63,9 +63,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             // only if total price > 40 then you can buy 5 or more milk
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
-            PolicyPredicate onlyif = new SimplePredicate(predicate);
+            PurchasePredicate onlyif = new SimplePredicate(predicate);
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            PolicyPredicate onlythen = new SimplePredicate(then);
+            PurchasePredicate onlythen = new SimplePredicate(then);
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
         }
@@ -75,9 +75,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             // only if total price > 60 then you can buy 5 or more milk
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
-            PolicyPredicate onlyif = new SimplePredicate(predicate);
+            PurchasePredicate onlyif = new SimplePredicate(predicate);
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            PolicyPredicate onlythen = new SimplePredicate(then);
+            PurchasePredicate onlythen = new SimplePredicate(then);
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
         }
@@ -86,13 +86,13 @@ namespace WSEP212_TESTS.UnitTests
         public void composedPredicateMetTest()
         {
             Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
-            PolicyPredicate sp1 = new SimplePredicate(p1);
+            PurchasePredicate sp1 = new SimplePredicate(p1);
             Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
-            PolicyPredicate sp2 = new SimplePredicate(p2);
+            PurchasePredicate sp2 = new SimplePredicate(p2);
             Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
-            PolicyPredicate sp3 = new SimplePredicate(p3);
-            PolicyPredicate orPP = new OrPredicates(sp1, sp2);
-            PolicyPredicate andPP = new AndPredicates(sp3, orPP);
+            PurchasePredicate sp3 = new SimplePredicate(p3);
+            PurchasePredicate orPP = new OrPredicates(sp1, sp2);
+            PurchasePredicate andPP = new AndPredicates(sp3, orPP);
             Assert.IsTrue(andPP.applyPrediacte(purchaseDetails));
         }
 
@@ -100,13 +100,13 @@ namespace WSEP212_TESTS.UnitTests
         public void composedPredicateNotMetTest()
         {
             Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
-            PolicyPredicate sp1 = new SimplePredicate(p1);
+            PurchasePredicate sp1 = new SimplePredicate(p1);
             Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
-            PolicyPredicate sp2 = new SimplePredicate(p2);
+            PurchasePredicate sp2 = new SimplePredicate(p2);
             Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
-            PolicyPredicate sp3 = new SimplePredicate(p3);
-            PolicyPredicate andPP = new AndPredicates(sp1, sp2);
-            PolicyPredicate andPP2 = new AndPredicates(sp3, andPP);
+            PurchasePredicate sp3 = new SimplePredicate(p3);
+            PurchasePredicate andPP = new AndPredicates(sp1, sp2);
+            PurchasePredicate andPP2 = new AndPredicates(sp3, andPP);
             Assert.IsFalse(andPP2.applyPrediacte(purchaseDetails));
         }
     }
