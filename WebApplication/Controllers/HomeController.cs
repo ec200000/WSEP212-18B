@@ -177,6 +177,23 @@ namespace WebApplication.Controllers
                 return View("OpenStore");
             }
         }
+        
+        public IActionResult TryRemoveItem(ItemModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.removeItemFromStorage(userName, (int)storeID, model.itemID);
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ItemActions");
+            }
+        }
 
         private int[] listToArray(ConcurrentLinkedList<int> lst)
         {

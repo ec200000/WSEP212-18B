@@ -18,5 +18,7 @@ namespace WebApplication.Models
         
         [Required]
         public string category { get; set; }
+        
+        public int itemID { get; set; }
     }
 }

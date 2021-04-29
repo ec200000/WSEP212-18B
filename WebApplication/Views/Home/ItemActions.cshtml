@@ -29,14 +29,13 @@
     }
 </div>
 <div>
-   <select name="storesList" id="storesList">
-               @{ int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("items1");}
-               @foreach (var dow in ItemsList)
-               {
-                   <option value="@dow">@dow</option>
-               }
-           </select>
-           <input type="button" onclick="location.href='@Url.Action("TryAddItem", "Home")'" value="Remove Item From Store"/>
+    @using (Html.BeginForm("TryRemoveItem", "Home", FormMethod.Post))
+        {
+            int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("items1");
+            @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()));
+            
+            <button class="w-10 btn btn-lg btn-primary" type="submit">Remove Item From Store</button>
+        }
 </div>
 </body>
 </html>
