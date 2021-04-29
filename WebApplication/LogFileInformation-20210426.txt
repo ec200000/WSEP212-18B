@@ -1,0 +1,368 @@
+2021-04-26 17:46:41.174 +03:00 [Information] Register Event was triggered, with the parameters: user name: sh
+
+2021-04-26 17:47:46.541 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:47:51.521 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:50:10.401 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:50:18.070 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:50:26.881 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 17:53:25.506 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:53:28.987 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:53:34.141 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 17:57:38.700 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:57:42.640 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 17:57:45.037 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:00:32.984 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:00:36.369 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:01:14.467 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:06:36.502 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:13:16.229 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:13:20.429 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:13:24.713 +03:00 [Information] Register Event was triggered, with the parameters: user name: shee
+
+2021-04-26 18:13:29.473 +03:00 [Information] Login Event was triggered, with the parameters: user name: shee
+
+2021-04-26 18:14:00.140 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:20:49.728 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:20:59.288 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:21:01.331 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:22:56.631 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:22:59.620 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:23:23.751 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:23:28.150 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:23:35.104 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:25:26.900 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:25:30.251 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:25:31.927 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:30:56.859 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:31:00.800 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:31:07.674 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:31:10.669 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:31:13.425 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:31:19.328 +03:00 [Information] Register Event was triggered, with the parameters: user name: shee
+
+2021-04-26 18:31:21.943 +03:00 [Information] Login Event was triggered, with the parameters: user name: shee
+
+2021-04-26 18:31:26.172 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:33:56.848 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:33:58.762 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:34:09.473 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:34:13.652 +03:00 [Information] Register Event was triggered, with the parameters: user name: shee
+
+2021-04-26 18:34:15.814 +03:00 [Information] Login Event was triggered, with the parameters: user name: shee
+
+2021-04-26 18:34:17.372 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 18:38:53.187 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:38:55.104 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:38:56.345 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:39:43.426 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:40:03.488 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:40:05.335 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:40:06.250 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:40:43.820 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:40:45.913 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:40:47.166 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:42:28.257 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:42:30.294 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:42:31.750 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:43:44.938 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:43:48.354 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:43:49.482 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:45:08.716 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:45:10.532 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:45:11.555 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:46:17.536 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:46:20.349 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:46:21.549 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:47:51.219 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:47:52.900 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:47:53.785 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:48:51.049 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:49:08.760 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:49:13.006 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:49:25.290 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:54:16.200 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:54:18.981 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:54:24.674 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:54:28.768 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:59:26.638 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:59:28.846 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 18:59:30.062 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 18:59:52.073 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-04-26 18:59:59.488 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:00:09.512 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wow2, purchase policy: default, sales policy: default
+
+2021-04-26 19:00:10.877 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:00:22.478 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wwwee, purchase policy: default, sales policy: default
+
+2021-04-26 19:00:23.653 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:03:38.793 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:03:41.112 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:03:43.123 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:03:59.312 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: yes, purchase policy: default, sales policy: default
+
+2021-04-26 19:04:00.522 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:04:09.625 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: no, purchase policy: default, sales policy: default
+
+2021-04-26 19:04:10.761 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:04:20.498 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: maybe, purchase policy: default, sales policy: default
+
+2021-04-26 19:04:21.587 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:04:29.999 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: daaaaa, purchase policy: default, sales policy: default
+
+2021-04-26 19:04:31.214 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:07:11.078 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:07:13.731 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:07:14.774 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:08:03.243 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:08:05.623 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:08:06.577 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:08:46.619 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:08:48.534 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:08:49.437 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:09:44.875 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:09:46.942 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:09:47.979 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:10:06.230 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-04-26 19:10:07.136 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:10:12.095 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wow2, purchase policy: default, sales policy: default
+
+2021-04-26 19:10:12.917 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:11:45.420 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:11:47.692 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:11:48.663 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:12:23.878 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:12:26.000 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:12:26.936 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:13:43.104 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:13:45.821 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:13:46.981 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:14:04.937 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-04-26 19:14:05.996 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:14:11.403 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wow2, purchase policy: default, sales policy: default
+
+2021-04-26 19:14:12.729 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:18:39.060 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:18:42.498 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:18:50.508 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:19:12.904 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:19:24.993 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:22:29.020 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:22:31.481 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:22:32.524 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:23:18.245 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:23:20.234 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:23:21.757 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:23:37.491 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:23:39.718 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:23:41.381 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:24:26.401 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:24:28.420 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:24:29.350 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:24:39.046 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:28:03.997 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:28:06.510 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:28:10.836 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:28:17.105 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-04-26 19:28:18.428 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:31:04.616 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:31:08.595 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:31:10.044 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:35:42.269 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:35:44.299 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:35:45.305 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:37:01.371 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:37:03.498 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:37:04.733 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:37:11.257 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-04-26 19:37:12.317 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:37:55.696 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:37:57.818 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:37:59.755 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:38:45.169 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:38:46.914 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:38:47.935 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:42:41.187 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:42:45.163 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:42:50.843 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:43:17.408 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-04-26 19:43:18.769 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:43:50.283 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:43:52.987 +03:00 [Information] Logout Event was triggered, with the parameter: user name: she
+
+2021-04-26 19:51:32.423 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:51:39.631 +03:00 [Information] Register Event was triggered, with the parameters: user name: shee
+
+2021-04-26 19:51:42.258 +03:00 [Information] Login Event was triggered, with the parameters: user name: shee
+
+2021-04-26 19:51:43.417 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shee
+
+2021-04-26 19:57:18.509 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 19:59:58.014 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-04-26 20:00:00.670 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-04-26 20:00:01.554 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-04-26 20:00:09.395 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
