@@ -2,21 +2,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication.Models
 {
-    public class ItemModel
+    public class ReviewModel
     {
-        [Required]
-        public int quantity { get; set; }
-        
-        [Required]
-        public string itemName { get; set; }
-        
-        [Required]
-        public string description { get; set; }
-        
-        [Required]
-        public double price { get; set; }
-        
-        [Required]
-        public string category { get; set; }
+        [Required] public int itemID { get; set; }
+
+        [Required] public string review { get; set; }
+
+        [Required] public int storeID { get; set; }
     }
+
 }

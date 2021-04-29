@@ -249,7 +249,6 @@ namespace WebApplication.Controllers
                 ViewBag.Alert = res.getMessage();
                 return View("Index");
             }
-            return arr;
         }
 
         private int[] itemListToArray(ConcurrentLinkedList<Item> lst)
