@@ -68,8 +68,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
-            PurchasePredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(50, saleOnCategory, policyPredicate);
+            SalePredicate policyPredicate = new SimplePredicate(predicate);
+            SimpleSale sale = new SimpleSale(50, saleOnCategory);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             Assert.AreEqual(2.25, conditionalSale.applySaleOnItem(itemA, purchaseDetails));
             Assert.AreEqual(2, conditionalSale.applySaleOnItem(itemC, purchaseDetails));
             Assert.AreEqual(10, conditionalSale.applySaleOnItem(itemB, purchaseDetails));
@@ -80,11 +81,12 @@ namespace WSEP212_TESTS.UnitTests
         {
             ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
             Predicate<PurchaseDetails> p1 = pd => pd.numOfItemsInPurchase() >= 10;
-            PurchasePredicate sp1 = new SimplePredicate(p1);
+            SalePredicate sp1 = new SimplePredicate(p1);
             Predicate<PurchaseDetails> p2 = pd => pd.totalPurchasePrice() >= 100;
-            PurchasePredicate sp2 = new SimplePredicate(p2);
-            PurchasePredicate policyPredicate = new AndPredicates(sp1, sp2);
-            Sale conditionalSale = new ConditionalSale(50, saleOnCategory, policyPredicate);
+            SalePredicate sp2 = new SimplePredicate(p2);
+            SalePredicate policyPredicate = new AndPredicates(sp1, sp2);
+            SimpleSale sale = new SimpleSale(50, saleOnCategory);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             Assert.AreEqual(4.5, conditionalSale.applySaleOnItem(itemA, purchaseDetails));
             Assert.AreEqual(4, conditionalSale.applySaleOnItem(itemC, purchaseDetails));
             Assert.AreEqual(10, conditionalSale.applySaleOnItem(itemB, purchaseDetails));
@@ -96,16 +98,14 @@ namespace WSEP212_TESTS.UnitTests
             // sale 1
             ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
-            PurchasePredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(50, saleOnCategory, policyPredicate);
+            SalePredicate policyPredicate = new SimplePredicate(predicate);
+            SimpleSale sale = new SimpleSale(50, saleOnCategory);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
             ApplySaleOn saleOnStore = new SaleOnAllStore();
             Sale simpleSale = new SimpleSale(50, saleOnStore);
 
-            ConcurrentLinkedList<Sale> sales = new ConcurrentLinkedList<Sale>();
-            sales.TryAdd(conditionalSale);
-            sales.TryAdd(simpleSale);
-            Sale maxSale = new MaxSale(sales);
+            Sale maxSale = new MaxSale(conditionalSale, simpleSale);
             Assert.AreEqual(2.25, maxSale.applySaleOnItem(itemA, purchaseDetails));
             Assert.AreEqual(2, maxSale.applySaleOnItem(itemC, purchaseDetails));
             Assert.AreEqual(5, maxSale.applySaleOnItem(itemB, purchaseDetails));
@@ -117,16 +117,14 @@ namespace WSEP212_TESTS.UnitTests
             // sale 1
             ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
-            PurchasePredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(25, saleOnCategory, policyPredicate);
+            SalePredicate policyPredicate = new SimplePredicate(predicate);
+            SimpleSale sale = new SimpleSale(25, saleOnCategory);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
             ApplySaleOn saleOnStore = new SaleOnAllStore();
             Sale simpleSale = new SimpleSale(25, saleOnStore);
 
-            ConcurrentLinkedList<Sale> sales = new ConcurrentLinkedList<Sale>();
-            sales.TryAdd(conditionalSale);
-            sales.TryAdd(simpleSale);
-            Sale doubleSale = new DoubleSales(sales);
+            Sale doubleSale = new DoubleSale(conditionalSale, simpleSale);
             Assert.AreEqual(2.25, doubleSale.applySaleOnItem(itemA, purchaseDetails));
             Assert.AreEqual(2, doubleSale.applySaleOnItem(itemC, purchaseDetails));
             Assert.AreEqual(7.5, doubleSale.applySaleOnItem(itemB, purchaseDetails));
@@ -138,8 +136,9 @@ namespace WSEP212_TESTS.UnitTests
             // sale 1
             ApplySaleOn saleOnStore = new SaleOnAllStore();
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() > 10;
-            PurchasePredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(25, saleOnStore, policyPredicate);
+            SalePredicate policyPredicate = new SimplePredicate(predicate);
+            SimpleSale sale = new SimpleSale(25, saleOnStore);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
             ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
             Sale simpleSale = new SimpleSale(25, saleOnCategory);
@@ -156,8 +155,9 @@ namespace WSEP212_TESTS.UnitTests
             // sale 1
             ApplySaleOn saleOnStore = new SaleOnAllStore();
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() > 10;
-            PurchasePredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(25, saleOnStore, policyPredicate);
+            SalePredicate policyPredicate = new SimplePredicate(predicate);
+            SimpleSale sale = new SimpleSale(25, saleOnStore);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
             ApplySaleOn saleOnCategory = new SaleOnCategory("milk products");
             Sale simpleSale = new SimpleSale(25, saleOnCategory);
@@ -174,8 +174,9 @@ namespace WSEP212_TESTS.UnitTests
             // sale 1
             ApplySaleOn saleOnStore = new SaleOnAllStore();
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() > 5;
-            PurchasePredicate policyPredicate = new SimplePredicate(predicate);
-            Sale conditionalSale = new ConditionalSale(50, saleOnStore, policyPredicate);
+            SalePredicate policyPredicate = new SimplePredicate(predicate);
+            SimpleSale sale = new SimpleSale(50, saleOnStore);
+            Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
             ApplySaleOn saleOnCategory = new SaleOnCategory("milk products");
             Sale simpleSale = new SimpleSale(25, saleOnCategory);

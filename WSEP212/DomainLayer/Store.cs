@@ -13,7 +13,7 @@ namespace WSEP212.DomainLayer
         private readonly object itemInStorageLock = new object();
         private readonly object purchaseItemsLock = new object();
         private readonly object addStoreSellerLock = new object();
-        
+
         // static counter for the storeIDs of diffrent stores
         private static int storeCounter = 1;
 
@@ -50,7 +50,7 @@ namespace WSEP212.DomainLayer
 
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
-            
+
             this.deliverySystem = DeliverySystem.Instance;
         }
 
@@ -59,7 +59,7 @@ namespace WSEP212.DomainLayer
         {
             lock (itemInStorageLock)
             {
-                if(storage.ContainsKey(itemID))   // checks if item exist in the store
+                if (storage.ContainsKey(itemID))   // checks if item exist in the store
                 {
                     Item item = storage[itemID];
                     if (quantity <= item.quantity)   // checks if there is enough of the item in stock
@@ -78,17 +78,17 @@ namespace WSEP212.DomainLayer
         // returns the itemID of the item, otherwise -1
         public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, String category)
         {
-            if(price <= 0 || itemName.Equals("") || category.Equals("") || quantity < 0)
+            if (price <= 0 || itemName.Equals("") || category.Equals("") || quantity < 0)
             {
                 return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
             }
             // checks that the item not already exist
-            foreach (KeyValuePair<int,Item> pairItem in storage)
+            foreach (KeyValuePair<int, Item> pairItem in storage)
             {
                 Item item = pairItem.Value;
-                if(item.itemName.Equals(itemName) && item.category.Equals(category) && item.price == price)   // the item already exist
+                if (item.itemName.Equals(itemName) && item.category.Equals(category) && item.price == price)   // the item already exist
                 {
-                    if(item.setQuantity(quantity))
+                    if (item.setQuantity(quantity))
                         return new OkWithValue<int>("The Item Is Already In Storage, The Quantity Of The Item Has Been Updated Accordingly", pairItem.Key);
                     return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
                 }
@@ -103,7 +103,7 @@ namespace WSEP212.DomainLayer
         // If the item has n quantity in the store, all the n will be deleted
         public RegularResult removeItemFromStorage(int itemID)
         {
-            if(storage.ContainsKey(itemID))
+            if (storage.ContainsKey(itemID))
             {
                 storage.TryRemove(itemID, out _);
                 return new Ok("Item Was Successfully Removed From The Store's Storage");
@@ -118,10 +118,10 @@ namespace WSEP212.DomainLayer
             if (storage.ContainsKey(itemID))
             {
                 Item item = storage[itemID];
-                if(item.changeQuantity(numOfItems))
+                if (item.changeQuantity(numOfItems))
                     return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
                 return new Failure("Item quantity can't be negative");
-                
+
             }
             return new Failure("Item Is Not Exist In Storage");
         }
@@ -129,7 +129,7 @@ namespace WSEP212.DomainLayer
         // returns the obj Item that corresponds to the requested ID number
         public ResultWithValue<Item> getItemById(int itemID)
         {
-            if(storage.ContainsKey(itemID))
+            if (storage.ContainsKey(itemID))
             {
                 return new OkWithValue<Item>("Item Found In Storage Successfully", storage[itemID]);
             }
@@ -149,11 +149,68 @@ namespace WSEP212.DomainLayer
                 item.description = description;
                 item.price = price;
                 item.category = category;
-                if(item.setQuantity(quantity))
+                if (item.setQuantity(quantity))
                     return new Ok("Item Details Have Been Successfully Updated In The Store");
                 return new Failure("Item quantity can't be negative");
             }
             return new Failure("Item Not Exist In Storage");
+        }
+
+        // add a new purchase prediacte for the store
+        public RegularResult addPurchasePredicate(SimplePredicate newPredicate)
+        {
+            return this.purchasePolicy.addPurchasePredicate(newPredicate);
+        }
+
+        // removes purchase prediacte from the store
+        public RegularResult removePurchasePredicate(int predicateID)
+        {
+            return this.purchasePolicy.removePurchasePredicate(predicateID);
+        }
+
+        // compose two predicates by the type of predicate 
+        public RegularResult composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
+        {
+            return this.purchasePolicy.composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
+        }
+
+        // add new sale for the store sale policy
+        public RegularResult addSale(SimpleSale newSale)
+        {
+            return this.salesPolicy.addSale(newSale);
+        }
+
+        // remove sale from the store sale policy
+        public RegularResult removeSale(int saleID)
+        {
+            return this.salesPolicy.removeSale(saleID);
+        }
+
+        // add conditional for getting the sale
+        public RegularResult addSaleCondition(int saleID, SalePredicate condition)
+        {
+            return this.salesPolicy.addSaleCondition(saleID, condition);
+        }
+
+        // compose two sales by the type of sale 
+        public RegularResult composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        {
+            return this.salesPolicy.composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
+        }
+
+        // Apply the sales policy on a list of items
+        // The function will return the price after discount for each of the items
+        // <itemID, price>
+        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
+        {
+            return salesPolicy.pricesAfterSalePolicy(items, purchaseDetails);
+        }
+
+        // Apply the purchase policy on a list of items and their type of purchase
+        // The function will return if the purchase can be made
+        public RegularResult applyPurchasePolicy(PurchaseDetails purchaseDetails)
+        {
+            return purchasePolicy.approveByPurchasePolicy(purchaseDetails);
         }
 
         // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
@@ -186,21 +243,6 @@ namespace WSEP212.DomainLayer
                 return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
             }
             return new FailureWithValue<double>(purchasePolicyRes.getMessage(), -1);
-        }
-
-        // Apply the sales policy on a list of items
-        // The function will return the price after discount for each of the items
-        // <itemID, price>
-        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
-        {
-            return salesPolicy.pricesAfterSalePolicy(items, purchaseDetails);
-        }
-
-        // Apply the purchase policy on a list of items and their type of purchase
-        // The function will return if the purchase can be made
-        public RegularResult applyPurchasePolicy(PurchaseDetails purchaseDetails)
-        {
-            return purchasePolicy.approveByPurchasePolicy(purchaseDetails);
         }
 
         private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItems(ConcurrentDictionary<int, int> items)

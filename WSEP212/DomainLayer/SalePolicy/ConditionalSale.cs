@@ -7,14 +7,12 @@ namespace WSEP212.DomainLayer
 {
     public class ConditionalSale : Sale
     {
-        public int salePercentage { get; set; }
-        public ApplySaleOn applySaleOn { get; set; }
+        public Sale sale { get; set; }
         public SalePredicate predicate { get; set; }
 
-        public ConditionalSale(int salePercentage, ApplySaleOn applySaleOn, SalePredicate predicate) : base()
+        public ConditionalSale(Sale sale, SalePredicate predicate) : base()
         {
-            this.salePercentage = salePercentage;
-            this.applySaleOn = applySaleOn;
+            this.sale = sale;
             this.predicate = predicate;
         }
 
@@ -23,11 +21,7 @@ namespace WSEP212.DomainLayer
             // checks if the predicate is met
             if (this.predicate.applyPrediacte(purchaseDetails))
             {
-                // checks if the sale is relavent to this item 
-                if (applySaleOn.shouldApplySale(item))
-                {
-                    return salePercentage;
-                }
+                return sale.getSalePercentageOnItem(item, purchaseDetails);
             }
             return 0;
         }

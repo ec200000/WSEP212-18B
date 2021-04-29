@@ -69,12 +69,6 @@ namespace WSEP212.DomainLayer
             return new Ok("The Composed Purchase Predicate Was Added To The Store's Purchase Policy");
         }
 
-        // uncompose the predicate - split it to the two diffrent prediactes
-        public RegularResult uncomposePurchasePredicate(int predicateID)
-        {
-
-        }
-
         // builds the purchase policy by all the predicates in the store
         // build it by composing all predicates with AND composition
         private PurchasePredicate buildPurchasePolicy()

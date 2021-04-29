@@ -36,7 +36,20 @@ namespace WSEP212.DomainLayer
             if (storeSales.ContainsKey(saleID))
             {
                 storeSales.TryRemove(saleID, out _);
-                return new Ok("The Sale Was Removed To The Store's Purchase Policy");
+                return new Ok("The Sale Was Removed To The Store's Sale Policy");
+            }
+            return new Failure("The Sale Is Not Exist In This Store Sale Policy");
+        }
+
+        // add conditional for getting the sale
+        public RegularResult addSaleCondition(int saleID, SalePredicate condition)
+        {
+            if(storeSales.ContainsKey(saleID))
+            {
+                storeSales.TryRemove(saleID, out Sale sale);
+                ConditionalSale conditionalSale = new ConditionalSale(sale, condition);
+                storeSales.TryAdd(conditionalSale.saleID, conditionalSale);
+                return new Ok("The New Conditional Sale Added To The Store's Sale Policy");
             }
             return new Failure("The Sale Is Not Exist In This Store Sale Policy");
         }
@@ -70,12 +83,6 @@ namespace WSEP212.DomainLayer
             return new Ok("The Composed Sale Was Added To The Store's Sale Policy");
         }
 
-        // uncompose the sale - split it to the two diffrent sales
-        public RegularResult uncomposeSale(int saleID)
-        {
-
-        }
-
         // builds the purchase policy by all the predicates in the store
         // build it by composing all predicates with AND composition
         private Sale buildSalePolicy()
@@ -103,7 +110,7 @@ namespace WSEP212.DomainLayer
             Sale policySales = buildSalePolicy();
             foreach (Item item in items.Keys)
             {
-                if(storeSales == null)
+                if(policySales == null)
                 {
                     itemPriceAfterSale = item.price;
                 }
