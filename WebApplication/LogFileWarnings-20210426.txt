@@ -1,0 +1,6 @@
+2021-04-26 18:34:44.715 +03:00 [Warning] The user  cannot perform the getStorePurchaseHistory action!
+
+2021-04-26 18:38:50.401 +03:00 [Warning] The user  cannot perform the logout action!
+
+2021-04-26 20:18:54.565 +03:00 [Warning] The user tal cannot perform the login action!
+

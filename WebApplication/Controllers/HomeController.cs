@@ -42,6 +42,16 @@ namespace WebApplication.Controllers
             return View();  
         }  
 
+        public IActionResult ItemReview()
+        {
+            return View();
+        }
+
+        public IActionResult ShoppingCart()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             ViewBag.Name = HttpContext.Session.GetString(SessionName);  
@@ -105,7 +115,22 @@ namespace WebApplication.Controllers
                 return View("Index");
             }
         }
-        
+
+        public IActionResult TryReviewItem(ReviewModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.itemReview(SessionName, model.review, model.itemID, model.storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+
         public IActionResult TryLogin(UserModel model)
         {
             SystemController systemController = SystemController.Instance;
@@ -157,7 +182,21 @@ namespace WebApplication.Controllers
                 return View("OpenStore");
             }
         }
-        
+
+        private int[] listToArray(ConcurrentLinkedList<int> lst)
+        {
+            int[] arr = new int[lst.size];
+            int i = 0;
+            Node<int> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            while(node.Next != null)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
+
         public IActionResult TryAddItem(ItemModel model)
         {
             SystemController systemController = SystemController.Instance;
@@ -195,16 +234,20 @@ namespace WebApplication.Controllers
             }
         }
 
-        private int[] listToArray(ConcurrentLinkedList<int> lst)
+
+        public IActionResult TryShowShoppingCart()
         {
-            int[] arr = new int[lst.size];
-            int i = 0;
-            Node<int> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
-            while(node.Next != null)
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ShoppingCart> res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
             {
-                arr[i] = node.Value;
-                node = node.Next;
-                i++;
+                HttpContext.Session.SetObject("shopping_cart", res.getValue());
+                return null;
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
             }
             return arr;
         }
