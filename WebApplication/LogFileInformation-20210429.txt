@@ -60,3 +60,27 @@
 
 2021-04-29 13:10:27.597 +03:00 [Information] GetItemsInStoresInformation Event was triggered
 
+2021-04-29 18:39:48.812 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-29 18:39:51.651 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-29 18:52:41.802 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-29 18:52:44.448 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-29 18:53:34.677 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-29 18:53:36.786 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-29 20:00:40.136 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-29 20:00:42.061 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-29 20:08:31.422 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-29 20:08:33.061 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-04-29 20:16:16.805 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-04-29 20:16:18.663 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+

@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "TAn5sfhwo5G9VauhbqWyn5zOrqBFq5hy4AYqpeJ7DdsIbGB0jAlUCeVAihnncvDAuJiPmu0eSQadXkVb/S9iYQ==",
+  "dgSpecHash": "WfaWC3Qoa8Tr7BFC0slf0aRSGYTR7mwArL8W0rl4tyFS1qpdmYyn3P4rksizzKV7+wJwfQAG4vgUi9dbgXtcRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\talsk\\source\\repos\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.authentication.certificate\\5.0.5\\microsoft.aspnetcore.authentication.certificate.5.0.5.nupkg.sha512",
-    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.0-preview.3.21201.13\\microsoft.aspnetcore.cryptography.internal.6.0.0-preview.3.21201.13.nupkg.sha512",
-    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.0-preview.3.21201.13\\microsoft.aspnetcore.cryptography.keyderivation.6.0.0-preview.3.21201.13.nupkg.sha512",
+    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.5\\microsoft.aspnetcore.cryptography.internal.5.0.5.nupkg.sha512",
+    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.5\\microsoft.aspnetcore.cryptography.keyderivation.5.0.5.nupkg.sha512",
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.dataprotection.abstractions\\2.2.0\\microsoft.aspnetcore.dataprotection.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",

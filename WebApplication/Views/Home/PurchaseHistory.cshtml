@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Collections.Concurrent;
+@using System;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Purchase History";
+}
+<!DOCTYPE html>
+
+<html>
+<body>
+    @model WebApplication.Models.PurchaseModel
+    <div>
+        @using (Html.BeginForm("TryShowPurchaseHistory", "Home", FormMethod.Post))
+        {
+
+            string purchases = HttpContextAccessor.HttpContext.Session.GetString("_History");
+            string[] singleItems = purchases.Split(";");
+            //for (int i = 0; i < singleItems.Length; i++)
+            //{
+            //    Model.itemName = singleItems[i];
+            //    @Html.DisplayFor(model => model.itemName);
+            //}
+            //int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("items1");
+            @Html.DropDownListFor(model => model.itemInfo, new SelectList(singleItems.OfType<string>().ToList()));
+            <button class="w-10 btn btn-lg btn-primary" type="submit">Add Review</button>
+        }
+    </div>
+</body>
+</html>
+
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+} 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace WSEP212.DomainLayer
 {
@@ -11,6 +12,19 @@ namespace WSEP212.DomainLayer
         public ConcurrentDictionary<int, int> items { get; set; }
         public double totalPrice { get; set; }
         public DateTime dateOfPurchase { get; set; }
+
+        public override string ToString()
+        {
+            string value = "empty";
+            foreach (KeyValuePair<int, int> item in items)
+            {
+                value += "Item Name: " + StoreRepository.Instance.getStore(storeID).getValue().storage[item.Key].itemName + 
+                         ", Item ID: " + item.Key + 
+                         ", Store ID: " + storeID + ";";
+            }
+            return value;
+
+        }
 
         public PurchaseInvoice(int storeID, String userName, ConcurrentDictionary<int, int> items, double totalPrice, DateTime dateOfPurchase)
         {

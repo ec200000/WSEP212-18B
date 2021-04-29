@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "PURc77H7GYKpKH4ZhXzxGCEsiZa0oXQhEn+MHiHacREmU8ZjxCIWlwFr0MTEMrdm+f6kC1qlq9nZxo+yOitcMQ==",
+  "dgSpecHash": "PxJevTDie0bDGrShYj11161A5JA+z9j/YF5KeHGxisQqHa6WhE8BNc7Ysoc0bZ1VGoN9AFFgxjmkgyM6fVAJFw==",
   "success": true,
   "projectFilePath": "C:\\Users\\talsk\\source\\repos\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.0-preview.3.21201.13\\microsoft.aspnetcore.cryptography.internal.6.0.0-preview.3.21201.13.nupkg.sha512",
-    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.0-preview.3.21201.13\\microsoft.aspnetcore.cryptography.keyderivation.6.0.0-preview.3.21201.13.nupkg.sha512",
+    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.5\\microsoft.aspnetcore.cryptography.internal.5.0.5.nupkg.sha512",
+    "C:\\Users\\talsk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.5\\microsoft.aspnetcore.cryptography.keyderivation.5.0.5.nupkg.sha512",
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.codecoverage\\16.9.4\\microsoft.codecoverage.16.9.4.nupkg.sha512",
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
     "C:\\Users\\talsk\\.nuget\\packages\\microsoft.dotnet.internalabstractions\\1.0.0\\microsoft.dotnet.internalabstractions.1.0.0.nupkg.sha512",

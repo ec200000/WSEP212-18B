@@ -123,9 +123,13 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Cryptography.Internal": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
             "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
               "target": "Package",
-              "version": "[6.0.0-preview.3.21201.13, )"
+              "version": "[5.0.5, )"
             },
             "Serilog": {
               "target": "Package",

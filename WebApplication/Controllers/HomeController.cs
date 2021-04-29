@@ -32,6 +32,7 @@ namespace WebApplication.Controllers
         const string SessionLogin = "_Login";  
         const string SessionStoreID = "_StoreID";
         const string SessionItemID = "_ItemID";
+        const string SessionPurchaseHistory = "_History";
 
         private User user;
         
@@ -42,7 +43,16 @@ namespace WebApplication.Controllers
             return View();  
         }  
 
-        public IActionResult ItemReview()
+        public IActionResult ItemReview(PurchaseModel model)
+        {
+            string info = model.itemInfo;
+            string[] subInfo = info.Split(",");
+            HttpContext.Session.SetString(SessionItemID, subInfo[1].Substring(9));
+            HttpContext.Session.SetString(SessionItemID, subInfo[2].Substring(10));
+            return View();
+        }
+
+        public IActionResult PurchaseHistory()
         {
             return View();
         }
@@ -119,7 +129,7 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.itemReview(SessionName, model.review, model.itemID, model.storeID);
+            RegularResult res = systemController.itemReview(SessionName, model.review, int.Parse(HttpContext.Session.GetString(SessionItemID)), int.Parse(HttpContext.Session.GetString(SessionStoreID)));
             if (res.getTag())
             {
                 return RedirectToAction("Privacy");
@@ -234,6 +244,26 @@ namespace WebApplication.Controllers
             }
         }
 
+        public IActionResult TryShowPurchaseHistory(PurchaseModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getUserPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (PurchaseInvoice inv in res.getValue())
+                {
+                    value += inv.ToString() + ";";
+                }
+                HttpContext.Session.SetString(SessionPurchaseHistory, value);
+                return ItemReview(model);
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
 
         public IActionResult TryShowShoppingCart()
         {
