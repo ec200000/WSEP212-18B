@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,6 +16,7 @@ using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using System.Web;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using ShoppingCart = WebApplication.Models.ShoppingCartModel;
 
 namespace WebApplication.Controllers
 {
@@ -47,9 +49,36 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public IActionResult ShoppingCart()
+        public IActionResult ShoppingCart(ShoppingCartModel model)
         {
+            SystemController systemController = SystemController.Instance;
+            WSEP212.DomainLayer.ShoppingCart res = systemController.viewShoppingCart(model.UserName).getValue();
+            ShoppingCartItems(res);
             return View();
+        }
+        private void ShoppingCartItems(WSEP212.DomainLayer.ShoppingCart shoppingCart)
+        {
+            if (shoppingCart == null)
+            {
+                HttpContext.Session.SetObject("shoppingCart", new string[]{""});
+                return;
+            }
+            ConcurrentDictionary<int, ShoppingBag> shoppingBagss = shoppingCart.shoppingBags;
+            LinkedList<string> storesAndItems = new LinkedList<string>();
+            foreach (ShoppingBag shopBag in shoppingBagss.Values)
+            {
+                int storeid = shopBag.store.storeID;
+                string storeAndItem = "StoreID:" + storeid;
+                foreach (int itemID in shopBag.items.Keys)
+                {
+                    string item = " ItemsID:" + itemID;
+                    //storeAndItem = storeAndItem +;
+                    storesAndItems.AddLast(storeAndItem+item);
+                }
+            }
+
+            string[] strs = storesAndItems.ToArray();
+            HttpContext.Session.SetObject("shoppingCart", storesAndItems);
         }
 
         public IActionResult Privacy()
@@ -233,8 +262,40 @@ namespace WebApplication.Controllers
                 return View("ItemActions");
             }
         }
+        
+        public IActionResult TryRemoveItemFromShoppingCart(ItemModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, model.itemID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ShoppingCart");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ShoppingCart");
+            }
+        }
+        public IActionResult TrypurchaseItems(ShoppingCart model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            RegularResult res = systemController.purchaseItems(userName, model.Address);
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ShoppingCart");
+            }
+        }
 
-
+/*
         public IActionResult TryShowShoppingCart()
         {
             SystemController systemController = SystemController.Instance;
@@ -250,7 +311,7 @@ namespace WebApplication.Controllers
                 return View("Index");
             }
         }
-
+*/
         private int[] itemListToArray(ConcurrentLinkedList<Item> lst)
         {
             int[] arr = new int[lst.size];
