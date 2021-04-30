@@ -73,5 +73,11 @@ namespace WSEP212.DomainLayer
                 return false;
             }
         }
+
+        public override string ToString()
+        {
+            return "Item name: " + itemName + " Item description: " + description + " Item price: " + price +
+                   " Item category: " + category + " Item quantity: " + quantity+ " Item ID: "+itemID;
+        }
     }
 }
