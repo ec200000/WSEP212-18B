@@ -16,12 +16,6 @@
 
             string purchases = HttpContextAccessor.HttpContext.Session.GetString("_History");
             string[] singleItems = purchases.Split(";");
-            //for (int i = 0; i < singleItems.Length; i++)
-            //{
-            //    Model.itemName = singleItems[i];
-            //    @Html.DisplayFor(model => model.itemName);
-            //}
-            //int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("items1");
             @Html.DropDownListFor(model => model.itemInfo, new SelectList(singleItems.OfType<string>().ToList()));
             <button class="w-10 btn btn-lg btn-primary" type="submit">Add Review</button>
         }

@@ -15,13 +15,15 @@ namespace WSEP212.DomainLayer
 
         public override string ToString()
         {
-            string value = "empty";
+            string value = "";
             foreach (KeyValuePair<int, int> item in items)
             {
                 value += "Item Name: " + StoreRepository.Instance.getStore(storeID).getValue().storage[item.Key].itemName + 
                          ", Item ID: " + item.Key + 
                          ", Store ID: " + storeID + ";";
             }
+
+            value = value.Substring(0, value.Length - 1);
             return value;
 
         }

@@ -47,14 +47,31 @@ namespace WebApplication.Controllers
         {
             string info = model.itemInfo;
             string[] subInfo = info.Split(",");
-            HttpContext.Session.SetString(SessionItemID, subInfo[1].Substring(9));
-            HttpContext.Session.SetString(SessionItemID, subInfo[2].Substring(10));
+            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
+            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[2].Substring(11)));
             return View();
         }
 
         public IActionResult PurchaseHistory()
         {
-            return View();
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getUserPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (PurchaseInvoice inv in res.getValue())
+                {
+                    value += inv.ToString() + ";";
+                }
+                value = value.Substring(0, value.Length - 1);
+                HttpContext.Session.SetString(SessionPurchaseHistory, value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
         }
 
         public IActionResult ShoppingCart(ShoppingCartModel model)
@@ -195,7 +212,7 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.itemReview(SessionName, model.review, int.Parse(HttpContext.Session.GetString(SessionItemID)), int.Parse(HttpContext.Session.GetString(SessionStoreID)));
+            RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
                 return RedirectToAction("Privacy");
@@ -333,23 +350,7 @@ namespace WebApplication.Controllers
 
         public IActionResult TryShowPurchaseHistory(PurchaseModel model)
         {
-            SystemController systemController = SystemController.Instance;
-            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getUserPurchaseHistory(HttpContext.Session.GetString(SessionName));
-            if (res.getTag())
-            {
-                string value = "";
-                foreach (PurchaseInvoice inv in res.getValue())
-                {
-                    value += inv.ToString() + ";";
-                }
-                HttpContext.Session.SetString(SessionPurchaseHistory, value);
-                return ItemReview(model);
-            }
-            else
-            {
-                ViewBag.Alert = res.getMessage();
-                return View("Index");
-            }
+            return RedirectToAction("ItemReview", model);
         }
 
         public IActionResult TryShowShoppingCart()
