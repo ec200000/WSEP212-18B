@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,7 +15,6 @@ using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using System.Web;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
-using ShoppingCart = WebApplication.Models.ShoppingCartModel;
 
 namespace WebApplication.Controllers
 {
@@ -52,17 +50,20 @@ namespace WebApplication.Controllers
         public IActionResult ShoppingCart(ShoppingCartModel model)
         {
             SystemController systemController = SystemController.Instance;
-            WSEP212.DomainLayer.ShoppingCart res = systemController.viewShoppingCart(model.UserName).getValue();
+            WSEP212.DomainLayer.ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
             ShoppingCartItems(res);
             return View();
         }
+
         private void ShoppingCartItems(WSEP212.DomainLayer.ShoppingCart shoppingCart)
         {
             if (shoppingCart == null)
             {
-                HttpContext.Session.SetObject("shoppingCart", new string[]{""});
+                HttpContext.Session.SetObject("shoppingCart", new string[] {""});
+                RedirectToAction("Login");
                 return;
             }
+
             ConcurrentDictionary<int, ShoppingBag> shoppingBagss = shoppingCart.shoppingBags;
             LinkedList<string> storesAndItems = new LinkedList<string>();
             foreach (ShoppingBag shopBag in shoppingBagss.Values)
@@ -73,12 +74,12 @@ namespace WebApplication.Controllers
                 {
                     string item = " ItemsID:" + itemID;
                     //storeAndItem = storeAndItem +;
-                    storesAndItems.AddLast(storeAndItem+item);
+                    storesAndItems.AddLast(storeAndItem + item);
                 }
             }
 
             string[] strs = storesAndItems.ToArray();
-            HttpContext.Session.SetObject("shoppingCart", storesAndItems);
+            HttpContext.Session.SetObject("shoppingCart", strs);
         }
 
         public IActionResult Privacy()
@@ -123,8 +124,21 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
+            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             checkStoresItems(model.storeID, res);
             return View();
+        }
+        
+        public IActionResult SearchItems(SearchModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            if (!model.flag)
+            {
+                ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
+                allItemStrings(res);
+            }
+            model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
+            return View(model);
         }
         
         public IActionResult Subscribe(UserModel model)
@@ -143,6 +157,29 @@ namespace WebApplication.Controllers
                 ViewBag.Alert = res.getMessage();
                 return View("Index");
             }
+        }
+        
+        public IActionResult TrySearchItems(SearchModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            if (model.itemName == null) model.itemName = "";
+            if (model.keyWords == null) model.keyWords = "";
+            if (model.minPrice == 0) model.minPrice = int.MinValue;
+            if (model.maxPrice == 0) model.maxPrice = int.MaxValue;
+            if (model.category == null) model.category = "";
+            ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, model.category);
+            if (res != null)
+            {
+                itemsFromSearch(res);
+                model.flag = true;
+            }
+            else
+            {
+                HttpContext.Session.SetObject("allitemstrings", new string[] {""});
+                model.flag = true;
+            }
+            //model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
+            return RedirectToAction("SearchItems", model);
         }
 
         public IActionResult TryReviewItem(ReviewModel model)
@@ -263,39 +300,28 @@ namespace WebApplication.Controllers
             }
         }
         
-        public IActionResult TryRemoveItemFromShoppingCart(ItemModel model)
+        public IActionResult TryAddItemToShoppingCart(SearchModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, model.itemID);
+            string[] authorsList = model.itemChosen.Split(": ");
+            string[] store = authorsList[1].Split(" ");
+            int storeID = int.Parse(store[0]);
+            int itemID = int.Parse(authorsList[authorsList.Length - 1]);
+            RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
             if (res.getTag())
             {
-                return RedirectToAction("ShoppingCart");
+                //HttpContext.Session.SetInt32(SessionItemID, res.getValue());
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ShoppingCart");
-            }
-        }
-        public IActionResult TrypurchaseItems(ShoppingCart model)
-        {
-            SystemController systemController = SystemController.Instance;
-            string userName = HttpContext.Session.GetString(SessionName);
-            RegularResult res = systemController.purchaseItems(userName, model.Address);
-            if (res.getTag())
-            {
-                return RedirectToAction("Privacy");
-            }
-            else
-            {
-                ViewBag.Alert = res.getMessage();
-                return View("ShoppingCart");
+                return View("OpenStore");
             }
         }
 
-/*
+
         public IActionResult TryShowShoppingCart()
         {
             SystemController systemController = SystemController.Instance;
@@ -311,7 +337,7 @@ namespace WebApplication.Controllers
                 return View("Index");
             }
         }
-*/
+
         private int[] itemListToArray(ConcurrentLinkedList<Item> lst)
         {
             int[] arr = new int[lst.size];
@@ -326,6 +352,81 @@ namespace WebApplication.Controllers
             return arr;
         }
         
+        private void allStoresItems(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
+        {
+            int[] items;
+            foreach (Store store in dict.Keys)
+            {
+                items = itemListToArray(dict[store]);
+                string itms = "searchitems" + store.storeID;
+                HttpContext.Session.SetObject(itms, items);
+            }
+        }
+        
+        private void getAllItems(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
+        {
+            int[] items;
+            LinkedList<int> itms = new LinkedList<int>();
+            allStoresItems(dict);
+            foreach (Store store in dict.Keys)
+            {
+                string str = "searchitems" + store.storeID;
+                items = HttpContext.Session.GetObject<int[]>(str);
+                if (items != null)
+                {
+                    LinkedList<int> newlist = new LinkedList<int>(items);
+                    itms.AppendRange(newlist);
+                }
+            }
+            int[] searches = itms.ToArray();
+            HttpContext.Session.SetObject("allitems", searches);
+            //HttpContext.Session.SetObject("allitems!", dict);
+        }
+        
+        private void allStoresItemStrings(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
+        {
+            string[] items;
+            foreach (Store store in dict.Keys)
+            {
+                items = itemListToStringArray(dict[store], store.storeID);
+                string itms = "searchitemsstr" + store.storeID;
+                HttpContext.Session.SetObject(itms, items);
+            }
+        }
+        
+        private void allItemStrings(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
+        {
+            string[] items;
+            LinkedList<string> itms = new LinkedList<string>();
+            allStoresItemStrings(dict);
+            foreach (Store store in dict.Keys)
+            {
+                string str = "searchitemsstr" + store.storeID;
+                items = HttpContext.Session.GetObject<string[]>(str);
+                if (items != null)
+                {
+                    LinkedList<string> newlist = new LinkedList<string>(items);
+                    itms.AppendRange(newlist);
+                }
+            }
+            string[] searches = itms.ToArray();
+            HttpContext.Session.SetObject("allitemstrings", searches);
+            //HttpContext.Session.SetObject("allitems!", dict);
+        }
+        
+        private void itemsFromSearch(ConcurrentDictionary<Item,int> dict)
+        {
+            LinkedList<string> itms = new LinkedList<string>();
+            foreach (Item item in dict.Keys)
+            {
+                string str = "StoreID: "+dict[item]+" "+ item.ToString();
+                itms.AddLast(str);
+            }
+            string[] searches = itms.ToArray();
+            HttpContext.Session.SetObject("allitemstrings", searches);
+            //HttpContext.Session.SetObject("allitems!", dict);
+        }
+        
         private void checkStoresItems(int lst, ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
         {
             foreach (Store store in dict.Keys)
@@ -333,10 +434,24 @@ namespace WebApplication.Controllers
                 if (lst == store.storeID)
                 {
                     int[] items = itemListToArray(dict[store]);
-                    string itms = "items" + store.storeID;
+                    string itms = "items" + lst;
                     HttpContext.Session.SetObject(itms, items);
                 }
             }
+        }
+        
+        private string[] itemListToStringArray(ConcurrentLinkedList<Item> lst, int storeID)
+        {
+            string[] arr = new string[lst.size];
+            int i = 0;
+            Node<Item> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            while(node.Next != null)
+            {
+                arr[i] = "StoreID: "+storeID+" "+ node.Value.ToString();
+                node = node.Next;
+                i++;
+            }
+            return arr;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -344,5 +459,41 @@ namespace WebApplication.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+        public IActionResult TryRemoveItemFromShoppingCart(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.itemID;
+            string[] strs = itemID.Split(":");
+            int item = int.Parse(strs[strs.Length - 1]);
+            RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
+            if (res.getTag())
+            {
+                return RedirectToAction("ShoppingCart");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ShoppingCart");
+            }
+        }
+        public IActionResult TrypurchaseItems(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            RegularResult res = systemController.purchaseItems(userName, model.Address);
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ShoppingCart");
+            }
+        }
+
+
     }
 }

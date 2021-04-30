@@ -241,6 +241,9 @@ C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebAppli
 C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.csproj.CopyComplete
 C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
 C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemReview.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemReview.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\SearchItems.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Web.config
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\appsettings.json
@@ -287,6 +290,7 @@ C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\V
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Logout.cshtml.g.cs
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\OpenStore.cshtml.g.cs
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\SearchItems.cshtml.g.cs
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StoreActions.cshtml.g.cs
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs

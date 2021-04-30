@@ -10,7 +10,7 @@ namespace WebApplication.Models
         [Required]
         public string Address { get; set; }
         
-        public int itemID { get; set; }
+        public string itemID { get; set; }
         public int storeID { get; set; }
     }
 }

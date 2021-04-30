@@ -30,8 +30,9 @@
 </div>
 <div>
     @using (Html.BeginForm("TryRemoveItem", "Home", FormMethod.Post))
-        {
-            int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("items1");
+    {
+        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str);
             @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()));
             
             <button class="w-10 btn btn-lg btn-primary" type="submit">Remove Item From Store</button>

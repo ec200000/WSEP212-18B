@@ -24,13 +24,16 @@
       <e p="Controllers" t="Include">
         <e p="HomeController.cs" t="Include" />
       </e>
+      <e p="LinkedListExtensions.cs" t="Include" />
       <e p="LogFileInformation-20210426.txt" t="Include" />
       <e p="LogFileInformation-20210429.txt" t="Include" />
+      <e p="LogFileInformation-20210430.txt" t="Include" />
       <e p="LogFileWarnings-20210426.txt" t="Include" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
         <e p="ReviewModel.cs" t="Include" />
+        <e p="SearchModel.cs" t="Include" />
         <e p="ShoppingCartModel.cs" t="Include" />
         <e p="StoreModel.cs" t="Include" />
         <e p="UserModel.cs" t="Include" />
@@ -62,6 +65,7 @@
           <e p="Logout.cshtml" t="Include" />
           <e p="OpenStore.cshtml" t="Include" />
           <e p="Privacy.cshtml" t="Include" />
+          <e p="SearchItems.cshtml" t="Include" />
           <e p="ShoppingCart.cshtml" t="Include" />
           <e p="StoreActions.cshtml" t="Include" />
         </e>
