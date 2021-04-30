@@ -241,3 +241,7 @@ C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebAppli
 C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
 C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemReview.cshtml.g.cs
 C:\Users\talsk\source\repos\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseHistory.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemReview.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseHistory.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\SearchItems.cshtml.g.cs
