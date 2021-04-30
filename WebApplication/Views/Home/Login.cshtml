@@ -1,24 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
+<head>
+    <title>title</title>
+</head>
 <body>
 @model WebApplication.Models.UserModel
 <div>
-    @using (Html.BeginForm("Subscribe", "Home", FormMethod.Post))
+    @using (Html.BeginForm("TryLogin", "Home", FormMethod.Post))
     {
-
+      
         @Html.TextBoxFor(model => model.UserName)
         @Html.ValidationMessageFor(model => model.UserName)
-
-        @Html.TextBoxFor(model => model.Age)
-        @Html.ValidationMessageFor(model => model.Age)
-        
+              
         @Html.PasswordFor(model => model.Password)
         @Html.ValidationMessageFor(model => model.Password)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Register</button>
+        <button class="w-10 btn btn-lg btn-primary" type="submit">Login</button>
     }
 </div>
 </body>
