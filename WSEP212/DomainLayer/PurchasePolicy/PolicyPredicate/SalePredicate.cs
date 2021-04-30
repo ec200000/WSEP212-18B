@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WSEP212.DomainLayer
 {
-    public enum PurchaseType
+    public abstract class SalePredicate : PurchasePredicate
     {
-        ImmediatePurchase
+        public SalePredicate() : base() { }
     }
 }

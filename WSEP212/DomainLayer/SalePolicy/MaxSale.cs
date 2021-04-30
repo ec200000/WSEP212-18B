@@ -1,69 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
-    public class MaxSale : ComposedSales
+    public class MaxSale : Sale
     {
-        private readonly object saleLock = new object();
+        public Sale firstSale { get; set; }
+        public Sale secondSale { get; set; }
 
-        public MaxSale(ConcurrentLinkedList<Sale> sales) : base(sales) { }
+        public MaxSale(Sale firstSale, Sale secondSale)
+        {
+            this.firstSale = firstSale;
+            this.secondSale = secondSale;
+        }
+
+        public override ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType)
+        {
+            return new ConditionalSale(this, condition);
+        }
 
         public override int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
         {
-            lock (saleLock)
+            double firstSaleTotalPrice = purchaseDetails.totalPurchasePriceAfterSale(firstSale);
+            double secondSaleTotalPrice = purchaseDetails.totalPurchasePriceAfterSale(secondSale);
+            if(firstSaleTotalPrice < secondSaleTotalPrice)
             {
-                Node<Sale> saleNode = sales.First;
-                double cheapestPrice = Double.MaxValue, priceAfterSale;
-                Sale bestSale = null;
-                while (saleNode.Value != null)
-                {
-                    // checks if there is better sale
-                    priceAfterSale = purchaseDetails.totalPurchasePriceAfterSale(saleNode.Value);
-                    if (priceAfterSale < cheapestPrice)
-                    {
-                        bestSale = saleNode.Value;
-                        cheapestPrice = priceAfterSale;
-                    }
-                    saleNode = saleNode.Next;
-                }
-                if (bestSale == null)
-                {
-                    return 0;
-                }
-                // apply the best sale on the item
-                return bestSale.getSalePercentageOnItem(item, purchaseDetails);
+                return firstSale.getSalePercentageOnItem(item, purchaseDetails);
             }
+            return secondSale.getSalePercentageOnItem(item, purchaseDetails);
         }
 
         public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
         {
-            lock (saleLock)
+            double firstSaleTotalPrice = purchaseDetails.totalPurchasePriceAfterSale(firstSale);
+            double secondSaleTotalPrice = purchaseDetails.totalPurchasePriceAfterSale(secondSale);
+            if (firstSaleTotalPrice < secondSaleTotalPrice)
             {
-                Node<Sale> saleNode = sales.First;
-                double cheapestPrice = Double.MaxValue, priceAfterSale;
-                Sale bestSale = null;
-                while (saleNode.Value != null)
-                {
-                    // checks if there is better sale
-                    priceAfterSale = purchaseDetails.totalPurchasePriceAfterSale(saleNode.Value);
-                    if (priceAfterSale < cheapestPrice)
-                    {
-                        bestSale = saleNode.Value;
-                        cheapestPrice = priceAfterSale;
-                    }
-                    saleNode = saleNode.Next;
-                }
-                
-                if(bestSale == null)
-                {
-                    return item.price;
-                }
-                // apply the best sale on the item
-                return bestSale.applySaleOnItem(item, purchaseDetails);
+                return firstSale.applySaleOnItem(item, purchaseDetails);
             }
+            return secondSale.applySaleOnItem(item, purchaseDetails);
         }
     }
 }

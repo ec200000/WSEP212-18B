@@ -51,6 +51,10 @@
             "Serilog.Sinks.RollingFile": {
               "target": "Package",
               "version": "[3.3.1-dev-00771, )"
+            },
+            "System.Collections.Concurrent": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [

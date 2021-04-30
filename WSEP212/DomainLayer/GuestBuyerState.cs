@@ -14,12 +14,25 @@ namespace WSEP212.DomainLayer
         {
         }
 
-        public override UserType getUserType()
+        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
-            return UserType.GuestBuyer;
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -32,6 +45,18 @@ namespace WSEP212.DomainLayer
         }
 
         public override RegularResult appointStoreOwner(string storeOwnerName, int storeID)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<int> composePurchasePredicates(int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -129,6 +154,18 @@ namespace WSEP212.DomainLayer
         }
 
         public override RegularResult removeItemFromStorage(int storeID, int itemID)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override RegularResult removePurchasePredicate(int storeID, int predicateID)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override RegularResult removeSale(int storeID, int saleID)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)

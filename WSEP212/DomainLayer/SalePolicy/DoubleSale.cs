@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
 namespace WSEP212.DomainLayer
 {
-    public class SimpleSale : Sale
+    public class DoubleSale : Sale
     {
-        public int salePercentage { get; set; }
-        public ApplySaleOn applySaleOn { get; set; }
+        public Sale firstSale { get; set; }
+        public Sale secondSale { get; set; }
 
-        public SimpleSale(int salePercentage, ApplySaleOn applySaleOn) : base()
+        public DoubleSale(Sale firstSale, Sale secondSale)
         {
-            this.salePercentage = salePercentage;
-            this.applySaleOn = applySaleOn;
+            this.firstSale = firstSale;
+            this.secondSale = secondSale;
         }
 
         public override ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType)
@@ -23,17 +22,13 @@ namespace WSEP212.DomainLayer
 
         public override int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
         {
-            // checks if the sale is relavent to this item 
-            if (applySaleOn.shouldApplySale(item))
-            {
-                return salePercentage;
-            }
-            return 0;
+            return firstSale.getSalePercentageOnItem(item, purchaseDetails) + secondSale.getSalePercentageOnItem(item, purchaseDetails);
         }
 
         public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
+            // apply the two sales on the item
             return item.price - ((item.price * salePercentage) / 100);
         }
     }

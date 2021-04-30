@@ -10,14 +10,19 @@ namespace WSEP212.DomainLayer
         public Sale secondSale { get; set; }
         public Predicate<PurchaseDetails> selectionRule { get; set; }
 
-        public XorSale(Sale firstSale, Sale secondSale, Predicate<PurchaseDetails> selectionRule)
+        public XorSale(Sale firstSale, Sale secondSale, Predicate<PurchaseDetails> selectionRule) : base()
         {
             this.firstSale = firstSale;
             this.secondSale = secondSale;
             this.selectionRule = selectionRule;
         }
 
-        public int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType)
+        {
+            return new ConditionalSale(this, condition);
+        }
+
+        public override int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             // checks the first sale percentage
             // if 0, the second sale is the determines
@@ -42,7 +47,7 @@ namespace WSEP212.DomainLayer
         }
 
         // applied zero or one of the sales
-        public double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             // checks if the first sale cannot applied
             // if so, the second sale is the determines
