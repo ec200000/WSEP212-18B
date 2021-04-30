@@ -16,6 +16,22 @@ namespace WSEP212.DomainLayer
             this.predicate = predicate;
         }
 
+        public override ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType)
+        {
+            SalePredicate composedPredicate = null;
+            switch(compositionType)
+            {
+                case SalePredicateCompositionType.AndComposition:
+                    composedPredicate = new AndPredicates(condition, predicate);
+                    break;
+                case SalePredicateCompositionType.OrComposition:
+                    composedPredicate = new OrPredicates(condition, predicate);
+                    break;
+            }
+            this.predicate = composedPredicate;
+            return this;
+        }
+
         public override int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             // checks if the predicate is met

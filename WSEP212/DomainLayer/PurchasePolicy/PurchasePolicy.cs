@@ -20,15 +20,12 @@ namespace WSEP212.DomainLayer
 
         // add new purchase predicate for the store purchase policy
         // add the predicate to the other predicates by composing them with AND Predicate - done by the build 
-        public RegularResult addPurchasePredicate(SimplePredicate newPredicate)
+        // returns the id of the new purchase predicate
+        public int addPurchasePredicate(Predicate<PurchaseDetails> predicate) 
         {
-            int predID = newPredicate.predicateID;
-            if (!purchasePredicates.ContainsKey(predID))
-            {
-                purchasePredicates.TryAdd(predID, newPredicate);
-                return new Ok("The Purchase Predicate Was Added To The Store's Purchase Policy");
-            }
-            return new Failure("The Predicate Is Already Exist In This Store Purchase Policy");
+            SimplePredicate simplePredicate = new SimplePredicate(predicate);
+            purchasePredicates.TryAdd(simplePredicate.predicateID, simplePredicate);
+            return simplePredicate.predicateID;
         }
 
         // remove purchase predicate from the store purchase policy
@@ -43,11 +40,12 @@ namespace WSEP212.DomainLayer
         }
 
         // compose two predicates by the type of predicate 
-        public RegularResult composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
+        // returns the id of the new composed predicate
+        public ResultWithValue<int> composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
         {
             if(!purchasePredicates.ContainsKey(firstPredicateID) || !purchasePredicates.ContainsKey(secondPredicateID))
             {
-                return new Failure("One Or More Of The Predicates Are Not Exist In This Store Purchase Policy");
+                return new FailureWithValue<int>("One Or More Of The Predicates Are Not Exist In This Store Purchase Policy", -1);
             }
             purchasePredicates.TryRemove(firstPredicateID, out PurchasePredicate firstPredicate);
             purchasePredicates.TryRemove(secondPredicateID, out PurchasePredicate secondPredicate);
@@ -66,7 +64,7 @@ namespace WSEP212.DomainLayer
                     break;
             }
             purchasePredicates.TryAdd(composedPredicate.predicateID, composedPredicate);
-            return new Ok("The Composed Purchase Predicate Was Added To The Store's Purchase Policy");
+            return new OkWithValue<int>("The Composed Purchase Predicate Was Added To The Store's Purchase Policy", composedPredicate.predicateID);
         }
 
         // builds the purchase policy by all the predicates in the store

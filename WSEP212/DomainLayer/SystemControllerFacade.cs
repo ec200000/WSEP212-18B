@@ -560,6 +560,244 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, newPredicate };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.addPurchasePredicate, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the addPurchasePredicate action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (ResultWithValue<int>)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In addPurchasePredicate function, the error is: {e.Message}");
+                return new FailureWithValue<int>(e.Message, -1);
+            }
+        }
+
+        public RegularResult removePurchasePredicate(string userName, int storeID, int predicateID)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, predicateID };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.removePurchasePredicate, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the removePurchasePredicate action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In removePurchasePredicate function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public ResultWithValue<int> composePurchasePredicates(string userName, int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, firstPredicateID, secondPredicateID, typeOfComposition };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.composePurchasePredicates, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the composePurchasePredicates action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (ResultWithValue<int>)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In composePurchasePredicates function, the error is: {e.Message}");
+                return new FailureWithValue<int>(e.Message, -1);
+            }
+        }
+
+        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, salePercentage, saleOn };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.addSale, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the addSale action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (ResultWithValue<int>)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In addSale function, the error is: {e.Message}");
+                return new FailureWithValue<int>(e.Message, -1);
+            }
+        }
+
+        public RegularResult removeSale(string userName, int storeID, int saleID)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, saleID };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.removeSale, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the removeSale action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In removeSale function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, saleID, condition, compositionType };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.addSaleCondition, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the addSaleCondition action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (ResultWithValue<int>)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In addSaleCondition function, the error is: {e.Message}");
+                return new FailureWithValue<int>(e.Message, -1);
+            }
+        }
+
+        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                    //   return new FailureWithValue<int>(userRes.getMessage(), -1);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, firstSaleID, secondSaleID, typeOfComposition, selectionRule };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.composeSales, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the composeSales action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (ResultWithValue<int>)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In composeSales function, the error is: {e.Message}");
+                return new FailureWithValue<int>(e.Message, -1);
+            }
+        }
+
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(string userName, int storeID)
         {
             try

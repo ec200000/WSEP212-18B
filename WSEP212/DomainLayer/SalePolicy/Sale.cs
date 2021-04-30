@@ -17,6 +17,7 @@ namespace WSEP212.DomainLayer
             saleCounter++;
         }
 
+        public abstract ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType);
         public abstract int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails);
         public abstract double applySaleOnItem(Item item, PurchaseDetails purchaseDetails);
     }

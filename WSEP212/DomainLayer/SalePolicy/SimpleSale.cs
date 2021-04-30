@@ -16,6 +16,11 @@ namespace WSEP212.DomainLayer
             this.applySaleOn = applySaleOn;
         }
 
+        public override ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType)
+        {
+            return new ConditionalSale(this, condition);
+        }
+
         public override int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails)
         {
             // checks if the sale is relavent to this item 

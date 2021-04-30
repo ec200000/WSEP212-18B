@@ -19,15 +19,12 @@ namespace WSEP212.DomainLayer
 
         // add new sale for the store sale policy
         // add the sale to the other sales by composing them with Double sale - done by the build 
-        public RegularResult addSale(SimpleSale newSale)
+        // returns the id of the new sale
+        public int addSale(int salePercentage, ApplySaleOn saleOn)
         {
-            int saleID = newSale.saleID;
-            if (!storeSales.ContainsKey(saleID))
-            {
-                storeSales.TryAdd(saleID, newSale);
-                return new Ok("The Sale Was Added To The Store's Sale Policy");
-            }
-            return new Failure("The Sale Is Already Exist In This Store Sale Policy");
+            SimpleSale simpleSale = new SimpleSale(salePercentage, saleOn);
+            storeSales.TryAdd(simpleSale.saleID, simpleSale);
+            return simpleSale.saleID;
         }
 
         // remove sale from the store sale policy
@@ -42,24 +39,26 @@ namespace WSEP212.DomainLayer
         }
 
         // add conditional for getting the sale
-        public RegularResult addSaleCondition(int saleID, SalePredicate condition)
+        // if the sale already has conditionals, composed them by the composition type
+        public ResultWithValue<int> addSaleCondition(int saleID, Predicate<PurchaseDetails> predicate, SalePredicateCompositionType compositionType)
         {
             if(storeSales.ContainsKey(saleID))
             {
+                SimplePredicate simplePredicate = new SimplePredicate(predicate);
                 storeSales.TryRemove(saleID, out Sale sale);
-                ConditionalSale conditionalSale = new ConditionalSale(sale, condition);
+                ConditionalSale conditionalSale = sale.addSaleCondition(simplePredicate, compositionType);
                 storeSales.TryAdd(conditionalSale.saleID, conditionalSale);
-                return new Ok("The New Conditional Sale Added To The Store's Sale Policy");
+                return new OkWithValue<int>("The New Conditional Sale Added To The Store's Sale Policy", conditionalSale.saleID);
             }
-            return new Failure("The Sale Is Not Exist In This Store Sale Policy");
+            return new FailureWithValue<int>("The Sale Is Not Exist In This Store Sale Policy", -1);
         }
 
         // compose two sales by the type of sale 
-        public RegularResult composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
         {
             if (!storeSales.ContainsKey(firstSaleID) || !storeSales.ContainsKey(secondSaleID))
             {
-                return new Failure("One Or More Of The Sales Are Not Exist In This Store Sale Policy");
+                return new FailureWithValue<int>("One Or More Of The Sales Are Not Exist In This Store Sale Policy", -1);
             }
             storeSales.TryRemove(firstSaleID, out Sale firstSale);
             storeSales.TryRemove(secondSaleID, out Sale secondSale);
@@ -69,7 +68,7 @@ namespace WSEP212.DomainLayer
             {
                 case SaleCompositionType.XorComposition:
                     if(selectionRule == null)
-                        return new Failure("For Composing With Xor, You Must Note Selection Rule");
+                        return new FailureWithValue<int>("For Composing With Xor, You Must Note Selection Rule", -1);
                     composedSale = new XorSale(firstSale, secondSale, selectionRule);
                     break;
                 case SaleCompositionType.MaxComposition:
@@ -80,7 +79,7 @@ namespace WSEP212.DomainLayer
                     break;
             }
             storeSales.TryAdd(composedSale.saleID, composedSale);
-            return new Ok("The Composed Sale Was Added To The Store's Sale Policy");
+            return new OkWithValue<int>("The Composed Sale Was Added To The Store's Sale Policy", composedSale.saleID);
         }
 
         // builds the purchase policy by all the predicates in the store

@@ -105,6 +105,7 @@ D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויק
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\net5.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\net5.0\WSEP212.dll
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\bin\Debug\net5.0\WSEP212.pdb
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.csprojAssemblyReference.cache
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.GeneratedMSBuildEditorConfig.editorconfig
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.AssemblyInfoInputs.cache
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212-TESTS\obj\Debug\net5.0\WSEP212-TESTS.AssemblyInfo.cs

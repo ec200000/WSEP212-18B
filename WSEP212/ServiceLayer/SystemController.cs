@@ -250,5 +250,61 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.viewShoppingCart(userName);
         }
+
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate)
+        {
+            String info = $"addPurchasePredicate Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, newPredicate: {newPredicate}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.addPurchasePredicate(userName, storeID, newPredicate);
+        }
+
+        public RegularResult removePurchasePredicate(string userName, int storeID, int predicateID)
+        {
+            String info = $"removePurchasePredicate Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, predicateID: {predicateID}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.removePurchasePredicate(userName, storeID, predicateID);
+        }
+
+        public ResultWithValue<int> composePurchasePredicates(string userName, int storeID, int firstPredicateID, int secondPredicateID, int typeOfComposition)
+        {
+            String info = $"composePurchasePredicates Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, firstPredicateID: {firstPredicateID}, secondPredicateID: {secondPredicateID}, typeOfComposition: {typeOfComposition}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.composePurchasePredicates(userName, storeID, firstPredicateID, secondPredicateID, (PurchasePredicateCompositionType)typeOfComposition);
+        }
+
+        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn)
+        {
+            String info = $"addSale Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, salePercentage: {salePercentage}, saleOn: {saleOn}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.addSale(userName, storeID, salePercentage, saleOn);
+        }
+
+        public RegularResult removeSale(string userName, int storeID, int saleID)
+        {
+            String info = $"removeSale Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, saleID: {saleID}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.removeSale(userName, storeID, saleID);
+        }
+
+        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, int compositionType)
+        {
+            String info = $"addSaleCondition Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, saleID: {saleID}, condition: {condition}, compositionType: {compositionType}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.addSaleCondition(userName, storeID, saleID, condition, (SalePredicateCompositionType)compositionType);
+        }
+
+        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, int typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        {
+            String info = $"composeSales Event was triggered, with the parameter: " +
+                          $"user name: {userName}, storeID: {storeID}, firstSaleID: {firstSaleID}, secondSaleID: {secondSaleID}, typeOfComposition: {typeOfComposition}, selectionRule: {selectionRule}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.composeSales(userName, storeID, firstSaleID, secondSaleID, (SaleCompositionType)typeOfComposition, selectionRule);
+        }
     }
 }

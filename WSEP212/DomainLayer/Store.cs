@@ -157,7 +157,7 @@ namespace WSEP212.DomainLayer
         }
 
         // add a new purchase prediacte for the store
-        public RegularResult addPurchasePredicate(SimplePredicate newPredicate)
+        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate)
         {
             return this.purchasePolicy.addPurchasePredicate(newPredicate);
         }
@@ -169,15 +169,15 @@ namespace WSEP212.DomainLayer
         }
 
         // compose two predicates by the type of predicate 
-        public RegularResult composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
+        public ResultWithValue<int> composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
         {
             return this.purchasePolicy.composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
         }
 
         // add new sale for the store sale policy
-        public RegularResult addSale(SimpleSale newSale)
+        public int addSale(int salePercentage, ApplySaleOn saleOn)
         {
-            return this.salesPolicy.addSale(newSale);
+            return this.salesPolicy.addSale(salePercentage, saleOn);
         }
 
         // remove sale from the store sale policy
@@ -187,13 +187,13 @@ namespace WSEP212.DomainLayer
         }
 
         // add conditional for getting the sale
-        public RegularResult addSaleCondition(int saleID, SalePredicate condition)
+        public ResultWithValue<int> addSaleCondition(int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
         {
-            return this.salesPolicy.addSaleCondition(saleID, condition);
+            return this.salesPolicy.addSaleCondition(saleID, condition, compositionType);
         }
 
         // compose two sales by the type of sale 
-        public RegularResult composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
         {
             return this.salesPolicy.composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
         }

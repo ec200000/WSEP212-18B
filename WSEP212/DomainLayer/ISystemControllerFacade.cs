@@ -19,6 +19,15 @@ namespace WSEP212.DomainLayer
         //edit item in shopping cart is equal to -> remove + add
         public RegularResult purchaseItems(String userName, String address); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
+
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate);
+        public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID);
+        public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
+        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn);
+        public RegularResult removeSale(String userName, int storeID, int saleID);
+        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType);
+        public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule);
+
         public RegularResult itemReview(String userName, String review, int itemID, int storeID);
         public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);
