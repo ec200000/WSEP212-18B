@@ -90,6 +90,11 @@ namespace WSEP212.DomainLayer
             }
             return hasPermissionRes;
         }
+        
+        public override RegularResult continueAsGuest(String userName)
+        {
+            throw new NotImplementedException();
+        }
 
         private RegularResult hasPermissionInStore(int storeID, Permissions permission)
         {

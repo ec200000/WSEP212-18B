@@ -150,6 +150,23 @@ namespace WebApplication.Controllers
             }
         }
         
+        public IActionResult ContinueAsGuest(UserModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.continueAsGuest(model.UserName);
+            if (res.getTag())
+            {
+                HttpContext.Session.SetString(SessionName, model.UserName);
+                HttpContext.Session.SetInt32(SessionLogin, 3);
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+        
         public IActionResult TryEditDetails(ItemModel model)
         {
             SystemController systemController = SystemController.Instance;
@@ -250,19 +267,29 @@ namespace WebApplication.Controllers
         
         public IActionResult TryLogout(UserModel model)
         {
-            SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.logout(HttpContext.Session.GetString(SessionName));
-            if (res.getTag())
+            if (HttpContext.Session.GetInt32(SessionLogin) != 3)
+            {
+                SystemController systemController = SystemController.Instance;
+                RegularResult res = systemController.logout(HttpContext.Session.GetString(SessionName));
+                if (res.getTag())
+                {
+                    HttpContext.Session.SetString(SessionName, "");
+                    HttpContext.Session.SetInt32(SessionLogin, 0);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return View("Logout");
+                }
+            }
+            else
             {
                 HttpContext.Session.SetString(SessionName, "");
                 HttpContext.Session.SetInt32(SessionLogin, 0);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                ViewBag.Alert = res.getMessage();
-                return View("Logout");
-            }
+            
         }
         
         public IActionResult TryOpenStore(StoreModel model)

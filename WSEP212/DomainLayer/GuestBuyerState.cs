@@ -116,6 +116,12 @@ namespace WSEP212.DomainLayer
             User user = new User(userName, userAge);
             return UserRepository.Instance.insertNewUser(user, password);
         }
+        
+        public override RegularResult continueAsGuest(String userName)
+        {
+            User user = new User(userName);
+            return UserRepository.Instance.addLoginUser(user);
+        }
 
         public override RegularResult removeItemFromStorage(int storeID, int itemID)
         {

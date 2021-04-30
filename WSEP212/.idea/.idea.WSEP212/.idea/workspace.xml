@@ -6,7 +6,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="136437e0-c403-413c-9540-5d28ff5d7d5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/UserState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileErrors-20210429.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileErrors-20210430.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileInformation-20210426.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileInformation-20210429.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileWarnings-20210426.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileWarnings-20210429.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +71,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5d/c5c23a33/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/534A917A-6AFF-4C8D-81E9-A50289A7632D/E/TagHelperContent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Index.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WebApplication/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
@@ -68,17 +86,9 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Register.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/UserModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Startup.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Web.config" />
-      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/StoreModel.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/ReviewModel.cs" />
@@ -90,8 +100,6 @@
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/SearchModel.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SearchItems.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SystemManagerState.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" />
       <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
@@ -107,6 +115,16 @@
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" />
+      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
     </changedPaths>
   </component>
@@ -244,7 +262,13 @@
       <option name="presentableId" value="LOCAL‎00008" />
       <updated>1619715473796</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎00009" summary="finished search items">
+      <created>1619800671692</created>
+      <option name="number" value="LOCAL‎00009" />
+      <option name="presentableId" value="LOCAL‎00009" />
+      <updated>1619800671692</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,37 +295,12 @@
     <MESSAGE value="added tons of pages 2" />
     <MESSAGE value="added remove item from storage" />
     <MESSAGE value="search items finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="search items finished" />
+    <MESSAGE value="finished search items" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished search items" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs</url>
-          <line>784</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\SystemControllerFacade.cs" initialLine="784" containingFunctionPresentation="method 'searchItems'">
-            <startOffsets>
-              <option value="41533" />
-            </startOffsets>
-            <endOffsets>
-              <option value="41584" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs</url>
-          <line>785</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\SystemControllerFacade.cs" initialLine="785" containingFunctionPresentation="method 'searchItems'">
-            <startOffsets>
-              <option value="41597" />
-            </startOffsets>
-            <endOffsets>
-              <option value="41598" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/SearchItems.cs</url>
           <line>26</line>

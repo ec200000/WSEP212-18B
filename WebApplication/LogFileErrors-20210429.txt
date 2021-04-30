@@ -1,8 +1,0 @@
-2021-04-29 19:00:14.602 +03:00 [Error] In SearchItems function, the error is: Value cannot be null. (Parameter 'value')
-
-2021-04-29 20:44:47.940 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
-
-2021-04-29 20:44:57.095 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
-
-2021-04-29 20:44:57.095 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
-

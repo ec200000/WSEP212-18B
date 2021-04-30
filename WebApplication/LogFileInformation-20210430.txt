@@ -326,3 +326,9 @@
 
 2021-04-30 17:06:52.300 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: big manager, password: 123456 
 
+2021-04-30 20:24:30.959 +03:00 [Information] Continue As Guest Event was triggered, with the parameter: user name: hello
+
+2021-04-30 20:26:34.349 +03:00 [Information] Continue As Guest Event was triggered, with the parameter: user name: hello
+
+2021-04-30 20:28:04.646 +03:00 [Information] Continue As Guest Event was triggered, with the parameter: user name: hello
+

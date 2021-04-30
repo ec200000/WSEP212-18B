@@ -12,6 +12,8 @@ namespace WSEP212.DomainLayer
     {
         public RegularResult register(String userName, int userAge, String password);
         public RegularResult login(String userName, String password);
+
+        public RegularResult continueAsGuest(String userName);
         public RegularResult logout(String userName);
 
         public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity);

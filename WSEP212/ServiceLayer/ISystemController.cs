@@ -13,6 +13,8 @@ namespace WSEP212.ServiceLayer
     {
         public RegularResult register(String userName,  int userAge, String password); // USE CASE 2.3
         public RegularResult login(String userName, String password); // USE CASE 2.4
+        
+        public RegularResult continueAsGuest(String userName); // USE CASE 2.1
         public RegularResult logout(String userName); // USE CASE 3.1
 
         public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity); // USE CASE 2.7
