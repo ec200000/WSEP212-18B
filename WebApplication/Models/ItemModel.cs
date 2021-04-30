@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Concurrent;
 using System.ComponentModel.DataAnnotations;
+using WSEP212.DomainLayer;
 
 namespace WebApplication.Models
 {
@@ -20,5 +23,9 @@ namespace WebApplication.Models
         public string category { get; set; }
         
         public int itemID { get; set; }
+        
+        public int storeID { get; set; }
+        
+        public ConcurrentDictionary<String, ItemReview> reviews { get; set; }
     }
 }

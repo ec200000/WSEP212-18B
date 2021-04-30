@@ -15,7 +15,9 @@
               
         @Html.PasswordFor(model => model.Password)
         @Html.ValidationMessageFor(model => model.Password)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Login</button>
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="TryLogin" value="Login">Login</button>
+                                                                 
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="LoginAsSystemManager">Login As System Manager</button>
     }
 </div>
 </body>

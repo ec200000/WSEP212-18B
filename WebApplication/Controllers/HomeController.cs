@@ -90,6 +90,11 @@ namespace WebApplication.Controllers
             return View();
         }
         
+        public IActionResult GetStoreInformation()
+        {
+            return View();
+        }
+        
         public IActionResult ItemActions(StoreModel model)
         {
             SystemController systemController = SystemController.Instance;
@@ -97,6 +102,22 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             checkStoresItems(model.storeID, res);
             return View();
+        }
+        
+        public IActionResult EditItemDetails(ItemModel model)
+        {
+            KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
+            //HttpContext.Session.SetInt32(SessionStoreID, pair.Value);
+            HttpContext.Session.SetInt32(SessionItemID, pair.Key.itemID);
+            Item item = pair.Key;
+            model.storeID = pair.Value;
+            model.itemName = item.itemName;
+            model.category = item.category;
+            model.description = item.description;
+            model.quantity = item.quantity;
+            model.price = item.price;
+            model.reviews = item.reviews;
+            return View(model);
         }
         
         public IActionResult SearchItems(SearchModel model)
@@ -129,6 +150,30 @@ namespace WebApplication.Controllers
             }
         }
         
+        public IActionResult TryEditDetails(ItemModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            //KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
+            ItemDTO itemDto = new ItemDTO((int)HttpContext.Session.GetInt32(SessionStoreID),
+                model.quantity,
+                model.itemName,
+                model.description,
+                model.reviews,
+                model.price,
+                model.category);
+            itemDto.itemID = (int) HttpContext.Session.GetInt32(SessionItemID);
+            RegularResult res = systemController.editItemDetails(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID), itemDto);
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("Privacy");
+            }
+        }
+        
         public IActionResult TrySearchItems(SearchModel model)
         {
             SystemController systemController = SystemController.Instance;
@@ -155,7 +200,7 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.itemReview(SessionName, model.review, model.itemID, model.storeID);
+            RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, model.itemID, model.storeID);
             if (res.getTag())
             {
                 return RedirectToAction("Privacy");
@@ -182,6 +227,24 @@ namespace WebApplication.Controllers
             {
                 ViewBag.Alert = res.getMessage();
                 return View("Index");
+            }
+        }
+
+        public IActionResult LoginAsSystemManager(UserModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.loginAsSystemManager(model.UserName, model.Password);
+            if (res.getTag())
+            {
+                this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
+                HttpContext.Session.SetString(SessionName, model.UserName);
+                HttpContext.Session.SetInt32(SessionLogin, 2);
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Login");
             }
         }
         
@@ -239,7 +302,7 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ItemDTO item = new ItemDTO((int) storeID, model.quantity, model.itemName, model.description,
-                new ConcurrentDictionary<string, string>(), model.price, model.category);
+                new ConcurrentDictionary<string, ItemReview>(), model.price, model.category);
             ResultWithValue<int> res = systemController.addItemToStorage(userName, (int)storeID, item);
             if (res.getTag())
             {

@@ -97,18 +97,7 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult loginAsSystemManager(string userName, string password)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if(findUserRes.getTag())
-            {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
-                if(loginStateRes.getTag())
-                {
-                    user.changeState(new SystemManagerState(user));
-                    return new Ok("The User Has Successfully Logged In");
-                }
-                return loginStateRes;
-            }
-            return new Failure(findUserRes.getMessage());
+            throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
         public override RegularResult logout(String userName)

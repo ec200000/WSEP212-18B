@@ -1202,3 +1202,19 @@
 
 2021-04-29 19:56:24.331 +03:00 [Information] SearchItemsByCategory Event was triggered, with the parameters:item name: name, key words: , meminimal price: -2147483648, maximal price: 2147483647, category: 
 
+2021-04-29 20:40:09.874 +03:00 [Information] Login Event was triggered, with the parameters: user name: big manager
+
+2021-04-29 20:40:09.874 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: , password:  
+
+2021-04-29 20:44:35.215 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: , password:  
+
+2021-04-29 20:44:35.215 +03:00 [Information] Login Event was triggered, with the parameters: user name: big manager
+
+2021-04-29 20:44:47.938 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: , password:  
+
+2021-04-29 20:44:47.939 +03:00 [Information] Login Event was triggered, with the parameters: user name: big manager
+
+2021-04-29 20:44:57.094 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: , password:  
+
+2021-04-29 20:44:57.094 +03:00 [Information] Login Event was triggered, with the parameters: user name: big manager
+

@@ -13,6 +13,12 @@ namespace WSEP212.DomainLayer
             this.reviewer = user;
             reviews = new ConcurrentLinkedList<string>();
         }
+        
+        public ItemReview()
+        {
+            this.reviewer = null;
+            reviews = new ConcurrentLinkedList<string>();
+        }
 
         public bool addReview(string review)
         {

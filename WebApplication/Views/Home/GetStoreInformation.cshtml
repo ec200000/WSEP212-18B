@@ -9,9 +9,6 @@
 </head>
 <body>
 <div>
-    <input type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
-</div>
-<div>
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
         int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");

@@ -1,0 +1,22 @@
+2021-04-30 15:18:30.710 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:18:32.209 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:54.596 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:55.967 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:56.130 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:56.577 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:56.945 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:57.199 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:57.525 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 15:19:57.893 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
+
+2021-04-30 16:39:09.420 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
+

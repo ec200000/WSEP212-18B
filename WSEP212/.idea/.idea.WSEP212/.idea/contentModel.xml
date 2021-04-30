@@ -26,9 +26,13 @@
       </e>
       <e p="LinkedListExtensions.cs" t="Include" />
       <e p="LogFileErrors-20210429.txt" t="Include" />
+      <e p="LogFileErrors-20210430.txt" t="Include" />
       <e p="LogFileInformation-20210426.txt" t="Include" />
       <e p="LogFileInformation-20210429.txt" t="Include" />
+      <e p="LogFileInformation-20210430.txt" t="Include" />
       <e p="LogFileWarnings-20210426.txt" t="Include" />
+      <e p="LogFileWarnings-20210429.txt" t="Include" />
+      <e p="LogFileWarnings-20210430.txt" t="Include" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
@@ -57,6 +61,8 @@
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
         <e p="Home" t="Include">
+          <e p="EditItemDetails.cshtml" t="Include" />
+          <e p="GetStoreInformation.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
           <e p="ItemActions.cshtml" t="Include" />
           <e p="ItemReview.cshtml" t="Include" />
