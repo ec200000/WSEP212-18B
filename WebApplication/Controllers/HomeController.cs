@@ -444,7 +444,6 @@ namespace WebApplication.Controllers
             }
             string[] searches = itms.ToArray();
             HttpContext.Session.SetObject("allitemstrings", searches);
-            //HttpContext.Session.SetObject("allitems!", dict);
         }
         
         private void itemsFromSearch(ConcurrentDictionary<Item,int> dict)
