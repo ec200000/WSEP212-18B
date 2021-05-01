@@ -63,7 +63,8 @@ namespace WebApplication.Controllers
                 {
                     value += inv.ToString() + ";";
                 }
-                value = value.Substring(0, value.Length - 1);
+                if(value!="")
+                    value = value.Substring(0, value.Length - 1);
                 HttpContext.Session.SetString(SessionPurchaseHistory, value);
                 return View();
             }
@@ -187,6 +188,34 @@ namespace WebApplication.Controllers
             }
             model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
             return View(model);
+        }
+        
+        public IActionResult ShowReviews(ShowReviewsModel model)
+        {
+            model = new ShowReviewsModel();
+            int itemID = (int)HttpContext.Session.GetInt32(SessionItemID);
+            KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(itemID);
+            model.reviews = pair.Key.reviews;
+            model.reviewsStrings = reviewsToString(pair.Key.reviews);
+            return View(model);
+        }
+
+        private string reviewsToString(ConcurrentDictionary<String, ItemReview> reviews)
+        {
+            string reviewsStr = "";
+            foreach (ItemReview review in reviews.Values)
+            {
+                reviewsStr += review + "\n";
+            }
+            return reviewsStr;
+        }
+        
+        public IActionResult TryShowReviews(SearchModel model)
+        {
+            string[] authorsList = model.itemChosen.Split(": ");
+            int itemID = int.Parse(authorsList[authorsList.Length - 1]);
+            HttpContext.Session.SetInt32(SessionItemID, itemID);
+            return RedirectToAction("ShowReviews");
         }
         
         public IActionResult Subscribe(UserModel model)
@@ -463,7 +492,7 @@ namespace WebApplication.Controllers
         {
             int[] arr = new int[lst.size];
             int i = 0;
-            Node<Item> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            Node<Item> node = lst.First; 
             while(node.Next != null)
             {
                 arr[i] = node.Value.itemID;

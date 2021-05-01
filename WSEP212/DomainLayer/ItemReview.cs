@@ -24,5 +24,27 @@ namespace WSEP212.DomainLayer
         {
             return this.reviews.TryAdd(review);
         }
+
+        public override string ToString()
+        {
+            return "The user " + this.reviewer.userName + " wrote:\n" +
+                   reviewsToString();
+        }
+
+        private string reviewsToString()
+        {
+            if (reviews.First != null)
+            {
+                Node<string> node = reviews.First;
+                string reviewsStr = "";
+                while(node.Next != null)
+                {
+                    reviewsStr += node.Value + "\n";
+                    node = node.Next;
+                }
+                return reviewsStr;
+            }
+            return "";
+        }
     }
 }

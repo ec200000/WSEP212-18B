@@ -246,3 +246,5 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\V
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\EditItemDetails.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\GetStoreInformation.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShowReviews.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseHistory.cshtml.g.cs

@@ -16,7 +16,7 @@ namespace WSEP212.DomainLayer
         public int quantity { get; set; }
         public String itemName { get; set; }
         public String description { get; set; }
-        // A data structure associated with a user name and his review 
+        // A data structure associated with a user name and his reviews
         public ConcurrentDictionary<String, ItemReview> reviews { get; set; }
         public double price { get; set; }
         public String category { get; set; }

@@ -18,6 +18,7 @@
         @Html.DropDownListFor(model => model.itemChosen, new SelectList(Model.items.OfType<string>().ToList()))
         @Html.TextBoxFor(model => model.quantity)
         <button class="w-10 btn btn-lg btn-primary" type="submit">Add Item To Shopping Cart</button>
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="TryShowReviews">View Item's reviews</button>
     }
 </div>
 <div>
