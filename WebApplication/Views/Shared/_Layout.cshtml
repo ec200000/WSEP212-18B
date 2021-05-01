@@ -42,7 +42,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShoppingCart">Shopping Cart</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SearchItems">SearchItems</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PurchaseHistory">Review Item</a>
                         </li>
                     }
                      @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 0 && @HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 3)

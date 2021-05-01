@@ -32,6 +32,7 @@ namespace WebApplication.Controllers
         const string SessionLogin = "_Login";  
         const string SessionStoreID = "_StoreID";
         const string SessionItemID = "_ItemID";
+        const string SessionPurchaseHistory = "_History";
 
         private User user;
         
@@ -42,14 +43,70 @@ namespace WebApplication.Controllers
             return View();  
         }  
 
-        public IActionResult ItemReview()
+        public IActionResult ItemReview(PurchaseModel model)
         {
+            string info = model.itemInfo;
+            string[] subInfo = info.Split(",");
+            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
+            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[2].Substring(11)));
             return View();
         }
 
-        public IActionResult ShoppingCart()
+        public IActionResult PurchaseHistory()
         {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getUserPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (PurchaseInvoice inv in res.getValue())
+                {
+                    value += inv.ToString() + ";";
+                }
+                value = value.Substring(0, value.Length - 1);
+                HttpContext.Session.SetString(SessionPurchaseHistory, value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+
+        public IActionResult ShoppingCart(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            WSEP212.DomainLayer.ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
+            ShoppingCartItems(res);
             return View();
+        }
+
+        private void ShoppingCartItems(WSEP212.DomainLayer.ShoppingCart shoppingCart)
+        {
+            if (shoppingCart == null)
+            {
+                HttpContext.Session.SetObject("shoppingCart", new string[] {""});
+                RedirectToAction("Login");
+                return;
+            }
+
+            ConcurrentDictionary<int, ShoppingBag> shoppingBagss = shoppingCart.shoppingBags;
+            LinkedList<string> storesAndItems = new LinkedList<string>();
+            foreach (ShoppingBag shopBag in shoppingBagss.Values)
+            {
+                int storeid = shopBag.store.storeID;
+                string storeAndItem = "StoreID:" + storeid;
+                foreach (int itemID in shopBag.items.Keys)
+                {
+                    string item = " ItemsID:" + itemID;
+                    //storeAndItem = storeAndItem +;
+                    storesAndItems.AddLast(storeAndItem + item);
+                }
+            }
+
+            string[] strs = storesAndItems.ToArray();
+            HttpContext.Session.SetObject("shoppingCart", strs);
         }
 
         public IActionResult Privacy()
@@ -217,7 +274,7 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, model.itemID, model.storeID);
+            RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
                 return RedirectToAction("Privacy");
@@ -381,6 +438,10 @@ namespace WebApplication.Controllers
             }
         }
 
+        public IActionResult TryShowPurchaseHistory(PurchaseModel model)
+        {
+            return RedirectToAction("ItemReview", model);
+        }
 
         public IActionResult TryShowShoppingCart()
         {
@@ -518,5 +579,41 @@ namespace WebApplication.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+        public IActionResult TryRemoveItemFromShoppingCart(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.itemID;
+            string[] strs = itemID.Split(":");
+            int item = int.Parse(strs[strs.Length - 1]);
+            RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
+            if (res.getTag())
+            {
+                return RedirectToAction("ShoppingCart");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ShoppingCart");
+            }
+        }
+        public IActionResult TrypurchaseItems(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            RegularResult res = systemController.purchaseItems(userName, model.Address);
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ShoppingCart");
+            }
+        }
+
+
     }
 }
