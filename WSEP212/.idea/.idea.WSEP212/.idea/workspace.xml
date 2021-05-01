@@ -6,16 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="136437e0-c403-413c-9540-5d28ff5d7d5e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +17,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="SearchItems" />
+        <entry key="$PROJECT_DIR$/.." value="UsersPurchaseHistory" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -43,6 +35,7 @@
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewStart.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ItemActions.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5d/c5c23a33/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WebApplication/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ShoppingCart.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/534A917A-6AFF-4C8D-81E9-A50289A7632D/E/TagHelperContent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -99,9 +92,11 @@
       <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/ShowReviewsModel.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShowReviews.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -190,7 +185,7 @@
       <workItem from="1619717686562" duration="670000" />
       <workItem from="1619784503460" duration="6749000" />
       <workItem from="1619871788600" duration="2207000" />
-      <workItem from="1619887091415" duration="625000" />
+      <workItem from="1619887091415" duration="1301000" />
     </task>
     <task id="LOCAL‎00001" summary="added views">
       <created>1619436040916</created>
@@ -258,7 +253,13 @@
       <option name="presentableId" value="LOCAL‎00011" />
       <updated>1619875977954</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL‎00012" summary="finished users purchase history">
+      <created>1619887944571</created>
+      <option name="number" value="LOCAL‎00012" />
+      <option name="presentableId" value="LOCAL‎00012" />
+      <updated>1619887944571</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,7 +289,8 @@
     <MESSAGE value="finished search items" />
     <MESSAGE value="handled continue as guest" />
     <MESSAGE value="merged all pages" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged all pages" />
+    <MESSAGE value="finished users purchase history" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished users purchase history" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

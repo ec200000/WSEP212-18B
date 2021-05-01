@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
             string info = model.itemInfo;
             string[] subInfo = info.Split(",");
             HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
-            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[2].Substring(11)));
+            HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(11)));
             return View();
         }
 
@@ -654,12 +654,38 @@ namespace WebApplication.Controllers
                 {
                     foreach (PurchaseInvoice inv in invs.Value)
                     {
-                        value += invs.Key+" bought  "+inv.ToString() + ";";
+                        value += invs.Key+" bought  "+inv.ToString() + "\n" + ";";
                     }
                 }
                 if(value!="")
                     value = value.Substring(0, value.Length - 1);
                 HttpContext.Session.SetString("users_history", value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+        
+        public IActionResult StoresPurchaseHistory()
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentDictionary<int,ConcurrentBag<PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (KeyValuePair<int,ConcurrentBag<PurchaseInvoice>> invs in res.getValue())
+                {
+                    foreach (PurchaseInvoice inv in invs.Value)
+                    {
+                        value += inv.ToString() + "\n" + ";";
+                    }
+                }
+                if(value!="")
+                    value = value.Substring(0, value.Length - 1);
+                HttpContext.Session.SetString("Stores_history", value);
                 return View();
             }
             else
