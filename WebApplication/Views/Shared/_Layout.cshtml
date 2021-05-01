@@ -55,6 +55,12 @@
                          <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="StoreActions">Store Actions</a>
                      </li>
                      }
+                      @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 2)
+                      {
+                          <li class="nav-item">
+                              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UsersPurchaseHistory">Users' Purchase History</a>
+                          </li>
+                      }
                 </ul>
             </div>
         </div>

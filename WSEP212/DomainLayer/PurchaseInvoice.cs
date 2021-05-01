@@ -20,7 +20,8 @@ namespace WSEP212.DomainLayer
             {
                 value += "Item Name: " + StoreRepository.Instance.getStore(storeID).getValue().storage[item.Key].itemName + 
                          ", Item ID: " + item.Key + 
-                         ", Store ID: " + storeID + ";";
+                         ", Item quantity: " + item.Value + 
+                         ", In Store ID: " + storeID + ";";
             }
 
             value = value.Substring(0, value.Length - 1);

@@ -73,6 +73,7 @@
           <e p="ShoppingCart.cshtml" t="Include" />
           <e p="ShowReviews.cshtml" t="Include" />
           <e p="StoreActions.cshtml" t="Include" />
+          <e p="UsersPurchaseHistory.cshtml" t="Include" />
         </e>
         <e p="Shared" t="Include">
           <e p="_Layout.cshtml" t="Include" />

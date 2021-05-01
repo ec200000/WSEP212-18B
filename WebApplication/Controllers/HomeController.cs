@@ -642,7 +642,32 @@ namespace WebApplication.Controllers
                 return View("ShoppingCart");
             }
         }
-
-
+        
+        public IActionResult UsersPurchaseHistory()
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentDictionary<string,ConcurrentBag<PurchaseInvoice>>> res = systemController.getUsersPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (KeyValuePair<string,ConcurrentBag<PurchaseInvoice>> invs in res.getValue())
+                {
+                    foreach (PurchaseInvoice inv in invs.Value)
+                    {
+                        value += invs.Key+" bought  "+inv.ToString() + ";";
+                    }
+                }
+                if(value!="")
+                    value = value.Substring(0, value.Length - 1);
+                HttpContext.Session.SetString("users_history", value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+        
     }
 }
