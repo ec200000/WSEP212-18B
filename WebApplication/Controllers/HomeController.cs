@@ -63,6 +63,13 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetObject("allUsers", users);
             return View();
         }
+        
+        public IActionResult PurchasePredicate()
+        {
+            //string[] predicates = StoreRepository.Instance.getStore((int)HttpContext.Session.GetInt32(SessionStoreID)).getValue().purchasePolicy;
+            //HttpContext.Session.SetObject("predicates", predicates);
+            return View();
+        }
 
         public IActionResult PurchaseHistory()
         {
@@ -156,18 +163,28 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentLinkedList<int>> res = systemController.getUsersStores(HttpContext.Session.GetString(SessionName));
             int[] stores = listToArray(res.getValue());
-            HttpContext.Session.SetObject("stores", stores);
+            string[] storesValues = new string[stores.Length];
+            for (int i = 0; i < stores.Length; i++)
+            {
+                string value = "Store ID: " + stores[i] + ", Store Name: " +
+                               StoreRepository.Instance.stores[stores[i]].storeName +
+                               ", Store Address: " + StoreRepository.Instance.stores[stores[i]].storeAddress;
+                storesValues[i] = value;
+            }
+            HttpContext.Session.SetObject("stores", storesValues);
             return View();
         }
         
         public IActionResult GetStoreInformation(StoreModel model)
         {
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
             HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             return View();
         }
         
         public IActionResult ItemActions(StoreModel model)
         {
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
             if (model.storeID != 0)
             {
                 SystemController systemController = SystemController.Instance;
