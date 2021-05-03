@@ -25,9 +25,6 @@
         <e p="HomeController.cs" t="Include" />
       </e>
       <e p="LinkedListExtensions.cs" t="Include" />
-      <e p="LogFileInformation-20210430.txt" t="Include" />
-      <e p="LogFileInformation-20210501.txt" t="Include" />
-      <e p="LogFileWarnings-20210430.txt" t="Include" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
