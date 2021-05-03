@@ -352,3 +352,79 @@
 
 2021-05-03 17:19:23.285 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: shelly
 
+2021-05-03 18:18:53.851 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-05-03 18:18:55.631 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-05-03 18:18:57.726 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-05-03 18:18:57.760 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:19:01.449 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 18:19:07.898 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: tal, store name: 1, purchase policy: 1, sales policy: 1
+
+2021-05-03 18:19:07.930 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 18:19:09.817 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:19:13.928 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 18:19:57.784 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 18:34:29.102 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:22:49.723 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-05-03 19:22:54.044 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-05-03 19:22:54.078 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:22:57.154 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:01.081 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: tal, store name: 1, purchase policy: 1, sales policy: 1
+
+2021-05-03 19:23:01.109 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:06.667 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: tal, store name: 2, purchase policy: 2, sales policy: 2
+
+2021-05-03 19:23:06.677 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:10.235 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:12.351 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:13.260 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:13.909 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:17.318 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:18.195 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:28.934 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:23:31.843 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:26:35.372 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-05-03 19:26:37.569 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-05-03 19:26:37.602 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:26:39.046 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:26:42.396 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: tal, store name: 1, purchase policy: 1, sales policy: 1
+
+2021-05-03 19:26:42.422 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:26:45.544 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: tal, store name: 2, purchase policy: 2, sales policy: 2
+
+2021-05-03 19:26:45.552 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:26:47.675 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:26:53.730 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 19:26:58.972 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+

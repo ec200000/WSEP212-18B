@@ -14,8 +14,8 @@
 <div>
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
-        int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");
-        @Html.DropDownListFor(model => model.storeID, new SelectList(StoresList.OfType<int>().ToList()));
+        string[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("stores");
+        @Html.DropDownListFor(model => model.storeInfo, new SelectList(StoresList.OfType<string>().ToList()));
         
         <button class="w-10 btn btn-lg btn-primary" formaction="ItemActions" type="submit">See Items In Store</button>
 
