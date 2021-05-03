@@ -5,9 +5,7 @@
     <projectFile>../WebApplication/WebApplication.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="136437e0-c403-413c-9540-5d28ff5d7d5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="136437e0-c403-413c-9540-5d28ff5d7d5e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -189,7 +187,7 @@
       <workItem from="1619871788600" duration="2207000" />
       <workItem from="1619887091415" duration="2186000" />
       <workItem from="1620033839701" duration="897000" />
-      <workItem from="1620040150902" duration="17057000" />
+      <workItem from="1620040150902" duration="17207000" />
     </task>
     <task id="LOCAL‎00001" summary="added views">
       <created>1619436040916</created>
@@ -281,7 +279,13 @@
       <option name="presentableId" value="LOCAL‎00015" />
       <updated>1620058493725</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL‎00016" summary="styling">
+      <created>1620059711657</created>
+      <option name="number" value="LOCAL‎00016" />
+      <option name="presentableId" value="LOCAL‎00016" />
+      <updated>1620059711657</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
