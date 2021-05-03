@@ -1,0 +1,44 @@
+<changelist name="Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]" date="1620038921576" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 03/05/2021 13:48 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/project.nuget.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/Debug/net5.0/WSEP212.assets.cache" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/WSEP212.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/project.nuget1.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/WebApplication.csprojAssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/WebApplication.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/project.nuget2.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/WSEP212-TESTS.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_03_05_2021_13_48_[Default_Changelist]/WSEP212-TESTS.csprojAssemblyReference.cache" />
+  </binary>
+</changelist>
