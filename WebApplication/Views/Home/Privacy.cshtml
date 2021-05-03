@@ -10,3 +10,12 @@
 <h3>@ViewBag.StoreID</h3>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+@if (ViewBag.Alert!= null)  
+{  
+    <script type="text/javascript">  
+            window.onload = function() {  
+                alert("@ViewBag.Alert");  
+            };  
+        </script>  
+} 

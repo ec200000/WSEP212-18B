@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Item Review";
+}
+<!DOCTYPE html>
+
+<html>
+<body>
+    @model WebApplication.Models.ReviewModel
+    <div>
+        @using (Html.BeginForm("TryReviewItem", "Home", FormMethod.Post))
+        {
+
+            @Html.TextBoxFor(model => model.review)
+            @Html.ValidationMessageFor(model => model.review)
+            <button class="w-10 btn btn-lg btn-primary" type="submit">Review Item</button>
+        }
+    </div>
+</body>
+</html>
+
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+} 

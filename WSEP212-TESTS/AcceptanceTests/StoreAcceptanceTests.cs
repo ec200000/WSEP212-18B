@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -24,7 +25,7 @@ namespace WSEP212_TESTS.AcceptanceTests
 
         public void testInit()
         {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
 
@@ -114,7 +115,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToStorageTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, "snacks");
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser", storeID, itemDto);
             Assert.IsTrue(res.getTag());
@@ -161,7 +162,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
 
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, string>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, "snacks");
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser", storeID, itemDto);
             Assert.IsTrue(res.getTag());

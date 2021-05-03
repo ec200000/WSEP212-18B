@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+<!DOCTYPE html>
+
+<html>
+<body>
+<div>
+    @model WebApplication.Models.ShoppingCartModel
+    @using (Html.BeginForm("TryRemoveItemFromShoppingCart", "Home", FormMethod.Post))
+    {
+        string[] ItemsListAndStores = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("shoppingCart");
+        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()));
+        <button class="w-10 btn btn-lg btn-primary" type="submit">Remove Item From Shopping Cart</button>
+    }
+</div>
+<div>
+    
+    @using (Html.BeginForm("TrypurchaseItems", "Home", FormMethod.Post))
+    {
+        @Html.TextBoxFor(model => model.Address)
+        <button class="w-10 btn btn-lg btn-primary" type="submit">Purchase items</button>
+    }
+</div>
+    </body>
+</html>
+
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+    
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+}

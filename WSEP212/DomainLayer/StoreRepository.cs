@@ -101,6 +101,21 @@ namespace WSEP212.DomainLayer
             }
             return items;
         }
+        
+        public KeyValuePair<Item,int> getItemByID(int itemID)
+        {
+            foreach (Store store in stores.Values)
+            {
+                foreach (Item item in store.storage.Values)
+                {
+                    if(item.itemID==itemID)
+                    {
+                        return new KeyValuePair<Item, int>(item, store.storeID);
+                    }
+                }
+            }
+            return new KeyValuePair<Item, int>();
+        }
 
         public ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getAllStoresPurchsesHistory()
         {

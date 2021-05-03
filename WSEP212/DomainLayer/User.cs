@@ -72,6 +72,23 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
+        
+        public void continueAsGuest(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            String username = (String)param.parameters[0];
+            object res;
+            try
+            {
+                res = state.continueAsGuest(username);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
 
         // params: string username
         // returns: bool
@@ -596,6 +613,22 @@ namespace WSEP212.DomainLayer
         public bool addSellerPermissions(SellerPermissions permissions)
         {
             return this.sellerPermissions.TryAdd(permissions);
+        }
+        
+        public void getUsersStores(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            object res;
+            try
+            {
+                res = state.getUsersStores();
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
         }
 
     }

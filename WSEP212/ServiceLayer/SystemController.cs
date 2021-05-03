@@ -306,5 +306,19 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.composeSales(userName, storeID, firstSaleID, secondSaleID, (SaleCompositionType)typeOfComposition, selectionRule);
         }
+        
+        public ResultWithValue<ConcurrentLinkedList<int>> getUsersStores(String userName)
+        {
+            String info = $"Get user's stores Event was triggered, with the parameter: user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getUsersStores(userName);
+        }
+
+        public RegularResult continueAsGuest(String userName)
+        {
+            String info = $"Continue As Guest Event was triggered, with the parameter: user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.continueAsGuest(userName);
+        }
     }
 }

@@ -8,6 +8,7 @@ using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
+    [Serializable]
     public class Store
     {
         private readonly object itemInStorageLock = new object();
