@@ -194,9 +194,14 @@ namespace WebApplication.Controllers
         {
             model = new ShowReviewsModel();
             int itemID = (int)HttpContext.Session.GetInt32(SessionItemID);
-            KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(itemID);
-            model.reviews = pair.Key.reviews;
-            model.reviewsStrings = reviewsToString(pair.Key.reviews);
+            if (itemID != 0)
+            {
+                KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(itemID);
+                model.reviews = pair.Key.reviews;
+                model.reviewsStrings = reviewsToString(pair.Key.reviews);
+            }
+            else
+                model.reviewsStrings = "";
             return View(model);
         }
 
@@ -212,9 +217,19 @@ namespace WebApplication.Controllers
         
         public IActionResult TryShowReviews(SearchModel model)
         {
-            string[] authorsList = model.itemChosen.Split(": ");
-            int itemID = int.Parse(authorsList[authorsList.Length - 1]);
-            HttpContext.Session.SetInt32(SessionItemID, itemID);
+            if (model != null)
+            {
+                if (model.itemChosen != null)
+                {
+                    string[] authorsList = model.itemChosen.Split(": ");
+                    int itemID = int.Parse(authorsList[authorsList.Length - 1]);
+                    HttpContext.Session.SetInt32(SessionItemID, itemID);
+                }
+                else
+                    HttpContext.Session.SetInt32(SessionItemID, 0);
+            }
+            else
+                HttpContext.Session.SetInt32(SessionItemID, 0);
             return RedirectToAction("ShowReviews");
         }
         
