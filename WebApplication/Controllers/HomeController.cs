@@ -858,7 +858,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ViewOfficials");
+                return RedirectToAction("ViewOfficials");
             }
         }
     }

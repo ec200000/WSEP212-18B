@@ -30,8 +30,10 @@
       <e p="LogFileInformation-20210503.txt" t="Include" />
       <e p="LogFileWarnings-20210430.txt" t="Include" />
       <e p="Models" t="Include">
+        <e p="AppointModel.cs" t="Include" />
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
+        <e p="OfficialsModel.cs" t="Include" />
         <e p="PurchaseModel.cs" t="Include" />
         <e p="ReviewModel.cs" t="Include" />
         <e p="SearchModel.cs" t="Include" />
@@ -60,6 +62,7 @@
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
         <e p="Home" t="Include">
+          <e p="AppointOfficials.cshtml" t="Include" />
           <e p="EditItemDetails.cshtml" t="Include" />
           <e p="GetStoreInformation.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
@@ -74,8 +77,10 @@
           <e p="ShoppingCart.cshtml" t="Include" />
           <e p="ShowReviews.cshtml" t="Include" />
           <e p="StoreActions.cshtml" t="Include" />
+          <e p="StorePurchaseHistory.cshtml" t="Include" />
           <e p="StoresPurchaseHistory.cshtml" t="Include" />
           <e p="UsersPurchaseHistory.cshtml" t="Include" />
+          <e p="ViewOfficials.cshtml" t="Include" />
         </e>
         <e p="Shared" t="Include">
           <e p="_Layout.cshtml" t="Include" />
