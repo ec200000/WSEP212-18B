@@ -5,23 +5,31 @@
     <title>title</title>
 </head>
 <body>
-<div>
+<div class="openstorediv">
     @model WebApplication.Models.StoreModel
     @using (Html.BeginForm("TryOpenStore", "Home", FormMethod.Post))
     {
-
-        @Html.TextBoxFor(model => model.storeName)
-        @Html.ValidationMessageFor(model => model.storeName)
-
-        @Html.TextBoxFor(model => model.storeAddress)
-        @Html.ValidationMessageFor(model => model.storeAddress)
+        <div>
+            @Html.TextBoxFor(model => model.storeName,new { placeholder = "Store Name",@class="inputclassopenstore" })
+            @Html.ValidationMessageFor(model => model.storeName)
+        </div>
         
-        @Html.TextBoxFor(model => model.salesPolicy)
-        @Html.ValidationMessageFor(model => model.salesPolicy)
-
-        @Html.TextBoxFor(model => model.purchasePolicy)
-        @Html.ValidationMessageFor(model => model.purchasePolicy)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">OpenStore</button>
+        <div>
+            @Html.TextBoxFor(model => model.storeAddress,new { placeholder = "Store Address",@class="inputclassopenstore" })
+            @Html.ValidationMessageFor(model => model.storeAddress)
+        </div>
+        
+        <div>
+            @Html.TextBoxFor(model => model.salesPolicy,new { placeholder = "Sales Policy",@class="inputclassopenstore" })
+            @Html.ValidationMessageFor(model => model.salesPolicy)
+        </div>
+        
+        <div>
+            @Html.TextBoxFor(model => model.purchasePolicy,new { placeholder = "Purchase Policy",@class="inputclassopenstore" })
+            @Html.ValidationMessageFor(model => model.purchasePolicy)
+        </div>
+        
+        <button class="btn btn-outline-primary" type="submit">OpenStore</button>
     }
 </div>
 </body>

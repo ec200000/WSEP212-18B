@@ -6,13 +6,13 @@
 <html>
 <body>
     @model WebApplication.Models.ReviewModel
-    <div>
+    <div class="itemreviewdiv">
         @using (Html.BeginForm("TryReviewItem", "Home", FormMethod.Post))
         {
 
-            @Html.TextBoxFor(model => model.review)
+            @Html.TextBoxFor(model => model.review,new { placeholder = "Your review...",@class="inputclasslogin" })
             @Html.ValidationMessageFor(model => model.review)
-            <button class="w-10 btn btn-lg btn-primary" type="submit">Review Item</button>
+            <button class="btn btn-outline-primary" type="submit">Review Item</button>
         }
     </div>
 </body>

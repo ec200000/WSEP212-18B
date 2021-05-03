@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Components.Web.Virtualization
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 
@@ -7,45 +8,59 @@
     <title>title</title>
 </head>
 <body>
-<div>
+<div class="itemactionsadddiv">
     @model WebApplication.Models.ItemModel
     @using (Html.BeginForm("TryAddItem", "Home", FormMethod.Post))
     {
-        @Html.EditorFor(model => model.quantity)
-        @Html.ValidationMessageFor(model => model.quantity)
-
-        @Html.TextBoxFor(model => model.itemName)
-        @Html.ValidationMessageFor(model => model.itemName)
+        <div>
+            @Html.EditorFor(model => model.quantity,new { htmlAttributes = new  {@class="inputclassitemactions" , @placeholder = "Quantity"}})
+            @Html.ValidationMessageFor(model => model.quantity)
+        </div>
         
-        @Html.TextBoxFor(model => model.description)
-        @Html.ValidationMessageFor(model => model.description)
+        <div>
+            @Html.TextBoxFor(model => model.itemName,new { placeholder = "Item name",@class="inputclassitemactions" })
+            @Html.ValidationMessageFor(model => model.itemName)
+        </div>
         
-        @Html.EditorFor(model => model.price)
-        @Html.ValidationMessageFor(model => model.price)
-
-        @Html.TextBoxFor(model => model.category)
-        @Html.ValidationMessageFor(model => model.category)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Add Item To Store</button>
+        <div>
+            @Html.TextBoxFor(model => model.description,new { placeholder = "Description",@class="inputclassitemactions" })
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+        
+        <div>
+            @Html.EditorFor(model => model.price,new { htmlAttributes = new  {@class="inputclassitemactions" , @placeholder = "Price"}})
+            @Html.ValidationMessageFor(model => model.price)
+        </div>
+        
+        <div>
+            @Html.TextBoxFor(model => model.category,new { placeholder = "Category",@class="inputclassitemactions" })
+            @Html.ValidationMessageFor(model => model.category)
+        </div>
+        
+        <button class="btn btn-outline-primary" type="submit" type="submit">Add Item To Store</button>
     }
 </div>
-<div>
+<div class="itemactionsremovediv">
     @using (Html.BeginForm("TryRemoveItem", "Home", FormMethod.Post))
     {
-        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
-        int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str);
-        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()));
-            
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Remove Item From Store</button>
+        <label for="storesList">Items List</label>
+        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID"); 
+        int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str); 
+        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()), new {@class = "custom-select"});
+
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" type="submit">Remove Item From Store</button>
     }
 </div>
-<div>
+<div class="itemactionseditdiv">
     @using (Html.BeginForm("EditItemDetails", "Home", FormMethod.Post))
     {
-        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
-        int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str);
-        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()));
-            
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Edit Item's Details</button>
+        <label for="storesList">Items List</label>
+        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID"); 
+        int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str); 
+        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()), new {@class = "custom-select"});
+
+
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" type="submit">Edit Item's Details</button>
     }
 </div>
 </body>

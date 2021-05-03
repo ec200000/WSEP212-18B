@@ -8,14 +8,14 @@
     <title>title</title>
 </head>
 <body>
-<div>
+<div class="getstoreinformationdiv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
-        <button class="w-10 btn btn-lg btn-primary" formaction="StorePurchaseHistory" type="submit">Get Store's Purchase History</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="StorePurchaseHistory" type="submit">Get Store's Purchase History</button>
 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="AppointOfficials">Appoint Officials</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="AppointOfficials">Appoint Officials</button>
         
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="ViewOfficials">View Officials</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="ViewOfficials">View Officials</button>
 
     }
 </div>

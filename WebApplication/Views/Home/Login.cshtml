@@ -6,18 +6,25 @@
 </head>
 <body>
 @model WebApplication.Models.UserModel
-<div>
+<div class="logindiv">
+    <h2>
+        Please Login:
+        </h2>
     @using (Html.BeginForm("TryLogin", "Home", FormMethod.Post))
     {
-      
-        @Html.TextBoxFor(model => model.UserName)
-        @Html.ValidationMessageFor(model => model.UserName)
-              
-        @Html.PasswordFor(model => model.Password)
-        @Html.ValidationMessageFor(model => model.Password)
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="TryLogin" value="Login">Login</button>
-                                                                 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="LoginAsSystemManager">Login As System Manager</button>
+        <div>
+            @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclasslogin" })
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+
+        <div>
+            @Html.PasswordFor(model => model.Password,new { placeholder = "Password",@class="inputclasslogin" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <button class="btn btn-outline-primary" type="submit" formaction="TryLogin" value="Login">Login</button>
+
+        <button style="margin-left: 5px" class="btn btn-outline-primary" type="submit" formaction="LoginAsSystemManager">Login As System Manager</button>
     }
 </div>
 </body>
