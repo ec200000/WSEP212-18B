@@ -13,7 +13,7 @@
     <div>
         @using (Html.BeginForm("TryShowPurchaseHistory", "Home", FormMethod.Post))
         {
-            string purchases = HttpContextAccessor.HttpContext.Session.GetString("stores_history");
+            string purchases = HttpContextAccessor.HttpContext.Session.GetString("Stores_history");
             <h6>@purchases</h6>
         }
     </div>

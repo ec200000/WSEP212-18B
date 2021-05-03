@@ -823,6 +823,11 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
+
+                if (threadParameters.result == null || ((ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result).IsEmpty)
+                {
+                    return new FailureWithValue<ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>>("No officials found", null);
+                }
                 return new OkWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>>("Get Officials Information Successfully", (ConcurrentDictionary<string, ConcurrentLinkedList<Permissions>>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
@@ -955,9 +960,10 @@ namespace WSEP212.DomainLayer
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {
-                    String errorMsg = "The user " + userName + " cannot perform the login action!";
+                    String errorMsg = "The user " + userName + " cannot perform the login as system manager action!";
                     Logger.Instance.writeWarningEventToLog(errorMsg);
-                    throw new NotImplementedException(); //there is no permission to perform this task
+                    //throw new NotImplementedException(); //there is no permission to perform this task
+                    return new Failure(errorMsg);
                 }
                 return (RegularResult)threadParameters.result;
             }

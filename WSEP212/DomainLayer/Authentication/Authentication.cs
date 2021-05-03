@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -120,5 +121,11 @@ namespace WSEP212.DomainLayer
         {
             return usersInfo.TryGetValue(userName, out var password) ? password : null;
         }
+
+        public String[] getAllUsers()
+        {
+            return usersInfo.Keys.ToArray();
+        }
+
     }
 }

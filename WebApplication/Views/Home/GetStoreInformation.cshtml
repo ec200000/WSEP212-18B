@@ -11,13 +11,24 @@
 <div>
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
-        int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");
-        @Html.DropDownListFor(model => model.storeID, new SelectList(StoresList.OfType<int>().ToList()));
-        
-        <button class="w-10 btn btn-lg btn-primary" formaction="ItemActions" type="submit">See Items In Store</button>
+        <button class="w-10 btn btn-lg btn-primary" formaction="StorePurchaseHistory" type="submit">Get Store's Purchase History</button>
 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="AppointOfficials">Appoint Officials</button>
+        
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="ViewOfficials">View Officials</button>
+
     }
 </div>
 </body>
 </html>
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+    
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+}
