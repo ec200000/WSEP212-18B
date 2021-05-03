@@ -46,9 +46,28 @@ namespace WebApplication.Controllers
         public IActionResult ItemReview(PurchaseModel model)
         {
             string info = model.itemInfo;
-            string[] subInfo = info.Split(",");
-            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
-            HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(14)));
+            if (info != null)
+            {
+                string[] subInfo = info.Split(",");
+                HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
+                HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(14)));
+                return View();
+            }
+
+            return RedirectToAction("PurchaseHistory");
+        }
+        
+        public IActionResult AppointOfficials()
+        {
+            string[] users = Authentication.Instance.getAllUsers();
+            HttpContext.Session.SetObject("allUsers", users);
+            return View();
+        }
+        
+        public IActionResult PurchasePredicate()
+        {
+            //string[] predicates = StoreRepository.Instance.getStore((int)HttpContext.Session.GetInt32(SessionStoreID)).getValue().purchasePolicy;
+            //HttpContext.Session.SetObject("predicates", predicates);
             return View();
         }
 
@@ -144,28 +163,42 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentLinkedList<int>> res = systemController.getUsersStores(HttpContext.Session.GetString(SessionName));
             int[] stores = listToArray(res.getValue());
-            HttpContext.Session.SetObject("stores", stores);
+            string[] storesValues = new string[stores.Length];
+            for (int i = 0; i < stores.Length; i++)
+            {
+                string value = "Store ID: " + stores[i] + ", Store Name: " +
+                               StoreRepository.Instance.stores[stores[i]].storeName +
+                               ", Store Address: " + StoreRepository.Instance.stores[stores[i]].storeAddress;
+                storesValues[i] = value;
+            }
+            HttpContext.Session.SetObject("stores", storesValues);
             return View();
         }
         
-        public IActionResult GetStoreInformation()
+        public IActionResult GetStoreInformation(StoreModel model)
         {
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             return View();
         }
         
         public IActionResult ItemActions(StoreModel model)
         {
-            SystemController systemController = SystemController.Instance;
-            ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
-            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
-            checkStoresItems(model.storeID, res);
-            return View();
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+            if (model.storeID != 0)
+            {
+                SystemController systemController = SystemController.Instance;
+                ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+                checkStoresItems(model.storeID, res);
+                return View();
+            }
+            return RedirectToAction("StoreActions");
         }
         
         public IActionResult EditItemDetails(ItemModel model)
         {
             KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
-            //HttpContext.Session.SetInt32(SessionStoreID, pair.Value);
             HttpContext.Session.SetInt32(SessionItemID, pair.Key.itemID);
             Item item = pair.Key;
             model.storeID = pair.Value;
@@ -247,7 +280,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("Index");
             }
         }
         
@@ -259,12 +292,12 @@ namespace WebApplication.Controllers
             {
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 3);
-                return RedirectToAction("Login");
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("Index");
             }
         }
         
@@ -288,7 +321,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -311,7 +344,6 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("allitemstrings", new string[] {""});
                 model.flag = true;
             }
-            //model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
             return RedirectToAction("SearchItems", model);
         }
 
@@ -321,12 +353,44 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("ItemReview");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("ItemReview");
+            }
+        }
+        
+        public IActionResult TryAppointManager(AppointModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.appointStoreManager(HttpContext.Session.GetString(SessionName),
+                model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                return RedirectToAction("AppointOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("AppointOfficials");
+            }
+        }
+        
+        public IActionResult TryAppointOwner(AppointModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.appointStoreOwner(HttpContext.Session.GetString(SessionName),
+                model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                return RedirectToAction("AppointOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("AppointOfficials");
             }
         }
 
@@ -339,12 +403,12 @@ namespace WebApplication.Controllers
                 this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 1);
-                return RedirectToAction("Privacy");
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("Login");
             }
         }
 
@@ -357,12 +421,12 @@ namespace WebApplication.Controllers
                 this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 2);
-                return RedirectToAction("Privacy");
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Login");
+                return RedirectToAction("Login");
             }
         }
         
@@ -381,14 +445,14 @@ namespace WebApplication.Controllers
                 else
                 {
                     ViewBag.Alert = res.getMessage();
-                    return View("Logout");
+                    return RedirectToAction("Logout");
                 }
             }
             else
             {
                 HttpContext.Session.SetString(SessionName, "");
                 HttpContext.Session.SetInt32(SessionLogin, 0);
-                return RedirectToAction("Index");
+                return RedirectToAction("Logout");
             }
             
         }
@@ -401,12 +465,12 @@ namespace WebApplication.Controllers
             if (res.getTag())
             {
                 HttpContext.Session.SetInt32(SessionStoreID, res.getValue());
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("OpenStore");
+                return RedirectToAction("StoreActions");
             }
         }
 
@@ -435,12 +499,12 @@ namespace WebApplication.Controllers
             if (res.getTag())
             {
                 HttpContext.Session.SetInt32(SessionItemID, res.getValue());
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("OpenStore");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -452,12 +516,12 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.removeItemFromStorage(userName, (int)storeID, model.itemID);
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ItemActions");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -465,20 +529,26 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            string[] authorsList = model.itemChosen.Split(": ");
-            string[] store = authorsList[1].Split(" ");
-            int storeID = int.Parse(store[0]);
-            int itemID = int.Parse(authorsList[authorsList.Length - 1]);
-            RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
-            if (res.getTag())
+            if (model.itemChosen != null)
             {
-                //HttpContext.Session.SetInt32(SessionItemID, res.getValue());
-                return RedirectToAction("SearchItems");
+                string[] authorsList = model.itemChosen.Split(": ");
+                string[] store = authorsList[1].Split(" ");
+                int storeID = int.Parse(store[0]);
+                int itemID = int.Parse(authorsList[authorsList.Length - 1]);
+                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
+                if (res.getTag())
+                {
+                    return RedirectToAction("SearchItems");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("SearchItems");
+                }
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
-                return View("OpenStore");
+                return RedirectToAction("SearchItems");
             }
         }
 
@@ -545,7 +615,6 @@ namespace WebApplication.Controllers
             }
             int[] searches = itms.ToArray();
             HttpContext.Session.SetObject("allitems", searches);
-            //HttpContext.Session.SetObject("allitems!", dict);
         }
         
         private void allStoresItemStrings(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
@@ -588,7 +657,6 @@ namespace WebApplication.Controllers
             }
             string[] searches = itms.ToArray();
             HttpContext.Session.SetObject("allitemstrings", searches);
-            //HttpContext.Session.SetObject("allitems!", dict);
         }
         
         private void checkStoresItems(int lst, ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
@@ -629,17 +697,24 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string itemID = model.itemID;
-            string[] strs = itemID.Split(":");
-            int item = int.Parse(strs[strs.Length - 1]);
-            RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
-            if (res.getTag())
+            if (itemID!=null && itemID != "")
             {
-                return RedirectToAction("ShoppingCart");
+                string[] strs = itemID.Split(":");
+                int item = int.Parse(strs[strs.Length - 1]);
+                RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
+                if (res.getTag())
+                {
+                    return RedirectToAction("ShoppingCart");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("ShoppingCart");
+                }
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
-                return View("ShoppingCart");
+                return RedirectToAction("ShoppingCart");
             }
         }
         public IActionResult TrypurchaseItems(ShoppingCartModel model)
@@ -649,12 +724,12 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.purchaseItems(userName, model.Address);
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("ShoppingCart");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ShoppingCart");
+                return RedirectToAction("ShoppingCart");
             }
         }
         
@@ -680,7 +755,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return View();
             }
         }
         
@@ -706,8 +781,220 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return View();
             }
+        }
+        
+        public IActionResult StorePurchaseHistory()
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (PurchaseInvoice inv in res.getValue())
+                {
+                    value += inv.ToString() + "\n" + ";";
+                }
+                if(value!="")
+                    value = value.Substring(0, value.Length - 1);
+                HttpContext.Session.SetString("store_history", value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult ViewOfficials()
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentDictionary<string,ConcurrentLinkedList<Permissions>>> res = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag()&&res.getValue()!=null&&res.getValue().Count!=0)
+            {
+                string[] value = new string[res.getValue().Count];
+                int i = 0;
+                foreach (string name in res.getValue().Keys)
+                {
+                    value[i] = name;
+                    if (res.getValue()[name].Contains(Permissions.AllPermissions))
+                        value[i] += ", Store Owner";
+                    else
+                        value[i] += ", Store Manager";
+                    i++;
+                }
+                HttpContext.Session.SetObject("officials", value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult RemoveManager(OfficialsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string managerName = model.UserName.Split(",")[0];
+            RegularResult res = systemController.removeStoreManager(userName,managerName, (int)storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ViewOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("ViewOfficials");
+            }
+        }
+        
+        public IActionResult RemoveOwner(OfficialsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string ownerName = model.UserName.Split(",")[0];
+            RegularResult res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ViewOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("ViewOfficials");
+            }
+        }
+
+        public ConcurrentLinkedList<int> changeListType(ConcurrentLinkedList<Permissions> pers)
+        {
+            ConcurrentLinkedList<int> permissions = new ConcurrentLinkedList<int>();
+            Node<Permissions> node = pers.First; // going over the user's permissions to check if he is a store manager or owner
+            while(node.Next != null)
+            {
+                permissions.TryAdd((int) node.Value);
+                node = node.Next;
+            }
+            return permissions;
+        }
+        
+        public IActionResult AddManagerPermission(OfficialsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[model.UserName];
+            int per = stringToEnum(model.Permission);
+            pers.TryAdd((Permissions) per);
+            ConcurrentLinkedList<int> permissions = changeListType(pers);
+            RegularResult res = systemController.editManagerPermissions(userName,model.UserName,permissions, (int)storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ViewOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("ViewOfficials");
+            }
+        }
+
+        public int stringToEnum(string pred)
+        {
+            switch (pred)
+            {
+                case "AllPermissions":
+                    return 0;
+                case "StorageManagment":
+                    return 1;
+                case "AppointStoreManager":
+                    return 2;
+                case "AppointStoreOwner":
+                    return 3;
+                case "RemoveStoreManager":
+                    return 4;
+                case "EditManagmentPermissions":
+                    return 5;
+                case "StorePoliciesManagement":
+                    return 6;
+                case "GetOfficialsInformation":
+                    return 7;
+                case "GetStorePurchaseHistory":
+                    return 8;
+            }
+            return -1;
+        }
+
+        public IActionResult EditSalePredicates()
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            SalePolicy res = StoreRepository.Instance.getStore((int)storeID).getValue().salesPolicy;
+            if (res != null)
+            {
+                ConcurrentDictionary<int,Sale> dict = res.storeSales;
+                string[] preds = new string[dict.Count];
+                int i = 0;
+                foreach (Sale sale in dict.Values)
+                {
+                    preds[i] = sale.ToString();
+                    i++;
+                }
+                HttpContext.Session.SetObject("sale_predicates", preds);
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult TryRemoveSalePredicate(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string pred = model.predicate;
+            int predicate = int.Parse(pred.Substring(8)); //TODO: CHANGE
+            RegularResult res = systemController.removeSale(userName, (int)storeID, predicate);
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult ComposeSalePredicates(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string firstpred = model.firstPred;
+            int predicate1 = int.Parse(firstpred.Substring(8)); //TODO: CHANGE
+            string secondpred = model.secondPred;
+            int predicate2 = int.Parse(secondpred.Substring(8)); //TODO: CHANGE
+            int composetype = model.compositionType;
+            /*ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype);
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }*/
+            return null;
         }
         
     }

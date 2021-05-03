@@ -8,6 +8,9 @@ namespace WebApplication.Models
         public string storeName { get; set; }
         
         [Required]
+        public string storeInfo { get; set; }
+        
+        [Required]
         public string storeAddress { get; set; }
         
         [Required]

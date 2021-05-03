@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
+@inject IHttpContextAccessor HttpContextAccessor
+@model WebApplication.Models.OfficialsModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
+        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()));
+        
+        <button class="w-10 btn btn-lg btn-primary" formaction="RemoveManager" type="submit">Remove Manager</button>
+
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="RemoveOwner">Remove Owner</button>
+    }
+</div>
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
+        Permissions[] arr = new[]
+        {
+            Permissions.StorageManagment, Permissions.AppointStoreManager, Permissions.AppointStoreOwner,
+            Permissions.EditManagmentPermissions, Permissions.GetOfficialsInformation, Permissions.RemoveStoreManager,
+            Permissions.StorePoliciesManagement, Permissions.GetStorePurchaseHistory
+        };
+        string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()));
+        
+        @Html.DropDownListFor(model => model.Permission, new SelectList(permissions.OfType<string>().ToList()));
+        
+        <button class="w-10 btn btn-lg btn-primary" formaction="AddManagerPermission" type="submit">Add Manager Permission</button>
+    }
+</div>
+</body>
+</html>
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+    
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+}

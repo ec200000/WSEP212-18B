@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    <input class="w-10 btn btn-lg btn-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
+</div>
+@model WebApplication.Models.AppointModel
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+
+        <button class="w-10 btn btn-lg btn-primary" formaction="TryAppointManager" type="submit">Remove Predicate</button>
+
+      //  string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+        
+        //string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+        
+       // string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+        <button class="w-10 btn btn-lg btn-primary" formaction="TryAppointOwner" type="submit">Compose Predicates</button>
+    }
+</div>
+</body>
+</html>
+
+@if (ViewBag.Alert!= null)  
+{  
+    <script type="text/javascript">  
+            window.onload = function() {  
+                alert("@ViewBag.Alert");  
+            };  
+        </script>  
+} 

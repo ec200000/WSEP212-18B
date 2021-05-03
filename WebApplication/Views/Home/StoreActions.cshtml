@@ -8,23 +8,35 @@
     <title>title</title>
 </head>
 <body>
-<div class="openstoreinstoreactionsdiv">
-    <input class="btn btn-outline-primary btn-lg" type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
+<div>
+    <input class="w-10 btn btn-lg btn-primary" type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
 </div>
-<div class="storeactionsdivadd">
+<div>
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
-        <label for="storesList">Stores List</label>
+        string[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("stores");
+        @Html.DropDownListFor(model => model.storeInfo, new SelectList(StoresList.OfType<string>().ToList()));
         
-            int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores"); 
-            @Html.DropDownListFor(model => model.storeID, new SelectList(StoresList.OfType<int>().ToList()), new {@class = "custom-select"});
-        
-        
-        
-        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ItemActions" type="submit">See Items In Store</button>
+        <button class="w-10 btn btn-lg btn-primary" formaction="ItemActions" type="submit">See Items In Store</button>
 
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+        
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Edit Store's Purchase Predicates</button>
+
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Edit Store's Sale Predicates</button>
+
     }
 </div>
 </body>
 </html>
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+    
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+}

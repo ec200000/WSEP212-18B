@@ -17,3 +17,14 @@
 
 </body>
 </html>
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+    
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+}
