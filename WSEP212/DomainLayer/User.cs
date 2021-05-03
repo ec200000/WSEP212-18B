@@ -153,7 +153,7 @@ namespace WSEP212.DomainLayer
 
         // params: ?
         // returns: bool
-        public void purchaseItems(Object list) //later
+        public void purchaseItems(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
             String address = (String)param.parameters[0];
@@ -354,6 +354,154 @@ namespace WSEP212.DomainLayer
             try
             {
                 res = state.removeStoreManager(managerName, storeID);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, Predicate pred
+        // returns: int - the id of the new pred
+        public void addPurchasePredicate(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            Predicate<PurchaseDetails> newPredicate = (Predicate<PurchaseDetails>)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.addPurchasePredicate(storeID, newPredicate);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, int predID
+        // returns: bool
+        public void removePurchasePredicate(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int predicateID = (int)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.removePurchasePredicate(storeID, predicateID);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, int firstPredID, int secondPredID, PurchasePredicateCompositionType composion
+        // returns: int - the id of the new composed pred
+        public void composePurchasePredicates(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int firstPredicateID = (int)param.parameters[1];
+            int secondPredicateID = (int)param.parameters[2];
+            PurchasePredicateCompositionType composionType = (PurchasePredicateCompositionType)param.parameters[3];
+            object res;
+            try
+            {
+                res = state.composePurchasePredicates(storeID, firstPredicateID, secondPredicateID, composionType);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, int salePercentage, ApplySaleOn saleOn
+        // returns: int - the id of the new sale
+        public void addSale(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int salePercentage = (int)param.parameters[1];
+            ApplySaleOn saleOn = (ApplySaleOn)param.parameters[2];
+            object res;
+            try
+            {
+                res = state.addSale(storeID, salePercentage, saleOn);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, int saleID
+        // returns: bool
+        public void removeSale(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int saleID = (int)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.removeSale(storeID, saleID);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType
+        // returns: int - the id of the new composed sale
+        public void addSaleCondition(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int saleID = (int)param.parameters[1];
+            Predicate<PurchaseDetails> condition = (Predicate<PurchaseDetails>)param.parameters[2];
+            SalePredicateCompositionType compositionType = (SalePredicateCompositionType)param.parameters[3];
+            object res;
+            try
+            {
+                res = state.addSaleCondition(storeID, saleID, condition, compositionType);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, int firstSaleID, int secondSaleID, SaleCompositionType composion, Predicate<PurchaseDetails> selectionRule
+        // returns: int - the id of the new composed sale
+        public void composeSales(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int firstSaleID = (int)param.parameters[1];
+            int secondSaleID = (int)param.parameters[2];
+            SaleCompositionType typeOfComposition = (SaleCompositionType)param.parameters[3];
+            Predicate<PurchaseDetails> selectionRule = (Predicate<PurchaseDetails>)param.parameters[4];
+            object res;
+            try
+            {
+                res = state.composeSales(storeID, firstSaleID, secondSaleID, typeOfComposition, selectionRule);
             }
             catch (NotImplementedException)
             {

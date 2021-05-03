@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace WSEP212.DomainLayer
 {
-    public enum PurchaseType
+    public enum SalePredicateCompositionType
     {
-        ImmediatePurchase
+        AndComposition,
+        OrComposition
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using WSEP212.DomainLayer;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
@@ -23,6 +23,16 @@ namespace WSEP212.ServiceLayer
         public RegularResult purchaseItems(String userName, String address); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate); // USE CASE 4.2
+        public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID); // USE CASE 4.2
+        public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, 
+            int secondPredicateID, Int32 typeOfComposition); // USE CASE 4.2
+        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn); // USE CASE 4.2
+        public RegularResult removeSale(String userName, int storeID, int saleID); // USE CASE 4.2
+        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, Predicate<PurchaseDetails> condition,
+            Int32 compositionType); // USE CASE 4.2
+        public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID,
+            Int32 typeOfComposition, Predicate<PurchaseDetails> selectionRule); // USE CASE 4.2
         public RegularResult itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item); // USE CASE  4.1.1
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID); // USE CASE 4.1.2
@@ -36,8 +46,7 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(
             String userName, int storeID); // USE CASE 4.9
         public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getStorePurchaseHistory(String userName, int storeID); // USE CASE 4.11
-        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>>>
-            getUsersPurchaseHistory(String userName); // USE CASE 6.4.1
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>>> getUsersPurchaseHistory(String userName); // USE CASE 6.4.1
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>>
             getStoresPurchaseHistory(String userName); // USE CASE 6.4.2
         public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(string userName); // USE CASE 3.7

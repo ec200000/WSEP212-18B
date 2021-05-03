@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
-    public class SimplePredicate : PolicyPredicate
+    public class SimplePredicate : SalePredicate
     {
         public Predicate<PurchaseDetails> predicate { get; set; }
 
-        public SimplePredicate(Predicate<PurchaseDetails> predicate)
+        public SimplePredicate(Predicate<PurchaseDetails> predicate) : base()
         {
             this.predicate = predicate;
         }
 
-        public bool applyPrediacte(PurchaseDetails purchaseDetails)
+        public override bool applyPrediacte(PurchaseDetails purchaseDetails)
         {
             return this.predicate(purchaseDetails);
         }

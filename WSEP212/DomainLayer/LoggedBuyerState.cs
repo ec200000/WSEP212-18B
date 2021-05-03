@@ -13,14 +13,6 @@ namespace WSEP212.DomainLayer
 
         }
 
-        // return the state of the user
-        // checks if the user is store owner, store manager or none of them
-        public override UserType getUserType()
-        {
-            // check store owner or store manager
-            return UserType.LoggedBuyer;
-        }
-
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
@@ -391,6 +383,127 @@ namespace WSEP212.DomainLayer
                 return new Failure(storeSellerRes.getMessage());
             }
             return hasPermissionRes;
+        }
+
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new FailureWithValue<int>(storeRes.getMessage(), -1);
+            }
+            // checks if the user has the permissions for adding purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                int predicateID = storeRes.getValue().addPurchasePredicate(newPredicate);
+                return new OkWithValue<int>("The Purchase Predicate Added To The Store's Purchase Policy", predicateID);
+            }
+            return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
+        }
+
+        public override RegularResult removePurchasePredicate(int storeID, int predicateID)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new Failure(storeRes.getMessage());
+            }
+            // checks if the user has the permissions for removing purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                return storeRes.getValue().removePurchasePredicate(predicateID);
+            }
+            return hasPermissionRes;
+        }
+
+        public override ResultWithValue<int> composePurchasePredicates(int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new FailureWithValue<int>(storeRes.getMessage(), -1);
+            }
+            // checks if the user has the permissions for adding purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                return storeRes.getValue().composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
+            }
+            return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
+        }
+
+        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new FailureWithValue<int>(storeRes.getMessage(), -1);
+            }
+            // checks if the user has the permissions for adding purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                int saleID = storeRes.getValue().addSale(salePercentage, saleOn);
+                return new OkWithValue<int>("The Sale Added To The Store's Sale Policy", saleID);
+            }
+            return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
+        }
+
+        public override RegularResult removeSale(int storeID, int saleID)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new Failure(storeRes.getMessage());
+            }
+            // checks if the user has the permissions for removing purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                return storeRes.getValue().removeSale(saleID);
+            }
+            return hasPermissionRes;
+        }
+
+        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new FailureWithValue<int>(storeRes.getMessage(), -1);
+            }
+            // checks if the user has the permissions for adding purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                return storeRes.getValue().addSaleCondition(saleID, condition, compositionType);
+            }
+            return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
+        }
+
+        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new FailureWithValue<int>(storeRes.getMessage(), -1);
+            }
+            // checks if the user has the permissions for adding purchase predicate
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                return storeRes.getValue().composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
+            }
+            return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
 
         public override ConcurrentLinkedList<int> getUsersStores()
