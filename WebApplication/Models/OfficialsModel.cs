@@ -4,7 +4,7 @@
     {
         public string UserName { get; set; }
         
-        public int Permission { get; set; }
+        public string Permission { get; set; }
 
     }
 }

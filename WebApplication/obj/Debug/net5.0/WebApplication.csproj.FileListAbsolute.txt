@@ -322,3 +322,4 @@ C:\Users\talsk\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\V
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AppointOfficials.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StorePurchaseHistory.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ViewOfficials.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\EditSalePredicates.cshtml.g.cs

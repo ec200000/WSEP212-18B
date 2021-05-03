@@ -802,6 +802,10 @@ namespace WebApplication.Controllers
                 foreach (string name in res.getValue().Keys)
                 {
                     value[i] = name;
+                    if (res.getValue()[name].Contains(Permissions.AllPermissions))
+                        value[i] += ", Store Owner";
+                    else
+                        value[i] += ", Store Manager";
                     i++;
                 }
                 HttpContext.Session.SetObject("officials", value);
@@ -819,7 +823,8 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            RegularResult res = systemController.removeStoreManager(userName,model.UserName, (int)storeID);
+            string managerName = model.UserName.Split(",")[0];
+            RegularResult res = systemController.removeStoreManager(userName,managerName, (int)storeID);
             if (res.getTag())
             {
                 return RedirectToAction("ViewOfficials");
@@ -836,7 +841,8 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            RegularResult res = systemController.removeStoreOwner(userName,model.UserName, (int)storeID);
+            string ownerName = model.UserName.Split(",")[0];
+            RegularResult res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
             if (res.getTag())
             {
                 return RedirectToAction("ViewOfficials");
@@ -866,7 +872,8 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[model.UserName];
-            pers.TryAdd((Permissions) model.Permission);
+            int per = stringToEnum(model.Permission);
+            pers.TryAdd((Permissions) per);
             ConcurrentLinkedList<int> permissions = changeListType(pers);
             RegularResult res = systemController.editManagerPermissions(userName,model.UserName,permissions, (int)storeID);
             if (res.getTag())
@@ -879,5 +886,99 @@ namespace WebApplication.Controllers
                 return RedirectToAction("ViewOfficials");
             }
         }
+
+        public int stringToEnum(string pred)
+        {
+            switch (pred)
+            {
+                case "AllPermissions":
+                    return 0;
+                case "StorageManagment":
+                    return 1;
+                case "AppointStoreManager":
+                    return 2;
+                case "AppointStoreOwner":
+                    return 3;
+                case "RemoveStoreManager":
+                    return 4;
+                case "EditManagmentPermissions":
+                    return 5;
+                case "StorePoliciesManagement":
+                    return 6;
+                case "GetOfficialsInformation":
+                    return 7;
+                case "GetStorePurchaseHistory":
+                    return 8;
+            }
+            return -1;
+        }
+
+        public IActionResult EditSalePredicates()
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            SalePolicy res = StoreRepository.Instance.getStore((int)storeID).getValue().salesPolicy;
+            if (res != null)
+            {
+                ConcurrentDictionary<int,Sale> dict = res.storeSales;
+                string[] preds = new string[dict.Count];
+                int i = 0;
+                foreach (Sale sale in dict.Values)
+                {
+                    preds[i] = sale.ToString();
+                    i++;
+                }
+                HttpContext.Session.SetObject("sale_predicates", preds);
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult TryRemoveSalePredicate(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string pred = model.predicate;
+            int predicate = int.Parse(pred.Substring(8)); //TODO: CHANGE
+            RegularResult res = systemController.removeSale(userName, (int)storeID, predicate);
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult ComposeSalePredicates(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string firstpred = model.firstPred;
+            int predicate1 = int.Parse(firstpred.Substring(8)); //TODO: CHANGE
+            string secondpred = model.secondPred;
+            int predicate2 = int.Parse(secondpred.Substring(8)); //TODO: CHANGE
+            int composetype = model.compositionType;
+            /*ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype);
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }*/
+            return null;
+        }
+        
     }
 }

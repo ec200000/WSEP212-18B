@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
+@inject IHttpContextAccessor HttpContextAccessor
+@model WebApplication.Models.SalesModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="AddSalePredicate">Add Sale Predicate</button>
+    }
+</div>
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
+        @Html.DropDownListFor(model => model.predicate, new SelectList(predList.OfType<string>().ToList()));
+
+        <button class="w-10 btn btn-lg btn-primary" formaction="TryRemoveSalePredicate" type="submit">Remove Sale Predicate</button>
+
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="AddSaleCondition">Add Sale Condition</button>
+    }
+</div>
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
+        SaleCompositionType[] arr = new[]
+        {
+            SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
+        };
+        int[] permissions = Array.ConvertAll(arr, value => (int) value);
+        @Html.DropDownListFor(model => model.firstPred, new SelectList(predList.OfType<string>().ToList()))
+        ;
+
+        @Html.DropDownListFor(model => model.secondPred, new SelectList(predList.OfType<string>().ToList()))
+        ;
+
+        @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<int>().ToList()))
+        ;
+
+        <button class="w-10 btn btn-lg btn-primary" formaction="ComposeSalePredicates" type="submit">Compose Sale Predicates</button>
+    }
+</div>
+</body>
+</html>
+@if (ViewBag.Alert != null)
+{
+    <script type="text/javascript">
+    
+
+            window.onload = function() {
+                alert("@ViewBag.Alert");
+            };
+    </script>
+
+}

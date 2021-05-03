@@ -36,6 +36,7 @@
         <e p="OfficialsModel.cs" t="Include" />
         <e p="PurchaseModel.cs" t="Include" />
         <e p="ReviewModel.cs" t="Include" />
+        <e p="SalesModel.cs" t="Include" />
         <e p="SearchModel.cs" t="Include" />
         <e p="ShoppingCartModel.cs" t="Include" />
         <e p="ShowReviewsModel.cs" t="Include" />
@@ -64,6 +65,7 @@
         <e p="Home" t="Include">
           <e p="AppointOfficials.cshtml" t="Include" />
           <e p="EditItemDetails.cshtml" t="Include" />
+          <e p="EditSalePredicates.cshtml" t="Include" />
           <e p="GetStoreInformation.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
           <e p="ItemActions.cshtml" t="Include" />
