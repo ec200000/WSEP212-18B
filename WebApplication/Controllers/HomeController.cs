@@ -46,10 +46,15 @@ namespace WebApplication.Controllers
         public IActionResult ItemReview(PurchaseModel model)
         {
             string info = model.itemInfo;
-            string[] subInfo = info.Split(",");
-            HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
-            HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(14)));
-            return View();
+            if (info != null)
+            {
+                string[] subInfo = info.Split(",");
+                HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
+                HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(14)));
+                return View();
+            }
+
+            return RedirectToAction("PurchaseHistory");
         }
         
         public IActionResult AppointOfficials()
@@ -163,17 +168,20 @@ namespace WebApplication.Controllers
         
         public IActionResult ItemActions(StoreModel model)
         {
-            SystemController systemController = SystemController.Instance;
-            ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
-            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
-            checkStoresItems(model.storeID, res);
-            return View();
+            if (model.storeID != 0)
+            {
+                SystemController systemController = SystemController.Instance;
+                ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+                checkStoresItems(model.storeID, res);
+                return View();
+            }
+            return RedirectToAction("StoreActions");
         }
         
         public IActionResult EditItemDetails(ItemModel model)
         {
             KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
-            //HttpContext.Session.SetInt32(SessionStoreID, pair.Value);
             HttpContext.Session.SetInt32(SessionItemID, pair.Key.itemID);
             Item item = pair.Key;
             model.storeID = pair.Value;
@@ -255,7 +263,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("Index");
             }
         }
         
@@ -267,12 +275,12 @@ namespace WebApplication.Controllers
             {
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 3);
-                return RedirectToAction("Login");
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("Index");
             }
         }
         
@@ -296,7 +304,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -319,7 +327,6 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("allitemstrings", new string[] {""});
                 model.flag = true;
             }
-            //model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
             return RedirectToAction("SearchItems", model);
         }
 
@@ -329,12 +336,12 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("ItemReview");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("ItemReview");
             }
         }
         
@@ -345,12 +352,12 @@ namespace WebApplication.Controllers
                 model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("AppointOfficials");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("AppointOfficials");
             }
         }
         
@@ -361,12 +368,12 @@ namespace WebApplication.Controllers
                 model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("AppointOfficials");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("AppointOfficials");
             }
         }
 
@@ -379,12 +386,12 @@ namespace WebApplication.Controllers
                 this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 1);
-                return RedirectToAction("Privacy");
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("Login");
             }
         }
 
@@ -397,12 +404,12 @@ namespace WebApplication.Controllers
                 this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 2);
-                return RedirectToAction("Privacy");
+                return RedirectToAction("SearchItems");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Login");
+                return RedirectToAction("Login");
             }
         }
         
@@ -421,14 +428,14 @@ namespace WebApplication.Controllers
                 else
                 {
                     ViewBag.Alert = res.getMessage();
-                    return View("Logout");
+                    return RedirectToAction("Logout");
                 }
             }
             else
             {
                 HttpContext.Session.SetString(SessionName, "");
                 HttpContext.Session.SetInt32(SessionLogin, 0);
-                return RedirectToAction("Index");
+                return RedirectToAction("Logout");
             }
             
         }
@@ -441,12 +448,12 @@ namespace WebApplication.Controllers
             if (res.getTag())
             {
                 HttpContext.Session.SetInt32(SessionStoreID, res.getValue());
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("OpenStore");
+                return RedirectToAction("StoreActions");
             }
         }
 
@@ -475,12 +482,12 @@ namespace WebApplication.Controllers
             if (res.getTag())
             {
                 HttpContext.Session.SetInt32(SessionItemID, res.getValue());
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("OpenStore");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -492,12 +499,12 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.removeItemFromStorage(userName, (int)storeID, model.itemID);
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("StoreActions");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ItemActions");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -505,20 +512,26 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            string[] authorsList = model.itemChosen.Split(": ");
-            string[] store = authorsList[1].Split(" ");
-            int storeID = int.Parse(store[0]);
-            int itemID = int.Parse(authorsList[authorsList.Length - 1]);
-            RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
-            if (res.getTag())
+            if (model.itemChosen != null)
             {
-                //HttpContext.Session.SetInt32(SessionItemID, res.getValue());
-                return RedirectToAction("SearchItems");
+                string[] authorsList = model.itemChosen.Split(": ");
+                string[] store = authorsList[1].Split(" ");
+                int storeID = int.Parse(store[0]);
+                int itemID = int.Parse(authorsList[authorsList.Length - 1]);
+                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
+                if (res.getTag())
+                {
+                    return RedirectToAction("SearchItems");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("SearchItems");
+                }
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
-                return View("OpenStore");
+                return RedirectToAction("SearchItems");
             }
         }
 
@@ -585,7 +598,6 @@ namespace WebApplication.Controllers
             }
             int[] searches = itms.ToArray();
             HttpContext.Session.SetObject("allitems", searches);
-            //HttpContext.Session.SetObject("allitems!", dict);
         }
         
         private void allStoresItemStrings(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
@@ -628,7 +640,6 @@ namespace WebApplication.Controllers
             }
             string[] searches = itms.ToArray();
             HttpContext.Session.SetObject("allitemstrings", searches);
-            //HttpContext.Session.SetObject("allitems!", dict);
         }
         
         private void checkStoresItems(int lst, ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
@@ -669,17 +680,24 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string itemID = model.itemID;
-            string[] strs = itemID.Split(":");
-            int item = int.Parse(strs[strs.Length - 1]);
-            RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
-            if (res.getTag())
+            if (itemID!=null && itemID != "")
             {
-                return RedirectToAction("ShoppingCart");
+                string[] strs = itemID.Split(":");
+                int item = int.Parse(strs[strs.Length - 1]);
+                RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
+                if (res.getTag())
+                {
+                    return RedirectToAction("ShoppingCart");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("ShoppingCart");
+                }
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
-                return View("ShoppingCart");
+                return RedirectToAction("ShoppingCart");
             }
         }
         public IActionResult TrypurchaseItems(ShoppingCartModel model)
@@ -689,12 +707,12 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.purchaseItems(userName, model.Address);
             if (res.getTag())
             {
-                return RedirectToAction("Privacy");
+                return RedirectToAction("ShoppingCart");
             }
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ShoppingCart");
+                return RedirectToAction("ShoppingCart");
             }
         }
         
@@ -720,7 +738,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return View();
             }
         }
         
@@ -746,7 +764,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return View();
             }
         }
         
@@ -769,7 +787,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("Index");
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -777,7 +795,7 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<string,ConcurrentLinkedList<Permissions>>> res = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
-            if (res.getTag())
+            if (res.getTag()&&res.getValue()!=null&&res.getValue().Count!=0)
             {
                 string[] value = new string[res.getValue().Count];
                 int i = 0;
@@ -792,7 +810,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View();
+                return RedirectToAction("StoreActions");
             }
         }
         
@@ -809,7 +827,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ViewOfficials");
+                return RedirectToAction("ViewOfficials");
             }
         }
         
@@ -826,7 +844,7 @@ namespace WebApplication.Controllers
             else
             {
                 ViewBag.Alert = res.getMessage();
-                return View("ViewOfficials");
+                return RedirectToAction("ViewOfficials");
             }
         }
 
