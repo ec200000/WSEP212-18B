@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
             string info = model.itemInfo;
             string[] subInfo = info.Split(",");
             HttpContext.Session.SetInt32(SessionItemID, int.Parse(subInfo[1].Substring(10)));
-            HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(11)));
+            HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(14)));
             return View();
         }
 
