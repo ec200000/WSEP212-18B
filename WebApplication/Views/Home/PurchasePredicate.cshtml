@@ -7,27 +7,27 @@
     <title>title</title>
 </head>
 <body>
-<div>
-    <input class="w-10 btn btn-lg btn-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
+<div class="purchasepredicatediv">
+    <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
 </div>
 @model WebApplication.Models.AppointModel
-<div>
+<div class="purchasepredicatediv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
         string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
 
-        <button class="w-10 btn btn-lg btn-primary" formaction="TryAppointManager" type="submit">Remove Predicate</button>
+        <button class="btn btn-outline-primary" formaction="TryAppointManager" type="submit">Remove Predicate</button>
 
       //  string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
         
         //string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
         
        // string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()));
-        <button class="w-10 btn btn-lg btn-primary" formaction="TryAppointOwner" type="submit">Compose Predicates</button>
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
+        <button class="btn btn-outline-primary" formaction="TryAppointOwner" type="submit">Compose Predicates</button>
     }
 </div>
 </body>

@@ -9,18 +9,18 @@
     <title>title</title>
 </head>
 <body>
-<div>
+<div class="viewofficialsdiv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
         string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
-        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()), new {@class = "custom-select"});
         
-        <button class="w-10 btn btn-lg btn-primary" formaction="RemoveManager" type="submit">Remove Manager</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="RemoveManager" type="submit">Remove Manager</button>
 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="RemoveOwner">Remove Owner</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="RemoveOwner">Remove Owner</button>
     }
 </div>
-<div>
+<div class="viewofficialsdiv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
         string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
@@ -31,11 +31,11 @@
             Permissions.StorePoliciesManagement, Permissions.GetStorePurchaseHistory
         };
         string[] permissions = Array.ConvertAll(arr, value => value.ToString());
-        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()), new {@class = "custom-select"});
         
-        @Html.DropDownListFor(model => model.Permission, new SelectList(permissions.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.Permission, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"});
         
-        <button class="w-10 btn btn-lg btn-primary" formaction="AddManagerPermission" type="submit">Add Manager Permission</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="AddManagerPermission" type="submit">Add Manager Permission</button>
     }
 </div>
 </body>

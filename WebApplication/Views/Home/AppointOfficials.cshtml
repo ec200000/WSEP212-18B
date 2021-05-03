@@ -8,16 +8,17 @@
 </head>
 <body>
 @model WebApplication.Models.AppointModel
-<div>
+<div class="appointofficialsdiv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
+        <label for="storesList">Users</label>
         string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()))
+        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"})
         ;
 
-        <button class="w-10 btn btn-lg btn-primary" formaction="TryAppointManager" type="submit">Appoint Manager</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="TryAppointManager" type="submit">Appoint Manager</button>
 
-        <button class="w-10 btn btn-lg btn-primary" formaction="TryAppointOwner" type="submit">Appoint Owner</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="TryAppointOwner" type="submit">Appoint Owner</button>
     }
 </div>
 </body>

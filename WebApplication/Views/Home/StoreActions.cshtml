@@ -8,22 +8,23 @@
     <title>title</title>
 </head>
 <body>
-<div>
-    <input class="w-10 btn btn-lg btn-primary" type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
+<div class="openstoreinstoreactionsdiv">
+    <input class="btn btn-outline-primary btn-lg" type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
 </div>
-<div>
+<div class="storeactionsdivadd">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
+        <label for="storesList">Stores list</label>
         string[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("stores");
-        @Html.DropDownListFor(model => model.storeInfo, new SelectList(StoresList.OfType<string>().ToList()));
+        @Html.DropDownListFor(model => model.storeInfo, new SelectList(StoresList.OfType<string>().ToList()), new {@class = "custom-select"});
         
-        <button class="w-10 btn btn-lg btn-primary" formaction="ItemActions" type="submit">See Items In Store</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ItemActions" type="submit">See Items In Store</button>
 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
         
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Edit Store's Purchase Predicates</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Purchase Predicates</button>
 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Edit Store's Sale Predicates</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Sale Predicates</button>
 
     }
 </div>
