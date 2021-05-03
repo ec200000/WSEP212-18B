@@ -51,6 +51,13 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetInt32(SessionStoreID, int.Parse(subInfo[3].Substring(14)));
             return View();
         }
+        
+        public IActionResult AppointOfficials()
+        {
+            string[] users = Authentication.Instance.getAllUsers();
+            HttpContext.Session.SetObject("allUsers", users);
+            return View();
+        }
 
         public IActionResult PurchaseHistory()
         {
@@ -320,6 +327,38 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+        
+        public IActionResult TryAppointManager(AppointModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.appointStoreManager(HttpContext.Session.GetString(SessionName),
+                model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                return RedirectToAction("Privacy");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+        
+        public IActionResult TryAppointOwner(AppointModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            RegularResult res = systemController.appointStoreOwner(HttpContext.Session.GetString(SessionName),
+                model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
                 return RedirectToAction("Privacy");

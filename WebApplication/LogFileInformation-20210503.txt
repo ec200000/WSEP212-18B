@@ -28,3 +28,33 @@
 
 2021-05-03 13:55:59.602 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: shelly
 
+2021-05-03 14:33:40.598 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-05-03 14:33:48.480 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-05-03 14:33:49.823 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 14:39:13.891 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: tal
+
+2021-05-03 15:12:18.196 +03:00 [Information] Register Event was triggered, with the parameters: user name: tal
+
+2021-05-03 15:12:20.337 +03:00 [Information] Login Event was triggered, with the parameters: user name: tal
+
+2021-05-03 15:12:21.897 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 15:12:28.857 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: tal, store name: 1, purchase policy: 1, sales policy: 1
+
+2021-05-03 15:12:29.610 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 15:12:57.230 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: tal, store ID: 1, manager name: tal
+
+2021-05-03 15:13:04.037 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 15:13:08.268 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: tal, store ID: 1, store owner name: tal
+
+2021-05-03 15:13:12.083 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+
+2021-05-03 15:13:16.667 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: tal, store ID: 1, manager name: big manager
+
+2021-05-03 15:13:20.175 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: tal
+

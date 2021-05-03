@@ -318,3 +318,4 @@ C:\Users\talsk\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebAppl
 C:\Users\talsk\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\ref\WebApplication.dll
 C:\Users\talsk\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 C:\Users\talsk\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
+C:\Users\talsk\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AppointOfficials.cshtml.g.cs

@@ -121,10 +121,11 @@ namespace WSEP212.DomainLayer
         {
             return usersInfo.TryGetValue(userName, out var password) ? password : null;
         }
-        
+
         public String[] getAllUsers()
         {
             return usersInfo.Keys.ToArray();
         }
+
     }
 }
