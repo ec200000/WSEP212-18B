@@ -25,7 +25,10 @@
         <e p="HomeController.cs" t="Include" />
       </e>
       <e p="LinkedListExtensions.cs" t="Include" />
+      <e p="LogFileErrors-20210430.txt" t="Include" />
+      <e p="LogFileInformation-20210501.txt" t="Include" />
       <e p="LogFileInformation-20210503.txt" t="Include" />
+      <e p="LogFileWarnings-20210430.txt" t="Include" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
@@ -177,17 +180,19 @@
         <e p="ItemReview.cs" t="Include" />
         <e p="LoggedBuyerState.cs" t="Include" />
         <e p="Permissions.cs" t="Include" />
-        <e p="PolicyPredicate" t="Include">
-          <e p="AndPredicates.cs" t="Include" />
-          <e p="ComposedPredicates.cs" t="Include" />
-          <e p="ConditioningPredicate.cs" t="Include" />
-          <e p="OrPredicates.cs" t="Include" />
-          <e p="PolicyPredicate.cs" t="Include" />
-          <e p="SimplePredicate.cs" t="Include" />
-        </e>
         <e p="PurchaseDetails.cs" t="Include" />
         <e p="PurchaseInvoice.cs" t="Include" />
         <e p="PurchasePolicy" t="Include">
+          <e p="PolicyPredicate" t="Include">
+            <e p="AndPredicates.cs" t="Include" />
+            <e p="ConditioningPredicate.cs" t="Include" />
+            <e p="OrPredicates.cs" t="Include" />
+            <e p="PurchasePredicate.cs" t="Include" />
+            <e p="PurchasePredicateCompositionType.cs" t="Include" />
+            <e p="SalePredicate.cs" t="Include" />
+            <e p="SalePredicateCompositionType.cs" t="Include" />
+            <e p="SimplePredicate.cs" t="Include" />
+          </e>
           <e p="PurchasePolicy.cs" t="Include" />
           <e p="PurchaseType.cs" t="Include" />
         </e>
@@ -197,12 +202,13 @@
             <e p="SaleOnAllStore.cs" t="Include" />
             <e p="SaleOnCategory.cs" t="Include" />
             <e p="SaleOnItem.cs" t="Include" />
+            <e p="SaleOnType.cs" t="Include" />
           </e>
-          <e p="ComposedSales.cs" t="Include" />
           <e p="ConditionalSale.cs" t="Include" />
-          <e p="DoubleSales.cs" t="Include" />
+          <e p="DoubleSale.cs" t="Include" />
           <e p="MaxSale.cs" t="Include" />
           <e p="Sale.cs" t="Include" />
+          <e p="SaleCompositionType.cs" t="Include" />
           <e p="SalePolicy.cs" t="Include" />
           <e p="SimpleSale.cs" t="Include" />
           <e p="XorSale.cs" t="Include" />
@@ -222,7 +228,6 @@
         <e p="User.cs" t="Include" />
         <e p="UserRepository.cs" t="Include" />
         <e p="UserState.cs" t="Include" />
-        <e p="UserType.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
@@ -269,6 +274,7 @@
       </e>
       <e p="bin" t="ExcludeRecursive" />
       <e p="IntegrationTests" t="Include">
+        <e p="StorePoliciesManagementTests.cs" t="Include" />
         <e p="UserStoreTests.cs" t="Include" />
         <e p="UserStoreTestsNegative.cs" t="Include" />
       </e>
