@@ -148,8 +148,9 @@ namespace WebApplication.Controllers
             return View();
         }
         
-        public IActionResult GetStoreInformation()
+        public IActionResult GetStoreInformation(StoreModel model)
         {
+            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             return View();
         }
         
@@ -710,5 +711,116 @@ namespace WebApplication.Controllers
             }
         }
         
+        public IActionResult StorePurchaseHistory()
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                string value = "";
+                foreach (PurchaseInvoice inv in res.getValue())
+                {
+                    value += inv.ToString() + "\n" + ";";
+                }
+                if(value!="")
+                    value = value.Substring(0, value.Length - 1);
+                HttpContext.Session.SetString("store_history", value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("Index");
+            }
+        }
+        
+        public IActionResult ViewOfficials()
+        {
+            SystemController systemController = SystemController.Instance;
+            ResultWithValue<ConcurrentDictionary<string,ConcurrentLinkedList<Permissions>>> res = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            if (res.getTag())
+            {
+                string[] value = new string[res.getValue().Count];
+                int i = 0;
+                foreach (string name in res.getValue().Keys)
+                {
+                    value[i] = name;
+                    i++;
+                }
+                HttpContext.Session.SetObject("officials", value);
+                return View();
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View();
+            }
+        }
+        
+        public IActionResult RemoveManager(OfficialsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.removeStoreManager(userName,model.UserName, (int)storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ViewOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ViewOfficials");
+            }
+        }
+        
+        public IActionResult RemoveOwner(OfficialsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.removeStoreOwner(userName,model.UserName, (int)storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ViewOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ViewOfficials");
+            }
+        }
+
+        public ConcurrentLinkedList<int> changeListType(ConcurrentLinkedList<Permissions> pers)
+        {
+            ConcurrentLinkedList<int> permissions = new ConcurrentLinkedList<int>();
+            Node<Permissions> node = pers.First; // going over the user's permissions to check if he is a store manager or owner
+            while(node.Next != null)
+            {
+                permissions.TryAdd((int) node.Value);
+                node = node.Next;
+            }
+            return permissions;
+        }
+        
+        public IActionResult AddManagerPermission(OfficialsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[model.UserName];
+            pers.TryAdd((Permissions) model.Permission);
+            ConcurrentLinkedList<int> permissions = changeListType(pers);
+            RegularResult res = systemController.editManagerPermissions(userName,model.UserName,permissions, (int)storeID);
+            if (res.getTag())
+            {
+                return RedirectToAction("ViewOfficials");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return View("ViewOfficials");
+            }
+        }
     }
 }
