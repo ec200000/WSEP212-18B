@@ -1,0 +1,966 @@
+2021-05-03 14:09:43.891 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:09:47.645 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:09:50.056 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:09:55.930 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:10:00.277 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:10:09.291 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:10:21.771 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 14:10:22.551 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:10:23.775 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:10:25.622 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:14:15.393 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:19:33.882 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:35:57.346 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:36:03.775 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:36:09.438 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:36:10.739 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:36:12.059 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 14:36:12.972 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:36:23.162 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 14:36:25.326 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:50:01.875 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:50:05.549 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 14:50:07.868 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:50:09.083 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:50:09.977 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 14:50:10.798 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:50:34.643 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 14:50:35.804 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:50:44.861 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wow2, purchase policy: default, sales policy: default
+
+2021-05-03 14:50:46.267 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:55:49.876 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:55:53.028 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:56:05.075 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:56:08.697 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:56:46.891 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:56:58.782 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwwwsdf, purchase policy: default, sales policy: default
+
+2021-05-03 14:57:00.306 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:57:02.803 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 14:57:04.575 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 14:58:05.521 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:07:31.621 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:07:34.528 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:07:38.118 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:07:39.994 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 15:07:41.039 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:07:52.412 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:07:54.949 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:08:10.850 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:08:24.509 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:08:28.779 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:08:45.274 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:08:51.624 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:08:58.809 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:09:02.877 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 15:09:03.457 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:09:10.267 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:09:12.491 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:09:25.247 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:09:29.801 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:20:37.949 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:20:40.616 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:20:42.659 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:20:49.612 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:20:50.877 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:21:33.470 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:21:36.242 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:21:37.315 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:21:43.625 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:21:48.231 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:21:49.286 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:21:59.180 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:25:59.135 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:26:01.289 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:26:02.978 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:26:13.126 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:27:12.075 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:28:11.863 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:28:13.734 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:28:14.790 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:28:20.744 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:28:22.340 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:28:50.179 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:29:14.063 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:29:17.330 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww345, purchase policy: default, sales policy: default
+
+2021-05-03 15:29:18.470 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:29:32.643 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:33:15.046 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:33:17.130 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 15:33:18.660 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:33:29.779 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 15:33:30.928 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 15:33:40.689 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 15:33:46.872 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:37:51.609 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:37:54.132 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:37:55.557 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:40:27.156 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 16:40:28.404 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:40:36.991 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:44:15.466 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:44:18.254 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:46:24.730 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:46:34.515 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:46:36.144 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 16:46:36.900 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:46:43.217 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 16:46:44.273 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:46:46.063 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:52:36.966 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:52:41.008 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:52:42.893 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:52:47.603 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 16:52:48.860 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:52:51.695 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:55:23.274 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:55:25.599 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:55:26.572 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:55:30.862 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 16:55:32.056 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:55:33.933 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:55:53.053 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 16:55:54.184 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:55:55.999 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:56:00.000 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 16:56:01.136 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:56:04.441 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:57:59.652 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:58:01.795 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 16:58:02.739 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:58:07.204 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 16:58:08.406 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:58:09.772 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:58:45.984 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:58:47.083 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 16:58:48.355 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 16:58:49.487 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:03:11.679 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:03:13.478 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:03:15.160 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:03:19.072 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:03:53.813 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:05:38.847 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:05:41.330 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:05:43.844 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:05:55.936 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:07:05.197 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:07:06.973 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:07:55.568 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:07:57.754 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:07:58.729 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:08:01.318 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:08:03.068 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:08:16.071 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:12:10.425 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:12:12.162 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:12:13.410 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:15:47.865 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:15:49.459 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:15:51.309 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:16:37.466 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:19:08.515 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:19:09.004 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:19:10.045 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:19:11.610 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:19:11.954 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:19:18.961 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:19:36.853 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:19:54.884 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:19:57.849 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:19:58.511 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:19:59.521 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:20:00.085 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:22:34.381 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:23:12.646 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:23:17.290 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:23:22.037 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 17:23:23.166 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:23:37.242 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:24:15.077 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 17:24:16.106 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:24:26.050 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww345, purchase policy: default, sales policy: default
+
+2021-05-03 17:24:27.389 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:24:31.281 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:25:01.381 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:25:04.859 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:26:15.753 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 17:26:16.455 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 17:26:18.036 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 17:27:33.236 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:42:50.848 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:42:53.195 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 17:42:54.436 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:01:04.906 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:01:07.314 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:01:10.000 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:01:10.726 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:01:12.024 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:10:02.028 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:10:04.298 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:10:05.620 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:10:10.193 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:10:11.229 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:10:51.158 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:10:53.073 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:10:53.996 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:10:59.706 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:11:00.948 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:11:02.874 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:11:03.341 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:11:22.519 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:12:20.359 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:12:21.936 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:12:24.016 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:12:29.107 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:12:30.277 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:13:04.121 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wow2, purchase policy: default, sales policy: default
+
+2021-05-03 18:13:05.328 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:13:14.020 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:13:41.425 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:13:42.091 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:13:43.957 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:13:48.743 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 18:13:50.001 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:13:51.569 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:13:56.257 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:14:48.075 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:14:51.956 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:14:54.813 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:14:56.040 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:15:02.044 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:15:03.161 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:15:06.716 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:15:07.864 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:15:16.570 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:15:16.578 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:15:20.613 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:15:24.054 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:15:26.467 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:15:27.178 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:15:30.724 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:15:35.804 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:15:36.551 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:16:21.063 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:16:31.638 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:17:01.412 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:17:05.516 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:17:06.563 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:17:13.744 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:17:15.905 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:17:18.023 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:20:24.061 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:20:25.946 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:20:27.158 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:20:30.247 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:20:33.969 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:20:35.055 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:20:36.345 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:20:41.528 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 18:20:42.916 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:20:43.995 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:20:51.678 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:20:54.031 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:25:09.230 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:25:10.828 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:25:12.474 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:25:13.751 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:25:17.543 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:25:18.558 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:25:19.756 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:25:25.917 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 18:25:26.715 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:25:27.425 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:25:46.274 +03:00 [Information] EditItemDetails Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:25:46.279 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:25:48.674 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:25:50.309 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:25:54.854 +03:00 [Information] EditItemDetails Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:25:54.858 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:25:56.587 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:26:00.216 +03:00 [Information] RemoveItemFromStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:26:01.303 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:26:05.191 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:26:06.135 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:26:11.455 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 18:26:12.646 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:26:16.597 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:26:26.071 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:26:29.460 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:26:32.208 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:29:38.570 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:29:53.677 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: she, password: 12345 
+
+2021-05-03 18:29:59.657 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:30:05.470 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:30:10.944 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:30:15.492 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:30:17.655 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:30:23.480 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:30:25.768 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:30:26.621 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:30:35.153 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:30:52.550 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:34:03.638 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:34:06.023 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:34:11.063 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:34:14.414 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:34:15.220 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:41:47.771 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:42:12.928 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:42:49.939 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:42:52.051 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:42:53.566 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:42:54.941 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:42:55.399 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:50:18.398 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:50:23.306 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:50:31.685 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:50:36.280 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:50:36.995 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:50:37.413 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:50:37.746 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:50:39.123 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:50:39.334 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:50:39.696 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:50:40.075 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:50:40.309 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:07.102 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:09.913 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:51:10.570 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:14.286 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:51:16.101 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:51:19.560 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:51:23.208 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:25.214 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:26.398 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:51:30.999 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 18:51:33.822 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:35.633 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:36.587 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:51:37.867 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:51:42.686 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:51:42.694 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:51:44.552 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:51:47.459 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:51:49.586 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:51:53.412 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:52:06.379 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:52:16.984 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:52:33.837 +03:00 [Information] SearchItemsByCategory Event was triggered, with the parameters:item name: sh, key words: sh, meminimal price: -2147483648, maximal price: 2147483647, category: dde
+
+2021-05-03 18:52:40.870 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:52:41.306 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:52:42.011 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:53:41.056 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:53:43.256 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 18:53:44.626 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:53:45.555 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:53:49.687 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 18:53:51.423 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:53:52.316 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:54:00.591 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 18:54:02.491 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:54:04.480 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:54:06.443 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:54:09.418 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:54:10.205 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:54:22.845 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:54:22.852 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:54:23.766 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:54:26.452 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:54:27.560 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:54:29.115 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:56:43.992 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: she, review: asdfghjkl;, store ID: 1, item ID: 1
+
+2021-05-03 18:56:45.592 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:56:47.835 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:56:52.618 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:56:55.667 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:56:58.980 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:59:15.222 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:59:20.302 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:59:25.497 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 18:59:25.500 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:59:27.265 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:59:29.229 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:59:31.901 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:59:35.003 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:59:47.136 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 18:59:49.830 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 18:59:53.010 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: she, review: asdfghjkl;, store ID: 1, item ID: 1
+
+2021-05-03 18:59:53.760 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 18:59:57.153 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 19:00:11.243 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 19:00:12.885 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 19:00:15.582 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 19:00:17.566 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:00:21.734 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 19:00:22.954 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:00:24.707 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:00:28.810 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 0
+
+2021-05-03 19:00:29.807 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:00:33.033 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:00:40.404 +03:00 [Information] EditItemDetails Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 19:00:40.409 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:00:43.787 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:00:46.371 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 19:00:50.039 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:00:50.878 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:00:55.253 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: she, store ID: 1, item ID: 1
+
+2021-05-03 19:00:55.261 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:00:56.357 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:00:58.356 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: she
+
+2021-05-03 19:00:59.187 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 19:01:20.913 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: she, review: asdfghjkl;, store ID: 1, item ID: 1
+
+2021-05-03 19:01:23.388 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:01:32.462 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:01:38.370 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: she
+
+2021-05-03 19:01:39.397 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:05:36.182 +03:00 [Information] Register Event was triggered, with the parameters: user name: she
+
+2021-05-03 19:05:38.466 +03:00 [Information] Login Event was triggered, with the parameters: user name: she
+
+2021-05-03 19:05:39.591 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:05:45.277 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: she, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 19:05:46.286 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:06:20.848 +03:00 [Information] Logout Event was triggered, with the parameter: user name: she
+
+2021-05-03 19:06:45.790 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: big manager, password: 123456 
+
+2021-05-03 19:06:53.633 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:06:55.329 +03:00 [Information] GetStoresPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:06:56.182 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:07:02.679 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: big manager, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 19:07:03.973 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:07:16.280 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:07:23.332 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:07:30.430 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: big manager, store ID: 2, item ID: 0
+
+2021-05-03 19:07:31.965 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:07:32.745 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:07:33.724 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:07:34.865 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:07:39.215 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:07:40.375 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:07:41.176 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:07:45.365 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: big manager, store ID: 2, item ID: 1
+
+2021-05-03 19:07:45.374 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:07:46.076 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:07:47.797 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:07:49.138 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:07:51.100 +03:00 [Information] GetStoresPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:07:53.156 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:10:48.797 +03:00 [Information] LoginAsSystemManager Event was triggered, with the parameters: user name: big manager, password: 123456 
+
+2021-05-03 19:10:51.633 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:10:55.153 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: big manager, store name: wowwww, purchase policy: default, sales policy: default
+
+2021-05-03 19:10:56.452 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:10:57.990 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:11:02.389 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: big manager, store ID: 1, item ID: 0
+
+2021-05-03 19:11:04.246 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:11:06.191 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:11:08.105 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:11:10.558 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:12.731 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:11:14.716 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: big manager, store ID: 1, item ID: 1
+
+2021-05-03 19:11:14.731 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:11:15.250 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:11:16.721 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:18.409 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:11:19.491 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:23.164 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: big manager, review: asdfghjkl;, store ID: 1, item ID: 1
+
+2021-05-03 19:11:25.974 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:27.041 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:11:32.259 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:40.317 +03:00 [Information] GetStoresPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:41.119 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:48.252 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:11:50.048 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:12:12.933 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:12:21.594 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:12:29.297 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:12:35.660 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:12:44.401 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: big manager, review: asdfghjkl;', store ID: 1, item ID: 1
+
+2021-05-03 19:12:46.629 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:12:51.598 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:12:53.182 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-03 19:12:54.140 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:13:01.549 +03:00 [Information] GetStoresPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:13:02.728 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:13:13.429 +03:00 [Information] GetUsersPurchaseHistory Event was triggered, with the parameter:user name: big manager
+
+2021-05-03 19:13:14.228 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+
+2021-05-03 19:13:18.473 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: big manager
+

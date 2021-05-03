@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\ec200\.nuget\packages\microsoft.net.test.sdk\16.9.4\build\netcoreapp2.1" t="Include">
+    <e p="C:\Users\shell\.nuget\packages\microsoft.net.test.sdk\16.9.4\build\netcoreapp2.1" t="Include">
       <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
     </e>
-    <e p="C:\Users\ec200\.nuget\packages\microsoft.testplatform.testhost\16.9.4\build\netcoreapp2.1\x64\Microsoft.TestPlatform.PlatformAbstractions.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\microsoft.testplatform.testhost\16.9.4\build\netcoreapp2.1\x64\testhost.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\microsoft.testplatform.testhost\16.9.4\build\netcoreapp2.1\x64\testhost.exe" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\mstest.testadapter\2.2.3\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\mstest.testadapter\2.2.3\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\mstest.testadapter\2.2.3\build\netcoreapp1.0\Microsoft.TestPlatform.AdapterUtilities.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\mstest.testadapter\2.2.3\build\netcoreapp1.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\nunit.engine.api.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\nunit.engine.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\NUnit3.TestAdapter.dll" t="Include" />
-    <e p="C:\Users\ec200\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\NUnit3.TestAdapter.pdb" t="Include" />
-    <e p="C:\Users\ec200\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\ec200\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_WSEP212.-2112122613.00" t="ExcludeRecursive" />
-    <e p="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication" t="IncludeRecursive">
+    <e p="C:\Users\shell\.nuget\packages\microsoft.testplatform.testhost\16.9.4\build\netcoreapp2.1\x64\Microsoft.TestPlatform.PlatformAbstractions.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\microsoft.testplatform.testhost\16.9.4\build\netcoreapp2.1\x64\testhost.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\microsoft.testplatform.testhost\16.9.4\build\netcoreapp2.1\x64\testhost.exe" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\mstest.testadapter\2.2.3\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\mstest.testadapter\2.2.3\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\mstest.testadapter\2.2.3\build\netcoreapp1.0\Microsoft.TestPlatform.AdapterUtilities.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\mstest.testadapter\2.2.3\build\netcoreapp1.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\nunit.engine.api.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\nunit.engine.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\NUnit3.TestAdapter.dll" t="Include" />
+    <e p="C:\Users\shell\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\NUnit3.TestAdapter.pdb" t="Include" />
+    <e p="C:\Users\shell\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\shell\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_WSEP212.-393214489.00" t="ExcludeRecursive" />
+    <e p="C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication" t="IncludeRecursive">
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
@@ -25,7 +25,11 @@
         <e p="HomeController.cs" t="Include" />
       </e>
       <e p="LinkedListExtensions.cs" t="Include" />
+      <e p="LogFileErrors-20210430.txt" t="Include" />
+      <e p="LogFileInformation-20210501.txt" t="Include" />
       <e p="LogFileInformation-20210503.txt" t="Include" />
+      <e p="LogFileWarnings-20210430.txt" t="Include" />
+      <e p="LogFileWarnings-20210503.txt" t="Include" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
@@ -145,7 +149,7 @@
         </e>
       </e>
     </e>
-    <e p="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212" t="IncludeRecursive">
+    <e p="C:\Users\shell\RiderProjects\WSEP212-18B\WSEP212" t="IncludeRecursive">
       <e p="bin" t="ExcludeRecursive" />
       <e p="DomainLayer" t="Include">
         <e p="Authentication" t="Include">
@@ -177,17 +181,19 @@
         <e p="ItemReview.cs" t="Include" />
         <e p="LoggedBuyerState.cs" t="Include" />
         <e p="Permissions.cs" t="Include" />
-        <e p="PolicyPredicate" t="Include">
-          <e p="AndPredicates.cs" t="Include" />
-          <e p="ComposedPredicates.cs" t="Include" />
-          <e p="ConditioningPredicate.cs" t="Include" />
-          <e p="OrPredicates.cs" t="Include" />
-          <e p="PolicyPredicate.cs" t="Include" />
-          <e p="SimplePredicate.cs" t="Include" />
-        </e>
         <e p="PurchaseDetails.cs" t="Include" />
         <e p="PurchaseInvoice.cs" t="Include" />
         <e p="PurchasePolicy" t="Include">
+          <e p="PolicyPredicate" t="Include">
+            <e p="AndPredicates.cs" t="Include" />
+            <e p="ConditioningPredicate.cs" t="Include" />
+            <e p="OrPredicates.cs" t="Include" />
+            <e p="PurchasePredicate.cs" t="Include" />
+            <e p="PurchasePredicateCompositionType.cs" t="Include" />
+            <e p="SalePredicate.cs" t="Include" />
+            <e p="SalePredicateCompositionType.cs" t="Include" />
+            <e p="SimplePredicate.cs" t="Include" />
+          </e>
           <e p="PurchasePolicy.cs" t="Include" />
           <e p="PurchaseType.cs" t="Include" />
         </e>
@@ -197,12 +203,13 @@
             <e p="SaleOnAllStore.cs" t="Include" />
             <e p="SaleOnCategory.cs" t="Include" />
             <e p="SaleOnItem.cs" t="Include" />
+            <e p="SaleOnType.cs" t="Include" />
           </e>
-          <e p="ComposedSales.cs" t="Include" />
           <e p="ConditionalSale.cs" t="Include" />
-          <e p="DoubleSales.cs" t="Include" />
+          <e p="DoubleSale.cs" t="Include" />
           <e p="MaxSale.cs" t="Include" />
           <e p="Sale.cs" t="Include" />
+          <e p="SaleCompositionType.cs" t="Include" />
           <e p="SalePolicy.cs" t="Include" />
           <e p="SimpleSale.cs" t="Include" />
           <e p="XorSale.cs" t="Include" />
@@ -222,7 +229,6 @@
         <e p="User.cs" t="Include" />
         <e p="UserRepository.cs" t="Include" />
         <e p="UserState.cs" t="Include" />
-        <e p="UserType.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
@@ -259,7 +265,7 @@
       <e p="WSEP212.csproj" t="IncludeRecursive" />
       <e p="WSEP212.sln" t="IncludeFlat" />
     </e>
-    <e p="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS" t="IncludeRecursive">
+    <e p="C:\Users\shell\RiderProjects\WSEP212-18B\WSEP212-TESTS" t="IncludeRecursive">
       <e p="AcceptanceTests" t="Include">
         <e p="AuthenticationActionsTests.cs" t="Include" />
         <e p="MultiThreadedTests.cs" t="Include" />
@@ -269,6 +275,7 @@
       </e>
       <e p="bin" t="ExcludeRecursive" />
       <e p="IntegrationTests" t="Include">
+        <e p="StorePoliciesManagementTests.cs" t="Include" />
         <e p="UserStoreTests.cs" t="Include" />
         <e p="UserStoreTestsNegative.cs" t="Include" />
       </e>

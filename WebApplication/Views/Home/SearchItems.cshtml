@@ -10,26 +10,38 @@
     <title>title</title>
 </head>
 <body>
-<div>
+<div class="searchitemsdivaddview">
     @model WebApplication.Models.SearchModel
     @using (Html.BeginForm("TryAddItemToShoppingCart", "Home", FormMethod.Post))
     {
+        <label for="storesList">Items List</label>
         ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<ConcurrentDictionary<Store,ConcurrentLinkedList<Item>>>("allitems!");
-        @Html.DropDownListFor(model => model.itemChosen, new SelectList(Model.items.OfType<string>().ToList()))
-        @Html.TextBoxFor(model => model.quantity)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Add Item To Shopping Cart</button>
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="TryShowReviews">View Item's reviews</button>
+        @Html.DropDownListFor(model => model.itemChosen, new SelectList(Model.items.OfType<string>().ToList()), new {@class = "custom-select"})
+        @Html.TextBoxFor(model => model.quantity,new { placeholder = "Quantity",@class="inputclassindex" })
+        <button class="btn btn-outline-primary" type="submit">Add Item To Shopping Cart</button>
+        <button class="btn btn-outline-primary" type="submit" formaction="TryShowReviews">View Item's reviews</button>
     }
 </div>
-<div>
+<div class="searchitemsdivsearch">
     @using (Html.BeginForm("TrySearchItems", "Home", FormMethod.Post))
     {
-        @Html.TextBoxFor(model => model.minPrice)
-        @Html.TextBoxFor(model => model.maxPrice)
-        @Html.TextBoxFor(model => model.keyWords)
-        @Html.TextBoxFor(model => model.category)
-        @Html.TextBoxFor(model => model.itemName)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Search Items</button>
+        <div>
+            @Html.TextBoxFor(model => model.minPrice,new { placeholder = "Minimum price",@class="inputclassindex" })
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.maxPrice,new { placeholder = "Maximum price",@class="inputclassindex" })
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.keyWords,new { placeholder = "Key words",@class="inputclassindex" })
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.category,new { placeholder = "Category",@class="inputclassindex" })
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.itemName,new { placeholder = "Item name",@class="inputclassindex" })
+        </div>
+        
+        <button class="btn btn-outline-primary" type="submit">Search Items</button>
     }
 </div>
 </body>

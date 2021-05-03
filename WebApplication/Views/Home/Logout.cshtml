@@ -6,10 +6,10 @@
 </head>
 <body>
 @model WebApplication.Models.UserModel
-<div>
+<div class="logoutdiv">
     @using (Html.BeginForm("TryLogout", "Home", FormMethod.Post))
     {
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Logout</button>
+        <button class="btn btn-outline-primary" type="submit">Logout</button>
     }
 </div>
 </body>

@@ -8,15 +8,18 @@
     <title>title</title>
 </head>
 <body>
-<div>
+<div class="getstoreinformationdiv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
     {
-        int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");
-        @Html.DropDownListFor(model => model.storeID, new SelectList(StoresList.OfType<int>().ToList()));
+        <label for="storesList">Stores List</label>
+        //<select name="storesList" id="storesList" class="custom-select">
+            int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");
+            @Html.DropDownListFor(model => model.storeID, new SelectList(StoresList.OfType<int>().ToList()), new {@class = "custom-select"});
+        //</select>
         
-        <button class="w-10 btn btn-lg btn-primary" formaction="ItemActions" type="submit">See Items In Store</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ItemActions" type="submit">See Items In Store</button>
 
-        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
     }
 </div>
 </body>

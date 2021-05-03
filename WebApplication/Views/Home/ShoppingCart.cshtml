@@ -7,21 +7,21 @@
 
 <html>
 <body>
-<div>
+<div class="shoppingcartremovediv">
     @model WebApplication.Models.ShoppingCartModel
     @using (Html.BeginForm("TryRemoveItemFromShoppingCart", "Home", FormMethod.Post))
     {
+        <label for="storesList">Items List</label>
         string[] ItemsListAndStores = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("shoppingCart");
-        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()));
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Remove Item From Shopping Cart</button>
+        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()), new {@class = "custom-select"});
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove Item From Shopping Cart</button>
     }
 </div>
-<div>
-    
+<div class="shoppingcartpurchasediv">
     @using (Html.BeginForm("TrypurchaseItems", "Home", FormMethod.Post))
     {
-        @Html.TextBoxFor(model => model.Address)
-        <button class="w-10 btn btn-lg btn-primary" type="submit">Purchase items</button>
+        @Html.TextBoxFor(model => model.Address,new { placeholder = "Address",@class="inputclassindex" })
+        <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Purchase items</button>
     }
 </div>
     </body>
