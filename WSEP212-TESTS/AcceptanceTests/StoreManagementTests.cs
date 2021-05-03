@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -22,7 +23,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("r", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, string>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         

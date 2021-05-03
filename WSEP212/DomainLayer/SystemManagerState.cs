@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
@@ -11,6 +12,21 @@ namespace WSEP212.DomainLayer
         public SystemManagerState(User user) : base(user)
         {
 
+        }
+        
+        public override RegularResult loginAsSystemManager(string userName, string password)
+        {
+            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
+            if(findUserRes.getTag())
+            {
+                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
+                if(loginStateRes.getTag())
+                {
+                    return new Ok("The User Has Successfully Logged In");
+                }
+                return loginStateRes;
+            }
+            return new Failure(findUserRes.getMessage());
         }
 
         public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()

@@ -122,18 +122,7 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult loginAsSystemManager(string userName, string password)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if(findUserRes.getTag())
-            {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
-                if(loginStateRes.getTag())
-                {
-                    user.changeState(new SystemManagerState(user));
-                    return new Ok("The User Has Successfully Logged In");
-                }
-                return loginStateRes;
-            }
-            return new Failure(findUserRes.getMessage());
+            throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
         public override RegularResult logout(String userName)
@@ -151,6 +140,12 @@ namespace WSEP212.DomainLayer
         {
             User user = new User(userName, userAge);
             return UserRepository.Instance.insertNewUser(user, password);
+        }
+        
+        public override RegularResult continueAsGuest(String userName)
+        {
+            User user = new User(userName);
+            return UserRepository.Instance.addLoginUser(user);
         }
 
         public override RegularResult removeItemFromStorage(int storeID, int itemID)
@@ -178,6 +173,12 @@ namespace WSEP212.DomainLayer
         }
         
         public override RegularResult removeStoreOwner(string ownerName, int storeID)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+        
+        public override ConcurrentLinkedList<int> getUsersStores()
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)

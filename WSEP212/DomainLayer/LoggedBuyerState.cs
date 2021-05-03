@@ -82,6 +82,11 @@ namespace WSEP212.DomainLayer
             }
             return hasPermissionRes;
         }
+        
+        public override RegularResult continueAsGuest(String userName)
+        {
+            throw new NotImplementedException();
+        }
 
         private RegularResult hasPermissionInStore(int storeID, Permissions permission)
         {
@@ -499,6 +504,18 @@ namespace WSEP212.DomainLayer
                 return storeRes.getValue().composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
+        }
+
+        public override ConcurrentLinkedList<int> getUsersStores()
+        {
+            ConcurrentLinkedList<int> list = new ConcurrentLinkedList<int>();
+            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
+            while(sellerPermissions.Value != null)
+            {
+                list.TryAdd(sellerPermissions.Value.store.storeID);
+                sellerPermissions = sellerPermissions.Next;
+            }
+            return list;
         }
     }
 }

@@ -18,8 +18,11 @@ namespace WSEP212.DomainLayer
 
         // * User Management In The System * //
         public abstract RegularResult register(String userName, int userAge, String password);
+
         public abstract RegularResult login(String userName, String password);   
         public abstract RegularResult loginAsSystemManager(String userName, String password);
+
+        public abstract RegularResult continueAsGuest(String userName);
         public abstract RegularResult logout(String userName);
         // * End Of User Management In The System * //
 
@@ -78,6 +81,8 @@ namespace WSEP212.DomainLayer
         public abstract ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
         public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory();
         public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory();
+        
+        public abstract ConcurrentLinkedList<int> getUsersStores();
         // * End Of Get Informations * //
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer;
 
 namespace WSEP212.ServiceLayer.ServiceObjectsDTO
 {
@@ -12,12 +13,12 @@ namespace WSEP212.ServiceLayer.ServiceObjectsDTO
         public int quantity;
         public String itemName;
         public String description;
-        public ConcurrentDictionary<String, String> review;
+        public ConcurrentDictionary<String, ItemReview> review;
         public double price;
         public int rank;
         public String category;
 
-        public ItemDTO(int storeId, int quantity, string itemName, string description, ConcurrentDictionary<string, string> review, double price, string category)
+        public ItemDTO(int storeId, int quantity, string itemName, string description, ConcurrentDictionary<string, ItemReview> review, double price, string category)
         {
             storeID = storeId;
             this.quantity = quantity;

@@ -1,0 +1,43 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @model WebApplication.Models.ItemModel
+    @using (Html.BeginForm("TryEditDetails", "Home", FormMethod.Post))
+    {
+        <div>
+            @Html.LabelFor(model => model.quantity)
+            @Html.EditorFor(model => model.quantity)
+        </div>
+        
+        <div>
+            @Html.LabelFor(model => model.itemName)
+            @Html.EditorFor(model => model.itemName)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.description)
+            @Html.EditorFor(model => model.description)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.price)
+            @Html.EditorFor(model => model.price)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.category)
+            @Html.EditorFor(model => model.category)
+        </div>
+        
+        <button class="w-10 btn btn-lg btn-primary" type="submit">Edit Details</button>
+    }
+</div>
+</body>
+</html>

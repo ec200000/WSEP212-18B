@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.ConcurrentLinkedList
+@using WSEP212.DomainLayer
+@using System.Collections.Concurrent
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @model WebApplication.Models.ShowReviewsModel
+    @Model.reviewsStrings
+</div>
+
+</body>
+</html>

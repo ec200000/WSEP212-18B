@@ -15,5 +15,7 @@ namespace WebApplication.Models
         
         [Required]
         public string salesPolicy { get; set; }
+        
+        public int storeID { get; set; }
     }
 }

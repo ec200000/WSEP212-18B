@@ -1,0 +1,23 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model WebApplication.Models.StoreModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    {
+        int[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>("stores");
+        @Html.DropDownListFor(model => model.storeID, new SelectList(StoresList.OfType<int>().ToList()));
+        
+        <button class="w-10 btn btn-lg btn-primary" formaction="ItemActions" type="submit">See Items In Store</button>
+
+        <button class="w-10 btn btn-lg btn-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+    }
+</div>
+</body>
+</html>
