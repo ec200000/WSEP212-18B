@@ -97,12 +97,12 @@ namespace WebApplication.Controllers
         public IActionResult ShoppingCart(ShoppingCartModel model)
         {
             SystemController systemController = SystemController.Instance;
-            WSEP212.DomainLayer.ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
+            ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
             ShoppingCartItems(res);
             return View();
         }
 
-        private void ShoppingCartItems(WSEP212.DomainLayer.ShoppingCart shoppingCart)
+        private void ShoppingCartItems(ShoppingCart shoppingCart)
         {
             if (shoppingCart == null)
             {
