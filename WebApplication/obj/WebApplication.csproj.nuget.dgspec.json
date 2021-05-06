@@ -44,6 +44,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNet.SignalR.Core": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
             "Microsoft.AspNetCore.Authentication.Certificate": {
               "target": "Package",
               "version": "[5.0.5, )"
@@ -51,6 +55,10 @@
             "Microsoft.AspNetCore.Session": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.WebSockets": {
+              "target": "Package",
+              "version": "[0.2.3.1, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

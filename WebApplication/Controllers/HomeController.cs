@@ -59,7 +59,7 @@ namespace WebApplication.Controllers
         
         public IActionResult AppointOfficials()
         {
-            string[] users = Authentication.Instance.getAllUsers();
+            string[] users = SystemController.Instance.getAllSignedUpUsers();
             HttpContext.Session.SetObject("allUsers", users);
             return View();
         }
@@ -167,8 +167,8 @@ namespace WebApplication.Controllers
             for (int i = 0; i < stores.Length; i++)
             {
                 string value = "Store ID: " + stores[i] + ", Store Name: " +
-                               StoreRepository.Instance.stores[stores[i]].storeName +
-                               ", Store Address: " + StoreRepository.Instance.stores[stores[i]].storeAddress;
+                               systemController.getStoreByID(stores[i]).storeName +
+                               ", Store Address: " + systemController.getStoreByID(stores[i]).storeAddress; 
                 storesValues[i] = value;
             }
             HttpContext.Session.SetObject("stores", storesValues);
@@ -198,7 +198,8 @@ namespace WebApplication.Controllers
         
         public IActionResult EditItemDetails(ItemModel model)
         {
-            KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
+            SystemController systemController = SystemController.Instance;
+            KeyValuePair<Item, int> pair = systemController.getItemByID(model.itemID);
             HttpContext.Session.SetInt32(SessionItemID, pair.Key.itemID);
             Item item = pair.Key;
             model.storeID = pair.Value;
@@ -226,10 +227,11 @@ namespace WebApplication.Controllers
         public IActionResult ShowReviews(ShowReviewsModel model)
         {
             model = new ShowReviewsModel();
+            SystemController systemController = SystemController.Instance;
             int itemID = (int)HttpContext.Session.GetInt32(SessionItemID);
             if (itemID != 0)
             {
-                KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(itemID);
+                KeyValuePair<Item, int> pair = systemController.getItemByID(itemID);
                 model.reviews = pair.Key.reviews;
                 model.reviewsStrings = reviewsToString(pair.Key.reviews);
             }
@@ -400,7 +402,6 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.login(model.UserName, model.Password);
             if (res.getTag())
             {
-                this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 1);
                 return RedirectToAction("SearchItems");
@@ -418,7 +419,6 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.loginAsSystemManager(model.UserName, model.Password);
             if (res.getTag())
             {
-                this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 2);
                 return RedirectToAction("SearchItems");
