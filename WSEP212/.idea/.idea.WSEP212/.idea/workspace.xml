@@ -384,7 +384,13 @@
       <option name="presentableId" value="LOCAL‎00019" />
       <updated>1620059287373</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL‎00020" summary="merged with storeworkers">
+      <created>1620059498353</created>
+      <option name="number" value="LOCAL‎00020" />
+      <option name="presentableId" value="LOCAL‎00020" />
+      <updated>1620059498353</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,7 +428,8 @@
     <MESSAGE value="almost final edits and removing" />
     <MESSAGE value="almost final edits" />
     <MESSAGE value="getting there" />
-    <option name="LAST_COMMIT_MESSAGE" value="getting there" />
+    <MESSAGE value="merged with storeworkers" />
+    <option name="LAST_COMMIT_MESSAGE" value="merged with storeworkers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

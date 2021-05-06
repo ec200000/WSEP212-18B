@@ -4019,19 +4019,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\shell\\.nuget\\packages\\": {}
+    "C:\\Users\\ec200\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\shell\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "C:\\Users\\shell\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
-      "packagesPath": "C:\\Users\\shell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\shell\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
+      "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+      "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\shell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4045,8 +4045,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\shell\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-              "projectPath": "C:\\Users\\shell\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+            "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+              "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
           }
         }
