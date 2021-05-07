@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using WebApplication.Controllers;
 
 namespace WebApplication.Communication
 {
@@ -11,15 +13,31 @@ namespace WebApplication.Communication
     {
         private ConcurrentDictionary<String, List<String>> usersConn = new ConcurrentDictionary<string, List<string>>();
         private readonly object listlock = new object();
-
-        public void SaveConnection(String name)
+        //private readonly IUserConnectionManager _userConnectionManager;
+        private static int i = 0;
+        /*public NotificationHub(IUserConnectionManager userConnectionManager)
         {
-            if (usersConn.ContainsKey(name))
-                usersConn.TryAdd(name, new List<string>());
-            lock (listlock)
-            { 
-                usersConn[name].Add(Context.ConnectionId);
-            }
+            _userConnectionManager = userConnectionManager;
+        }*/
+        public string GetConnectionId()
+        {
+            var httpContext = this.Context.GetHttpContext();
+            //var userId = httpContext.Request.Query["userId"];
+            if(i % 2 == 0) //TODO: just for now
+                UserConnectionManager.Instance.KeepUserConnection("iris", Context.ConnectionId);
+            if(i % 2 == 1)
+                UserConnectionManager.Instance.KeepUserConnection("i", Context.ConnectionId);
+            i++;
+            //UserConnectionManager.Instance.KeepUserConnection(httpContext.Session.GetString("SessionName"), Context.ConnectionId);
+            return Context.ConnectionId;
+        }
+        //Called when a connection with the hub is terminated.
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            //get the connectionId
+            var connectionId = Context.ConnectionId;
+            UserConnectionManager.Instance.RemoveUserConnection(connectionId);
+            var value = await Task.FromResult(0);
         }
         
         public Task Send(string message)

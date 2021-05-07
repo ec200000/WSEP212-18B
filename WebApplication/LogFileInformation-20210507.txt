@@ -1,0 +1,122 @@
+2021-05-07 16:38:55.450 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 16:39:56.884 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 16:40:06.492 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 16:40:06.529 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 16:40:19.923 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 16:40:24.236 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 16:40:24.251 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 16:40:33.992 +03:00 [Information] Logout Event was triggered, with the parameter: user name: i
+
+2021-05-07 16:51:59.191 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 16:56:46.957 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 16:57:02.473 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 16:57:02.512 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 16:57:39.567 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 16:57:52.147 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 16:57:52.174 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 16:58:03.662 +03:00 [Information] Logout Event was triggered, with the parameter: user name: i
+
+2021-05-07 16:59:51.604 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:04:55.966 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:05:08.635 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:05:08.673 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:07:12.559 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:07:27.630 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:07:27.664 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:07:33.022 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:07:49.126 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:07:49.140 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:07:54.341 +03:00 [Information] Logout Event was triggered, with the parameter: user name: i
+
+2021-05-07 17:08:45.500 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:09:00.009 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:09:00.047 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:09:05.195 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:09:53.601 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:09:53.620 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:09:55.754 +03:00 [Information] Logout Event was triggered, with the parameter: user name: i
+
+2021-05-07 17:10:58.548 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:12:14.174 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:12:46.533 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:12:46.578 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:12:50.109 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:12:50.136 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:12:54.353 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
+2021-05-07 17:14:57.102 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:15:09.024 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:15:09.059 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:16:10.992 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:16:26.604 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:16:36.294 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:16:36.330 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:16:44.367 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:16:44.390 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:16:53.799 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:16:58.789 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
+2021-05-07 17:18:50.359 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:19:15.977 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:19:44.665 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:19:44.699 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:20:14.466 +03:00 [Information] Login Event was triggered, with the parameters: user name: i
+
+2021-05-07 17:20:14.486 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-07 17:20:34.792 +03:00 [Information] Logout Event was triggered, with the parameter: user name: i
+
+2021-05-07 17:39:06.784 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 17:39:48.141 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
+

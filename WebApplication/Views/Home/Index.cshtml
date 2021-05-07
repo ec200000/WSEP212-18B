@@ -46,15 +46,15 @@
     }
 </div>
 
-<div class="container">
+<!--- <div class="container">
     <input type="text" id="txtMessage" />
     <input type="button" id="sendMessage" value="Send" onclick="sendMessage();" />
  
     <div id="DisplayMessages"></div>
  
-</div>
+</div>--->
 </body>
-</html>
+</html> 
 
 @if (ViewBag.Alert!= null)  
 {  
@@ -64,28 +64,3 @@
             };  
         </script>  
 } 
-
-@section Scripts {
-    <script src="~/js/signalr.js"></script>
-
-    <script>
-        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
-     
-        connection.on('send', data => {
-             alert(data)
-        });
-        
-        connection.on('save', data => {
-            alert(data)
-        });
-     
-        connection.start().then(() => {
-            console.log("connection started");
-        });
-     
-        function sendMessage() {
-          var msg = document.getElementById("txtMessage").value;
-          connection.invoke('send', msg);
-        }
-      </script>
-}

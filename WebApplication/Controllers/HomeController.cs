@@ -14,6 +14,8 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using System.Web;
+using Microsoft.AspNetCore.SignalR;
+using WebApplication.Communication;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -21,19 +23,28 @@ namespace WebApplication.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHubContext<NotificationHub> _notificationUserHubContext;
+        //private readonly IUserConnectionManager _userConnectionManager;
+        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationUserHubContext) 
+            //IUserConnectionManager userConnectionManager)
         {
             _logger = logger;
+            _notificationUserHubContext = notificationUserHubContext;
+            //_userConnectionManager = userConnectionManager;
         }
+        
+        /*public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }*/
 
-        public static string SessionName = "_Name";  
+        const string SessionName = "_Name";  
         const string SessionAge = "_Age";  
         const string SessionLogin = "_Login";  
         const string SessionStoreID = "_StoreID";
         const string SessionItemID = "_ItemID";
         const string SessionPurchaseHistory = "_History";
-
+        
         private User user;
         
         public IActionResult Index()  
@@ -42,7 +53,20 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetInt32(SessionLogin, 0);
             return View();  
         }  
-
+        
+        [HttpPost]
+        public async void SendToSpecificUser(String userName, String msg)
+        {
+            var connections = UserConnectionManager.Instance.GetUserConnections(userName);
+            if (connections != null && connections.Count > 0)
+            {
+                foreach (var connectionId in connections)
+                {
+                    await _notificationUserHubContext.Clients.Client(connectionId).SendAsync("sendToUser", msg);
+                }
+            }
+        }
+        
         public IActionResult ItemReview(PurchaseModel model)
         {
             string info = model.itemInfo;
@@ -433,6 +457,7 @@ namespace WebApplication.Controllers
                 {
                     HttpContext.Session.SetString(SessionName, "");
                     HttpContext.Session.SetInt32(SessionLogin, 0);
+                    SendToSpecificUser("iris", "Logged out bitch");
                     return RedirectToAction("Index");
                 }
                 else
