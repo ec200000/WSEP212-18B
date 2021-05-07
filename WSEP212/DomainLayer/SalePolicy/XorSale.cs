@@ -8,9 +8,11 @@ namespace WSEP212.DomainLayer
     {
         public Sale firstSale { get; set; }
         public Sale secondSale { get; set; }
-        public Predicate<PurchaseDetails> selectionRule { get; set; }
+        public SimplePredicate selectionRule { get; set; }
 
-        public XorSale(Sale firstSale, Sale secondSale, Predicate<PurchaseDetails> selectionRule) : base()
+        public XorSale(Sale firstSale, Sale secondSale, SimplePredicate selectionRule) :
+            base("(Only One Of The Two Sales Can Be Applied: " + firstSale.ToString() + ", OR: " + secondSale.ToString() + ", " +
+                "Select The Sale To Apply By The Selection Rule: " + selectionRule.ToString() + ")")
         {
             this.firstSale = firstSale;
             this.secondSale = secondSale;
@@ -39,7 +41,7 @@ namespace WSEP212.DomainLayer
                 return firstSalePercentage;
             }
             // both sales can be applied, choose by the selection rule
-            if (this.selectionRule(purchaseDetails))
+            if (this.selectionRule.applyPrediacte(purchaseDetails))
             {
                 return firstSalePercentage;
             }
@@ -64,7 +66,7 @@ namespace WSEP212.DomainLayer
                 return itemPriceAfterSale1;
             }
             // both sales can be applied, choose by the selection rule
-            if(this.selectionRule(purchaseDetails))
+            if(this.selectionRule.applyPrediacte(purchaseDetails))
             {
                 return itemPriceAfterSale1;
             }

@@ -10,7 +10,8 @@ namespace WSEP212.DomainLayer
         public Sale sale { get; set; }
         public SalePredicate predicate { get; set; }
 
-        public ConditionalSale(Sale sale, SalePredicate predicate) : base()
+        public ConditionalSale(Sale sale, SalePredicate predicate) : 
+            base("(In Order To Get The Sale: " + sale.ToString() + ", You Must Met The Condition: " + predicate.ToString() + ")")
         {
             this.sale = sale;
             this.predicate = predicate;

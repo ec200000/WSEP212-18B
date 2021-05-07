@@ -9,7 +9,7 @@ namespace WSEP212.DomainLayer
     {
         public Predicate<PurchaseDetails> predicate { get; set; }
 
-        public SimplePredicate(Predicate<PurchaseDetails> predicate) : base()
+        public SimplePredicate(Predicate<PurchaseDetails> predicate, String predicateDescription) : base(predicateDescription)
         {
             this.predicate = predicate;
         }

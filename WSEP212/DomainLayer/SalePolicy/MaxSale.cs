@@ -9,7 +9,9 @@ namespace WSEP212.DomainLayer
         public Sale firstSale { get; set; }
         public Sale secondSale { get; set; }
 
-        public MaxSale(Sale firstSale, Sale secondSale)
+        public MaxSale(Sale firstSale, Sale secondSale) :
+            base("(Only One Of The Two Sales Can Be Applied: " + firstSale.ToString() + ", OR: " + secondSale.ToString() + ", " +
+                "Select The Sale To Apply By The Biggest Sale")
         {
             this.firstSale = firstSale;
             this.secondSale = secondSale;

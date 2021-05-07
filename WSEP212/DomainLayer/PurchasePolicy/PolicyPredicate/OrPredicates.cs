@@ -10,7 +10,8 @@ namespace WSEP212.DomainLayer
         public PurchasePredicate firstPredicate { get; set; }
         public PurchasePredicate secondPredicate { get; set; }
 
-        public OrPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate)
+        public OrPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate) :
+            base("(At Least One Of The Two Predicates Must Be Met: " + firstPredicate.ToString() + " OR:" + secondPredicate.ToString() + ")")
         {
             this.firstPredicate = firstPredicate;
             this.secondPredicate = secondPredicate;

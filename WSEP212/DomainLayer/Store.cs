@@ -158,9 +158,9 @@ namespace WSEP212.DomainLayer
         }
 
         // add a new purchase prediacte for the store
-        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate)
+        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
-            return this.purchasePolicy.addPurchasePredicate(newPredicate);
+            return this.purchasePolicy.addPurchasePredicate(newPredicate, predDescription);
         }
 
         // removes purchase prediacte from the store
@@ -175,10 +175,16 @@ namespace WSEP212.DomainLayer
             return this.purchasePolicy.composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
         }
 
-        // add new sale for the store sale policy
-        public int addSale(int salePercentage, ApplySaleOn saleOn)
+        // returns the descriptions of all preds for presenting them to the user
+        public ConcurrentDictionary<int, String> getPurchasePredicatesDescriptions()
         {
-            return this.salesPolicy.addSale(salePercentage, saleOn);
+            return this.purchasePolicy.getPurchasePredicatesDescriptions();
+        }
+
+        // add new sale for the store sale policy
+        public int addSale(int salePercentage, ApplySaleOn saleOn, String saleDescription)
+        {
+            return this.salesPolicy.addSale(salePercentage, saleOn, saleDescription);
         }
 
         // remove sale from the store sale policy
@@ -188,15 +194,21 @@ namespace WSEP212.DomainLayer
         }
 
         // add conditional for getting the sale
-        public ResultWithValue<int> addSaleCondition(int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public ResultWithValue<int> addSaleCondition(int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             return this.salesPolicy.addSaleCondition(saleID, condition, compositionType);
         }
 
         // compose two sales by the type of sale 
-        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             return this.salesPolicy.composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
+        }
+
+        // returns the descriptions of all sales for presenting them to the user
+        public ConcurrentDictionary<int, String> getSalesDescriptions()
+        {
+            return this.salesPolicy.getSalesDescriptions();
         }
 
         // Apply the sales policy on a list of items

@@ -251,12 +251,12 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.viewShoppingCart(userName);
         }
 
-        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate)
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             String info = $"addPurchasePredicate Event was triggered, with the parameter: " +
-                          $"user name: {userName}, storeID: {storeID}, newPredicate: {newPredicate}";
+                          $"user name: {userName}, storeID: {storeID}, newPredicate: {newPredicate}, predDescription: {predDescription}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.addPurchasePredicate(userName, storeID, newPredicate);
+            return SystemControllerFacade.Instance.addPurchasePredicate(userName, storeID, newPredicate, predDescription);
         }
 
         public RegularResult removePurchasePredicate(string userName, int storeID, int predicateID)
@@ -275,12 +275,12 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.composePurchasePredicates(userName, storeID, firstPredicateID, secondPredicateID, (PurchasePredicateCompositionType)typeOfComposition);
         }
 
-        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn)
+        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             String info = $"addSale Event was triggered, with the parameter: " +
-                          $"user name: {userName}, storeID: {storeID}, salePercentage: {salePercentage}, saleOn: {saleOn}";
+                          $"user name: {userName}, storeID: {storeID}, salePercentage: {salePercentage}, saleOn: {saleOn}, saleDescription: {saleDescription}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.addSale(userName, storeID, salePercentage, saleOn);
+            return SystemControllerFacade.Instance.addSale(userName, storeID, salePercentage, saleOn, saleDescription);
         }
 
         public RegularResult removeSale(string userName, int storeID, int saleID)
@@ -291,7 +291,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.removeSale(userName, storeID, saleID);
         }
 
-        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, int compositionType)
+        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, SimplePredicate condition, int compositionType)
         {
             String info = $"addSaleCondition Event was triggered, with the parameter: " +
                           $"user name: {userName}, storeID: {storeID}, saleID: {saleID}, condition: {condition}, compositionType: {compositionType}";
@@ -299,7 +299,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.addSaleCondition(userName, storeID, saleID, condition, (SalePredicateCompositionType)compositionType);
         }
 
-        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, int typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, int typeOfComposition, SimplePredicate selectionRule)
         {
             String info = $"composeSales Event was triggered, with the parameter: " +
                           $"user name: {userName}, storeID: {storeID}, firstSaleID: {firstSaleID}, secondSaleID: {secondSaleID}, typeOfComposition: {typeOfComposition}, selectionRule: {selectionRule}";
@@ -334,6 +334,22 @@ namespace WSEP212.ServiceLayer
             String info = $"Continue As Guest Event was triggered, with the parameter: user name: {userName}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.continueAsGuest(userName);
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID)
+        {
+            String info = $"getStorePredicatesDescription Event was triggered, with the parameters:" +
+                          $"store ID: {storeID}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getStorePredicatesDescription(storeID);
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID)
+        {
+            String info = $"getStoreSalesDescription Event was triggered, with the parameters:" +
+                          $"store ID: {storeID}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.getStoreSalesDescription(storeID);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace WSEP212.DomainLayer
         public int salePercentage { get; set; }
         public ApplySaleOn applySaleOn { get; set; }
 
-        public SimpleSale(int salePercentage, ApplySaleOn applySaleOn) : base()
+        public SimpleSale(int salePercentage, ApplySaleOn applySaleOn, String saleDescription) : base(saleDescription)
         {
             this.salePercentage = salePercentage;
             this.applySaleOn = applySaleOn;
