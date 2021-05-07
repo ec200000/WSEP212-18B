@@ -385,7 +385,7 @@ namespace WSEP212.DomainLayer
             return hasPermissionRes;
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -397,7 +397,7 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
             if (hasPermissionRes.getTag())
             {
-                int predicateID = storeRes.getValue().addPurchasePredicate(newPredicate);
+                int predicateID = storeRes.getValue().addPurchasePredicate(newPredicate, predDescription);
                 return new OkWithValue<int>("The Purchase Predicate Added To The Store's Purchase Policy", predicateID);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
@@ -437,7 +437,7 @@ namespace WSEP212.DomainLayer
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
 
-        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn)
+        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -449,7 +449,7 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
             if (hasPermissionRes.getTag())
             {
-                int saleID = storeRes.getValue().addSale(salePercentage, saleOn);
+                int saleID = storeRes.getValue().addSale(salePercentage, saleOn, saleDescription);
                 return new OkWithValue<int>("The Sale Added To The Store's Sale Policy", saleID);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
@@ -472,7 +472,7 @@ namespace WSEP212.DomainLayer
             return hasPermissionRes;
         }
 
-        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -489,7 +489,7 @@ namespace WSEP212.DomainLayer
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
 
-        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);

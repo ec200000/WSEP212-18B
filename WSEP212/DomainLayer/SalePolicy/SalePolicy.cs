@@ -20,9 +20,9 @@ namespace WSEP212.DomainLayer
         // add new sale for the store sale policy
         // add the sale to the other sales by composing them with Double sale - done by the build 
         // returns the id of the new sale
-        public int addSale(int salePercentage, ApplySaleOn saleOn)
+        public int addSale(int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
-            SimpleSale simpleSale = new SimpleSale(salePercentage, saleOn);
+            SimpleSale simpleSale = new SimpleSale(salePercentage, saleOn, saleDescription);
             storeSales.TryAdd(simpleSale.saleID, simpleSale);
             return simpleSale.saleID;
         }
@@ -40,11 +40,10 @@ namespace WSEP212.DomainLayer
 
         // add conditional for getting the sale
         // if the sale already has conditionals, composed them by the composition type
-        public ResultWithValue<int> addSaleCondition(int saleID, Predicate<PurchaseDetails> predicate, SalePredicateCompositionType compositionType)
+        public ResultWithValue<int> addSaleCondition(int saleID, SimplePredicate simplePredicate, SalePredicateCompositionType compositionType)
         {
             if(storeSales.ContainsKey(saleID))
             {
-                SimplePredicate simplePredicate = new SimplePredicate(predicate);
                 storeSales.TryRemove(saleID, out Sale sale);
                 ConditionalSale conditionalSale = sale.addSaleCondition(simplePredicate, compositionType);
                 storeSales.TryAdd(conditionalSale.saleID, conditionalSale);
@@ -54,7 +53,7 @@ namespace WSEP212.DomainLayer
         }
 
         // compose two sales by the type of sale 
-        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             if (!storeSales.ContainsKey(firstSaleID) || !storeSales.ContainsKey(secondSaleID))
             {
@@ -80,6 +79,17 @@ namespace WSEP212.DomainLayer
             }
             storeSales.TryAdd(composedSale.saleID, composedSale);
             return new OkWithValue<int>("The Composed Sale Was Added To The Store's Sale Policy", composedSale.saleID);
+        }
+
+        // returns the descriptions of all sales for presenting them to the user
+        public ConcurrentDictionary<int, String> getSalesDescriptions()
+        {
+            ConcurrentDictionary<int, String> salesDescriptions = new ConcurrentDictionary<int, string>();
+            foreach (KeyValuePair<int, Sale> salePair in storeSales)
+            {
+                salesDescriptions.TryAdd(salePair.Key, salePair.Value.ToString());
+            }
+            return salesDescriptions;
         }
 
         // builds the purchase policy by all the predicates in the store

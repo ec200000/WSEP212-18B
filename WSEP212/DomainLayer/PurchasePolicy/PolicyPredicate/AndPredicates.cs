@@ -11,7 +11,8 @@ namespace WSEP212.DomainLayer
         public PurchasePredicate firstPredicate { get; set; }
         public PurchasePredicate secondPredicate { get; set; }
 
-        public AndPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate)
+        public AndPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate) :
+            base("(Both Predicates Must Be Met: " + firstPredicate.ToString() + " AND:" + secondPredicate.ToString() + ")")
         {
             this.firstPredicate = firstPredicate;
             this.secondPredicate = secondPredicate;

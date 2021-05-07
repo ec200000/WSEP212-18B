@@ -8,6 +8,6 @@ namespace WSEP212.DomainLayer
 {
     public abstract class SalePredicate : PurchasePredicate
     {
-        public SalePredicate() : base() { }
+        public SalePredicate(String predicateDescription) : base(predicateDescription) { }
     }
 }

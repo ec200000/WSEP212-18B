@@ -370,10 +370,11 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             Predicate<PurchaseDetails> newPredicate = (Predicate<PurchaseDetails>)param.parameters[1];
+            String predDescription = (String)param.parameters[2];
             object res;
             try
             {
-                res = state.addPurchasePredicate(storeID, newPredicate);
+                res = state.addPurchasePredicate(storeID, newPredicate, predDescription);
             }
             catch (NotImplementedException)
             {
@@ -433,10 +434,11 @@ namespace WSEP212.DomainLayer
             int storeID = (int)param.parameters[0];
             int salePercentage = (int)param.parameters[1];
             ApplySaleOn saleOn = (ApplySaleOn)param.parameters[2];
+            String saleDescription = (String)param.parameters[3];
             object res;
             try
             {
-                res = state.addSale(storeID, salePercentage, saleOn);
+                res = state.addSale(storeID, salePercentage, saleOn, saleDescription);
             }
             catch (NotImplementedException)
             {
@@ -473,7 +475,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             int saleID = (int)param.parameters[1];
-            Predicate<PurchaseDetails> condition = (Predicate<PurchaseDetails>)param.parameters[2];
+            SimplePredicate condition = (SimplePredicate)param.parameters[2];
             SalePredicateCompositionType compositionType = (SalePredicateCompositionType)param.parameters[3];
             object res;
             try
@@ -497,7 +499,7 @@ namespace WSEP212.DomainLayer
             int firstSaleID = (int)param.parameters[1];
             int secondSaleID = (int)param.parameters[2];
             SaleCompositionType typeOfComposition = (SaleCompositionType)param.parameters[3];
-            Predicate<PurchaseDetails> selectionRule = (Predicate<PurchaseDetails>)param.parameters[4];
+            SimplePredicate selectionRule = (SimplePredicate)param.parameters[4];
             object res;
             try
             {

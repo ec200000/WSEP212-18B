@@ -9,7 +9,8 @@ namespace WSEP212.DomainLayer
         public Sale firstSale { get; set; }
         public Sale secondSale { get; set; }
 
-        public DoubleSale(Sale firstSale, Sale secondSale)
+        public DoubleSale(Sale firstSale, Sale secondSale) :
+            base("(Both Sales Can Be Applied: " + firstSale.ToString() + ", AND: " + secondSale.ToString() + ")")
         {
             this.firstSale = firstSale;
             this.secondSale = secondSale;
