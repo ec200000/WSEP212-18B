@@ -10,14 +10,19 @@ namespace WSEP212.DomainLayer
         // static counter for the predicateIDs
         private static int predicateCounter = 1;
         public int predicateID { get; set; }
+        public String predicateDescription { get; set; }
 
-        public PurchasePredicate()
+        public PurchasePredicate(String predicateDescription)
         {
             this.predicateID = predicateCounter;
             predicateCounter++;
+            this.predicateDescription = predicateDescription;
         }
 
         public abstract bool applyPrediacte(PurchaseDetails purchaseDetails);
-
+        public override String ToString()
+        {
+            return this.predicateDescription;
+        }
     }
 }

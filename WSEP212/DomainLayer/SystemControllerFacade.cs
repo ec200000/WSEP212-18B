@@ -560,7 +560,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate)
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             try
             {
@@ -574,7 +574,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { storeID, newPredicate };
+                Object[] paramsList = { storeID, newPredicate, predDescription };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.addPurchasePredicate, threadParameters); //creating the job
@@ -662,7 +662,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn)
+        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             try
             {
@@ -676,7 +676,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { storeID, salePercentage, saleOn };
+                Object[] paramsList = { storeID, salePercentage, saleOn, saleDescription };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.addSale, threadParameters); //creating the job
@@ -730,7 +730,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             try
             {
@@ -764,7 +764,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             try
             {
@@ -1102,6 +1102,30 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog($"In ContinueAsGuest function, the error is: {e.Message}");
                 return new Failure("user couldn't perform action.");
             }
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID)
+        {
+            Store store;
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (storeRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
+            }
+            store = storeRes.getValue();
+            return new OkWithValue<ConcurrentDictionary<int, String>>("Store Exist", store.getPurchasePredicatesDescriptions());
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID)
+        {
+            Store store;
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (storeRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
+            }
+            store = storeRes.getValue();
+            return new OkWithValue<ConcurrentDictionary<int, String>>("Store Exist", store.getSalesDescriptions());
         }
     }
 }

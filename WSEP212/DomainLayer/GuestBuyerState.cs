@@ -20,19 +20,19 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn)
+        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -56,7 +56,7 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)

@@ -38,11 +38,11 @@ namespace WSEP212_TESTS.UnitTests
         public void simplePredicateMetTest()
         {
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
-            SimplePredicate policyPredicate = new SimplePredicate(predicate);
+            SimplePredicate policyPredicate = new SimplePredicate(predicate, "price is more then 40");
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
 
             predicate = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            policyPredicate = new SimplePredicate(predicate);
+            policyPredicate = new SimplePredicate(predicate, "more then 5 bisli in bag");
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
         }
 
@@ -50,11 +50,11 @@ namespace WSEP212_TESTS.UnitTests
         public void simplePredicateNotMetTest()
         {
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
-            SimplePredicate policyPredicate = new SimplePredicate(predicate);
+            SimplePredicate policyPredicate = new SimplePredicate(predicate, "price is more then 40");
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
 
             predicate = pd => pd.atLeastNQuantity(itemA.itemID, 5);
-            policyPredicate = new SimplePredicate(predicate);
+            policyPredicate = new SimplePredicate(predicate, "more then 5 bamba in bag");
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
         }
 
@@ -63,9 +63,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             // only if total price > 40 then you can buy 5 or more milk
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
-            PurchasePredicate onlyif = new SimplePredicate(predicate);
+            PurchasePredicate onlyif = new SimplePredicate(predicate, "price is more then 40");
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            PurchasePredicate onlythen = new SimplePredicate(then);
+            PurchasePredicate onlythen = new SimplePredicate(then, "more then 5 bisli in bag");
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
         }
@@ -75,9 +75,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             // only if total price > 60 then you can buy 5 or more milk
             Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
-            PurchasePredicate onlyif = new SimplePredicate(predicate);
+            PurchasePredicate onlyif = new SimplePredicate(predicate, "price is more then 60");
             Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
-            PurchasePredicate onlythen = new SimplePredicate(then);
+            PurchasePredicate onlythen = new SimplePredicate(then, "more then 5 bisli in bag");
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
         }
@@ -86,11 +86,11 @@ namespace WSEP212_TESTS.UnitTests
         public void composedPredicateMetTest()
         {
             Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
-            PurchasePredicate sp1 = new SimplePredicate(p1);
+            PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 60");
             Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
-            PurchasePredicate sp2 = new SimplePredicate(p2);
+            PurchasePredicate sp2 = new SimplePredicate(p2, "more then 5 milk in bag");
             Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
-            PurchasePredicate sp3 = new SimplePredicate(p3);
+            PurchasePredicate sp3 = new SimplePredicate(p3, "user age is bigger then 18");
             PurchasePredicate orPP = new OrPredicates(sp1, sp2);
             PurchasePredicate andPP = new AndPredicates(sp3, orPP);
             Assert.IsTrue(andPP.applyPrediacte(purchaseDetails));
@@ -100,11 +100,11 @@ namespace WSEP212_TESTS.UnitTests
         public void composedPredicateNotMetTest()
         {
             Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
-            PurchasePredicate sp1 = new SimplePredicate(p1);
+            PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 60");
             Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
-            PurchasePredicate sp2 = new SimplePredicate(p2);
+            PurchasePredicate sp2 = new SimplePredicate(p2, "more then 5 milk in bag");
             Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
-            PurchasePredicate sp3 = new SimplePredicate(p3);
+            PurchasePredicate sp3 = new SimplePredicate(p3, "user age is bigger then 18");
             PurchasePredicate andPP = new AndPredicates(sp1, sp2);
             PurchasePredicate andPP2 = new AndPredicates(sp3, andPP);
             Assert.IsFalse(andPP2.applyPrediacte(purchaseDetails));

@@ -22,13 +22,15 @@ namespace WSEP212.DomainLayer
         public RegularResult purchaseItems(String userName, String address); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
 
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate);
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID);
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
-        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn);
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID);
+        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription);
         public RegularResult removeSale(String userName, int storeID, int saleID);
-        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType);
-        public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule);
+        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType);
+        public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule);
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID);
 
         public RegularResult itemReview(String userName, String review, int itemID, int storeID);
         public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);

@@ -23,16 +23,18 @@ namespace WSEP212.ServiceLayer
         public RegularResult purchaseItems(String userName, String address); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate); // USE CASE 4.2
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID); // USE CASE 4.2
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, 
             int secondPredicateID, Int32 typeOfComposition); // USE CASE 4.2
-        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn); // USE CASE 4.2
+        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn, String predDescription); // USE CASE 4.2
         public RegularResult removeSale(String userName, int storeID, int saleID); // USE CASE 4.2
-        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, Predicate<PurchaseDetails> condition,
+        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, SimplePredicate condition,
             Int32 compositionType); // USE CASE 4.2
         public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID,
-            Int32 typeOfComposition, Predicate<PurchaseDetails> selectionRule); // USE CASE 4.2
+            Int32 typeOfComposition, SimplePredicate selectionRule); // USE CASE 4.2
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID); // USE CASE 4.2
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID); // USE CASE 4.2
         public RegularResult itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item); // USE CASE  4.1.1
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID); // USE CASE 4.1.2

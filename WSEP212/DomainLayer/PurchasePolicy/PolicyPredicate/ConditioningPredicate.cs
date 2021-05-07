@@ -10,7 +10,8 @@ namespace WSEP212.DomainLayer
         public PurchasePredicate onlyIf { get; set; }
         public PurchasePredicate then { get; set; }
 
-        public ConditioningPredicate(PurchasePredicate onlyIf, PurchasePredicate then)
+        public ConditioningPredicate(PurchasePredicate onlyIf, PurchasePredicate then) : 
+            base("(Only If: " + onlyIf.ToString() + " Then You Can:" + then.ToString() + ")")
         {
             this.onlyIf = onlyIf;
             this.then = then;
