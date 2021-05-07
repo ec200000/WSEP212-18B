@@ -267,7 +267,6 @@
         <e p="ServiceObjectsDTO" t="Include">
           <e p="ItemDTO.cs" t="Include" />
           <e p="SearchItemsDTO.cs" t="Include" />
-          <e p="StoreDTO.cs" t="Include" />
         </e>
         <e p="SystemController.cs" t="Include" />
       </e>
