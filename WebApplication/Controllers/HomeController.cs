@@ -63,13 +63,6 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetObject("allUsers", users);
             return View();
         }
-        
-        public IActionResult PurchasePredicate()
-        {
-            //string[] predicates = StoreRepository.Instance.getStore((int)HttpContext.Session.GetInt32(SessionStoreID)).getValue().purchasePolicy;
-            //HttpContext.Session.SetObject("predicates", predicates);
-            return View();
-        }
 
         public IActionResult PurchaseHistory()
         {
@@ -935,15 +928,14 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            SalePolicy res = StoreRepository.Instance.getStore((int)storeID).getValue().salesPolicy;
-            if (res != null)
+            ResultWithValue<ConcurrentDictionary<int, string>> res = systemController.getStoreSalesDescription((int) storeID);
+            if (res.getTag())
             {
-                ConcurrentDictionary<int,Sale> dict = res.storeSales;
-                string[] preds = new string[dict.Count];
+                string[] preds = new string[res.getValue().Count];
                 int i = 0;
-                foreach (Sale sale in dict.Values)
+                foreach (KeyValuePair<int,string> pred in res.getValue())
                 {
-                    preds[i] = sale.ToString();
+                    preds[i] = pred.Value+ "; " + pred.Key.ToString();
                     i++;
                 }
                 HttpContext.Session.SetObject("sale_predicates", preds);
@@ -961,7 +953,8 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string pred = model.predicate;
-            int predicate = int.Parse(pred.Substring(8)); //TODO: CHANGE
+            string[] predparts = pred.Split(";");
+            int predicate = int.Parse(predparts[1]); 
             RegularResult res = systemController.removeSale(userName, (int)storeID, predicate);
             if (res.getTag())
             {
@@ -974,17 +967,33 @@ namespace WebApplication.Controllers
             }
         }
         
+        public int saleStringToEnum(string pred)
+        {
+            switch (pred)
+            {
+                case "XorComposition":
+                    return 0;
+                case "MaxComposition":
+                    return 1;
+                case "DoubleComposition":
+                    return 2;
+            }
+            return -1;
+        }
+        
         public IActionResult ComposeSalePredicates(SalesModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string firstpred = model.firstPred;
-            int predicate1 = int.Parse(firstpred.Substring(8)); //TODO: CHANGE
+            string[] predparts1 = firstpred.Split(";");
+            int predicate1 = int.Parse(predparts1[1]);
             string secondpred = model.secondPred;
-            int predicate2 = int.Parse(secondpred.Substring(8)); //TODO: CHANGE
-            int composetype = model.compositionType;
-            /*ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype);
+            string[] predparts2 = secondpred.Split(";");
+            int predicate2 = int.Parse(predparts2[1]);
+            int composetype = saleStringToEnum(model.compositionType);
+            ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype, null);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
@@ -993,7 +1002,7 @@ namespace WebApplication.Controllers
             {
                 ViewBag.Alert = res.getMessage();
                 return RedirectToAction("StoreActions");
-            }*/
+            }
             return null;
         }
     }
