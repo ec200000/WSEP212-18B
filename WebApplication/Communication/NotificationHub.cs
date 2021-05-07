@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.SignalR;
 using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication.Controllers;
-
 namespace WebApplication.Communication
 {
     public class NotificationHub : Hub
@@ -28,7 +28,7 @@ namespace WebApplication.Communication
             if(i % 2 == 1)
                 UserConnectionManager.Instance.KeepUserConnection("i", Context.ConnectionId);
             i++;
-            //UserConnectionManager.Instance.KeepUserConnection(httpContext.Session.GetString("SessionName"), Context.ConnectionId);
+            UserConnectionManager.Instance.KeepUserConnection(Context.GetHttpContext().Session.GetString("SessionName"), Context.ConnectionId);
             return Context.ConnectionId;
         }
         //Called when a connection with the hub is terminated.
