@@ -27,7 +27,7 @@ namespace WebApplication.Controllers
             _logger = logger;
         }
 
-        const string SessionName = "_Name";  
+        public static string SessionName = "_Name";  
         const string SessionAge = "_Age";  
         const string SessionLogin = "_Login";  
         const string SessionStoreID = "_StoreID";
