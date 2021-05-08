@@ -1,0 +1,229 @@
+<changelist name="Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]" date="1620386598199" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 07/05/2021 14:23 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.pdb" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csproj.CoreCompileInputs.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csproj.CoreCompileInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS.csproj.CoreCompileInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.csprojAssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/Debug/net5.0/WSEP212.assets.cache" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.dll" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.genruntimeconfig.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.genruntimeconfig.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.genruntimeconfig.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.csprojAssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/Debug/net5.0/WSEP212.dll" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.Views.pdb" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.Views.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.Views.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Debug/net5.0/WSEP212.pdb" />
+    <option name="AFTER_PATH" value="bin/Debug/net5.0/WSEP212.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/Microsoft.AspNetCore.Cryptography.Internal.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/Microsoft.AspNetCore.Cryptography.Internal.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WSEP212.exe" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.exe" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.pdb" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/Debug/net5.0/WSEP212.csproj.CoreCompileInputs.cache" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.csproj.CoreCompileInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.csproj.CoreCompileInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/bin/Debug/net5.0/ref/WebApplication.dll" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/ref/WebApplication.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.pdb" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP2121.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Debug/net5.0/WSEP212.dll" />
+    <option name="AFTER_PATH" value="bin/Debug/net5.0/WSEP212.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP2121.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/Serilog.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/Serilog.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WSEP212.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP2122.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.dll" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP2123.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/Serilog.Sinks.File.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/Serilog.Sinks.File.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.Views.pdb" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.Views.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.Views1.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.dll" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication1.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS.csprojAssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.Views.dll" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WebApplication.Views.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.Views.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/Debug/net5.0/WSEP212.genruntimeconfig.cache" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.genruntimeconfig.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212.genruntimeconfig.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.dll" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS1.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/Newtonsoft.Json.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/Newtonsoft.Json.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/Serilog.Sinks.RollingFile.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/Serilog.Sinks.RollingFile.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/System.Net.WebSockets.WebSocketProtocol.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/System.Net.WebSockets.WebSocketProtocol.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/Debug/net5.0/WSEP212.pdb" />
+    <option name="AFTER_PATH" value="obj/Debug/net5.0/WSEP212.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP2122.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/project.nuget.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.pdb" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS1.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/ref/WebApplication.dll" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/ref/WebApplication.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication2.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.csproj.CoreCompileInputs.cache" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.csproj.CoreCompileInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.csproj.CoreCompileInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.genruntimeconfig.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.genruntimeconfig.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP212-TESTS.genruntimeconfig.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WSEP212-TESTS/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="../WSEP212-TESTS/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/project.nuget1.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.Views.dll" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.Views.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication.Views1.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/project.nuget2.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.pdb" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication1.pdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.dll" />
+    <option name="AFTER_PATH" value="../WebApplication/obj/Debug/net5.0/WebApplication.dll" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WebApplication3.dll" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../WebApplication/bin/Debug/net5.0/WSEP212.pdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23_[Default_Changelist]/WSEP2123.pdb" />
+  </binary>
+</changelist>

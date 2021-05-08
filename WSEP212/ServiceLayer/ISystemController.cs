@@ -20,7 +20,7 @@ namespace WSEP212.ServiceLayer
         public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity); // USE CASE 2.7
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID); // USE CASE 2.8
         //edit item in shopping cart is equal to -> remove + add
-        public RegularResult purchaseItems(String userName, String address); // USE CASE 2.9
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
         public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
@@ -35,7 +35,7 @@ namespace WSEP212.ServiceLayer
             Int32 typeOfComposition, SimplePredicate selectionRule); // USE CASE 4.2
         public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID); // USE CASE 4.2
         public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID); // USE CASE 4.2
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item); // USE CASE  4.1.1
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID); // USE CASE 4.1.2
         public RegularResult editItemDetails(String userName, int storeID, ItemDTO item); // USE CASE 4.1.3

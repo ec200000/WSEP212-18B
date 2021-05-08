@@ -142,5 +142,17 @@ namespace WSEP212.DomainLayer
             }
             return storesItemsInfo;
         }
+        
+        public ConcurrentLinkedList<string> getStoreOwners(int storeID)
+        {
+            ConcurrentLinkedList<string> officials = new ConcurrentLinkedList<string>();
+            Store store = stores[storeID];
+            foreach (var sellerPer in store.storeSellersPermissions.Values)
+            {
+                if(sellerPer.isStoreOwner())
+                    officials.TryAdd(sellerPer.seller.userName);
+            }
+            return officials;
+        }
     }
 }

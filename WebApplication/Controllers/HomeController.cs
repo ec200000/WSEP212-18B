@@ -3,8 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,7 +11,8 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
-using System.Web;
+using Microsoft.AspNetCore.SignalR;
+using WebApplication.Publisher;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -21,11 +20,20 @@ namespace WebApplication.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHubContext<NotificationHub> _notificationUserHubContext;
+        //private readonly IUserConnectionManager _userConnectionManager;
+        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationUserHubContext) 
+            //IUserConnectionManager userConnectionManager)
         {
             _logger = logger;
+            _notificationUserHubContext = notificationUserHubContext;
+            //_userConnectionManager = userConnectionManager;
         }
+        
+        /*public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }*/
 
         const string SessionName = "_Name";  
         const string SessionAge = "_Age";  
@@ -33,7 +41,7 @@ namespace WebApplication.Controllers
         const string SessionStoreID = "_StoreID";
         const string SessionItemID = "_ItemID";
         const string SessionPurchaseHistory = "_History";
-
+        
         private User user;
         
         public IActionResult Index()  
@@ -42,7 +50,26 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetInt32(SessionLogin, 0);
             return View();  
         }  
+        
+        [HttpPost]
+        public async void SendToSpecificUser(String userName, String msg)
+        {
+            var connections = UserConnectionManager.Instance.GetUserConnections(userName);
+            if (connections != null && connections.Count > 0) //the user is logged in
+            {
+                foreach (var connectionId in connections)
+                {
+                    await _notificationUserHubContext.Clients.Client(connectionId).SendAsync("sendToUser", msg);
+                }
+            }
+            else
+            {
+                UserConnectionManager.Instance.KeepNotification(userName,msg);
+            }
+        }
 
+        
+        
         public IActionResult ItemReview(PurchaseModel model)
         {
             string info = model.itemInfo;
@@ -207,6 +234,8 @@ namespace WebApplication.Controllers
         
         public IActionResult SearchItems(SearchModel model)
         {
+            //this is the first screen that the user sees after he logs in/continue as guest
+            //SendDelayedNotificationsToUser(HttpContext.Session.GetString(SessionName));
             SystemController systemController = SystemController.Instance;
             if (!model.flag)
             {
@@ -345,9 +374,17 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            ResultWithValue<ConcurrentLinkedList<string>> res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
+                Node<string> node = res.getValue().First; // going over the user's permissions to check if he is a store manager or owner
+                string userName = HttpContext.Session.GetString(SessionName);
+                int itemID= (int)HttpContext.Session.GetInt32("_ItemID");
+                while (node.Next != null)
+                {
+                    SendToSpecificUser(node.Value, $"The user {userName} has reviewed your item (ID: {itemID})");
+                    node = node.Next;
+                }
                 return RedirectToAction("ItemReview");
             }
             else
@@ -393,6 +430,7 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.login(model.UserName, model.Password);
+            string userName = model.UserName;
             if (res.getTag())
             {
                 HttpContext.Session.SetString(SessionName, model.UserName);
@@ -401,6 +439,7 @@ namespace WebApplication.Controllers
             }
             else
             {
+                UserConnectionManager.Instance.RemoveUser(userName);
                 ViewBag.Alert = res.getMessage();
                 return RedirectToAction("Login");
             }
@@ -714,9 +753,15 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            RegularResult res = systemController.purchaseItems(userName, model.Address);
+            ResultWithValue<ConcurrentLinkedList<string>> res = systemController.purchaseItems(userName, model.Address);
             if (res.getTag())
             {
+                Node<string> node = res.getValue().First;
+                while (node.Next != null)
+                {
+                    SendToSpecificUser(node.Value, $"The user {userName} has purchased your item");
+                    node = node.Next;
+                }
                 return RedirectToAction("ShoppingCart");
             }
             else
@@ -837,6 +882,7 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.removeStoreManager(userName,managerName, (int)storeID);
             if (res.getTag())
             {
+                SendToSpecificUser(managerName, $"The user {userName} has fired you! You are no longer store manager!");
                 return RedirectToAction("ViewOfficials");
             }
             else
@@ -855,6 +901,7 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
             if (res.getTag())
             {
+                SendToSpecificUser(ownerName, $"The user {userName} has fired you! You are no longer store owner!");
                 return RedirectToAction("ViewOfficials");
             }
             else

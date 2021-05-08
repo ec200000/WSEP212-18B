@@ -44,5 +44,15 @@ namespace WSEP212.DomainLayer
             return new SellerPermissions(seller, store, grantor, permissions);
         }
 
+        public int getStoreID()
+        {
+            return store.storeID;
+        }
+
+        public bool isStoreOwner()
+        {
+            return permissionsInStore.Contains(Permissions.AllPermissions);
+        }
+
     }
 }

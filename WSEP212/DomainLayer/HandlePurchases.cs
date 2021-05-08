@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -90,9 +92,9 @@ namespace WSEP212.DomainLayer
             return new Ok("All Items Deliver To The User Successfully");
         }
 
-        public RegularResult purchaseItems(User user, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(User user, String address)
         {
-            if (address == null) return new Failure("address is null!");
+            if (address == null) return new FailureWithValue<ConcurrentLinkedList<string>>("address is null!",null);
             ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
             if (pricePerStoreRes.getTag())
             {
@@ -112,19 +114,31 @@ namespace WSEP212.DomainLayer
                         RegularResult purchaseInfosRes = createPurchaseInvoices(user, pricePerStoreRes.getValue());
                         if (purchaseInfosRes.getTag())
                         {
+                            var stores = user.shoppingCart.shoppingBags.Keys;
+                            ConcurrentLinkedList<string> storeOwners = new ConcurrentLinkedList<string>();
+                            foreach (var store in stores)
+                            {
+                                ConcurrentLinkedList<string> l = StoreRepository.Instance.getStoreOwners(store);
+                                Node<string> node = l.First;
+                                while (node.Next != null)
+                                {
+                                    storeOwners.TryAdd(node.Value);
+                                    node = node.Next;
+                                }
+                            }
                             user.shoppingCart.clearShoppingCart();
-                            return new Ok("Purchase Completed Successfully!");
+                            return new OkWithValue<ConcurrentLinkedList<string>>("Purchase Completed Successfully!",storeOwners);
                         }
                         rollback(user);
-                        return purchaseInfosRes;
+                        return new FailureWithValue<ConcurrentLinkedList<string>>(purchaseInfosRes.getMessage(),null);
                     }
                     rollback(user);
-                    return deliveryRes;
+                    return new FailureWithValue<ConcurrentLinkedList<string>>(deliveryRes.getMessage(),null);
                 }
                 rollback(user);
-                return externalPurchaseRes;
+                return new FailureWithValue<ConcurrentLinkedList<string>>(externalPurchaseRes.getMessage(),null);
             }
-            return new Failure(pricePerStoreRes.getMessage());
+            return new FailureWithValue<ConcurrentLinkedList<string>>(pricePerStoreRes.getMessage(), null);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.removeItemFromShoppingCart(userName, storeID, itemID);
         }
 
-        public RegularResult purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
         {
             String info = $"PurchaseItems Event was triggered, with the parameter:" +
                           $"user name: {userName}";
@@ -88,7 +88,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy, newSalesPolicy);
         }
 
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID)
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID)
         {
             String info = $"ItemReview Event was triggered, with the parameters:" +
                           $"user name: {userName}, review: {review}, store ID: {storeID}, item ID: {itemID}";
@@ -176,7 +176,7 @@ namespace WSEP212.ServiceLayer
             String info = $"RemoveStoreManager Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, manager name: {ownerName}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.removeStoreManager(userName, ownerName, storeID);
+            return SystemControllerFacade.Instance.removeStoreOwner(userName, ownerName, storeID);
         }
 
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(String userName, int storeID)

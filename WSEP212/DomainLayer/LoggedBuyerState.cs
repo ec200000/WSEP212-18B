@@ -203,9 +203,9 @@ namespace WSEP212.DomainLayer
             // only system managers can do that
         }
 
-        public override RegularResult itemReview(String review, int itemID, int storeID)
+        public override ResultWithValue<ConcurrentLinkedList<string>> itemReview(String review, int itemID, int storeID)
         {
-            if(review==null) return new Failure("Review Is Null");
+            if(review==null) return new FailureWithValue<ConcurrentLinkedList<string>>("Review Is Null",null);
             ResultWithValue<Store> getStoreRes = StoreRepository.Instance.getStore(storeID);
             if (getStoreRes.getTag())
             {
@@ -215,13 +215,17 @@ namespace WSEP212.DomainLayer
                     if(isPurchasedItem(itemID))
                     {
                         getItemRes.getValue().addReview(this.user.userName, review);
-                        return new Ok("Item Review Have Been Successfully Added");
+                        
+                        return new OkWithValue<ConcurrentLinkedList<string>>("Item Review Have Been Successfully Added",
+                            StoreRepository.Instance.getStoreOwners(storeID));
                     }
-                    return new Failure("Unpurchased Product Cannot Be Reviewed");
+                    return new FailureWithValue<ConcurrentLinkedList<string>>("Unpurchased Product Cannot Be Reviewed",null);
                 }
-                return new Failure(getItemRes.getMessage());
+                return new FailureWithValue<ConcurrentLinkedList<string>>(getItemRes.getMessage(),null);
+                
             }
-            return new Failure(getStoreRes.getMessage());
+            return new FailureWithValue<ConcurrentLinkedList<string>>(getStoreRes.getMessage(),null);
+            
         }
 
         private bool isPurchasedItem(int itemID)
@@ -334,11 +338,11 @@ namespace WSEP212.DomainLayer
                         }
                         return new Failure("The User Is Not Store Manager In This Store");
                     }
-                    return removeFromStoreRes;
+                    return new Failure(removeFromStoreRes.getMessage());
                 }
                 return new Failure(storeSellerRes.getMessage());
             }
-            return hasPermissionRes;
+            return new Failure(hasPermissionRes.getMessage());
         }
         
         public override RegularResult removeStoreOwner(string ownerName, int storeID)
