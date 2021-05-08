@@ -19,7 +19,7 @@ namespace WSEP212.DomainLayer
         public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity);
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         //edit item in shopping cart is equal to -> remove + add
-        public RegularResult purchaseItems(String userName, String address); 
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
 
         public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);

@@ -68,7 +68,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.removeItemFromShoppingCart(userName, storeID, itemID);
         }
 
-        public RegularResult purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
         {
             String info = $"PurchaseItems Event was triggered, with the parameter:" +
                           $"user name: {userName}";

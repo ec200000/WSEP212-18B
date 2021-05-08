@@ -766,9 +766,15 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            RegularResult res = systemController.purchaseItems(userName, model.Address);
+            ResultWithValue<ConcurrentLinkedList<string>> res = systemController.purchaseItems(userName, model.Address);
             if (res.getTag())
             {
+                Node<string> node = res.getValue().First;
+                while (node.Next != null)
+                {
+                    SendToSpecificUser(node.Value, $"The user {userName} has purchased your item");
+                    node = node.Next;
+                }
                 return RedirectToAction("ShoppingCart");
             }
             else

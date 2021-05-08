@@ -185,7 +185,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
         {
             try
             {
@@ -210,12 +210,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In PurchaseItems function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message, null);
             }
         }
 

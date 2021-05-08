@@ -38,14 +38,14 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult result = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);//adding an item
             Assert.IsTrue(result.getTag());
 
-            result = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
-            Assert.IsFalse(result.getTag());
+            ResultWithValue<ConcurrentLinkedList<string>> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
+            Assert.IsFalse(result2.getTag());
 
-            result = controller.purchaseItems("theuser", null); //wrong item id
-            Assert.IsFalse(result.getTag());
+            result2 = controller.purchaseItems("theuser", null); //wrong item id
+            Assert.IsFalse(result2.getTag());
 
-            result = controller.purchaseItems("theuser", "ashdod");
-            Assert.IsTrue(result.getTag());
+            result2 = controller.purchaseItems("theuser", "ashdod");
+            Assert.IsTrue(result2.getTag());
         }
 
         [TestMethod]
@@ -92,8 +92,8 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             RegularResult res = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);
             Assert.IsTrue(res.getTag());
-            res = controller.purchaseItems("theuser", "ashdod");
-            Assert.IsTrue(res.getTag());
+            ResultWithValue<ConcurrentLinkedList<string>> res2 = controller.purchaseItems("theuser", "ashdod");
+            Assert.IsTrue(res2.getTag());
             ResultWithValue<ConcurrentLinkedList<string>> result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
 

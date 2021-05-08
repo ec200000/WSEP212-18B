@@ -104,7 +104,7 @@ namespace WSEP212_TESTS.UnitTests
                         if (addItemToShoppingCart(storeID, itemID, 2))
                         {
                             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
-                            RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
+                            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsFalse(res.getTag());
                             Assert.AreEqual(user.purchases.Count, 0);
                             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -131,7 +131,7 @@ namespace WSEP212_TESTS.UnitTests
                         {
                             HandlePurchases.Instance.paymentSystem = PaymentSystem.Instance;
                             StoreRepository.Instance.stores[storeID].deliverySystem = DeliverySystemMock.Instance;
-                            RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
+                            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsFalse(res.getTag());
                             Assert.AreEqual(user.purchases.Count, 0);
                             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -161,7 +161,7 @@ namespace WSEP212_TESTS.UnitTests
                         if (addItem1 && addItem2)
                         {
                             HandlePurchases.Instance.paymentSystem = PaymentSystem.Instance;
-                            RegularResult res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
+                            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(this.user, "habanim");
                             Assert.IsTrue(res.getTag());
                             Assert.AreEqual(user.purchases.Count, 2);
                             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 0);

@@ -20,7 +20,7 @@ namespace WSEP212.ServiceLayer
         public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity); // USE CASE 2.7
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID); // USE CASE 2.8
         //edit item in shopping cart is equal to -> remove + add
-        public RegularResult purchaseItems(String userName, String address); // USE CASE 2.9
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
         public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
