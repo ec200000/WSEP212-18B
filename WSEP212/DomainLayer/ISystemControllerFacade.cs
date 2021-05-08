@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule);
         public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID);
 
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID);
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID);
         public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);
         public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category);

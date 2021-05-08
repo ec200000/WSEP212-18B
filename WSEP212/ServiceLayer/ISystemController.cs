@@ -35,7 +35,7 @@ namespace WSEP212.ServiceLayer
             Int32 typeOfComposition, SimplePredicate selectionRule); // USE CASE 4.2
         public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID); // USE CASE 4.2
         public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID); // USE CASE 4.2
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item); // USE CASE  4.1.1
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID); // USE CASE 4.1.2
         public RegularResult editItemDetails(String userName, int storeID, ItemDTO item); // USE CASE 4.1.3

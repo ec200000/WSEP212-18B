@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
@@ -93,7 +94,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(res.getTag());
             res = controller.purchaseItems("theuser", "ashdod");
             Assert.IsTrue(res.getTag());
-            RegularResult result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
+            ResultWithValue<ConcurrentLinkedList<string>> result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
 
             result = controller.itemReview(null, "boo", itemID, storeID);

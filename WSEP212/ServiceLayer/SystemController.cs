@@ -88,7 +88,7 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy, newSalesPolicy);
         }
 
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID)
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID)
         {
             String info = $"ItemReview Event was triggered, with the parameters:" +
                           $"user name: {userName}, review: {review}, store ID: {storeID}, item ID: {itemID}";

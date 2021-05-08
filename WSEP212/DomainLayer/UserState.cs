@@ -63,7 +63,7 @@ namespace WSEP212.DomainLayer
 
 
         // * Item Reviews * //
-        public abstract RegularResult itemReview(String review, int itemID, int storeID);
+        public abstract ResultWithValue<ConcurrentLinkedList<string>> itemReview(String review, int itemID, int storeID);
         // * End Of Item Reviews * //
 
 

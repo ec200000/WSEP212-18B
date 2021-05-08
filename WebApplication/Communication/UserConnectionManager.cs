@@ -8,7 +8,9 @@ namespace WebApplication.Communication
     public class UserConnectionManager : IUserConnectionManager
     {
         private static Dictionary<string, List<string>> userConnectionMap;
+        private static ConcurrentDictionary<string, List<string>> delayedNotifications;
         private static string userConnectionMapLocker = string.Empty;
+        private static string delayedNotificationsLock = string.Empty;
         
         private static readonly Lazy<UserConnectionManager> lazy
             = new Lazy<UserConnectionManager>(() => new UserConnectionManager());
@@ -16,7 +18,11 @@ namespace WebApplication.Communication
         public static UserConnectionManager Instance
             => lazy.Value;
 
-        private UserConnectionManager() { userConnectionMap = new Dictionary<string, List<string>>();}
+        private UserConnectionManager()
+        {
+            userConnectionMap = new Dictionary<string, List<string>>();
+            delayedNotifications = new ConcurrentDictionary<string, List<string>>();
+        }
         public void KeepUserConnection(string userId, string connectionId)
         {
             lock (userConnectionMapLocker)
@@ -54,6 +60,26 @@ namespace WebApplication.Communication
                 conn = userConnectionMap[userId];
             }
             return conn;
+        }
+
+        public void KeepNotification(string userName, string msg)
+        {
+            lock (delayedNotificationsLock)
+            {
+                if (!delayedNotifications.ContainsKey(userName))
+                    delayedNotifications[userName] = new List<string>();
+                delayedNotifications[userName].Add(msg);
+            }
+        }
+
+        public List<string> GetUserDelayedNotifications(string userName)
+        {
+            lock (delayedNotificationsLock)
+            {
+                if(delayedNotifications.ContainsKey(userName))
+                    return delayedNotifications[userName];
+                return null;
+            }
         }
     }
 }

@@ -58,11 +58,27 @@ namespace WebApplication.Controllers
         public async void SendToSpecificUser(String userName, String msg)
         {
             var connections = UserConnectionManager.Instance.GetUserConnections(userName);
-            if (connections != null && connections.Count > 0)
+            if (connections != null && connections.Count > 0) //the user is logged in
             {
                 foreach (var connectionId in connections)
                 {
                     await _notificationUserHubContext.Clients.Client(connectionId).SendAsync("sendToUser", msg);
+                }
+            }
+            else
+            {
+                UserConnectionManager.Instance.KeepNotification(userName,msg);
+            }
+        }
+
+        public void SendDelayedNotificationsToUser(String userName)
+        {
+            var delayedNot = UserConnectionManager.Instance.GetUserDelayedNotifications(userName);
+            if (delayedNot != null)
+            {
+                foreach (var not in delayedNot)
+                {
+                    SendToSpecificUser(userName, not);
                 }
             }
         }
@@ -231,6 +247,9 @@ namespace WebApplication.Controllers
         
         public IActionResult SearchItems(SearchModel model)
         {
+            //this is the first screen that the user sees after he logs in
+            string userName = HttpContext.Session.GetString("_Name");
+            SendDelayedNotificationsToUser(userName);
             SystemController systemController = SystemController.Instance;
             if (!model.flag)
             {
@@ -369,9 +388,17 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            RegularResult res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            ResultWithValue<ConcurrentLinkedList<string>> res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
+                Node<string> node = res.getValue().First; // going over the user's permissions to check if he is a store manager or owner
+                string userName = HttpContext.Session.GetString(SessionName);
+                int itemID= (int)HttpContext.Session.GetInt32("_ItemID");
+                while (node.Next != null)
+                {
+                    SendToSpecificUser(node.Value, $"The user {userName} has reviewed your item (ID: {itemID})");
+                    node = node.Next;
+                }
                 return RedirectToAction("ItemReview");
             }
             else

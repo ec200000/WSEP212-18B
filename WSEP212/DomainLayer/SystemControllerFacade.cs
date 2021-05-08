@@ -252,7 +252,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult itemReview(string userName, string review, int itemID, int storeID)
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(string userName, string review, int itemID, int storeID)
         {
             try
             {
@@ -277,12 +277,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In ItemReview function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message,null);
             }
         }
 

@@ -98,7 +98,7 @@ namespace WSEP212.DomainLayer
             // only system managers can do that
         }
 
-        public override RegularResult itemReview(string review, int itemID, int storeID)
+        public override ResultWithValue<ConcurrentLinkedList<string>> itemReview(string review, int itemID, int storeID)
         {
             throw new NotImplementedException();
             // only logged buyers can do that

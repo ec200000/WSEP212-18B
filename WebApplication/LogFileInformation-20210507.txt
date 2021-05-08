@@ -120,3 +120,7 @@
 
 2021-05-07 17:39:48.141 +03:00 [Information] Register Event was triggered, with the parameters: user name: i
 
+2021-05-07 23:53:37.087 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-07 23:58:28.825 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
