@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using WSEP212.ConcurrentLinkedList;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Connections.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,13 @@ namespace WebApplication.Communication
             UserConnectionManager.Instance.KeepUserConnection(Context.GetHttpContext().Session.GetString("_Name"), Context.ConnectionId);
             return Context.ConnectionId;
         }
+        
+        public string GetConnectionIdWithUserName(string userName)
+        {
+            UserConnectionManager.Instance.KeepUserConnection(userName, Context.ConnectionId);
+            return Context.ConnectionId;
+        }
+        
         //Called when a connection with the hub is terminated.
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -40,5 +48,21 @@ namespace WebApplication.Communication
             return Clients.All.SendAsync("Send", message);
         }
         
+        public async void SendDelayedNotificationsToUser(String userName)
+        {
+            var delayedNot = UserConnectionManager.Instance.GetUserDelayedNotifications(userName);
+            var connections = UserConnectionManager.Instance.GetUserConnections(userName);
+            Thread.Sleep(1000);
+            if (delayedNot != null && connections != null && connections.Count > 0)
+            {
+                foreach (var noti in delayedNot)
+                {
+                    foreach (var connectionId in connections)
+                    {
+                        await Clients.Client(connectionId).SendAsync("sendToUser", noti);
+                    }
+                }
+            }
+        }
     }
 }

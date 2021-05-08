@@ -71,17 +71,7 @@ namespace WebApplication.Controllers
             }
         }
 
-        public void SendDelayedNotificationsToUser(String userName)
-        {
-            var delayedNot = UserConnectionManager.Instance.GetUserDelayedNotifications(userName);
-            if (delayedNot != null)
-            {
-                foreach (var not in delayedNot)
-                {
-                    SendToSpecificUser(userName, not);
-                }
-            }
-        }
+        
         
         public IActionResult ItemReview(PurchaseModel model)
         {
@@ -247,9 +237,8 @@ namespace WebApplication.Controllers
         
         public IActionResult SearchItems(SearchModel model)
         {
-            //this is the first screen that the user sees after he logs in
-            string userName = HttpContext.Session.GetString("_Name");
-            SendDelayedNotificationsToUser(userName);
+            //this is the first screen that the user sees after he logs in/continue as guest
+            //SendDelayedNotificationsToUser(HttpContext.Session.GetString(SessionName));
             SystemController systemController = SystemController.Instance;
             if (!model.flag)
             {
@@ -444,6 +433,7 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.login(model.UserName, model.Password);
+            string userName = model.UserName;
             if (res.getTag())
             {
                 HttpContext.Session.SetString(SessionName, model.UserName);
@@ -452,6 +442,7 @@ namespace WebApplication.Controllers
             }
             else
             {
+                UserConnectionManager.Instance.RemoveUser(userName);
                 ViewBag.Alert = res.getMessage();
                 return RedirectToAction("Login");
             }
@@ -484,7 +475,6 @@ namespace WebApplication.Controllers
                 {
                     HttpContext.Session.SetString(SessionName, "");
                     HttpContext.Session.SetInt32(SessionLogin, 0);
-                    SendToSpecificUser("iris", "Logged out bitch");
                     return RedirectToAction("Index");
                 }
                 else

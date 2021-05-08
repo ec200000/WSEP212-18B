@@ -52,6 +52,16 @@ namespace WebApplication.Communication
                 }
             }
         }
+
+        public void RemoveUser(string userName)
+        {
+            lock (userConnectionMapLocker)
+            {
+                if (userConnectionMap.ContainsKey(userName))
+                    userConnectionMap.Remove(userName);
+            }
+        }
+        
         public List<string> GetUserConnections(string userId)
         {
             var conn = new List<string>();
@@ -81,5 +91,7 @@ namespace WebApplication.Communication
                 return null;
             }
         }
+        
+       
     }
 }
