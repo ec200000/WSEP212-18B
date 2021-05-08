@@ -59,15 +59,8 @@ namespace WebApplication.Controllers
         
         public IActionResult AppointOfficials()
         {
-            string[] users = Authentication.Instance.getAllUsers();
+            string[] users = SystemController.Instance.getAllSignedUpUsers();
             HttpContext.Session.SetObject("allUsers", users);
-            return View();
-        }
-        
-        public IActionResult PurchasePredicate()
-        {
-            //string[] predicates = StoreRepository.Instance.getStore((int)HttpContext.Session.GetInt32(SessionStoreID)).getValue().purchasePolicy;
-            //HttpContext.Session.SetObject("predicates", predicates);
             return View();
         }
 
@@ -97,12 +90,12 @@ namespace WebApplication.Controllers
         public IActionResult ShoppingCart(ShoppingCartModel model)
         {
             SystemController systemController = SystemController.Instance;
-            WSEP212.DomainLayer.ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
+            ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
             ShoppingCartItems(res);
             return View();
         }
 
-        private void ShoppingCartItems(WSEP212.DomainLayer.ShoppingCart shoppingCart)
+        private void ShoppingCartItems(ShoppingCart shoppingCart)
         {
             if (shoppingCart == null)
             {
@@ -167,8 +160,8 @@ namespace WebApplication.Controllers
             for (int i = 0; i < stores.Length; i++)
             {
                 string value = "Store ID: " + stores[i] + ", Store Name: " +
-                               StoreRepository.Instance.stores[stores[i]].storeName +
-                               ", Store Address: " + StoreRepository.Instance.stores[stores[i]].storeAddress;
+                               systemController.getStoreByID(stores[i]).storeName +
+                               ", Store Address: " + systemController.getStoreByID(stores[i]).storeAddress; 
                 storesValues[i] = value;
             }
             HttpContext.Session.SetObject("stores", storesValues);
@@ -198,7 +191,8 @@ namespace WebApplication.Controllers
         
         public IActionResult EditItemDetails(ItemModel model)
         {
-            KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
+            SystemController systemController = SystemController.Instance;
+            KeyValuePair<Item, int> pair = systemController.getItemByID(model.itemID);
             HttpContext.Session.SetInt32(SessionItemID, pair.Key.itemID);
             Item item = pair.Key;
             model.storeID = pair.Value;
@@ -226,10 +220,11 @@ namespace WebApplication.Controllers
         public IActionResult ShowReviews(ShowReviewsModel model)
         {
             model = new ShowReviewsModel();
+            SystemController systemController = SystemController.Instance;
             int itemID = (int)HttpContext.Session.GetInt32(SessionItemID);
             if (itemID != 0)
             {
-                KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(itemID);
+                KeyValuePair<Item, int> pair = systemController.getItemByID(itemID);
                 model.reviews = pair.Key.reviews;
                 model.reviewsStrings = reviewsToString(pair.Key.reviews);
             }
@@ -330,7 +325,7 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             if (model.itemName == null) model.itemName = "";
             if (model.keyWords == null) model.keyWords = "";
-            if (model.minPrice == 0) model.minPrice = int.MinValue;
+            //if (model.minPrice == 0) model.minPrice = int.MinValue;
             if (model.maxPrice == 0) model.maxPrice = int.MaxValue;
             if (model.category == null) model.category = "";
             ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, model.category);
@@ -400,7 +395,6 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.login(model.UserName, model.Password);
             if (res.getTag())
             {
-                this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 1);
                 return RedirectToAction("SearchItems");
@@ -418,7 +412,6 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.loginAsSystemManager(model.UserName, model.Password);
             if (res.getTag())
             {
-                this.user = UserRepository.Instance.findUserByUserName(model.UserName).getValue();
                 HttpContext.Session.SetString(SessionName, model.UserName);
                 HttpContext.Session.SetInt32(SessionLogin, 2);
                 return RedirectToAction("SearchItems");
@@ -935,15 +928,14 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            SalePolicy res = StoreRepository.Instance.getStore((int)storeID).getValue().salesPolicy;
-            if (res != null)
+            ResultWithValue<ConcurrentDictionary<int, string>> res = systemController.getStoreSalesDescription((int) storeID);
+            if (res.getTag())
             {
-                ConcurrentDictionary<int,Sale> dict = res.storeSales;
-                string[] preds = new string[dict.Count];
+                string[] preds = new string[res.getValue().Count];
                 int i = 0;
-                foreach (Sale sale in dict.Values)
+                foreach (KeyValuePair<int,string> pred in res.getValue())
                 {
-                    preds[i] = sale.ToString();
+                    preds[i] = pred.Value+ "; " + pred.Key.ToString();
                     i++;
                 }
                 HttpContext.Session.SetObject("sale_predicates", preds);
@@ -961,7 +953,8 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string pred = model.predicate;
-            int predicate = int.Parse(pred.Substring(8)); //TODO: CHANGE
+            string[] predparts = pred.Split(";");
+            int predicate = int.Parse(predparts[1]); 
             RegularResult res = systemController.removeSale(userName, (int)storeID, predicate);
             if (res.getTag())
             {
@@ -974,17 +967,33 @@ namespace WebApplication.Controllers
             }
         }
         
+        public int saleStringToEnum(string pred)
+        {
+            switch (pred)
+            {
+                case "XorComposition":
+                    return 0;
+                case "MaxComposition":
+                    return 1;
+                case "DoubleComposition":
+                    return 2;
+            }
+            return -1;
+        }
+        
         public IActionResult ComposeSalePredicates(SalesModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string firstpred = model.firstPred;
-            int predicate1 = int.Parse(firstpred.Substring(8)); //TODO: CHANGE
+            string[] predparts1 = firstpred.Split(";");
+            int predicate1 = int.Parse(predparts1[1]);
             string secondpred = model.secondPred;
-            int predicate2 = int.Parse(secondpred.Substring(8)); //TODO: CHANGE
-            int composetype = model.compositionType;
-            /*ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype);
+            string[] predparts2 = secondpred.Split(";");
+            int predicate2 = int.Parse(predparts2[1]);
+            int composetype = saleStringToEnum(model.compositionType);
+            ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype, null);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
@@ -993,9 +1002,8 @@ namespace WebApplication.Controllers
             {
                 ViewBag.Alert = res.getMessage();
                 return RedirectToAction("StoreActions");
-            }*/
+            }
             return null;
         }
-        
     }
 }

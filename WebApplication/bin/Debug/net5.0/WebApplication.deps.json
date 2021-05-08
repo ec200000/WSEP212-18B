@@ -33,8 +33,10 @@
     ".NETCoreApp,Version=v5.0": {
       "WebApplication/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNet.SignalR.Core": "2.4.2",
           "Microsoft.AspNetCore.Authentication.Certificate": "5.0.5",
           "Microsoft.AspNetCore.Session": "2.2.0",
+          "Microsoft.WebSockets": "0.2.3.1",
           "Newtonsoft.Json": "9.0.1",
           "WSEP212": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
@@ -326,6 +328,17 @@
           "WebApplication.dll": {}
         }
       },
+      "Microsoft.AspNet.SignalR.Core/2.4.2": {
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {
+            "assemblyVersion": "2.4.2.0",
+            "fileVersion": "2.4.2.21106"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.Certificate/5.0.5": {
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "5.0.0"
@@ -475,6 +488,17 @@
       "Microsoft.Extensions.Primitives/5.0.0": {},
       "Microsoft.NETCore.Platforms/2.0.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Microsoft.WebSockets/0.2.3.1": {
+        "runtime": {
+          "lib/net45/Microsoft.WebSockets.dll": {
+            "assemblyVersion": "0.2.3.0",
+            "fileVersion": "0.2.3.0"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.WebSockets.dll": {}
+        }
+      },
       "Microsoft.Win32.Registry/4.5.0": {
         "dependencies": {
           "System.Security.AccessControl": "4.5.0",
@@ -2622,6 +2646,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.AspNet.SignalR.Core/2.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mpkCnN9sF4zBrE6Gkz7rmJL/as4JMGZDCV/dfcUh6mDwFdbGGYWBzchQOW1mWCx/3EBzHK+KkBr8+WGwTDejwg==",
+      "path": "microsoft.aspnet.signalr.core/2.4.2",
+      "hashPath": "microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authentication.Certificate/5.0.5": {
       "type": "package",
       "serviceable": true,
@@ -2775,6 +2806,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "Microsoft.WebSockets/0.2.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-z5tX7rYNudZQKPMnXsB8HFKTFjLHxExxcHPqQxeOO510FBzp1A51FJrSocWjPTd5wY83Qf+Wh9kym5nwEnl3sQ==",
+      "path": "microsoft.websockets/0.2.3.1",
+      "hashPath": "microsoft.websockets.0.2.3.1.nupkg.sha512"
     },
     "Microsoft.Win32.Registry/4.5.0": {
       "type": "package",

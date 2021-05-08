@@ -314,6 +314,21 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getUsersStores(userName);
         }
 
+        public string[] getAllSignedUpUsers()
+        {
+            return Authentication.Instance.getAllUsers(); //TODO: change?
+        }
+
+        public Store getStoreByID(int storeID)
+        {
+            return StoreRepository.Instance.stores[storeID];
+        }
+
+        public KeyValuePair<Item,int> getItemByID(int itemID)
+        {
+            return StoreRepository.Instance.getItemByID(itemID);
+        }
+        
         public RegularResult continueAsGuest(String userName)
         {
             String info = $"Continue As Guest Event was triggered, with the parameter: user name: {userName}";

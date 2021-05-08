@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "Microsoft.AspNet.SignalR.Core/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.Certificate/5.0.5": {
         "type": "package",
         "dependencies": {
@@ -285,6 +294,15 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
+        }
+      },
+      "Microsoft.WebSockets/0.2.3.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.WebSockets.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.WebSockets.dll": {}
         }
       },
       "Microsoft.Win32.Registry/4.5.0": {
@@ -1021,6 +1039,21 @@
     }
   },
   "libraries": {
+    "Microsoft.AspNet.SignalR.Core/2.4.2": {
+      "sha512": "mpkCnN9sF4zBrE6Gkz7rmJL/as4JMGZDCV/dfcUh6mDwFdbGGYWBzchQOW1mWCx/3EBzHK+KkBr8+WGwTDejwg==",
+      "type": "package",
+      "path": "microsoft.aspnet.signalr.core/2.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.dll",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.pdb",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.xml",
+        "microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512",
+        "microsoft.aspnet.signalr.core.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.Certificate/5.0.5": {
       "sha512": "D9NSm58SHhoQI1MwUU/khghzf4nYnW2u4a7OEq2HI4bTfyyCJuHsqD/tl0L6PTm55dUYDiwlsG6Ir6f5PInrOQ==",
       "type": "package",
@@ -1417,6 +1450,18 @@
         "microsoft.netcore.targets.1.1.0.nupkg.sha512",
         "microsoft.netcore.targets.nuspec",
         "runtime.json"
+      ]
+    },
+    "Microsoft.WebSockets/0.2.3.1": {
+      "sha512": "z5tX7rYNudZQKPMnXsB8HFKTFjLHxExxcHPqQxeOO510FBzp1A51FJrSocWjPTd5wY83Qf+Wh9kym5nwEnl3sQ==",
+      "type": "package",
+      "path": "microsoft.websockets/0.2.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.WebSockets.dll",
+        "microsoft.websockets.0.2.3.1.nupkg.sha512",
+        "microsoft.websockets.nuspec"
       ]
     },
     "Microsoft.Win32.Registry/4.5.0": {
@@ -4012,31 +4057,28 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "Microsoft.AspNet.SignalR.Core >= 2.4.2",
       "Microsoft.AspNetCore.Authentication.Certificate >= 5.0.5",
       "Microsoft.AspNetCore.Session >= 2.2.0",
+      "Microsoft.WebSockets >= 0.2.3.1",
       "Newtonsoft.Json >= 9.0.1",
       "WSEP212 >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\שגיב משיח\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ec200\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
-      "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
-      "outputPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WebApplication\\obj\\",
+      "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+      "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4050,8 +4092,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-              "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+            "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+              "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
           }
         }
@@ -4066,6 +4108,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "Microsoft.AspNet.SignalR.Core": {
+            "target": "Package",
+            "version": "[2.4.2, )"
+          },
           "Microsoft.AspNetCore.Authentication.Certificate": {
             "target": "Package",
             "version": "[5.0.5, )"
@@ -4073,6 +4119,10 @@
           "Microsoft.AspNetCore.Session": {
             "target": "Package",
             "version": "[2.2.0, )"
+          },
+          "Microsoft.WebSockets": {
+            "target": "Package",
+            "version": "[0.2.3.1, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",
@@ -4100,5 +4150,27 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.SignalR.Core",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.WebSockets 0.2.3.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.WebSockets",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }

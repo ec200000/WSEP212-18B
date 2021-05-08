@@ -6,7 +6,7 @@
 
         public string secondPred { get; set; }
 
-        public int compositionType { get; set; }
+        public string compositionType { get; set; }
         
         public string predicate { get; set; }
     }
