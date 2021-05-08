@@ -130,13 +130,13 @@ namespace WSEP212.DomainLayer
                             return new OkWithValue<ConcurrentLinkedList<string>>("Purchase Completed Successfully!",storeOwners);
                         }
                         rollback(user);
-                        return new OkWithValue<ConcurrentLinkedList<string>>(purchaseInfosRes.getMessage(), null);
+                        return new FailureWithValue<ConcurrentLinkedList<string>>(purchaseInfosRes.getMessage(),null);
                     }
                     rollback(user);
-                    return new OkWithValue<ConcurrentLinkedList<string>>(deliveryRes.getMessage(), null);
+                    return new FailureWithValue<ConcurrentLinkedList<string>>(deliveryRes.getMessage(),null);
                 }
                 rollback(user);
-                return new OkWithValue<ConcurrentLinkedList<string>>(externalPurchaseRes.getMessage(), null);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(externalPurchaseRes.getMessage(),null);
             }
             return new FailureWithValue<ConcurrentLinkedList<string>>(pricePerStoreRes.getMessage(), null);
         }

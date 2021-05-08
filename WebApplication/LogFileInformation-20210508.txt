@@ -1358,3 +1358,163 @@
 
 2021-05-08 17:31:41.401 +03:00 [Information] GetItemsInStoresInformation Event was triggered
 
+2021-05-08 19:07:09.473 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-08 19:07:11.638 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-08 19:07:11.676 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:07:18.826 +03:00 [Information] Register Event was triggered, with the parameters: user name: kron
+
+2021-05-08 19:07:20.977 +03:00 [Information] Login Event was triggered, with the parameters: user name: kron
+
+2021-05-08 19:07:20.996 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:07:25.394 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:07:32.185 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-08 19:07:32.220 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:07:34.175 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:07:41.043 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-08 19:07:41.053 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:07:45.814 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:08:14.676 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:09:24.878 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:09:36.759 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:09:46.367 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:09:46.380 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:10:03.106 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:10:11.620 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, store owner name: kron
+
+2021-05-08 19:10:16.028 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:10:25.393 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:10:35.491 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:10:35.499 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:10:46.646 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:12:40.346 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, store owner name: kron
+
+2021-05-08 19:12:42.979 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:12:47.221 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:12:55.916 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:12:55.924 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:27:40.343 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-08 19:27:42.083 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-08 19:27:42.121 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:27:46.929 +03:00 [Information] Register Event was triggered, with the parameters: user name: kron
+
+2021-05-08 19:27:48.996 +03:00 [Information] Login Event was triggered, with the parameters: user name: kron
+
+2021-05-08 19:27:49.020 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:27:52.384 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:27:56.949 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-08 19:27:56.973 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:27:58.944 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:27:59.590 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:28:03.970 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-08 19:28:03.978 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:28:24.115 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:28:40.891 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:28:47.636 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, store owner name: kron
+
+2021-05-08 19:28:51.246 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:28:53.819 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:30:30.535 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:30:30.545 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:30:41.044 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:30:41.052 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:30:45.543 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:30:45.551 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:30:48.896 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:30:51.659 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:30:56.180 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:30:56.191 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:30:57.782 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:30:57.788 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:31:33.918 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:32:05.092 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:32:29.712 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:34:53.249 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-08 19:34:55.294 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-08 19:34:55.333 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:34:56.811 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:35:00.729 +03:00 [Information] Register Event was triggered, with the parameters: user name: kron
+
+2021-05-08 19:35:02.720 +03:00 [Information] Login Event was triggered, with the parameters: user name: kron
+
+2021-05-08 19:35:02.739 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:35:09.253 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-08 19:35:09.281 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:35:10.592 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-08 19:35:14.801 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-08 19:35:14.809 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:35:25.598 +03:00 [Information] AppointStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, store owner name: kron
+
+2021-05-08 19:35:27.639 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-08 19:35:29.462 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+
+2021-05-08 19:35:33.612 +03:00 [Information] RemoveStoreManager Event was triggered, with the parameters:user name: iris, store ID: 1, manager name: kron
+
+2021-05-08 19:35:33.627 +03:00 [Information] GetOfficialsInformation Event was triggered, with the parameters:user name: iris, store ID: 1
+

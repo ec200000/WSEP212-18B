@@ -543,7 +543,7 @@ namespace WSEP212.DomainLayer
                 Object[] paramsList = { ownerName, storeID };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                ThreadPool.QueueUserWorkItem(user.removeStoreManager, threadParameters); //creating the job
+                ThreadPool.QueueUserWorkItem(user.removeStoreOwner, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {

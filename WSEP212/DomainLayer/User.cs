@@ -362,6 +362,26 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set();
         }
+        
+        // params: String managerName, int storeID
+        // returns: bool
+        public void removeStoreOwner(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            String ownerName = (String)param.parameters[0];
+            int storeID = (int)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.removeStoreOwner(ownerName, storeID);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
 
         // params: int storeID, Predicate pred
         // returns: int - the id of the new pred

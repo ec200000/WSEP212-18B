@@ -3,8 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,9 +11,8 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
-using System.Web;
 using Microsoft.AspNetCore.SignalR;
-using WebApplication.Communication;
+using WebApplication.Publisher;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -885,6 +882,7 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.removeStoreManager(userName,managerName, (int)storeID);
             if (res.getTag())
             {
+                SendToSpecificUser(managerName, $"The user {userName} has fired you! You are no longer store manager!");
                 return RedirectToAction("ViewOfficials");
             }
             else
@@ -903,6 +901,7 @@ namespace WebApplication.Controllers
             RegularResult res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
             if (res.getTag())
             {
+                SendToSpecificUser(ownerName, $"The user {userName} has fired you! You are no longer store owner!");
                 return RedirectToAction("ViewOfficials");
             }
             else

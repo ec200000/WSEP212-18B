@@ -5,8 +5,8 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="payment notification">
-      <change afterPath="$PROJECT_DIR$/../WebApplication/LogFileWarnings-20210508.txt" afterDir="false" />
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="delayed notifications">
+      <change afterPath="$PROJECT_DIR$/../WebApplication/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DomainLayer/HandlePurchases.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/HandlePurchases.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" afterDir="false" />
@@ -86,6 +86,7 @@
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -101,61 +102,62 @@
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditSalePredicates.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/package-lock.json" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/package-lock.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Models/ShowReviewsModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Models/AppointModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Models/SalesModel.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Permissions.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/PolicyPredicateTests.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/OfficialsModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/wwwroot/css/site.css" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/WebApplication.csproj" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Shared/_Layout.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Communication/IUserConnectionManager.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/_ViewStart.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Startup.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/wwwroot/js/usernotifications.js" />
-      <option value="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShowReviews.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" />
       <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreAcceptanceTests.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/HandlePurchases.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Communication/UserConnectionManager.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Communication/NotificationHub.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/HandlePurchases.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Publisher/IUserConnectionManager.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Publisher/NotificationHub.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Communication/MyCertificateValidationService.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Startup.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Privacy.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShowReviews.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" />
+      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -296,6 +298,23 @@
     <option name="LAST_COMMIT_MESSAGE" value="save" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
+          <line>907</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="907" containingFunctionPresentation="method 'RemoveOwner'">
+            <startOffsets>
+              <option value="36710" />
+            </startOffsets>
+            <endOffsets>
+              <option value="36798" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#WebApplication.Models.SearchModel" memberName="itemIDs" />

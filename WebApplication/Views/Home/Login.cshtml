@@ -51,8 +51,8 @@
                         console.log("connection started");
                         let userName = document.getElementById("nameBox").value 
                         await connection.invoke('GetConnectionIdWithUserName', userName).then(async function (connectionId) {
-                            alert(connectionId);
-                            await connection.invoke('SendDelayedNotificationsToUser', userName).then(() => alert("should work"));
+                            //alert(connectionId);
+                            await connection.invoke('SendDelayedNotificationsToUser', userName);
                         });
                     });
         }
@@ -60,9 +60,5 @@
         connection.on('sendToUser', data => {
            alert(data)
         });
-        /*function sendMessage() {
-          var msg = document.getElementById("txtMessage").value;
-          connection.invoke('send', msg);
-        }*/
       </script>
 }

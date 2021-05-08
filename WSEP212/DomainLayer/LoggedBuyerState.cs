@@ -338,11 +338,11 @@ namespace WSEP212.DomainLayer
                         }
                         return new Failure("The User Is Not Store Manager In This Store");
                     }
-                    return removeFromStoreRes;
+                    return new Failure(removeFromStoreRes.getMessage());
                 }
                 return new Failure(storeSellerRes.getMessage());
             }
-            return hasPermissionRes;
+            return new Failure(hasPermissionRes.getMessage());
         }
         
         public override RegularResult removeStoreOwner(string ownerName, int storeID)
