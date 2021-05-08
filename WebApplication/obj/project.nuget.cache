@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "T2W+uRGNhsotFyBeC13vdaJAAVOPeUYsa+yZwlVdmnSqfoSG4yx+ozV9/xs74ukPFHT1YYtbmrDR/HJH83nkrg==",
+  "dgSpecHash": "D+LkbZ2MXjvwnRp+JWy9U1xCafcUMB370vk6PQKxaR9jKPOFzU5iGztwMPdvi/6WyKvz/EgJWo5ASsoSx7tSNw==",
   "success": true,
   "projectFilePath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnet.signalr.core\\2.4.2\\microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnetcore.authentication.certificate\\5.0.5\\microsoft.aspnetcore.authentication.certificate.5.0.5.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
@@ -89,16 +90,6 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.SignalR.Core",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.WebSockets 0.2.3.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.WebSockets",
       "targetGraphs": [
         "net5.0"
       ]

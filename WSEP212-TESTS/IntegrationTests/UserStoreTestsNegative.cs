@@ -202,7 +202,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = storeID;
             parameters.parameters = list;
             user1.itemReview(parameters);
-            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -218,7 +218,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = storeID;
             parameters.parameters = list;
             user2.itemReview(parameters);
-            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -234,7 +234,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = storeID;
             parameters.parameters = list;
             user2.itemReview(parameters);
-            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -494,7 +494,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list2[0] = address;
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
-            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
         }
@@ -507,7 +507,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list2[0] = null;
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
-            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
             Assert.AreEqual(0,user2.shoppingCart.shoppingBags.Count);

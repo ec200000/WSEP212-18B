@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "Microsoft.AspNet.SignalR.Core/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -512,15 +521,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        }
-      },
-      "Microsoft.WebSockets/0.2.3.1": {
-        "type": "package",
-        "compile": {
-          "lib/net45/Microsoft.WebSockets.dll": {}
-        },
-        "runtime": {
-          "lib/net45/Microsoft.WebSockets.dll": {}
         }
       },
       "Microsoft.Win32.Registry/4.5.0": {
@@ -1039,6 +1039,21 @@
     }
   },
   "libraries": {
+    "Microsoft.AspNet.SignalR.Core/2.4.2": {
+      "sha512": "mpkCnN9sF4zBrE6Gkz7rmJL/as4JMGZDCV/dfcUh6mDwFdbGGYWBzchQOW1mWCx/3EBzHK+KkBr8+WGwTDejwg==",
+      "type": "package",
+      "path": "microsoft.aspnet.signalr.core/2.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.dll",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.pdb",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.xml",
+        "microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512",
+        "microsoft.aspnet.signalr.core.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.Abstractions/2.2.0": {
       "sha512": "VloMLDJMf3n/9ic5lCBOa42IBYJgyB1JhzLsL68Zqg+2bEPWfGBj/xCJy/LrKTArN0coOcZp3wyVTZlx0y9pHQ==",
       "type": "package",
@@ -1616,18 +1631,6 @@
         "microsoft.netcore.targets.1.1.0.nupkg.sha512",
         "microsoft.netcore.targets.nuspec",
         "runtime.json"
-      ]
-    },
-    "Microsoft.WebSockets/0.2.3.1": {
-      "sha512": "z5tX7rYNudZQKPMnXsB8HFKTFjLHxExxcHPqQxeOO510FBzp1A51FJrSocWjPTd5wY83Qf+Wh9kym5nwEnl3sQ==",
-      "type": "package",
-      "path": "microsoft.websockets/0.2.3.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net45/Microsoft.WebSockets.dll",
-        "microsoft.websockets.0.2.3.1.nupkg.sha512",
-        "microsoft.websockets.nuspec"
       ]
     },
     "Microsoft.Win32.Registry/4.5.0": {
@@ -3622,16 +3625,6 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.SignalR.Core",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.WebSockets 0.2.3.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.WebSockets",
       "targetGraphs": [
         "net5.0"
       ]
