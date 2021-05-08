@@ -396,4 +396,5 @@ C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebAppl
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\ref\WebApplication.dll
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
-C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchasePredicate.cshtml.g.cs
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.WebSockets.dll
