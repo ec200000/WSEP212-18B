@@ -325,7 +325,7 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             if (model.itemName == null) model.itemName = "";
             if (model.keyWords == null) model.keyWords = "";
-            if (model.minPrice == 0) model.minPrice = int.MinValue;
+            //if (model.minPrice == 0) model.minPrice = int.MinValue;
             if (model.maxPrice == 0) model.maxPrice = int.MaxValue;
             if (model.category == null) model.category = "";
             ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, model.category);

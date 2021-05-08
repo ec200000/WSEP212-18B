@@ -6,8 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="start of notifications">
-      <change beforePath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -345,7 +344,13 @@
       <option name="presentableId" value="LOCAL‎00024" />
       <updated>1620387286279</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL‎00025" summary="fixed buisness layer">
+      <created>1620467583589</created>
+      <option name="number" value="LOCAL‎00025" />
+      <option name="presentableId" value="LOCAL‎00025" />
+      <updated>1620467583589</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -387,7 +392,8 @@
     <MESSAGE value="no actual changes" />
     <MESSAGE value="changed usage of service layer" />
     <MESSAGE value="displaying sales" />
-    <option name="LAST_COMMIT_MESSAGE" value="displaying sales" />
+    <MESSAGE value="fixed buisness layer" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed buisness layer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
