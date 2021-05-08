@@ -167,7 +167,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID) // if the user works at the store
                 {
-                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.size!=0)
                         return sellerPermissions.Value.store.getStoreOfficialsInfo(); // getting all users permissions
                 }
                 sellerPermissions = sellerPermissions.Next; // checking the next store

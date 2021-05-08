@@ -5,11 +5,9 @@
     <projectFile>../WebApplication/WebApplication.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="a">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Models/SalesModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Models/SalesModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" afterDir="false" />
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="start of notifications">
+      <change beforePath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +17,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="TryingSockets" />
+        <entry key="$PROJECT_DIR$/.." value="realTimeNotifications" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -72,7 +70,6 @@
       <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Item.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
@@ -108,10 +105,13 @@
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/SalesModel.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

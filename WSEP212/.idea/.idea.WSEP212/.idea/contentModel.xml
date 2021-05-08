@@ -76,7 +76,6 @@
           <e p="OpenStore.cshtml" t="Include" />
           <e p="Privacy.cshtml" t="Include" />
           <e p="PurchaseHistory.cshtml" t="Include" />
-          <e p="PurchasePredicate.cshtml" t="Include" />
           <e p="SearchItems.cshtml" t="Include" />
           <e p="ShoppingCart.cshtml" t="Include" />
           <e p="ShowReviews.cshtml" t="Include" />
