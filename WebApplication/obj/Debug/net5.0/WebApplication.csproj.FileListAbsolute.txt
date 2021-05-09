@@ -448,7 +448,6 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\OpenStore.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseHistory.cshtml.g.cs
-C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchasePredicate.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\SearchItems.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShowReviews.cshtml.g.cs
@@ -471,3 +470,4 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\bin\Debug\net5.0\package-lock.json
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNet.SignalR.Core.dll

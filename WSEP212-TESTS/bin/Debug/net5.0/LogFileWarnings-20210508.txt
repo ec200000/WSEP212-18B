@@ -92,3 +92,21 @@
 
 2021-05-08 20:37:35.525 +03:00 [Warning] The user  cannot perform the itemReview action!
 
+2021-05-08 20:47:35.116 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-05-08 20:47:35.124 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-05-08 20:47:35.388 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-08 20:47:35.390 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-08 20:47:35.404 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-08 20:47:35.421 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-08 20:47:35.421 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-08 20:47:35.672 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-05-08 20:47:35.897 +03:00 [Warning] The user  cannot perform the openStore action!
+

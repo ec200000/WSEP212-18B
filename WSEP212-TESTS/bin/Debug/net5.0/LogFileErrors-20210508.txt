@@ -122,3 +122,65 @@
 
 2021-05-08 20:34:09.663 +03:00 [Error] In GetOfficialsInformation function, the error is: Object reference not set to an instance of an object.
 
+2021-05-08 20:47:35.901 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.904 +03:00 [Error] In AddItemToShoppingCart function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.923 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.927 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.930 +03:00 [Error] In RemoveItemFromStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.934 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.938 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.940 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.942 +03:00 [Error] In Login function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.944 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.946 +03:00 [Error] In AddItemToStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.949 +03:00 [Error] In AppointStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.954 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.956 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.958 +03:00 [Error] In AppointStoreOwner function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.960 +03:00 [Error] In AppointStoreOwner function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.962 +03:00 [Error] In AppointStoreOwner function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.966 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.968 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.970 +03:00 [Error] In AppointStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.981 +03:00 [Error] In EditManagerPermissions function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.986 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.988 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.991 +03:00 [Error] In AppointStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.994 +03:00 [Error] In RemoveStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:35.997 +03:00 [Error] In RemoveStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:36.000 +03:00 [Error] In RemoveStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:36.007 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:36.011 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:36.013 +03:00 [Error] In AppointStoreManager function, the error is: Object reference not set to an instance of an object.
+
+2021-05-08 20:47:36.017 +03:00 [Error] In GetOfficialsInformation function, the error is: Object reference not set to an instance of an object.
+
