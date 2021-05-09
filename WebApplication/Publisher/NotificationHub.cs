@@ -37,11 +37,11 @@ namespace WebApplication.Publisher
             var value = await Task.FromResult(0);
         }
         
-        public Task Send(string message)
+        /*public Task Send(string message)
         {
             var connection = Context.ConnectionId;
             return Clients.All.SendAsync("Send", message);
-        }
+        }*/
         
         public async void SendDelayedNotificationsToUser(String userName)
         {
@@ -58,6 +58,29 @@ namespace WebApplication.Publisher
                     }
                 }
             }
+        }
+        
+        public async void SendToSpecificUser(String userName, String msg)
+        {
+            var connections = UserConnectionManager.Instance.GetUserConnections(userName);
+            if (connections != null && connections.Count > 0) //the user is logged in
+            {
+                foreach (var connectionId in connections)
+                {
+                    await Clients.Client(connectionId).SendAsync("sendToUser", msg);
+                }
+            }
+            else
+            {
+                UserConnectionManager.Instance.KeepNotification(userName,msg);
+            }
+        }
+        
+        public async Task Send(string message)
+        {
+            await Clients
+                .Caller
+                .SendAsync("OnMessageRecieved", message);
         }
     }
 }
