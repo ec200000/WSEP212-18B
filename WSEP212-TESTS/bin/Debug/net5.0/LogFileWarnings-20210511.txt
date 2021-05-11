@@ -1,0 +1,40 @@
+2021-05-11 17:11:34.606 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-05-11 17:11:34.735 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-05-11 17:11:35.161 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-11 17:11:35.165 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-11 17:11:35.184 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-11 17:11:35.184 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-11 17:11:35.204 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-11 17:11:35.204 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-11 17:11:35.595 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-05-11 17:11:36.339 +03:00 [Warning] The user  cannot perform the openStore action!
+
+2021-05-11 17:12:20.416 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-05-11 17:12:20.427 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-05-11 17:12:20.849 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-11 17:12:20.849 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-11 17:12:20.876 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-11 17:12:20.876 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-11 17:12:20.903 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-11 17:12:20.904 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-11 17:12:21.399 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-05-11 17:12:22.033 +03:00 [Warning] The user  cannot perform the openStore action!
+
