@@ -130,7 +130,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInitStoreWithManager2();
             
-            RegularResult res = controller.removeStoreManager("b", "no such user", storeID);
+            ResultWithValue<NotificationDTO> res = controller.removeStoreManager("b", "no such user", storeID);
             Assert.IsFalse(res.getTag());
             
             res = controller.removeStoreManager("b", "abcd", -1);

@@ -185,7 +185,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
         {
             try
             {
@@ -210,12 +210,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In PurchaseItems function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message, null);
             }
         }
 
@@ -252,7 +252,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult itemReview(string userName, string review, int itemID, int storeID)
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(string userName, string review, int itemID, int storeID)
         {
             try
             {
@@ -277,12 +277,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In ItemReview function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message,null);
             }
         }
 
@@ -543,7 +543,7 @@ namespace WSEP212.DomainLayer
                 Object[] paramsList = { ownerName, storeID };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                ThreadPool.QueueUserWorkItem(user.removeStoreManager, threadParameters); //creating the job
+                ThreadPool.QueueUserWorkItem(user.removeStoreOwner, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {

@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Http
-@using WSEP212.DomainLayer
-@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 
@@ -39,4 +37,23 @@
                 alert("@TempData["alert"]");  
             };  
         </script>  
+} 
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+     
+        connection.on('sendToUser', data => {
+             alert(data)
+        });
+     
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+      </script>
 }

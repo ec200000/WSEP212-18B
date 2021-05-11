@@ -20,7 +20,7 @@ namespace WSEP212.ServiceLayer
         public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity); // USE CASE 2.7
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID); // USE CASE 2.8
         //edit item in shopping cart is equal to -> remove + add
-        public RegularResult purchaseItems(String userName, String address); // USE CASE 2.9
+        public ResultWithValue<NotificationDTO> purchaseItems(String userName, String address); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
         public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
@@ -35,7 +35,7 @@ namespace WSEP212.ServiceLayer
             Int32 typeOfComposition, SimplePredicate selectionRule); // USE CASE 4.2
         public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID); // USE CASE 4.2
         public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID); // USE CASE 4.2
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
+        public ResultWithValue<NotificationDTO> itemReview(String userName, String review, int itemID, int storeID); // USE CASE 3.3
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item); // USE CASE  4.1.1
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID); // USE CASE 4.1.2
         public RegularResult editItemDetails(String userName, int storeID, ItemDTO item); // USE CASE 4.1.3
@@ -43,8 +43,8 @@ namespace WSEP212.ServiceLayer
         public RegularResult appointStoreOwner(String userName, String storeOwnerName, int storeID); // USE CASE 4.3
         public RegularResult editManagerPermissions(String userName, String managerName,
             ConcurrentLinkedList<Int32> permissions, int storeID); // USE CASE 4.6, 5.1
-        public RegularResult removeStoreManager(String userName, String managerName, int storeID); // USE CASE 4.7
-        public RegularResult removeStoreOwner(String userName, String ownerName, int storeID); // USE CASE 4.4
+        public ResultWithValue<NotificationDTO> removeStoreManager(String userName, String managerName, int storeID); // USE CASE 4.7
+        public ResultWithValue<NotificationDTO> removeStoreOwner(String userName, String ownerName, int storeID); // USE CASE 4.4
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(
             String userName, int storeID); // USE CASE 4.9
         public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getStorePurchaseHistory(String userName, int storeID); // USE CASE 4.11
@@ -64,5 +64,10 @@ namespace WSEP212.ServiceLayer
         
         public RegularResult hasPermission(string userName, int storeID, Permissions permission);
         
+        public string[] getAllSignedUpUsers();
+        
+        public Store getStoreByID(int storeID);
+        
+        public KeyValuePair<Item,int> getItemByID(int itemID);
     }
 }

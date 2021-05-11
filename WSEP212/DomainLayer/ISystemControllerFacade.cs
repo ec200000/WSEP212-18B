@@ -19,7 +19,7 @@ namespace WSEP212.DomainLayer
         public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity);
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         //edit item in shopping cart is equal to -> remove + add
-        public RegularResult purchaseItems(String userName, String address); 
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
 
         public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule);
         public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID);
 
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID);
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID);
         public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);
         public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category);

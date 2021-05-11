@@ -312,6 +312,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void purchaseItemsTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            ResultWithValue<NotificationDTO> res4 =
+                    new OkWithValue<NotificationDTO>("ok", null),
+                res5 = new OkWithValue<NotificationDTO>("ok", null),
+                res6 = new OkWithValue<NotificationDTO>("ok", null);
             
             Thread t1 = new Thread(() =>
             {
@@ -319,7 +323,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
                     if (res1.getTag())
-                        res1 = systemController.purchaseItems("a", "ashdod");
+                        res4 = systemController.purchaseItems("a", "ashdod");
                 }
                 catch (NotImplementedException)
                 {
@@ -333,7 +337,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
                     if (res2.getTag())
-                        res2 = systemController.purchaseItems("mol", "ness ziona");
+                        res5 = systemController.purchaseItems("mol", "ness ziona");
                 }
                 catch (NotImplementedException)
                 {
@@ -346,7 +350,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
                     if(res3.getTag())
-                        res3 = systemController.purchaseItems("lol", "holon");
+                        res6 = systemController.purchaseItems("lol", "holon");
 
                 }
                 catch (NotImplementedException)
@@ -364,8 +368,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             t3.Join();
             
             //only b or r will be able to purchase the items because they are taking the last products
-            Assert.IsTrue((!res3.getTag() && res2.getTag()) || (res3.getTag() && !res2.getTag())); //only one can be successful
-            Assert.IsTrue(res1.getTag());
+            Assert.IsTrue((!res5.getTag() && res6.getTag()) || (res5.getTag() && !res6.getTag())); //only one can be successful
+            Assert.IsTrue(res4.getTag());
         }
 
         [TestMethod]
@@ -425,6 +429,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void deleteItemAndTryToBuyItTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
+            ResultWithValue<NotificationDTO> res3 =
+                new OkWithValue<NotificationDTO>("ok", null);
             
             Thread t1 = new Thread(() =>
             {
@@ -444,7 +450,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res2 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
                     if (res2.getTag())
-                        res2 = systemController.purchaseItems("lol", "ness ziona");
+                        res3 = systemController.purchaseItems("lol", "ness ziona");
                 }
                 catch (NotImplementedException)
                 {
@@ -457,10 +463,8 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             t1.Join();
             t2.Join();
-
-            Console.WriteLine(res1.getMessage());
-            Console.WriteLine(res2.getMessage());
-            Assert.IsTrue((res1.getTag() && res2.getTag()) || (res1.getTag() && !res2.getTag()));
+            Assert.IsTrue(res2.getTag());
+            Assert.IsTrue((res1.getTag() && res3.getTag()) || (res1.getTag() && !res3.getTag()));
         }
 
         [TestMethod]

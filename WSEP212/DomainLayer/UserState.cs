@@ -36,7 +36,7 @@ namespace WSEP212.DomainLayer
         {
             return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
         }
-        public RegularResult purchaseItems(string address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string address)
         {
             return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
         }
@@ -63,7 +63,7 @@ namespace WSEP212.DomainLayer
 
 
         // * Item Reviews * //
-        public abstract RegularResult itemReview(String review, int itemID, int storeID);
+        public abstract ResultWithValue<ConcurrentLinkedList<string>> itemReview(String review, int itemID, int storeID);
         // * End Of Item Reviews * //
 
 

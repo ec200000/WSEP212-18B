@@ -26,3 +26,24 @@
             };  
         </script>  
 }
+
+} 
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+     
+        connection.on('sendToUser', data => {
+             alert(data)
+        });
+        
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+      </script>
+}

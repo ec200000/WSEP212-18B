@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
@@ -30,6 +31,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
         public void purchaseItemsTest()
         {
             testInit();
@@ -37,14 +39,14 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult result = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);//adding an item
             Assert.IsTrue(result.getTag());
 
-            result = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
-            Assert.IsFalse(result.getTag());
+            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
+            Assert.IsFalse(result2.getTag());
 
-            result = controller.purchaseItems("theuser", null); //wrong item id
-            Assert.IsFalse(result.getTag());
+            result2 = controller.purchaseItems("theuser", null); //wrong item id
+            Assert.IsFalse(result2.getTag());
 
-            result = controller.purchaseItems("theuser", "ashdod");
-            Assert.IsTrue(result.getTag());
+            result2 = controller.purchaseItems("theuser", "ashdod");
+            Assert.IsTrue(result2.getTag());
         }
 
         [TestMethod]
@@ -91,9 +93,9 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             RegularResult res = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);
             Assert.IsTrue(res.getTag());
-            res = controller.purchaseItems("theuser", "ashdod");
-            Assert.IsTrue(res.getTag());
-            RegularResult result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
+            ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser", "ashdod");
+            Assert.IsTrue(res2.getTag());
+            ResultWithValue<NotificationDTO> result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
 
             result = controller.itemReview(null, "boo", itemID, storeID);
