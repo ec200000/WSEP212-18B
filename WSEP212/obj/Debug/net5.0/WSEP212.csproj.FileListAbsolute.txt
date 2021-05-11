@@ -129,3 +129,4 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\obj\Debug\net5.0\ref\WSEP212.dll
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.pdb
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.genruntimeconfig.cache
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.csprojAssemblyReference.cache

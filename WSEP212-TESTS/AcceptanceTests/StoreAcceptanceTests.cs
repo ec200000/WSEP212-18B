@@ -31,6 +31,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
         public void purchaseItemsTest()
         {
             testInit();
