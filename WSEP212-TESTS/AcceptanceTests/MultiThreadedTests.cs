@@ -312,10 +312,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void purchaseItemsTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
-            ResultWithValue<ConcurrentLinkedList<string>> res4 =
-                    new OkWithValue<ConcurrentLinkedList<string>>("ok", null),
-                res5 = new OkWithValue<ConcurrentLinkedList<string>>("ok", null),
-                res6 = new OkWithValue<ConcurrentLinkedList<string>>("ok", null);
+            ResultWithValue<NotificationDTO> res4 =
+                    new OkWithValue<NotificationDTO>("ok", null),
+                res5 = new OkWithValue<NotificationDTO>("ok", null),
+                res6 = new OkWithValue<NotificationDTO>("ok", null);
             
             Thread t1 = new Thread(() =>
             {
@@ -429,8 +429,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void deleteItemAndTryToBuyItTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
-            ResultWithValue<ConcurrentLinkedList<string>> res3 =
-                new OkWithValue<ConcurrentLinkedList<string>>("ok", null);
+            ResultWithValue<NotificationDTO> res3 =
+                new OkWithValue<NotificationDTO>("ok", null);
             
             Thread t1 = new Thread(() =>
             {

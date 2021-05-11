@@ -68,12 +68,17 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.removeItemFromShoppingCart(userName, storeID, itemID);
         }
 
-        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
+        public ResultWithValue<NotificationDTO> purchaseItems(String userName, String address)
         {
             String info = $"PurchaseItems Event was triggered, with the parameter:" +
                           $"user name: {userName}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.purchaseItems(userName, address);
+            var usersToSendRes = SystemControllerFacade.Instance.purchaseItems(userName, address);
+            return usersToSendRes.getTag()
+                ? new OkWithValue<NotificationDTO>(usersToSendRes.getMessage(),
+                    new NotificationDTO(usersToSendRes.getValue(),
+                        $"The user {userName} has purchased your item"))
+                : new FailureWithValue<NotificationDTO>(usersToSendRes.getMessage(), null);
         }
 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, String purchasePolicy, String salesPolicy)
@@ -88,12 +93,17 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy, newSalesPolicy);
         }
 
-        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID)
+        public ResultWithValue<NotificationDTO> itemReview(String userName, String review, int itemID, int storeID)
         {
             String info = $"ItemReview Event was triggered, with the parameters:" +
                           $"user name: {userName}, review: {review}, store ID: {storeID}, item ID: {itemID}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.itemReview(userName, review, itemID, storeID);
+            var usersToSendRes = SystemControllerFacade.Instance.itemReview(userName, review, itemID, storeID);
+            return usersToSendRes.getTag()
+                ? new OkWithValue<NotificationDTO>(usersToSendRes.getMessage(),
+                    new NotificationDTO(usersToSendRes.getValue(),
+                        $"The user {userName} has reviewed your item (ID: {itemID} in StoreID: {storeID})"))
+                : new FailureWithValue<NotificationDTO>(usersToSendRes.getMessage(), null);
         }
 
         public ResultWithValue<int> addItemToStorage(String userName, int storeID, ItemDTO item)
@@ -163,20 +173,28 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.editManagerPermissions(userName, managerName, newPermissions, storeID);
         }
 
-        public RegularResult removeStoreManager(String userName, String managerName, int storeID)
+        public ResultWithValue<NotificationDTO> removeStoreManager(String userName, String managerName, int storeID)
         {
             String info = $"RemoveStoreManager Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, manager name: {managerName}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.removeStoreManager(userName, managerName, storeID);
+            var res = SystemControllerFacade.Instance.removeStoreManager(userName, managerName, storeID);
+            return res.getTag()
+                ? new OkWithValue<NotificationDTO>(res.getMessage(),
+                    new NotificationDTO(null, $"The user {userName} has fired you! You are no longer store owner!"))
+                : new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
         
-        public RegularResult removeStoreOwner(String userName, String ownerName, int storeID)
+        public ResultWithValue<NotificationDTO> removeStoreOwner(String userName, String ownerName, int storeID)
         {
             String info = $"RemoveStoreManager Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, manager name: {ownerName}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.removeStoreOwner(userName, ownerName, storeID);
+            var res = SystemControllerFacade.Instance.removeStoreOwner(userName, ownerName, storeID);
+            return res.getTag()
+                ? new OkWithValue<NotificationDTO>(res.getMessage(),
+                    new NotificationDTO(null, $"The user {userName} has fired you! You are no longer store owner!"))
+                : new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
 
         public ResultWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>> getOfficialsInformation(String userName, int storeID)

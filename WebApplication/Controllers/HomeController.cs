@@ -12,7 +12,7 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
-using WebApplication.Publisher;
+using WebApplication.Communication;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -29,11 +29,6 @@ namespace WebApplication.Controllers
             _notificationUserHubContext = notificationUserHubContext;
             //_userConnectionManager = userConnectionManager;
         }
-        
-        /*public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }*/
 
         const string SessionName = "_Name";  
         const string SessionAge = "_Age";  
@@ -68,8 +63,6 @@ namespace WebApplication.Controllers
             }
         }
 
-        
-        
         public IActionResult ItemReview(PurchaseModel model)
         {
             string info = model.itemInfo;
@@ -374,15 +367,15 @@ namespace WebApplication.Controllers
         public IActionResult TryReviewItem(ReviewModel model)
         {
             SystemController systemController = SystemController.Instance;
-            ResultWithValue<ConcurrentLinkedList<string>> res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            ResultWithValue<NotificationDTO> res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
-                Node<string> node = res.getValue().First; // going over the user's permissions to check if he is a store manager or owner
+                Node<string> node = res.getValue().usersToSend.First; // going over the user's permissions to check if he is a store manager or owner
                 string userName = HttpContext.Session.GetString(SessionName);
                 int itemID= (int)HttpContext.Session.GetInt32("_ItemID");
                 while (node.Next != null)
                 {
-                    SendToSpecificUser(node.Value, $"The user {userName} has reviewed your item (ID: {itemID})");
+                    SendToSpecificUser(node.Value, res.getValue().msgToSend);
                     node = node.Next;
                 }
                 return RedirectToAction("ItemReview");
@@ -753,13 +746,13 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            ResultWithValue<ConcurrentLinkedList<string>> res = systemController.purchaseItems(userName, model.Address);
+            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, model.Address);
             if (res.getTag())
             {
-                Node<string> node = res.getValue().First;
+                Node<string> node = res.getValue().usersToSend.First;
                 while (node.Next != null)
                 {
-                    SendToSpecificUser(node.Value, $"The user {userName} has purchased your item");
+                    SendToSpecificUser(node.Value, res.getValue().msgToSend);
                     node = node.Next;
                 }
                 return RedirectToAction("ShoppingCart");
@@ -879,10 +872,10 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string managerName = model.UserName.Split(",")[0];
-            RegularResult res = systemController.removeStoreManager(userName,managerName, (int)storeID);
+            ResultWithValue<NotificationDTO> res = systemController.removeStoreManager(userName,managerName, (int)storeID);
             if (res.getTag())
             {
-                SendToSpecificUser(managerName, $"The user {userName} has fired you! You are no longer store manager!");
+                SendToSpecificUser(managerName, res.getValue().msgToSend);
                 return RedirectToAction("ViewOfficials");
             }
             else
@@ -898,10 +891,10 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string ownerName = model.UserName.Split(",")[0];
-            RegularResult res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
+            ResultWithValue<NotificationDTO> res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
             if (res.getTag())
             {
-                SendToSpecificUser(ownerName, $"The user {userName} has fired you! You are no longer store owner!");
+                SendToSpecificUser(ownerName, res.getValue().msgToSend);
                 return RedirectToAction("ViewOfficials");
             }
             else

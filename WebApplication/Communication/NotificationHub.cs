@@ -3,19 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using WSEP212.DomainLayer;
 
-namespace WebApplication.Publisher
+namespace WebApplication.Communication
 {
     public class NotificationHub : Hub
     {
-        //private ConcurrentDictionary<String, List<String>> usersConn = new ConcurrentDictionary<string, List<string>>();
-        //private readonly object listlock = new object();
-        //private readonly IUserConnectionManager _userConnectionManager;
-        //private static int i = 0;
-        /*public NotificationHub(IUserConnectionManager userConnectionManager)
-        {
-            _userConnectionManager = userConnectionManager;
-        }*/
         public string GetConnectionId()
         {
             UserConnectionManager.Instance.KeepUserConnection(Context.GetHttpContext().Session.GetString("_Name"), Context.ConnectionId);
@@ -36,13 +29,7 @@ namespace WebApplication.Publisher
             UserConnectionManager.Instance.RemoveUserConnection(connectionId);
             var value = await Task.FromResult(0);
         }
-        
-        /*public Task Send(string message)
-        {
-            var connection = Context.ConnectionId;
-            return Clients.All.SendAsync("Send", message);
-        }*/
-        
+
         public async void SendDelayedNotificationsToUser(String userName)
         {
             var delayedNot = UserConnectionManager.Instance.GetUserDelayedNotifications(userName);
