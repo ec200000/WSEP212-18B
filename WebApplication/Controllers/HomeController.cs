@@ -89,7 +89,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View("Index");
             }
         }
@@ -279,7 +279,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Index");
             }
         }
@@ -296,7 +296,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Index");
             }
         }
@@ -320,7 +320,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -357,7 +357,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ItemReview");
             }
         }
@@ -373,7 +373,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("AppointOfficials");
             }
         }
@@ -389,7 +389,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("AppointOfficials");
             }
         }
@@ -407,7 +407,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }
@@ -425,7 +425,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }
@@ -444,7 +444,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("Logout");
                 }
             }
@@ -469,7 +469,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -503,7 +503,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -520,7 +520,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -542,7 +542,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("SearchItems");
                 }
             }
@@ -568,8 +568,8 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
-                return View("Index");
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("SearchItems");
             }
         }
 
@@ -708,7 +708,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("ShoppingCart");
                 }
             }
@@ -728,7 +728,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ShoppingCart");
             }
         }
@@ -754,7 +754,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View();
             }
         }
@@ -780,7 +780,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View();
             }
         }
@@ -803,7 +803,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -830,7 +830,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -848,7 +848,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -866,7 +866,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -899,7 +899,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -969,7 +969,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -991,7 +991,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }*/
             return null;

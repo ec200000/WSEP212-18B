@@ -48,11 +48,11 @@
 </body>
 </html>
 
-@if (ViewBag.Alert!= null)  
-{  
+@if (TempData["alert"] != null)
+{
     <script type="text/javascript">  
             window.onload = function() {  
-                alert("@ViewBag.Alert");  
+                alert("@TempData["alert"]");  
             };  
         </script>  
-} 
+}
