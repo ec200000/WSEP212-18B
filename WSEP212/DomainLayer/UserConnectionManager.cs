@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace WebApplication.Publisher
+namespace WSEP212.DomainLayer
 {
     public class UserConnectionManager : IUserConnectionManager
     {
