@@ -39,7 +39,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult result = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);//adding an item
             Assert.IsTrue(result.getTag());
 
-            ResultWithValue<ConcurrentLinkedList<string>> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
+            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
             Assert.IsFalse(result2.getTag());
 
             result2 = controller.purchaseItems("theuser", null); //wrong item id
@@ -93,9 +93,9 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             RegularResult res = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);
             Assert.IsTrue(res.getTag());
-            ResultWithValue<ConcurrentLinkedList<string>> res2 = controller.purchaseItems("theuser", "ashdod");
+            ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser", "ashdod");
             Assert.IsTrue(res2.getTag());
-            ResultWithValue<ConcurrentLinkedList<string>> result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
+            ResultWithValue<NotificationDTO> result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
 
             result = controller.itemReview(null, "boo", itemID, storeID);
