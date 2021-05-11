@@ -27,27 +27,27 @@ namespace WSEP212_TESTS.AcceptanceTests
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
-        public void testInit2()
+        public void testInitRegStore()
         {
             controller.register("w", 18, "123456");
             storeID = controller.openStore("b", "store20", "somewhere", "DEFAULT", "DEFAULT").getValue();
         }
         
-        public void testInit3()
+        public void testInitStoreWithManager()
         {
             controller.register("abc", 18, "123456");
             storeID = controller.openStore("b", "store21", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.appointStoreManager("b", "abc", storeID);
         }
         
-        public void testInit4()
+        public void testInitStoreWithManager2()
         {
             controller.register("abcd", 18, "123456");
             storeID = controller.openStore("b", "store22", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.appointStoreManager("b", "abcd", storeID);
         }
         
-        public void testInit5()
+        public void testInitStoreWithManager3()
         {
             controller.register("abcde", 18, "123456");
             storeID = controller.openStore("b", "store23", "somewhere", "DEFAULT", "DEFAULT").getValue();
@@ -82,7 +82,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ExpectedException(typeof(NotImplementedException))]
         public void appointStoreOwnerTest()
         {
-            testInit2();
+            testInitRegStore();
 
             RegularResult res = controller.appointStoreOwner("b", "w", -1);
             Assert.IsFalse(res.getTag());
@@ -104,7 +104,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ExpectedException(typeof(NotImplementedException))]
         public void editManagerPermissionsTest()
         {
-            testInit3();
+            testInitStoreWithManager();
 
             //r is store manager with only GetOfficialsInformation permission
             ConcurrentLinkedList<int> newPermissions = new ConcurrentLinkedList<int>();
@@ -128,7 +128,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ExpectedException(typeof(NotImplementedException))]
         public void removeStoreManagerTest()
         {
-            testInit4();
+            testInitStoreWithManager2();
             
             RegularResult res = controller.removeStoreManager("b", "no such user", storeID);
             Assert.IsFalse(res.getTag());
@@ -147,7 +147,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ExpectedException(typeof(NotImplementedException))]
         public void getOfficialsInformationTest()
         {
-            testInit5();
+            testInitStoreWithManager3();
             
             Assert.IsTrue(controller.getOfficialsInformation("b", storeID).getTag());
             

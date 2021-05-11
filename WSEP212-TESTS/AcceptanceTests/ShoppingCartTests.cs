@@ -25,7 +25,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
-        public void testInit2()
+        public void testInitTwoCarts()
         {
             controller.register("a", 18, "123");
             controller.register("b", 18, "123456");
@@ -36,6 +36,28 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
             result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
             Assert.IsTrue(result.getTag());
+        }
+        
+        public void testInitStoreWithItem()
+        {
+            controller.register("ab", 18, "123");
+            controller.register("bc", 18, "123456");
+            controller.login("bc", "123456");
+            storeID = controller.openStore("bc", "store3", "somewhere", "DEFAULT", "DEFAULT").getValue();
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            itemID = controller.addItemToStorage("bc", storeID, item).getValue();
+            HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+        }
+        
+        public void testInitBadDelivery()
+        {
+            controller.register("aa", 18, "123");
+            controller.register("bb", 18, "123456");
+            controller.login("bb", "123456");
+            storeID = controller.openStore("bb", "store4", "somewhere", "DEFAULT", "DEFAULT").getValue();
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            itemID = controller.addItemToStorage("bb", storeID, item).getValue();
+            StoreRepository.Instance.stores[storeID].deliverySystem = new DeliverySystemMock();
         }
 
         [TestMethod]
@@ -63,7 +85,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void removeItemFromShoppingCartTest()
         {
-            testInit2();
+            testInitTwoCarts();
             
             RegularResult result = controller.removeItemFromShoppingCart("b",-1, itemID); //wrong store id
             Assert.IsFalse(result.getTag());
@@ -79,6 +101,35 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             result = controller.removeItemFromShoppingCart("a",storeID, itemID); //nothing in the cart
             Assert.IsFalse(result.getTag());
+        }
+        
+        [TestMethod]
+        public void purchaseItemsBadPaymentTest()
+        {
+            testInitStoreWithItem();
+            HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+            
+            RegularResult res1 = new Ok("ok");
+            
+            res1 = controller.addItemToShoppingCart("a",storeID, itemID, 2);
+            if (res1.getTag())
+                res1 = controller.purchaseItems("a", "ashdod");
+
+            Assert.IsFalse(res1.getTag()); // bad purchase mock
+        }
+        
+        [TestMethod]
+        public void purchaseItemsBadDeliveryTest()
+        {
+            testInitBadDelivery();
+            
+            RegularResult res1 = new Ok("ok");
+            
+            res1 = controller.addItemToShoppingCart("a",storeID, itemID, 2);
+            if (res1.getTag())
+                res1 = controller.purchaseItems("a", "ashdod");
+
+            Assert.IsFalse(res1.getTag()); // bad purchase mock
         }
     }
 }

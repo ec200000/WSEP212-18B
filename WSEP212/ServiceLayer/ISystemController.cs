@@ -59,5 +59,10 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
 
         public ResultWithValue<ConcurrentLinkedList<int>> getUsersStores(String userName);
+
+        public RegularResult isStoreOwner(string userName, int storeID);
+        
+        public RegularResult hasPermission(string userName, int storeID, Permissions permission);
+        
     }
 }

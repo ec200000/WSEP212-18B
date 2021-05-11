@@ -859,7 +859,7 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string ownerName = model.UserName.Split(",")[0];
-            RegularResult res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
+            RegularResult res = systemController.removeStoreOwner(userName, ownerName, (int)storeID);
             if (res.getTag())
             {
                 return RedirectToAction("ViewOfficials");
@@ -888,11 +888,12 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[model.UserName];
+            string managerName = model.UserName.Split(",")[0];
+            ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[managerName];
             int per = stringToEnum(model.Permission);
             pers.TryAdd((Permissions) per);
             ConcurrentLinkedList<int> permissions = changeListType(pers);
-            RegularResult res = systemController.editManagerPermissions(userName,model.UserName,permissions, (int)storeID);
+            RegularResult res = systemController.editManagerPermissions(userName,managerName,permissions, (int)storeID);
             if (res.getTag())
             {
                 return RedirectToAction("ViewOfficials");
