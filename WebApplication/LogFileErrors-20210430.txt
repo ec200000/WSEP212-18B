@@ -1,2 +1,0 @@
-2021-04-30 19:19:17.097 +03:00 [Error] In GetUserPurchaseHistory function, the error is: Object reference not set to an instance of an object.
-

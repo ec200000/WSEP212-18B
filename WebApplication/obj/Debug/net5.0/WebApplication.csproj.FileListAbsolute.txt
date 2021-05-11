@@ -448,7 +448,6 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\OpenStore.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseHistory.cshtml.g.cs
-C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchasePredicate.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\SearchItems.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShowReviews.cshtml.g.cs
@@ -471,3 +470,38 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\bin\Debug\net5.0\package-lock.json
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNet.SignalR.Core.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Web.config
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.deps.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.runtimeconfig.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.runtimeconfig.dev.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.exe
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\package-lock.json
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNet.SignalR.Core.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Serilog.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Serilog.Sinks.File.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\Serilog.Sinks.RollingFile.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.dll
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\bin\Debug\net5.0\WSEP212.pdb
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AppointOfficials.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\EditItemDetails.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\EditSalePredicates.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\GetStoreInformation.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemActions.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ItemReview.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Logout.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\OpenStore.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseHistory.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\SearchItems.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShoppingCart.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ShowReviews.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StoreActions.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StorePurchaseHistory.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\StoresPurchaseHistory.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\UsersPurchaseHistory.cshtml.g.cs
+D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\ViewOfficials.cshtml.g.cs
