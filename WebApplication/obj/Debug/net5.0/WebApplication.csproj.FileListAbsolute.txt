@@ -580,3 +580,7 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\ref\WebApplication.dll
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\package-lock.json
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchasePredicate.cshtml.g.cs

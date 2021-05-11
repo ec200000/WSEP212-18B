@@ -25,7 +25,10 @@ namespace WSEP212.DomainLayer
         {
             this.itemID = itemCounter;
             itemCounter++;
-            this.quantity = quantity;
+            if (!setQuantity(quantity))
+            {
+                throw new ArithmeticException();
+            }
             this.itemName = itemName;
             this.description = description;
             this.reviews = new ConcurrentDictionary<string, ItemReview>();

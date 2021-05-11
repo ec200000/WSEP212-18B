@@ -372,7 +372,7 @@ namespace WSEP212.DomainLayer
                     if (storeSellerRes.getValue().grantor != this.user)
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
-                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().seller.userName);
+                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreOwner(storeSellerRes.getValue().seller.userName);
                     if(removeFromStoreRes.getTag())
                     {
                         if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))

@@ -102,7 +102,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View("Index");
             }
         }
@@ -296,7 +296,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Index");
             }
         }
@@ -313,7 +313,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Index");
             }
         }
@@ -337,7 +337,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -382,7 +382,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ItemReview");
             }
         }
@@ -398,7 +398,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("AppointOfficials");
             }
         }
@@ -414,7 +414,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("AppointOfficials");
             }
         }
@@ -433,7 +433,7 @@ namespace WebApplication.Controllers
             else
             {
                 UserConnectionManager.Instance.RemoveUser(userName);
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }
@@ -450,7 +450,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }
@@ -469,7 +469,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("Logout");
                 }
             }
@@ -494,7 +494,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -528,7 +528,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -545,7 +545,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -567,7 +567,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("SearchItems");
                 }
             }
@@ -593,8 +593,8 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
-                return View("Index");
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("SearchItems");
             }
         }
 
@@ -733,7 +733,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("ShoppingCart");
                 }
             }
@@ -759,7 +759,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ShoppingCart");
             }
         }
@@ -785,7 +785,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View();
             }
         }
@@ -811,7 +811,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View();
             }
         }
@@ -834,7 +834,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -861,7 +861,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -880,7 +880,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -899,7 +899,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -921,18 +921,19 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[model.UserName];
+            string managerName = model.UserName.Split(",")[0];
+            ConcurrentLinkedList<Permissions> pers = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID)).getValue()[managerName];
             int per = stringToEnum(model.Permission);
             pers.TryAdd((Permissions) per);
             ConcurrentLinkedList<int> permissions = changeListType(pers);
-            RegularResult res = systemController.editManagerPermissions(userName,model.UserName,permissions, (int)storeID);
+            RegularResult res = systemController.editManagerPermissions(userName,managerName,permissions, (int)storeID);
             if (res.getTag())
             {
                 return RedirectToAction("ViewOfficials");
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -1002,7 +1003,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -1040,7 +1041,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
             return null;

@@ -352,6 +352,25 @@ namespace WSEP212.DomainLayer
             return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
         }
 
+        // Removes a store seller from this store
+        public RegularResult removeStoreOwner(String sellerUserName)
+        {
+            if (storeSellersPermissions.ContainsKey(sellerUserName))
+            {
+                storeSellersPermissions.TryRemove(sellerUserName, out _);
+                foreach(KeyValuePair<string,SellerPermissions> val in storeSellersPermissions)
+                {
+                    if (val.Value.grantor.userName.Equals(sellerUserName))
+                    {
+                        storeSellersPermissions.TryRemove(val.Key, out _);
+                    }
+                }
+                return new Ok("The Store Seller Removed From The Store Successfully");
+            }
+            return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
+        }
+
+
         // checks if the user is seller in this store
         // if he is, returns his seller permissions in the store
         public ResultWithValue<SellerPermissions> getStoreSellerPermissions(String userName)
