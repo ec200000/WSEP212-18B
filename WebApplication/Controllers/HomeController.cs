@@ -891,7 +891,6 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string ownerName = model.UserName.Split(",")[0];
-            RegularResult res = systemController.removeStoreOwner(userName, ownerName, (int)storeID);
             ResultWithValue<NotificationDTO> res = systemController.removeStoreOwner(userName,ownerName, (int)storeID);
             if (res.getTag())
             {

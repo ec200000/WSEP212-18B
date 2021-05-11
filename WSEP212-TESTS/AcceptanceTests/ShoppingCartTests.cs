@@ -108,12 +108,13 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInitStoreWithItem();
             HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+
+            RegularResult res;
+            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
             
-            RegularResult res1 = new Ok("ok");
-            
-            res1 = controller.addItemToShoppingCart("a",storeID, itemID, 2);
-            if (res1.getTag())
-                res1 = controller.purchaseItems("a", "ashdod");
+            res = controller.addItemToShoppingCart("bc",storeID, itemID, 2);
+            if (res.getTag())
+                res1 = controller.purchaseItems("bc", "ashdod");
 
             Assert.IsFalse(res1.getTag()); // bad purchase mock
         }
@@ -123,11 +124,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInitBadDelivery();
             
-            RegularResult res1 = new Ok("ok");
+            RegularResult res;
+            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
             
-            res1 = controller.addItemToShoppingCart("a",storeID, itemID, 2);
-            if (res1.getTag())
-                res1 = controller.purchaseItems("a", "ashdod");
+            res = controller.addItemToShoppingCart("bb",storeID, itemID, 2);
+            if (res.getTag())
+                res1 = controller.purchaseItems("bb", "ashdod");
 
             Assert.IsFalse(res1.getTag()); // bad purchase mock
         }

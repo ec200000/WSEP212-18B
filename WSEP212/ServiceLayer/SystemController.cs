@@ -387,8 +387,7 @@ namespace WSEP212.ServiceLayer
             }
             return new Failure("the user does not have this permission!");
         }
-
-    public RegularResult continueAsGuest(String userName)
+        
         public string[] getAllSignedUpUsers()
         {
             return Authentication.Instance.getAllUsers(); //TODO: change?
