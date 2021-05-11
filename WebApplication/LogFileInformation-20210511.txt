@@ -1,0 +1,8 @@
+2021-05-11 16:28:00.951 +03:00 [Information] Login Event was triggered, with the parameters: user name: moshe
+
+2021-05-11 16:28:53.790 +03:00 [Information] Login Event was triggered, with the parameters: user name: hii
+
+2021-05-11 16:31:47.892 +03:00 [Information] Login Event was triggered, with the parameters: user name: hii
+
+2021-05-11 16:32:27.806 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
