@@ -255,10 +255,10 @@ namespace WebApplication.Controllers
             return View(model);
         }
 
-        private string reviewsToString(ConcurrentDictionary<String, ItemReview> reviews)
+        private string reviewsToString(ConcurrentDictionary<String, ItemUserReviews> reviews)
         {
             string reviewsStr = "";
-            foreach (ItemReview review in reviews.Values)
+            foreach (ItemUserReviews review in reviews.Values)
             {
                 reviewsStr += review + "\n";
             }
@@ -519,7 +519,7 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ItemDTO item = new ItemDTO((int) storeID, model.quantity, model.itemName, model.description,
-                new ConcurrentDictionary<string, ItemReview>(), model.price, model.category);
+                new ConcurrentDictionary<string, ItemUserReviews>(), model.price, model.category);
             ResultWithValue<int> res = systemController.addItemToStorage(userName, (int)storeID, item);
             if (res.getTag())
             {

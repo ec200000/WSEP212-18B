@@ -15,6 +15,7 @@ namespace WSEP212.DomainLayer
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
+        public ConcurrentLinkedList<ItemUserReviews> myReviews { get; set; }
         public bool isSystemManager { get; set; }
 
         public User(String userName, int userAge = int.MinValue, bool isSystemManager = false)
@@ -24,6 +25,7 @@ namespace WSEP212.DomainLayer
             this.shoppingCart = new ShoppingCart();
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
+            this.myReviews = new ConcurrentLinkedList<ItemUserReviews>();
             this.state = new GuestBuyerState(this);
         }
 

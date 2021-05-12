@@ -26,6 +26,6 @@ namespace WebApplication.Models
         
         public int storeID { get; set; }
         
-        public ConcurrentDictionary<String, ItemReview> reviews { get; set; }
+        public ConcurrentDictionary<String, ItemUserReviews> reviews { get; set; }
     }
 }

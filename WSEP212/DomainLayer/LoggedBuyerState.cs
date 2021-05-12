@@ -214,8 +214,14 @@ namespace WSEP212.DomainLayer
                 {
                     if(isPurchasedItem(itemID))
                     {
-                        getItemRes.getValue().addReview(this.user.userName, review);
-                        
+                        Item item = getItemRes.getValue();
+                        ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(item, user);
+                        userReviews.addReview(review);
+                        if (!user.myReviews.Contains(userReviews))
+                        {
+                            item.addUserReviews(userReviews);
+                            user.myReviews.TryAdd(userReviews);
+                        }
                         return new OkWithValue<ConcurrentLinkedList<string>>("Item Review Have Been Successfully Added",
                             StoreRepository.Instance.getStoreOwners(storeID));
                     }

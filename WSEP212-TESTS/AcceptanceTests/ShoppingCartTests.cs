@@ -21,7 +21,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("b", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
@@ -31,7 +31,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("b", 18, "123456");
             //RegularResult result1 = controller.login("b", "123456");
             storeID = controller.openStore("b", "store2", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
             RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
             result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
@@ -44,7 +44,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("bc", 18, "123456");
             controller.login("bc", "123456");
             storeID = controller.openStore("bc", "store3", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("bc", storeID, item).getValue();
             HandlePurchases.Instance.paymentSystem = new BadPaymentSystemMock();
         }
@@ -55,7 +55,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("bb", 18, "123456");
             controller.login("bb", "123456");
             storeID = controller.openStore("bb", "store4", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("bb", storeID, item).getValue();
             StoreRepository.Instance.stores[storeID].deliverySystem = new BadDeliverySystemMock();
         }

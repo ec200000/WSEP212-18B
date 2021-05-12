@@ -26,7 +26,7 @@ namespace WSEP212_TESTS.AcceptanceTests
 
         public void testInit()
         {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
 
@@ -117,7 +117,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToStorageTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemReview>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser", storeID, itemDto);
             Assert.IsTrue(res.getTag());
@@ -164,7 +164,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
 
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemReview>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser", storeID, itemDto);
             Assert.IsTrue(res.getTag());
