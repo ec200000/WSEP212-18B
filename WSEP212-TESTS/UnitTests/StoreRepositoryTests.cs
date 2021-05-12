@@ -61,23 +61,33 @@ namespace WSEP212_TESTS.UnitTests
             int storeID = this.store.storeID;
             ResultWithValue<Store> getStoreBool = StoreRepository.Instance.getStore(storeID);
             Assert.IsTrue(getStoreBool.getTag());
-            getStoreBool = StoreRepository.Instance.getStore(-1);
+        }
+
+        [TestMethod]
+        public void getStoreNotInRepoTest()
+        {
+            ResultWithValue<Store> getStoreBool = StoreRepository.Instance.getStore(-1);
             Assert.IsFalse(getStoreBool.getTag());
         }
 
         [TestMethod]
-        public void searchItemTest()
+        public void searchItemByNameTest()
         {
-            int storeID = this.store.storeID;
-
             SearchItems searchItemsByName = new SearchItems(new SearchItemsDTO("masks", "", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByName = StoreRepository.Instance.searchItem(searchItemsByName);
             Assert.AreEqual(2, itemsByName.Count);
-
             SearchItems searchItemsByName2 = new SearchItems(new SearchItemsDTO("white", "", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByName2 = StoreRepository.Instance.searchItem(searchItemsByName2);
             Assert.AreEqual(1, itemsByName2.Count);
 
+            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
+            ConcurrentDictionary<Item, int> itemsByKeyWords = StoreRepository.Instance.searchItem(searchItemsByKeyWords);
+            Assert.AreEqual(2, itemsByKeyWords.Count);
+        }
+
+        [TestMethod]
+        public void searchItemByKeywordsTest()
+        {
             SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByKeyWords = StoreRepository.Instance.searchItem(searchItemsByKeyWords);
             Assert.AreEqual(2, itemsByKeyWords.Count);

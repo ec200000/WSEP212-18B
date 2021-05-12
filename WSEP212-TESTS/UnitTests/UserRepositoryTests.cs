@@ -55,11 +55,15 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void removeUserTest()
+        public void removeExistingUserTest()
         {
             UserRepository.Instance.removeUser(user1); //removing existing user
             Assert.AreEqual(1, UserRepository.Instance.users.Count);
+        }
 
+        [TestMethod]
+        public void removeNotExistingUserTest()
+        {
             User u = new User("c");
             UserRepository.Instance.removeUser(u); //removing user that do not exists
             Assert.AreEqual(1, UserRepository.Instance.users.Count);
@@ -96,16 +100,26 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void findUserByUserNameTest()
+        public void findExistUserByNameTest()
         {
             Assert.IsTrue(UserRepository.Instance.findUserByUserName("b").getTag());
+        }
+
+        [TestMethod]
+        public void findNotExistUserByNameTest()
+        {
             Assert.IsFalse(UserRepository.Instance.findUserByUserName("k").getTag());
         }
 
         [TestMethod]
-        public void checkIfUserExistsTest()
+        public void checkIfUserExistsSuccessfulTest()
         {
             Assert.IsTrue(UserRepository.Instance.checkIfUserExists("b"));
+        }
+
+        [TestMethod]
+        public void checkIfUserExistsUnsuccessfulTest()
+        {
             Assert.IsFalse(UserRepository.Instance.checkIfUserExists("k"));
         }
 

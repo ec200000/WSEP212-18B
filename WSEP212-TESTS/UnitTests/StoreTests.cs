@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -31,12 +32,17 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void isAvailableInStorageTest()
+        public void availableInStorageTest()
         {
             RegularResult available = store.isAvailableInStorage(sodaID, 2);
             Assert.IsTrue(available.getTag());
+        }
+
+        [TestMethod]
+        public void notAvailableInStorageTest()
+        {
             Item bamba = new Item(3, "bamba", "tasty snack", 4.8, "snack");
-            available = store.isAvailableInStorage(bamba.itemID, 1);
+            RegularResult available = store.isAvailableInStorage(bamba.itemID, 1);
             Assert.IsFalse(available.getTag());
             available = store.isAvailableInStorage(sodaID, 5);
             Assert.IsFalse(available.getTag());
@@ -47,26 +53,51 @@ namespace WSEP212_TESTS.UnitTests
         {
             ResultWithValue<int> itemIDRes = store.addItemToStorage(40, "nike bag", "sport bag", 220, "bag");
             Assert.IsTrue(itemIDRes.getTag());
-            itemIDRes = store.addItemToStorage(60, "bisli", "monosodium glutamate", -4.8, "snack");
+        }
+
+        [TestMethod]
+        public void addItemToStorageNegPriceTest()
+        {
+            ResultWithValue<int> itemIDRes = store.addItemToStorage(60, "bisli", "monosodium glutamate", -4.8, "snack");
             Assert.IsFalse(itemIDRes.getTag());
-            itemIDRes = store.addItemToStorage(60, "", "monosodium glutamate", 4.8, "snack");
+        }
+
+        [TestMethod]
+        public void addItemToStorageEmptyNameTest()
+        {
+            ResultWithValue<int> itemIDRes = store.addItemToStorage(60, "", "monosodium glutamate", 4.8, "snack");
             Assert.IsFalse(itemIDRes.getTag());
-            itemIDRes = store.addItemToStorage(-1, "bisli", "monosodium glutamate", 4.8, "snack");
+        }
+
+        [TestMethod]
+        public void addItemToStorageNegQuantityTest()
+        {
+            ResultWithValue<int> itemIDRes = store.addItemToStorage(-1, "bisli", "monosodium glutamate", 4.8, "snack");
             Assert.IsFalse(itemIDRes.getTag());
-            itemIDRes = store.addItemToStorage(1, "bisli", "monosodium glutamate", 4.8, "");
+        }
+
+        [TestMethod]
+        public void addItemToStorageEmptyCategoryTest()
+        {
+            ResultWithValue<int> itemIDRes = store.addItemToStorage(1, "bisli", "monosodium glutamate", 4.8, "");
             Assert.IsFalse(itemIDRes.getTag());
         }
 
         [TestMethod]
         public void removeItemFromStorageTest()
         {
+            int bisliID = store.addItemToStorage(60, "bisli", "monosodium glutamate", 4.8, "snack").getValue();
+            RegularResult removed = store.removeItemFromStorage(bisliID);
+            Assert.IsTrue(removed.getTag());
+            Assert.IsFalse(store.isAvailableInStorage(bisliID, 1).getTag());
+        }
+
+        [TestMethod]
+        public void removeItemNotInStorageTest()
+        {
             Item cola = new Item(40, "cola", "lot of sugar", 7, "drink");
             RegularResult removed = store.removeItemFromStorage(cola.itemID);
             Assert.IsFalse(removed.getTag());
-            int bisliID = store.addItemToStorage(60, "bisli", "monosodium glutamate", 4.8, "snack").getValue();
-            removed = store.removeItemFromStorage(bisliID);
-            Assert.IsTrue(removed.getTag());
-            Assert.IsFalse(store.isAvailableInStorage(bisliID, 1).getTag());
         }
 
         [TestMethod]
@@ -75,6 +106,11 @@ namespace WSEP212_TESTS.UnitTests
             store.changeItemQuantity(sodaID, 4);
             int quantity = store.getItemById(sodaID).getValue().quantity;
             Assert.AreEqual(7, quantity);
+        }
+
+        [TestMethod]
+        public void changeItemQuantityNotExistTest()
+        {
             Item tesla = new Item(3, "tesla-3", "great car", 150000, "car");
             RegularResult changed = store.changeItemQuantity(tesla.itemID, 150);
             Assert.IsFalse(changed.getTag());
@@ -89,11 +125,26 @@ namespace WSEP212_TESTS.UnitTests
             int teslaID = store.addItemToStorage(3, "tesla-3", "great car", 150000, "car").getValue();
             RegularResult edited = store.editItem(teslaID, "tesla-3", "nice car", 200000, "car", 5);
             Assert.IsTrue(edited.getTag());   
-            edited = store.editItem(teslaID, "tesla-3", "nice car", 200000, "", 5);
+        }
+
+        [TestMethod]
+        public void editItemEmptyCategoryTest()
+        {
+            RegularResult edited = store.editItem(sodaID, "soda-stream", "great drink", 1000.0, "", 3);
             Assert.IsFalse(edited.getTag());
-            edited = store.editItem(teslaID, "", "nice car", 200000, "car", 5);
+        }
+
+        [TestMethod]
+        public void editItemEmptyNameTest()
+        {
+            RegularResult edited = store.editItem(sodaID, "", "great drink", 1000.0, "", 3);
             Assert.IsFalse(edited.getTag());
-            edited = store.editItem(teslaID, "tesla-3", "nice car", -200000, "car", 5);
+        }
+
+        [TestMethod]
+        public void editItemNegPriceTest()
+        {
+            RegularResult edited = store.editItem(sodaID, "soda-stream", "great drink", -1000.0, "", 3);
             Assert.IsFalse(edited.getTag());
         }
 
@@ -108,6 +159,9 @@ namespace WSEP212_TESTS.UnitTests
             itemsPurchaseType.TryAdd(sodaID, PurchaseType.ImmediatePurchase);
             itemsPurchaseType.TryAdd(oliveOilID, PurchaseType.ImmediatePurchase);
             User miki = new User("miki");
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            StoreRepository.Instance.stores[store.storeID].deliverySystem = DeliverySystemMock.Instance;
+
             ResultWithValue<double> totalPrice = store.purchaseItems(miki, items, itemsPurchaseType);
             Assert.IsTrue(totalPrice.getTag());
             Assert.AreEqual(250.0, totalPrice.getValue());
@@ -146,13 +200,20 @@ namespace WSEP212_TESTS.UnitTests
 
 
         [TestMethod]
-        public void purchaseItemsIfAvailableTest()
+        public void purchaseItemsAvailableTest()
         {
             int oliveOilID = store.addItemToStorage(10, "olive-oil", "from olive", 50, "oil").getValue();
             ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
             items.TryAdd(sodaID, 1);
             RegularResult successfulPurchase = store.purchaseItemsIfAvailable(items);
             Assert.IsTrue(successfulPurchase.getTag());
+            store.removeItemFromStorage(oliveOilID);
+        }
+
+        [TestMethod]
+        public void purchaseItemsNotAvailableTest()
+        {
+            int oliveOilID = store.addItemToStorage(10, "olive-oil", "from olive", 50, "oil").getValue();
             ConcurrentDictionary<int, int> badQuantityItems = new ConcurrentDictionary<int, int>();
             badQuantityItems.TryAdd(oliveOilID, 11);
             Item soda = store.getItemById(sodaID).getValue();
@@ -205,7 +266,6 @@ namespace WSEP212_TESTS.UnitTests
             perms.TryAdd(Permissions.AllPermissions);
             SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
             store.addNewStoreSeller(aviTheSeller);
-
             RegularResult removeStoreSellerBool1 = store.removeStoreSeller("avi");
             Assert.IsTrue(removeStoreSellerBool1.getTag());
             RegularResult removeStoreSellerBool2 = store.removeStoreSeller("avi");
@@ -219,7 +279,6 @@ namespace WSEP212_TESTS.UnitTests
             perms.TryAdd(Permissions.AllPermissions);
             SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
             store.addNewStoreSeller(aviTheSeller);
-
             ResultWithValue<SellerPermissions> result = store.getStoreSellerPermissions("avi");
             Assert.IsTrue(result.getTag());
             Assert.AreEqual(aviTheSeller, result.getValue());
@@ -231,22 +290,11 @@ namespace WSEP212_TESTS.UnitTests
             ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> info = store.getStoreOfficialsInfo();
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-
             int numOfRecords = info.Count;
             Assert.AreEqual(numOfRecords, 1);
             SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
             store.addNewStoreSeller(aviTheSeller);
             Assert.AreEqual(store.getStoreOfficialsInfo().Count, 2);
-        }
-
-        [TestMethod]
-        public void addNewPurchaseTest()
-        {
-            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
-            items.TryAdd(sodaID, 1);
-            store.addNewPurchase(new PurchaseInvoice(this.store.storeID, "admin", items, 15, System.DateTime.Now));
-            Assert.IsTrue(true);
-            //Assert.IsTrue(add);
         }
     }
 }
