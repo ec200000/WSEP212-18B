@@ -7,6 +7,7 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -22,7 +23,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestInitialize]
         public void testInit()
         {
-            
             systemController.register("lol", 18, "123456");
             systemController.register("mol", 18, "1234");
             systemController.register("pol", 18, "123");
@@ -35,8 +35,12 @@ namespace WSEP212_TESTS.AcceptanceTests
             ResultWithValue<int> val2 = systemController.addItemToStorage("mol", val.getValue(), item);
             this.storeID = val.getValue();
             this.itemID = val2.getValue();
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            StoreRepository.Instance.stores[storeID].deliverySystem = DeliverySystemMock.Instance;
+            StoreRepository.Instance.stores[storeID].purchasePolicy = new PurchasePolicyMock();
+            StoreRepository.Instance.stores[storeID].salesPolicy = new SalePolicyMock();
         }
-        
+
         [TestCleanup]
         public void testClean()
         {

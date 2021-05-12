@@ -2,30 +2,29 @@
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
-using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.PolicyPredicate
 {
-    public class AndPredicates : SalePredicate
+    public class OrPredicates : SalePredicate
     {
         public PurchasePredicate firstPredicate { get; set; }
         public PurchasePredicate secondPredicate { get; set; }
 
-        public AndPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate) :
-            base("(Both Predicates Must Be Met: " + firstPredicate.ToString() + " AND:" + secondPredicate.ToString() + ")")
+        public OrPredicates(PurchasePredicate firstPredicate, PurchasePredicate secondPredicate) :
+            base("(At Least One Of The Two Predicates Must Be Met: " + firstPredicate.ToString() + " OR:" + secondPredicate.ToString() + ")")
         {
             this.firstPredicate = firstPredicate;
             this.secondPredicate = secondPredicate;
         }
 
-        // return true if all predicates are met, else false
+        // return true if one or more of the predicates are met, else false
         public override bool applyPrediacte(PurchaseDetails purchaseDetails)
         {
-            if(firstPredicate.applyPrediacte(purchaseDetails))
+            if(!firstPredicate.applyPrediacte(purchaseDetails))
             {
                 return secondPredicate.applyPrediacte(purchaseDetails);
             }
-            return false;
+            return true;
         }
     }
 }

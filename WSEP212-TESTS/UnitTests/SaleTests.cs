@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
 namespace WSEP212_TESTS.UnitTests
 {

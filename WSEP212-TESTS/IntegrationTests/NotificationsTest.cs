@@ -5,7 +5,7 @@ using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
-namespace WSEP212_TEST.IntegrationTests
+namespace WSEP212_TESTS.IntegrationTests
 {
     [TestClass]
     public class NotificationsTest
@@ -115,14 +115,6 @@ namespace WSEP212_TEST.IntegrationTests
             createUserWithStore();
             createUser();
             controller.appointStoreOwner("theuser", "theotheruser", storeID);
-        }
-
-        [TestMethod]
-        public void removeOwnerSuccessful()
-        {
-            removeOwnerInit();
-            var res = controller.removeStoreOwner("theuser", "theotheruser", storeID);
-            Assert.IsTrue(res.getTag());
         }
         
         [TestMethod]

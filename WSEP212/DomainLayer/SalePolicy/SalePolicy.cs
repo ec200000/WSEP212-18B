@@ -2,11 +2,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
-    public class SalePolicy
+    public class SalePolicy : SalePolicyInterface
     {
         public String salesPolicyName { get; set; }
         public ConcurrentDictionary<int, Sale> storeSales { get; set; }

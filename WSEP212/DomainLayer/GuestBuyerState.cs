@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -130,7 +134,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             throw new NotImplementedException();
             // only logged buyers can do that

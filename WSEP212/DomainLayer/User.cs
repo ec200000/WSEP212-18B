@@ -3,6 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -179,8 +183,8 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             String storeName = (String)param.parameters[0];
             String storeAdress = (String)param.parameters[1];
-            PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[2];
-            SalePolicy salesPolicy = (SalePolicy)param.parameters[3];
+            PurchasePolicyInterface purchasePolicy = (PurchasePolicyInterface)param.parameters[2];
+            SalePolicyInterface salesPolicy = (SalePolicyInterface)param.parameters[3];
             object res;
             try
             {

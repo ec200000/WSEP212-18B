@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 
 namespace WSEP212_TEST.UnitTests.UnitTestMocks
 {

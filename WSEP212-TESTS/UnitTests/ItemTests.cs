@@ -9,14 +9,14 @@ namespace WSEP212_TESTS.UnitTests
     [TestClass]
     public class ItemTests
     {
-        private User user;
-        private Item potato;
+        private static User user;
+        private static Item potato;
 
         [ClassInitialize]
-        public void Initialize()
+        public static void SetupAuth(TestContext context)
         {
-            this.potato = new Item(5, "potato", "vegetable", 1.5, "vegetables");
-            this.user = new User("Sagiv");
+            potato = new Item(5, "potato", "vegetable", 1.5, "vegetables");
+            user = new User("Sagiv");
             ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(potato, user);
             userReviews.addReview("yummy");
             potato.addUserReviews(userReviews);
@@ -28,19 +28,19 @@ namespace WSEP212_TESTS.UnitTests
             ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(potato, user);
             userReviews.addReview("the potato was very tasty!");
             potato.addUserReviews(userReviews);
-            Assert.IsTrue(potato.reviews.ContainsKey("admin"));
-            Assert.AreEqual("the potato was very tasty!", potato.reviews["admin"].reviews.First.Value);
+            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
+            Assert.AreEqual("the potato was very tasty!", potato.reviews["Sagiv"].reviews.First.Value);
             userReviews.addReview("5/5!!!");
-            Assert.IsTrue(potato.reviews.ContainsKey("admin"));
-            Assert.AreEqual("5/5!!!", potato.reviews["admin"].reviews.First.Value);
+            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
+            Assert.AreEqual("5/5!!!", potato.reviews["Sagiv"].reviews.First.Value);
         }
 
         [TestMethod]
         public void removeReviewTest()
         {
-            Assert.IsTrue(potato.reviews.ContainsKey("admin"));
+            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
             potato.removeUserReviews(user.userName);
-            Assert.IsFalse(potato.reviews.ContainsKey("admin"));
+            Assert.IsFalse(potato.reviews.ContainsKey("Sagiv"));
         }
 
         [TestMethod]

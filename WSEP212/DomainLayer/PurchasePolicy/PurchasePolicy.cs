@@ -2,11 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.PurchasePolicy
 {
-    public class PurchasePolicy
+    public class PurchasePolicy : PurchasePolicyInterface
     {
         public String purchasePolicyName { get; set; }
         //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }

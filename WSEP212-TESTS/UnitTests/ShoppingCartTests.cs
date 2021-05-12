@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.ServiceLayer.Result;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
 
@@ -22,8 +23,8 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            SalePolicy salesPolicy = new SalePolicy("DEFAULT");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("DEFAULT");
+            SalePolicyMock salesPolicy = new SalePolicyMock();
+            PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
             User user = new User("admin");
 
             ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);

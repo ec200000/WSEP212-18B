@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.ServiceLayer.Result;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
 
@@ -20,7 +21,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), new User("admin"));
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             this.store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             this.sodaID = this.store.addItemToStorage(3, "soda-stream", "great drink", 150, "drink").getValue();
         }

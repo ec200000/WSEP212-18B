@@ -1,5 +1,5 @@
 ﻿using System;
-using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 
 namespace WSEP212_TEST.UnitTests.UnitTestMocks
 {

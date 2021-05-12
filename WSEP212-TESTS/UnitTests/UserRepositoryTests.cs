@@ -65,8 +65,7 @@ namespace WSEP212_TESTS.UnitTests
         public void removeNotExistingUserTest()
         {
             User u = new User("c");
-            UserRepository.Instance.removeUser(u); //removing user that do not exists
-            Assert.AreEqual(1, UserRepository.Instance.users.Count);
+            Assert.IsFalse(UserRepository.Instance.removeUser(u)); //removing user that do not exists
         }
 
         [TestMethod]

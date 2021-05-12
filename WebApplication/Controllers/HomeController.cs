@@ -1044,7 +1044,6 @@ namespace WebApplication.Controllers
                 TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
-            return null;
         }
     }
 }
