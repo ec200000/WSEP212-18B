@@ -4,19 +4,20 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TEST.UnitTests.UnitTestMocks
+
 {
-    public class DeliverySystemMock : DeliveryInterface
+    public class BadDeliverySystemMock: DeliveryInterface
     {
         //singelton
-        private static readonly Lazy<DeliverySystemMock> lazy
-            = new Lazy<DeliverySystemMock>(() => new DeliverySystemMock());
+        private static readonly Lazy<BadDeliverySystemMock> lazy
+            = new Lazy<BadDeliverySystemMock>(() => new BadDeliverySystemMock());
 
-        public static DeliverySystemMock Instance
+        public static BadDeliverySystemMock Instance
             => lazy.Value;
 
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
-            return new Ok("Deliver All Items Successfully!");
+            return new Failure("Can Not Deliver Zero Items");
         }
     }
 }

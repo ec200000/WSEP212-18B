@@ -46,7 +46,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             storeID = controller.openStore("bc", "store3", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
             itemID = controller.addItemToStorage("bc", storeID, item).getValue();
-            HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+            HandlePurchases.Instance.paymentSystem = new BadPaymentSystemMock();
         }
         
         public void testInitBadDelivery()
@@ -57,7 +57,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             storeID = controller.openStore("bb", "store4", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
             itemID = controller.addItemToStorage("bb", storeID, item).getValue();
-            StoreRepository.Instance.stores[storeID].deliverySystem = new DeliverySystemMock();
+            StoreRepository.Instance.stores[storeID].deliverySystem = new BadDeliverySystemMock();
         }
 
         [TestMethod]
@@ -107,7 +107,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void purchaseItemsBadPaymentTest()
         {
             testInitStoreWithItem();
-            HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+            HandlePurchases.Instance.paymentSystem = new BadPaymentSystemMock();
 
             RegularResult res;
             ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);

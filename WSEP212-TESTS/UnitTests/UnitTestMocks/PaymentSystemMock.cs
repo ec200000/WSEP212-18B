@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 
-namespace WSEP212_TESTS
+namespace WSEP212_TEST.UnitTests.UnitTestMocks
 {
     public class PaymentSystemMock : PaymentInterface
     {
@@ -14,7 +18,7 @@ namespace WSEP212_TESTS
 
         public double paymentCharge(double price)
         {
-            return 30000; //charging in the listed price
+            return price;
         }
     }
 }
