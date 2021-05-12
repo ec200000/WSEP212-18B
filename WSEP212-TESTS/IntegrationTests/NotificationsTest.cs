@@ -5,7 +5,7 @@ using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
-namespace WSEP212_TEST.IntegrationTests
+namespace WSEP212_TESTS.IntegrationTests
 {
     [TestClass]
     public class NotificationsTest
@@ -26,7 +26,7 @@ namespace WSEP212_TEST.IntegrationTests
             RegularResult result = controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
         
@@ -115,14 +115,6 @@ namespace WSEP212_TEST.IntegrationTests
             createUserWithStore();
             createUser();
             controller.appointStoreOwner("theuser", "theotheruser", storeID);
-        }
-
-        [TestMethod]
-        public void removeOwnerSuccessful()
-        {
-            removeOwnerInit();
-            var res = controller.removeStoreOwner("theuser", "theotheruser", storeID);
-            Assert.IsTrue(res.getTag());
         }
         
         [TestMethod]

@@ -7,6 +7,12 @@ using WSEP212.DomainLayer;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SystemLoggers;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.AuthenticationSystem;
 
 namespace WSEP212.ServiceLayer
 {

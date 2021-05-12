@@ -6,6 +6,7 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -19,171 +20,199 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
-            RegularResult result = controller.register("theuser", 18, "123456");
-            controller.login("theuser", "123456");
-            storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
+            RegularResult result = controller.register("theuser123", 18, "123456");
+            controller.login("theuser123", "123456");
+            storeID = controller.openStore("theuser123", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
         }
 
         public void testInit()
         {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
-            itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            itemID = controller.addItemToStorage("theuser123", storeID, item).getValue();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public void purchaseItemsTest()
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);//adding an item
+            RegularResult result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2);//adding an item
             Assert.IsTrue(result.getTag());
-
-            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
-            Assert.IsFalse(result2.getTag());
-
-            result2 = controller.purchaseItems("theuser", null); //wrong item id
-            Assert.IsFalse(result2.getTag());
-
-            result2 = controller.purchaseItems("theuser", "ashdod");
+            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("theuser123", "ashdod");
             Assert.IsTrue(result2.getTag());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
+        public void purchaseItemsEmptyCartTest()
+        {
+            testInit();
+
+            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
+            Assert.IsFalse(result2.getTag());
+        }
+
+        [TestMethod]
         public void openStoreTest()
         {
             testInit();
 
-            ResultWithValue<int> result = controller.openStore("theuser", "store2", "somewhere", "DEFAULT", "DEFAULT");
-            Assert.IsFalse(result.getTag()); //store already exists
-
-            result = controller.openStore(null, "store2", "somewhere", "DEFAULT", "DEFAULT");
-            Assert.IsFalse(result.getTag()); //null user name
-
-            result = controller.openStore("theuser", null, "somewhere", "DEFAULT", "DEFAULT");
-            Assert.IsFalse(result.getTag()); //null store name
-
-            result = controller.openStore("theuser", "store2", null, "DEFAULT", "DEFAULT");
-            Assert.IsFalse(result.getTag()); //null address
-
-            result = controller.openStore("theuser", "store2", "somewhere", null, "DEFAULT");
-            Assert.IsFalse(result.getTag()); //null purchase policy
-
-            result = controller.openStore("theuser", "store2", "somewhere", "DEFAULT", null);
-            Assert.IsFalse(result.getTag()); //null sales policy
-
-            result = controller.openStore("theuser", "HAMAMA", "Ashdod", "DEFAULT", "DEFAULT");
+            ResultWithValue<int> result = controller.openStore("theuser123", "HAMAMAH", "Ashdod", "DEFAULT", "DEFAULT");
             Console.WriteLine(result.getMessage());
             Assert.IsTrue(result.getTag());
-            
-            controller.logout("theuser");
-            
-            ResultWithValue<int> res = controller.openStore("a", "gg", "kk", "default", "default"); //guest cant open
-            Assert.IsFalse(true); //should throw exception - if its here, nothing was thrown
-            
-            controller.login("theuser", "123456");
+        }
+
+        [TestMethod]
+        public void openStoreTwiceTest()
+        {
+            testInit();
+
+            ResultWithValue<int> result = controller.openStore("theuser123", "store", "somewhere", "DEFAULT", "DEFAULT");
+            Assert.IsFalse(result.getTag()); //store already exists
+        }
+
+        [TestMethod]
+        public void openStoreWithNullTest()
+        {
+            testInit();
+
+            ResultWithValue<int> result = controller.openStore("theuser123", null, "somewhere", "DEFAULT", "DEFAULT");
+            Assert.IsFalse(result.getTag()); //null store name
+            result = controller.openStore("theuser123", "store2", null, "DEFAULT", "DEFAULT");
+            Assert.IsFalse(result.getTag()); //null address
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
+        public void openStoreWithGuestTest()
+        {
+            testInit();
+
+            ResultWithValue<int> res = controller.openStore("a", "gg", "kk", "default", "default"); //guest cant open
+            Assert.IsFalse(true); //should throw exception - if its here, nothing was thrown
+        }
+
+        [TestMethod]
         public void itemReviewTest()
         {
             testInit();
 
-            RegularResult res = controller.addItemToShoppingCart("theuser", storeID, itemID, 2);
+            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2);
             Assert.IsTrue(res.getTag());
-            ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser", "ashdod");
+            ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser123", "ashdod");
             Assert.IsTrue(res2.getTag());
-            ResultWithValue<NotificationDTO> result = controller.itemReview("theuser", "wow", itemID, storeID); //logged
+            ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
+        }
 
-            result = controller.itemReview(null, "boo", itemID, storeID);
-            Assert.IsFalse(result.getTag());
+        [TestMethod]
+        public void itemEmptyReviewTest()
+        {
+            testInit();
 
-            result = controller.itemReview("theuser", null, itemID, storeID);
+            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2);
+            Assert.IsTrue(res.getTag());
+            ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", null, itemID, storeID);
             Assert.IsFalse(result.getTag());
-            
-            controller.logout("theuser");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void itemReviewByGuestest()
+        {
+            testInit();
 
             controller.itemReview("moon", "boo", itemID, storeID); //guest user can't perform this action
             Assert.IsFalse(true);
-
-            controller.login("theuser", "123456");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public void addItemToStorageTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemReview>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
 
-            ResultWithValue<int> res = controller.addItemToStorage("theuser", storeID, itemDto);
+            ResultWithValue<int> res = controller.addItemToStorage("theuser123", storeID, itemDto);
+            Assert.IsTrue(res.getTag());
+            res = controller.addItemToStorage("theuser123", storeID, itemDto); //already in storage
             Assert.IsTrue(res.getTag());
 
-            res = controller.addItemToStorage("theuser", storeID, itemDto); //already in storage
-            Assert.IsTrue(res.getTag());
             int bisliID = res.getValue();
-
-            res = controller.addItemToStorage("theuser", storeID, null);
-            Assert.IsFalse(res.getTag());
-
-            controller.removeItemFromStorage("theuser", storeID, bisliID);
-            
-            controller.logout("theuser");
-
-            controller.addItemToStorage("moon", storeID, itemDto);//guest user - can't perform this action
-            Assert.IsFalse(true);
-
-            controller.login("theuser", "123456");
+            controller.removeItemFromStorage("theuser123", storeID, bisliID);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
+        public void addItemToStorageByGuestTest()
+        {
+            ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
+
+            controller.addItemToStorage("moon", storeID, itemDto);//guest user - can't perform this action
+            Assert.IsFalse(true);
+        }
+
+        [TestMethod]
         public void removeItemFromStorageTest()
         {
             testInit();
 
-            RegularResult result = controller.removeItemFromStorage("theuser", storeID, itemID);
+            RegularResult result = controller.removeItemFromStorage("theuser123", storeID, itemID);
             Assert.IsTrue(result.getTag());
+        }
 
-            result = controller.removeItemFromStorage("theuser", storeID, -1); //no such item
+        [TestMethod]
+        public void removeItemFromStorageNoSuchItemTest()
+        {
+            testInit();
+
+            RegularResult result = controller.removeItemFromStorage("theuser123", storeID, -1); //no such item
             Assert.IsFalse(result.getTag());
+        }
 
-            result = controller.removeItemFromStorage("theuser", -1, itemID); //no such store
-            Assert.IsFalse(result.getTag());
+        [TestMethod]
+        public void removeItemFromStorageNoSuchStoreTest()
+        {
+            testInit();
 
-            result = controller.removeItemFromStorage("booo", storeID, itemID);//guest user - can't perform this action
+            RegularResult result = controller.removeItemFromStorage("theuser123", -1, itemID); //no such store
             Assert.IsFalse(result.getTag());
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
+        public void removeItemFromStorageByGuestTest()
+        {
+            testInit();
+
+            RegularResult result = controller.removeItemFromStorage("booo", storeID, itemID);//guest user - can't perform this action
+            Assert.IsFalse(result.getTag());
+        }
+
+        [TestMethod]
         public void editItemDetailsTest()
         {
-
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemReview>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
 
-            ResultWithValue<int> res = controller.addItemToStorage("theuser", storeID, itemDto);
+            ResultWithValue<int> res = controller.addItemToStorage("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
             Assert.AreNotEqual(-1, res.getValue());
             itemDto.itemID = res.getValue();
-
             itemDto.price = 7.9;
-            RegularResult result = controller.editItemDetails("theuser", storeID, itemDto);
+            RegularResult result = controller.editItemDetails("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
+        }
 
-            result = controller.editItemDetails("theuser", storeID, null);
-            Assert.IsFalse(result.getTag());
-            
-            controller.logout("theuser");
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void editItemDetailsByGuestTest()
+        {
+            ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
+                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
 
             controller.editItemDetails("blue", storeID, itemDto); //guest user - can't perform this action
             Assert.IsFalse(true);
-
-            controller.login("theuser", "123456");
         }
     }
 }

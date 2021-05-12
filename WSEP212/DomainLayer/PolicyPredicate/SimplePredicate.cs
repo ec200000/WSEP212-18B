@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.PolicyPredicate
 {
     public class SimplePredicate : SalePredicate
     {

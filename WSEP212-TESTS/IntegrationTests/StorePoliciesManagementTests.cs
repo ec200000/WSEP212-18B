@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
 using WSEP212.ServiceLayer.Result;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -24,6 +29,8 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             user = new User("Sagiv", 21);
             store = new Store("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            store.deliverySystem = DeliverySystemMock.Instance;
 
             shoppingBagItems = new ConcurrentDictionary<int, int>();
             itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();

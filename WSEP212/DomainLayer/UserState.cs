@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -44,7 +46,7 @@ namespace WSEP212.DomainLayer
         
 
         // * Store Storage Management * //
-        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
+        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
         public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
         public abstract RegularResult removeItemFromStorage(int storeID, int itemID);
         public abstract RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category);

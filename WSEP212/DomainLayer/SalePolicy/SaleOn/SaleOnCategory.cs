@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy.SaleOn
 {
     public class SaleOnCategory : ApplySaleOn
     {

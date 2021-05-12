@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy.SaleOn
 {
     public enum SaleOnType
     {

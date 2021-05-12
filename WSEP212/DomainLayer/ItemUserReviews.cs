@@ -3,26 +3,41 @@ using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
-    public class ItemReview
+    public class ItemUserReviews
     {
+        public Item item { get; set; }
         public User reviewer { get; set; }
         public ConcurrentLinkedList<string> reviews { get; set; }
 
-        public ItemReview(User user)
+        private ItemUserReviews(Item item, User user)
         {
+            this.item = item;
             this.reviewer = user;
             reviews = new ConcurrentLinkedList<string>();
         }
-        
-        public ItemReview()
+
+        // Checks that there is no other assosiation class for this user and item
+        // If there is, return it, else, create new one
+        public static ItemUserReviews getItemUserReviews(Item item, User user)
         {
-            this.reviewer = null;
-            reviews = new ConcurrentLinkedList<string>();
+            foreach (ItemUserReviews reviews in item.reviews.Values)
+            {
+                if(reviews.reviewer.Equals(user))
+                {
+                    return reviews;
+                }
+            }
+            return new ItemUserReviews(item, user);
         }
 
-        public bool addReview(string review)
+        public void addReview(string review)
         {
-            return this.reviews.TryAdd(review);
+            this.reviews.TryAdd(review);
+        }
+
+        public void removeReview(string review)
+        {
+            this.reviews.Remove(review, out _);
         }
 
         public override string ToString()

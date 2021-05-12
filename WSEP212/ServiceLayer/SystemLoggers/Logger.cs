@@ -2,7 +2,7 @@
 using System.IO;
 using Serilog;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SystemLoggers
 {
     public class Logger
     {

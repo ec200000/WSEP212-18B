@@ -5,6 +5,7 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -15,13 +16,24 @@ namespace WSEP212_TESTS.AcceptanceTests
         int itemID;
         int storeID;
 
+        [TestCleanup]
+        public void testClean()
+        {
+            UserRepository.Instance.users.Clear();
+            foreach (Store store in StoreRepository.Instance.stores.Values)
+            {
+                store.storage.Clear();
+            }
+            StoreRepository.Instance.stores.Clear();
+        }
+
         public void testInit()
         {
             controller.register("a", 18, "123");
             controller.register("b", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
@@ -29,9 +41,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             controller.register("a", 18, "123");
             controller.register("b", 18, "123456");
-            //RegularResult result1 = controller.login("b", "123456");
+            RegularResult result1 = controller.login("b", "123456");
             storeID = controller.openStore("b", "store2", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
             RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
             result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
@@ -44,9 +56,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("bc", 18, "123456");
             controller.login("bc", "123456");
             storeID = controller.openStore("bc", "store3", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("bc", storeID, item).getValue();
-            HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+            HandlePurchases.Instance.paymentSystem = BadPaymentSystemMock.Instance;
         }
         
         public void testInitBadDelivery()
@@ -55,9 +67,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("bb", 18, "123456");
             controller.login("bb", "123456");
             storeID = controller.openStore("bb", "store4", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("bb", storeID, item).getValue();
-            StoreRepository.Instance.stores[storeID].deliverySystem = new DeliverySystemMock();
+            StoreRepository.Instance.stores[storeID].deliverySystem = BadDeliverySystemMock.Instance;
         }
 
         [TestMethod]
@@ -67,47 +79,73 @@ namespace WSEP212_TESTS.AcceptanceTests
             
             RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
             Assert.IsTrue(result.getTag());
-
             result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
             Assert.IsTrue(result.getTag());
-
-            result = controller.addItemToShoppingCart("b", storeID, itemID, 100); //over quantity
-            Assert.IsFalse(result.getTag());
-            
-            result = controller.addItemToShoppingCart("b", storeID, -1, 1); //item does not exists
-            Assert.IsFalse(result.getTag());
-            
-            result = controller.addItemToShoppingCart("b",-1, itemID, 1); //store doest not exists
-            Assert.IsFalse(result.getTag());
-            
         }
-        
+
+        [TestMethod]
+        public void addItemToShoppingCartOverQuantityTest()
+        {
+            testInit();
+
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 100); //over quantity
+            Assert.IsFalse(result.getTag());
+        }
+
+        [TestMethod]
+        public void addItemNotExistToShoppingCartTest()
+        {
+            testInit();
+
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, -1, 1); //item does not exists
+            Assert.IsFalse(result.getTag());
+        }
+
+        [TestMethod]
+        public void addItemToShoppingCartStoreNotExistTest()
+        {
+            testInit();
+
+            RegularResult result = controller.addItemToShoppingCart("b", -1, itemID, 1); //store doest not exists
+            Assert.IsFalse(result.getTag());
+        }
+
         [TestMethod]
         public void removeItemFromShoppingCartTest()
         {
             testInitTwoCarts();
-            
-            RegularResult result = controller.removeItemFromShoppingCart("b",-1, itemID); //wrong store id
-            Assert.IsFalse(result.getTag());
-            
-            result = controller.removeItemFromShoppingCart("b",storeID, -1); //wrong item id
-            Assert.IsFalse(result.getTag());
-            
-            result = controller.removeItemFromShoppingCart("b",storeID, itemID); //removing it
+
+            RegularResult result = controller.removeItemFromShoppingCart("b",storeID, itemID); //removing it
             Assert.IsTrue(result.getTag());
-            
             result = controller.removeItemFromShoppingCart("a",storeID, itemID); //removing it
             Assert.IsTrue(result.getTag());
-            
-            result = controller.removeItemFromShoppingCart("a",storeID, itemID); //nothing in the cart
+            result = controller.removeItemFromShoppingCart("a",storeID, itemID); //nothing left in the cart
             Assert.IsFalse(result.getTag());
         }
-        
+
+        [TestMethod]
+        public void removeItemFromShoppingCartWrongStoreTest()
+        {
+            testInitTwoCarts();
+
+            RegularResult result = controller.removeItemFromShoppingCart("b", -1, itemID); //wrong store id
+            Assert.IsFalse(result.getTag());
+        }
+
+        [TestMethod]
+        public void removeItemFromShoppingCartWrongItemTest()
+        {
+            testInitTwoCarts();
+
+            RegularResult result = controller.removeItemFromShoppingCart("b", storeID, -1); //wrong item id
+            Assert.IsFalse(result.getTag());
+        }
+
         [TestMethod]
         public void purchaseItemsBadPaymentTest()
         {
             testInitStoreWithItem();
-            HandlePurchases.Instance.paymentSystem = new PaymentSystemMock();
+            HandlePurchases.Instance.paymentSystem = new BadPaymentSystemMock();
 
             RegularResult res;
             ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
