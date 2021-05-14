@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -24,14 +29,14 @@ namespace WSEP212.DomainLayer
         public String storeName { get; set; }
         public String storeAddress { get; set; }
         public bool activeStore { get; set; }
-        public SalePolicy salesPolicy { get; set; }
-        public PurchasePolicy purchasePolicy { get; set; }
+        public SalePolicyInterface salesPolicy { get; set; }
+        public PurchasePolicyInterface purchasePolicy { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
         public DeliveryInterface deliverySystem { get; set; }
 
-        public Store(String storeName, String storeAddress, SalePolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;

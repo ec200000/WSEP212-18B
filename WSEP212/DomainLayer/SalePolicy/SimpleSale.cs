@@ -2,8 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class SimpleSale : Sale
     {

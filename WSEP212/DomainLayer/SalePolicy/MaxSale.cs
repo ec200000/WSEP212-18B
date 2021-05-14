@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class MaxSale : Sale
     {

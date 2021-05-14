@@ -1,0 +1,12 @@
+2021-05-12 18:53:45.743 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-12 18:53:45.756 +03:00 [Error] In OpenStore function, the error is: Object reference not set to an instance of an object.
+
+2021-05-12 18:53:45.776 +03:00 [Error] In PurchaseItems function, the error is: Object reference not set to an instance of an object.
+
+2021-05-12 18:53:45.792 +03:00 [Error] In RemoveItemFromStorage function, the error is: Object reference not set to an instance of an object.
+
+2021-05-12 18:55:59.292 +03:00 [Error] In PurchaseItems function, the error is: Object reference not set to an instance of an object.
+
+2021-05-12 18:55:59.300 +03:00 [Error] In RemoveItemFromStorage function, the error is: Object reference not set to an instance of an object.
+

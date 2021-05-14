@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.PolicyPredicate
 {
-    public enum PurchasePredicateCompositionType
+    public enum SalePredicateCompositionType
     {
         AndComposition,
-        OrComposition,
-        ConditionalComposition
+        OrComposition
     }
 }

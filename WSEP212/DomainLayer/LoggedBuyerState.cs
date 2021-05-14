@@ -2,6 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -214,8 +218,14 @@ namespace WSEP212.DomainLayer
                 {
                     if(isPurchasedItem(itemID))
                     {
-                        getItemRes.getValue().addReview(this.user.userName, review);
-                        
+                        Item item = getItemRes.getValue();
+                        ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(item, user);
+                        userReviews.addReview(review);
+                        if (!user.myReviews.Contains(userReviews))
+                        {
+                            item.addUserReviews(userReviews);
+                            user.myReviews.TryAdd(userReviews);
+                        }
                         return new OkWithValue<ConcurrentLinkedList<string>>("Item Review Have Been Successfully Added",
                             StoreRepository.Instance.getStoreOwners(storeID));
                     }
@@ -267,7 +277,7 @@ namespace WSEP212.DomainLayer
             return new Failure(findUserRes.getMessage());
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore(storeName, storeAddress, salesPolicy, purchasePolicy, this.user);
             if (addStoreRes.getTag())

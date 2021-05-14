@@ -22,11 +22,17 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInit();
             RegularResult result = controller.register("abcd", 18, "1234");
             Assert.IsTrue(result.getTag());
+        }
+
+        [TestMethod]
+        public void failRegisterTest()
+        {
+            testInit();
 
             RegularResult result2 = controller.register("a", 18, "123");
             Assert.IsFalse(result2.getTag());
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException), "user that is logged in, can perform this action again")]
         public void loginTest()
@@ -34,7 +40,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInit();
             RegularResult result = controller.login("a", "123");
             Assert.IsTrue(result.getTag());
-
             RegularResult result2 = controller.login("a", "123"); //already logged
             //should  throw exception
             Assert.IsFalse(true); //if it gets here - no exception was thrown
@@ -47,7 +52,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInit();
             RegularResult result = controller.logout("b");
             Assert.IsTrue(result.getTag());
-
             RegularResult result2 = controller.logout("a"); //not logged in
             //should throw exception
             Assert.IsFalse(true); //if it gets here - no exception was thrown

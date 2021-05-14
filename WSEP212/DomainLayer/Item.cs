@@ -17,7 +17,7 @@ namespace WSEP212.DomainLayer
         public String itemName { get; set; }
         public String description { get; set; }
         // A data structure associated with a user name and his reviews
-        public ConcurrentDictionary<String, ItemReview> reviews { get; set; }
+        public ConcurrentDictionary<String, ItemUserReviews> reviews { get; set; }
         public double price { get; set; }
         public String category { get; set; }
 
@@ -31,23 +31,27 @@ namespace WSEP212.DomainLayer
             }
             this.itemName = itemName;
             this.description = description;
-            this.reviews = new ConcurrentDictionary<string, ItemReview>();
+            this.reviews = new ConcurrentDictionary<string, ItemUserReviews>();
             this.price = price;
             this.category = category;
         }
 
         // Add new review about an item
-        public void addReview(String username, String review)   
+        public void addUserReviews(ItemUserReviews userReviews)   
         {
-            if(reviews.ContainsKey(username))
+            String userName = userReviews.reviewer.userName;
+            if (!reviews.ContainsKey(userName))
             {
-                reviews[username].addReview(review);
+                reviews.TryAdd(userName, userReviews);
             }
-            else
+        }
+
+        // remove review about an item
+        public void removeUserReviews(String userName)
+        {
+            if (reviews.ContainsKey(userName))
             {
-                ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue());
-                areview.reviews.TryAdd(review);
-                reviews.TryAdd(username, areview);
+                reviews.TryRemove(userName, out _);
             }
         }
 
@@ -63,14 +67,16 @@ namespace WSEP212.DomainLayer
                 return false;
             }
         }
-        
-        public bool changeQuantity(int quantity)
+
+        // change the quantity of item by numOfItems
+        // if quantity is less then zero, doesnt apply the action
+        public bool changeQuantity(int numOfItems)
         {
             lock (quantitylock)
             {
-                if (this.quantity + quantity >= 0)
+                if (this.quantity + numOfItems >= 0)
                 {
-                    this.quantity += quantity;
+                    this.quantity += numOfItems;
                     return true;
                 }
                 return false;

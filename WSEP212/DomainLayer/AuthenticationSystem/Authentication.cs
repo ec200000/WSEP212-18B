@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using WSEP212.ConcurrentLinkedList;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.AuthenticationSystem
 {
     public class Authentication
     {

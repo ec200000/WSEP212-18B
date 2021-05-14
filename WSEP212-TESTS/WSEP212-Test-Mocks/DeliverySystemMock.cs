@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212_TESTS
+namespace WSEP212_TEST.UnitTests.UnitTestMocks
 {
-    public class DeliverySystemMock: DeliveryInterface
+    public class DeliverySystemMock : DeliveryInterface
     {
         //singelton
         private static readonly Lazy<DeliverySystemMock> lazy
@@ -16,7 +17,7 @@ namespace WSEP212_TESTS
 
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
-            return new Failure("Can Not Deliver Zero Items");
+            return new Ok("Deliver All Items Successfully!");
         }
     }
 }

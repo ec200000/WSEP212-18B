@@ -8,6 +8,11 @@ using System.Threading;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212.DomainLayer.SystemLoggers;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
 namespace WSEP212.DomainLayer
 {
@@ -219,7 +224,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             try
             {
