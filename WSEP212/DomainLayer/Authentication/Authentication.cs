@@ -1,22 +1,38 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class Authentication
     {
-        private ConcurrentDictionary<String,String> usersInfo { get; set; }
+        [NotMapped]
+        public ConcurrentDictionary<String,String> usersInfo { get; set; }
+
+        [Key] 
+        public int field { get; set; }
+        public string UserInfoJson
+        {
+            get => JsonConvert.SerializeObject(usersInfo);
+            set => usersInfo = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(value);
+        }
         private static readonly Lazy<Authentication> lazy
             = new Lazy<Authentication>(() => new Authentication());
 
         public static Authentication Instance
             => lazy.Value;
 
-        private Authentication() { usersInfo = new ConcurrentDictionary<string, string>();}
+        private Authentication()
+        {
+            usersInfo = new ConcurrentDictionary<string, string>();
+            field = 0;
+        }
 
         public string encryptPassword(string password)
         {
@@ -92,24 +108,22 @@ namespace WSEP212.DomainLayer
                 | ((uint)(buffer[offset + 3]));
         }
 
-        /*public string encryptpassword(string password)
-        {
-            byte[] data = system.text.encoding.ascii.getbytes(password);
-            data = new system.security.cryptography.sha256managed().computehash(data);
-            string hash = system.text.encoding.ascii.getstring(data);
-            return hash;
-        }
-
-        public bool validatePassword(String passwordToValidate, String userPassword) //the user password is already encrypted
-        {
-            string passwordToValidateHash = encryptPassword(passwordToValidate);
-
-            return passwordToValidateHash.Equals(userPassword);
-        }*/
-
         public void insertUserInfo(string userName, string password)
         {
-            usersInfo.TryAdd(userName, encryptPassword(password));
+            //var result = SystemDBAccess.Instance.UsersInfo.SingleOrDefault(a => a.usersInfo == this.usersInfo);
+            var result = SystemDBAccess.Instance.UsersInfo.Find(0);
+            if (result != null)
+            {
+                result.UserInfoJson = this.UserInfoJson;
+                SystemDBAccess.Instance.SaveChanges();
+                usersInfo.TryAdd(userName, encryptPassword(password));
+            }
+            else //first time - no passwords are saved
+            {
+                usersInfo.TryAdd(userName, encryptPassword(password));
+                this.UserInfoJson = JsonConvert.SerializeObject(usersInfo);
+                SystemDBAccess.Instance.UsersInfo.Add(this);
+            }
         }
 
         public bool removeUserInfo(string userName)

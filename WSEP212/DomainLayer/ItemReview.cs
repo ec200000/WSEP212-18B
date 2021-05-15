@@ -32,11 +32,7 @@ namespace WSEP212.DomainLayer
             reviews = new ConcurrentLinkedList<string>();
         }
         
-        public ItemReview()
-        {
-            this.reviewer = null;
-            reviews = new ConcurrentLinkedList<string>();
-        }
+        public ItemReview(){}
 
         public bool addReview(string review)
         {

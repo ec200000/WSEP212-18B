@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer
 
         public void createSystemManager()
         {
-            User systemManager = new User("big manager");
+            User systemManager = new User("big manager", 25, true);
             systemManager.changeState(new SystemManagerState(systemManager));
             RegularResult res = insertNewUser(systemManager, "123456");
             if (!res.getTag())

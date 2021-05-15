@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
         }
 
         // * User Management In The System * //
-        public abstract RegularResult register(String userName, int userAge, String password);
+        public abstract RegularResult register(User newUser, String password);
 
         public abstract RegularResult login(String userName, String password);   
         public abstract RegularResult loginAsSystemManager(String userName, String password);

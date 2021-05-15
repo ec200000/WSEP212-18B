@@ -66,6 +66,7 @@ namespace WSEP212.DomainLayer
                 if (result != null)
                 {
                     result.DictionaryAsJson = this.DictionaryAsJson;
+                    result.reviews = reviews;
                     SystemDBAccess.Instance.SaveChanges();
                 }
             }

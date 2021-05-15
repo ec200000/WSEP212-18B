@@ -450,3 +450,229 @@
 
 2021-05-15 17:27:11.812 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
 
+2021-05-15 18:31:00.150 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 18:31:17.051 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 18:31:28.220 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 18:31:33.332 +03:00 [Information] Register Event was triggered, with the parameters: user name: kron
+
+2021-05-15 18:35:00.055 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 18:42:22.391 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 18:54:46.256 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 18:57:04.265 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:03:31.963 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:03:35.467 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:03:35.521 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 19:32:12.021 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:48:26.614 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:50:48.583 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:52:25.679 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 19:56:34.763 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:10:28.927 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:10:37.041 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:10:37.101 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 20:10:44.272 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 20:10:48.334 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 20:18:43.211 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:18:58.991 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:18:59.045 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 20:19:00.599 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 20:19:04.537 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 20:22:03.317 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:22:43.923 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:22:43.962 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 20:22:45.519 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 20:22:50.084 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 20:27:11.664 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:27:18.436 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:27:18.484 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 20:27:19.956 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 20:27:25.082 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 20:47:10.088 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:48:41.202 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:48:50.637 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:48:50.706 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 20:48:51.970 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 20:48:55.876 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 20:48:57.094 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 20:59:38.317 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:59:42.528 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 20:59:42.586 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 20:59:44.354 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:00:02.698 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 21:07:26.066 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:07:31.187 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:07:31.229 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:07:32.992 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:07:54.554 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 21:17:43.453 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:17:48.488 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:17:48.528 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:17:49.969 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:17:54.308 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 21:17:55.507 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:18:03.620 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:18:09.394 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-15 21:18:10.057 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:18:14.306 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:18:17.605 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-15 21:18:17.622 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:18:20.276 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:18:23.201 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:18:24.398 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:18:26.723 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:19:28.587 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: iris, review: only with bisli, store ID: 1, item ID: 1
+
+2021-05-15 21:19:29.515 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:19:59.476 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:23:25.582 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:23:30.421 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:23:30.468 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:23:33.238 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:23:47.578 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 21:23:58.122 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:24:00.153 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:24:04.969 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-15 21:24:05.626 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:24:13.034 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:24:20.118 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-15 21:24:20.134 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:24:21.050 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:24:23.126 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:24:24.259 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:24:26.589 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:24:29.719 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: iris, review: only with bisli, store ID: 1, item ID: 1
+
+2021-05-15 21:24:30.609 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:24:46.626 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:24:48.427 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:29:56.557 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:30:00.805 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-15 21:30:00.847 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:30:02.301 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:30:06.740 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-15 21:30:07.945 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:30:09.064 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:30:14.479 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-15 21:30:15.143 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:30:17.858 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:30:18.863 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:30:21.336 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:30:23.602 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-15 21:30:23.617 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-15 21:30:24.824 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:30:26.791 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:30:27.962 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-15 21:30:29.631 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:30:33.084 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: iris, review: only with bisli, store ID: 1, item ID: 1
+
+2021-05-15 21:30:33.977 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-15 21:30:37.692 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
