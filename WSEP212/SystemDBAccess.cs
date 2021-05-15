@@ -31,8 +31,8 @@ namespace WSEP212
         //public virtual DbSet<Store> Stores { get; set; }
        // public virtual DbSet<ShoppingCart> Carts { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<PurchaseInvoice> Invoices { get; set; }
-        public virtual DbSet<SellerPermissions> Permissions { get; set; }
+        //public virtual DbSet<PurchaseInvoice> Invoices { get; set; }
+        //public virtual DbSet<SellerPermissions> Permissions { get; set; }
         
         public void Init() => Database.Initialize(true);
 

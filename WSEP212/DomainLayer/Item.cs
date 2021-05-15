@@ -2,13 +2,19 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class Item
     {
+        [NotMapped]
         private static int itemCounter = 1;
         
         private readonly object quantitylock = new object();
@@ -21,7 +27,14 @@ namespace WSEP212.DomainLayer
         public ConcurrentDictionary<String, ItemReview> reviews { get; set; }
         public double price { get; set; }
         public String category { get; set; }
-
+        
+        public string DictionaryAsJson
+        {
+            get => JsonConvert.SerializeObject(reviews);
+            set => reviews = JsonConvert.DeserializeObject<ConcurrentDictionary<string, ItemReview>>(value);
+        }
+        
+        public Item(){}
         public Item(int quantity, String itemName, String description, double price, String category)
         {
             this.itemID = itemCounter;
@@ -49,6 +62,12 @@ namespace WSEP212.DomainLayer
                 ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue());
                 areview.reviews.TryAdd(review);
                 reviews.TryAdd(username, areview);
+                var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
+                if (result != null)
+                {
+                    result.DictionaryAsJson = this.DictionaryAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
             }
         }
 

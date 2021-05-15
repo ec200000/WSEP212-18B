@@ -13,10 +13,11 @@ namespace WSEP212.DomainLayer
     public class User
     {
         [Key]
-        [ForeignKey("SellerPermissions")]
         public String userName { get; set; }
         public int userAge { get; set; }
+        [NotMapped]
         public UserState state { get; set; }
+        [NotMapped]
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }

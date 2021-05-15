@@ -1,39 +1,34 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class ItemReview
     {
+        public string UserNameRef{ get; set; }
         [Key]
+        [ForeignKey("UserNameRef")]
+        [JsonIgnore]
         public User reviewer { get; set; }
         [NotMapped]
         public ConcurrentLinkedList<string> reviews { get; set; }
         
-        public string LinkedListAsXml
+        public string LinkedListAsJson
         {
-            get
-            {
-                return new XElement("root",
-                    listToArray(reviews).Select(kv => new XElement(kv))).Value;
-            }
-            set
-            {
-                XElement rootElement = XElement.Parse("<root>value</root>");
-                foreach(var el in rootElement.Elements())
-                {
-                    reviews.TryAdd(el.Value);
-                }
-            }
+            get => JsonConvert.SerializeObject(reviews);
+            set => reviews = JsonConvert.DeserializeObject<ConcurrentLinkedList<string>>(value);
         }
 
         public ItemReview(User user)
         {
             this.reviewer = user;
+            UserNameRef = user.userName;
             reviews = new ConcurrentLinkedList<string>();
         }
         
