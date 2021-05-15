@@ -130,3 +130,23 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.pdb
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.genruntimeconfig.cache
 D:\Software Engineering\שנה ג\סמסטר ו\סדנא ליישום פרויקט תוכנה\WSEP212-18B\WSEP212\obj\Debug\net5.0\WSEP212.csprojAssemblyReference.cache
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\EntityFramework.SqlServer.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\EntityFramework.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.CodeDom.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.Data.SqlClient.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.Drawing.Common.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.Security.Permissions.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\System.Windows.Extensions.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\talsk\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
