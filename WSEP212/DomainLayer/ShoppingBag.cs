@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -10,13 +11,14 @@ namespace WSEP212.DomainLayer
     {
         public Store store { get; set; }
         // A data structure associated with a item ID and its quantity - more effective when there will be a sales policy
-        // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping bag
         public ConcurrentDictionary<int, int> items { get; set; }
+        public ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseTypes { get; set; }
 
         public ShoppingBag(Store store)
         {
             this.store = store;
             this.items = new ConcurrentDictionary<int, int>();
+            this.itemsPurchaseTypes = new ConcurrentDictionary<int, ItemPurchaseType>();
         }
 
         // return true if the shopping bag is empty
@@ -27,20 +29,34 @@ namespace WSEP212.DomainLayer
 
         // Adds item to the shopping bag if the item exist and available in the store
         // quantity is the number of the same item to add
-        public RegularResult addItem(int itemID, int quantity)
+        public RegularResult addItem(int itemID, int quantity, ItemPurchaseType purchaseType)
         {
             if (quantity > 0)
             {
-                int addition = items.ContainsKey(itemID) ? items[itemID] : 0; 
-                int updatedQuantity = addition + quantity;
-                RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
-                if (itemAvailableRes.getTag())
+                if(items.ContainsKey(itemID))
                 {
-                    items[itemID] = updatedQuantity;
-                    return new Ok("The Item Was Successfully Added To The Shopping Bag");
+                    int updatedQuantity = quantity + items[itemID];
+                    // check if the item quantity available in storage
+                    RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
+                    if (itemAvailableRes.getTag())
+                    {
+                        items[itemID] = updatedQuantity;
+                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
+                    }
+                    return itemAvailableRes;
                 }
-                return itemAvailableRes;
-                
+                else
+                {
+                    // check if the item quantity available in storage
+                    RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, quantity);
+                    if (itemAvailableRes.getTag())
+                    {
+                        items.TryAdd(itemID, quantity);
+                        itemsPurchaseTypes.TryAdd(itemID, purchaseType);
+                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
+                    }
+                    return itemAvailableRes;
+                }
             }
             return new Failure("Cannot Add A Item To The Shopping Bag With A Non-Positive Quantity");
         }
@@ -83,7 +99,7 @@ namespace WSEP212.DomainLayer
 
         // purchase all the items in the shopping bag
         // returns the total price after sales. if the purchase cannot be made returns -1
-        public ResultWithValue<double> purchaseItemsInBag(User user, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public ResultWithValue<double> purchaseItemsInBag(User user, ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseType)
         {
             foreach (KeyValuePair<int, int> item in items)
             {

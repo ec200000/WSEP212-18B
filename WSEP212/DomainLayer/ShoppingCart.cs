@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -84,7 +85,7 @@ namespace WSEP212.DomainLayer
 
         // purchase all the items in the shopping cart
         // returns the total price after sales for each store. if the purchase cannot be made returns null
-        public ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsInCart(User user, ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> itemsPurchaseType)
+        public ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsInCart(User user, ConcurrentDictionary<int, ConcurrentDictionary<int, ItemPurchaseType>> itemsPurchaseType)
         {
             if(isEmpty())
             {
@@ -98,7 +99,7 @@ namespace WSEP212.DomainLayer
                 foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
                 {
                     int storeID = shoppingBag.Value.store.storeID;
-                    if (itemsPurchaseType.TryGetValue(storeID, out ConcurrentDictionary<int, PurchaseType> bagItemsPurchaseType))
+                    if (itemsPurchaseType.TryGetValue(storeID, out ConcurrentDictionary<int, ItemPurchaseType> bagItemsPurchaseType))
                     {
                         shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag(user, bagItemsPurchaseType);
                         if (!shoppingBagPriceRes.getTag())

@@ -7,6 +7,7 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
@@ -84,10 +85,6 @@ namespace WSEP212.DomainLayer
         // returns the itemID of the item, otherwise -1
         public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, String category)
         {
-            if (price <= 0 || itemName.Equals("") || category.Equals("") || quantity < 0)
-            {
-                return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
-            }
             // checks that the item not already exist
             foreach (KeyValuePair<int, Item> pairItem in storage)
             {
@@ -100,9 +97,14 @@ namespace WSEP212.DomainLayer
                 }
             }
             // item not exist - add new item to storage
-            Item newItem = new Item(quantity, itemName, description, price, category);
-            this.storage.TryAdd(newItem.itemID, newItem);
-            return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
+            try {
+                Item newItem = new Item(quantity, itemName, description, price, category);
+                this.storage.TryAdd(newItem.itemID, newItem);
+                return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
+            } 
+            catch(ArithmeticException _) {
+                return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
+            }
         }
 
         // Remove item from the store
@@ -232,7 +234,7 @@ namespace WSEP212.DomainLayer
         }
 
         // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
-        public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseType)
         {
             ResultWithValue<ConcurrentDictionary<Item, int>> objItemsRes = getObjItems(items);
             if (!objItemsRes.getTag())

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 
 namespace WSEP212.DomainLayer
@@ -12,10 +13,10 @@ namespace WSEP212.DomainLayer
         public User user { get; set; }
         // A data structure associated with a item and its quantity
         public ConcurrentDictionary<Item, int> shoppingBagItems { get; set; }
-        public ConcurrentDictionary<int, PurchaseType> itemsPurchaseType { get; set; }
+        public ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseType { get; set; }
         public DateTime dateOfPurchase { get; set; }
 
-        public PurchaseDetails(User user, ConcurrentDictionary<Item, int> shoppingBagItems, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        public PurchaseDetails(User user, ConcurrentDictionary<Item, int> shoppingBagItems, ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseType)
         {
             this.user = user;
             this.shoppingBagItems = shoppingBagItems;

@@ -94,8 +94,6 @@ namespace WSEP212.ServiceLayer
             String info = $"OpenStore Event was triggered, with the parameter:" +
                           $"user name: {userName}, store name: {storeName}, purchase policy: {purchasePolicy}, sales policy: {salesPolicy}";
             Logger.Instance.writeInformationEventToLog(info);
-            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             PurchasePolicy newPurchasePolicy = new PurchasePolicy(purchasePolicy);
             SalePolicy newSalesPolicy = new SalePolicy(salesPolicy);
             return SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy,

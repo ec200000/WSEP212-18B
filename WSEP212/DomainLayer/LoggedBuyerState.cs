@@ -235,7 +235,6 @@ namespace WSEP212.DomainLayer
                 
             }
             return new FailureWithValue<ConcurrentLinkedList<string>>(getStoreRes.getMessage(),null);
-            
         }
 
         private bool isPurchasedItem(int itemID)

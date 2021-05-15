@@ -5,6 +5,7 @@ using System.Threading;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -27,7 +28,7 @@ namespace WSEP212.DomainLayer
         // returns the total price after sales for each store. if the purchase cannot be made returns null
         private ResultWithValue<ConcurrentDictionary<int, double>> calculatePurchaseTotal(User user)
         {
-            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> purchaseTypes = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>>();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, ItemPurchaseType>> purchaseTypes = new ConcurrentDictionary<int, ConcurrentDictionary<int, ItemPurchaseType>>();
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
                 purchaseTypes.TryAdd(shoppingBag.store.storeID, getBagPurchaseTypes(shoppingBag));
@@ -52,12 +53,12 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        private ConcurrentDictionary<int, PurchaseType> getBagPurchaseTypes(ShoppingBag shoppingBag)
+        private ConcurrentDictionary<int, ItemPurchaseType> getBagPurchaseTypes(ShoppingBag shoppingBag)
         {
-            ConcurrentDictionary<int, PurchaseType> purchaseTypes = new ConcurrentDictionary<int, PurchaseType>();
+            ConcurrentDictionary<int, ItemPurchaseType> purchaseTypes = new ConcurrentDictionary<int, ItemPurchaseType>();
             foreach (int itemID in shoppingBag.items.Keys)
             {
-                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase); // getting the purchase types for each item
+                purchaseTypes.TryAdd(itemID, ItemPurchaseType.ImmediatePurchase); // getting the purchase types for each item
             }
             return purchaseTypes;
         }
