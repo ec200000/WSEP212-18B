@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
@@ -20,6 +22,8 @@ namespace WSEP212.DomainLayer
 
         // A data structure associated with a item ID and its item
         public ConcurrentDictionary<int, Item> storage { get; set; }
+        [Key]
+        [ForeignKey("SellerPermissions")]
         public int storeID { get; set; }
         public String storeName { get; set; }
         public String storeAddress { get; set; }

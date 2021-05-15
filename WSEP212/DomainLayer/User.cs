@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
@@ -9,6 +12,8 @@ namespace WSEP212.DomainLayer
 {
     public class User
     {
+        [Key]
+        [ForeignKey("SellerPermissions")]
         public String userName { get; set; }
         public int userAge { get; set; }
         public UserState state { get; set; }

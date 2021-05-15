@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer

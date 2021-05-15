@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 
@@ -11,7 +12,7 @@ namespace WSEP212.DomainLayer
         private static int itemCounter = 1;
         
         private readonly object quantitylock = new object();
-
+        [Key]
         public int itemID { get; set; }   // different item ID for same item in different stores -> example: water is 2 in store A, and 3 in store B
         public int quantity { get; set; }
         public String itemName { get; set; }
@@ -31,6 +32,9 @@ namespace WSEP212.DomainLayer
             this.reviews = new ConcurrentDictionary<string, ItemReview>();
             this.price = price;
             this.category = category;
+            
+            SystemDBAccess.Instance.Items.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
 
         // Add new review about an item

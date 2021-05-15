@@ -37,8 +37,6 @@ namespace WebApplication.Controllers
         const string SessionItemID = "_ItemID";
         const string SessionPurchaseHistory = "_History";
         
-        private User user;
-        
         public IActionResult Index()  
         {
             HttpContext.Session.SetString(SessionName, "");
@@ -1043,7 +1041,6 @@ namespace WebApplication.Controllers
                 ViewBag.Alert = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
-            return null;
         }
     }
 }

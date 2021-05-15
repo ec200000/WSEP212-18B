@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 
@@ -8,8 +9,11 @@ namespace WSEP212.DomainLayer
 {
     public class SellerPermissions
     {
+        [Key]
         public User seller { get; set; }
+        [Key]
         public Store store { get; set; }
+        [Key]
         public User grantor { get; set; }
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
         public ConcurrentLinkedList<Permissions> permissionsInStore { get; set; }
