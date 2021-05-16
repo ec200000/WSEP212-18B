@@ -164,6 +164,21 @@ namespace WSEP212.DomainLayer
             return new Failure("Item Not Exist In Storage");
         }
 
+        public void supportPurchaseType(PurchaseType purchaseType)
+        {
+            purchasePolicy.supportPurchaseType(purchaseType);
+        }
+
+        public void unsupportPurchaseType(PurchaseType purchaseType)
+        {
+            purchasePolicy.unsupportPurchaseType(purchaseType);
+        }
+
+        public Boolean isStoreSupportPurchaseType(PurchaseType purchaseType)
+        {
+            return purchasePolicy.hasPurchaseTypeSupport(purchaseType);
+        }
+
         // add a new purchase prediacte for the store
         public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, String predDescription)
         {

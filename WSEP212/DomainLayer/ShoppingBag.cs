@@ -33,30 +33,24 @@ namespace WSEP212.DomainLayer
         {
             if (quantity > 0)
             {
-                if(items.ContainsKey(itemID))
-                {
-                    int updatedQuantity = quantity + items[itemID];
-                    // check if the item quantity available in storage
-                    RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
-                    if (itemAvailableRes.getTag())
-                    {
-                        items[itemID] = updatedQuantity;
-                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
-                    }
-                    return itemAvailableRes;
-                }
-                else
+                if(!items.ContainsKey(itemID))
                 {
                     // check if the item quantity available in storage
                     RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, quantity);
                     if (itemAvailableRes.getTag())
                     {
-                        items.TryAdd(itemID, quantity);
-                        itemsPurchaseTypes.TryAdd(itemID, purchaseType);
-                        return new Ok("The Item Was Successfully Added To The Shopping Bag");
+                        // checks that the store support this purchase type
+                        if (store.isStoreSupportPurchaseType(purchaseType.getPurchaseType()))
+                        {
+                            items.TryAdd(itemID, quantity);
+                            itemsPurchaseTypes.TryAdd(itemID, purchaseType);
+                            return new Ok("The Item Was Successfully Added To The Shopping Bag");
+                        }
+                        return new Failure("Cannot Add Item Because The Store Doesn't Support Purchase Type");
                     }
                     return itemAvailableRes;
                 }
+                return new Failure("The Item Already Exist In The Shopping Bag");
             }
             return new Failure("Cannot Add A Item To The Shopping Bag With A Non-Positive Quantity");
         }
@@ -65,9 +59,10 @@ namespace WSEP212.DomainLayer
         // If the item has n quantity in the basket, all the n will be deleted
         public RegularResult removeItem(int itemID)
         {
-            if(items.ContainsKey(itemID))
+            if(items.ContainsKey(itemID) && itemsPurchaseTypes.ContainsKey(itemID))
             {
                 items.TryRemove(itemID, out _);
+                itemsPurchaseTypes.TryRemove(itemID, out _);
                 return new Ok("The Item Was Successfully Removed From The Shopping Bag");
             }
             return new Failure("The Item Is Not Exist In The Shopping Bag");
@@ -97,15 +92,31 @@ namespace WSEP212.DomainLayer
             return new Failure("Cannot Change Item Quantity To A Non-Positive Number");
         }
 
+        // Changes the item purchase type if the store support this purchase type
+        public RegularResult changeItemPurchaseType(int itemID, ItemPurchaseType itemPurchaseType)
+        {
+            if(itemsPurchaseTypes.ContainsKey(itemID))
+            {
+                // checks that the store support this purchase type
+                if(store.isStoreSupportPurchaseType(itemPurchaseType.getPurchaseType()))
+                {
+                    itemsPurchaseTypes[itemID] = itemPurchaseType;
+                    return new Ok("Change The Item Purchase Type Successfully");
+                }
+                return new Failure("Cannot Change Item Purchase Type Because The Store Doesn't Support It");
+            }
+            return new Failure("The Item Not Exist In The Shopping Bag");
+        }
+
         // purchase all the items in the shopping bag
         // returns the total price after sales. if the purchase cannot be made returns -1
-        public ResultWithValue<double> purchaseItemsInBag(User user, ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseType)
+        public ResultWithValue<double> purchaseItemsInBag(User user)
         {
-            foreach (KeyValuePair<int, int> item in items)
+            foreach (ItemPurchaseType purchaseType in itemsPurchaseTypes.Values)
             {
-                if(!itemsPurchaseType.ContainsKey(item.Key))
+                if(!purchaseType.isApproved())
                 {
-                    return new FailureWithValue<double>("No Purchase Type Was Selected For One Or More Of The Items", -1);
+                    return new FailureWithValue<double>("One Or More Of The Items Price In The Bag Wasn't Aprroved", -1);
                 }
             }
             return store.purchaseItems(user, items, itemsPurchaseType);

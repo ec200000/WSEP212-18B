@@ -19,6 +19,11 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             this.itemPrice = itemPrice;
         }
 
+        public override PurchaseType getPurchaseType()
+        {
+            return PurchaseType.SubmitOfferPurchase;
+        }
+
         public override RegularResult approveItemPrice()
         {
             this.priceApproved = true;

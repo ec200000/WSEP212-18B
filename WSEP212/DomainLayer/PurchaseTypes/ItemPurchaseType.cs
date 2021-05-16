@@ -22,6 +22,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             return this.itemPrice;
         }
 
+        public abstract PurchaseType getPurchaseType();
         public abstract RegularResult approveItemPrice();
         public abstract RegularResult rejectItemPrice();
         // change the item price - Depending on the different types of purchase

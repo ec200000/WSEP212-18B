@@ -15,6 +15,11 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             this.itemPrice = itemPrice;
         }
 
+        public override PurchaseType getPurchaseType()
+        {
+            return PurchaseType.ImmediatePurchase;
+        }
+
         // item price of immediate purchase is always approve 
         public override RegularResult approveItemPrice()
         {
