@@ -7,7 +7,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -18,6 +20,7 @@ namespace WSEP212.DomainLayer
         public String userName { get; set; }
         public int userAge { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public UserState state { get; set; }
         [NotMapped]
         public ShoppingCart shoppingCart { get; set; }
@@ -55,7 +58,7 @@ namespace WSEP212.DomainLayer
         {
             this.userName = userName;
             this.userAge = userAge;
-            this.shoppingCart = new ShoppingCart();
+            this.shoppingCart = new ShoppingCart(userName);
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
@@ -666,11 +669,13 @@ namespace WSEP212.DomainLayer
 
         public void addPurchase(PurchaseInvoice info)
         {
-            this.purchases.Add(info);
             var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == this.userName);
             if (result != null)
             {
-                result.PurchasesJson = this.PurchasesJson;
+                this.purchases.Add(info);
+                result.purchases = purchases;
+                if(!JToken.DeepEquals(result.PurchasesJson, this.PurchasesJson))
+                    result.PurchasesJson = this.PurchasesJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
         }

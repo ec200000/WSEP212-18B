@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WSEP212.ServiceLayer.Result;
 
@@ -8,6 +9,7 @@ namespace WSEP212.DomainLayer
 {
     public class SalePolicy
     {
+        [Key]
         public String salesPolicyName { get; set; }
         public ConcurrentDictionary<int, Sale> storeSales { get; set; }
 

@@ -12,14 +12,14 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
 
-        public int shoppingCartID;
-        private static int idCounter = 1; 
-        public ShoppingCart()
+        [Key]
+        public string cartOwner { get; set; } 
+        public ShoppingCart(string userName)
         {
             this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
-            shoppingCartID = idCounter;
-            idCounter++;
-
+            this.cartOwner = userName;
+            //SystemDBAccess.Instance.Carts.Add(this);
+            //SystemDBAccess.Instance.SaveChanges();
         }
 
         // return true if the shopping cart is empty

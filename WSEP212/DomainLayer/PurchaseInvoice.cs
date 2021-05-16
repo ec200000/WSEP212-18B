@@ -25,7 +25,7 @@ namespace WSEP212.DomainLayer
         [Column(Order=3)]
         public DateTime dateOfPurchase { get; set; }
         
-        public string DictionaryAsJson
+        public string ItemsAsJson
         {
             get => JsonConvert.SerializeObject(items);
             set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
@@ -52,6 +52,8 @@ namespace WSEP212.DomainLayer
             this.items = items;
             this.totalPrice = totalPrice;
             this.dateOfPurchase = dateOfPurchase;
+            SystemDBAccess.Instance.Invoices.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
 
         public bool wasItemPurchased(int itemID)

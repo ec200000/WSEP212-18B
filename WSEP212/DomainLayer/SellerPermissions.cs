@@ -1,37 +1,51 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class SellerPermissions
     {
-        
+        [Key] 
+        [Column(Order = 1)]
         public string SellerNameRef{ get; set; }
-        [Key] [Column(Order = 1)] [ForeignKey("SellerNameRef")]
+        [ForeignKey("SellerNameRef")]
         [JsonIgnore]
         public User seller { get; set; }
-
-        public int StoreIDRef { get; set; }
         [Key]
         [Column(Order=2)]
+        public int StoreIDRef { get; set; }
+        
+        
         [ForeignKey("StoreIDRef")]
         [JsonIgnore]
         public Store store { get; set; }
-
-        public string GrantorNameRef{ get; set; }
         [Key]
         [Column(Order=3)]
+        public string GrantorNameRef{ get; set; }
+        
+        
         [ForeignKey("GrantorNameRef")]
         [JsonIgnore]
         public User grantor { get; set; }
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
-        public ConcurrentLinkedList<Permissions> permissionsInStore { get; set; }
+        [NotMapped]
+        public ConcurrentLinkedList<Permissions> permissionsInStore { get; private set; }
+
+        public string PermissionsInStoreAsJson
+        {
+            get => JsonConvert.SerializeObject(permissionsInStore);
+            set => permissionsInStore = JsonConvert.DeserializeObject<ConcurrentLinkedList<Permissions>>(value);
+        }
 
         public SellerPermissions(){}
 
@@ -46,6 +60,8 @@ namespace WSEP212.DomainLayer
             if(grantor != null)
                 this.GrantorNameRef = grantor.userName;
             this.permissionsInStore = permissionsInStore;
+            //SystemDBAccess.Instance.Permissions.Add(this);
+            //SystemDBAccess.Instance.SaveChanges();
         }
 
         // Checks that there is no other permission for this seller and store
@@ -78,6 +94,19 @@ namespace WSEP212.DomainLayer
         public bool isStoreOwner()
         {
             return permissionsInStore.Contains(Permissions.AllPermissions);
+        }
+
+        public void setPermissions(ConcurrentLinkedList<Permissions> newPer)
+        {
+            /*var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.SellerNameRef == this.SellerNameRef && i.GrantorNameRef == this.GrantorNameRef && i.StoreIDRef == this.StoreIDRef);
+            if (result != null)
+            {
+                result.permissionsInStore = newPer;
+                if(!JToken.DeepEquals(result.PermissionsInStoreAsJson, this.PermissionsInStoreAsJson))
+                    result.PermissionsInStoreAsJson = this.PermissionsInStoreAsJson;
+                SystemDBAccess.Instance.SaveChanges();*/
+                this.permissionsInStore = newPer;
+            //}
         }
 
     }

@@ -8,12 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class Item
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        
         [NotMapped]
         private static int itemCounter = 1;
         
@@ -30,7 +39,7 @@ namespace WSEP212.DomainLayer
         
         public string DictionaryAsJson
         {
-            get => JsonConvert.SerializeObject(reviews);
+            get => JsonConvert.SerializeObject(reviews,settings);
             set => reviews = JsonConvert.DeserializeObject<ConcurrentDictionary<string, ItemReview>>(value);
         }
         
@@ -60,15 +69,16 @@ namespace WSEP212.DomainLayer
             else
             {
                 ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue());
-                areview.reviews.TryAdd(review);
+                areview.addReview(review);
                 reviews.TryAdd(username, areview);
-                var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
-                if (result != null)
-                {
+            }
+            var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
+            if (result != null)
+            {
+                result.reviews = reviews;
+                if(!JToken.DeepEquals(result.DictionaryAsJson, this.DictionaryAsJson))
                     result.DictionaryAsJson = this.DictionaryAsJson;
-                    result.reviews = reviews;
-                    SystemDBAccess.Instance.SaveChanges();
-                }
+                SystemDBAccess.Instance.SaveChanges();
             }
         }
 
@@ -79,6 +89,12 @@ namespace WSEP212.DomainLayer
                 if (quantity >= 0)
                 {
                     this.quantity = quantity;
+                    var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
+                    if (result != null)
+                    {
+                        result.quantity = quantity;
+                        SystemDBAccess.Instance.SaveChanges();
+                    }
                     return true;
                 }
                 return false;
@@ -92,6 +108,12 @@ namespace WSEP212.DomainLayer
                 if (this.quantity + quantity >= 0)
                 {
                     this.quantity += quantity;
+                    var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
+                    if (result != null)
+                    {
+                        result.quantity = quantity;
+                        SystemDBAccess.Instance.SaveChanges();
+                    }
                     return true;
                 }
                 return false;
@@ -102,6 +124,32 @@ namespace WSEP212.DomainLayer
         {
             return "Item name: " + itemName + " Item description: " + description + " Item price: " + price +
                    " Item category: " + category + " Item quantity: " + quantity+ " Item ID: "+itemID;
+        }
+
+        public RegularResult editItem(String itemName, String description, double price, String category, int quantity)
+        {
+            if (itemName.Equals("") || price <= 0 || category.Equals(""))
+                return new Failure("One Or More Of The New Item Details Are Invalid");
+            this.itemName = itemName;
+            this.description = description;
+            this.price = price;
+            this.category = category;
+            if (this.setQuantity(quantity))
+            {
+                var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
+                if (result != null)
+                {
+                    result.itemName = itemName;
+                    result.description = description;
+                    result.price = price;
+                    result.category = category;
+                    result.quantity = quantity;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+                return new Ok("Item Details Have Been Successfully Updated In The Store");
+            }
+
+            return new Failure("Item quantity can't be negative");
         }
     }
 }

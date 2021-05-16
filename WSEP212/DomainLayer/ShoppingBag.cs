@@ -12,6 +12,7 @@ namespace WSEP212.DomainLayer
 {
     public class ShoppingBag
     {
+        public int StoreIDRef { get; set; }
         [Key]
         [ForeignKey("StoreIDRef")]
         public Store store { get; set; }
@@ -29,6 +30,7 @@ namespace WSEP212.DomainLayer
         {
             this.store = store;
             this.items = new ConcurrentDictionary<int, int>();
+            this.StoreIDRef = store.storeID;
         }
 
         // return true if the shopping bag is empty

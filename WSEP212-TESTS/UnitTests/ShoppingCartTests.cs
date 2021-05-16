@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TESTS.UnitTests
@@ -33,7 +34,7 @@ namespace WSEP212_TESTS.UnitTests
             itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
             itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, "health").getValue();
 
-            shoppingCart = new ShoppingCart();
+            shoppingCart = new ShoppingCart("admin");
         }
 
         [TestCleanup]

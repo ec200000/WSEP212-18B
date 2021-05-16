@@ -6,22 +6,30 @@ using System.Linq;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class ItemReview
     {
-        public string UserNameRef{ get; set; }
-        [Key]
-        [ForeignKey("UserNameRef")]
         [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        
+        [Key]
+        public string UserNameRef{ get; set; }
+        
+        [ForeignKey("UserNameRef")]
         public User reviewer { get; set; }
         [NotMapped]
         public ConcurrentLinkedList<string> reviews { get; set; }
         
-        public string LinkedListAsJson
+        public string ReviewsAsJson
         {
-            get => JsonConvert.SerializeObject(reviews);
+            get => JsonConvert.SerializeObject(reviews,settings);
             set => reviews = JsonConvert.DeserializeObject<ConcurrentLinkedList<string>>(value);
         }
 
@@ -30,13 +38,24 @@ namespace WSEP212.DomainLayer
             this.reviewer = user;
             UserNameRef = user.userName;
             reviews = new ConcurrentLinkedList<string>();
+            SystemDBAccess.Instance.ItemReviewes.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
         
         public ItemReview(){}
 
         public bool addReview(string review)
         {
-            return this.reviews.TryAdd(review);
+            var res = false;
+            var result = SystemDBAccess.Instance.ItemReviewes.SingleOrDefault(i => i.ReviewsAsJson == this.ReviewsAsJson);
+            if (result != null)
+            {
+                res = this.reviews.TryAdd(review);
+                result.reviews = reviews;
+                result.ReviewsAsJson = this.ReviewsAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+            return res;
         }
 
         public override string ToString()
