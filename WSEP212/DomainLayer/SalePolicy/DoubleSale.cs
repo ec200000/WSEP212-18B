@@ -27,11 +27,11 @@ namespace WSEP212.DomainLayer.SalePolicy
             return firstSale.getSalePercentageOnItem(item, purchaseDetails) + secondSale.getSalePercentageOnItem(item, purchaseDetails);
         }
 
-        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
             // apply the two sales on the item
-            return item.price - ((item.price * salePercentage) / 100);
+            return purchaseItemPrice - ((purchaseItemPrice * salePercentage) / 100);
         }
     }
 }

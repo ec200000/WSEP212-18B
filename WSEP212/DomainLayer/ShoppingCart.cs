@@ -9,12 +9,16 @@ namespace WSEP212.DomainLayer
 {
     public class ShoppingCart
     {
+        public User cartOwner { get; set; }
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
+        public double cartFinalPrice { get; set; }
 
-        public ShoppingCart()
+        public ShoppingCart(User cartOwner)
         {
+            this.cartOwner = cartOwner;
             this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
+            this.cartFinalPrice = 0;
         }
 
         // return true if the shopping cart is empty
@@ -25,19 +29,16 @@ namespace WSEP212.DomainLayer
 
         // Adds a quantity items to a store's shopping bag if the store and the item exists 
         // If the operation fails, remove the shopping bag if it is empty
-        public RegularResult addItemToShoppingBag(int storeID, int itemID, int quantity)
+        public RegularResult addItemToShoppingBag(int storeID, int itemID, int quantity, ItemPurchaseType purchaseType)
         {
             if (quantity > 0)
             {
                 ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
                 if (shoppingBagRes.getTag())
                 {
-                    RegularResult addItemRes = shoppingBagRes.getValue().addItem(itemID, quantity);
-                    if (!addItemRes.getTag())
-                    {
-                        removeShoppingBagIfEmpty(shoppingBagRes.getValue());
-                        return new Failure("Could not add items to the shopping bag!");
-                    }
+                    RegularResult addItemRes = shoppingBagRes.getValue().addItem(itemID, quantity, purchaseType);
+                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                    updateFinalCartPrice();
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -53,10 +54,8 @@ namespace WSEP212.DomainLayer
             if (shoppingBagRes.getTag())
             {
                 RegularResult removeItemRes = shoppingBagRes.getValue().removeItem(itemID);
-                if (removeItemRes.getTag())
-                {
-                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
-                }
+                removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                updateFinalCartPrice();
                 return removeItemRes;
             }
             return new Failure(shoppingBagRes.getMessage());
@@ -72,10 +71,8 @@ namespace WSEP212.DomainLayer
                 if (shoppingBagRes.getTag())
                 {
                     RegularResult changeQuantityRes = shoppingBagRes.getValue().changeItemQuantity(itemID, updatedQuantity);
-                    if (changeQuantityRes.getTag())
-                    {
-                        removeShoppingBagIfEmpty(shoppingBagRes.getValue());
-                    }
+                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                    updateFinalCartPrice();
                     return changeQuantityRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -83,40 +80,68 @@ namespace WSEP212.DomainLayer
             return new Failure("Cannot Change Item Quantity To A Non-Positive Number");
         }
 
+        // Changes the purchase type of item in a shopping bag
+        public RegularResult changeItemPurchaseTypeInShoppingBag(int storeID, int itemID, ItemPurchaseType updatedPurchaseType)
+        {
+            ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+            if (shoppingBagRes.getTag())
+            {
+                RegularResult changePurchaseRes = shoppingBagRes.getValue().changeItemPurchaseType(itemID, updatedPurchaseType);
+                removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                updateFinalCartPrice();
+                return changePurchaseRes;
+            }
+            return new Failure(shoppingBagRes.getMessage());
+        }
+
         // purchase all the items in the shopping cart
-        // returns the total price after sales for each store. if the purchase cannot be made returns null
-        public ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsInCart(User user, ConcurrentDictionary<int, ConcurrentDictionary<int, ItemPurchaseType>> itemsPurchaseType)
+        // returns the total price after sales for all stores. if the purchase cannot be made returns -1
+        public ResultWithValue<double> purchaseItemsInCart()
         {
             if(isEmpty())
             {
-                return new FailureWithValue<ConcurrentDictionary<int, double>>("Purchase Cannot Be Made When The Shopping Cart Is Empty", null);
+                return new FailureWithValue<double>("Purchase Cannot Be Made When The Shopping Cart Is Empty", -1);
             }
             else
             {
-                ConcurrentDictionary<int, double> bagsFinalPrices = new ConcurrentDictionary<int, double>();
                 ConcurrentDictionary<int, ShoppingBag> rollBackBags = new ConcurrentDictionary<int, ShoppingBag>();
                 ResultWithValue<double> shoppingBagPriceRes;
+                double totalPurchasePrice = 0;
                 foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
                 {
                     int storeID = shoppingBag.Value.store.storeID;
-                    if (itemsPurchaseType.TryGetValue(storeID, out ConcurrentDictionary<int, ItemPurchaseType> bagItemsPurchaseType))
-                    {
-                        shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag(user, bagItemsPurchaseType);
-                        if (!shoppingBagPriceRes.getTag())
-                        {
-                            rollBackItemsInBags(rollBackBags);   // cancel the previous shopping cart items
-                            return new FailureWithValue<ConcurrentDictionary<int, double>>(shoppingBagPriceRes.getMessage(), null);
-                        }
-                        bagsFinalPrices.TryAdd(storeID, shoppingBagPriceRes.getValue());
-                        rollBackBags.TryAdd(shoppingBag.Key, shoppingBag.Value);
-                    }
-                    else
+                    shoppingBagPriceRes = shoppingBag.Value.purchaseItemsInBag();
+                    if (!shoppingBagPriceRes.getTag())
                     {
                         rollBackItemsInBags(rollBackBags);   // cancel the previous shopping cart items
-                        return new FailureWithValue<ConcurrentDictionary<int, double>>("No Purchase Type Was Selected For One Or More Of The Shopping Bag Items", null);
+                        return new FailureWithValue<double>(shoppingBagPriceRes.getMessage(), -1);
                     }
+                    totalPurchasePrice += shoppingBagPriceRes.getValue();
+                    rollBackBags.TryAdd(shoppingBag.Key, shoppingBag.Value);
                 }
-                return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", bagsFinalPrices);
+                // calculate the sum of all stores prices
+                this.cartFinalPrice = totalPurchasePrice;
+                return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPurchasePrice);
+            }
+        }
+
+        // calculate the final price of the cart - after sales
+        public void updateFinalCartPrice()
+        {
+            double updatedFinalPrice = 0;
+            foreach (ShoppingBag shoppingBag in shoppingBags.Values)
+            {
+                updatedFinalPrice += shoppingBag.bagFinalPrice;
+            }
+            this.cartFinalPrice = updatedFinalPrice;
+        }
+
+        // create purchase invoices after paying for the items
+        public void createPurchaseInvoices()
+        {
+            foreach (ShoppingBag shoppingBag in shoppingBags.Values)
+            {
+                shoppingBag.createPurchaseInvoice();
             }
         }
 
@@ -129,10 +154,17 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        // returns all the items in the shopping bags to the stores storage
+        public void rollBackShoppingCart()
+        {
+            rollBackItemsInBags(shoppingBags);
+        }
+
         // Removes all the shopping bags in the shopping cart
         public void clearShoppingCart()
         {
             shoppingBags.Clear();
+            cartFinalPrice = 0;
         }
 
         // Returns the store's shopping bag
@@ -149,7 +181,7 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
                 if (storeRes.getTag())
                 {
-                    ShoppingBag newShoppingBag = new ShoppingBag(storeRes.getValue());
+                    ShoppingBag newShoppingBag = new ShoppingBag(storeRes.getValue(), cartOwner);
                     shoppingBags.TryAdd(storeID, newShoppingBag);
                     return new OkWithValue<ShoppingBag>("Returns A New Shopping Bag", newShoppingBag);
                 }

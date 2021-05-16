@@ -33,7 +33,7 @@ namespace WSEP212.DomainLayer
                 {
                     if (sellerPermissions.Value.store != null)
                     {
-                        if (store.Equals(sellerPermissions.Value.store))
+                        if (store.storeID == sellerPermissions.Value.store.storeID)
                         {
                             return sellerPermissions.Value;
                         }

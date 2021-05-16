@@ -236,9 +236,9 @@ namespace WSEP212.DomainLayer
         // Apply the sales policy on a list of items
         // The function will return the price after discount for each of the items
         // <itemID, price>
-        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
+        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, double> itemsPrices, PurchaseDetails purchaseDetails)
         {
-            return salesPolicy.pricesAfterSalePolicy(items, purchaseDetails);
+            return salesPolicy.pricesAfterSalePolicy(itemsPrices, purchaseDetails);
         }
 
         // Apply the purchase policy on a list of items and their type of purchase
@@ -248,52 +248,36 @@ namespace WSEP212.DomainLayer
             return purchasePolicy.approveByPurchasePolicy(purchaseDetails);
         }
 
-        // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
-        public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseType)
+        // create purchase details of the relevent purchase
+        public ResultWithValue<PurchaseDetails> createPurchaseDetails(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
-            ResultWithValue<ConcurrentDictionary<Item, int>> objItemsRes = getObjItems(items);
-            if (!objItemsRes.getTag())
+            ResultWithValue<ConcurrentDictionary<Item, int>> itemsQuantitiesRes = getObjItemsQuantities(items);
+            if (!itemsQuantitiesRes.getTag())
             {
-                return new FailureWithValue<double>(objItemsRes.getMessage(), -1);
+                return new FailureWithValue<PurchaseDetails>(itemsQuantitiesRes.getMessage(), null);
             }
-            PurchaseDetails purchaseDetails = new PurchaseDetails(buyer, objItemsRes.getValue(), itemsPurchaseType);
-
-            // checks the purchase can be made by the purchase policy
-            RegularResult purchasePolicyRes = applyPurchasePolicy(purchaseDetails);
-            if (purchasePolicyRes.getTag())
-            {
-                // checks that all the items available in the store storage
-                RegularResult availableItemsRes = purchaseItemsIfAvailable(items);
-                if (availableItemsRes.getTag())
-                {
-                    // calculate the price of each item after sales
-                    ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(objItemsRes.getValue(), purchaseDetails);
-                    double totalPrice = 0;
-                    foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
-                    {
-                        totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
-                    }
-                    return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
-                }
-                return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
-            }
-            return new FailureWithValue<double>(purchasePolicyRes.getMessage(), -1);
+            PurchaseDetails purchaseDetails = new PurchaseDetails(buyer, itemsQuantitiesRes.getValue(), itemsPurchasePrices);
+            return new OkWithValue<PurchaseDetails>("Purchase Details Created Successfully", purchaseDetails);
         }
 
-        private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItems(ConcurrentDictionary<int, int> items)
+        // returns the final price of a purchase - doesnt purchase the items, just calculate the final price!
+        public ResultWithValue<double> purchaseFinalPrice(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
-            ConcurrentDictionary<Item, int> objItems = new ConcurrentDictionary<Item, int>();
-            foreach (KeyValuePair<int, int> item in items)
+            ResultWithValue<PurchaseDetails> purchaseDetailsRes = createPurchaseDetails(buyer, items, itemsPurchasePrices);
+            if (!purchaseDetailsRes.getTag())
             {
-                int itemID = item.Key;
-                if (!storage.ContainsKey(itemID))
-                {
-                    return new FailureWithValue<ConcurrentDictionary<Item, int>>("One Or More Of The Items Not Exist In Storage", null);
-                }
-                Item objItem = storage[itemID];
-                objItems.TryAdd(objItem, item.Value);
+                return new FailureWithValue<double>(purchaseDetailsRes.getMessage(), -1);
             }
-            return new OkWithValue<ConcurrentDictionary<Item, int>>("All Items Exist In Storage", objItems);
+
+            ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
+            // calculate the price of each item after sales
+            ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
+            double totalPrice = 0;
+            foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
+            {
+                totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
+            }
+            return new OkWithValue<double>("The Final Price Calculated For The Purchase Items", totalPrice);
         }
 
         // Purchase items from a store if all items are available in storage
@@ -311,7 +295,7 @@ namespace WSEP212.DomainLayer
                     if (itemAvailableRes.getTag())
                     {
                         RegularResult changeQuantityRes = changeItemQuantity(itemID, -1 * quantity);
-                        if(changeQuantityRes.getTag())
+                        if (changeQuantityRes.getTag())
                         {
                             updatedItems.TryAdd(itemID, quantity);
                         }
@@ -329,6 +313,72 @@ namespace WSEP212.DomainLayer
                 }
                 return new Ok("All Items Are Available In The Store's Storage");
             }
+        }
+
+        // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
+        public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        {
+            ResultWithValue<PurchaseDetails> purchaseDetailsRes = createPurchaseDetails(buyer, items, itemsPurchasePrices);
+            if (!purchaseDetailsRes.getTag())
+            {
+                return new FailureWithValue<double>(purchaseDetailsRes.getMessage(), -1);
+            }
+
+            // checks the purchase can be made by the purchase policy
+            RegularResult purchasePolicyRes = applyPurchasePolicy(purchaseDetailsRes.getValue());
+            if (purchasePolicyRes.getTag())
+            {
+                // checks that all the items available in the store storage
+                RegularResult availableItemsRes = purchaseItemsIfAvailable(items);
+                if (availableItemsRes.getTag())
+                {
+                    ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
+                    // calculate the price of each item after sales
+                    ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
+                    double totalPrice = 0;
+                    foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
+                    {
+                        totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
+                    }
+                    return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
+                }
+                return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
+            }
+            return new FailureWithValue<double>(purchasePolicyRes.getMessage(), -1);
+        }
+
+        private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItemsQuantities(ConcurrentDictionary<int, int> items)
+        {
+            ConcurrentDictionary<Item, int> objItemsQuantities = new ConcurrentDictionary<Item, int>();
+            Item objItem;
+            int itemID;
+            foreach (KeyValuePair<int, int> itemQuantityPair in items)
+            {
+                itemID = itemQuantityPair.Key;
+                if (!storage.ContainsKey(itemID))
+                {
+                    return new FailureWithValue<ConcurrentDictionary<Item, int>>("One Or More Of The Items Not Exist In Storage", null);
+                }
+                objItem = storage[itemID];
+                objItemsQuantities.TryAdd(objItem, itemQuantityPair.Value);
+            }
+            return new OkWithValue<ConcurrentDictionary<Item, int>>("All Items Exist In Storage", objItemsQuantities);
+        }
+
+        private ResultWithValue<ConcurrentDictionary<Item, double>> getObjItemsPrices(ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        {
+            ConcurrentDictionary<Item, double> objItemsPrices = new ConcurrentDictionary<Item, double>();
+            Item objItem;
+            foreach (int itemID in items.Keys)
+            {
+                if (!storage.ContainsKey(itemID))
+                {
+                    return new FailureWithValue<ConcurrentDictionary<Item, double>>("One Or More Of The Items Not Exist In Storage", null);
+                }
+                objItem = storage[itemID];
+                objItemsPrices.TryAdd(objItem, itemsPurchasePrices[itemID]);
+            }
+            return new OkWithValue<ConcurrentDictionary<Item, double>>("All Items Exist In Storage", objItemsPrices);
         }
 
         // In case the purchase is canceled (payment is not made / system collapses) -
