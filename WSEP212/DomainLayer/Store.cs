@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
         public bool activeStore { get; set; }
         public SalePolicyInterface salesPolicy { get; set; }
         public PurchasePolicyInterface purchasePolicy { get; set; }
-        public ConcurrentBag<PurchaseInvoice> purchasesHistory { get; set; }
+        public ConcurrentDictionary<int, PurchaseInvoice> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
         public DeliveryInterface deliverySystem { get; set; }
@@ -45,7 +45,7 @@ namespace WSEP212.DomainLayer
             this.activeStore = true;
             this.salesPolicy = salesPolicy;
             this.purchasePolicy = purchasePolicy;
-            this.purchasesHistory = new ConcurrentBag<PurchaseInvoice>();
+            this.purchasesHistory = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
 
@@ -261,23 +261,18 @@ namespace WSEP212.DomainLayer
         }
 
         // returns the final price of a purchase - doesnt purchase the items, just calculate the final price!
-        public ResultWithValue<double> purchaseFinalPrice(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        public ResultWithValue<ConcurrentDictionary<int, double>> itemsAfterSalePrices(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
             ResultWithValue<PurchaseDetails> purchaseDetailsRes = createPurchaseDetails(buyer, items, itemsPurchasePrices);
-            if (!purchaseDetailsRes.getTag())
+            ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
+            if (!purchaseDetailsRes.getTag() || !itemsPricesRes.getTag())
             {
-                return new FailureWithValue<double>(purchaseDetailsRes.getMessage(), -1);
+                return new FailureWithValue<ConcurrentDictionary<int, double>>(purchaseDetailsRes.getMessage(), null);
             }
 
-            ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
             // calculate the price of each item after sales
             ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
-            double totalPrice = 0;
-            foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
-            {
-                totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
-            }
-            return new OkWithValue<double>("The Final Price Calculated For The Purchase Items", totalPrice);
+            return new OkWithValue<ConcurrentDictionary<int, double>>("The Final Price Calculated For Each Of The Purchase Items", pricesAfterSaleRes);
         }
 
         // Purchase items from a store if all items are available in storage
@@ -316,12 +311,12 @@ namespace WSEP212.DomainLayer
         }
 
         // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
-        public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        public ResultWithValue<ConcurrentDictionary<int, double>> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
             ResultWithValue<PurchaseDetails> purchaseDetailsRes = createPurchaseDetails(buyer, items, itemsPurchasePrices);
             if (!purchaseDetailsRes.getTag())
             {
-                return new FailureWithValue<double>(purchaseDetailsRes.getMessage(), -1);
+                return new FailureWithValue<ConcurrentDictionary<int, double>>(purchaseDetailsRes.getMessage(), null);
             }
 
             // checks the purchase can be made by the purchase policy
@@ -334,17 +329,12 @@ namespace WSEP212.DomainLayer
                 {
                     ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
                     // calculate the price of each item after sales
-                    ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
-                    double totalPrice = 0;
-                    foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
-                    {
-                        totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
-                    }
-                    return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
+                    ConcurrentDictionary<int, double> pricesAfterSale = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
+                    return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", pricesAfterSale);
                 }
-                return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
+                return new FailureWithValue<ConcurrentDictionary<int, double>>(availableItemsRes.getMessage(), null);
             }
-            return new FailureWithValue<double>(purchasePolicyRes.getMessage(), -1);
+            return new FailureWithValue<ConcurrentDictionary<int, double>>(purchasePolicyRes.getMessage(), null);
         }
 
         private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItemsQuantities(ConcurrentDictionary<int, int> items)
@@ -467,9 +457,16 @@ namespace WSEP212.DomainLayer
         }
 
         // Add purchase made by user in the store
-        public void addNewPurchase(PurchaseInvoice purchase)
+        public void addPurchaseInvoice(PurchaseInvoice purchase)
         {
-            purchasesHistory.Add(purchase);
+            purchasesHistory.TryAdd(purchase.purchaseInvoiceID, purchase);
+        }
+
+        // Remove purchase made by user in the store
+        // done only if the rollback function was called
+        public void removePurchaseInvoice(int purchaseInvoiceID)
+        {
+            purchasesHistory.TryRemove(purchaseInvoiceID, out _);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a item ID and its quantity - more effective when there will be a sales policy
         public ConcurrentDictionary<int, int> items { get; set; }
         public ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseTypes { get; set; }
-        public double bagFinalPrice { get; set; }
 
         public ShoppingBag(Store store, User bagOwner)
         {
@@ -22,7 +21,6 @@ namespace WSEP212.DomainLayer
             this.bagOwner = bagOwner;
             this.items = new ConcurrentDictionary<int, int>();
             this.itemsPurchaseTypes = new ConcurrentDictionary<int, ItemPurchaseType>();
-            this.bagFinalPrice = 0;
         }
 
         // return true if the shopping bag is empty
@@ -48,7 +46,6 @@ namespace WSEP212.DomainLayer
                         {
                             items.TryAdd(itemID, quantity);
                             itemsPurchaseTypes.TryAdd(itemID, purchaseType);
-                            updateFinalBagPrice();
                             return new Ok("The Item Was Successfully Added To The Shopping Bag");
                         }
                         return new Failure("Cannot Add Item Because The Store Doesn't Support Purchase Type");
@@ -68,7 +65,6 @@ namespace WSEP212.DomainLayer
             {
                 items.TryRemove(itemID, out _);
                 itemsPurchaseTypes.TryRemove(itemID, out _);
-                updateFinalBagPrice();
                 return new Ok("The Item Was Successfully Removed From The Shopping Bag");
             }
             return new Failure("The Item Is Not Exist In The Shopping Bag");
@@ -89,7 +85,6 @@ namespace WSEP212.DomainLayer
                     if (itemAvailableRes.getTag())   // check if item available in store
                     {
                         items[itemID] = updatedQuantity;
-                        updateFinalBagPrice();
                         return new Ok("Item Quantity Was Successfully Changed In The Shopping Bag");
                     }
                     return itemAvailableRes;
@@ -108,7 +103,6 @@ namespace WSEP212.DomainLayer
                 if(store.isStoreSupportPurchaseType(itemPurchaseType.getPurchaseType()))
                 {
                     itemsPurchaseTypes[itemID] = itemPurchaseType;
-                    updateFinalBagPrice();
                     return new Ok("Change The Item Purchase Type Successfully");
                 }
                 return new Failure("Cannot Change Item Purchase Type Because The Store Doesn't Support It");
@@ -138,40 +132,43 @@ namespace WSEP212.DomainLayer
 
         // purchase all the items in the shopping bag
         // returns the total price after sales. if the purchase cannot be made returns -1
-        public ResultWithValue<double> purchaseItemsInBag()
+        public ResultWithValue<PurchaseInvoice> purchaseItemsInBag()
         {
             ResultWithValue<ConcurrentDictionary<int, double>> itemsPricesRes = getItemsPrices();
             if(itemsPricesRes.getTag())
             {
-                ResultWithValue<double> purchasePriceRes = store.purchaseItems(bagOwner, items, itemsPricesRes.getValue());
-                if(purchasePriceRes.getTag())
+                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(bagOwner, items, itemsPricesRes.getValue());
+                if(purchaseItemsRes.getTag())
                 {
-                    this.bagFinalPrice = purchasePriceRes.getValue();
+                    // create purchase invoice
+                    // if the purchase will be canceled, roll back will clean this invoices
+                    PurchaseInvoice purchaseInvoice = new PurchaseInvoice(store.storeID, bagOwner.userName, items, purchaseItemsRes.getValue(), DateTime.Now);
+                    store.addPurchaseInvoice(purchaseInvoice);
+                    bagOwner.addPurchase(purchaseInvoice);
+                    return new OkWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), purchaseInvoice);
                 }
-                return purchasePriceRes;
+                return new FailureWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), null);
             }
-            return new FailureWithValue<double>(itemsPricesRes.getMessage(), -1);
+            return new FailureWithValue<PurchaseInvoice>(itemsPricesRes.getMessage(), null);
         }
 
-        // calculate the final price of the bag - after sales
-        public void updateFinalBagPrice()
+        // calculate the final price of each item in the bag, after sales
+        public ResultWithValue<ConcurrentDictionary<int, double>> getItemsAfterSalePrices()
         {
             ResultWithValue<ConcurrentDictionary<int, double>> itemsPricesRes = getItemsPrices();
-            this.bagFinalPrice = store.purchaseFinalPrice(bagOwner, items, itemsPricesRes.getValue()).getValue();
-        }
-
-        // create purchase invoice after paying for the items
-        public void createPurchaseInvoice()
-        {
-            PurchaseInvoice purchaseInvoice = new PurchaseInvoice(store.storeID, bagOwner.userName, items, bagFinalPrice, DateTime.Now);
-            store.addNewPurchase(purchaseInvoice);
-            bagOwner.addPurchase(purchaseInvoice);
+            if (itemsPricesRes.getTag())
+            {
+                return store.itemsAfterSalePrices(bagOwner, items, itemsPricesRes.getValue());
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, double>>(itemsPricesRes.getMessage(), null);
         }
 
         // roll back purchase - returns all the items in the bag to the store
-        public void rollBackItems()
+        public void rollBackPurchase(int purchaseInvoiceID)
         {
             store.rollBackPurchase(items);
+            store.removePurchaseInvoice(purchaseInvoiceID);
+            bagOwner.removePurchase(purchaseInvoiceID);
         }
 
         // Removes all the items in the shopping bag
@@ -179,7 +176,6 @@ namespace WSEP212.DomainLayer
         {
             items.Clear();
             itemsPurchaseTypes.Clear();
-            bagFinalPrice = 0;
         }
 
     }

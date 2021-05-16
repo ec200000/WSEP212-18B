@@ -47,9 +47,19 @@ namespace WSEP212.DomainLayer
             return new Ok("All Items Deliver To The User Successfully");
         }
 
-        private void rollback(User user)
+        private double calculateTotalPrice(ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
         {
-            user.shoppingCart.rollBackShoppingCart();
+            double totalPrice = 0;
+            foreach (PurchaseInvoice purchaseInvoice in purchaseInvoices.Values)
+            {
+                totalPrice += purchaseInvoice.getPurchaseTotalPrice();
+            }
+            return totalPrice;
+        }
+
+        private void rollback(User user, ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
+        {
+            user.shoppingCart.rollBackBags(purchaseInvoices);
         }
 
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(User user, String address)
@@ -57,11 +67,14 @@ namespace WSEP212.DomainLayer
             if (address == null) 
                 return new FailureWithValue<ConcurrentLinkedList<string>>("address is null!", null);
 
-            // returns the total price after sales for all stores. if the purchase cannot be made returns -1
-            ResultWithValue<double> finalPriceRes = user.shoppingCart.purchaseItemsInCart();
-            if (finalPriceRes.getTag())
+            // if the purchase cannot be made returns null
+            // create purchase invoices
+            ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> purchaseRes = user.shoppingCart.purchaseItemsInCart();
+            if (purchaseRes.getTag())
             {
-                double totalPrice = finalPriceRes.getValue();
+                ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices = purchaseRes.getValue();
+                // calculate final price by all the invoices
+                double totalPrice = calculateTotalPrice(purchaseInvoices);
                 // call payment system
                 RegularResult externalPurchaseRes = externalPurchase(totalPrice, user);
                 if (externalPurchaseRes.getTag())
@@ -70,9 +83,6 @@ namespace WSEP212.DomainLayer
                     RegularResult deliveryRes = callDeliverySystem(user, address);
                     if (deliveryRes.getTag())
                     {
-                        // create purchase invoices
-                        user.shoppingCart.createPurchaseInvoices();
-
                         var stores = user.shoppingCart.shoppingBags.Keys;
                         ConcurrentLinkedList<string> storeOwners = new ConcurrentLinkedList<string>();
                         foreach (var store in stores)
@@ -89,13 +99,13 @@ namespace WSEP212.DomainLayer
                         user.shoppingCart.clearShoppingCart();
                         return new OkWithValue<ConcurrentLinkedList<string>>("Purchase Completed Successfully!", storeOwners);
                     }
-                    rollback(user);
+                    rollback(user, purchaseInvoices);
                     return new FailureWithValue<ConcurrentLinkedList<string>>(deliveryRes.getMessage(),null);
                 }
-                rollback(user);
+                rollback(user, purchaseInvoices);
                 return new FailureWithValue<ConcurrentLinkedList<string>>(externalPurchaseRes.getMessage(),null);
             }
-            return new FailureWithValue<ConcurrentLinkedList<string>>(finalPriceRes.getMessage(), null);
+            return new FailureWithValue<ConcurrentLinkedList<string>>(purchaseRes.getMessage(), null);
         }
     }
 }

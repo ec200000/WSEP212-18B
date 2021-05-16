@@ -17,7 +17,7 @@ namespace WSEP212.DomainLayer
         public int userAge { get; set; }
         public UserState state { get; set; }
         public ShoppingCart shoppingCart { get; set; }
-        public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
+        public ConcurrentDictionary<int, PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
         public ConcurrentLinkedList<ItemUserReviews> myReviews { get; set; }
         public bool isSystemManager { get; set; }
@@ -27,7 +27,7 @@ namespace WSEP212.DomainLayer
             this.userName = userName;
             this.userAge = userAge;
             this.shoppingCart = new ShoppingCart(this);
-            this.purchases = new ConcurrentBag<PurchaseInvoice>();
+            this.purchases = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.myReviews = new ConcurrentLinkedList<ItemUserReviews>();
             this.state = new GuestBuyerState(this);
@@ -635,9 +635,14 @@ namespace WSEP212.DomainLayer
 
         public void addPurchase(PurchaseInvoice info)
         {
-            this.purchases.Add(info);
+            this.purchases.TryAdd(info.purchaseInvoiceID, info);
         }
-        
+
+        public void removePurchase(int purchaseInvoiceID)
+        {
+            this.purchases.TryRemove(purchaseInvoiceID, out _);
+        }
+
         public bool addSellerPermissions(SellerPermissions permissions)
         {
             return this.sellerPermissions.TryAdd(permissions);
