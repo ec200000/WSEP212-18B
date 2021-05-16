@@ -26,7 +26,7 @@ namespace WSEP212.DomainLayer
         {
             this.userName = userName;
             this.userAge = userAge;
-            this.shoppingCart = new ShoppingCart();
+            this.shoppingCart = new ShoppingCart(this);
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.myReviews = new ConcurrentLinkedList<ItemUserReviews>();

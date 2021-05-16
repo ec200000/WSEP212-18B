@@ -118,7 +118,7 @@ namespace WSEP212.DomainLayer
 
         // returns the prices of the items in the shopping bags
         // if the price not approved yet, return the items cannot be purchased
-        public ResultWithValue<ConcurrentDictionary<int, double>> getItemsPrices()
+        private ResultWithValue<ConcurrentDictionary<int, double>> getItemsPrices()
         {
             ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
             Boolean allApproved = true;

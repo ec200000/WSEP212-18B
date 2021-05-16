@@ -249,7 +249,7 @@ namespace WSEP212.DomainLayer
         }
 
         // create purchase details of the relevent purchase
-        public ResultWithValue<PurchaseDetails> createPurchaseDetails(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        private ResultWithValue<PurchaseDetails> createPurchaseDetails(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
             ResultWithValue<ConcurrentDictionary<Item, int>> itemsQuantitiesRes = getObjItemsQuantities(items);
             if (!itemsQuantitiesRes.getTag())
