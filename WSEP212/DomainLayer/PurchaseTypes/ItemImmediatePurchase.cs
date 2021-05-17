@@ -11,7 +11,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
     {
         public ItemImmediatePurchase(double itemPrice)
         {
-            this.priceApproved = true;
+            this.priceStatus = PriceStatus.Approved;
             this.itemPrice = itemPrice;
         }
 
@@ -21,15 +21,9 @@ namespace WSEP212.DomainLayer.PurchaseTypes
         }
 
         // item price of immediate purchase is always approve 
-        public override RegularResult approveItemPrice()
+        public override RegularResult changeItemPriceStatus(PriceStatus status)
         {
-            return new Failure("Cannot Approve Immediate Purchase Price - Already Approved");
-        }
-
-        // item price of immediate purchase is always approve 
-        public override RegularResult rejectItemPrice()
-        {
-            return new Failure("Cannot Reject Immediate Purchase Price");
+            return new Failure("Cannot Change Immediate Purchase Item Price Status");
         }
 
         // item price of immediate purchase is always the regular price

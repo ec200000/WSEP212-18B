@@ -110,34 +110,62 @@ namespace WSEP212.DomainLayer
             return new Failure("The Item Not Exist In The Shopping Bag");
         }
 
-        // returns the prices of the items in the shopping bags
-        // if the price not approved yet, return the items cannot be purchased
-        private ResultWithValue<ConcurrentDictionary<int, double>> getItemsPrices()
+        // submit new item price offer
+        public RegularResult submitItemPriceOffer(int itemID, double offerItemPrice)
         {
-            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
-            Boolean allApproved = true;
+            if(itemsPurchaseTypes.ContainsKey(itemID))
+            {
+                return itemsPurchaseTypes[itemID].changeItemPrice(offerItemPrice);
+            }
+            return new Failure("The Item Not Exist In The Shopping Bag");
+        }
+
+        // update the status of the price - can be done only by store owners & managers
+        public RegularResult updateItemPriceStatus(int itemID, PriceStatus priceStatus)
+        {
+            if (itemsPurchaseTypes.ContainsKey(itemID))
+            {
+                return itemsPurchaseTypes[itemID].changeItemPriceStatus(priceStatus);
+            }
+            return new Failure("The Item Not Exist In The Shopping Bag");
+        }
+
+        // returns the prices of the items in the shopping bags, and their status
+        private ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
+        {
+            ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPrices = new ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>();
+            KeyValuePair<double, PriceStatus> itemStatus;
             foreach (KeyValuePair<int, ItemPurchaseType> itemPurchaseType in itemsPurchaseTypes)
             {
-                if (!itemPurchaseType.Value.isApproved())
-                {
-                    allApproved = false;
-                }
-                itemsPrices.TryAdd(itemPurchaseType.Key, itemPurchaseType.Value.getCurrentPrice());
+                itemStatus = new KeyValuePair<double, PriceStatus>(itemPurchaseType.Value.getCurrentPrice(), itemPurchaseType.Value.getPriceStatus());
+                itemsPrices.TryAdd(itemPurchaseType.Key, itemStatus);
             }
-            // if all approve returns Ok, else Failure
-            if(allApproved)
-                return new OkWithValue<ConcurrentDictionary<int, double>>("All The Item Prices Were Approved", itemsPrices);
-            return new FailureWithValue<ConcurrentDictionary<int, double>>("One Or More Of The Items Price In The Bag Wasn't Aprroved", itemsPrices);
+            return itemsPrices;
+        }
+
+        // returns all the approved items and their prices out of all the items in the bag
+        private ConcurrentDictionary<int, double> approvedItemsPrices()
+        {
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            foreach (KeyValuePair<int, ItemPurchaseType> itemPurchaseType in itemsPurchaseTypes)
+            {
+                if(itemPurchaseType.Value.getPriceStatus().Equals(PriceStatus.Approved))
+                {
+                    itemsPrices.TryAdd(itemPurchaseType.Key, itemPurchaseType.Value.getCurrentPrice());
+                }
+            }
+            return itemsPrices;
         }
 
         // purchase all the items in the shopping bag
         // returns the total price after sales. if the purchase cannot be made returns -1
         public ResultWithValue<PurchaseInvoice> purchaseItemsInBag()
         {
-            ResultWithValue<ConcurrentDictionary<int, double>> itemsPricesRes = getItemsPrices();
-            if(itemsPricesRes.getTag())
+            ConcurrentDictionary<int, double> itemsPrices = approvedItemsPrices();
+            // if all the items were approved
+            if(itemsPrices.Count == itemsPurchaseTypes.Count)
             {
-                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(bagOwner, items, itemsPricesRes.getValue());
+                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(bagOwner, items, itemsPrices);
                 if(purchaseItemsRes.getTag())
                 {
                     // create purchase invoice
@@ -149,18 +177,42 @@ namespace WSEP212.DomainLayer
                 }
                 return new FailureWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), null);
             }
-            return new FailureWithValue<PurchaseInvoice>(itemsPricesRes.getMessage(), null);
+            return new FailureWithValue<PurchaseInvoice>("One Or More Of The Items Price Weren't Approved Yet", null);
         }
 
         // calculate the final price of each item in the bag, after sales
-        public ResultWithValue<ConcurrentDictionary<int, double>> getItemsAfterSalePrices()
+        // for all the items that not approved, not apply the sales on them
+        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> getItemsAfterSalePrices()
         {
-            ResultWithValue<ConcurrentDictionary<int, double>> itemsPricesRes = getItemsPrices();
-            if (itemsPricesRes.getTag())
+            ConcurrentDictionary<int, double> approvedItemsAndPrices = approvedItemsPrices();
+            // build new shopping bag with only approved items
+            ConcurrentDictionary<int, int> approvedItems = new ConcurrentDictionary<int, int>();
+            foreach (int itemID in approvedItemsAndPrices.Keys)
             {
-                return store.itemsAfterSalePrices(bagOwner, items, itemsPricesRes.getValue());
+                approvedItems.TryAdd(itemID, items[itemID]);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, double>>(itemsPricesRes.getMessage(), null);
+            // calculate the price after sale for approved items only
+            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = store.itemsAfterSalePrices(bagOwner, approvedItems, approvedItemsAndPrices);
+            if(approvedAfterSale.getTag())
+            {
+                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPricesAndStatus = allItemsPricesAndStatus();
+                int itemID;
+                double prevPrice, salePrice;
+                // update all approved items price after sale 
+                foreach (KeyValuePair<int, double> itemPriceSale in approvedAfterSale.getValue())
+                {
+                    itemID = itemPriceSale.Key;
+                    prevPrice = itemsPricesAndStatus[itemID].Key;
+                    salePrice = itemPriceSale.Value;
+                    if (salePrice < prevPrice)
+                    {
+                        KeyValuePair<double, PriceStatus> salePriceAndStatus = new KeyValuePair<double, PriceStatus>(salePrice, PriceStatus.Approved);
+                        itemsPricesAndStatus[itemID] = salePriceAndStatus;
+                    }
+                }
+                return itemsPricesAndStatus;
+            }
+            return null;
         }
 
         // roll back purchase - returns all the items in the bag to the store

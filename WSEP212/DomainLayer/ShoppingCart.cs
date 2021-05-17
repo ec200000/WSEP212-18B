@@ -88,6 +88,32 @@ namespace WSEP212.DomainLayer
             return new Failure(shoppingBagRes.getMessage());
         }
 
+        // submit new item price offer
+        public RegularResult submitPriceOffer(int storeID, int itemID, double offerItemPrice)
+        {
+            ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+            if (shoppingBagRes.getTag())
+            {
+                RegularResult submitOfferRes = shoppingBagRes.getValue().submitItemPriceOffer(itemID, offerItemPrice);
+                removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                return submitOfferRes;
+            }
+            return new Failure(shoppingBagRes.getMessage());
+        }
+
+        // update the status of the price - can be done only by store owners & managers
+        public RegularResult updatePriceStatus(int storeID, int itemID, PriceStatus priceStatus)
+        {
+            ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+            if (shoppingBagRes.getTag())
+            {
+                RegularResult updateStatusRes = shoppingBagRes.getValue().updateItemPriceStatus(itemID, priceStatus);
+                removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                return updateStatusRes;
+            }
+            return new Failure(shoppingBagRes.getMessage());
+        }
+
         // purchase all the items in the shopping cart
         // returns the total price after sales for all stores. if the purchase cannot be made returns -1
         public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> purchaseItemsInCart()
@@ -116,21 +142,17 @@ namespace WSEP212.DomainLayer
         }
 
         // calculate the final price of each item in the cart, after sales
-        // returns <storeID, <itemID, priceAfterSale>>
-        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, double>>> getItemsAfterSalePrices()
+        // returns <storeID, <itemID, <priceAfterSale, status>>>
+        public ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> getItemsAfterSalePrices()
         {
-            ConcurrentDictionary<int, ConcurrentDictionary<int, double>> pricesAfterSale = new ConcurrentDictionary<int, ConcurrentDictionary<int, double>>();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> pricesAfterSale = new ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>();
+            ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> bagAfterSale;
             foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
             {
-                shoppingBag.Value.getItemsAfterSalePrices();
+                bagAfterSale = shoppingBag.Value.getItemsAfterSalePrices();
+                pricesAfterSale.TryAdd(shoppingBag.Key, bagAfterSale);
             }
-
-            ResultWithValue<ConcurrentDictionary<int, double>> itemsPricesRes = getItemsPrices();
-            if (itemsPricesRes.getTag())
-            {
-                return store.itemsAfterSalePrices(bagOwner, items, itemsPricesRes.getValue());
-            }
-            return new FailureWithValue<ConcurrentDictionary<int, double>>(itemsPricesRes.getMessage(), null);
+            return pricesAfterSale;
         }
 
         // cancel the purchase in the other store - returns the items back to storage

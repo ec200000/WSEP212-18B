@@ -15,7 +15,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             {
                 throw new ArithmeticException();
             }
-            this.priceApproved = false;
+            this.priceStatus = PriceStatus.Pending;
             this.itemPrice = itemPrice;
         }
 
@@ -24,26 +24,16 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             return PurchaseType.SubmitOfferPurchase;
         }
 
-        public override RegularResult approveItemPrice()
+        public override RegularResult changeItemPriceStatus(PriceStatus status)
         {
-            this.priceApproved = true;
-            return new Ok("Approved Submit Offer Item Price");
-        }
-
-        public override RegularResult rejectItemPrice()
-        {
-            this.priceApproved = false;
-            return new Ok("Rejected Submit Offer Item Price");
+            this.priceStatus = status;
+            return new Ok("Change Item Price Status");
         }
 
         public override RegularResult changeItemPrice(double newItemPrice)
         {
-            // cannot bid new offer that is less then the prev bid
-            if(newItemPrice < this.itemPrice)
-            {
-                return new Failure("Cannot Submit New Offer That Is Less Then The Previous Offer");
-            }
             this.itemPrice = newItemPrice;
+            this.priceStatus = PriceStatus.Pending;
             return new Ok("Change Submit Offer Item Price");
         }
     }

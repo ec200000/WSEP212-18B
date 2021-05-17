@@ -9,12 +9,12 @@ namespace WSEP212.DomainLayer.PurchaseTypes
 {
     public abstract class ItemPurchaseType
     {
-        protected Boolean priceApproved { get; set; }
+        protected PriceStatus priceStatus { get; set; }
         protected double itemPrice { get; set; }
 
-        public Boolean isApproved()
+        public PriceStatus getPriceStatus()
         {
-            return this.priceApproved;
+            return this.priceStatus;
         }
 
         public double getCurrentPrice()
@@ -23,8 +23,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
         }
 
         public abstract PurchaseType getPurchaseType();
-        public abstract RegularResult approveItemPrice();
-        public abstract RegularResult rejectItemPrice();
+        public abstract RegularResult changeItemPriceStatus(PriceStatus status);
         // change the item price - Depending on the different types of purchase
         public abstract RegularResult changeItemPrice(double newItemPrice);
     }
