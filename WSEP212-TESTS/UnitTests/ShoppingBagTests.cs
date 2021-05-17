@@ -63,13 +63,9 @@ namespace WSEP212_TESTS.UnitTests
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out int quantity));
             Assert.AreEqual(5, quantity);
 
-            Assert.IsTrue(shoppingBag.addItem(itemID, 15, purchaseType).getTag());
+            Assert.IsFalse(shoppingBag.addItem(itemID, 15, purchaseType).getTag());
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
-            Assert.AreEqual(20, quantity);
-
-            Assert.IsFalse(shoppingBag.addItem(itemID, 481, purchaseType).getTag());   // should fail because there is no enough of the item in storage
-            Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
-            Assert.AreEqual(20, quantity);
+            Assert.AreEqual(5, quantity);
 
             shoppingBag.removeItem(itemID);
 

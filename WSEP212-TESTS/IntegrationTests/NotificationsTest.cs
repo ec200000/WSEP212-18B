@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -40,7 +41,7 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             createUserWithStore();
             createUser();
-            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2);
+            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             controller.purchaseItems("theotheruser", "ashdod");
         }
         
@@ -66,7 +67,7 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             createUserWithStore();
             createUser();
-            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2);
+            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
         }
 
         [TestMethod]

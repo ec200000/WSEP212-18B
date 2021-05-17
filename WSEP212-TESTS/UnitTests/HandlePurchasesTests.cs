@@ -89,10 +89,11 @@ namespace WSEP212_TESTS.UnitTests
         public static void addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = storeID;
             list[1] = itemID;
             list[2] = quantity;
+            list[3] = new ItemImmediatePurchase(10.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
             Assert.IsTrue(((RegularResult) parameters.result).getTag());

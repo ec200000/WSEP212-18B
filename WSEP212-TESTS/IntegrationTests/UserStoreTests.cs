@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
 
@@ -447,10 +448,11 @@ namespace WSEP212_TESTS.IntegrationTests
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
-                object[] list = new object[3];
+                object[] list = new object[4];
                 list[0] = storeID;
                 list[1] = itemID;
                 list[2] = quantity;
+                list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
                 RegularResult res = (RegularResult)(parameters.result);
@@ -469,10 +471,11 @@ namespace WSEP212_TESTS.IntegrationTests
                 int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
-                object[] list = new object[3];
+                object[] list = new object[4];
                 list[0] = storeID;
                 list[1] = itemID;
                 list[2] = quantity;
+                list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
                 if (((RegularResult)parameters.result).getTag())

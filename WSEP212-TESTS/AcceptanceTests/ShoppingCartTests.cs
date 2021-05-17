@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -45,8 +46,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             storeID = controller.openStore("b", "store2", "somewhere", "DEFAULT", "DEFAULT").getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
-            result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4); //logged user
+            result = controller.addItemToShoppingCart("a", storeID, itemID, 8, (int)PurchaseType.ImmediatePurchase, 2.4); //guest user
             Assert.IsTrue(result.getTag());
         }
         
@@ -77,9 +78,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
             
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4); //logged user
             Assert.IsTrue(result.getTag());
-            result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
+            result = controller.addItemToShoppingCart("a", storeID, itemID, 8, (int)PurchaseType.ImmediatePurchase, 2.4); //guest user
             Assert.IsTrue(result.getTag());
         }
 
@@ -88,7 +89,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 100); //over quantity
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 100, (int)PurchaseType.ImmediatePurchase, 2.4); //over quantity
             Assert.IsFalse(result.getTag());
         }
 
@@ -97,7 +98,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, -1, 1); //item does not exists
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, -1, 1, (int)PurchaseType.ImmediatePurchase, 2.4); //item does not exists
             Assert.IsFalse(result.getTag());
         }
 
@@ -106,7 +107,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("b", -1, itemID, 1); //store doest not exists
+            RegularResult result = controller.addItemToShoppingCart("b", -1, itemID, 1, (int)PurchaseType.ImmediatePurchase, 2.4); //store doest not exists
             Assert.IsFalse(result.getTag());
         }
 
@@ -150,7 +151,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult res;
             ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
             
-            res = controller.addItemToShoppingCart("bc",storeID, itemID, 2);
+            res = controller.addItemToShoppingCart("bc",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             if (res.getTag())
                 res1 = controller.purchaseItems("bc", "ashdod");
 
@@ -165,7 +166,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult res;
             ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
             
-            res = controller.addItemToShoppingCart("bb",storeID, itemID, 2);
+            res = controller.addItemToShoppingCart("bb",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             if (res.getTag())
                 res1 = controller.purchaseItems("bb", "ashdod");
 

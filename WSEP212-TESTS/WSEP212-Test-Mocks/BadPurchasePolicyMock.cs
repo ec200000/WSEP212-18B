@@ -52,7 +52,7 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
 
         public bool hasPurchaseTypeSupport(PurchaseType purchaseType)
         {
-            return false;
+            return true;
         }
     }
 }

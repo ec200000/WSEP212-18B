@@ -561,7 +561,7 @@ namespace WebApplication.Controllers
                 int storeID = int.Parse(store[0]);
                 int itemID = int.Parse(authorsList[authorsList.Length - 1]);
                 // TODO: ADD CHOOSE PURCHASE TYPE, AND PRICE TO OFFER (FOR IMMIDIATE INSERT THE REAL PRICE) 
-                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
+                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, 0, model.maxPrice);
                 if (res.getTag())
                 {
                     return RedirectToAction("SearchItems");

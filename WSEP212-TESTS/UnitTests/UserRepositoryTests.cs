@@ -72,9 +72,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void updateUserTest()
         {
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(10, 1);
             ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
             itemsPrices.TryAdd(10, 1.2);
-            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, itemsPrices, DateTime.Now);
+            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", items, itemsPrices, DateTime.Now);
             user1.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo); //updating the user
             UserRepository.Instance.updateUser(user1);
             Assert.AreEqual(2, UserRepository.Instance.users.Count);

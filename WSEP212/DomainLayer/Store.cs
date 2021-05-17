@@ -102,7 +102,8 @@ namespace WSEP212.DomainLayer
                 this.storage.TryAdd(newItem.itemID, newItem);
                 return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
             } 
-            catch(ArithmeticException _) {
+            catch (ArithmeticException)
+            {
                 return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
             }
         }
