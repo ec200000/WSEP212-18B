@@ -1058,7 +1058,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getStorePurchaseHistory(string userName, int storeID)
+        public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getStorePurchaseHistory(string userName, int storeID)
         {
             try
             {
@@ -1085,18 +1085,18 @@ namespace WSEP212.DomainLayer
                 }
                 if (threadParameters.result == null)
                 {
-                    return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>("Cannot perform this action!", null);
+                    return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("Cannot perform this action!", null);
                 }
-                return new OkWithValue<ConcurrentBag<PurchaseInvoice>>("Get Store Purchase History Successfully", (ConcurrentBag<PurchaseInvoice>)threadParameters.result);
+                return new OkWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("Get Store Purchase History Successfully", (ConcurrentDictionary<int, PurchaseInvoice>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetStorePurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>(e.Message, null);
             }
         }
 
-        public ResultWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>> getUsersPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>> getUsersPurchaseHistory(String userName)
         {
             try
             {
@@ -1119,16 +1119,16 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return new OkWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>)threadParameters.result);
+                return new OkWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetUsersPurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>>(e.Message, null);
             }
         }
 
-        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>> getStoresPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> getStoresPurchaseHistory(String userName)
         {
             try
             {
@@ -1151,12 +1151,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>)threadParameters.result);
+                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetStoresPurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>(e.Message, null);
             }
         }
 
@@ -1204,7 +1204,6 @@ namespace WSEP212.DomainLayer
                 {
                     return new FailureWithValue<ShoppingCart>(userRes.getMessage(), null);
                 }
-
                 return new OkWithValue<ShoppingCart>("Found user with shopping cart",userRes.getValue().shoppingCart);
             }
             catch (Exception e) when (!(e is NotImplementedException))
@@ -1214,7 +1213,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(string userName)
+        public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getUserPurchaseHistory(string userName)
         {
             try
             {
@@ -1223,12 +1222,30 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetUserPurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>(e.Message, null);
             }
-            
         }
-        
-        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation()
+
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName)
+        {
+            try
+            {
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(userRes.getMessage(), null);
+                }
+                ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> itemsPrices = userRes.getValue().shoppingCart.getItemsAfterSalePrices();
+                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("Return User Items Prices Afetr Sales", itemsPrices);
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In GetUserPurchaseHistory function, the error is: {e.Message}");
+                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(e.Message, null);
+            }
+        }
+
+            public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation()
         {
             try
             {

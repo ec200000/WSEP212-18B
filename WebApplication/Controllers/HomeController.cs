@@ -87,11 +87,11 @@ namespace WebApplication.Controllers
         public IActionResult PurchaseHistory()
         {
             SystemController systemController = SystemController.Instance;
-            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getUserPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> res = systemController.getUserPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
             {
                 string value = "";
-                foreach (PurchaseInvoice inv in res.getValue())
+                foreach (PurchaseInvoice inv in res.getValue().Values)
                 {
                     value += inv.ToString() + ";";
                 }
@@ -560,6 +560,7 @@ namespace WebApplication.Controllers
                 string[] store = authorsList[1].Split(" ");
                 int storeID = int.Parse(store[0]);
                 int itemID = int.Parse(authorsList[authorsList.Length - 1]);
+                // TODO: ADD CHOOSE PURCHASE TYPE, AND PRICE TO OFFER (FOR IMMIDIATE INSERT THE REAL PRICE) 
                 RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity);
                 if (res.getTag())
                 {
@@ -767,13 +768,13 @@ namespace WebApplication.Controllers
         public IActionResult UsersPurchaseHistory()
         {
             SystemController systemController = SystemController.Instance;
-            ResultWithValue<ConcurrentDictionary<string,ConcurrentBag<PurchaseInvoice>>> res = systemController.getUsersPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            ResultWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getUsersPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
             {
                 string value = "";
-                foreach (KeyValuePair<string,ConcurrentBag<PurchaseInvoice>> invs in res.getValue())
+                foreach (KeyValuePair<string, ConcurrentDictionary<int, PurchaseInvoice>> invs in res.getValue())
                 {
-                    foreach (PurchaseInvoice inv in invs.Value)
+                    foreach (PurchaseInvoice inv in invs.Value.Values)
                     {
                         value += invs.Key+" bought  "+inv.ToString() + "\n" + ";";
                     }
@@ -793,13 +794,13 @@ namespace WebApplication.Controllers
         public IActionResult StoresPurchaseHistory()
         {
             SystemController systemController = SystemController.Instance;
-            ResultWithValue<ConcurrentDictionary<int,ConcurrentBag<PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
+            ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
             {
                 string value = "";
-                foreach (KeyValuePair<int,ConcurrentBag<PurchaseInvoice>> invs in res.getValue())
+                foreach (KeyValuePair<int, ConcurrentDictionary<int, PurchaseInvoice>> invs in res.getValue())
                 {
-                    foreach (PurchaseInvoice inv in invs.Value)
+                    foreach (PurchaseInvoice inv in invs.Value.Values)
                     {
                         value += inv.ToString() + "\n" + ";";
                     }
@@ -819,11 +820,11 @@ namespace WebApplication.Controllers
         public IActionResult StorePurchaseHistory()
         {
             SystemController systemController = SystemController.Instance;
-            ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
+            ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
             {
                 string value = "";
-                foreach (PurchaseInvoice inv in res.getValue())
+                foreach (PurchaseInvoice inv in res.getValue().Values)
                 {
                     value += inv.ToString() + "\n" + ";";
                 }

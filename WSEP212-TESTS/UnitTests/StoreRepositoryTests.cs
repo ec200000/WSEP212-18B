@@ -3,7 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
@@ -104,7 +104,7 @@ namespace WSEP212_TESTS.UnitTests
         public void getAllStoresPurchsesHistoryTest()
         {
             int storeID = this.store.storeID;
-            ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
             Assert.AreEqual(1, storesPurchases.Count);
             Assert.AreEqual(0, storesPurchases[storeID].Count);
         }

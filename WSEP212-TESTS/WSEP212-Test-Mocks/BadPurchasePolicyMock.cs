@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TEST.UnitTests.UnitTestMocks
@@ -45,5 +46,13 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
             return new Failure("The Purchase Was Not Approved By The Purchase Policy");
         }
 
+        public void supportPurchaseType(PurchaseType purchaseType) { }
+
+        public void unsupportPurchaseType(PurchaseType purchaseType) { }
+
+        public bool hasPurchaseTypeSupport(PurchaseType purchaseType)
+        {
+            return false;
+        }
     }
 }
