@@ -115,13 +115,34 @@ namespace WSEP212.DomainLayer
         {
             if(itemsPurchaseTypes.ContainsKey(itemID))
             {
-                return itemsPurchaseTypes[itemID].changeItemPrice(offerItemPrice);
+                ItemPurchaseType purchaseType = itemsPurchaseTypes[itemID];
+                RegularResult changingPriceRes = purchaseType.changeItemPrice(offerItemPrice);
+                if(changingPriceRes.getTag())
+                {
+                    return purchaseType.changeItemPriceStatus(PriceStatus.Pending);
+                }
+                return changingPriceRes;
             }
             return new Failure("The Item Not Exist In The Shopping Bag");
         }
 
+        // accepting/rejecting counter-offer from a store manager
+        public RegularResult counterOfferDecision(int itemID, double counterOffer, PriceStatus myDecision)
+        {
+            RegularResult changeStatusRes = itemPriceStatusDecision(itemID, myDecision);
+            if (PriceStatus.Approved == myDecision)
+            {
+                RegularResult changePriceRes = submitItemPriceOffer(itemID, counterOffer);
+                if(!changePriceRes.getTag())
+                {
+                    return changePriceRes;
+                }
+            }
+            return itemPriceStatusDecision(itemID, myDecision);
+        }
+
         // update the status of the price - can be done only by store owners & managers
-        public RegularResult updateItemPriceStatus(int itemID, PriceStatus priceStatus)
+        public RegularResult itemPriceStatusDecision(int itemID, PriceStatus priceStatus)
         {
             if (itemsPurchaseTypes.ContainsKey(itemID))
             {

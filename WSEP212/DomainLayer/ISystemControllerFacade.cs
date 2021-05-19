@@ -26,6 +26,7 @@ namespace WSEP212.DomainLayer
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity);
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, PurchaseType purchaseType, double startPrice);
         public RegularResult submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice);
+        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, PriceStatus myDecision);
         public abstract RegularResult confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, PriceStatus priceStatus);
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);

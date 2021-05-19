@@ -21,9 +21,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestInitialize]
         public void beforeTests()
         {
-            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             bagOwner = new User("Sagiv", 21);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();

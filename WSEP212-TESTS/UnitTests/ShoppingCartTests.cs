@@ -28,8 +28,8 @@ namespace WSEP212_TESTS.UnitTests
             PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
             User user = new User("admin");
 
-            ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);
-            ResultWithValue<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Holon", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Tel-Aviv", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Haifa", salesPolicy, purchasePolicy, user);
             storeA = StoreRepository.Instance.getStore(addStoreARes.getValue()).getValue();
             storeB = StoreRepository.Instance.getStore(addStoreBRes.getValue()).getValue();
 

@@ -137,10 +137,11 @@ namespace WSEP212_TESTS.IntegrationTests
             int itemID = 1;
             int quantity = 2;
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = storeID;
             list[1] = itemID;
             list[2] = quantity;
+            list[3] = new ItemImmediatePurchase(12.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
             return (bool) parameters.result;

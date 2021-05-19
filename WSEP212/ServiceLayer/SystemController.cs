@@ -455,6 +455,14 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.submitPriceOffer(userName, storeID, itemID, offerItemPrice);
         }
 
+        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, Int32 myDecision)
+        {
+            String info = $"counterOfferDecision Event was triggered, with the parameters:" +
+                          $"userName: {userName}, store ID: {storeID}, item ID: {itemID}, counter offer: {counterOffer}, my Decision: {myDecision}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.counterOfferDecision(userName, storeID, itemID, counterOffer, (PriceStatus)myDecision);
+        }
+
         public RegularResult confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, int priceStatus)
         {
             String info = $"confirmPriceStatus Event was triggered, with the parameters:" +

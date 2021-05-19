@@ -51,6 +51,10 @@ namespace WSEP212.DomainLayer
         {
             return this.user.shoppingCart.submitPriceOffer(storeID, itemID, offerItemPrice);
         }
+        public RegularResult counterOfferDecision(int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        {
+            return this.user.shoppingCart.counterOfferDecision(storeID, itemID, counterOffer, myDecision);
+        }
         public abstract RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus);
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string address)
         {

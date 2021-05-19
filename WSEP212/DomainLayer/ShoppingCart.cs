@@ -89,6 +89,7 @@ namespace WSEP212.DomainLayer
         }
 
         // submit new item price offer
+        // done by the user
         public RegularResult submitPriceOffer(int storeID, int itemID, double offerItemPrice)
         {
             ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
@@ -101,13 +102,28 @@ namespace WSEP212.DomainLayer
             return new Failure(shoppingBagRes.getMessage());
         }
 
-        // update the status of the price - can be done only by store owners & managers
-        public RegularResult updatePriceStatus(int storeID, int itemID, PriceStatus priceStatus)
+        // accepting/rejecting counter-offer from a store manager
+        // done by the user
+        public RegularResult counterOfferDecision(int storeID, int itemID, double counterOffer, PriceStatus myDecision)
         {
             ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
             if (shoppingBagRes.getTag())
             {
-                RegularResult updateStatusRes = shoppingBagRes.getValue().updateItemPriceStatus(itemID, priceStatus);
+                RegularResult submitOfferRes = shoppingBagRes.getValue().counterOfferDecision(itemID, counterOffer, myDecision);
+                removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                return submitOfferRes;
+            }
+            return new Failure(shoppingBagRes.getMessage());
+        }
+
+        // update the status of the price
+        // can be done only by store owners & managers
+        public RegularResult itemPriceStatusDecision(int storeID, int itemID, PriceStatus priceStatus)
+        {
+            ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
+            if (shoppingBagRes.getTag())
+            {
+                RegularResult updateStatusRes = shoppingBagRes.getValue().itemPriceStatusDecision(itemID, priceStatus);
                 removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                 return updateStatusRes;
             }

@@ -301,7 +301,7 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
             if (hasPermissionRes.getTag())
             {
-                return findUserRes.getValue().shoppingCart.updatePriceStatus(storeID, itemID, priceStatus);
+                return findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
             }
             return hasPermissionRes;
         }

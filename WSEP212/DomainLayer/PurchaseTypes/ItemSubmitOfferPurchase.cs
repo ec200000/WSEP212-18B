@@ -33,7 +33,6 @@ namespace WSEP212.DomainLayer.PurchaseTypes
         public override RegularResult changeItemPrice(double newItemPrice)
         {
             this.itemPrice = newItemPrice;
-            this.priceStatus = PriceStatus.Pending;
             return new Ok("Change Submit Offer Item Price");
         }
     }

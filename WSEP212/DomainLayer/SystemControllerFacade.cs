@@ -307,6 +307,39 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, itemID, counterOffer, myDecision };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.counterOfferDecision, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the counterOfferDecision action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In counterOfferDecision function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
         public RegularResult confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, PriceStatus priceStatus)
         {
             try
