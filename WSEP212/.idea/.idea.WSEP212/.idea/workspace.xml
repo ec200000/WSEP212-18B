@@ -5,8 +5,93 @@
     <projectFile>../WebApplication/WebApplication.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="fixed some tests">
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="a">
+      <change afterPath="$PROJECT_DIR$/../WebApplication/LogFileErrors-20210520.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WebApplication/LogFileInformation-20210520.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa/storage_v2/_src_/database/wsep212.7MsFYQ/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa/storage_v2/_src_/database/wsep212.7MsFYQ/schema/dbo.sYMBAA.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_14_23__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/Store.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/Store.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/UserState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SystemDBAccess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SystemDBAccess.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.runtimeconfig.dev.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ref/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ref/WSEP212.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WSEP212.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.runtimeconfig.dev.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.Views.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.Views.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.Views.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.Views.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WebApplication.runtimeconfig.dev.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/AppointOfficials.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/AppointOfficials.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditItemDetails.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditItemDetails.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditPurchasePredicates.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditPurchasePredicates.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditSalePredicates.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditSalePredicates.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/GetStoreInformation.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/GetStoreInformation.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Index.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Index.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ItemActions.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ItemActions.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ItemReview.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ItemReview.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Login.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Login.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Logout.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Logout.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/OpenStore.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/OpenStore.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Privacy.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Privacy.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/PurchaseHistory.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/PurchaseHistory.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/SearchItems.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/SearchItems.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ShoppingCart.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ShoppingCart.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ShowReviews.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ShowReviews.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/StoreActions.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/StoreActions.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/StorePurchaseHistory.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/StorePurchaseHistory.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/StoresPurchaseHistory.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/StoresPurchaseHistory.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/UsersPurchaseHistory.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/UsersPurchaseHistory.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ViewOfficials.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ViewOfficials.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/Error.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/Error.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewImports.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewImports.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewStart.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewStart.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.Views.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.Views.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.Views.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.Views.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,24 +122,26 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../WebApplication/package-lock.json" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/package-lock.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DomainLayer/PurchasePolicy/PolicyPredicate/ConditioningPredicate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Login.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ItemActions.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DomainLayer/PurchasePolicy/PolicyPredicate/PurchasePredicate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/ShoppingCart.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/Error.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DomainLayer/Configuration.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewImports.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewStart.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/bf/ba5589be/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/GetStoreInformation.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5d/c5c23a33/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DomainLayer/Configuration.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/EditSalePredicates.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/534A917A-6AFF-4C8D-81E9-A50289A7632D/E/TagHelperContent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -63,8 +150,8 @@
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Index.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SystemDBAccess.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/Privacy.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -109,16 +196,16 @@
       <option value="$PROJECT_DIR$/Program.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Configuration.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
-      <option value="$PROJECT_DIR$/SystemDBAccess.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Item.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
+      <option value="$PROJECT_DIR$/SystemDBAccess.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -142,7 +229,7 @@
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.WebApplication: IIS Express">
+  <component name="RunManager" selected=".NET Launch Settings Profile.WebApplication">
     <configuration name="WSEP212" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -280,12 +367,27 @@
     <option name="LAST_COMMIT_MESSAGE" value="meantime" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/SearchItems.cs</url>
+          <line>26</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\SearchItems.cs" initialLine="26" containingFunctionPresentation="method 'matchSearchSettings'" />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#WebApplication.Models.SearchModel" memberName="itemIDs" />
         <PinnedItemInfo parentTag="Frame#WebApplication.Controllers.HomeController.SearchItems" memberName="res" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="LaunchSettings">
+        <watch expression="new System.Collections.Concurrent.IDictionaryDebugView&lt;WSEP212.DomainLayer.Store, WSEP212.ConcurrentLinkedList.ConcurrentLinkedList&lt;WSEP212.DomainLayer.Item&gt;&gt;(res).Items[0]" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

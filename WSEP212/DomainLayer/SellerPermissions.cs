@@ -15,6 +15,13 @@ namespace WSEP212.DomainLayer
 {
     public class SellerPermissions
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        
         [Key] 
         [Column(Order = 1)]
         public string SellerNameRef{ get; set; }
@@ -60,8 +67,8 @@ namespace WSEP212.DomainLayer
             if(grantor != null)
                 this.GrantorNameRef = grantor.userName;
             this.permissionsInStore = permissionsInStore;
-            //SystemDBAccess.Instance.Permissions.Add(this);
-            //SystemDBAccess.Instance.SaveChanges();
+            SystemDBAccess.Instance.Permissions.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
 
         // Checks that there is no other permission for this seller and store
@@ -98,15 +105,15 @@ namespace WSEP212.DomainLayer
 
         public void setPermissions(ConcurrentLinkedList<Permissions> newPer)
         {
-            /*var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.SellerNameRef == this.SellerNameRef && i.GrantorNameRef == this.GrantorNameRef && i.StoreIDRef == this.StoreIDRef);
+            var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.SellerNameRef == this.SellerNameRef && i.GrantorNameRef == this.GrantorNameRef && i.StoreIDRef == this.StoreIDRef);
             if (result != null)
             {
                 result.permissionsInStore = newPer;
                 if(!JToken.DeepEquals(result.PermissionsInStoreAsJson, this.PermissionsInStoreAsJson))
                     result.PermissionsInStoreAsJson = this.PermissionsInStoreAsJson;
-                SystemDBAccess.Instance.SaveChanges();*/
+                SystemDBAccess.Instance.SaveChanges();
                 this.permissionsInStore = newPer;
-            //}
+            }
         }
 
     }

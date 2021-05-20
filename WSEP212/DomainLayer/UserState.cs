@@ -2,7 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
@@ -32,7 +34,17 @@ namespace WSEP212.DomainLayer
         // * Purchase Items Functions *//
         public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
-            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            RegularResult res =  this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            if (res.getTag())
+            {
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
+                if (result != null)
+                {
+                    result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+            }
+            return res;
         }
         public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
         {

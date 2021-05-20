@@ -3,14 +3,27 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class ShoppingCart
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
+        
+        public string BagsAsJson
+        {
+            get => JsonConvert.SerializeObject(shoppingBags,settings);
+            set => shoppingBags = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ShoppingBag>>(value);
+        }
 
         [Key]
         public string cartOwner { get; set; } 
@@ -18,8 +31,12 @@ namespace WSEP212.DomainLayer
         {
             this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
             this.cartOwner = userName;
-            //SystemDBAccess.Instance.Carts.Add(this);
-            //SystemDBAccess.Instance.SaveChanges();
+            SystemDBAccess.Instance.Carts.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
+        }
+        
+        public ShoppingCart()
+        {
         }
 
         // return true if the shopping cart is empty

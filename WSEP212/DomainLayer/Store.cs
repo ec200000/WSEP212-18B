@@ -65,6 +65,7 @@ namespace WSEP212.DomainLayer
             set => storeSellersPermissions = JsonConvert.DeserializeObject<ConcurrentDictionary<String, SellerPermissions>>(value);
         }
         [NotMapped]
+        [JsonIgnore]
         public DeliveryInterface deliverySystem { get; set; }
 
         public Store() {}
