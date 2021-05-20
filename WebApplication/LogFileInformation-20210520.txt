@@ -114,3 +114,45 @@
 
 2021-05-20 13:38:37.996 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
 
+2021-05-20 13:59:13.175 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 13:59:20.354 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 13:59:20.414 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-20 13:59:22.142 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-20 13:59:27.015 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-20 14:05:39.249 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 14:05:52.389 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 14:05:52.460 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-20 14:05:54.222 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-20 14:05:59.952 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-20 14:34:25.466 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 14:34:33.120 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 14:34:33.221 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-20 14:34:35.175 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-20 14:34:40.291 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-20 14:37:30.113 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 14:37:37.941 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 14:37:38.012 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-20 14:37:39.135 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-20 14:37:43.930 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-20 14:37:47.747 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+

@@ -64,6 +64,9 @@ namespace WSEP212.DomainLayer
                     }
                 }
             }
+
+            if (SystemDBAccess.Instance.Stores.Find(storeName) != null)
+                return true;
             return false;
         }
 
@@ -151,7 +154,7 @@ namespace WSEP212.DomainLayer
             foreach (var sellerPer in store.storeSellersPermissions.Values)
             {
                 if(sellerPer.isStoreOwner())
-                    officials.TryAdd(sellerPer.seller.userName);
+                    officials.TryAdd(sellerPer.SellerName);
             }
             return officials;
         }

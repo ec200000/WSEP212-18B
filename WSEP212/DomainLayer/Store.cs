@@ -88,7 +88,7 @@ namespace WSEP212.DomainLayer
             ConcurrentLinkedList<Permissions> founderPermissions = new ConcurrentLinkedList<Permissions>();
             founderPermissions.TryAdd(Permissions.AllPermissions);   // founder has all permisiions
 
-            SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder, this, null, founderPermissions);
+            SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder.userName, this.storeID, "", founderPermissions);
 
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
@@ -472,7 +472,7 @@ namespace WSEP212.DomainLayer
         {
             lock (addStoreSellerLock)
             {
-                String sellerUserName = sellerPermissions.seller.userName;
+                String sellerUserName = sellerPermissions.SellerName;
                 if (!storeSellersPermissions.ContainsKey(sellerUserName))
                 {
                     storeSellersPermissions.TryAdd(sellerUserName, sellerPermissions);
@@ -527,7 +527,7 @@ namespace WSEP212.DomainLayer
             foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
             {
                 SellerPermissions seller = sellerEntry.Value;
-                officialsInfo.TryAdd(seller.seller.userName, seller.permissionsInStore);
+                officialsInfo.TryAdd(seller.SellerName, seller.permissionsInStore);
             }
             return officialsInfo;
         }

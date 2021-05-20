@@ -3,7 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -60,6 +62,13 @@ namespace WSEP212.DomainLayer
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                         return new Failure("Could not add items to the shopping bag!");
                     }
+                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                    if (result != null)
+                    {
+                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                            result.BagsAsJson = this.BagsAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
+                    }
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -79,6 +88,13 @@ namespace WSEP212.DomainLayer
                 {
                     removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                 }
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                if (result != null)
+                {
+                    if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                        result.BagsAsJson = this.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
                 return removeItemRes;
             }
             return new Failure(shoppingBagRes.getMessage());
@@ -97,6 +113,13 @@ namespace WSEP212.DomainLayer
                     if (changeQuantityRes.getTag())
                     {
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                    }
+                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                    if (result != null)
+                    {
+                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                            result.BagsAsJson = this.BagsAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
                     }
                     return changeQuantityRes;
                 }
@@ -138,6 +161,13 @@ namespace WSEP212.DomainLayer
                         return new FailureWithValue<ConcurrentDictionary<int, double>>("No Purchase Type Was Selected For One Or More Of The Shopping Bag Items", null);
                     }
                 }
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                if (result != null)
+                {
+                    if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                        result.BagsAsJson = this.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
                 return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", bagsFinalPrices);
             }
         }
@@ -148,6 +178,13 @@ namespace WSEP212.DomainLayer
             foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBagsToRollBack)
             {
                 shoppingBag.Value.rollBackItems();
+            }
+            var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+            if (result != null)
+            {
+                if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                    result.BagsAsJson = this.BagsAsJson;
+                SystemDBAccess.Instance.SaveChanges();
             }
         }
 

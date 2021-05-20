@@ -669,7 +669,7 @@ namespace WSEP212.DomainLayer
 
         public void addPurchase(PurchaseInvoice info)
         {
-            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == this.userName);
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
             if (result != null)
             {
                 this.purchases.Add(info);
@@ -683,7 +683,7 @@ namespace WSEP212.DomainLayer
         public bool addSellerPermissions(SellerPermissions permissions)
         {
             var res = false;
-            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == this.userName);
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
             if (result != null)
             {
                 result.SellerPermissionsJson = this.SellerPermissionsJson;

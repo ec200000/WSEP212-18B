@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -15,35 +16,19 @@ namespace WSEP212.DomainLayer
 {
     public class SellerPermissions
     {
-        [JsonIgnore]
-        private JsonSerializerSettings settings = new JsonSerializerSettings
-        {
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        };
-        
+
         [Key] 
         [Column(Order = 1)]
-        public string SellerNameRef{ get; set; }
-        [ForeignKey("SellerNameRef")]
-        [JsonIgnore]
-        public User seller { get; set; }
+        public string SellerName{ get; set; }
+        
         [Key]
         [Column(Order=2)]
-        public int StoreIDRef { get; set; }
-        
-        
-        [ForeignKey("StoreIDRef")]
-        [JsonIgnore]
-        public Store store { get; set; }
+        public int StoreID { get; set; }
+
         [Key]
         [Column(Order=3)]
-        public string GrantorNameRef{ get; set; }
+        public string GrantorName{ get; set; }
         
-        
-        [ForeignKey("GrantorNameRef")]
-        [JsonIgnore]
-        public User grantor { get; set; }
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
         [NotMapped]
         public ConcurrentLinkedList<Permissions> permissionsInStore { get; private set; }
@@ -56,33 +41,46 @@ namespace WSEP212.DomainLayer
 
         public SellerPermissions(){}
 
-        private SellerPermissions(User seller, Store store, User grantor, ConcurrentLinkedList<Permissions> permissionsInStore)
+        private SellerPermissions(string SellerName, int StoreID, string GrantorName, ConcurrentLinkedList<Permissions> permissionsInStore)
         {
-            this.seller = seller;
-            this.SellerNameRef = seller.userName;
-            this.store = store;
-            this.StoreIDRef = store.storeID;
-            this.grantor = grantor;
-            this.GrantorNameRef = string.Empty;
-            if(grantor != null)
-                this.GrantorNameRef = grantor.userName;
+            this.SellerName = SellerName;
+            this.StoreID = StoreID;
+            this.GrantorName = GrantorName;
             this.permissionsInStore = permissionsInStore;
             SystemDBAccess.Instance.Permissions.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            try
+            {
+                SystemDBAccess.Instance.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
 
         // Checks that there is no other permission for this seller and store
         // If there is one, return it, else, create new permission
-        public static SellerPermissions getSellerPermissions(User seller, Store store, User grantor, ConcurrentLinkedList<Permissions> permissions)
+        public static SellerPermissions getSellerPermissions(string SellerName, int StoreID, string GrantorName, ConcurrentLinkedList<Permissions> permissions)
         {
+            User seller = UserRepository.Instance.findUserByUserName(SellerName).getValue();
             if (seller.sellerPermissions != null)
             {
                 Node<SellerPermissions> sellerPermissions = seller.sellerPermissions.First;
                 while(sellerPermissions.Value != null)
                 {
-                    if (sellerPermissions.Value.store != null)
+                    if (sellerPermissions.Value.StoreID != 0)
                     {
-                        if (store.Equals(sellerPermissions.Value.store))
+                        if (StoreID == sellerPermissions.Value.StoreID)
                         {
                             return sellerPermissions.Value;
                         }
@@ -90,12 +88,12 @@ namespace WSEP212.DomainLayer
                     sellerPermissions = sellerPermissions.Next;
                 }
             }
-            return new SellerPermissions(seller, store, grantor, permissions);
+            return new SellerPermissions(SellerName, StoreID, GrantorName, permissions);
         }
 
         public int getStoreID()
         {
-            return store.storeID;
+            return StoreID;
         }
 
         public bool isStoreOwner()
@@ -105,7 +103,7 @@ namespace WSEP212.DomainLayer
 
         public void setPermissions(ConcurrentLinkedList<Permissions> newPer)
         {
-            var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.SellerNameRef == this.SellerNameRef && i.GrantorNameRef == this.GrantorNameRef && i.StoreIDRef == this.StoreIDRef);
+            var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.GrantorName == this.GrantorName && i.SellerName == this.SellerName && i.StoreID == this.StoreID);
             if (result != null)
             {
                 result.permissionsInStore = newPer;

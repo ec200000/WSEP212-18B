@@ -34,8 +34,8 @@ namespace WSEP212.DomainLayer
         // * Purchase Items Functions *//
         public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
-            RegularResult res =  this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
-            if (res.getTag())
+            RegularResult res = this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            if (res.getTag() && Authentication.Instance.usersInfo.ContainsKey(this.user.userName))
             {
                 var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
                 if (result != null)
@@ -48,7 +48,17 @@ namespace WSEP212.DomainLayer
         }
         public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
         {
-            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+            RegularResult res = this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+            if (res.getTag() && Authentication.Instance.usersInfo.ContainsKey(this.user.userName))
+            {
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
+                if (result != null)
+                {
+                    result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+            }
+            return res;
         }
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string address)
         {
