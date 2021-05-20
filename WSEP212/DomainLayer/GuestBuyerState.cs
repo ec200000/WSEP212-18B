@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -80,19 +85,19 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID)
+        public override ConcurrentDictionary<int, PurchaseInvoice> getStorePurchaseHistory(int storeID)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
@@ -130,10 +135,28 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             throw new NotImplementedException();
             // only logged buyers can do that
+        }
+
+        public override RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override RegularResult unsupportPurchaseType(int storeID, PurchaseType purchaseType)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
         }
 
         public override RegularResult register(String userName, int userAge, String password)

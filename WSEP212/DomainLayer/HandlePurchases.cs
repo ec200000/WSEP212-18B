@@ -3,6 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -22,17 +25,6 @@ namespace WSEP212.DomainLayer
             paymentSystem = PaymentSystem.Instance;
         }
 
-        // returns the total price after sales for each store. if the purchase cannot be made returns null
-        private ResultWithValue<ConcurrentDictionary<int, double>> calculatePurchaseTotal(User user)
-        {
-            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> purchaseTypes = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>>();
-            foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
-            {
-                purchaseTypes.TryAdd(shoppingBag.store.storeID, getBagPurchaseTypes(shoppingBag));
-            }
-            return user.shoppingCart.purchaseItemsInCart(user, purchaseTypes);
-        }
-
         private RegularResult externalPurchase(double amount, User user)
         {
             if (Math.Abs(amount - paymentSystem.paymentCharge(amount)) < 0.01)
@@ -40,43 +32,6 @@ namespace WSEP212.DomainLayer
                 return new Ok("Payment Charged Successfully");
             }
             return new Failure("Payment Charge Failed");
-        }
-
-        private void rollback(User user)
-        {
-            foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
-            {
-                shoppingBag.store.rollBackPurchase(shoppingBag.items); // if the purchase failed
-            }
-        }
-
-        private ConcurrentDictionary<int, PurchaseType> getBagPurchaseTypes(ShoppingBag shoppingBag)
-        {
-            ConcurrentDictionary<int, PurchaseType> purchaseTypes = new ConcurrentDictionary<int, PurchaseType>();
-            foreach (int itemID in shoppingBag.items.Keys)
-            {
-                purchaseTypes.TryAdd(itemID, PurchaseType.ImmediatePurchase); // getting the purchase types for each item
-            }
-            return purchaseTypes;
-        }
-
-        private RegularResult createPurchaseInvoices(User user, ConcurrentDictionary<int, double> pricePerStore)
-        {
-            foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
-            {
-                int storeID = shoppingBag.store.storeID;
-                if (pricePerStore.ContainsKey(storeID))
-                {
-                    PurchaseInvoice purchaseInvoice = new PurchaseInvoice(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
-                    user.addPurchase(purchaseInvoice);
-                    shoppingBag.store.addNewPurchase(purchaseInvoice);
-                }
-                else
-                {
-                    return new Failure("The Final Price For The Store Does Not Exist");
-                }
-            }
-            return new Ok("All Purchase Histories Has Been Successfully Added");
         }
 
         private RegularResult callDeliverySystem(User user, String address)
@@ -92,53 +47,65 @@ namespace WSEP212.DomainLayer
             return new Ok("All Items Deliver To The User Successfully");
         }
 
+        private double calculateTotalPrice(ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
+        {
+            double totalPrice = 0;
+            foreach (PurchaseInvoice purchaseInvoice in purchaseInvoices.Values)
+            {
+                totalPrice += purchaseInvoice.getPurchaseTotalPrice();
+            }
+            return totalPrice;
+        }
+
+        private void rollback(User user, ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
+        {
+            user.shoppingCart.rollBackBags(purchaseInvoices);
+        }
+
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(User user, String address)
         {
-            if (address == null) return new FailureWithValue<ConcurrentLinkedList<string>>("address is null!",null);
-            ResultWithValue<ConcurrentDictionary<int, double>> pricePerStoreRes = calculatePurchaseTotal(user);
-            if (pricePerStoreRes.getTag())
-            {
-                // calculate total price for all stores
-                double totalPrice = 0;
-                foreach (double price in pricePerStoreRes.getValue().Values)
-                {
-                    totalPrice += price;
-                }
+            if (address == null) 
+                return new FailureWithValue<ConcurrentLinkedList<string>>("address is null!", null);
 
+            // if the purchase cannot be made returns null
+            // create purchase invoices
+            ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> purchaseRes = user.shoppingCart.purchaseItemsInCart();
+            if (purchaseRes.getTag())
+            {
+                ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices = purchaseRes.getValue();
+                // calculate final price by all the invoices
+                double totalPrice = calculateTotalPrice(purchaseInvoices);
+                // call payment system
                 RegularResult externalPurchaseRes = externalPurchase(totalPrice, user);
                 if (externalPurchaseRes.getTag())
                 {
+                    // call delivery system
                     RegularResult deliveryRes = callDeliverySystem(user, address);
                     if (deliveryRes.getTag())
                     {
-                        RegularResult purchaseInfosRes = createPurchaseInvoices(user, pricePerStoreRes.getValue());
-                        if (purchaseInfosRes.getTag())
+                        var stores = user.shoppingCart.shoppingBags.Keys;
+                        ConcurrentLinkedList<string> storeOwners = new ConcurrentLinkedList<string>();
+                        foreach (var store in stores)
                         {
-                            var stores = user.shoppingCart.shoppingBags.Keys;
-                            ConcurrentLinkedList<string> storeOwners = new ConcurrentLinkedList<string>();
-                            foreach (var store in stores)
+                            ConcurrentLinkedList<string> l = StoreRepository.Instance.getStoreOwners(store);
+                            Node<string> node = l.First;
+                            while (node.Next != null)
                             {
-                                ConcurrentLinkedList<string> l = StoreRepository.Instance.getStoreOwners(store);
-                                Node<string> node = l.First;
-                                while (node.Next != null)
-                                {
-                                    storeOwners.TryAdd(node.Value);
-                                    node = node.Next;
-                                }
+                                storeOwners.TryAdd(node.Value);
+                                node = node.Next;
                             }
-                            user.shoppingCart.clearShoppingCart();
-                            return new OkWithValue<ConcurrentLinkedList<string>>("Purchase Completed Successfully!",storeOwners);
                         }
-                        rollback(user);
-                        return new FailureWithValue<ConcurrentLinkedList<string>>(purchaseInfosRes.getMessage(),null);
+                        // clear the shopping cart of the user
+                        user.shoppingCart.clearShoppingCart();
+                        return new OkWithValue<ConcurrentLinkedList<string>>("Purchase Completed Successfully!", storeOwners);
                     }
-                    rollback(user);
+                    rollback(user, purchaseInvoices);
                     return new FailureWithValue<ConcurrentLinkedList<string>>(deliveryRes.getMessage(),null);
                 }
-                rollback(user);
+                rollback(user, purchaseInvoices);
                 return new FailureWithValue<ConcurrentLinkedList<string>>(externalPurchaseRes.getMessage(),null);
             }
-            return new FailureWithValue<ConcurrentLinkedList<string>>(pricePerStoreRes.getMessage(), null);
+            return new FailureWithValue<ConcurrentLinkedList<string>>(purchaseRes.getMessage(), null);
         }
     }
 }

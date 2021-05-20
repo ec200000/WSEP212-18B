@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -27,11 +31,11 @@ namespace WSEP212_TESTS.UnitTests
             shoppingBagItems.TryAdd(itemA, 3);
             shoppingBagItems.TryAdd(itemB, 2);
             shoppingBagItems.TryAdd(itemC, 5);
-            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
-            itemsPurchaseType.TryAdd(itemA.itemID, PurchaseType.ImmediatePurchase);
-            itemsPurchaseType.TryAdd(itemB.itemID, PurchaseType.ImmediatePurchase);
-            itemsPurchaseType.TryAdd(itemC.itemID, PurchaseType.ImmediatePurchase);
-            purchaseDetails = new PurchaseDetails(user, shoppingBagItems, itemsPurchaseType);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(itemA.itemID, 4.5);
+            itemsPrices.TryAdd(itemB.itemID, 10);
+            itemsPrices.TryAdd(itemC.itemID, 4);
+            purchaseDetails = new PurchaseDetails(user, shoppingBagItems, itemsPrices);
         }
 
         [TestMethod]
@@ -39,8 +43,8 @@ namespace WSEP212_TESTS.UnitTests
         {
             ApplySaleOn saleOnItem = new SaleOnItem(itemB.itemID);
             Sale simpleSale = new SimpleSale(25, saleOnItem, "25% sale on milk");
-            Assert.AreEqual(7.5, simpleSale.applySaleOnItem(itemB, purchaseDetails));
-            Assert.AreEqual(4, simpleSale.applySaleOnItem(itemC, purchaseDetails));
+            Assert.AreEqual(7.5, simpleSale.applySaleOnItem(itemB, 10, purchaseDetails));
+            Assert.AreEqual(4, simpleSale.applySaleOnItem(itemC, 4, purchaseDetails));
         }
 
         [TestMethod]
@@ -48,9 +52,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
             Sale simpleSale = new SimpleSale(50, saleOnCategory, "50% sale on snacks");
-            Assert.AreEqual(2.25, simpleSale.applySaleOnItem(itemA, purchaseDetails));
-            Assert.AreEqual(2, simpleSale.applySaleOnItem(itemC, purchaseDetails));
-            Assert.AreEqual(10, simpleSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(2.25, simpleSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
+            Assert.AreEqual(2, simpleSale.applySaleOnItem(itemC, 4, purchaseDetails));
+            Assert.AreEqual(10, simpleSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -58,9 +62,9 @@ namespace WSEP212_TESTS.UnitTests
         {
             ApplySaleOn saleOnStore = new SaleOnAllStore();
             Sale simpleSale = new SimpleSale(50, saleOnStore, "50% sale on all store");
-            Assert.AreEqual(2.25, simpleSale.applySaleOnItem(itemA, purchaseDetails));
-            Assert.AreEqual(2, simpleSale.applySaleOnItem(itemC, purchaseDetails));
-            Assert.AreEqual(5, simpleSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(2.25, simpleSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
+            Assert.AreEqual(2, simpleSale.applySaleOnItem(itemC, 4, purchaseDetails));
+            Assert.AreEqual(5, simpleSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -71,9 +75,9 @@ namespace WSEP212_TESTS.UnitTests
             SalePredicate policyPredicate = new SimplePredicate(predicate, "more then 10 items in bag");
             SimpleSale sale = new SimpleSale(50, saleOnCategory, "50% sale on snacks");
             Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
-            Assert.AreEqual(2.25, conditionalSale.applySaleOnItem(itemA, purchaseDetails));
-            Assert.AreEqual(2, conditionalSale.applySaleOnItem(itemC, purchaseDetails));
-            Assert.AreEqual(10, conditionalSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(2.25, conditionalSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
+            Assert.AreEqual(2, conditionalSale.applySaleOnItem(itemC, 4, purchaseDetails));
+            Assert.AreEqual(10, conditionalSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -87,9 +91,9 @@ namespace WSEP212_TESTS.UnitTests
             SalePredicate policyPredicate = new AndPredicates(sp1, sp2);
             SimpleSale sale = new SimpleSale(50, saleOnCategory, "50% sale on snacks");
             Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
-            Assert.AreEqual(4.5, conditionalSale.applySaleOnItem(itemA, purchaseDetails));
-            Assert.AreEqual(4, conditionalSale.applySaleOnItem(itemC, purchaseDetails));
-            Assert.AreEqual(10, conditionalSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(4.5, conditionalSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
+            Assert.AreEqual(4, conditionalSale.applySaleOnItem(itemC, 4, purchaseDetails));
+            Assert.AreEqual(10, conditionalSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -106,9 +110,9 @@ namespace WSEP212_TESTS.UnitTests
             Sale simpleSale = new SimpleSale(50, saleOnStore, "50% sale on all store");
 
             Sale maxSale = new MaxSale(conditionalSale, simpleSale);
-            Assert.AreEqual(2.25, maxSale.applySaleOnItem(itemA, purchaseDetails));
-            Assert.AreEqual(2, maxSale.applySaleOnItem(itemC, purchaseDetails));
-            Assert.AreEqual(5, maxSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(2.25, maxSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
+            Assert.AreEqual(2, maxSale.applySaleOnItem(itemC, 4, purchaseDetails));
+            Assert.AreEqual(5, maxSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -125,9 +129,9 @@ namespace WSEP212_TESTS.UnitTests
             Sale simpleSale = new SimpleSale(25, saleOnStore, "25% sale on all store");
 
             Sale doubleSale = new DoubleSale(conditionalSale, simpleSale);
-            Assert.AreEqual(2.25, doubleSale.applySaleOnItem(itemA, purchaseDetails));
-            Assert.AreEqual(2, doubleSale.applySaleOnItem(itemC, purchaseDetails));
-            Assert.AreEqual(7.5, doubleSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(2.25, doubleSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
+            Assert.AreEqual(2, doubleSale.applySaleOnItem(itemC, 4, purchaseDetails));
+            Assert.AreEqual(7.5, doubleSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -146,7 +150,7 @@ namespace WSEP212_TESTS.UnitTests
             SimplePredicate selectionRule = new SimplePredicate(pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale), "first sale is cheapest");
 
             Sale xorSale = new XorSale(conditionalSale, simpleSale, selectionRule);
-            Assert.AreEqual(10, xorSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(10, xorSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -165,7 +169,7 @@ namespace WSEP212_TESTS.UnitTests
             SimplePredicate selectionRule = new SimplePredicate(pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale), "first sale is cheapest");
 
             Sale xorSale = new XorSale(conditionalSale, simpleSale, selectionRule);
-            Assert.AreEqual(7.5, xorSale.applySaleOnItem(itemB, purchaseDetails));
+            Assert.AreEqual(7.5, xorSale.applySaleOnItem(itemB, 10, purchaseDetails));
         }
 
         [TestMethod]
@@ -185,8 +189,8 @@ namespace WSEP212_TESTS.UnitTests
 
             Sale xorSale = new XorSale(conditionalSale, simpleSale, selectionRule);
             // choose the cheapest sale, selection rule
-            Assert.AreEqual(5, xorSale.applySaleOnItem(itemB, purchaseDetails));
-            Assert.AreEqual(2, xorSale.applySaleOnItem(itemC, purchaseDetails));
+            Assert.AreEqual(5, xorSale.applySaleOnItem(itemB, 10, purchaseDetails));
+            Assert.AreEqual(2, xorSale.applySaleOnItem(itemC, 4, purchaseDetails));
         }
     }
 }

@@ -2,8 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public abstract class Sale
     {
@@ -21,7 +22,7 @@ namespace WSEP212.DomainLayer
 
         public abstract ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType);
         public abstract int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails);
-        public abstract double applySaleOnItem(Item item, PurchaseDetails purchaseDetails);
+        public abstract double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails);
         public override String ToString()
         {
             return this.saleDescription;

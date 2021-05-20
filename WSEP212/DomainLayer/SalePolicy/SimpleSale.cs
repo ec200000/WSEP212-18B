@@ -2,8 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class SimpleSale : Sale
     {
@@ -31,10 +33,10 @@ namespace WSEP212.DomainLayer
             return 0;
         }
 
-        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
-            return item.price - ((item.price * salePercentage) / 100);
+            return purchaseItemPrice - ((purchaseItemPrice * salePercentage) / 100);
         }
     }
 }

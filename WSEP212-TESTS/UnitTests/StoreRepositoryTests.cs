@@ -3,8 +3,10 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -20,7 +22,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), new User("admin"));
+            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             this.store = StoreRepository.Instance.getStore(storeIdRes.getValue()).getValue();
             itemAID = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
             itemBID = store.addItemToStorage(50, "white masks", "protects against infection of covid-19", 10, "health").getValue();
@@ -29,7 +31,12 @@ namespace WSEP212_TESTS.UnitTests
         [TestCleanup]
         public void afterTests()
         {
-            StoreRepository.Instance.removeStore(store.storeID);
+            UserRepository.Instance.users.Clear();
+            foreach (Store store in StoreRepository.Instance.stores.Values)
+            {
+                store.storage.Clear();
+            }
+            StoreRepository.Instance.stores.Clear();
         }
 
         [TestMethod]
@@ -37,10 +44,10 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), new User("admin"));
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             Assert.IsTrue(addStoreBool.getTag());
             int newStoreID = addStoreBool.getValue();
-            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), new User("admin"));
+            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             Assert.IsFalse(addStoreBool.getTag());
             StoreRepository.Instance.removeStore(newStoreID);
         }
@@ -61,19 +68,21 @@ namespace WSEP212_TESTS.UnitTests
             int storeID = this.store.storeID;
             ResultWithValue<Store> getStoreBool = StoreRepository.Instance.getStore(storeID);
             Assert.IsTrue(getStoreBool.getTag());
-            getStoreBool = StoreRepository.Instance.getStore(-1);
+        }
+
+        [TestMethod]
+        public void getStoreNotInRepoTest()
+        {
+            ResultWithValue<Store> getStoreBool = StoreRepository.Instance.getStore(-1);
             Assert.IsFalse(getStoreBool.getTag());
         }
 
         [TestMethod]
-        public void searchItemTest()
+        public void searchItemByNameTest()
         {
-            int storeID = this.store.storeID;
-
             SearchItems searchItemsByName = new SearchItems(new SearchItemsDTO("masks", "", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByName = StoreRepository.Instance.searchItem(searchItemsByName);
             Assert.AreEqual(2, itemsByName.Count);
-
             SearchItems searchItemsByName2 = new SearchItems(new SearchItemsDTO("white", "", Double.MinValue, Double.MaxValue, ""));
             ConcurrentDictionary<Item, int> itemsByName2 = StoreRepository.Instance.searchItem(searchItemsByName2);
             Assert.AreEqual(1, itemsByName2.Count);
@@ -84,10 +93,18 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
+        public void searchItemByKeywordsTest()
+        {
+            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
+            ConcurrentDictionary<Item, int> itemsByKeyWords = StoreRepository.Instance.searchItem(searchItemsByKeyWords);
+            Assert.AreEqual(2, itemsByKeyWords.Count);
+        }
+
+        [TestMethod]
         public void getAllStoresPurchsesHistoryTest()
         {
             int storeID = this.store.storeID;
-            ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
             Assert.AreEqual(1, storesPurchases.Count);
             Assert.AreEqual(0, storesPurchases[storeID].Count);
         }

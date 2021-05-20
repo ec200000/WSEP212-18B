@@ -7,6 +7,8 @@ using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -22,7 +24,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestInitialize]
         public void testInit()
         {
-            
             systemController.register("lol", 18, "123456");
             systemController.register("mol", 18, "1234");
             systemController.register("pol", 18, "123");
@@ -31,12 +32,16 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = systemController.login("mol", "1234");
             Console.WriteLine(res.getMessage());
             ResultWithValue<int> val = systemController.openStore("mol", "t", "bb", "DEFAULT", "DEFAULT");
-            ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, ItemReview>(),12, "milk products");
+            ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, ItemUserReviews>(),12, "milk products");
             ResultWithValue<int> val2 = systemController.addItemToStorage("mol", val.getValue(), item);
             this.storeID = val.getValue();
             this.itemID = val2.getValue();
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            StoreRepository.Instance.stores[storeID].deliverySystem = DeliverySystemMock.Instance;
+            StoreRepository.Instance.stores[storeID].purchasePolicy = new PurchasePolicyMock();
+            StoreRepository.Instance.stores[storeID].salesPolicy = new SalePolicyMock();
         }
-        
+
         [TestCleanup]
         public void testClean()
         {
@@ -199,12 +204,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToShoppingCartTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
-            
+
             Thread t1 = new Thread(() =>
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                 }
                 catch (NotImplementedException)
                 {
@@ -216,7 +221,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                 }
                 catch (NotImplementedException)
                 {
@@ -227,7 +232,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 58);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 58, (int)PurchaseType.ImmediatePurchase, 12);
                 }
                 catch (NotImplementedException)
                 {
@@ -257,7 +262,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res1.getTag())
                         res1 = systemController.removeItemFromShoppingCart("a", storeID, itemID);
                 }
@@ -271,7 +276,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
                         res2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
                 }
@@ -284,7 +289,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12, (int)PurchaseType.ImmediatePurchase, 12);
                     if(res3.getTag())
                         res3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
                         
@@ -312,16 +317,16 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void purchaseItemsTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
-            ResultWithValue<ConcurrentLinkedList<string>> res4 =
-                    new OkWithValue<ConcurrentLinkedList<string>>("ok", null),
-                res5 = new OkWithValue<ConcurrentLinkedList<string>>("ok", null),
-                res6 = new OkWithValue<ConcurrentLinkedList<string>>("ok", null);
+            ResultWithValue<NotificationDTO> res4 =
+                    new OkWithValue<NotificationDTO>("ok", null),
+                res5 = new OkWithValue<NotificationDTO>("ok", null),
+                res6 = new OkWithValue<NotificationDTO>("ok", null);
             
             Thread t1 = new Thread(() =>
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res1.getTag())
                         res4 = systemController.purchaseItems("a", "ashdod");
                 }
@@ -335,7 +340,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
                         res5 = systemController.purchaseItems("mol", "ness ziona");
                 }
@@ -348,7 +353,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if(res3.getTag())
                         res6 = systemController.purchaseItems("lol", "holon");
 
@@ -429,8 +434,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void deleteItemAndTryToBuyItTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
-            ResultWithValue<ConcurrentLinkedList<string>> res3 =
-                new OkWithValue<ConcurrentLinkedList<string>>("ok", null);
+            ResultWithValue<NotificationDTO> res3 =
+                new OkWithValue<NotificationDTO>("ok", null);
             
             Thread t1 = new Thread(() =>
             {
@@ -448,7 +453,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
                         res3 = systemController.purchaseItems("lol", "ness ziona");
                 }
