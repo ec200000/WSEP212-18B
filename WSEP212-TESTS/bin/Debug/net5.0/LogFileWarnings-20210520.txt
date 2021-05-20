@@ -1,0 +1,38 @@
+2021-05-20 11:54:32.820 +03:00 [Warning] The user a cannot perform the login action!
+
+2021-05-20 11:54:32.835 +03:00 [Warning] The user b cannot perform the logout action!
+
+2021-05-20 11:54:33.116 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-20 11:54:33.116 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-20 11:54:33.132 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-20 11:54:33.132 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-20 11:54:33.144 +03:00 [Warning] The user a cannot perform the logout action!
+
+2021-05-20 11:54:33.144 +03:00 [Warning] The user mol cannot perform the logout action!
+
+2021-05-20 11:54:33.206 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-05-20 11:54:33.924 +03:00 [Warning] The user moon cannot perform the addItemToStorage action!
+
+2021-05-20 11:54:33.937 +03:00 [Warning] The user blue cannot perform the editItemDetails action!
+
+2021-05-20 11:54:33.964 +03:00 [Warning] The user moon cannot perform the itemReview action!
+
+2021-05-20 11:54:33.996 +03:00 [Warning] The user a cannot perform the openStore action!
+
+2021-05-20 11:54:34.020 +03:00 [Warning] The user booo cannot perform the removeItemFromStorage action!
+
+2021-05-20 11:54:34.113 +03:00 [Warning] The user moon cannot perform the appointStoreManager action!
+
+2021-05-20 11:54:34.367 +03:00 [Warning] The user moon cannot perform the appointStoreOwner action!
+
+2021-05-20 11:54:34.604 +03:00 [Warning] The user moon cannot perform the editManagerPermissions action!
+
+2021-05-20 11:54:34.829 +03:00 [Warning] The user moon cannot perform the getOfficialsInformation action!
+
+2021-05-20 11:54:34.946 +03:00 [Warning] The user moon cannot perform the removeStoreManager action!
+
