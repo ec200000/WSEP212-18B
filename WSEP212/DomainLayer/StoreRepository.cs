@@ -119,9 +119,9 @@ namespace WSEP212.DomainLayer
             return new KeyValuePair<Item, int>();
         }
 
-        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getAllStoresPurchsesHistory()
+        public ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getAllStoresPurchsesHistory()
         {
-            ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>();
             foreach(KeyValuePair<int, Store> storePair in stores)
             {
                 storesPurchasesHistory.TryAdd(storePair.Key, storePair.Value.purchasesHistory);

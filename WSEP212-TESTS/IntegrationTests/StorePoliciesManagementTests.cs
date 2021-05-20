@@ -12,6 +12,7 @@ using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -21,7 +22,7 @@ namespace WSEP212_TESTS.IntegrationTests
         public static User user;
         public static Store store;
         public static ConcurrentDictionary<int, int> shoppingBagItems;
-        public static ConcurrentDictionary<int, PurchaseType> itemsPurchaseType;
+        public static ConcurrentDictionary<int, double> itemsPrices;
         public static int milkID;
 
         [ClassInitialize]
@@ -33,25 +34,37 @@ namespace WSEP212_TESTS.IntegrationTests
             store.deliverySystem = DeliverySystemMock.Instance;
 
             shoppingBagItems = new ConcurrentDictionary<int, int>();
-            itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            itemsPrices = new ConcurrentDictionary<int, double>();
 
-            int itemID = store.addItemToStorage(500, "bamba", "snack for childrens", 4.5, "snack").getValue();
+            int itemID = store.addItemToStorage(500, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks).getValue();
             shoppingBagItems.TryAdd(itemID, 2);
-            itemsPurchaseType.TryAdd(itemID, PurchaseType.ImmediatePurchase);
-            milkID = store.addItemToStorage(500, "milk", "pasteurized milk", 8, "milk products").getValue();
+            itemsPrices.TryAdd(itemID, 4.5);
+            milkID = store.addItemToStorage(500, "milk", "pasteurized milk", 8, ItemCategory.Dairy).getValue();
             shoppingBagItems.TryAdd(milkID, 2);
-            itemsPurchaseType.TryAdd(milkID, PurchaseType.ImmediatePurchase);
-            itemID = store.addItemToStorage(500, "bisli", "snack for childrens", 4, "snack").getValue();
+            itemsPrices.TryAdd(milkID, 8);
+            itemID = store.addItemToStorage(500, "bisli", "snack for childrens", 4, ItemCategory.Snacks).getValue();
             shoppingBagItems.TryAdd(itemID, 5);
-            itemsPurchaseType.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+            itemsPrices.TryAdd(itemID, 4);
+        }
+
+        private void noSalePurchase(ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes)
+        {
+            ConcurrentDictionary<int, double> noSaleItemsPrices = purchaseRes.getValue();
+            // 3 diffrenet items
+            Assert.AreEqual(3, noSaleItemsPrices.Count);
+            foreach (KeyValuePair<int, double> itemAndPrice in itemsPrices)
+            {
+                Assert.IsTrue(noSaleItemsPrices.ContainsKey(itemAndPrice.Key));
+                Assert.AreEqual(itemAndPrice.Value, noSaleItemsPrices[itemAndPrice.Key]);
+            }
         }
 
         [TestMethod]
         public void noPolicyTest()
         {
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(45.0, purchaseRes.getValue());
+            noSalePurchase(purchaseRes);
         }
 
         [TestMethod]
@@ -60,9 +73,9 @@ namespace WSEP212_TESTS.IntegrationTests
             Predicate<PurchaseDetails> pred = pd => pd.numOfItemsInPurchase() >= 2;
             int predicateID = store.addPurchasePredicate(pred, "more then 2 items in bag");
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(45.0, purchaseRes.getValue());
+            noSalePurchase(purchaseRes);
 
             store.removePurchasePredicate(predicateID);
         }
@@ -78,9 +91,9 @@ namespace WSEP212_TESTS.IntegrationTests
             int predID3 = store.addPurchasePredicate(pred3, "user age is more then 18");
             int composedID = store.composePurchasePredicates(predID2, predID3, PurchasePredicateCompositionType.OrComposition).getValue();
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(45.0, purchaseRes.getValue());
+            noSalePurchase(purchaseRes);
 
             store.removePurchasePredicate(predID1);
             store.removePurchasePredicate(composedID);
@@ -92,7 +105,7 @@ namespace WSEP212_TESTS.IntegrationTests
             Predicate<PurchaseDetails> pred = pd => pd.numOfItemsInPurchase() >= 20;
             int predicateID = store.addPurchasePredicate(pred, "more then 20 items in bag");
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsFalse(purchaseRes.getTag());
 
             store.removePurchasePredicate(predicateID);
@@ -109,22 +122,41 @@ namespace WSEP212_TESTS.IntegrationTests
             int predID3 = store.addPurchasePredicate(pred3, "user age is more then 18");
             int composedID = store.composePurchasePredicates(predID2, predID3, PurchasePredicateCompositionType.ConditionalComposition).getValue();
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsFalse(purchaseRes.getTag());
 
             store.removePurchasePredicate(predID1);
             store.removePurchasePredicate(composedID);
         }
 
+        private void saleOnSancks(ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes)
+        {
+            ConcurrentDictionary<int, double> saleItemsPrices = purchaseRes.getValue();
+            // 3 diffrenet items
+            Assert.AreEqual(3, saleItemsPrices.Count);
+            foreach (KeyValuePair<int, double> itemAndPrice in itemsPrices)
+            {
+                Assert.IsTrue(saleItemsPrices.ContainsKey(itemAndPrice.Key));
+                if (itemAndPrice.Key == milkID)
+                {
+                    Assert.AreEqual(itemAndPrice.Value, saleItemsPrices[itemAndPrice.Key]);
+                }
+                else
+                {
+                    Assert.AreEqual(itemAndPrice.Value, saleItemsPrices[itemAndPrice.Key] * 2);
+                }
+            }
+        }
+
         [TestMethod]
         public void appliedSaleSimpleTest()
         {
-            ApplySaleOn saleOn = new SaleOnCategory("snack");
+            ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(30.5, purchaseRes.getValue());
+            saleOnSancks(purchaseRes);
 
             store.removeSale(saleID);
         }
@@ -132,7 +164,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void appliedSaleComplexTest()
         {
-            ApplySaleOn saleOnSnacks = new SaleOnCategory("snack");
+            ApplySaleOn saleOnSnacks = new SaleOnCategory(ItemCategory.Snacks);
             int saleID1 = store.addSale(50, saleOnSnacks, "50% sale on sancks");
             ApplySaleOn saleOnMilk = new SaleOnItem(milkID);
             int saleID2 = store.addSale(50, saleOnMilk, "50% sale on milk");
@@ -141,9 +173,9 @@ namespace WSEP212_TESTS.IntegrationTests
             int composedID = store.composeSales(saleID1, saleID3, SaleCompositionType.MaxComposition, null).getValue();
             composedID = store.composeSales(saleID2, composedID, SaleCompositionType.MaxComposition, null).getValue();
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(30.5, purchaseRes.getValue());
+            saleOnSancks(purchaseRes);
 
             store.removeSale(composedID);
         }
@@ -151,15 +183,15 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void appliedConditionalSaleTest()
         {
-            ApplySaleOn saleOn = new SaleOnCategory("snack");
+            ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
             Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 40;
             SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 40");
             saleID = store.addSaleCondition(saleID, predicate, SalePredicateCompositionType.AndComposition).getValue();
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(30.5, purchaseRes.getValue());
+            saleOnSancks(purchaseRes);
 
             store.removeSale(saleID);
         }
@@ -167,15 +199,15 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void notAppliedConditionalSaleTest()
         {
-            ApplySaleOn saleOn = new SaleOnCategory("snack");
+            ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
             Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 50;
             SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 50");
             saleID = store.addSaleCondition(saleID, predicate, SalePredicateCompositionType.AndComposition).getValue();
 
-            ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
             Assert.IsTrue(purchaseRes.getTag());
-            Assert.AreEqual(45.0, purchaseRes.getValue());
+            noSalePurchase(purchaseRes);
 
             store.removeSale(saleID);
         }

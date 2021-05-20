@@ -2,6 +2,9 @@
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -33,7 +36,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("b", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
@@ -43,10 +46,10 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("b", 18, "123456");
             RegularResult result1 = controller.login("b", "123456");
             storeID = controller.openStore("b", "store2", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
-            result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4); //logged user
+            result = controller.addItemToShoppingCart("a", storeID, itemID, 8, (int)PurchaseType.ImmediatePurchase, 2.4); //guest user
             Assert.IsTrue(result.getTag());
         }
         
@@ -56,7 +59,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("bc", 18, "123456");
             controller.login("bc", "123456");
             storeID = controller.openStore("bc", "store3", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("bc", storeID, item).getValue();
             HandlePurchases.Instance.paymentSystem = BadPaymentSystemMock.Instance;
         }
@@ -67,7 +70,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("bb", 18, "123456");
             controller.login("bb", "123456");
             storeID = controller.openStore("bb", "store4", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("bb", storeID, item).getValue();
             StoreRepository.Instance.stores[storeID].deliverySystem = BadDeliverySystemMock.Instance;
         }
@@ -77,9 +80,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
             
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2); //logged user
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4); //logged user
             Assert.IsTrue(result.getTag());
-            result = controller.addItemToShoppingCart("a", storeID, itemID, 8); //guest user
+            result = controller.addItemToShoppingCart("a", storeID, itemID, 8, (int)PurchaseType.ImmediatePurchase, 2.4); //guest user
             Assert.IsTrue(result.getTag());
         }
 
@@ -88,7 +91,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 100); //over quantity
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, itemID, 100, (int)PurchaseType.ImmediatePurchase, 2.4); //over quantity
             Assert.IsFalse(result.getTag());
         }
 
@@ -97,7 +100,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("b", storeID, -1, 1); //item does not exists
+            RegularResult result = controller.addItemToShoppingCart("b", storeID, -1, 1, (int)PurchaseType.ImmediatePurchase, 2.4); //item does not exists
             Assert.IsFalse(result.getTag());
         }
 
@@ -106,7 +109,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("b", -1, itemID, 1); //store doest not exists
+            RegularResult result = controller.addItemToShoppingCart("b", -1, itemID, 1, (int)PurchaseType.ImmediatePurchase, 2.4); //store doest not exists
             Assert.IsFalse(result.getTag());
         }
 
@@ -147,12 +150,12 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInitStoreWithItem();
             HandlePurchases.Instance.paymentSystem = new BadPaymentSystemMock();
 
-            RegularResult res;
-            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
-            
-            res = controller.addItemToShoppingCart("bc",storeID, itemID, 2);
-            if (res.getTag())
-                res1 = controller.purchaseItems("bc", "ashdod");
+            DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("bc", "habanim", "Haifa", "Israel", "786598");
+            PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "bc", "086", "207885623");
+
+            RegularResult res = controller.addItemToShoppingCart("bc",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            Assert.IsTrue(res.getTag());
+            ResultWithValue<NotificationDTO> res1 = controller.purchaseItems("bc", deliveryParameters, paymentParameters);
 
             Assert.IsFalse(res1.getTag()); // bad purchase mock
         }
@@ -161,15 +164,15 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void purchaseItemsBadDeliveryTest()
         {
             testInitBadDelivery();
-            
-            RegularResult res;
-            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok",null);
-            
-            res = controller.addItemToShoppingCart("bb",storeID, itemID, 2);
-            if (res.getTag())
-                res1 = controller.purchaseItems("bb", "ashdod");
 
-            Assert.IsFalse(res1.getTag()); // bad purchase mock
+            DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("bb", "habanim", "Haifa", "Israel", "786598");
+            PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "bb", "086", "207885623");
+
+            RegularResult res = controller.addItemToShoppingCart("bb", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            Assert.IsTrue(res.getTag());
+            ResultWithValue<NotificationDTO> res1 = controller.purchaseItems("bb", deliveryParameters, paymentParameters);
+
+            Assert.IsFalse(res1.getTag()); 
         }
     }
 }

@@ -17,9 +17,17 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
         public static PaymentSystemMock Instance
             => lazy.Value;
 
-        public double paymentCharge(double price)
+        private PaymentSystemMock() { }
+
+        // returns valid transaction id
+        public int paymentCharge(string cardNumber, string month, string year, string holder, string ccv, string id, double price)
         {
-            return price;
+            return 10000;
+        }
+
+        public bool cancelPaymentCharge(int transactionID)
+        {
+            return true;
         }
     }
 }

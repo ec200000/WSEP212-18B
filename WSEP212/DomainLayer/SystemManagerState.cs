@@ -29,12 +29,12 @@ namespace WSEP212.DomainLayer
             return new Failure(findUserRes.getMessage());
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getStoresPurchaseHistory()
         {
             return StoreRepository.Instance.getAllStoresPurchsesHistory();
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> getUsersPurchaseHistory()
         {
             return UserRepository.Instance.getAllUsersPurchaseHistory();
         }

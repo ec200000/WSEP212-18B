@@ -15,9 +15,17 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
         public static DeliverySystemMock Instance
             => lazy.Value;
 
-        public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
+        private DeliverySystemMock() { }
+
+        // returns valid transaction id
+        public int deliverItems(string sendToName, string address, string city, string country, string zip)
         {
-            return new Ok("Deliver All Items Successfully!");
+            return 10000;
+        }
+
+        public bool cancelDelivery(int transactionID)
+        {
+            return true;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace WSEP212.DomainLayer
         RemoveStoreManager,
         EditManagmentPermissions,
         StorePoliciesManagement,
+        ConfirmPurchasePrice,
         GetOfficialsInformation,
         GetStorePurchaseHistory
     }

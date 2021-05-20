@@ -50,19 +50,19 @@ namespace WSEP212.DomainLayer.SalePolicy
         }
 
         // applied zero or one of the sales
-        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails)
         {
             // checks if the first sale cannot applied
             // if so, the second sale is the determines
-            double itemPriceAfterSale1 = this.firstSale.applySaleOnItem(item, purchaseDetails);
-            if (itemPriceAfterSale1 == item.price)
+            double itemPriceAfterSale1 = this.firstSale.applySaleOnItem(item, purchaseItemPrice, purchaseDetails);
+            if (itemPriceAfterSale1 == purchaseItemPrice)
             {
-                return this.secondSale.applySaleOnItem(item, purchaseDetails);
+                return this.secondSale.applySaleOnItem(item, purchaseItemPrice, purchaseDetails);
             }
             // the first sale can be applied, need to check if the second sale can too
             // if not, return the first sale price
-            double itemPriceAfterSale2 = this.secondSale.applySaleOnItem(item, purchaseDetails);
-            if (itemPriceAfterSale2 == item.price)
+            double itemPriceAfterSale2 = this.secondSale.applySaleOnItem(item, purchaseItemPrice, purchaseDetails);
+            if (itemPriceAfterSale2 == purchaseItemPrice)
             {
                 return itemPriceAfterSale1;
             }
