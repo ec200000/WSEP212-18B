@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -31,10 +32,11 @@ namespace WSEP212.DomainLayer
                     return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
                 }
 
-                Object[] paramsList = { userName, userAge, password };
+                
+                User newUser = new User(userName, userAge);
+                Object[] paramsList = { newUser, password };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                User newUser = new User(userName, userAge);
                 ThreadPool.QueueUserWorkItem(newUser.register, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if(threadParameters.result is NotImplementedException)

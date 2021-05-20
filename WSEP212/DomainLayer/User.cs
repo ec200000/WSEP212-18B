@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -13,23 +17,55 @@ namespace WSEP212.DomainLayer
     public class User
     {
         [Key]
-        [ForeignKey("SellerPermissions")]
         public String userName { get; set; }
         public int userAge { get; set; }
+        [NotMapped]
+        [JsonIgnore]
         public UserState state { get; set; }
+        [NotMapped]
         public ShoppingCart shoppingCart { get; set; }
-        public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
-        public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
+        [NotMapped]
+        public ConcurrentBag<PurchaseInvoice> purchases
+        {
+            get;
+            set;
+        }
+        [NotMapped]
+        public ConcurrentLinkedList<SellerPermissions> sellerPermissions
+        {
+            get;
+            set;
+        }
         public bool isSystemManager { get; set; }
+
+        public string PurchasesJson
+        {
+            get => JsonConvert.SerializeObject(purchases);
+            set => purchases = JsonConvert.DeserializeObject<ConcurrentBag<PurchaseInvoice>>(value);
+        }
+        
+        public string SellerPermissionsJson
+        {
+            get => JsonConvert.SerializeObject(sellerPermissions);
+            set => sellerPermissions = JsonConvert.DeserializeObject<ConcurrentLinkedList<SellerPermissions>>(value);
+        }
+
+        public User()
+        {
+        }
 
         public User(String userName, int userAge = int.MinValue, bool isSystemManager = false)
         {
             this.userName = userName;
             this.userAge = userAge;
-            this.shoppingCart = new ShoppingCart();
+            this.shoppingCart = new ShoppingCart(userName);
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
+            this.isSystemManager = isSystemManager;
+            
+            SystemDBAccess.Instance.Users.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
 
         public void changeState(UserState state)
@@ -42,13 +78,12 @@ namespace WSEP212.DomainLayer
         public void register(Object list)
         {
             ThreadParameters param = (ThreadParameters)list; // getting the thread parameters object for the function
-            String username = (String)param.parameters[0]; // getting the first argument
-            int userAge = (int)param.parameters[1]; // getting the second argument
-            String password = (String)param.parameters[2]; // getting the third argument
+            User newUser = (User)param.parameters[0]; // getting the first argument
+            String password = (String)param.parameters[1]; // getting the second argument
             object res;
             try
             {
-                res = state.register(username, userAge, password);  // calling the function of the user's state
+                res = state.register(newUser, password);  // calling the function of the user's state
             }
             catch (NotImplementedException)
             {
@@ -634,12 +669,29 @@ namespace WSEP212.DomainLayer
 
         public void addPurchase(PurchaseInvoice info)
         {
-            this.purchases.Add(info);
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == this.userName);
+            if (result != null)
+            {
+                this.purchases.Add(info);
+                result.purchases = purchases;
+                if(!JToken.DeepEquals(result.PurchasesJson, this.PurchasesJson))
+                    result.PurchasesJson = this.PurchasesJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
         }
         
         public bool addSellerPermissions(SellerPermissions permissions)
         {
-            return this.sellerPermissions.TryAdd(permissions);
+            var res = false;
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == this.userName);
+            if (result != null)
+            {
+                result.SellerPermissionsJson = this.SellerPermissionsJson;
+                res = this.sellerPermissions.TryAdd(permissions);
+                result.sellerPermissions = this.sellerPermissions;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+            return res;
         }
         
         public void getUsersStores(Object list)

@@ -5,37 +5,30 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace WSEP212.DomainLayer
 {
     public class PurchaseInvoice
     {
         [Key]
+        [Column(Order=1)]
         public int storeID { get; set; }
         [Key]
+        [Column(Order=2)]
         public String userName { get; set; }
         // A data structure associated with a item ID and its quantity
         [NotMapped]
         public ConcurrentDictionary<int, int> items { get; set; }
         public double totalPrice { get; set; }
         [Key]
+        [Column(Order=3)]
         public DateTime dateOfPurchase { get; set; }
         
-        public string DictionaryAsXml
+        public string ItemsAsJson
         {
-            get
-            {
-                return new XElement("root",
-                    items.Select(kv => new XElement(kv.Key.ToString(), kv.Value.ToString()))).Value;
-            }
-            set
-            {
-                XElement rootElement = XElement.Parse("<root><key>value</key></root>");
-                foreach(var el in rootElement.Elements())
-                {
-                    items.TryAdd(int.Parse(el.Name.LocalName), int.Parse(el.Value));
-                }
-            }
+            get => JsonConvert.SerializeObject(items);
+            set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
         }
 
         public override string ToString()
@@ -59,6 +52,8 @@ namespace WSEP212.DomainLayer
             this.items = items;
             this.totalPrice = totalPrice;
             this.dateOfPurchase = dateOfPurchase;
+            SystemDBAccess.Instance.Invoices.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
 
         public bool wasItemPurchased(int itemID)

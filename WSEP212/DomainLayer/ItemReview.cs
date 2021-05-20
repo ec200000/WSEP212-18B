@@ -1,51 +1,61 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
     public class ItemReview
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        
         [Key]
+        public string UserNameRef{ get; set; }
+        
+        [ForeignKey("UserNameRef")]
         public User reviewer { get; set; }
         [NotMapped]
         public ConcurrentLinkedList<string> reviews { get; set; }
         
-        public string LinkedListAsXml
+        public string ReviewsAsJson
         {
-            get
-            {
-                return new XElement("root",
-                    listToArray(reviews).Select(kv => new XElement(kv))).Value;
-            }
-            set
-            {
-                XElement rootElement = XElement.Parse("<root>value</root>");
-                foreach(var el in rootElement.Elements())
-                {
-                    reviews.TryAdd(el.Value);
-                }
-            }
+            get => JsonConvert.SerializeObject(reviews,settings);
+            set => reviews = JsonConvert.DeserializeObject<ConcurrentLinkedList<string>>(value);
         }
 
         public ItemReview(User user)
         {
             this.reviewer = user;
+            UserNameRef = user.userName;
             reviews = new ConcurrentLinkedList<string>();
+            SystemDBAccess.Instance.ItemReviewes.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
         
-        public ItemReview()
-        {
-            this.reviewer = null;
-            reviews = new ConcurrentLinkedList<string>();
-        }
+        public ItemReview(){}
 
         public bool addReview(string review)
         {
-            return this.reviews.TryAdd(review);
+            var res = false;
+            var result = SystemDBAccess.Instance.ItemReviewes.SingleOrDefault(i => i.ReviewsAsJson == this.ReviewsAsJson);
+            if (result != null)
+            {
+                res = this.reviews.TryAdd(review);
+                result.reviews = reviews;
+                result.ReviewsAsJson = this.ReviewsAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+            return res;
         }
 
         public override string ToString()

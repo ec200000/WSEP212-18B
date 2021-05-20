@@ -1,0 +1,28 @@
+2021-05-15 18:31:00.098 +03:00 [Error] The model backing the 'SystemDBAccess' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+
+2021-05-15 18:31:00.156 +03:00 [Error] In Register function, the error is: The model backing the 'SystemDBAccess' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+
+2021-05-15 18:31:17.052 +03:00 [Error] In Register function, the error is: The model backing the 'SystemDBAccess' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+
+2021-05-15 18:31:33.334 +03:00 [Error] In Register function, the error is: The model backing the 'SystemDBAccess' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+
+2021-05-15 18:34:59.947 +03:00 [Error] System error.
+
+2021-05-15 18:42:22.338 +03:00 [Error] An error occurred while updating the entries. See the inner exception for details.
+
+2021-05-15 18:42:23.056 +03:00 [Error] In Register function, the error is: An error occurred while updating the entries. See the inner exception for details.
+
+2021-05-15 19:32:11.964 +03:00 [Error] The specified type member 'usersInfo' is not supported in LINQ to Entities. Only initializers, entity members, and entity navigation properties are supported.
+
+2021-05-15 19:48:26.577 +03:00 [Error] The specified type member 'usersInfo' is not supported in LINQ to Entities. Only initializers, entity members, and entity navigation properties are supported.
+
+2021-05-15 19:50:48.548 +03:00 [Error] The specified type member 'usersInfo' is not supported in LINQ to Entities. Only initializers, entity members, and entity navigation properties are supported.
+
+2021-05-15 19:52:25.643 +03:00 [Error] The specified type member 'usersInfo' is not supported in LINQ to Entities. Only initializers, entity members, and entity navigation properties are supported.
+
+2021-05-15 19:56:34.727 +03:00 [Error] An error occurred while updating the entries. See the inner exception for details.
+
+2021-05-15 19:56:35.418 +03:00 [Error] In Register function, the error is: An error occurred while updating the entries. See the inner exception for details.
+
+2021-05-15 20:47:10.005 +03:00 [Error] The type of one of the primary key values did not match the type defined in the entity. See inner exception for details. (Parameter 'keyValues')
+

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
+using WSEP212.ConcurrentLinkedList;
 
-namespace WSEP212.ConcurrentLinkedList
+namespace WSEP212.DomainLayer.ConcurrentLinkedList
 {
     public class ConcurrentLinkedList<T> : IConcurrentLinkedList<T>
     {
@@ -228,6 +228,5 @@ namespace WSEP212.ConcurrentLinkedList
             var threadState = _threads[threadId];
             return threadState.Pending && threadState.Phase <= phase;
         }
-
     }
 }

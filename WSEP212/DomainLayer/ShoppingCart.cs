@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -11,9 +12,14 @@ namespace WSEP212.DomainLayer
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
 
-        public ShoppingCart()
+        [Key]
+        public string cartOwner { get; set; } 
+        public ShoppingCart(string userName)
         {
             this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
+            this.cartOwner = userName;
+            //SystemDBAccess.Instance.Carts.Add(this);
+            //SystemDBAccess.Instance.SaveChanges();
         }
 
         // return true if the shopping cart is empty

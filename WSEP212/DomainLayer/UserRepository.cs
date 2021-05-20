@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Text;
-using WSEP212.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -26,12 +22,11 @@ namespace WSEP212.DomainLayer
 
         public void createSystemManager()
         {
-            User systemManager = new User("big manager");
+            User systemManager = new User("big manager", 25, true);
             systemManager.changeState(new SystemManagerState(systemManager));
             RegularResult res = insertNewUser(systemManager, "123456");
             if (!res.getTag())
                 throw new SystemException("Couldn't create a system manager");
-            systemManager.isSystemManager = true;
         }
         
         public RegularResult insertNewUser(User newUser, String password)
@@ -47,7 +42,7 @@ namespace WSEP212.DomainLayer
                 return new Ok("Registration To The System Was Successful");
             }
         }
-
+        
         public RegularResult addLoginUser(User newUser)
         {
             lock (insertLock)

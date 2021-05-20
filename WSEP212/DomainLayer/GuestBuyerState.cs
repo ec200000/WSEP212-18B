@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -136,10 +137,9 @@ namespace WSEP212.DomainLayer
             // only logged buyers can do that
         }
 
-        public override RegularResult register(String userName, int userAge, String password)
+        public override RegularResult register(User newUser, String password)
         {
-            User user = new User(userName, userAge);
-            return UserRepository.Instance.insertNewUser(user, password);
+            return UserRepository.Instance.insertNewUser(newUser, password);
         }
         
         public override RegularResult continueAsGuest(String userName)

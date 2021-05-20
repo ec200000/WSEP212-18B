@@ -1,21 +1,36 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class ShoppingBag
     {
+        public int StoreIDRef { get; set; }
+        [Key]
+        [ForeignKey("StoreIDRef")]
         public Store store { get; set; }
         // A data structure associated with a item ID and its quantity - more effective when there will be a sales policy
         // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping bag
+        [NotMapped]
         public ConcurrentDictionary<int, int> items { get; set; }
-
+        public string DictionaryAsJson
+        {
+            get => JsonConvert.SerializeObject(items);
+            set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
+        }
+        
         public ShoppingBag(Store store)
         {
             this.store = store;
             this.items = new ConcurrentDictionary<int, int>();
+            this.StoreIDRef = store.storeID;
         }
 
         // return true if the shopping bag is empty

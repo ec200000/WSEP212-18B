@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -18,7 +19,7 @@ namespace WSEP212.DomainLayer
         }
 
         // * User Management In The System * //
-        public abstract RegularResult register(String userName, int userAge, String password);
+        public abstract RegularResult register(User newUser, String password);
 
         public abstract RegularResult login(String userName, String password);   
         public abstract RegularResult loginAsSystemManager(String userName, String password);

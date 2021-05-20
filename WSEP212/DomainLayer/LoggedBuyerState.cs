@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -142,7 +143,7 @@ namespace WSEP212.DomainLayer
                 {
                     if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
                         return new Failure("Can't edit store's owner permissions!");
-                    storeSellerRes.getValue().permissionsInStore = permissions;
+                    storeSellerRes.getValue().setPermissions(permissions);
                     return new Ok("Edit Manager Permissions Successfully");
                 }
                 return new Failure(storeSellerRes.getMessage());
@@ -279,7 +280,7 @@ namespace WSEP212.DomainLayer
             return addStoreRes;
         }
 
-        public override RegularResult register(string userName, int userAge, string password)
+        public override RegularResult register(User newUSer, string password)
         {
             throw new NotImplementedException();
         }

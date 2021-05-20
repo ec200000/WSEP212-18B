@@ -1,20 +1,2 @@
-2021-05-14 16:34:26.247 +03:00 [Error] Object reference not set to an instance of an object.
-
-2021-05-14 16:34:26.325 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
-
-2021-05-14 16:34:30.106 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
-
-2021-05-14 16:35:35.897 +03:00 [Error] Object reference not set to an instance of an object.
-
-2021-05-14 16:35:35.951 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
-
-2021-05-14 16:37:17.544 +03:00 [Error] Object reference not set to an instance of an object.
-
-2021-05-14 16:37:17.628 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
-
-2021-05-14 16:37:21.568 +03:00 [Error] In ContinueAsGuest function, the error is: Object reference not set to an instance of an object.
-
-2021-05-14 16:37:27.414 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
-
-2021-05-14 16:37:37.538 +03:00 [Error] In LoginAsSystemManager function, the error is: Object reference not set to an instance of an object.
+2021-05-14 16:38:01.877 +03:00 [Error] No connection string named 'ourdb' could be found in the application config file.
 
