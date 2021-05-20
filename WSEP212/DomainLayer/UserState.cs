@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -36,7 +38,7 @@ namespace WSEP212.DomainLayer
         {
             return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
         }
-        public RegularResult purchaseItems(string address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string address)
         {
             return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
         }
@@ -44,7 +46,7 @@ namespace WSEP212.DomainLayer
         
 
         // * Store Storage Management * //
-        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
+        public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
         public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
         public abstract RegularResult removeItemFromStorage(int storeID, int itemID);
         public abstract RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category);
@@ -52,18 +54,18 @@ namespace WSEP212.DomainLayer
 
 
         // * Store Policies Management * //
-        public abstract ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate);
+        public abstract ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
         public abstract RegularResult removePurchasePredicate(int storeID, int predicateID);
         public abstract ResultWithValue<int> composePurchasePredicates(int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
-        public abstract ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn);
+        public abstract ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription);
         public abstract RegularResult removeSale(int storeID, int saleID);
-        public abstract ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType);
-        public abstract ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule);
+        public abstract ResultWithValue<int> addSaleCondition(int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType);
+        public abstract ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule);
         // * End Of Store Policies Management * //
 
 
         // * Item Reviews * //
-        public abstract RegularResult itemReview(String review, int itemID, int storeID);
+        public abstract ResultWithValue<ConcurrentLinkedList<string>> itemReview(String review, int itemID, int storeID);
         // * End Of Item Reviews * //
 
 

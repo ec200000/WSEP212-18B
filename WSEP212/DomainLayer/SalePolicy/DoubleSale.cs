@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class DoubleSale : Sale
     {
         public Sale firstSale { get; set; }
         public Sale secondSale { get; set; }
 
-        public DoubleSale(Sale firstSale, Sale secondSale)
+        public DoubleSale(Sale firstSale, Sale secondSale) :
+            base("(Both Sales Can Be Applied: " + firstSale.ToString() + ", AND: " + secondSale.ToString() + ")")
         {
             this.firstSale = firstSale;
             this.secondSale = secondSale;

@@ -3,6 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -15,6 +19,7 @@ namespace WSEP212.DomainLayer
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
+        public ConcurrentLinkedList<ItemUserReviews> myReviews { get; set; }
         public bool isSystemManager { get; set; }
 
         public User(String userName, int userAge = int.MinValue, bool isSystemManager = false)
@@ -24,6 +29,7 @@ namespace WSEP212.DomainLayer
             this.shoppingCart = new ShoppingCart();
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
+            this.myReviews = new ConcurrentLinkedList<ItemUserReviews>();
             this.state = new GuestBuyerState(this);
         }
 
@@ -177,8 +183,8 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             String storeName = (String)param.parameters[0];
             String storeAdress = (String)param.parameters[1];
-            PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[2];
-            SalePolicy salesPolicy = (SalePolicy)param.parameters[3];
+            PurchasePolicyInterface purchasePolicy = (PurchasePolicyInterface)param.parameters[2];
+            SalePolicyInterface salesPolicy = (SalePolicyInterface)param.parameters[3];
             object res;
             try
             {
@@ -362,6 +368,26 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set();
         }
+        
+        // params: String managerName, int storeID
+        // returns: bool
+        public void removeStoreOwner(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            String ownerName = (String)param.parameters[0];
+            int storeID = (int)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.removeStoreOwner(ownerName, storeID);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
 
         // params: int storeID, Predicate pred
         // returns: int - the id of the new pred
@@ -370,10 +396,11 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             Predicate<PurchaseDetails> newPredicate = (Predicate<PurchaseDetails>)param.parameters[1];
+            String predDescription = (String)param.parameters[2];
             object res;
             try
             {
-                res = state.addPurchasePredicate(storeID, newPredicate);
+                res = state.addPurchasePredicate(storeID, newPredicate, predDescription);
             }
             catch (NotImplementedException)
             {
@@ -433,10 +460,11 @@ namespace WSEP212.DomainLayer
             int storeID = (int)param.parameters[0];
             int salePercentage = (int)param.parameters[1];
             ApplySaleOn saleOn = (ApplySaleOn)param.parameters[2];
+            String saleDescription = (String)param.parameters[3];
             object res;
             try
             {
-                res = state.addSale(storeID, salePercentage, saleOn);
+                res = state.addSale(storeID, salePercentage, saleOn, saleDescription);
             }
             catch (NotImplementedException)
             {
@@ -473,7 +501,7 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
             int saleID = (int)param.parameters[1];
-            Predicate<PurchaseDetails> condition = (Predicate<PurchaseDetails>)param.parameters[2];
+            SimplePredicate condition = (SimplePredicate)param.parameters[2];
             SalePredicateCompositionType compositionType = (SalePredicateCompositionType)param.parameters[3];
             object res;
             try
@@ -497,7 +525,7 @@ namespace WSEP212.DomainLayer
             int firstSaleID = (int)param.parameters[1];
             int secondSaleID = (int)param.parameters[2];
             SaleCompositionType typeOfComposition = (SaleCompositionType)param.parameters[3];
-            Predicate<PurchaseDetails> selectionRule = (Predicate<PurchaseDetails>)param.parameters[4];
+            SimplePredicate selectionRule = (SimplePredicate)param.parameters[4];
             object res;
             try
             {

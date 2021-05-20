@@ -2,11 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.PurchasePolicy
 {
-    public class PurchasePolicy
+    public class PurchasePolicy : PurchasePolicyInterface
     {
         public String purchasePolicyName { get; set; }
         //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
@@ -21,9 +22,9 @@ namespace WSEP212.DomainLayer
         // add new purchase predicate for the store purchase policy
         // add the predicate to the other predicates by composing them with AND Predicate - done by the build 
         // returns the id of the new purchase predicate
-        public int addPurchasePredicate(Predicate<PurchaseDetails> predicate) 
+        public int addPurchasePredicate(Predicate<PurchaseDetails> predicate, String predicateDescription) 
         {
-            SimplePredicate simplePredicate = new SimplePredicate(predicate);
+            SimplePredicate simplePredicate = new SimplePredicate(predicate, predicateDescription);
             purchasePredicates.TryAdd(simplePredicate.predicateID, simplePredicate);
             return simplePredicate.predicateID;
         }
@@ -65,6 +66,17 @@ namespace WSEP212.DomainLayer
             }
             purchasePredicates.TryAdd(composedPredicate.predicateID, composedPredicate);
             return new OkWithValue<int>("The Composed Purchase Predicate Was Added To The Store's Purchase Policy", composedPredicate.predicateID);
+        }
+
+        // returns the descriptions of all predicates for presenting them to the user
+        public ConcurrentDictionary<int, String> getPurchasePredicatesDescriptions()
+        {
+            ConcurrentDictionary<int, String> predicatesDescriptions = new ConcurrentDictionary<int, string>();
+            foreach (KeyValuePair<int, PurchasePredicate> predPair in purchasePredicates)
+            {
+                predicatesDescriptions.TryAdd(predPair.Key, predPair.Value.ToString());
+            }
+            return predicatesDescriptions;
         }
 
         // builds the purchase policy by all the predicates in the store

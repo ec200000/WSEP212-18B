@@ -1,4 +1,6 @@
 @using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
+@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.StoreModel
 <!DOCTYPE html>
@@ -18,26 +20,39 @@
         string[] StoresList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("stores");
         @Html.DropDownListFor(model => model.storeInfo, new SelectList(StoresList.OfType<string>().ToList()), new {@class = "custom-select"});
         
-        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ItemActions" type="submit">See Items In Store</button>
-
+            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ItemActions" type="submit">See Items In Store</button>
         <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
         
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Purchase Predicates</button>
-
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Sale Predicates</button>
-
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Purchase Predicates</button>
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Sale Predicates</button>
     }
 </div>
 </body>
 </html>
-@if (ViewBag.Alert != null)
+@if (TempData["alert"] != null)
 {
-    <script type="text/javascript">
-    
+    <script type="text/javascript">  
+            window.onload = function() {  
+                alert("@TempData["alert"]");  
+            };  
+        </script>  
+}
 
-            window.onload = function() {
-                alert("@ViewBag.Alert");
-            };
-    </script>
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
 
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+     
+        connection.on('sendToUser', data => {
+             alert(data)
+        });
+        
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+      </script>
 }

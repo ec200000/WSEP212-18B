@@ -2,15 +2,17 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class SimpleSale : Sale
     {
         public int salePercentage { get; set; }
         public ApplySaleOn applySaleOn { get; set; }
 
-        public SimpleSale(int salePercentage, ApplySaleOn applySaleOn) : base()
+        public SimpleSale(int salePercentage, ApplySaleOn applySaleOn, String saleDescription) : base(saleDescription)
         {
             this.salePercentage = salePercentage;
             this.applySaleOn = applySaleOn;

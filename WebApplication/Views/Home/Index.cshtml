@@ -45,14 +45,22 @@
         <button class="btn btn-outline-primary" type="submit">Continue As Guest</button>
     }
 </div>
-</body>
-</html>
 
-@if (ViewBag.Alert!= null)  
-{  
+<!--- <div class="container">
+    <input type="text" id="txtMessage" />
+    <input type="button" id="sendMessage" value="Send" onclick="sendMessage();" />
+ 
+    <div id="DisplayMessages"></div>
+ 
+</div>--->
+</body>
+</html> 
+
+@if (TempData["alert"] != null)
+{
     <script type="text/javascript">  
             window.onload = function() {  
-                alert("@ViewBag.Alert");  
+                alert("@TempData["alert"]");  
             };  
         </script>  
-} 
+}

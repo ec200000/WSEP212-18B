@@ -3,6 +3,7 @@ using System;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -20,7 +21,7 @@ namespace WSEP212_TESTS.IntegrationTests
             UserRepository.Instance.users.TryAdd(user1, false);
             UserRepository.Instance.users.TryAdd(user2, true);
             
-            Store store2 = new Store("t", "bb", new SalePolicy("default"), new PurchasePolicy("default"), user2);
+            Store store2 = new Store("t", "bb", new SalePolicyMock(), new PurchasePolicyMock(), user2);
             Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
             store2.storage.TryAdd(1, item);
             StoreRepository.Instance.stores.TryAdd(1,store2);
@@ -103,8 +104,8 @@ namespace WSEP212_TESTS.IntegrationTests
             User u = new User("k"); //the user is not registered to the system
             String name = "store";
             String address = "holon";
-            SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default");
+            SalePolicyMock salesPolicy = new SalePolicyMock();
+            PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -202,7 +203,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = storeID;
             parameters.parameters = list;
             user1.itemReview(parameters);
-            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -218,7 +219,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = storeID;
             parameters.parameters = list;
             user2.itemReview(parameters);
-            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -234,7 +235,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = storeID;
             parameters.parameters = list;
             user2.itemReview(parameters);
-            Assert.IsFalse(((RegularResult)parameters.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
         }
         
         [TestMethod]
@@ -494,7 +495,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list2[0] = address;
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
-            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
         }
@@ -507,7 +508,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list2[0] = null;
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
-            Assert.IsFalse(((RegularResult)parameters2.result).getTag());
+            Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
             Assert.AreEqual(0, this.user2.purchases.Count);
             Assert.AreEqual(0, StoreRepository.Instance.stores[1].purchasesHistory.Count);
             Assert.AreEqual(0,user2.shoppingCart.shoppingBags.Count);

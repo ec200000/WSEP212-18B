@@ -3,7 +3,9 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.ServiceLayer.Result;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -19,7 +21,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), new User("admin"));
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
             shoppingBag = new ShoppingBag(shoppingBagStore);
@@ -83,7 +85,6 @@ namespace WSEP212_TESTS.UnitTests
 
             Assert.IsFalse(shoppingBag.addItem(itemID, -5).getTag());   // should fail because it is not possible to add a item with negative quantity
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));
-
         }
 
         [TestMethod]
@@ -91,12 +92,18 @@ namespace WSEP212_TESTS.UnitTests
         {
             int itemID = storeItemID;
 
-            Assert.IsFalse(shoppingBag.removeItem(itemID).getTag());   // should fail because there is no such item ID in the shopping bag
-            Assert.IsFalse(shoppingBag.removeItem(-1).getTag());   // should fail because there is no such item ID
-
             shoppingBag.addItem(itemID, 5);
             Assert.IsTrue(shoppingBag.removeItem(itemID).getTag());
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));
+        }
+
+        [TestMethod]
+        public void removeItemFailTest()
+        {
+            int itemID = storeItemID;
+
+            Assert.IsFalse(shoppingBag.removeItem(itemID).getTag());   // should fail because there is no such item ID in the shopping bag
+            Assert.IsFalse(shoppingBag.removeItem(-1).getTag());   // should fail because there is no such item ID
         }
 
         [TestMethod]
@@ -142,6 +149,8 @@ namespace WSEP212_TESTS.UnitTests
             User user = new User("admin");
             ConcurrentDictionary<int, PurchaseType> purchaseType = new ConcurrentDictionary<int, PurchaseType>();
             purchaseType.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            StoreRepository.Instance.stores[shoppingBagStore.storeID].deliverySystem = DeliverySystemMock.Instance;
 
             ResultWithValue<double> result = shoppingBag.purchaseItemsInBag(user, purchaseType);
             Assert.IsTrue(result.getTag());
@@ -154,7 +163,6 @@ namespace WSEP212_TESTS.UnitTests
             int itemID = storeItemID;
             shoppingBag.addItem(itemID, 5);
             Assert.IsFalse(shoppingBag.isEmpty());   // should not be empty - 5 items
-
             shoppingBag.clearShoppingBag();
             Assert.IsTrue(shoppingBag.isEmpty());   // should be empty after clearing the shopping bag
         }

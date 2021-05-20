@@ -8,6 +8,11 @@ using System.Threading;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
+using WSEP212.DomainLayer.SystemLoggers;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
 namespace WSEP212.DomainLayer
 {
@@ -185,7 +190,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
         {
             try
             {
@@ -210,16 +215,16 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In PurchaseItems function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message, null);
             }
         }
 
-        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             try
             {
@@ -252,7 +257,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult itemReview(string userName, string review, int itemID, int storeID)
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(string userName, string review, int itemID, int storeID)
         {
             try
             {
@@ -277,12 +282,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In ItemReview function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message,null);
             }
         }
 
@@ -543,7 +548,7 @@ namespace WSEP212.DomainLayer
                 Object[] paramsList = { ownerName, storeID };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                ThreadPool.QueueUserWorkItem(user.removeStoreManager, threadParameters); //creating the job
+                ThreadPool.QueueUserWorkItem(user.removeStoreOwner, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {
@@ -560,7 +565,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate)
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             try
             {
@@ -574,7 +579,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { storeID, newPredicate };
+                Object[] paramsList = { storeID, newPredicate, predDescription };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.addPurchasePredicate, threadParameters); //creating the job
@@ -662,7 +667,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn)
+        public ResultWithValue<int> addSale(string userName, int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             try
             {
@@ -676,7 +681,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { storeID, salePercentage, saleOn };
+                Object[] paramsList = { storeID, salePercentage, saleOn, saleDescription };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.addSale, threadParameters); //creating the job
@@ -730,7 +735,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public ResultWithValue<int> addSaleCondition(string userName, int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             try
             {
@@ -764,7 +769,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(string userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             try
             {
@@ -1102,6 +1107,30 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog($"In ContinueAsGuest function, the error is: {e.Message}");
                 return new Failure("user couldn't perform action.");
             }
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID)
+        {
+            Store store;
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (storeRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
+            }
+            store = storeRes.getValue();
+            return new OkWithValue<ConcurrentDictionary<int, String>>("Store Exist", store.getPurchasePredicatesDescriptions());
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID)
+        {
+            Store store;
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (storeRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
+            }
+            store = storeRes.getValue();
+            return new OkWithValue<ConcurrentDictionary<int, String>>("Store Exist", store.getSalesDescriptions());
         }
     }
 }

@@ -13,7 +13,7 @@
     @using (Html.BeginForm("TryLogin", "Home", FormMethod.Post))
     {
         <div>
-            @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclasslogin" })
+            @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclasslogin", @id="nameBox" })
             @Html.ValidationMessageFor(model => model.UserName)
         </div>
 
@@ -22,7 +22,7 @@
             @Html.ValidationMessageFor(model => model.Password)
         </div>
 
-        <button class="btn btn-outline-primary" type="submit" formaction="TryLogin" value="Login">Login</button>
+        <button class="btn btn-outline-primary" type="submit" formaction="TryLogin" value="Login" onclick="saveConn()">Login</button>
 
         <button style="margin-left: 5px" class="btn btn-outline-primary" type="submit" formaction="LoginAsSystemManager">Login As System Manager</button>
     }
@@ -30,11 +30,35 @@
 </body>
 </html>
 
-@if (ViewBag.Alert!= null)  
-{  
+@if (TempData["alert"] != null)
+{
     <script type="text/javascript">  
             window.onload = function() {  
-                alert("@ViewBag.Alert");  
+                alert("@TempData["alert"]");  
             };  
         </script>  
-} 
+}
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+     
+        function saveConn()
+        {
+            let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+            connection.start().then(async () => {
+                        console.log("connection started");
+                        let userName = document.getElementById("nameBox").value 
+                        await connection.invoke('GetConnectionIdWithUserName', userName).then(async function (connectionId) {
+                            //alert(connectionId);
+                            await connection.invoke('SendDelayedNotificationsToUser', userName);
+                        });
+                    });
+        }
+        
+        connection.on('sendToUser', data => {
+           alert(data)
+        });
+      </script>
+}

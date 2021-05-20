@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -20,19 +24,19 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn)
+        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -56,7 +60,7 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -98,7 +102,7 @@ namespace WSEP212.DomainLayer
             // only system managers can do that
         }
 
-        public override RegularResult itemReview(string review, int itemID, int storeID)
+        public override ResultWithValue<ConcurrentLinkedList<string>> itemReview(string review, int itemID, int storeID)
         {
             throw new NotImplementedException();
             // only logged buyers can do that
@@ -130,7 +134,7 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException(); // can't log out because he ain't logged in
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             throw new NotImplementedException();
             // only logged buyers can do that

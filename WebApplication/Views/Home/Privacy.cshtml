@@ -11,11 +11,30 @@
 
 <p>Use this page to detail your site's privacy policy.</p>
 
-@if (ViewBag.Alert!= null)  
-{  
+@if (TempData["alert"] != null)
+{
     <script type="text/javascript">  
             window.onload = function() {  
-                alert("@ViewBag.Alert");  
+                alert("@TempData["alert"]");  
             };  
         </script>  
-} 
+}
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+     
+        connection.on('sendToUser', data => {
+             alert(data)
+        });
+        
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+      </script>
+}

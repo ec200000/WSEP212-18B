@@ -2,15 +2,17 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class ConditionalSale : Sale
     {
         public Sale sale { get; set; }
         public SalePredicate predicate { get; set; }
 
-        public ConditionalSale(Sale sale, SalePredicate predicate) : base()
+        public ConditionalSale(Sale sale, SalePredicate predicate) : 
+            base("(In Order To Get The Sale: " + sale.ToString() + ", You Must Met The Condition: " + predicate.ToString() + ")")
         {
             this.sale = sale;
             this.predicate = predicate;

@@ -2,6 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -167,7 +171,7 @@ namespace WSEP212.DomainLayer
             {
                 if (sellerPermissions.Value.store.storeID == storeID) // if the user works at the store
                 {
-                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
+                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.size!=0)
                         return sellerPermissions.Value.store.getStoreOfficialsInfo(); // getting all users permissions
                 }
                 sellerPermissions = sellerPermissions.Next; // checking the next store
@@ -203,9 +207,9 @@ namespace WSEP212.DomainLayer
             // only system managers can do that
         }
 
-        public override RegularResult itemReview(String review, int itemID, int storeID)
+        public override ResultWithValue<ConcurrentLinkedList<string>> itemReview(String review, int itemID, int storeID)
         {
-            if(review==null) return new Failure("Review Is Null");
+            if(review==null) return new FailureWithValue<ConcurrentLinkedList<string>>("Review Is Null",null);
             ResultWithValue<Store> getStoreRes = StoreRepository.Instance.getStore(storeID);
             if (getStoreRes.getTag())
             {
@@ -214,14 +218,24 @@ namespace WSEP212.DomainLayer
                 {
                     if(isPurchasedItem(itemID))
                     {
-                        getItemRes.getValue().addReview(this.user.userName, review);
-                        return new Ok("Item Review Have Been Successfully Added");
+                        Item item = getItemRes.getValue();
+                        ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(item, user);
+                        userReviews.addReview(review);
+                        if (!user.myReviews.Contains(userReviews))
+                        {
+                            item.addUserReviews(userReviews);
+                            user.myReviews.TryAdd(userReviews);
+                        }
+                        return new OkWithValue<ConcurrentLinkedList<string>>("Item Review Have Been Successfully Added",
+                            StoreRepository.Instance.getStoreOwners(storeID));
                     }
-                    return new Failure("Unpurchased Product Cannot Be Reviewed");
+                    return new FailureWithValue<ConcurrentLinkedList<string>>("Unpurchased Product Cannot Be Reviewed",null);
                 }
-                return new Failure(getItemRes.getMessage());
+                return new FailureWithValue<ConcurrentLinkedList<string>>(getItemRes.getMessage(),null);
+                
             }
-            return new Failure(getStoreRes.getMessage());
+            return new FailureWithValue<ConcurrentLinkedList<string>>(getStoreRes.getMessage(),null);
+            
         }
 
         private bool isPurchasedItem(int itemID)
@@ -263,7 +277,7 @@ namespace WSEP212.DomainLayer
             return new Failure(findUserRes.getMessage());
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore(storeName, storeAddress, salesPolicy, purchasePolicy, this.user);
             if (addStoreRes.getTag())
@@ -334,11 +348,11 @@ namespace WSEP212.DomainLayer
                         }
                         return new Failure("The User Is Not Store Manager In This Store");
                     }
-                    return removeFromStoreRes;
+                    return new Failure(removeFromStoreRes.getMessage());
                 }
                 return new Failure(storeSellerRes.getMessage());
             }
-            return hasPermissionRes;
+            return new Failure(hasPermissionRes.getMessage());
         }
         
         public override RegularResult removeStoreOwner(string ownerName, int storeID)
@@ -368,7 +382,7 @@ namespace WSEP212.DomainLayer
                     if (storeSellerRes.getValue().grantor != this.user)
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
-                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().seller.userName);
+                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreOwner(storeSellerRes.getValue().seller.userName);
                     if(removeFromStoreRes.getTag())
                     {
                         if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))
@@ -385,7 +399,7 @@ namespace WSEP212.DomainLayer
             return hasPermissionRes;
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -397,7 +411,7 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
             if (hasPermissionRes.getTag())
             {
-                int predicateID = storeRes.getValue().addPurchasePredicate(newPredicate);
+                int predicateID = storeRes.getValue().addPurchasePredicate(newPredicate, predDescription);
                 return new OkWithValue<int>("The Purchase Predicate Added To The Store's Purchase Policy", predicateID);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
@@ -437,7 +451,7 @@ namespace WSEP212.DomainLayer
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
 
-        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn)
+        public override ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -449,7 +463,7 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
             if (hasPermissionRes.getTag())
             {
-                int saleID = storeRes.getValue().addSale(salePercentage, saleOn);
+                int saleID = storeRes.getValue().addSale(salePercentage, saleOn, saleDescription);
                 return new OkWithValue<int>("The Sale Added To The Store's Sale Policy", saleID);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
@@ -472,7 +486,7 @@ namespace WSEP212.DomainLayer
             return hasPermissionRes;
         }
 
-        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public override ResultWithValue<int> addSaleCondition(int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -489,7 +503,7 @@ namespace WSEP212.DomainLayer
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
 
-        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public override ResultWithValue<int> composeSales(int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);

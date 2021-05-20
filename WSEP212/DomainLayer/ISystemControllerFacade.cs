@@ -3,6 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
@@ -19,18 +23,20 @@ namespace WSEP212.DomainLayer
         public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity);
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         //edit item in shopping cart is equal to -> remove + add
-        public RegularResult purchaseItems(String userName, String address); 
-        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy);
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); 
+        public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
 
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate);
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID);
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
-        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn);
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID);
+        public ResultWithValue<int> addSale(String userName, int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription);
         public RegularResult removeSale(String userName, int storeID, int saleID);
-        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType);
-        public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule);
+        public ResultWithValue<int> addSaleCondition(String userName, int storeID, int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType);
+        public ResultWithValue<int> composeSales(String userName, int storeID, int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule);
+        public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID);
 
-        public RegularResult itemReview(String userName, String review, int itemID, int storeID);
+        public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID);
         public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);
         public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category);

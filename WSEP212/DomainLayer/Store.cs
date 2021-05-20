@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -24,14 +29,14 @@ namespace WSEP212.DomainLayer
         public String storeName { get; set; }
         public String storeAddress { get; set; }
         public bool activeStore { get; set; }
-        public SalePolicy salesPolicy { get; set; }
-        public PurchasePolicy purchasePolicy { get; set; }
+        public SalePolicyInterface salesPolicy { get; set; }
+        public PurchasePolicyInterface purchasePolicy { get; set; }
         public ConcurrentBag<PurchaseInvoice> purchasesHistory { get; set; }
         // A data structure associated with a user name and seller permissions
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
         public DeliveryInterface deliverySystem { get; set; }
 
-        public Store(String storeName, String storeAddress, SalePolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
@@ -158,9 +163,9 @@ namespace WSEP212.DomainLayer
         }
 
         // add a new purchase prediacte for the store
-        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate)
+        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, String predDescription)
         {
-            return this.purchasePolicy.addPurchasePredicate(newPredicate);
+            return this.purchasePolicy.addPurchasePredicate(newPredicate, predDescription);
         }
 
         // removes purchase prediacte from the store
@@ -175,10 +180,16 @@ namespace WSEP212.DomainLayer
             return this.purchasePolicy.composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
         }
 
-        // add new sale for the store sale policy
-        public int addSale(int salePercentage, ApplySaleOn saleOn)
+        // returns the descriptions of all preds for presenting them to the user
+        public ConcurrentDictionary<int, String> getPurchasePredicatesDescriptions()
         {
-            return this.salesPolicy.addSale(salePercentage, saleOn);
+            return this.purchasePolicy.getPurchasePredicatesDescriptions();
+        }
+
+        // add new sale for the store sale policy
+        public int addSale(int salePercentage, ApplySaleOn saleOn, String saleDescription)
+        {
+            return this.salesPolicy.addSale(salePercentage, saleOn, saleDescription);
         }
 
         // remove sale from the store sale policy
@@ -188,15 +199,21 @@ namespace WSEP212.DomainLayer
         }
 
         // add conditional for getting the sale
-        public ResultWithValue<int> addSaleCondition(int saleID, Predicate<PurchaseDetails> condition, SalePredicateCompositionType compositionType)
+        public ResultWithValue<int> addSaleCondition(int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
             return this.salesPolicy.addSaleCondition(saleID, condition, compositionType);
         }
 
         // compose two sales by the type of sale 
-        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, Predicate<PurchaseDetails> selectionRule)
+        public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
             return this.salesPolicy.composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
+        }
+
+        // returns the descriptions of all sales for presenting them to the user
+        public ConcurrentDictionary<int, String> getSalesDescriptions()
+        {
+            return this.salesPolicy.getSalesDescriptions();
         }
 
         // Apply the sales policy on a list of items
@@ -339,6 +356,25 @@ namespace WSEP212.DomainLayer
             }
             return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
         }
+
+        // Removes a store seller from this store
+        public RegularResult removeStoreOwner(String sellerUserName)
+        {
+            if (storeSellersPermissions.ContainsKey(sellerUserName))
+            {
+                storeSellersPermissions.TryRemove(sellerUserName, out _);
+                foreach(KeyValuePair<string,SellerPermissions> val in storeSellersPermissions)
+                {
+                    if (val.Value.grantor.userName.Equals(sellerUserName))
+                    {
+                        storeSellersPermissions.TryRemove(val.Key, out _);
+                    }
+                }
+                return new Ok("The Store Seller Removed From The Store Successfully");
+            }
+            return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
+        }
+
 
         // checks if the user is seller in this store
         // if he is, returns his seller permissions in the store

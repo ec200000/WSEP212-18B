@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.ExternalDeliverySystem
 {
     public class DeliverySystem : DeliveryInterface
     {

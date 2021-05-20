@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
+@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 
@@ -15,20 +17,45 @@
         string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
         @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"})
         ;
-
-        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="TryAppointManager" type="submit">Appoint Manager</button>
-
-        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="TryAppointOwner" type="submit">Appoint Owner</button>
+        string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+        int store = (int)HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+        @if (SystemController.Instance.hasPermission(name, store, Permissions.AppointStoreManager).getTag())
+        {
+            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="TryAppointManager" type="submit">Appoint Manager</button>
+        }
+        @if (SystemController.Instance.hasPermission(name, store, Permissions.AppointStoreOwner).getTag())
+        {
+            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="TryAppointOwner" type="submit">Appoint Owner</button>
+        }
     }
 </div>
 </body>
 </html>
 
-@if (ViewBag.Alert!= null)  
-{  
+@if (TempData["alert"] != null)
+{
     <script type="text/javascript">  
             window.onload = function() {  
-                alert("@ViewBag.Alert");  
+                alert("@TempData["alert"]");  
             };  
         </script>  
 } 
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+     
+        connection.on('sendToUser', data => {
+             alert(data)
+        });
+     
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+      </script>
+}

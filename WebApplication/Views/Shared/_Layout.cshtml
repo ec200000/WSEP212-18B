@@ -20,21 +20,21 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 0)
-                     {
-                         <li class="nav-item">
-                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                         </li>
-                     }
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                     </li>
-                     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 0)
-                     {
-                         <li class="nav-item">
-                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
-                         </li>
-                     }
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 0)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 0)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                        </li>
+                    }
                     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 0)
                     {
                         <li class="nav-item">
@@ -48,25 +48,25 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SearchItems">Search Items</a>
                         </li>
                     }
-                     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 0 && @HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 3)
-                     {
-                      <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PurchaseHistory">Purchase History</a>
-                     </li>
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 0 && @HttpContextAccessor.HttpContext.Session.GetInt32("_Login") != 3)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PurchaseHistory">Purchase History</a>
+                        </li>
 
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="StoreActions">Store Actions</a>
-                     </li>
-                     }
-                      @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 2)
-                      {
-                          <li class="nav-item">
-                              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UsersPurchaseHistory">Users' Purchase History</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="StoresPurchaseHistory">Stores' Purchase History</a>
-                          </li>
-                      }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="StoreActions">Store Actions</a>
+                        </li>
+                    }
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_Login") == 2)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UsersPurchaseHistory">Users' Purchase History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="StoresPurchaseHistory">Stores' Purchase History</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -77,12 +77,6 @@
         @RenderBody()
     </main>
 </div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - WebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

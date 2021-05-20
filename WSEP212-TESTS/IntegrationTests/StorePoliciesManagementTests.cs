@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
 using WSEP212.ServiceLayer.Result;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -24,6 +29,8 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             user = new User("Sagiv", 21);
             store = new Store("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            store.deliverySystem = DeliverySystemMock.Instance;
 
             shoppingBagItems = new ConcurrentDictionary<int, int>();
             itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
@@ -51,7 +58,7 @@ namespace WSEP212_TESTS.IntegrationTests
         public void approvedByPurchasePolicySimpleTest()
         {
             Predicate<PurchaseDetails> pred = pd => pd.numOfItemsInPurchase() >= 2;
-            int predicateID = store.addPurchasePredicate(pred);
+            int predicateID = store.addPurchasePredicate(pred, "more then 2 items in bag");
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
             Assert.IsTrue(purchaseRes.getTag());
@@ -64,11 +71,11 @@ namespace WSEP212_TESTS.IntegrationTests
         public void approvedByPurchasePolicyComplexTest()
         {
             Predicate<PurchaseDetails> pred1 = pd => pd.numOfItemsInPurchase() >= 2;
-            int predID1 = store.addPurchasePredicate(pred1);
+            int predID1 = store.addPurchasePredicate(pred1, "more then 2 items in bag");
             Predicate<PurchaseDetails> pred2 = pd => pd.totalPurchasePrice() >= 100;
-            int predID2 = store.addPurchasePredicate(pred2);
+            int predID2 = store.addPurchasePredicate(pred2, "price is more then 100");
             Predicate<PurchaseDetails> pred3 = pd => pd.user.userAge >= 18;
-            int predID3 = store.addPurchasePredicate(pred3);
+            int predID3 = store.addPurchasePredicate(pred3, "user age is more then 18");
             int composedID = store.composePurchasePredicates(predID2, predID3, PurchasePredicateCompositionType.OrComposition).getValue();
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
@@ -83,7 +90,7 @@ namespace WSEP212_TESTS.IntegrationTests
         public void rejectedByPurchasePolicySimpleTest()
         {
             Predicate<PurchaseDetails> pred = pd => pd.numOfItemsInPurchase() >= 20;
-            int predicateID = store.addPurchasePredicate(pred);
+            int predicateID = store.addPurchasePredicate(pred, "more then 20 items in bag");
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
             Assert.IsFalse(purchaseRes.getTag());
@@ -95,11 +102,11 @@ namespace WSEP212_TESTS.IntegrationTests
         public void rejectedByPurchasePolicyComplexTest()
         {
             Predicate<PurchaseDetails> pred1 = pd => pd.numOfItemsInPurchase() >= 2;
-            int predID1 = store.addPurchasePredicate(pred1);
+            int predID1 = store.addPurchasePredicate(pred1, "more then 2 items in bag");
             Predicate<PurchaseDetails> pred2 = pd => pd.totalPurchasePrice() >= 100;
-            int predID2 = store.addPurchasePredicate(pred2);
+            int predID2 = store.addPurchasePredicate(pred2, "price is more then 100");
             Predicate<PurchaseDetails> pred3 = pd => pd.user.userAge >= 18;
-            int predID3 = store.addPurchasePredicate(pred3);
+            int predID3 = store.addPurchasePredicate(pred3, "user age is more then 18");
             int composedID = store.composePurchasePredicates(predID2, predID3, PurchasePredicateCompositionType.ConditionalComposition).getValue();
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
@@ -113,7 +120,7 @@ namespace WSEP212_TESTS.IntegrationTests
         public void appliedSaleSimpleTest()
         {
             ApplySaleOn saleOn = new SaleOnCategory("snack");
-            int saleID = store.addSale(50, saleOn);
+            int saleID = store.addSale(50, saleOn, "50% sale on sancks");
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
             Assert.IsTrue(purchaseRes.getTag());
@@ -126,11 +133,11 @@ namespace WSEP212_TESTS.IntegrationTests
         public void appliedSaleComplexTest()
         {
             ApplySaleOn saleOnSnacks = new SaleOnCategory("snack");
-            int saleID1 = store.addSale(50, saleOnSnacks);
+            int saleID1 = store.addSale(50, saleOnSnacks, "50% sale on sancks");
             ApplySaleOn saleOnMilk = new SaleOnItem(milkID);
-            int saleID2 = store.addSale(50, saleOnMilk);
+            int saleID2 = store.addSale(50, saleOnMilk, "50% sale on milk");
             ApplySaleOn saleOnAllStore = new SaleOnAllStore();
-            int saleID3 = store.addSale(25, saleOnAllStore);
+            int saleID3 = store.addSale(25, saleOnAllStore, "25% sale on all store");
             int composedID = store.composeSales(saleID1, saleID3, SaleCompositionType.MaxComposition, null).getValue();
             composedID = store.composeSales(saleID2, composedID, SaleCompositionType.MaxComposition, null).getValue();
 
@@ -145,9 +152,10 @@ namespace WSEP212_TESTS.IntegrationTests
         public void appliedConditionalSaleTest()
         {
             ApplySaleOn saleOn = new SaleOnCategory("snack");
-            int saleID = store.addSale(50, saleOn);
+            int saleID = store.addSale(50, saleOn, "50% sale on sancks");
             Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 40;
-            saleID = store.addSaleCondition(saleID, pred, SalePredicateCompositionType.AndComposition).getValue();
+            SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 40");
+            saleID = store.addSaleCondition(saleID, predicate, SalePredicateCompositionType.AndComposition).getValue();
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
             Assert.IsTrue(purchaseRes.getTag());
@@ -160,9 +168,10 @@ namespace WSEP212_TESTS.IntegrationTests
         public void notAppliedConditionalSaleTest()
         {
             ApplySaleOn saleOn = new SaleOnCategory("snack");
-            int saleID = store.addSale(50, saleOn);
+            int saleID = store.addSale(50, saleOn, "50% sale on sancks");
             Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 50;
-            saleID = store.addSaleCondition(saleID, pred, SalePredicateCompositionType.AndComposition).getValue();
+            SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 50");
+            saleID = store.addSaleCondition(saleID, predicate, SalePredicateCompositionType.AndComposition).getValue();
 
             ResultWithValue<double> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPurchaseType);
             Assert.IsTrue(purchaseRes.getTag());
