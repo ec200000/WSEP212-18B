@@ -11,7 +11,7 @@ namespace WSEP212.DomainLayer
         public String keyWords { get; set; }
         public double minPrice { get; set; }
         public double maxPrice { get; set; }
-        public String category { get; set; }
+        public ItemCategory category { get; set; }
 
         public SearchItems(SearchItemsDTO searchItemsDTO)
         {
@@ -19,13 +19,13 @@ namespace WSEP212.DomainLayer
             this.keyWords = searchItemsDTO.keyWords;
             this.minPrice = searchItemsDTO.minPrice;
             this.maxPrice = searchItemsDTO.maxPrice;
-            this.category = searchItemsDTO.category;
+            this.category = (ItemCategory)searchItemsDTO.category;
         }
 
         public bool matchSearchSettings(Item item)
         {
-            return (item.itemName.Contains(itemName) && item.category.Contains(category) && matchKeyWordsSetting(item)
-                && item.price >= minPrice && item.price <= maxPrice);
+            return (item.itemName.Contains(itemName) && (item.category == category || category == ItemCategory.AllCategories)
+                && matchKeyWordsSetting(item) && item.price >= minPrice && item.price <= maxPrice);
         }
 
         private bool matchKeyWordsSetting(Item item)
@@ -33,7 +33,7 @@ namespace WSEP212.DomainLayer
             String[] words = keyWords.Split(' ');   // split key words by space
             foreach (String word in words)
             {
-                if (item.category.Contains(word) || item.description.Contains(word) || item.itemName.Contains(word) || item.category.Contains(word))
+                if (item.category.ToString().Contains(word) || item.description.Contains(word) || item.itemName.Contains(word))
                 {
                     return true;
                 }

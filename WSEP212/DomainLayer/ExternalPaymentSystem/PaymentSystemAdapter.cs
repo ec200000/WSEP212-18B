@@ -24,12 +24,12 @@ namespace WSEP212.DomainLayer.ExternalPaymentSystem
 
         public int paymentCharge(string cardNumber, string month, string year, string holder, string ccv, string id, double price)
         {
-            return this.paymentSystemAPI.paymentCharge(cardNumber, month, year, holder, ccv, id, price).Result;
+            return this.paymentSystemAPI.paymentChargeAsync(cardNumber, month, year, holder, ccv, id, price).Result;
         }
 
         public bool cancelPaymentCharge(int transactionID)
         {
-            return this.paymentSystemAPI.cancelPaymentCharge(transactionID).Result;
+            return this.paymentSystemAPI.cancelPaymentChargeAsync(transactionID).Result;
         }
     }
 }

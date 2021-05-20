@@ -33,8 +33,8 @@ namespace WSEP212_TESTS.UnitTests
             storeA = StoreRepository.Instance.getStore(addStoreARes.getValue()).getValue();
             storeB = StoreRepository.Instance.getStore(addStoreBRes.getValue()).getValue();
 
-            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
-            itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, "health").getValue();
+            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
+            itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             purchaseType = new ItemImmediatePurchase(10);
 
             User buyer = new User("Sagiv", 21);

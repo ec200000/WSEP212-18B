@@ -19,6 +19,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         private static int storeID;
         private static int itemIDA;
         private static int itemIDB;
+        private static DeliveryParametersDTO deliveryParameters;
+        private static PaymentParametersDTO paymentParameters;
 
         private static int submitOfferPurchaseType = 1;
         private int approvedType = 0;
@@ -32,10 +34,13 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.login(userName, "123456");
             storeID = controller.openStore(userName, "SagivStore", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.supportPurchaseType(userName, storeID, submitOfferPurchaseType);
-            ItemDTO itemA = new ItemDTO(storeID, 10, "yammy", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemUserReviews>(), 5.0, "diary");
+            ItemDTO itemA = new ItemDTO(storeID, 10, "yammy", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemUserReviews>(), 5.0, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
             itemIDA = controller.addItemToStorage(userName, storeID, itemA).getValue();
-            ItemDTO itemB = new ItemDTO(storeID, 10, "tasty", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemUserReviews>(), 7.5, "diary");
+            ItemDTO itemB = new ItemDTO(storeID, 10, "tasty", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemUserReviews>(), 7.5, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
             itemIDB = controller.addItemToStorage(userName, storeID, itemB).getValue();
+
+            deliveryParameters = new DeliveryParametersDTO("guest", "habanim", "Haifa", "Israel", "786598");
+            paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "guest", "086", "207885623");
         }
 
         [TestCleanup]
@@ -50,7 +55,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 4.5);
             controller.confirmPriceStatus(userName, "guest", storeID, itemIDA, approvedType);
-            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", "Tel-Aviv");
+            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
         }
 
@@ -59,7 +64,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 1.0);
             controller.confirmPriceStatus(userName, "guest", storeID, itemIDA, rejectedType);
-            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", "Tel-Aviv");
+            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
 
             controller.removeItemFromShoppingCart("guest", storeID, itemIDA);
@@ -74,7 +79,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.confirmPriceStatus(userName, "guest", storeID, itemIDA, approvedType);
             controller.confirmPriceStatus(userName, "guest", storeID, itemIDB, approvedType);
 
-            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", "Tel-Aviv");
+            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
         }
 
@@ -83,7 +88,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 2.0);
             controller.counterOfferDecision("guest", storeID, itemIDA, 4.0, approvedType);
-            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", "Tel-Aviv");
+            ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
         }
     }

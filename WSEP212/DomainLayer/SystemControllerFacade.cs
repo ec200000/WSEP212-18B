@@ -14,6 +14,8 @@ using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
 
 namespace WSEP212.DomainLayer
 {
@@ -439,7 +441,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string userName, DeliveryParameters deliveryParameters, PaymentParameters paymentParameters)
         {
             try
             {
@@ -453,7 +455,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { address };
+                Object[] paramsList = { deliveryParameters, paymentParameters };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.purchaseItems, threadParameters); //creating the job
@@ -540,7 +542,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category)
+        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             try
             {
@@ -608,7 +610,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
+        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             try
             {

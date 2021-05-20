@@ -19,7 +19,7 @@ namespace WSEP212.DomainLayer
         {
         }
 
-        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
+        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -67,7 +67,7 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
+        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)

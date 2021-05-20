@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -265,16 +267,16 @@ namespace WSEP212.DomainLayer
             param.eventWaitHandle.Set(); // signal we're done
         }
 
-        // params: ?
         // returns: bool
         public void purchaseItems(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
-            String address = (String)param.parameters[0];
+            DeliveryParameters deliveryParameters = (DeliveryParameters)param.parameters[0];
+            PaymentParameters paymentParameters = (PaymentParameters)param.parameters[1];
             object res;
             try
             {
-                res = state.purchaseItems(address);
+                res = state.purchaseItems(deliveryParameters, paymentParameters);
             }
             catch (NotImplementedException)
             {
@@ -337,7 +339,7 @@ namespace WSEP212.DomainLayer
             String itemName = (String)param.parameters[2];
             String description = (String)param.parameters[3];
             double price = (double)param.parameters[4];
-            String category = (String)param.parameters[5];
+            ItemCategory category = (ItemCategory)param.parameters[5];
             object res;
             try
             {
@@ -382,7 +384,7 @@ namespace WSEP212.DomainLayer
             String itemName = (String)param.parameters[3];
             String description = (String)param.parameters[4];
             double price = (double)param.parameters[5];
-            String category = (String)param.parameters[6];
+            ItemCategory category = (ItemCategory)param.parameters[6];
             object res;
             try
             {

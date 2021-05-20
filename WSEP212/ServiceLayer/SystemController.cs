@@ -14,6 +14,8 @@ using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 
 namespace WSEP212.ServiceLayer
 {
@@ -76,12 +78,14 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.removeItemFromShoppingCart(userName, storeID, itemID);
         }
 
-        public ResultWithValue<NotificationDTO> purchaseItems(String userName, String address)
+        public ResultWithValue<NotificationDTO> purchaseItems(String userName, DeliveryParametersDTO deliveryParametersDTO, PaymentParametersDTO paymentParametersDTO)
         {
             String info = $"PurchaseItems Event was triggered, with the parameter:" +
-                          $"user name: {userName}";
+                          $"user name: {userName}, delivery Params: {deliveryParametersDTO}, payment Params: {paymentParametersDTO}";
             Logger.Instance.writeInformationEventToLog(info);
-            var usersToSendRes = SystemControllerFacade.Instance.purchaseItems(userName, address);
+            DeliveryParameters deliveryParameters = new DeliveryParameters(deliveryParametersDTO);
+            PaymentParameters paymentParameters = new PaymentParameters(paymentParametersDTO);
+            var usersToSendRes = SystemControllerFacade.Instance.purchaseItems(userName, deliveryParameters, paymentParameters);
             return usersToSendRes.getTag()
                 ? new OkWithValue<NotificationDTO>(usersToSendRes.getMessage(),
                     new NotificationDTO(usersToSendRes.getValue(),
@@ -125,7 +129,7 @@ namespace WSEP212.ServiceLayer
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.addItemToStorage(userName, storeID, item.quantity, item.itemName,
-                item.description, item.price, item.category);
+                item.description, item.price, (ItemCategory)item.category);
         }
 
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID)
@@ -147,7 +151,7 @@ namespace WSEP212.ServiceLayer
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.editItemDetails(userName, storeID, item.itemID, item.quantity,
-                item.itemName, item.description, item.price, item.category);
+                item.itemName, item.description, item.price, (ItemCategory)item.category);
         }
 
         public RegularResult appointStoreManager(String userName, String managerName, int storeID)
@@ -263,7 +267,7 @@ namespace WSEP212.ServiceLayer
         }
 
         public ConcurrentDictionary<Item, int> searchItems(String itemName = "", String keyWords = "",
-            double minPrice = Double.MinValue, double maxPrice = Double.MaxValue, String category = "")
+            double minPrice = Double.MinValue, double maxPrice = Double.MaxValue, Int32 category = 0)
         {
             String info = $"SearchItemsByCategory Event was triggered, with the parameters:" +
                           $"item name: {itemName}, key words: {keyWords}, meminimal price: {minPrice}, maximal price: {maxPrice}, category: {category}";

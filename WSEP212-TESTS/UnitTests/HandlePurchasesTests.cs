@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
@@ -12,24 +14,26 @@ namespace WSEP212_TESTS.UnitTests
     public class HandlePurchasesTests
     {
         private static User user;
-        private static User user3;
         private static int storeID1;
         private static int storeID2;
         private static int itemID1;
         private static int itemID2;
 
+        private static DeliveryParameters deliveryParameters;
+        private static PaymentParameters paymentParameters;
+
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
             user = new User("check name");
-            user3 = new User("b"); //logged
-            user3.changeState(new LoggedBuyerState(user3));
-            UserRepository.Instance.users.TryAdd(user3, true);
 
             registerAndLogin();
             storeID1 = openStore("Store1", "Holon");
-            itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, "milk items");
+            itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, ItemCategory.Dairy);
             addItemToShoppingCart(storeID1, itemID1, 2);
+
+            deliveryParameters = new DeliveryParameters(user.userName, "habanim", "Haifa", "Israel", "786598");
+            paymentParameters = new PaymentParameters("68957221011", "1", "2021", user.userName, "086", "207885623");
         }
         
         [ClassCleanup]
@@ -70,7 +74,7 @@ namespace WSEP212_TESTS.UnitTests
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
         
-        public static int addItemToStorage(int storeID, String itemName, int quantity, String description, double price, String category)
+        public static int addItemToStorage(int storeID, String itemName, int quantity, String description, double price, ItemCategory category)
         {
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[6];
@@ -102,7 +106,7 @@ namespace WSEP212_TESTS.UnitTests
         public static void initWithAnotherStore()
         {
             storeID2 = openStore("Store2", "Holon");
-            itemID2 = addItemToStorage(storeID2, "shoko tnova", 10, "taim!", 9.5, "milk items");
+            itemID2 = addItemToStorage(storeID2, "shoko tnova", 10, "taim!", 9.5, ItemCategory.Dairy);
             addItemToShoppingCart(storeID2, itemID2, 2);
         }
         
@@ -111,7 +115,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = BadPaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -124,7 +128,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = BadDeliverySystemMock.Instance;
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -138,7 +142,7 @@ namespace WSEP212_TESTS.UnitTests
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].purchasePolicy = new BadPurchasePolicyMock();
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -155,7 +159,7 @@ namespace WSEP212_TESTS.UnitTests
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID2].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].purchasePolicy = new PurchasePolicyMock();
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(user.purchases.Count, 2);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 0);

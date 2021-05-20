@@ -24,9 +24,9 @@ namespace WSEP212_TESTS.UnitTests
         public static void SetupAuth(TestContext context)
         {
             User user = new User("Sagiv", 21);
-            itemA = new Item(100, "bamba", "snack for childrens", 4.5, "snack");
-            itemB = new Item(500, "milk", "pasteurized milk", 10, "milk products");
-            itemC = new Item(100, "bisli", "snack for childrens", 4, "snack");
+            itemA = new Item(100, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks);
+            itemB = new Item(500, "milk", "pasteurized milk", 10, ItemCategory.Dairy);
+            itemC = new Item(100, "bisli", "snack for childrens", 4, ItemCategory.Snacks);
             ConcurrentDictionary<Item, int> shoppingBagItems = new ConcurrentDictionary<Item, int>();
             shoppingBagItems.TryAdd(itemA, 3);
             shoppingBagItems.TryAdd(itemB, 2);
@@ -50,7 +50,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void simpleSaleOnCategoryTest()
         {
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Snacks);
             Sale simpleSale = new SimpleSale(50, saleOnCategory, "50% sale on snacks");
             Assert.AreEqual(2.25, simpleSale.applySaleOnItem(itemA, 4.5, purchaseDetails));
             Assert.AreEqual(2, simpleSale.applySaleOnItem(itemC, 4, purchaseDetails));
@@ -70,7 +70,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void conditionalSaleMetTest()
         {
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Snacks);
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
             SalePredicate policyPredicate = new SimplePredicate(predicate, "more then 10 items in bag");
             SimpleSale sale = new SimpleSale(50, saleOnCategory, "50% sale on snacks");
@@ -83,7 +83,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void conditionalSaleNotMetTest()
         {
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Snacks);
             Predicate<PurchaseDetails> p1 = pd => pd.numOfItemsInPurchase() >= 10;
             SalePredicate sp1 = new SimplePredicate(p1, "more then 10 items in bag");
             Predicate<PurchaseDetails> p2 = pd => pd.totalPurchasePrice() >= 100;
@@ -100,7 +100,7 @@ namespace WSEP212_TESTS.UnitTests
         public void maxSaleTest()
         {
             // sale 1
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Snacks);
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
             SalePredicate policyPredicate = new SimplePredicate(predicate, "more then 10 items in bag");
             SimpleSale sale = new SimpleSale(50, saleOnCategory, "50% sale on snacks");
@@ -119,7 +119,7 @@ namespace WSEP212_TESTS.UnitTests
         public void doubleSaleTest()
         {
             // sale 1
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Snacks);
             Predicate<PurchaseDetails> predicate = pd => pd.numOfItemsInPurchase() >= 10;
             SalePredicate policyPredicate = new SimplePredicate(predicate, "more then 10 items in bag");
             SimpleSale sale = new SimpleSale(25, saleOnCategory, "25% sale on snacks");
@@ -144,7 +144,7 @@ namespace WSEP212_TESTS.UnitTests
             SimpleSale sale = new SimpleSale(25, saleOnStore, "25% sale on all store");
             Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
-            ApplySaleOn saleOnCategory = new SaleOnCategory("snack");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Snacks);
             Sale simpleSale = new SimpleSale(25, saleOnCategory, "25% sale on snacks");
             // selection rule
             SimplePredicate selectionRule = new SimplePredicate(pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale), "first sale is cheapest");
@@ -163,7 +163,7 @@ namespace WSEP212_TESTS.UnitTests
             SimpleSale sale = new SimpleSale(25, saleOnStore, "25% sale on all store");
             Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
-            ApplySaleOn saleOnCategory = new SaleOnCategory("milk products");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Dairy);
             Sale simpleSale = new SimpleSale(25, saleOnCategory, "25% sale on milk products");
             // selection rule
             SimplePredicate selectionRule = new SimplePredicate(pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale), "first sale is cheapest");
@@ -182,7 +182,7 @@ namespace WSEP212_TESTS.UnitTests
             SimpleSale sale = new SimpleSale(50, saleOnStore, "50% sale on all store");
             Sale conditionalSale = new ConditionalSale(sale, policyPredicate);
             // sale 2
-            ApplySaleOn saleOnCategory = new SaleOnCategory("milk products");
+            ApplySaleOn saleOnCategory = new SaleOnCategory(ItemCategory.Dairy);
             Sale simpleSale = new SimpleSale(25, saleOnCategory, "50% sale on milk products");
             // selection rule
             SimplePredicate selectionRule = new SimplePredicate(pd => pd.totalPurchasePriceAfterSale(conditionalSale) <= pd.totalPurchasePriceAfterSale(simpleSale), "first sale is cheapest");

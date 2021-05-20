@@ -36,13 +36,13 @@ namespace WSEP212_TESTS.IntegrationTests
             shoppingBagItems = new ConcurrentDictionary<int, int>();
             itemsPrices = new ConcurrentDictionary<int, double>();
 
-            int itemID = store.addItemToStorage(500, "bamba", "snack for childrens", 4.5, "snack").getValue();
+            int itemID = store.addItemToStorage(500, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks).getValue();
             shoppingBagItems.TryAdd(itemID, 2);
             itemsPrices.TryAdd(itemID, 4.5);
-            milkID = store.addItemToStorage(500, "milk", "pasteurized milk", 8, "milk products").getValue();
+            milkID = store.addItemToStorage(500, "milk", "pasteurized milk", 8, ItemCategory.Dairy).getValue();
             shoppingBagItems.TryAdd(milkID, 2);
             itemsPrices.TryAdd(milkID, 8);
-            itemID = store.addItemToStorage(500, "bisli", "snack for childrens", 4, "snack").getValue();
+            itemID = store.addItemToStorage(500, "bisli", "snack for childrens", 4, ItemCategory.Snacks).getValue();
             shoppingBagItems.TryAdd(itemID, 5);
             itemsPrices.TryAdd(itemID, 4);
         }
@@ -151,7 +151,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void appliedSaleSimpleTest()
         {
-            ApplySaleOn saleOn = new SaleOnCategory("snack");
+            ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
 
             ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
@@ -164,7 +164,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void appliedSaleComplexTest()
         {
-            ApplySaleOn saleOnSnacks = new SaleOnCategory("snack");
+            ApplySaleOn saleOnSnacks = new SaleOnCategory(ItemCategory.Snacks);
             int saleID1 = store.addSale(50, saleOnSnacks, "50% sale on sancks");
             ApplySaleOn saleOnMilk = new SaleOnItem(milkID);
             int saleID2 = store.addSale(50, saleOnMilk, "50% sale on milk");
@@ -183,7 +183,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void appliedConditionalSaleTest()
         {
-            ApplySaleOn saleOn = new SaleOnCategory("snack");
+            ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
             Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 40;
             SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 40");
@@ -199,7 +199,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void notAppliedConditionalSaleTest()
         {
-            ApplySaleOn saleOn = new SaleOnCategory("snack");
+            ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
             Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 50;
             SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 50");
