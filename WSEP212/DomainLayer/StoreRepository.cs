@@ -65,8 +65,8 @@ namespace WSEP212.DomainLayer
                 }
             }
 
-            if (SystemDBAccess.Instance.Stores.Find(storeName) != null)
-                return true;
+            //if (SystemDBAccess.Instance.Stores.Find(storeName) != null)
+            //    return true;
             return false;
         }
 

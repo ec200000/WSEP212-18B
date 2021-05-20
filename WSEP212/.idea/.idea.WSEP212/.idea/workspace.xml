@@ -6,54 +6,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="a">
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/EntityFramework.SqlServer.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/EntityFramework.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/System.CodeDom.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/System.Data.SqlClient.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.dll.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/win-arm64/native/sni.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/win-x64/native/sni.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/win-x86/native/sni.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/System.Configuration.ConfigurationManager.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/System.Configuration.ConfigurationManager.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/System.Security.Cryptography.ProtectedData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/System.Security.Cryptography.ProtectedData.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212-TESTS.runtimeconfig.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WSEP212.runtimeconfig.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/Web.config" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/Web.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.Views.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.Views.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.Views.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.Views.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/WebApplication.runtimeconfig.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/bin/Debug/net5.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.genruntimeconfig.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa/storage_v2/_src_/database/wsep212.7MsFYQ/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/dataSources/d251bbdb-ab69-41a9-882a-b0077cc667fa/storage_v2/_src_/database/wsep212.7MsFYQ/schema/dbo.sYMBAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/Store.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/Store.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WSEP212.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ref/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ref/WSEP212.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WSEP212.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileErrors-20210520.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/LogFileErrors-20210520.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/LogFileInformation-20210520.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/LogFileInformation-20210520.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/bin/Debug/net5.0/WSEP212.pdb" afterDir="false" />
@@ -130,8 +93,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Privacy.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" />
@@ -168,19 +129,21 @@
       <option value="$PROJECT_DIR$/Program.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Configuration.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Item.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
       <option value="$PROJECT_DIR$/SystemDBAccess.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
+      <option value="$PROJECT_DIR$/Configuration.txt" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -319,7 +282,13 @@
       <option name="presentableId" value="LOCAL‎00005" />
       <updated>1621507637511</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL‎00006" summary="DB without repos">
+      <created>1621525793176</created>
+      <option name="number" value="LOCAL‎00006" />
+      <option name="presentableId" value="LOCAL‎00006" />
+      <updated>1621525793176</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -346,7 +315,8 @@
     <MESSAGE value="fixed some tests" />
     <MESSAGE value="meantime" />
     <MESSAGE value="added shopping cart DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="added shopping cart DB" />
+    <MESSAGE value="DB without repos" />
+    <option name="LAST_COMMIT_MESSAGE" value="DB without repos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

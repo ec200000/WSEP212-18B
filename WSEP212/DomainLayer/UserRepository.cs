@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -17,6 +18,7 @@ namespace WSEP212.DomainLayer
 
         private UserRepository() {
             users = new ConcurrentDictionary<User, bool>();
+            users = new ConcurrentDictionary<User, bool>(SystemDBAccess.Instance.Users.ToDictionary(g => g, g=>g!=null));
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 
@@ -116,6 +118,8 @@ namespace WSEP212.DomainLayer
                     return new OkWithValue<User>("The User Was Found In The User Repository Successfully", user.Key);
                 }
             }
+           // if (SystemDBAccess.Instance.Users.Find(userName) != null)
+            //    return new OkWithValue<User>("The User Was Found In The User Repository Successfully",SystemDBAccess.Instance.Users.Find(userName));
             return new FailureWithValue<User>("The User Name Not Exist In The User Repository", null);
         }
 
@@ -134,6 +138,8 @@ namespace WSEP212.DomainLayer
                 if (pair.Key.userName.Equals(userName))
                     return true;
             }
+            //if (SystemDBAccess.Instance.Users.Find(userName) != null)
+            //    return true;
             return false;
         }
 

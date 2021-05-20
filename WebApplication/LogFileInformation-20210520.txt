@@ -156,3 +156,7 @@
 
 2021-05-20 14:37:47.747 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
 
+2021-05-20 19:12:31.637 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-20 19:34:18.349 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+

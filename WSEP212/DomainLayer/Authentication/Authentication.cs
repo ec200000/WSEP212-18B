@@ -31,6 +31,8 @@ namespace WSEP212.DomainLayer
         private Authentication()
         {
             usersInfo = new ConcurrentDictionary<string, string>();
+            usersInfo = new ConcurrentDictionary<string, string>(SystemDBAccess.Instance.UsersInfo.Find(0).usersInfo);
+
             field = 0;
         }
 
