@@ -2,20 +2,49 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.PurchasePolicy
 {
-    public class PurchasePolicy
+    public class PurchasePolicy : PurchasePolicyInterface
     {
         public String purchasePolicyName { get; set; }
-        //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
+        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
 
         public PurchasePolicy(String purchasePolicyName)
         {
             this.purchasePolicyName = purchasePolicyName;
+            this.purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
+            this.purchaseTypes.TryAdd(PurchaseType.ImmediatePurchase);
             this.purchasePredicates = new ConcurrentDictionary<int, PurchasePredicate>();
+        }
+
+        // add support for new purchase type
+        public void supportPurchaseType(PurchaseType purchaseType)
+        {
+            if(!purchaseTypes.Contains(purchaseType))
+            {
+                purchaseTypes.TryAdd(purchaseType);
+            }
+        }
+
+        // remove the purchase type from the store - not supporting it
+        public void unsupportPurchaseType(PurchaseType purchaseType)
+        {
+            if (purchaseTypes.Contains(purchaseType))
+            {
+                purchaseTypes.Remove(purchaseType, out _);
+            }
+        }
+
+        // return true only if the store support the purchase type
+        public Boolean hasPurchaseTypeSupport(PurchaseType purchaseType)
+        {
+            return purchaseTypes.Contains(purchaseType);
         }
 
         // add new purchase predicate for the store purchase policy

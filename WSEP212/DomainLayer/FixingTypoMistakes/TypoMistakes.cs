@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.FixingTypoMistakes
 {
     /// <summary>
     /// Conversion from http://norvig.com/spell-correct.html by C.Small

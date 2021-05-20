@@ -2,6 +2,11 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -175,7 +180,7 @@ namespace WSEP212.DomainLayer
             return null;
         }
 
-        public override ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID)
+        public override ConcurrentDictionary<int, PurchaseInvoice> getStorePurchaseHistory(int storeID)
         {
             if (!StoreRepository.Instance.stores.ContainsKey(storeID)) return null;
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
@@ -191,13 +196,13 @@ namespace WSEP212.DomainLayer
             return null;
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
@@ -214,8 +219,14 @@ namespace WSEP212.DomainLayer
                 {
                     if(isPurchasedItem(itemID))
                     {
-                        getItemRes.getValue().addReview(this.user.userName, review);
-                        
+                        Item item = getItemRes.getValue();
+                        ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(item, user);
+                        userReviews.addReview(review);
+                        if (!user.myReviews.Contains(userReviews))
+                        {
+                            item.addUserReviews(userReviews);
+                            user.myReviews.TryAdd(userReviews);
+                        }
                         return new OkWithValue<ConcurrentLinkedList<string>>("Item Review Have Been Successfully Added",
                             StoreRepository.Instance.getStoreOwners(storeID));
                     }
@@ -225,12 +236,11 @@ namespace WSEP212.DomainLayer
                 
             }
             return new FailureWithValue<ConcurrentLinkedList<string>>(getStoreRes.getMessage(),null);
-            
         }
 
         private bool isPurchasedItem(int itemID)
         {
-            foreach (PurchaseInvoice purchaseInfo in this.user.purchases)
+            foreach (PurchaseInvoice purchaseInfo in this.user.purchases.Values)
             {
                 if(purchaseInfo.wasItemPurchased(itemID))
                 {
@@ -267,7 +277,7 @@ namespace WSEP212.DomainLayer
             return new Failure(findUserRes.getMessage());
         }
 
-        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicy purchasePolicy, SalePolicy salesPolicy)
+        public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
         {
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore(storeName, storeAddress, salesPolicy, purchasePolicy, this.user);
             if (addStoreRes.getTag())
@@ -277,6 +287,59 @@ namespace WSEP212.DomainLayer
                 this.user.addSellerPermissions(sellerPermissionsRes.getValue());
             }
             return addStoreRes;
+        }
+
+        public override RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        {
+            // checks user exists
+            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!findUserRes.getTag())
+            {
+                return new Failure(findUserRes.getMessage());
+            }
+            // checks if the user has the permissions for confirm price status
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
+            if (hasPermissionRes.getTag())
+            {
+                return findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
+            }
+            return hasPermissionRes;
+        }
+
+        public override RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new Failure(storeRes.getMessage());
+            }
+            // checks if the user has the permissions for support purchase type
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                storeRes.getValue().supportPurchaseType(purchaseType);
+                return new Ok("The Purchase Type Added And Will Be Supported In The Store");
+            }
+            return hasPermissionRes;
+        }
+
+        public override RegularResult unsupportPurchaseType(int storeID, PurchaseType purchaseType)
+        {
+            // checks store exists
+            ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
+            if (!storeRes.getTag())
+            {
+                return new Failure(storeRes.getMessage());
+            }
+            // checks if the user has the permissions for support purchase type
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.StorePoliciesManagement);
+            if (hasPermissionRes.getTag())
+            {
+                storeRes.getValue().unsupportPurchaseType(purchaseType);
+                return new Ok("The Purchase Type Removed And Will Not Be Supported In The Store");
+            }
+            return hasPermissionRes;
         }
 
         public override RegularResult register(string userName, int userAge, string password)
@@ -372,7 +435,7 @@ namespace WSEP212.DomainLayer
                     if (storeSellerRes.getValue().grantor != this.user)
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
-                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().seller.userName);
+                    RegularResult removeFromStoreRes = storeRes.getValue().removeStoreOwner(storeSellerRes.getValue().seller.userName);
                     if(removeFromStoreRes.getTag())
                     {
                         if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))

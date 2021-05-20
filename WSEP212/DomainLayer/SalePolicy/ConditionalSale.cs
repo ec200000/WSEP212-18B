@@ -2,8 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class ConditionalSale : Sale
     {
@@ -44,10 +45,10 @@ namespace WSEP212.DomainLayer
         }
 
         // apply the sale only if the conditional is met and the sale is relevant to this item
-        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
-            return item.price - ((item.price * salePercentage) / 100);
+            return purchaseItemPrice - ((purchaseItemPrice * salePercentage) / 100);
         }
     }
 }

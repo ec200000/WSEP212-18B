@@ -7109,23 +7109,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\talsk\\.nuget\\packages\\": {},
+    "C:\\Users\\שגיב משיח\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "projectUniqueName": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
       "projectName": "WSEP212-TESTS",
-      "projectPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
-      "packagesPath": "C:\\Users\\talsk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
+      "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+      "outputPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\talsk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7140,11 +7140,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
-              "projectPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj"
+            "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
+              "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WebApplication\\WebApplication.csproj"
             },
-            "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-              "projectPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+            "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+              "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
           }
         }
@@ -7217,9 +7217,6 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
-          "Microsoft.AspNetCore.App": {
-            "privateAssets": "none"
-          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }

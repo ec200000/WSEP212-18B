@@ -76,3 +76,15 @@
 
 2021-05-11 11:36:50.218 +03:00 [Warning] The user moon cannot perform the removeStoreManager action!
 
+2021-05-11 17:51:25.159 +03:00 [Warning] The user noName cannot perform the itemReview action!
+
+2021-05-11 17:51:25.166 +03:00 [Warning] The user noName cannot perform the itemReview action!
+
+2021-05-11 17:51:25.453 +03:00 [Warning] The user theuser cannot perform the removeStoreManager action!
+
+2021-05-11 17:51:25.459 +03:00 [Warning] The user theuser cannot perform the removeStoreManager action!
+
+2021-05-11 17:51:25.573 +03:00 [Warning] The user theuser cannot perform the removeStoreManager action!
+
+2021-05-11 17:51:25.577 +03:00 [Warning] The user theuser cannot perform the removeStoreManager action!
+
