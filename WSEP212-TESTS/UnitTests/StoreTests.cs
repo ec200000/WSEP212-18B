@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
 
@@ -155,29 +155,35 @@ namespace WSEP212_TESTS.UnitTests
             int oliveOilID = store.addItemToStorage(10, "olive-oil", "from olive", 50, "oil").getValue();
             ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
             items.TryAdd(sodaID, 1);
-            items.TryAdd(oliveOilID, 2);
-            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
-            itemsPurchaseType.TryAdd(sodaID, PurchaseType.ImmediatePurchase);
-            itemsPurchaseType.TryAdd(oliveOilID, PurchaseType.ImmediatePurchase);
+            items.TryAdd(oliveOilID, 1);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(sodaID, 150);
+            itemsPrices.TryAdd(oliveOilID, 50);
             User miki = new User("miki");
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[store.storeID].deliverySystem = DeliverySystemMock.Instance;
 
-            ResultWithValue<double> totalPrice = store.purchaseItems(miki, items, itemsPurchaseType);
+            ResultWithValue<ConcurrentDictionary<int, double>> totalPrice = store.purchaseItems(miki, items, itemsPrices);
             Assert.IsTrue(totalPrice.getTag());
-            Assert.AreEqual(250.0, totalPrice.getValue());
+            Assert.AreEqual(2, totalPrice.getValue().Count);
+            Assert.IsTrue(totalPrice.getValue().ContainsKey(oliveOilID));
+            Assert.AreEqual(50, totalPrice.getValue()[oliveOilID]);
+            Assert.IsTrue(totalPrice.getValue().ContainsKey(sodaID));
+            Assert.AreEqual(150, totalPrice.getValue()[sodaID]);
         }
 
         [TestMethod()]
         public void applySalesPolicyTest()
         {
             ConcurrentDictionary<Item, int> items = new ConcurrentDictionary<Item, int>();
-            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
             items.TryAdd(store.getItemById(sodaID).getValue(), 1);
-            itemsPurchaseType.TryAdd(sodaID, PurchaseType.ImmediatePurchase);
+            itemsPrices.TryAdd(sodaID, 150);
             User miki = new User("miki");
-            PurchaseDetails purchaseDetails = new PurchaseDetails(miki, items, itemsPurchaseType);
-            ConcurrentDictionary<int, double> itemPrices = store.applySalesPolicy(items, purchaseDetails);
+            PurchaseDetails purchaseDetails = new PurchaseDetails(miki, items, itemsPrices);
+            ConcurrentDictionary<Item, double> objItems = new ConcurrentDictionary<Item, double>();
+            objItems.TryAdd(store.getItemById(sodaID).getValue(), 150);
+            ConcurrentDictionary<int, double> itemPrices = store.applySalesPolicy(objItems, purchaseDetails);
             double total = 0.0;
             foreach (KeyValuePair<int, double> item in itemPrices)
             {
@@ -192,13 +198,12 @@ namespace WSEP212_TESTS.UnitTests
             ConcurrentDictionary<Item, int> items = new ConcurrentDictionary<Item, int>();
             items.TryAdd(store.getItemById(sodaID).getValue(), 1);
             User miki = new User("miki");
-            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
-            itemsPurchaseType.TryAdd(sodaID, PurchaseType.ImmediatePurchase);
-            PurchaseDetails purchaseDetails = new PurchaseDetails(miki, items, itemsPurchaseType);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(sodaID, 150);
+            PurchaseDetails purchaseDetails = new PurchaseDetails(miki, items, itemsPrices);
             RegularResult approved = store.applyPurchasePolicy(purchaseDetails);
             Assert.IsTrue(approved.getTag());
         }
-
 
         [TestMethod]
         public void purchaseItemsAvailableTest()

@@ -13,6 +13,7 @@ using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212.DomainLayer
 {
@@ -122,7 +123,22 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity)
+        private ItemPurchaseType createItemPurchaseType(PurchaseType purchaseType, double startPrice)
+        {
+            ItemPurchaseType itemPurchaseType = null;
+            switch(purchaseType)
+            {
+                case PurchaseType.ImmediatePurchase:
+                    itemPurchaseType = new ItemImmediatePurchase(startPrice);
+                    break;
+                case PurchaseType.SubmitOfferPurchase:
+                    itemPurchaseType = new ItemSubmitOfferPurchase(startPrice);
+                    break;
+            }
+            return itemPurchaseType;
+        }
+
+        public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice)
         {
             try
             {
@@ -136,7 +152,8 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { storeID, itemID, quantity };
+                ItemPurchaseType itemPurchaseType = createItemPurchaseType(purchaseType, startPrice);
+                Object[] paramsList = { storeID, itemID, quantity, itemPurchaseType };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.addItemToShoppingCart, threadParameters); //creating the job
@@ -186,6 +203,238 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In RemoveItemFromShoppingCart function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult changeItemQuantityInShoppingCart(string userName, int storeID, int itemID, int updatedQuantity)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, itemID, updatedQuantity };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.changeItemQuantityInShoppingCart, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the changeItemQuantityInShoppingCart action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In changeItemQuantityInShoppingCart function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult changeItemPurchaseType(string userName, int storeID, int itemID, PurchaseType purchaseType, double startPrice)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                ItemPurchaseType itemPurchaseType = createItemPurchaseType(purchaseType, startPrice);
+                Object[] paramsList = { storeID, itemID, itemPurchaseType };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.changeItemPurchaseType, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the changeItemPurchaseType action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In changeItemPurchaseType function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult submitPriceOffer(string userName, int storeID, int itemID, double offerItemPrice)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, itemID, offerItemPrice };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.submitPriceOffer, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the submitPriceOffer action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In submitPriceOffer function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, itemID, counterOffer, myDecision };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.counterOfferDecision, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the counterOfferDecision action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In counterOfferDecision function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, PriceStatus priceStatus)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(storeManager);
+                if (!userRes.getTag())
+                {
+                    user = new User(storeManager);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { userToConfirm, storeID, itemID, priceStatus };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.confirmPriceStatus, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + storeManager + " cannot perform the confirmPriceStatus action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In confirmPriceStatus function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult supportPurchaseType(string userName, int storeID, PurchaseType purchaseType)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, purchaseType };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.supportPurchaseType, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the supportPurchaseType action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In supportPurchaseType function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
+
+        public RegularResult unsupportPurchaseType(string userName, int storeID, PurchaseType purchaseType)
+        {
+            try
+            {
+                User user;
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    user = new User(userName);
+                    UserRepository.Instance.addLoginUser(user);
+                }
+                else user = userRes.getValue();
+
+                Object[] paramsList = { storeID, purchaseType };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(user.unsupportPurchaseType, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if (threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the unsupportPurchaseType action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In unsupportPurchaseType function, the error is: {e.Message}");
                 return new Failure(e.Message);
             }
         }
@@ -842,7 +1091,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getStorePurchaseHistory(string userName, int storeID)
+        public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getStorePurchaseHistory(string userName, int storeID)
         {
             try
             {
@@ -869,18 +1118,18 @@ namespace WSEP212.DomainLayer
                 }
                 if (threadParameters.result == null)
                 {
-                    return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>("Cannot perform this action!", null);
+                    return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("Cannot perform this action!", null);
                 }
-                return new OkWithValue<ConcurrentBag<PurchaseInvoice>>("Get Store Purchase History Successfully", (ConcurrentBag<PurchaseInvoice>)threadParameters.result);
+                return new OkWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("Get Store Purchase History Successfully", (ConcurrentDictionary<int, PurchaseInvoice>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetStorePurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>(e.Message, null);
             }
         }
 
-        public ResultWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>> getUsersPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>> getUsersPurchaseHistory(String userName)
         {
             try
             {
@@ -903,16 +1152,16 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return new OkWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>)threadParameters.result);
+                return new OkWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>>("Get Users Purchase History Successfully", (ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetUsersPurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentDictionary<string, ConcurrentBag<PurchaseInvoice>>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>>(e.Message, null);
             }
         }
 
-        public ResultWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>> getStoresPurchaseHistory(String userName)
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> getStoresPurchaseHistory(String userName)
         {
             try
             {
@@ -935,12 +1184,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return new OkWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>)threadParameters.result);
+                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>("Get Stores Purchase History Successfully", (ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetStoresPurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>(e.Message, null);
             }
         }
 
@@ -988,7 +1237,6 @@ namespace WSEP212.DomainLayer
                 {
                     return new FailureWithValue<ShoppingCart>(userRes.getMessage(), null);
                 }
-
                 return new OkWithValue<ShoppingCart>("Found user with shopping cart",userRes.getValue().shoppingCart);
             }
             catch (Exception e) when (!(e is NotImplementedException))
@@ -998,7 +1246,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<ConcurrentBag<PurchaseInvoice>> getUserPurchaseHistory(string userName)
+        public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getUserPurchaseHistory(string userName)
         {
             try
             {
@@ -1007,12 +1255,30 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In GetUserPurchaseHistory function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentBag<PurchaseInvoice>>(e.Message, null);
+                return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>(e.Message, null);
             }
-            
         }
-        
-        public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation()
+
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName)
+        {
+            try
+            {
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(userRes.getMessage(), null);
+                }
+                ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> itemsPrices = userRes.getValue().shoppingCart.getItemsAfterSalePrices();
+                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("Return User Items Prices Afetr Sales", itemsPrices);
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In GetUserPurchaseHistory function, the error is: {e.Message}");
+                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(e.Message, null);
+            }
+        }
+
+            public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation()
         {
             try
             {
