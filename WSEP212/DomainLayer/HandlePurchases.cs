@@ -21,7 +21,7 @@ namespace WSEP212.DomainLayer
 
         private HandlePurchases()
         {
-            paymentSystem = PaymentSystem.Instance;
+            paymentSystem = PaymentSystemAdapter.Instance;
         }
 
         // returns the total price after sales for each store. if the purchase cannot be made returns null

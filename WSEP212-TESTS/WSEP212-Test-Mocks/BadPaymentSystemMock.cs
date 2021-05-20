@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 
 namespace WSEP212_TEST.UnitTests.UnitTestMocks
@@ -12,9 +13,15 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
         public static BadPaymentSystemMock Instance
             => lazy.Value;
 
-        public double paymentCharge(double price)
+        // bad payment system, always reject the payment 
+        public int paymentCharge(string cardNumber, string month, string year, string holder, string ccv, string id, double price)
         {
-            return 30000; //charging in the listed price
+            return -1;
+        }
+
+        public bool cancelPaymentCharge(int transactionID)
+        {
+            return false;
         }
     }
 }
