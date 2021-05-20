@@ -17,6 +17,8 @@
     <e p="C:\Users\shell\.nuget\packages\nunit3testadapter\3.16.1\build\netcoreapp2.1\NUnit3.TestAdapter.pdb" t="Include" />
     <e p="C:\Users\shell\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
     <e p="C:\Users\shell\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_WSEP212.-393214489.00" t="ExcludeRecursive" />
+    <e p="C:\Users\shell\AppData\Roaming\JetBrains\Rider2020.3\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\shell\AppData\Roaming\JetBrains\Rider2020.3\extensions" t="IncludeRecursive" />
     <e p="C:\Users\shell\RiderProjects\WSEP212-18B\WebApplication" t="IncludeRecursive">
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
@@ -28,6 +30,7 @@
       <e p="LogFileErrors-20210430.txt" t="Include" />
       <e p="LogFileInformation-20210501.txt" t="Include" />
       <e p="LogFileInformation-20210503.txt" t="Include" />
+      <e p="LogFileInformation-20210505.txt" t="Include" />
       <e p="LogFileWarnings-20210430.txt" t="Include" />
       <e p="LogFileWarnings-20210503.txt" t="Include" />
       <e p="Models" t="Include">
@@ -35,6 +38,7 @@
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="ItemModel.cs" t="Include" />
         <e p="OfficialsModel.cs" t="Include" />
+        <e p="PredicateModel.cs" t="Include" />
         <e p="PurchaseModel.cs" t="Include" />
         <e p="ReviewModel.cs" t="Include" />
         <e p="SalesModel.cs" t="Include" />

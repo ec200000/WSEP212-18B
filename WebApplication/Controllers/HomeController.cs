@@ -124,7 +124,6 @@ namespace WebApplication.Controllers
                     storesAndItems.AddLast(storeAndItem + item);
                 }
             }
-
             string[] strs = storesAndItems.ToArray();
             HttpContext.Session.SetObject("shoppingCart", strs);
         }
@@ -996,6 +995,115 @@ namespace WebApplication.Controllers
             }*/
             return null;
         }
-        
+        public IActionResult PurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            //string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            //string pred = model.predicate;
+            //int predicate = int.Parse(pred.Substring(8)); //TODO: CHANGE
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> info =
+                systemController.getItemsInStoresInformation();
+            Store store = null;
+            foreach (var storeid in info.Keys)
+            {
+                if (storeid.storeID == storeID)
+                {
+                    store = storeid;
+                    break;
+                }
+            }
+            if (store != null)
+            {
+                ConcurrentDictionary<int, PurchasePredicate> storespurchase = store.purchasePolicy.purchasePredicates;
+                LinkedList<string> purchasepredicateList = new LinkedList<string>();
+                foreach (PurchasePredicate purpre in storespurchase.Values)
+                {
+                    string purchasepredicate = "Predicate:" + purpre.ToString();
+                    purchasepredicateList.AddLast(purchasepredicate);
+                }
+                string[] strs = purchasepredicateList.ToArray();
+                HttpContext.Session.SetObject("PurchasePredicate", strs);
+            }
+            return View();
+            /*if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }*/
+        }
+        public IActionResult TryRemovePurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            //string predicate = model.predicate;
+            //if (predicate!=null && predicate != "")
+            //{
+                //string[] strs = predicate.Split(":");
+                //int predicateID = int.Parse(strs[strs.Length - 1]);
+                RegularResult res = systemController.removePurchasePredicate(userName, (int)storeID, model.predicate);
+                if (res.getTag())
+                {
+                    return RedirectToAction("PurchasePredicate");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("PurchasePredicate");
+                }
+            //}
+           /* else
+            {
+                return RedirectToAction("PurchasePredicate");
+            }*/
+        }
+        /*public IActionResult TryAddPurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            Predicate<PurchaseDetails> newPred = new Predicate<PurchaseDetails>();
+            //string predicate = model.predicate;
+            if (newPred!=null)
+            {
+                //string[] strs = predicate.Split(":");
+                //int predicateID = int.Parse(strs[strs.Length - 1]);
+                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int)storeID, newPred);
+                if (res.getTag())
+                {
+                    return RedirectToAction("PurchasePredicate");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("PurchasePredicate");
+                }
+            }
+            else
+            {
+                return RedirectToAction("PurchasePredicate");
+            }
+        }*/
+        public IActionResult TryComposePurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ResultWithValue<int> res = systemController.composePurchasePredicates(userName, (int)storeID, model.firstPred,model.secondPred,model.compositionType);
+            if (res.getTag())
+            {
+                return RedirectToAction("PurchasePredicate");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("PurchasePredicate");
+            }
+        }
     }
 }
