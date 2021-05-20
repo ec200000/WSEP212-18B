@@ -17,6 +17,6 @@ namespace WSEP212.DomainLayer.SalePolicy
         public ResultWithValue<int> addSaleCondition(int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType);
         public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule);
         public ConcurrentDictionary<int, String> getSalesDescriptions();
-        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails);
+        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, double> itemsPrices, PurchaseDetails purchaseDetails);
     }
 }

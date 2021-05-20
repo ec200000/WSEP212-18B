@@ -23,12 +23,12 @@ namespace WSEP212.DomainLayer
 
         public Item(int quantity, String itemName, String description, double price, String category)
         {
-            this.itemID = itemCounter;
-            itemCounter++;
-            if (!setQuantity(quantity))
+            if (price <= 0 || itemName.Equals("") || category.Equals("") || !setQuantity(quantity))
             {
                 throw new ArithmeticException();
             }
+            this.itemID = itemCounter;
+            itemCounter++;
             this.itemName = itemName;
             this.description = description;
             this.reviews = new ConcurrentDictionary<string, ItemUserReviews>();

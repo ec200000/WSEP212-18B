@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Concurrent;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS.UnitTests
@@ -71,8 +72,12 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void updateUserTest()
         {
-            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, 1.2, DateTime.Now);
-            user1.purchases.Add(purchaseInfo); //updating the user
+            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
+            items.TryAdd(10, 1);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(10, 1.2);
+            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", items, itemsPrices, DateTime.Now);
+            user1.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo); //updating the user
             UserRepository.Instance.updateUser(user1);
             Assert.AreEqual(2, UserRepository.Instance.users.Count);
             bool found = false;
@@ -81,8 +86,8 @@ namespace WSEP212_TESTS.UnitTests
                 if (u.userName.Equals(user1.userName))
                 {
                     Assert.AreEqual(1, u.purchases.Count);
-                    u.purchases.TryPeek(out var p);
-                    Assert.AreEqual(1.2, p.totalPrice);
+                    u.purchases.TryGetValue(purchaseInfo.purchaseInvoiceID, out var p);
+                    Assert.AreEqual(1.2, p.getPurchaseTotalPrice());
                     found = true;
                 }
             }
@@ -125,9 +130,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void getAllUsersPurchaseHistoryTest()
         {
-            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, 1.2, DateTime.Now);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(10, 1.2);
+            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, itemsPrices, DateTime.Now);
             User user3 = new User("c");
-            user3.purchases.Add(purchaseInfo);
+            user3.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo);
             UserRepository.Instance.users.TryAdd(user3, false);
             var res = UserRepository.Instance.getAllUsersPurchaseHistory();
             Assert.IsNotNull(res);

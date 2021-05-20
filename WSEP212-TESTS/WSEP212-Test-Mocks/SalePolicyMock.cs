@@ -47,12 +47,12 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
         }
 
         // returns the price of each item after sales - no sales!
-        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
+        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, double> itemsPrices, PurchaseDetails purchaseDetails)
         {
             ConcurrentDictionary<int, double> pricesAfterSale = new ConcurrentDictionary<int, double>();
-            foreach (Item item in items.Keys)
+            foreach (KeyValuePair<Item, double> itemPricePair in itemsPrices)
             {
-                pricesAfterSale.TryAdd(item.itemID, item.price);
+                pricesAfterSale.TryAdd(itemPricePair.Key.itemID, itemPricePair.Value);
             }
             return pricesAfterSale;
         }

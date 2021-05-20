@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
@@ -30,22 +31,39 @@ namespace WSEP212.DomainLayer
 
 
         // * Purchase Items Functions *//
-        public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity)
+        public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity, ItemPurchaseType purchaseType)
         {
-            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity);
+            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity, purchaseType);
         }
         public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
         {
             return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
         }
+        public RegularResult changeItemQuantityInShoppingCart(int storeID, int itemID, int updatedQuantity)
+        {
+            return this.user.shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, updatedQuantity);
+        }
+        public RegularResult changeItemPurchaseType(int storeID, int itemID, ItemPurchaseType itemPurchaseType)
+        {
+            return this.user.shoppingCart.changeItemPurchaseTypeInShoppingBag(storeID, itemID, itemPurchaseType);
+        }
+        public RegularResult submitPriceOffer(int storeID, int itemID, double offerItemPrice)
+        {
+            return this.user.shoppingCart.submitPriceOffer(storeID, itemID, offerItemPrice);
+        }
+        public RegularResult counterOfferDecision(int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        {
+            return this.user.shoppingCart.counterOfferDecision(storeID, itemID, counterOffer, myDecision);
+        }
+        public abstract RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus);
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string address)
         {
             return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
         }
         // * End Of Purchase Items Functions *//
-        
 
-        // * Store Storage Management * //
+
+            // * Store Storage Management * //
         public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
         public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
         public abstract RegularResult removeItemFromStorage(int storeID, int itemID);
@@ -54,6 +72,8 @@ namespace WSEP212.DomainLayer
 
 
         // * Store Policies Management * //
+        public abstract RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType);
+        public abstract RegularResult unsupportPurchaseType(int storeID, PurchaseType purchaseType);
         public abstract ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
         public abstract RegularResult removePurchasePredicate(int storeID, int predicateID);
         public abstract ResultWithValue<int> composePurchasePredicates(int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
@@ -80,10 +100,9 @@ namespace WSEP212.DomainLayer
 
         // * Get Informations * //
         public abstract ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID);
-        public abstract ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
-        public abstract ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory();
-        public abstract ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory();
-        
+        public abstract ConcurrentDictionary<int, PurchaseInvoice> getStorePurchaseHistory(int storeID); //all the purchases of the store that I manage/own
+        public abstract ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> getUsersPurchaseHistory();
+        public abstract ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getStoresPurchaseHistory();
         public abstract ConcurrentLinkedList<int> getUsersStores();
         // * End Of Get Informations * //
     }

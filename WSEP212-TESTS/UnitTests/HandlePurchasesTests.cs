@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
 
@@ -89,10 +89,11 @@ namespace WSEP212_TESTS.UnitTests
         public static void addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = storeID;
             list[1] = itemID;
             list[2] = quantity;
+            list[3] = new ItemImmediatePurchase(10.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
             Assert.IsTrue(((RegularResult) parameters.result).getTag());

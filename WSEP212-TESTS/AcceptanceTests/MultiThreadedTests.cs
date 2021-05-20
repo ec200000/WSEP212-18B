@@ -8,6 +8,7 @@ using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 using WSEP212_TEST.UnitTests.UnitTestMocks;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -203,12 +204,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToShoppingCartTest()
         {
             RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
-            
+
             Thread t1 = new Thread(() =>
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                 }
                 catch (NotImplementedException)
                 {
@@ -220,7 +221,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                 }
                 catch (NotImplementedException)
                 {
@@ -231,7 +232,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 58);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 58, (int)PurchaseType.ImmediatePurchase, 12);
                 }
                 catch (NotImplementedException)
                 {
@@ -261,7 +262,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res1.getTag())
                         res1 = systemController.removeItemFromShoppingCart("a", storeID, itemID);
                 }
@@ -275,7 +276,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
                         res2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
                 }
@@ -288,7 +289,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12, (int)PurchaseType.ImmediatePurchase, 12);
                     if(res3.getTag())
                         res3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
                         
@@ -325,7 +326,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2);
+                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res1.getTag())
                         res4 = systemController.purchaseItems("a", "ashdod");
                 }
@@ -339,7 +340,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
                         res5 = systemController.purchaseItems("mol", "ness ziona");
                 }
@@ -352,7 +353,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
+                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if(res3.getTag())
                         res6 = systemController.purchaseItems("lol", "holon");
 
@@ -452,7 +453,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             {
                 try
                 {
-                    res2 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28);
+                    res2 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
                         res3 = systemController.purchaseItems("lol", "ness ziona");
                 }
