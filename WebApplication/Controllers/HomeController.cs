@@ -13,6 +13,8 @@ using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
 using WebApplication.Communication;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -986,16 +988,92 @@ namespace WebApplication.Controllers
                 return RedirectToAction("StoreActions");
             }
         }
+        public IActionResult AddSaleItemsList()
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> itemsandstores = systemController.getItemsInStoresInformation();
+            Store store = null;
+            ConcurrentLinkedList<Item> items = null;
+            foreach (var storeid in itemsandstores.Keys)
+            {
+                if (storeid.storeID == storeID)
+                {
+                    store = storeid;
+                    items = itemsandstores.GetValueOrDefault(storeid);
+                    break;
+                }
+            }
+            if (items != null)
+            {
+                string[] arr = new string[items.size];
+                int i = 0;
+                Node<Item> node = items.First; 
+                while(node.Next != null)
+                {
+                    arr[i] = node.Value.ToString();
+                    node = node.Next;
+                    i++;
+                }
+                HttpContext.Session.SetObject("itemsList", arr);
+            }
+            return RedirectToAction("TryAddSale");
+        }
+        public IActionResult TryAddSale(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ApplySaleOn typeSale = null;
+            if (model.itemID != null)
+            {
+                string itemid = model.itemID;
+                string[] s = itemid.Split(": ");
+                int itemidd = int.Parse(s[s.Length - 1]);
+                typeSale = new SaleOnItem(itemidd);
+            }
+            else if (model.category != null)
+            {
+                string category = model.category; //TODO
+                typeSale = new SaleOnCategory(category);
+            }
+            else
+            {
+                typeSale = new SaleOnAllStore();
+            }
+            
+            ResultWithValue<int> res = systemController.addSale(userName, (int) storeID, model.salePercentage, typeSale,
+                model.saleDescription);
+            
+            if (res.getTag())
+            {
+                return RedirectToAction("TryAddSale");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("TryAddSale");
+            }
+        }
         
         public IActionResult TryRemoveSalePredicate(SalesModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            string pred = model.predicate;
-            string[] predparts = pred.Split(";");
-            int predicate = int.Parse(predparts[1]); 
-            RegularResult res = systemController.removeSale(userName, (int)storeID, predicate);
+            ResultWithValue<ConcurrentDictionary<int, string>> salesPredicatesDescription =
+                systemController.getStoreSalesDescription((int)storeID);
+            int predicateID = 0;
+            foreach (string purpre in salesPredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.predicate))
+                {
+                    predicateID = salesPredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            RegularResult res = systemController.removeSale(userName, (int)storeID, predicateID);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
@@ -1026,14 +1104,28 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            string firstpred = model.firstPred;
-            string[] predparts1 = firstpred.Split(";");
-            int predicate1 = int.Parse(predparts1[1]);
-            string secondpred = model.secondPred;
-            string[] predparts2 = secondpred.Split(";");
-            int predicate2 = int.Parse(predparts2[1]);
+            ResultWithValue<ConcurrentDictionary<int, string>> salePredicatesDescription =
+                systemController.getStoreSalesDescription((int)storeID);
+            int predicate1ID = 0;
+            int predicate2ID = 0;
+            foreach (string purpre in salePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.firstPred))
+                {
+                    predicate1ID = salePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            foreach (string purpre in salePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.secondPred))
+                {
+                    predicate2ID = salePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
             int composetype = saleStringToEnum(model.compositionType);
-            ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype, null);
+            ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1ID,predicate2ID,composetype, null);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
@@ -1047,10 +1139,7 @@ namespace WebApplication.Controllers
         public IActionResult PurchasePredicate(PredicateModel model)
         {
             SystemController systemController = SystemController.Instance;
-            //string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            //string pred = model.predicate;
-            //int predicate = int.Parse(pred.Substring(8)); //TODO: CHANGE
             ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> info =
                 systemController.getItemsInStoresInformation();
             Store store = null;
@@ -1064,38 +1153,37 @@ namespace WebApplication.Controllers
             }
             if (store != null)
             {
-                ConcurrentDictionary<int, PurchasePredicate> storespurchase = store.purchasePolicy.purchasePredicates;
+                ResultWithValue<ConcurrentDictionary<int, string>> storePredicatesDescription =
+                    systemController.getStorePredicatesDescription((int)storeID);
                 LinkedList<string> purchasepredicateList = new LinkedList<string>();
-                foreach (PurchasePredicate purpre in storespurchase.Values)
+                foreach (string purpre in storePredicatesDescription.getValue().Values)
                 {
-                    string purchasepredicate = "Predicate:" + purpre.ToString();
+                    string purchasepredicate = "Predicate: " + purpre;
                     purchasepredicateList.AddLast(purchasepredicate);
                 }
+                
                 string[] strs = purchasepredicateList.ToArray();
                 HttpContext.Session.SetObject("PurchasePredicate", strs);
             }
             return View();
-            /*if (res.getTag())
-            {
-                return RedirectToAction("StoreActions");
-            }
-            else
-            {
-                ViewBag.Alert = res.getMessage();
-                return RedirectToAction("StoreActions");
-            }*/
         }
         public IActionResult TryRemovePurchasePredicate(PredicateModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            //string predicate = model.predicate;
-            //if (predicate!=null && predicate != "")
-            //{
-                //string[] strs = predicate.Split(":");
-                //int predicateID = int.Parse(strs[strs.Length - 1]);
-                RegularResult res = systemController.removePurchasePredicate(userName, (int)storeID, model.predicate);
+            ResultWithValue<ConcurrentDictionary<int, string>> storePredicatesDescription =
+                systemController.getStorePredicatesDescription((int)storeID);
+            int predicateID = 0;
+            foreach (string purpre in storePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.predicate))
+                {
+                    predicateID = storePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            RegularResult res = systemController.removePurchasePredicate(userName, (int)storeID, predicateID);
                 if (res.getTag())
                 {
                     return RedirectToAction("PurchasePredicate");
@@ -1105,24 +1193,29 @@ namespace WebApplication.Controllers
                     ViewBag.Alert = res.getMessage();
                     return RedirectToAction("PurchasePredicate");
                 }
-            //}
-           /* else
-            {
-                return RedirectToAction("PurchasePredicate");
-            }*/
         }
-        /*public IActionResult TryAddPurchasePredicate(PredicateModel model)
+
+        public IActionResult TryAddPurchasePredicate(PredicateModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            Predicate<PurchaseDetails> newPred = new Predicate<PurchaseDetails>();
-            //string predicate = model.predicate;
-            if (newPred!=null)
+            Predicate<PurchaseDetails> newPred = null;
+            if (model.numbersOfProducts != null)
             {
-                //string[] strs = predicate.Split(":");
-                //int predicateID = int.Parse(strs[strs.Length - 1]);
-                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int)storeID, newPred);
+                newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+            }
+            if (model.priceOfShoppingBag != null)
+            {
+                newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+            }
+            if (model.ageOfUser != null)
+            {
+                newPred = pd => pd.userAge() >= model.ageOfUser;
+            }
+            if (newPred != null)
+            {
+                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int) storeID, newPred,"");
                 if (res.getTag())
                 {
                     return RedirectToAction("PurchasePredicate");
@@ -1137,13 +1230,50 @@ namespace WebApplication.Controllers
             {
                 return RedirectToAction("PurchasePredicate");
             }
-        }*/
+        }
+        
+        public int composePurchasePredicateStringToEnum(string pred)
+        {
+            switch (pred)
+            {
+                case "AndComposition":
+                    return 0;
+                case "OrComposition":
+                    return 1;
+                case "ConditionalComposition":
+                    return 2;
+            }
+            return -1;
+        }
+        
         public IActionResult TryComposePurchasePredicate(PredicateModel model)
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            ResultWithValue<int> res = systemController.composePurchasePredicates(userName, (int)storeID, model.firstPred,model.secondPred,model.compositionType);
+            ResultWithValue<ConcurrentDictionary<int, string>> storePredicatesDescription =
+                systemController.getStorePredicatesDescription((int)storeID);
+            int predicate1ID = 0;
+            int predicate2ID = 0;
+            foreach (string purpre in storePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.firstPred))
+                {
+                    predicate1ID = storePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            foreach (string purpre in storePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.secondPred))
+                {
+                    predicate2ID = storePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+
+            int compositionTypee = composePurchasePredicateStringToEnum(model.compositionType);
+            ResultWithValue<int> res = systemController.composePurchasePredicates(userName, (int)storeID, predicate1ID,predicate2ID,compositionTypee);
             if (res.getTag())
             {
                 return RedirectToAction("PurchasePredicate");

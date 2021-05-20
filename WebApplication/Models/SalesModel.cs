@@ -9,5 +9,12 @@
         public string compositionType { get; set; }
         
         public string predicate { get; set; }
+        
+        public int salePercentage { get; set; }
+        public string category { get; set; }
+        public string itemID { get; set; }
+        public string saleDescription { get; set; }
+        
+        
     }
 }

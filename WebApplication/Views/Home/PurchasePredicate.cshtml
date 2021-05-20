@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer.PolicyPredicate
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Purchase Predicate";
@@ -31,9 +32,19 @@
 <div class="purchasepredicatediv">
     @using (Html.BeginForm("TryComposePurchasePredicate", "Home", FormMethod.Post))
     {
-        @Html.TextBoxFor(model => model.firstPred,new { placeholder = "First Predicate ID",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.secondPred,new { placeholder = "Second Predicate ID",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.compositionType,new { placeholder = "Composition Type",@class="inputclassindex" })
+        PurchasePredicateCompositionType[] arr = new[]
+        {
+            PurchasePredicateCompositionType.AndComposition, PurchasePredicateCompositionType.OrComposition, PurchasePredicateCompositionType.ConditionalComposition
+        };
+        string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+        string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
+        <label for="storesList">First predicate</label>
+        @Html.DropDownListFor(model => model.firstPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        <label for="storesList">Second predicate</label>
+        @Html.DropDownListFor(model => model.secondPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        <label for="storesList">compositionType</label>
+        @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"});
+        
         <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Compose purchase predicate</button>
     }
 </div>
@@ -47,4 +58,22 @@
                 alert("@TempData["alert"]");  
             };  
         </script>  
+}
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+
+        connection.on('sendToUser', data => {
+            alert(data)
+        });
+
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+    </script>
 }
