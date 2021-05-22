@@ -43,7 +43,7 @@
             <label for="storesList">Second predicate</label>
             @Html.DropDownListFor(model => model.secondPred, new SelectList(predList.OfType<string>().ToList()), new { @class = "custom-select" })
             ;
-            <label for="storesList">compositionType</label>
+            <label for="storesList">Composition Type</label>
             @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new { @class = "custom-select" })
             ;
 

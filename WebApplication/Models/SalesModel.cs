@@ -15,6 +15,12 @@
         public string itemID { get; set; }
         public string saleDescription { get; set; }
         
+        public string saleinfo { get; set; }
+        public int numbersOfProducts { get; set; }
+        public int priceOfShoppingBag { get; set; }
+        public int ageOfUser { get; set; }
+        public string predicateDescription { get; set; }
+        
         
     }
 }

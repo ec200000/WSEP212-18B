@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer.PolicyPredicate
 @inject IHttpContextAccessor HttpContextAccessor
+@model WebApplication.Models.PredicateModel
 @{
     ViewData["Title"] = "Purchase Predicate";
 }
@@ -14,13 +15,11 @@
 <div class="purchasepredicatediv">
     <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
 </div>
-@model WebApplication.Models.AppointModel
 <div class="purchasepredicatediv">
     <input class="btn btn-outline-primary btn-lg" type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
    
 </div>
 <div class="purchasepredicatediv">
-    @model WebApplication.Models.PredicateModel
     @using (Html.BeginForm("TryRemovePurchasePredicate", "Home", FormMethod.Post))
     {
         <label for="storesList">Purchase Predicate</label>

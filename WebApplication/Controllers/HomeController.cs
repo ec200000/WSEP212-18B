@@ -751,7 +751,7 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             // !!! TODO: CHANGE FUNCTION TO GET PAYMENT AND DELIVERY PARAMETERS !!!
-            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, null, null);
+            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, new DeliveryParametersDTO(), null);
             if (res.getTag())
             {
                 Node<string> node = res.getValue().usersToSend.First;
@@ -981,7 +981,7 @@ namespace WebApplication.Controllers
                 int i = 0;
                 foreach (KeyValuePair<int,string> pred in res.getValue())
                 {
-                    preds[i] = pred.Value+ "; " + pred.Key.ToString();
+                    preds[i] = pred.Value+ ": " + pred.Key.ToString();
                     i++;
                 }
                 HttpContext.Session.SetObject("sale_predicates", preds);
@@ -1024,6 +1024,47 @@ namespace WebApplication.Controllers
             }
             return RedirectToAction("TryAddSale");
         }
+        public int categorytoenum(string pred)
+        {
+            switch (pred)
+            {
+                case "AllCategories":
+                    return 0;
+                case "Dairy":
+                    return 1;
+                case "Meat":
+                    return 2;
+                case "Clothing":
+                    return 3;
+                case "Footwear":
+                    return 4;
+                case "Cleaners":
+                    return 5;
+                case "Vegetables":
+                    return 6;
+                case "Electronics":
+                    return 7;
+                case "Health":
+                    return 8;
+                case "Sport":
+                    return 9;
+                case "Dinnerware":
+                    return 10;
+                case "Fruits":
+                    return 11;
+                case "Snacks":
+                    return 12;
+                case "Pastries":
+                    return 13;
+                case "Drinks":
+                    return 14;
+                case "Tools":
+                    return 15;
+                case "Other":
+                    return 16;
+            }
+            return -1;
+        }
         public IActionResult TryAddSale(SalesModel model)
         {
             SystemController systemController = SystemController.Instance;
@@ -1039,24 +1080,94 @@ namespace WebApplication.Controllers
             }
             else if (model.category != null)
             {
-                string category = model.category; //TODO
-                typeSale = new SaleOnCategory(category);
+                string category = model.category; 
+                typeSale = new SaleOnCategory((ItemCategory)categorytoenum(category));
             }
             else
             {
                 typeSale = new SaleOnAllStore();
             }
-            
-            ResultWithValue<int> res = systemController.addSale(userName, (int) storeID, model.salePercentage, typeSale,
-                model.saleDescription);
-            
-            if (res.getTag())
+
+            if (typeSale != null)
+            {
+                ResultWithValue<int> res = systemController.addSale(userName, (int) storeID, model.salePercentage, typeSale,
+                    model.saleDescription);
+                if (res.getTag())
+                {
+                    return RedirectToAction("TryAddSale");
+                }
+                else
+                {
+                    TempData["alert"] = res.getMessage();
+                    return RedirectToAction("TryAddSale");
+                }
+            }
+            return RedirectToAction("TryAddSale");
+        }
+        public IActionResult TryAllSales(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ResultWithValue<ConcurrentDictionary<int, string>> salesinfo = systemController.getStoreSalesDescription((int)storeID);
+            if (salesinfo.getTag())
+            {
+                string[] saleidanddesc = new string[salesinfo.getValue().Count];
+                int i = 0;
+                foreach (KeyValuePair<int,string> pred in salesinfo.getValue())
+                {
+                    saleidanddesc[i] = pred.Value+ ": " + pred.Key.ToString();
+                    i++;
+                }
+                HttpContext.Session.SetObject("sales_info", saleidanddesc);
+                return RedirectToAction("TryAllSales");
+            }
+            else
+            {
+                return RedirectToAction("TryAllSales");
+            }
+        }
+
+        public IActionResult TryAddSaleCondition(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            int composetype = saleStringToEnum(model.compositionType);
+            SimplePredicate typeCondition = null;
+            Predicate<PurchaseDetails> newPred = null;
+            if (model.numbersOfProducts != null)
+            {
+                newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+            }
+
+            if (model.priceOfShoppingBag != null)
+            {
+                newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+            }
+
+            if (model.ageOfUser != null)
+            {
+                newPred = pd => pd.userAge() >= model.ageOfUser;
+            }
+            typeCondition = new SimplePredicate(newPred, model.saleDescription);
+            int saleID = 0;
+            if (model.saleinfo != null)
+            {
+                string saleid = model.saleinfo;
+                string[] s = saleid.Split(": ");
+                saleID = int.Parse(s[s.Length - 1]);
+            }
+
+            ResultWithValue<int> salecond =
+                systemController.addSaleCondition(userName, (int)storeID, saleID, typeCondition, composetype);
+            if (salecond.getTag())
             {
                 return RedirectToAction("TryAddSale");
             }
             else
             {
-                TempData["alert"] = res.getMessage();
+                TempData["alert"] = salecond.getMessage();
                 return RedirectToAction("TryAddSale");
             }
         }
