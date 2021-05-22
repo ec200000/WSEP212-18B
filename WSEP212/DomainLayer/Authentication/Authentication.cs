@@ -31,7 +31,8 @@ namespace WSEP212.DomainLayer
         private Authentication()
         {
             usersInfo = new ConcurrentDictionary<string, string>();
-            usersInfo = new ConcurrentDictionary<string, string>(SystemDBAccess.Instance.UsersInfo.Find(0).usersInfo);
+            if(SystemDBAccess.Instance.UsersInfo.Find(1)!=null)
+                usersInfo = new ConcurrentDictionary<string, string>(SystemDBAccess.Instance.UsersInfo.Find(1).usersInfo);
 
             field = 0;
         }
@@ -113,12 +114,12 @@ namespace WSEP212.DomainLayer
         public void insertUserInfo(string userName, string password)
         {
             //var result = SystemDBAccess.Instance.UsersInfo.SingleOrDefault(a => a.usersInfo == this.usersInfo);
-            var result = SystemDBAccess.Instance.UsersInfo.Find(0);
+            var result = SystemDBAccess.Instance.UsersInfo.Find(1);
             if (result != null)
             {
+                usersInfo.TryAdd(userName, encryptPassword(password));
                 result.UserInfoJson = this.UserInfoJson;
                 SystemDBAccess.Instance.SaveChanges();
-                usersInfo.TryAdd(userName, encryptPassword(password));
             }
             else //first time - no passwords are saved
             {

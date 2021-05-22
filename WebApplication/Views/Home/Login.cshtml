@@ -30,14 +30,7 @@
 </body>
 </html>
 
-@if (ViewBag.Alert!= null)  
-{  
-    <script type="text/javascript">  
-            window.onload = function() {  
-                alert("@ViewBag.Alert");  
-            };  
-        </script>  
-} 
+
 
 @section Scripts {
     <script src="~/js/signalr.js"></script>
@@ -61,4 +54,13 @@
            alert(data)
         });
       </script>
+      
+      @if (ViewBag.Alert != null)  
+      {  
+          <script type="text/javascript">  
+                  window.onload = function() {  
+                      alert("@ViewBag.Alert");  
+                  };  
+          </script>  
+      } 
 }

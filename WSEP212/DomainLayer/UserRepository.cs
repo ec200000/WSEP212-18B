@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
 
         private UserRepository() {
             users = new ConcurrentDictionary<User, bool>();
-            users = new ConcurrentDictionary<User, bool>(SystemDBAccess.Instance.Users.ToDictionary(g => g, g=>g!=null));
+            //users = new ConcurrentDictionary<User, bool>(SystemDBAccess.Instance.Users.ToDictionary(g => g, g=>g!=null));
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 

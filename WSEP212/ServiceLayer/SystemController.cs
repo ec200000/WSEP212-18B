@@ -23,7 +23,7 @@ namespace WSEP212.ServiceLayer
         {
             try
             {
-                UserRepository.Instance.createSystemManager();
+                //UserRepository.Instance.createSystemManager();
             }
             catch (SystemException e)
             {

@@ -464,6 +464,10 @@ namespace WSEP212.DomainLayer
         // returns true if the delivery done successfully
         public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
         {
+            if (this.deliverySystem == null)
+            {
+                this.deliverySystem = DeliverySystem.Instance;
+            }
             return this.deliverySystem.deliverItems(address, items);
         }
 

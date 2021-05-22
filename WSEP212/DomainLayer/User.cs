@@ -103,6 +103,10 @@ namespace WSEP212.DomainLayer
             object res;
             try
             {
+                if (this.state == null)
+                {
+                    this.state = new GuestBuyerState(this);
+                }
                 res = state.login(username, password);
             }
             catch (NotImplementedException)
