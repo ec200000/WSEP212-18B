@@ -152,7 +152,7 @@ namespace WSEP212.DomainLayer
         }
 
         // returns the prices of the items in the shopping bags, and their status
-        private ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
+        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
         {
             ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPrices = new ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>();
             KeyValuePair<double, PriceStatus> itemStatus;

@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
@@ -33,8 +34,21 @@
         </div>
         
         <div>
-            @Html.TextBoxFor(model => model.category,new { placeholder = "Category",@class="inputclassitemactions" })
-            @Html.ValidationMessageFor(model => model.category)
+            @using (Html.BeginForm("TryAddItem", "Home", FormMethod.Post))
+            {
+                <label for="storesList">Category List</label>
+                ItemCategory[] arr = new[]
+                {
+                    ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
+                    ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
+                    ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks,ItemCategory.Pastries,
+                    ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
+                };
+                string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
+                @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+                @Html.ValidationMessageFor(model => model.category)
+            }
         </div>
         
         <button class="btn btn-outline-primary" type="submit" type="submit">Add Item To Store</button>

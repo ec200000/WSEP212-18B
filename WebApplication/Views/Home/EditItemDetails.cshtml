@@ -1,5 +1,7 @@
 @using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
 @inject IHttpContextAccessor HttpContextAccessor
+
 <!DOCTYPE html>
 
 <html>
@@ -32,8 +34,21 @@
         </div>
 
         <div>
-            @Html.LabelFor(model => model.category,new {@class="inputclassindex" })
-            @Html.EditorFor(model => model.category,new {@class="inputclassindex" })
+            @using (Html.BeginForm("TryEditDetails", "Home", FormMethod.Post))
+            {
+                <label for="storesList">Category List</label>
+                ItemCategory[] arr = new[]
+                {
+                    ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
+                    ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
+                    ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks,ItemCategory.Pastries,
+                    ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
+                };
+                string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
+                @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+                @Html.EditorFor(model => model.category, new {@class = "inputclassindex"})
+            }
         </div>
         
         <button style="margin-top: 15px" class="btn btn-outline-primary" type="submit">Edit Details</button>

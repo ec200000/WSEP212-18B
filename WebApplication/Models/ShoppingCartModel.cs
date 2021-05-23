@@ -12,5 +12,7 @@ namespace WebApplication.Models
         
         public string itemID { get; set; }
         public int storeID { get; set; }
+        public int priceBeforeSale { get; set; }
+        public int priceAfterSale { get; set; }
     }
 }

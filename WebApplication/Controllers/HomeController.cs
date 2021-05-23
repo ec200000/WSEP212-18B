@@ -14,6 +14,7 @@ using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
 using WebApplication.Communication;
 using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
@@ -751,7 +752,7 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             // !!! TODO: CHANGE FUNCTION TO GET PAYMENT AND DELIVERY PARAMETERS !!!
-            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, new DeliveryParametersDTO(), null);
+            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, null, null);
             if (res.getTag())
             {
                 Node<string> node = res.getValue().usersToSend.First;
@@ -1398,6 +1399,43 @@ namespace WebApplication.Controllers
                 ViewBag.Alert = res.getMessage();
                 return RedirectToAction("PurchasePredicate");
             }
+        }
+
+        public IActionResult TryPriceAftereSale(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>
+                pricesAfterSale = systemController.getItemsAfterSalePrices(userName);
+            double finalPriceAfterSale = 0;
+            foreach (ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> dict in pricesAfterSale.getValue().Values)
+            {
+                foreach (KeyValuePair<double, PriceStatus> keyValuePair in dict.Values)
+                {
+                    finalPriceAfterSale = finalPriceAfterSale + keyValuePair.Key;
+                }
+            }
+            HttpContext.Session.SetObject("finalPriceAfterSale", finalPriceAfterSale);
+            return RedirectToAction("TryPriceAftereSale");
+        }
+        public IActionResult TryPriceBeforeSale(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
+            ConcurrentDictionary<int, ShoppingBag> shoppingBagss = res.shoppingBags;
+
+            double finalPriceBeforeSale = 0;
+            foreach (ShoppingBag shopBag in shoppingBagss.Values)
+            {
+                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> prices = shopBag.allItemsPricesAndStatus();
+                foreach (KeyValuePair<double, PriceStatus> keyValuePair in prices.Values)
+                {
+                    finalPriceBeforeSale = finalPriceBeforeSale + keyValuePair.Key;
+                }
+            }
+            HttpContext.Session.SetObject("finalPriceBeforeSale", finalPriceBeforeSale);
+            return RedirectToAction("TryPriceBeforeSale");
         }
     }
 }
