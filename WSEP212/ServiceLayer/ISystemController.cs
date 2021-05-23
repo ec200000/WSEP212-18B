@@ -24,9 +24,9 @@ namespace WSEP212.ServiceLayer
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID); // USE CASE 2.8
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity); // USE CASE 2.8
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, Int32 purchaseType, double startPrice); // USE CASE 2.8
-        public RegularResult submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice); // USE CASE 2.8
-        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, Int32 myDecision); // USE CASE 2.8
-        public abstract RegularResult confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, Int32 priceStatus); // USE CASE 2.8
+        public ResultWithValue<NotificationDTO> submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice); // USE CASE 2.8
+        public ResultWithValue<NotificationDTO> itemCounterOffer(String storeManager, String userName, int storeID, int itemID, double counterOffer); // USE CASE 2.8
+        public ResultWithValue<NotificationDTO> confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, Int32 priceStatus); // USE CASE 2.8
         public ResultWithValue<NotificationDTO> purchaseItems(string userName, DeliveryParametersDTO deliveryParameters, PaymentParametersDTO paymentParameters); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2

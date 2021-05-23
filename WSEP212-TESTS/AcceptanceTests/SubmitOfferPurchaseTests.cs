@@ -87,7 +87,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void counterOfferPurchaseTest()
         {
             controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 2.0);
-            controller.counterOfferDecision("guest", storeID, itemIDA, 4.0, approvedType);
+            controller.itemCounterOffer(userName, "guest", storeID, itemIDA, 4.5);
             ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
         }

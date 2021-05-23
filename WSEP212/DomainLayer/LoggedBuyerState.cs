@@ -289,21 +289,48 @@ namespace WSEP212.DomainLayer
             return addStoreRes;
         }
 
-        public override RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        public override ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
         {
             // checks user exists
             ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
             if (!findUserRes.getTag())
             {
-                return new Failure(findUserRes.getMessage());
+                return new FailureWithValue<string>(findUserRes.getMessage(), userName);
             }
             // checks if the user has the permissions for confirm price status
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
             if (hasPermissionRes.getTag())
             {
-                return findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
+                RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
+                if(res.getTag())
+                {
+                    return new OkWithValue<string>(res.getMessage(), userName);
+                }
+                return new FailureWithValue<string>(res.getMessage(), userName);
             }
-            return hasPermissionRes;
+            return new FailureWithValue<string>(hasPermissionRes.getMessage(), userName);
+        }
+
+        public override ResultWithValue<string> itemCounterOffer(String userName, int storeID, int itemID, double counterOffer)
+        {
+            // checks user exists
+            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!findUserRes.getTag())
+            {
+                return new FailureWithValue<string>(findUserRes.getMessage(), userName);
+            }
+            // checks if the user has the permissions for confirm price status
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
+            if (hasPermissionRes.getTag())
+            {
+                RegularResult res = findUserRes.getValue().shoppingCart.itemCounterOffer(storeID, itemID, counterOffer);
+                if (res.getTag())
+                {
+                    return new OkWithValue<string>(res.getMessage(), userName);
+                }
+                return new FailureWithValue<string>(res.getMessage(), userName);
+            }
+            return new FailureWithValue<string>(hasPermissionRes.getMessage(), userName);
         }
 
         public override RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType)

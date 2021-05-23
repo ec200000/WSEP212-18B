@@ -49,15 +49,18 @@ namespace WSEP212.DomainLayer
         {
             return this.user.shoppingCart.changeItemPurchaseTypeInShoppingBag(storeID, itemID, itemPurchaseType);
         }
-        public RegularResult submitPriceOffer(int storeID, int itemID, double offerItemPrice)
+        public ResultWithValue<ConcurrentLinkedList<string>> submitPriceOffer(int storeID, int itemID, double offerItemPrice)
         {
-            return this.user.shoppingCart.submitPriceOffer(storeID, itemID, offerItemPrice);
+            RegularResult res = this.user.shoppingCart.submitPriceOffer(storeID, itemID, offerItemPrice);
+            if(res.getTag())
+            {
+                ConcurrentLinkedList<string> storeOwners = StoreRepository.Instance.getStoreOwners(storeID);
+                return new OkWithValue<ConcurrentLinkedList<string>>(res.getMessage(), storeOwners);
+            }
+            return new FailureWithValue<ConcurrentLinkedList<string>>(res.getMessage(), null);
         }
-        public RegularResult counterOfferDecision(int storeID, int itemID, double counterOffer, PriceStatus myDecision)
-        {
-            return this.user.shoppingCart.counterOfferDecision(storeID, itemID, counterOffer, myDecision);
-        }
-        public abstract RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus);
+        public abstract ResultWithValue<string> itemCounterOffer(String userName, int storeID, int itemID, double counterOffer);
+        public abstract ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus);
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(DeliveryParameters deliveryParameters, PaymentParameters paymentParameters)
         {
             return HandlePurchases.Instance.purchaseItems(this.user, deliveryParameters, paymentParameters); // handling the purchase procedure

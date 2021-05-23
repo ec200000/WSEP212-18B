@@ -153,7 +153,13 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        public override ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<string> itemCounterOffer(String userName, int storeID, int itemID, double counterOffer)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)

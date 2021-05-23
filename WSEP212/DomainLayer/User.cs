@@ -223,19 +223,19 @@ namespace WSEP212.DomainLayer
             param.eventWaitHandle.Set(); // signal we're done
         }
 
-        // params: int storeID, int itemID, double counterOffer, PriceStatus priceStatus
+        // params: int storeID, int itemID, double counterOffer
         // returns: bool
-        public void counterOfferDecision(Object list)
+        public void itemCounterOffer(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
-            int storeID = (int)param.parameters[0];
-            int itemID = (int)param.parameters[1];
-            double offerItemPrice = (double)param.parameters[2];
-            PriceStatus myDecision = (PriceStatus)param.parameters[3];
+            String userName = (String)param.parameters[0];
+            int storeID = (int)param.parameters[1];
+            int itemID = (int)param.parameters[2];
+            double offerItemPrice = (double)param.parameters[3];
             object res;
             try
             {
-                res = state.counterOfferDecision(storeID, itemID, offerItemPrice, myDecision);
+                res = state.itemCounterOffer(userName, storeID, itemID, offerItemPrice);
             }
             catch (NotImplementedException)
             {

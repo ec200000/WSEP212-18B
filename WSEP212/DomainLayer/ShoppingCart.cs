@@ -102,14 +102,13 @@ namespace WSEP212.DomainLayer
             return new Failure(shoppingBagRes.getMessage());
         }
 
-        // accepting/rejecting counter-offer from a store manager
-        // done by the user
-        public RegularResult counterOfferDecision(int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        // store manager send counter offer
+        public RegularResult itemCounterOffer(int storeID, int itemID, double counterOffer)
         {
             ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
             if (shoppingBagRes.getTag())
             {
-                RegularResult submitOfferRes = shoppingBagRes.getValue().counterOfferDecision(itemID, counterOffer, myDecision);
+                RegularResult submitOfferRes = shoppingBagRes.getValue().counterOffer(itemID, counterOffer);
                 removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                 return submitOfferRes;
             }

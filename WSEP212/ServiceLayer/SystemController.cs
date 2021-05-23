@@ -451,28 +451,48 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.changeItemPurchaseType(userName, storeID, itemID, (PurchaseType)purchaseType, startPrice);
         }
 
-        public RegularResult submitPriceOffer(string userName, int storeID, int itemID, double offerItemPrice)
+        public ResultWithValue<NotificationDTO> submitPriceOffer(string userName, int storeID, int itemID, double offerItemPrice)
         {
             String info = $"submitPriceOffer Event was triggered, with the parameters:" +
                           $"userName: {userName}, store ID: {storeID}, item ID: {itemID}, offer price: {offerItemPrice}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.submitPriceOffer(userName, storeID, itemID, offerItemPrice);
+            ResultWithValue<ConcurrentLinkedList<string>> res = SystemControllerFacade.Instance.submitPriceOffer(userName, storeID, itemID, offerItemPrice);
+            return res.getTag() ? new OkWithValue<NotificationDTO>(res.getMessage(),
+                new NotificationDTO(res.getValue(), $"The user {userName} submit new price offer fot item {itemID}.\n please review this offer")) :
+                new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
 
-        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, Int32 myDecision)
-        {
-            String info = $"counterOfferDecision Event was triggered, with the parameters:" +
-                          $"userName: {userName}, store ID: {storeID}, item ID: {itemID}, counter offer: {counterOffer}, my Decision: {myDecision}";
-            Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.counterOfferDecision(userName, storeID, itemID, counterOffer, (PriceStatus)myDecision);
-        }
-
-        public RegularResult confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, int priceStatus)
+        public ResultWithValue<NotificationDTO> confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, int priceStatus)
         {
             String info = $"confirmPriceStatus Event was triggered, with the parameters:" +
                           $"store Manager: {storeManager}, user To Confirm: {userToConfirm}, store ID: {storeID}, item ID: {itemID}, price Status: {priceStatus}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.confirmPriceStatus(storeManager, userToConfirm, storeID, itemID, (PriceStatus)priceStatus);
+            ResultWithValue<string> res = SystemControllerFacade.Instance.confirmPriceStatus(storeManager, userToConfirm, storeID, itemID, (PriceStatus)priceStatus);
+            if(res.getTag())
+            {
+                ConcurrentLinkedList<string> userToSend = new ConcurrentLinkedList<string>();
+                userToSend.TryAdd(res.getValue());
+                string decision = priceStatus == 0 ? "approve" : "reject";
+                return new OkWithValue<NotificationDTO>(res.getMessage(),
+                    new NotificationDTO(userToSend, $"Store manager {storeManager} review your offer on item {itemID}.\n he decided to {decision} your offer."));
+            }
+            return new FailureWithValue<NotificationDTO>(res.getMessage(), null);
+        }
+
+        public ResultWithValue<NotificationDTO> itemCounterOffer(string storeManager, string userToConfirm, int storeID, int itemID, double counterOffer)
+        {
+            String info = $"itemCounterOffer Event was triggered, with the parameters:" +
+                          $"storeManager: {storeManager}, userName: {userToConfirm}, store ID: {storeID}, item ID: {itemID}, counter offer: {counterOffer}";
+            Logger.Instance.writeInformationEventToLog(info);
+            ResultWithValue<string> res = SystemControllerFacade.Instance.itemCounterOffer(storeManager, userToConfirm, storeID, itemID, counterOffer);
+            if (res.getTag())
+            {
+                ConcurrentLinkedList<string> userToSend = new ConcurrentLinkedList<string>();
+                userToSend.TryAdd(res.getValue());
+                return new OkWithValue<NotificationDTO>(res.getMessage(),
+                    new NotificationDTO(userToSend, $"Store manager {storeManager} review your offer on item {itemID}.\n he decided to counter your offer to {counterOffer}."));
+            }
+            return new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
 
         public RegularResult supportPurchaseType(string userName, int storeID, int purchaseType)
