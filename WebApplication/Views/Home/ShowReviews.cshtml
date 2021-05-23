@@ -17,17 +17,14 @@
 
 </body>
 </html>
-@if (ViewBag.Alert != null)
-{
-    <script type="text/javascript">
-    
-
-            window.onload = function() {
-                alert("@ViewBag.Alert");
-            };
-    </script>
-
-}
+@if (TempData["Alert"] != null)  
+{  
+    <script type="text/javascript">  
+                  window.onload = function() {  
+                      alert("@TempData["Alert"]");  
+                  };  
+          </script>  
+} 
 
 @section Scripts {
     <script src="~/js/signalr.js"></script>
