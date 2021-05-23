@@ -90,7 +90,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = 12.0;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
@@ -106,7 +106,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = 12.0;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user3.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
@@ -317,7 +317,7 @@ namespace WSEP212_TESTS.IntegrationTests
                     list[2] = "bamba";
                     list[3] = "taim retzah!";
                     list[4] = 1.23;
-                    list[5] = "snacks";
+                    list[5] = ItemCategory.Snacks;
                     parameters.parameters = list;
                     user.addItemToStorage(parameters);
                     Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].storage.Count);
@@ -446,7 +446,7 @@ namespace WSEP212_TESTS.IntegrationTests
             {
                 int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
-                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy).getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[4];
@@ -469,7 +469,7 @@ namespace WSEP212_TESTS.IntegrationTests
             {
                 int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
-                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy).getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[4];

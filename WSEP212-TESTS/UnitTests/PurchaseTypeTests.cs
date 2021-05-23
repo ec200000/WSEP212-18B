@@ -25,7 +25,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicy("DEFUALT"), new PurchasePolicy("DEFUALT"), new User("admin"));
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
-            storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
+            storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             shoppingBag = new ShoppingBag(shoppingBagStore, new User("Sagiv", 21));
         }
 
@@ -142,31 +142,16 @@ namespace WSEP212_TESTS.UnitTests
         }
 
         [TestMethod]
-        public void approveCountingOfferTest()
+        public void countingOfferTest()
         {
             supportPurchaseType(PurchaseType.SubmitOfferPurchase);
             ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5);
             shoppingBag.addItem(storeItemID, 2, purchaseType);
 
-            RegularResult res = shoppingBag.counterOfferDecision(storeItemID, 8.0, PriceStatus.Approved);
+            RegularResult res = shoppingBag.counterOffer(storeItemID, 8.0);
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(8.0, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
             Assert.AreEqual(PriceStatus.Approved, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
-
-            unsupportAndCleanBag(PurchaseType.SubmitOfferPurchase);
-        }
-
-        [TestMethod]
-        public void rejectCountingOfferTest()
-        {
-            supportPurchaseType(PurchaseType.SubmitOfferPurchase);
-            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5);
-            shoppingBag.addItem(storeItemID, 2, purchaseType);
-
-            RegularResult res = shoppingBag.counterOfferDecision(storeItemID, 10.0, PriceStatus.Rejected);
-            Assert.IsTrue(res.getTag());
-            Assert.AreEqual(7.5, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
-            Assert.AreEqual(PriceStatus.Rejected, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
 
             unsupportAndCleanBag(PurchaseType.SubmitOfferPurchase);
         }

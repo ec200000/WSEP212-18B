@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -22,29 +23,35 @@ namespace WSEP212.DomainLayer
 
         private HandlePurchases()
         {
-            paymentSystem = PaymentSystem.Instance;
+            paymentSystem = PaymentSystemAdapter.Instance;
         }
 
-        private RegularResult externalPurchase(double amount, User user)
+        private ResultWithValue<int> externalPaymentSystem(PaymentParameters paymentParameters, double price)
         {
-            if (Math.Abs(amount - paymentSystem.paymentCharge(amount)) < 0.01)
+            int transactionID = paymentSystem.paymentCharge(paymentParameters.cardNumber, paymentParameters.month, paymentParameters.year,
+                paymentParameters.holder, paymentParameters.ccv, paymentParameters.id, price);
+            if(transactionID != -1)
             {
-                return new Ok("Payment Charged Successfully");
+                return new OkWithValue<int>("External Payment System Charged", transactionID);
             }
-            return new Failure("Payment Charge Failed");
+            return new FailureWithValue<int>("External Payment System Not Charged", transactionID);
         }
 
-        private RegularResult callDeliverySystem(User user, String address)
+        private ResultWithValue<ConcurrentDictionary<int, int>> externalDeliverySystem(User user, DeliveryParameters deliveryParameters)
         {
+            ConcurrentDictionary<int, int> transactions = new ConcurrentDictionary<int, int>();
+            int storeID, transactionID;
             foreach (ShoppingBag shoppingBag in user.shoppingCart.shoppingBags.Values)
             {
-                RegularResult deliverRes = shoppingBag.store.deliverItems(address, shoppingBag.items);
-                if (!deliverRes.getTag())
+                storeID = shoppingBag.store.storeID;
+                transactionID = shoppingBag.store.deliverItems(deliveryParameters);
+                if (transactionID == -1)
                 {
-                    return deliverRes;
+                    rollbackDeliveries(transactions);
+                    return new FailureWithValue<ConcurrentDictionary<int, int>>("One Or More Of The Deliveries Cannot Be Done", null);
                 }
             }
-            return new Ok("All Items Deliver To The User Successfully");
+            return new OkWithValue<ConcurrentDictionary<int, int>>("All Items Deliver To The User Successfully", transactions);
         }
 
         private double calculateTotalPrice(ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
@@ -57,16 +64,28 @@ namespace WSEP212.DomainLayer
             return totalPrice;
         }
 
-        private void rollback(User user, ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
+        private void rollbackDeliveries(ConcurrentDictionary<int, int> transactions)
+        {
+            Store store;
+            foreach (KeyValuePair<int, int> storeTransPair in transactions)
+            {
+                store = StoreRepository.Instance.getStore(storeTransPair.Key).getValue();
+                store.cancelDelivery(storeTransPair.Value);
+            }
+        }
+
+        private void rollbackPayment(int transactionID)
+        {
+            paymentSystem.cancelPaymentCharge(transactionID);
+        }
+
+        private void rollbackPurchase(User user, ConcurrentDictionary<int, PurchaseInvoice> purchaseInvoices)
         {
             user.shoppingCart.rollBackBags(purchaseInvoices);
         }
 
-        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(User user, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(User user, DeliveryParameters deliveryParameters, PaymentParameters paymentParameters)
         {
-            if (address == null) 
-                return new FailureWithValue<ConcurrentLinkedList<string>>("address is null!", null);
-
             // if the purchase cannot be made returns null
             // create purchase invoices
             ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> purchaseRes = user.shoppingCart.purchaseItemsInCart();
@@ -76,11 +95,11 @@ namespace WSEP212.DomainLayer
                 // calculate final price by all the invoices
                 double totalPrice = calculateTotalPrice(purchaseInvoices);
                 // call payment system
-                RegularResult externalPurchaseRes = externalPurchase(totalPrice, user);
-                if (externalPurchaseRes.getTag())
+                ResultWithValue<int> paymentRes = externalPaymentSystem(paymentParameters, totalPrice);
+                if (paymentRes.getTag())
                 {
                     // call delivery system
-                    RegularResult deliveryRes = callDeliverySystem(user, address);
+                    ResultWithValue<ConcurrentDictionary<int, int>> deliveryRes = externalDeliverySystem(user, deliveryParameters);
                     if (deliveryRes.getTag())
                     {
                         var stores = user.shoppingCart.shoppingBags.Keys;
@@ -99,11 +118,12 @@ namespace WSEP212.DomainLayer
                         user.shoppingCart.clearShoppingCart();
                         return new OkWithValue<ConcurrentLinkedList<string>>("Purchase Completed Successfully!", storeOwners);
                     }
-                    rollback(user, purchaseInvoices);
+                    rollbackPayment(paymentRes.getValue());
+                    rollbackPurchase(user, purchaseInvoices);
                     return new FailureWithValue<ConcurrentLinkedList<string>>(deliveryRes.getMessage(),null);
                 }
-                rollback(user, purchaseInvoices);
-                return new FailureWithValue<ConcurrentLinkedList<string>>(externalPurchaseRes.getMessage(),null);
+                rollbackPurchase(user, purchaseInvoices);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(paymentRes.getMessage(), null);
             }
             return new FailureWithValue<ConcurrentLinkedList<string>>(purchaseRes.getMessage(), null);
         }

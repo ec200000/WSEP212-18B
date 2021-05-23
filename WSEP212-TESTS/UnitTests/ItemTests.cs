@@ -15,7 +15,7 @@ namespace WSEP212_TESTS.UnitTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
-            potato = new Item(5, "potato", "vegetable", 1.5, "vegetables");
+            potato = new Item(5, "potato", "vegetable", 1.5, ItemCategory.Vegetables);
             user = new User("Sagiv");
             ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(potato, user);
             userReviews.addReview("yummy");

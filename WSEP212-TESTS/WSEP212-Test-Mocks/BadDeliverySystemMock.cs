@@ -16,9 +16,17 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
         public static BadDeliverySystemMock Instance
             => lazy.Value;
 
-        public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
+        private BadDeliverySystemMock() { }
+
+        // bad delivery system, always reject the delivery 
+        public int deliverItems(string sendToName, string address, string city, string country, string zip)
         {
-            return new Failure("Can Not Deliver Zero Items");
+            return -1;
+        }
+
+        public bool cancelDelivery(int transactionID)
+        {
+            return false;
         }
     }
 }

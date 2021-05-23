@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
 
         }
 
-        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
+        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
             while(sellerPermissions.Value != null)
@@ -112,7 +112,7 @@ namespace WSEP212.DomainLayer
             return new Failure("The User Is Not Store Seller Of This Store");
         }
 
-        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
+        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -289,21 +289,48 @@ namespace WSEP212.DomainLayer
             return addStoreRes;
         }
 
-        public override RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        public override ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
         {
             // checks user exists
             ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
             if (!findUserRes.getTag())
             {
-                return new Failure(findUserRes.getMessage());
+                return new FailureWithValue<string>(findUserRes.getMessage(), userName);
             }
             // checks if the user has the permissions for confirm price status
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
             if (hasPermissionRes.getTag())
             {
-                return findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
+                RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
+                if(res.getTag())
+                {
+                    return new OkWithValue<string>(res.getMessage(), userName);
+                }
+                return new FailureWithValue<string>(res.getMessage(), userName);
             }
-            return hasPermissionRes;
+            return new FailureWithValue<string>(hasPermissionRes.getMessage(), userName);
+        }
+
+        public override ResultWithValue<string> itemCounterOffer(String userName, int storeID, int itemID, double counterOffer)
+        {
+            // checks user exists
+            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
+            if (!findUserRes.getTag())
+            {
+                return new FailureWithValue<string>(findUserRes.getMessage(), userName);
+            }
+            // checks if the user has the permissions for confirm price status
+            RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
+            if (hasPermissionRes.getTag())
+            {
+                RegularResult res = findUserRes.getValue().shoppingCart.itemCounterOffer(storeID, itemID, counterOffer);
+                if (res.getTag())
+                {
+                    return new OkWithValue<string>(res.getMessage(), userName);
+                }
+                return new FailureWithValue<string>(res.getMessage(), userName);
+            }
+            return new FailureWithValue<string>(hasPermissionRes.getMessage(), userName);
         }
 
         public override RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType)

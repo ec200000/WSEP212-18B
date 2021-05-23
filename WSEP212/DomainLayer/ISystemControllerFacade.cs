@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -25,10 +27,10 @@ namespace WSEP212.DomainLayer
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity);
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, PurchaseType purchaseType, double startPrice);
-        public RegularResult submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice);
-        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, PriceStatus myDecision);
-        public abstract RegularResult confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, PriceStatus priceStatus);
-        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address); 
+        public ResultWithValue<ConcurrentLinkedList<string>> submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice);
+        public ResultWithValue<string> itemCounterOffer(String storeManager, String userName, int storeID, int itemID, double counterOffer);
+        public ResultWithValue<string> confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, PriceStatus priceStatus);
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string userName, DeliveryParameters deliveryParameters, PaymentParameters paymentParameters); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
 
         public RegularResult supportPurchaseType(String userName, int storeID, PurchaseType purchaseType);
@@ -44,9 +46,9 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<ConcurrentDictionary<int, string>> getStoreSalesDescription(int storeID);
 
         public ResultWithValue<ConcurrentLinkedList<string>> itemReview(String userName, String review, int itemID, int storeID);
-        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category);
+        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, ItemCategory category);
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID);
-        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category);
+        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category);
         public RegularResult appointStoreManager(String userName, String managerName, int storeID); //the store manager will receive default permissions(4.9)
         public RegularResult appointStoreOwner(String userName, String storeOwnerName, int storeID);
         public RegularResult editManagerPermissions(String userName, String managerName, ConcurrentLinkedList<Permissions> permissions, int storeID);

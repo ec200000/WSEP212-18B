@@ -24,8 +24,8 @@ namespace WSEP212_TESTS.UnitTests
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
             this.store = StoreRepository.Instance.getStore(storeIdRes.getValue()).getValue();
-            itemAID = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
-            itemBID = store.addItemToStorage(50, "white masks", "protects against infection of covid-19", 10, "health").getValue();
+            itemAID = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
+            itemBID = store.addItemToStorage(50, "white masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
         }
 
         [TestCleanup]
@@ -80,14 +80,14 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void searchItemByNameTest()
         {
-            SearchItems searchItemsByName = new SearchItems(new SearchItemsDTO("masks", "", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByName = new SearchItems(new SearchItemsDTO("masks", "", Double.MinValue, Double.MaxValue, 0));
             ConcurrentDictionary<Item, int> itemsByName = StoreRepository.Instance.searchItem(searchItemsByName);
             Assert.AreEqual(2, itemsByName.Count);
-            SearchItems searchItemsByName2 = new SearchItems(new SearchItemsDTO("white", "", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByName2 = new SearchItems(new SearchItemsDTO("white", "", Double.MinValue, Double.MaxValue, 0));
             ConcurrentDictionary<Item, int> itemsByName2 = StoreRepository.Instance.searchItem(searchItemsByName2);
             Assert.AreEqual(1, itemsByName2.Count);
 
-            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, 0));
             ConcurrentDictionary<Item, int> itemsByKeyWords = StoreRepository.Instance.searchItem(searchItemsByKeyWords);
             Assert.AreEqual(2, itemsByKeyWords.Count);
         }
@@ -95,7 +95,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void searchItemByKeywordsTest()
         {
-            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, ""));
+            SearchItems searchItemsByKeyWords = new SearchItems(new SearchItemsDTO("", "covid-19", Double.MinValue, Double.MaxValue, 0));
             ConcurrentDictionary<Item, int> itemsByKeyWords = StoreRepository.Instance.searchItem(searchItemsByKeyWords);
             Assert.AreEqual(2, itemsByKeyWords.Count);
         }

@@ -14,6 +14,8 @@ using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
 
 namespace WSEP212.DomainLayer
 {
@@ -274,7 +276,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult submitPriceOffer(string userName, int storeID, int itemID, double offerItemPrice)
+        public ResultWithValue<ConcurrentLinkedList<string>> submitPriceOffer(string userName, int storeID, int itemID, double offerItemPrice)
         {
             try
             {
@@ -298,49 +300,49 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In submitPriceOffer function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message, null);
             }
         }
 
-        public RegularResult counterOfferDecision(String userName, int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        public ResultWithValue<string> itemCounterOffer(String storeManager, String userName, int storeID, int itemID, double counterOffer)
         {
             try
             {
                 User user;
-                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(storeManager);
                 if (!userRes.getTag())
                 {
-                    user = new User(userName);
+                    user = new User(storeManager);
                     UserRepository.Instance.addLoginUser(user);
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { storeID, itemID, counterOffer, myDecision };
+                Object[] paramsList = { userName, storeID, itemID, counterOffer };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                ThreadPool.QueueUserWorkItem(user.counterOfferDecision, threadParameters); //creating the job
+                ThreadPool.QueueUserWorkItem(user.itemCounterOffer, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {
-                    String errorMsg = "The user " + userName + " cannot perform the counterOfferDecision action!";
+                    String errorMsg = "The user " + storeManager + " cannot perform the itemCounterOffer action!";
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<string>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
-                Logger.Instance.writeErrorEventToLog($"In counterOfferDecision function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                Logger.Instance.writeErrorEventToLog($"In itemCounterOffer function, the error is: {e.Message}");
+                return new FailureWithValue<string>(e.Message, userName);
             }
         }
 
-        public RegularResult confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, PriceStatus priceStatus)
+        public ResultWithValue<string> confirmPriceStatus(string storeManager, string userToConfirm, int storeID, int itemID, PriceStatus priceStatus)
         {
             try
             {
@@ -364,12 +366,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<string>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In confirmPriceStatus function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<string>(e.Message, userToConfirm);
             }
         }
 
@@ -439,7 +441,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(String userName, String address)
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string userName, DeliveryParameters deliveryParameters, PaymentParameters paymentParameters)
         {
             try
             {
@@ -453,7 +455,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                Object[] paramsList = { address };
+                Object[] paramsList = { deliveryParameters, paymentParameters };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
                 ThreadPool.QueueUserWorkItem(user.purchaseItems, threadParameters); //creating the job
@@ -540,7 +542,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, String category)
+        public ResultWithValue<int> addItemToStorage(string userName, int storeID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             try
             {
@@ -608,7 +610,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
+        public RegularResult editItemDetails(string userName, int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             try
             {

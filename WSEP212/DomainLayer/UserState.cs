@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -47,27 +49,30 @@ namespace WSEP212.DomainLayer
         {
             return this.user.shoppingCart.changeItemPurchaseTypeInShoppingBag(storeID, itemID, itemPurchaseType);
         }
-        public RegularResult submitPriceOffer(int storeID, int itemID, double offerItemPrice)
+        public ResultWithValue<ConcurrentLinkedList<string>> submitPriceOffer(int storeID, int itemID, double offerItemPrice)
         {
-            return this.user.shoppingCart.submitPriceOffer(storeID, itemID, offerItemPrice);
+            RegularResult res = this.user.shoppingCart.submitPriceOffer(storeID, itemID, offerItemPrice);
+            if(res.getTag())
+            {
+                ConcurrentLinkedList<string> storeOwners = StoreRepository.Instance.getStoreOwners(storeID);
+                return new OkWithValue<ConcurrentLinkedList<string>>(res.getMessage(), storeOwners);
+            }
+            return new FailureWithValue<ConcurrentLinkedList<string>>(res.getMessage(), null);
         }
-        public RegularResult counterOfferDecision(int storeID, int itemID, double counterOffer, PriceStatus myDecision)
+        public abstract ResultWithValue<string> itemCounterOffer(String userName, int storeID, int itemID, double counterOffer);
+        public abstract ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus);
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(DeliveryParameters deliveryParameters, PaymentParameters paymentParameters)
         {
-            return this.user.shoppingCart.counterOfferDecision(storeID, itemID, counterOffer, myDecision);
-        }
-        public abstract RegularResult confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus);
-        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string address)
-        {
-            return HandlePurchases.Instance.purchaseItems(this.user, address); // handling the purchase procedure
+            return HandlePurchases.Instance.purchaseItems(this.user, deliveryParameters, paymentParameters); // handling the purchase procedure
         }
         // * End Of Purchase Items Functions *//
 
 
-            // * Store Storage Management * //
+        // * Store Storage Management * //
         public abstract ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
-        public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category);
+        public abstract ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, ItemCategory category);
         public abstract RegularResult removeItemFromStorage(int storeID, int itemID);
-        public abstract RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category);
+        public abstract RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category);
         // * End Of Store Storage Management * //
 
 

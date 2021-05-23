@@ -58,7 +58,7 @@ namespace WSEP212.DomainLayer
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
 
-            this.deliverySystem = DeliverySystem.Instance;
+            this.deliverySystem = DeliverySystemAdapter.Instance;
         }
 
         // Check if the item exist and available in the store
@@ -83,7 +83,7 @@ namespace WSEP212.DomainLayer
         // if the item has the same name, category and price we treat the product as an existing product
         // the quantity of an existing product will update
         // returns the itemID of the item, otherwise -1
-        public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, String category)
+        public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, ItemCategory category)
         {
             // checks that the item not already exist
             foreach (KeyValuePair<int, Item> pairItem in storage)
@@ -146,7 +146,7 @@ namespace WSEP212.DomainLayer
         }
 
         // edit the personal details of an item
-        public RegularResult editItem(int itemID, String itemName, String description, double price, String category, int quantity)
+        public RegularResult editItem(int itemID, String itemName, String description, double price, ItemCategory category, int quantity)
         {
             if (itemName.Equals("") || price <= 0 || category.Equals(""))
                 return new Failure("One Or More Of The New Item Details Are Invalid");
@@ -383,10 +383,17 @@ namespace WSEP212.DomainLayer
         }
 
         // Deliver all the items to the address
-        // returns true if the delivery done successfully
-        public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
+        // returns transaction id if the delivery done successfully
+        public int deliverItems(DeliveryParameters deliveryParameters)
         {
-            return this.deliverySystem.deliverItems(address, items);
+            return this.deliverySystem.deliverItems(deliveryParameters.sendToName, deliveryParameters.address, deliveryParameters.city,
+                deliveryParameters.country, deliveryParameters.zip);
+        }
+
+        // cancel the delivery of the transaction id
+        public bool cancelDelivery(int transactionID)
+        {
+            return this.deliverySystem.cancelDelivery(transactionID);
         }
 
         // Adds a new store seller for this store

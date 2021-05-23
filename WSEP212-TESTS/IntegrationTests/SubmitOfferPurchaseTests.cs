@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
@@ -30,8 +32,8 @@ namespace WSEP212_TESTS.IntegrationTests
             store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             store.supportPurchaseType(PurchaseType.ImmediatePurchase);
             store.supportPurchaseType(PurchaseType.SubmitOfferPurchase);
-            itemIDA = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
-            itemIDA = store.addItemToStorage(500, "white masks", "protects against infection of covid-19", 10, "health").getValue();
+            itemIDA = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
+            itemIDB = store.addItemToStorage(500, "white masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
 
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             store.deliverySystem = DeliverySystemMock.Instance;
@@ -85,10 +87,12 @@ namespace WSEP212_TESTS.IntegrationTests
 
         public ResultWithValue<ConcurrentLinkedList<String>> purchaseItems()
         {
-            string address = "moshe levi 3 beer sheva";
+            DeliveryParameters deliveryParameters = new DeliveryParameters(user.userName, "habanim", "Haifa", "Israel", "786598");
+            PaymentParameters paymentParameters = new PaymentParameters("68957221011", "1", "2021", user.userName, "086", "207885623");
             ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[1];
-            list2[0] = address;
+            object[] list2 = new object[2];
+            list2[0] = deliveryParameters;
+            list2[1] = paymentParameters;
             parameters2.parameters = list2;
             user.purchaseItems(parameters2);
             return ((ResultWithValue<ConcurrentLinkedList<String>>)parameters2.result);

@@ -37,8 +37,6 @@ namespace WebApplication.Controllers
         const string SessionItemID = "_ItemID";
         const string SessionPurchaseHistory = "_History";
         
-        private User user;
-        
         public IActionResult Index()  
         {
             HttpContext.Session.SetString(SessionName, "");
@@ -217,7 +215,8 @@ namespace WebApplication.Controllers
             Item item = pair.Key;
             model.storeID = pair.Value;
             model.itemName = item.itemName;
-            model.category = item.category;
+            // !!! TODO: fix category to work with ItemCategory !!!
+            model.category = "";
             model.description = item.description;
             model.quantity = item.quantity;
             model.price = item.price;
@@ -322,13 +321,14 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             //KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
+            // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO itemDto = new ItemDTO((int)HttpContext.Session.GetInt32(SessionStoreID),
                 model.quantity,
                 model.itemName,
                 model.description,
                 model.reviews,
                 model.price,
-                model.category);
+                0);
             itemDto.itemID = (int) HttpContext.Session.GetInt32(SessionItemID);
             RegularResult res = systemController.editItemDetails(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID), itemDto);
             if (res.getTag())
@@ -350,7 +350,8 @@ namespace WebApplication.Controllers
             //if (model.minPrice == 0) model.minPrice = int.MinValue;
             if (model.maxPrice == 0) model.maxPrice = int.MaxValue;
             if (model.category == null) model.category = "";
-            ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, model.category);
+            // !!! TODO: fix category to work with ItemCategory !!!
+            ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, 0);
             if (res != null)
             {
                 itemsFromSearch(res);
@@ -518,8 +519,9 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO item = new ItemDTO((int) storeID, model.quantity, model.itemName, model.description,
-                new ConcurrentDictionary<string, ItemUserReviews>(), model.price, model.category);
+                new ConcurrentDictionary<string, ItemUserReviews>(), model.price, 0);
             ResultWithValue<int> res = systemController.addItemToStorage(userName, (int)storeID, item);
             if (res.getTag())
             {
@@ -560,7 +562,7 @@ namespace WebApplication.Controllers
                 string[] store = authorsList[1].Split(" ");
                 int storeID = int.Parse(store[0]);
                 int itemID = int.Parse(authorsList[authorsList.Length - 1]);
-                // TODO: ADD CHOOSE PURCHASE TYPE, AND PRICE TO OFFER (FOR IMMIDIATE INSERT THE REAL PRICE) 
+                // !!! TODO: ADD CHOOSE PURCHASE TYPE, AND PRICE TO OFFER (FOR IMMIDIATE INSERT THE REAL PRICE) !!!
                 RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, 0, model.maxPrice);
                 if (res.getTag())
                 {
@@ -747,7 +749,8 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, model.Address);
+            // !!! TODO: CHANGE FUNCTION TO GET PAYMENT AND DELIVERY PARAMETERS !!!
+            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, null, null);
             if (res.getTag())
             {
                 Node<string> node = res.getValue().usersToSend.First;

@@ -126,19 +126,20 @@ namespace WSEP212.DomainLayer
             return new Failure("The Item Not Exist In The Shopping Bag");
         }
 
-        // accepting/rejecting counter-offer from a store manager
-        public RegularResult counterOfferDecision(int itemID, double counterOffer, PriceStatus myDecision)
+        // store manager send counter offer
+        public RegularResult counterOffer(int itemID, double counterOffer)
         {
-            RegularResult changeStatusRes = itemPriceStatusDecision(itemID, myDecision);
-            if (PriceStatus.Approved == myDecision)
+            if(itemsPurchaseTypes.ContainsKey(itemID))
             {
-                RegularResult changePriceRes = submitItemPriceOffer(itemID, counterOffer);
-                if(!changePriceRes.getTag())
+                ItemPurchaseType purchaseType = itemsPurchaseTypes[itemID];
+                RegularResult changingPriceRes = purchaseType.changeItemPrice(counterOffer);
+                if (changingPriceRes.getTag())
                 {
-                    return changePriceRes;
+                    return purchaseType.changeItemPriceStatus(PriceStatus.Approved);
                 }
+                return changingPriceRes;
             }
-            return itemPriceStatusDecision(itemID, myDecision);
+            return new Failure("The Item Not Exist In The Shopping Bag");
         }
 
         // update the status of the price - can be done only by store owners & managers
