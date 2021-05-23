@@ -420,6 +420,7 @@ namespace WebApplication.Controllers
 
         public IActionResult TryLogin(UserModel model)
         {
+            TempData["Alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.login(model.UserName, model.Password);
             string userName = model.UserName;
@@ -432,7 +433,7 @@ namespace WebApplication.Controllers
             else
             {
                 UserConnectionManager.Instance.RemoveUser(userName);
-                ViewBag.Alert = res.getMessage();
+                TempData["Alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }

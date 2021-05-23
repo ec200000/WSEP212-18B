@@ -55,11 +55,11 @@
         });
       </script>
       
-      @if (ViewBag.Alert != null)  
+      @if (TempData["Alert"] != null)  
       {  
           <script type="text/javascript">  
                   window.onload = function() {  
-                      alert("@ViewBag.Alert");  
+                      alert("@TempData["Alert"]");  
                   };  
           </script>  
       } 

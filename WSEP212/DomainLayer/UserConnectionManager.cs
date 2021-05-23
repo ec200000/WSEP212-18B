@@ -88,7 +88,8 @@ namespace WSEP212.DomainLayer
             var conn = new List<string>();
             lock (userConnectionMapLocker)
             {
-                conn = userConnectionMap[userId];
+                if(userConnectionMap.ContainsKey(userId))
+                    conn = userConnectionMap[userId];
             }
             return conn;
         }
