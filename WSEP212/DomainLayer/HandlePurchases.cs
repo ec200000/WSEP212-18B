@@ -69,6 +69,7 @@ namespace WSEP212.DomainLayer
                 if (pricePerStore.ContainsKey(storeID))
                 {
                     PurchaseInvoice purchaseInvoice = new PurchaseInvoice(storeID, user.userName, shoppingBag.items, pricePerStore[storeID], DateTime.Now);
+                    purchaseInvoice.addToDB();
                     user.addPurchase(purchaseInvoice);
                     shoppingBag.store.addNewPurchase(purchaseInvoice);
                 }

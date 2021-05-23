@@ -16,25 +16,31 @@ namespace WSEP212.DomainLayer
         public ConcurrentDictionary<String,String> usersInfo { get; set; }
 
         [Key] 
-        public int field { get; set; }
+        public string k { get; set; }
         public string UserInfoJson
         {
             get => JsonConvert.SerializeObject(usersInfo);
             set => usersInfo = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(value);
         }
         private static readonly Lazy<Authentication> lazy
-            = new Lazy<Authentication>(() => new Authentication());
+            = new Lazy<Authentication>(() => new Authentication("1"));
 
         public static Authentication Instance
             => lazy.Value;
 
-        private Authentication()
+        public Authentication()
         {
-            usersInfo = new ConcurrentDictionary<string, string>();
-            if(SystemDBAccess.Instance.UsersInfo.Find(1)!=null)
-                usersInfo = new ConcurrentDictionary<string, string>(SystemDBAccess.Instance.UsersInfo.Find(1).usersInfo);
+        }
 
-            field = 0;
+        private Authentication(string c)
+        {
+            k = "1";
+            usersInfo = new ConcurrentDictionary<string, string>();
+            //if(SystemDBAccess.Instance.UsersInfo != null && SystemDBAccess.Instance.UsersInfo.Find(1)!=null)
+            //      usersInfo = new ConcurrentDictionary<string, string>(SystemDBAccess.Instance.UsersInfo.Find(1).usersInfo);
+            var auth = SystemDBAccess.Instance.UsersInfo.Find("1");
+            if(auth != null)
+                usersInfo = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(auth.UserInfoJson);
         }
 
         public string encryptPassword(string password)
@@ -114,7 +120,7 @@ namespace WSEP212.DomainLayer
         public void insertUserInfo(string userName, string password)
         {
             //var result = SystemDBAccess.Instance.UsersInfo.SingleOrDefault(a => a.usersInfo == this.usersInfo);
-            var result = SystemDBAccess.Instance.UsersInfo.Find(1);
+            var result = SystemDBAccess.Instance.UsersInfo.Find("1");
             if (result != null)
             {
                 usersInfo.TryAdd(userName, encryptPassword(password));

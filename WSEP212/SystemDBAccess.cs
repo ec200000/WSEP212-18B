@@ -16,7 +16,7 @@ namespace WSEP212
 
         public static SystemDBAccess Instance => lazy.Value;
         
-        public SystemDBAccess() : base("Server=tcp:wsep212.database.windows.net,1433;Database=wsep212;User ID=wsep212@wsep212;Password=Ab123456;Connection Timeout=30;")
+        public SystemDBAccess() : base("Server=tcp:wsep212b.database.windows.net,1433;Database=wsep212B;User ID=wsep212@wsep212B;Password=Ab123456;Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
         {
             Init();
             Database.CommandTimeout = 120;
@@ -37,6 +37,7 @@ namespace WSEP212
         public virtual DbSet<Authentication> UsersInfo { get; set; }
         public virtual DbSet<PurchaseInvoice> Invoices { get; set; }
         public virtual DbSet<SellerPermissions> Permissions { get; set; }
+        public virtual DbSet<UserConnectionManager> DelayedNotifications { get; set; }
         
         public void Init() => Database.Initialize(true);
 

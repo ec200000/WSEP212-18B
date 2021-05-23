@@ -54,7 +54,10 @@ namespace WSEP212.DomainLayer
             this.reviews = new ConcurrentDictionary<string, ItemReview>();
             this.price = price;
             this.category = category;
-            
+        }
+
+        public void addToDB()
+        {
             SystemDBAccess.Instance.Items.Add(this);
             SystemDBAccess.Instance.SaveChanges();
         }
@@ -69,6 +72,7 @@ namespace WSEP212.DomainLayer
             else
             {
                 ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue());
+                areview.addToDB();
                 areview.addReview(review);
                 reviews.TryAdd(username, areview);
             }

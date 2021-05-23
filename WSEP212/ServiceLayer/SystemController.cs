@@ -30,7 +30,12 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(e.Message);
             }
         }
-        
+
+        public void initRepo()
+        {
+            
+            UserRepository.Instance.initRepo();
+        }
         public RegularResult register(String userName, int userAge, String password)
         {
             String info = $"Register Event was triggered, with the parameters: " +

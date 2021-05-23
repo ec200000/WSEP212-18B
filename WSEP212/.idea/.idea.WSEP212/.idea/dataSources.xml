@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@wsep212.database.windows.net" uuid="d251bbdb-ab69-41a9-882a-b0077cc667fa">
+    <data-source source="LOCAL" name="wsep212B@wsep212b.database.windows.net" uuid="24763510-3fd1-404a-927b-030c83553ecf">
       <driver-ref>azure.ms</driver-ref>
       <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://wsep212.database.windows.net:1433</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://wsep212b.database.windows.net:1433;database=wsep212B</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

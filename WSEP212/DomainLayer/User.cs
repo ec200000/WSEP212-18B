@@ -59,6 +59,7 @@ namespace WSEP212.DomainLayer
             this.userName = userName;
             this.userAge = userAge;
             this.shoppingCart = new ShoppingCart(userName);
+            shoppingCart.addToDB();
             this.purchases = new ConcurrentBag<PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);

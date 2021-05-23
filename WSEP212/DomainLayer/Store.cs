@@ -89,15 +89,18 @@ namespace WSEP212.DomainLayer
             founderPermissions.TryAdd(Permissions.AllPermissions);   // founder has all permisiions
 
             SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder.userName, this.storeID, "", founderPermissions);
-
+            
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
 
             this.deliverySystem = DeliverySystem.Instance;
+        }
+
+        public void addToDB()
+        {
             SystemDBAccess.Instance.Stores.Add(this);
             SystemDBAccess.Instance.SaveChanges();
         }
-
         // Check if the item exist and available in the store
         public RegularResult isAvailableInStorage(int itemID, int quantity)
         {
@@ -149,6 +152,7 @@ namespace WSEP212.DomainLayer
             }
             // item not exist - add new item to storage
             Item newItem = new Item(quantity, itemName, description, price, category);
+            newItem.addToDB();
             this.storage.TryAdd(newItem.itemID, newItem);
             var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
             if (res != null)

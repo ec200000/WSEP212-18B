@@ -33,14 +33,17 @@ namespace WSEP212.DomainLayer
         {
             this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
             this.cartOwner = userName;
-            SystemDBAccess.Instance.Carts.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
         }
         
         public ShoppingCart()
         {
         }
 
+        public void addToDB()
+        {
+            SystemDBAccess.Instance.Carts.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
+        }
         // return true if the shopping cart is empty
         public bool isEmpty()
         {

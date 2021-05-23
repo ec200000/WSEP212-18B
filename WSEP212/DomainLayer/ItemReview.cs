@@ -38,10 +38,13 @@ namespace WSEP212.DomainLayer
             this.reviewer = user;
             UserNameRef = user.userName;
             reviews = new ConcurrentLinkedList<string>();
+        }
+
+        public void addToDB()
+        {
             SystemDBAccess.Instance.ItemReviewes.Add(this);
             SystemDBAccess.Instance.SaveChanges();
         }
-        
         public ItemReview(){}
 
         public bool addReview(string review)

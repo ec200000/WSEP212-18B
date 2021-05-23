@@ -6,3 +6,31 @@
 
 2021-05-22 13:54:23.629 +03:00 [Error] In Register function, the error is: An error occurred while updating the entries. See the inner exception for details.
 
+2021-05-22 15:06:57.180 +03:00 [Error] In Register function, the error is: System error.
+
+2021-05-22 15:12:00.555 +03:00 [Error] In Login function, the error is: An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:14:35.079 +03:00 [Error] In Login function, the error is: ValueFactory attempted to access the Value property of this instance.
+
+2021-05-22 15:23:38.741 +03:00 [Error] An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:23:38.859 +03:00 [Error] In Login function, the error is: An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:28:33.232 +03:00 [Error] An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:28:33.337 +03:00 [Error] In Login function, the error is: An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:35:25.751 +03:00 [Error] An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:36:39.486 +03:00 [Error] An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 15:38:30.384 +03:00 [Error] An error occurred while starting a transaction on the provider connection. See the inner exception for details.
+
+2021-05-22 16:21:22.195 +03:00 [Error] The Include path expression must refer to a navigation property defined on the type. Use dotted paths for reference navigation properties and the Select operator for collection navigation properties. (Parameter 'path')
+
+2021-05-22 16:59:55.228 +03:00 [Error] In Register function, the error is: An error occurred while updating the entries. See the inner exception for details.
+
+2021-05-22 17:00:56.924 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+
+2021-05-22 17:01:14.567 +03:00 [Error] In Register function, the error is: Object reference not set to an instance of an object.
+

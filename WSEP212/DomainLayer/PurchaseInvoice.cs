@@ -52,10 +52,13 @@ namespace WSEP212.DomainLayer
             this.items = items;
             this.totalPrice = totalPrice;
             this.dateOfPurchase = dateOfPurchase;
+        }
+
+        public void addToDB()
+        {
             SystemDBAccess.Instance.Invoices.Add(this);
             SystemDBAccess.Instance.SaveChanges();
         }
-
         public bool wasItemPurchased(int itemID)
         {
             return items.ContainsKey(itemID);

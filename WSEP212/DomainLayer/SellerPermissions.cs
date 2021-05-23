@@ -47,6 +47,10 @@ namespace WSEP212.DomainLayer
             this.StoreID = StoreID;
             this.GrantorName = GrantorName;
             this.permissionsInStore = permissionsInStore;
+        }
+
+        public void addToDB()
+        {
             SystemDBAccess.Instance.Permissions.Add(this);
             try
             {
@@ -67,7 +71,6 @@ namespace WSEP212.DomainLayer
                 throw;
             }
         }
-
         // Checks that there is no other permission for this seller and store
         // If there is one, return it, else, create new permission
         public static SellerPermissions getSellerPermissions(string SellerName, int StoreID, string GrantorName, ConcurrentLinkedList<Permissions> permissions)
@@ -88,7 +91,9 @@ namespace WSEP212.DomainLayer
                     sellerPermissions = sellerPermissions.Next;
                 }
             }
-            return new SellerPermissions(SellerName, StoreID, GrantorName, permissions);
+            var sellerPer = new SellerPermissions(SellerName, StoreID, GrantorName, permissions);
+            sellerPer.addToDB();
+            return sellerPer;
         }
 
         public int getStoreID()

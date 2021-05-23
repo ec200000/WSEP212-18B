@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using WSEP212.ServiceLayer.Result;
 
@@ -16,12 +17,29 @@ namespace WSEP212.DomainLayer
         public static UserRepository Instance
             => lazy.Value;
 
-        private UserRepository() {
-            users = new ConcurrentDictionary<User, bool>();
-            //users = new ConcurrentDictionary<User, bool>(SystemDBAccess.Instance.Users.ToDictionary(g => g, g=>g!=null));
+        private UserRepository()
+        {
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 
+        public void initRepo()
+        {
+            users = new ConcurrentDictionary<User, bool>(); 
+            var usersList =  SystemDBAccess.Instance.Users.ToList();
+            var cartsList = SystemDBAccess.Instance.Carts.ToList();
+            foreach (var user in usersList)
+            {
+                foreach (var cart in cartsList)
+                {
+                    if (cart.cartOwner.Equals(user.userName))
+                    {
+                        user.shoppingCart = cart;
+                        break;
+                    }
+                }
+                users.TryAdd(user, false); //when the system is starting no user is logged in
+            }
+        }
         public void createSystemManager()
         {
             User systemManager = new User("big manager", 25, true);
