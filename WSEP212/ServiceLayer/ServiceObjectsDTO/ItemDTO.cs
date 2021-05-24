@@ -13,12 +13,12 @@ namespace WSEP212.ServiceLayer.ServiceObjectsDTO
         public int quantity;
         public String itemName;
         public String description;
-        public ConcurrentDictionary<String, ItemUserReviews> review;
+        public ConcurrentDictionary<String, ItemReview> review;
         public double price;
         public int rank;
         public Int32 category;
 
-        public ItemDTO(int storeId, int quantity, string itemName, string description, ConcurrentDictionary<string, ItemUserReviews> review, double price, Int32 category)
+        public ItemDTO(int storeId, int quantity, string itemName, string description, ConcurrentDictionary<string, ItemReview> review, double price, Int32 category)
         {
             storeID = storeId;
             this.quantity = quantity;

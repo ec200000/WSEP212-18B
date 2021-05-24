@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer
         public ShoppingCart shoppingCart { get; set; }
         public ConcurrentDictionary<int, PurchaseInvoice> purchases { get; set; }
         public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
-        public ConcurrentLinkedList<ItemUserReviews> myReviews { get; set; }
+        public ConcurrentLinkedList<ItemReview> myReviews { get; set; }
         public bool isSystemManager { get; set; }
 
         public User(String userName, int userAge = int.MinValue, bool isSystemManager = false)
@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
             this.shoppingCart = new ShoppingCart(this);
             this.purchases = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
-            this.myReviews = new ConcurrentLinkedList<ItemUserReviews>();
+            this.myReviews = new ConcurrentLinkedList<ItemReview>();
             this.state = new GuestBuyerState(this);
         }
 

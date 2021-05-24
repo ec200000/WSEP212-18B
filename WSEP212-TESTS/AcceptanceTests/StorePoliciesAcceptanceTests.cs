@@ -25,11 +25,11 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult result = controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            int itemID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "bamba", "snack for childrens", new ConcurrentDictionary<string, ItemUserReviews>(), 4.5, "snack")).getValue();
+            int itemID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "bamba", "snack for childrens", new ConcurrentDictionary<string, ItemReview>(), 4.5, "snack")).getValue();
             controller.addItemToShoppingCart("theuser", storeID, itemID, 2, 0, 4.5);
-            milkID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "milk", "pasteurized milk", new ConcurrentDictionary<string, ItemUserReviews>(), 8, "milk products")).getValue();
+            milkID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "milk", "pasteurized milk", new ConcurrentDictionary<string, ItemReview>(), 8, "milk products")).getValue();
             controller.addItemToShoppingCart("theuser", storeID, milkID, 2, 0, 8);
-            itemID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "bisli", "snack for childrens", new ConcurrentDictionary<string, ItemUserReviews>(), 4, "snack")).getValue();
+            itemID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "bisli", "snack for childrens", new ConcurrentDictionary<string, ItemReview>(), 4, "snack")).getValue();
             controller.addItemToShoppingCart("theuser", storeID, itemID, 5, 0, 4);
         }
 

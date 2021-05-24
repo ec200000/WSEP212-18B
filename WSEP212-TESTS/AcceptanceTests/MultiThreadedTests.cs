@@ -34,7 +34,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             res = systemController.login("mol", "1234");
             Console.WriteLine(res.getMessage());
             ResultWithValue<int> val = systemController.openStore("mol", "t", "bb", "DEFAULT", "DEFAULT");
-            ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, ItemUserReviews>(),12, (int)ItemCategory.Dairy);
+            ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, ItemReview>(),12, (int)ItemCategory.Dairy);
             ResultWithValue<int> val2 = systemController.addItemToStorage("mol", val.getValue(), item);
             this.storeID = val.getValue();
             this.itemID = val2.getValue();

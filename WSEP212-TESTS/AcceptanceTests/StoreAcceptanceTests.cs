@@ -29,7 +29,7 @@ namespace WSEP212_TESTS.AcceptanceTests
 
         public void testInit()
         {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, (int)ItemCategory.Dairy);
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("theuser123", storeID, item).getValue();
         }
 
@@ -146,7 +146,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToStorageTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, (int)ItemCategory.Snacks);
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
@@ -162,7 +162,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToStorageByGuestTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, (int)ItemCategory.Snacks);
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             controller.addItemToStorage("moon", storeID, itemDto);//guest user - can't perform this action
             Assert.IsFalse(true);
@@ -209,7 +209,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void editItemDetailsTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, (int)ItemCategory.Snacks);
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
@@ -225,7 +225,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void editItemDetailsByGuestTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, (int)ItemCategory.Snacks);
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             controller.editItemDetails("blue", storeID, itemDto); //guest user - can't perform this action
             Assert.IsFalse(true);

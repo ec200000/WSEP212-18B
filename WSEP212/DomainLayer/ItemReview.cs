@@ -3,13 +3,13 @@ using WSEP212.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
-    public class ItemUserReviews
+    public class ItemReview
     {
         public Item item { get; set; }
         public User reviewer { get; set; }
         public ConcurrentLinkedList<string> reviews { get; set; }
 
-        private ItemUserReviews(Item item, User user)
+        private ItemReview(Item item, User user)
         {
             this.item = item;
             this.reviewer = user;
@@ -18,16 +18,16 @@ namespace WSEP212.DomainLayer
 
         // Checks that there is no other assosiation class for this user and item
         // If there is, return it, else, create new one
-        public static ItemUserReviews getItemUserReviews(Item item, User user)
+        public static ItemReview getItemUserReviews(Item item, User user)
         {
-            foreach (ItemUserReviews reviews in item.reviews.Values)
+            foreach (ItemReview reviews in item.reviews.Values)
             {
                 if(reviews.reviewer.Equals(user))
                 {
                     return reviews;
                 }
             }
-            return new ItemUserReviews(item, user);
+            return new ItemReview(item, user);
         }
 
         public void addReview(string review)
