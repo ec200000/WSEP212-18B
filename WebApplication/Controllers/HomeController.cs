@@ -101,7 +101,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View("Index");
             }
         }
@@ -284,7 +284,7 @@ namespace WebApplication.Controllers
         
         public IActionResult Subscribe(UserModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.register(model.UserName, model.Age, model.Password);
             if (res.getTag())
@@ -296,14 +296,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Index");
             }
         }
         
         public IActionResult ContinueAsGuest(UserModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.continueAsGuest(model.UserName);
             if (res.getTag())
@@ -314,14 +314,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Index");
             }
         }
         
         public IActionResult TryEditDetails(ItemModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             //KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
             ItemDTO itemDto = new ItemDTO((int)HttpContext.Session.GetInt32(SessionStoreID),
@@ -339,7 +339,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -368,7 +368,7 @@ namespace WebApplication.Controllers
 
         public IActionResult TryReviewItem(ReviewModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<NotificationDTO> res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
@@ -385,14 +385,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ItemReview");
             }
         }
         
         public IActionResult TryAppointManager(AppointModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.appointStoreManager(HttpContext.Session.GetString(SessionName),
                 model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
@@ -402,14 +402,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("AppointOfficials");
             }
         }
         
         public IActionResult TryAppointOwner(AppointModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.appointStoreOwner(HttpContext.Session.GetString(SessionName),
                 model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
@@ -419,14 +419,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("AppointOfficials");
             }
         }
 
         public IActionResult TryLogin(UserModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.login(model.UserName, model.Password);
             string userName = model.UserName;
@@ -439,7 +439,7 @@ namespace WebApplication.Controllers
             else
             {
                 UserConnectionManager.Instance.RemoveUser(userName);
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }
@@ -456,14 +456,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("Login");
             }
         }
         
         public IActionResult TryLogout(UserModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             if (HttpContext.Session.GetInt32(SessionLogin) != 3)
             {
                 SystemController systemController = SystemController.Instance;
@@ -476,7 +476,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    TempData["Alert"] = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("Logout");
                 }
             }
@@ -491,7 +491,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryOpenStore(StoreModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             ResultWithValue<int> res = systemController.openStore(userName, model.storeName, model.storeAddress, model.purchasePolicy, model.salesPolicy);
@@ -502,7 +502,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -523,7 +523,7 @@ namespace WebApplication.Controllers
 
         public IActionResult TryAddItem(ItemModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -537,14 +537,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
         
         public IActionResult TryRemoveItem(ItemModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -555,14 +555,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
         
         public IActionResult TryAddItemToShoppingCart(SearchModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             if (model.itemChosen != null)
@@ -578,7 +578,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    TempData["Alert"] = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("SearchItems");
                 }
             }
@@ -590,13 +590,13 @@ namespace WebApplication.Controllers
 
         public IActionResult TryShowPurchaseHistory(PurchaseModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             return RedirectToAction("ItemReview", model);
         }
 
         public IActionResult TryShowShoppingCart()
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ShoppingCart> res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
@@ -606,7 +606,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View("Index");
             }
         }
@@ -731,7 +731,7 @@ namespace WebApplication.Controllers
         }
         public IActionResult TryRemoveItemFromShoppingCart(ShoppingCartModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -747,7 +747,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    TempData["Alert"] = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("ShoppingCart");
                 }
             }
@@ -758,7 +758,7 @@ namespace WebApplication.Controllers
         }
         public IActionResult TrypurchaseItems(ShoppingCartModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, model.Address);
@@ -774,14 +774,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ShoppingCart");
             }
         }
         
         public IActionResult UsersPurchaseHistory()
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<string,ConcurrentBag<PurchaseInvoice>>> res = systemController.getUsersPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
@@ -801,14 +801,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View();
             }
         }
         
         public IActionResult StoresPurchaseHistory()
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<int,ConcurrentBag<PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
@@ -828,14 +828,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return View();
             }
         }
         
         public IActionResult StorePurchaseHistory()
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentBag<PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
@@ -852,14 +852,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
         
         public IActionResult ViewOfficials()
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<string,ConcurrentLinkedList<Permissions>>> res = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag()&&res.getValue()!=null&&res.getValue().Count!=0)
@@ -880,14 +880,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
         
         public IActionResult RemoveManager(OfficialsModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -900,14 +900,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
         
         public IActionResult RemoveOwner(OfficialsModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -920,7 +920,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -939,7 +939,7 @@ namespace WebApplication.Controllers
         
         public IActionResult AddManagerPermission(OfficialsModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -954,7 +954,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("ViewOfficials");
             }
         }
@@ -1011,7 +1011,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryRemoveSalePredicate(SalesModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -1025,7 +1025,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
@@ -1046,7 +1046,7 @@ namespace WebApplication.Controllers
         
         public IActionResult ComposeSalePredicates(SalesModel model)
         {
-            TempData["Alert"] = null;
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -1064,7 +1064,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
         }
