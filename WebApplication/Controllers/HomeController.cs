@@ -749,8 +749,11 @@ namespace WebApplication.Controllers
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            // !!! TODO: CHANGE FUNCTION TO GET PAYMENT AND DELIVERY PARAMETERS !!!
-            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, null, null);
+            PaymentParametersDTO payment = new PaymentParametersDTO(model.cardNumber, model.month, model.year,
+                model.holder, model.ccv, model.id);
+            DeliveryParametersDTO delivery =
+                new DeliveryParametersDTO(model.sendToName, model.address, model.city, model.country, model.zip);
+            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, delivery, payment);
             if (res.getTag())
             {
                 Node<string> node = res.getValue().usersToSend.First;
