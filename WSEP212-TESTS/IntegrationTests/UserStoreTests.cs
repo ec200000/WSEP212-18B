@@ -3,8 +3,9 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -13,6 +14,7 @@ namespace WSEP212_TESTS.IntegrationTests
     {
         User user;
         private User user3;
+
         [TestInitialize]
         public void testInit()
         {
@@ -45,8 +47,8 @@ namespace WSEP212_TESTS.IntegrationTests
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default");
+            SalePolicyMock salesPolicy = new SalePolicyMock();
+            PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -64,8 +66,8 @@ namespace WSEP212_TESTS.IntegrationTests
             //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
-            SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default");
+            SalePolicyMock salesPolicy = new SalePolicyMock();
+            PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -88,7 +90,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = 12.0;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
@@ -104,7 +106,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = 12.0;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user3.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
@@ -135,10 +137,11 @@ namespace WSEP212_TESTS.IntegrationTests
             int itemID = 1;
             int quantity = 2;
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = storeID;
             list[1] = itemID;
             list[2] = quantity;
+            list[3] = new ItemImmediatePurchase(12.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
             return (bool) parameters.result;
@@ -200,7 +203,7 @@ namespace WSEP212_TESTS.IntegrationTests
         }
 
         [TestMethod]
-        //[ExpectedException (typeof(NotImplementedException))]
+
         public void TestLogin()
         {
             ThreadParameters parameters = new ThreadParameters();
@@ -284,8 +287,8 @@ namespace WSEP212_TESTS.IntegrationTests
             {
                 String name = "store";
                 String address = "holon";
-                SalePolicy salesPolicy = new SalePolicy("default");
-                PurchasePolicy purchasePolicy = new PurchasePolicy("default");
+                SalePolicyMock salesPolicy = new SalePolicyMock();
+                PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
                 ThreadParameters parameters = new ThreadParameters();
                 object[] list = new object[4];
                 list[0] = name;
@@ -314,7 +317,7 @@ namespace WSEP212_TESTS.IntegrationTests
                     list[2] = "bamba";
                     list[3] = "taim retzah!";
                     list[4] = 1.23;
-                    list[5] = "snacks";
+                    list[5] = ItemCategory.Snacks;
                     parameters.parameters = list;
                     user.addItemToStorage(parameters);
                     Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].storage.Count);
@@ -441,15 +444,16 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default"), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
-                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy).getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
-                object[] list = new object[3];
+                object[] list = new object[4];
                 list[0] = storeID;
                 list[1] = itemID;
                 list[2] = quantity;
+                list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
                 RegularResult res = (RegularResult)(parameters.result);
@@ -463,15 +467,16 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicy("default"), new PurchasePolicy("default"), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), this.user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
-                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy).getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
-                object[] list = new object[3];
+                object[] list = new object[4];
                 list[0] = storeID;
                 list[1] = itemID;
                 list[2] = quantity;
+                list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
                 if (((RegularResult)parameters.result).getTag())

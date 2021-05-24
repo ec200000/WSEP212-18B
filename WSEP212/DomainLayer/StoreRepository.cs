@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -30,7 +32,7 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         
-        public ResultWithValue<int> addStore(String storeName, String storeAddress, SalePolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public ResultWithValue<int> addStore(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
             if (storeName == null || storeAddress == null || salesPolicy == null || purchasePolicy == null ||
                 storeFounder == null)
@@ -125,9 +127,9 @@ namespace WSEP212.DomainLayer
             return new KeyValuePair<Item, int>();
         }
 
-        public ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getAllStoresPurchsesHistory()
+        public ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getAllStoresPurchsesHistory()
         {
-            ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>>();
+            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> storesPurchasesHistory = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>();
             foreach(KeyValuePair<int, Store> storePair in stores)
             {
                 storesPurchasesHistory.TryAdd(storePair.Key, storePair.Value.purchasesHistory);

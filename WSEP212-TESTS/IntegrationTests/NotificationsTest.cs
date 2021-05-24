@@ -1,11 +1,14 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
-namespace WSEP212_TEST.IntegrationTests
+namespace WSEP212_TESTS.IntegrationTests
 {
     [TestClass]
     public class NotificationsTest
@@ -13,7 +16,9 @@ namespace WSEP212_TEST.IntegrationTests
         public static SystemController controller = SystemController.Instance;
         public static int itemID;
         public static int storeID;
-        
+        private static DeliveryParametersDTO deliveryParameters;
+        private static PaymentParametersDTO paymentParameters;
+
         [TestCleanup]
         public void testClean()
         {
@@ -26,7 +31,7 @@ namespace WSEP212_TEST.IntegrationTests
             RegularResult result = controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("theuser", storeID, item).getValue();
         }
         
@@ -40,10 +45,17 @@ namespace WSEP212_TEST.IntegrationTests
         {
             createUserWithStore();
             createUser();
-            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2);
-            controller.purchaseItems("theotheruser", "ashdod");
+            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            initPurchaseParameters();
+            controller.purchaseItems("theotheruser", deliveryParameters, paymentParameters);
         }
         
+        private void initPurchaseParameters()
+        {
+            deliveryParameters = new DeliveryParametersDTO("theotheruser", "habanim", "Haifa", "Israel", "786598");
+            paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theotheruser", "086", "207885623");
+        }
+
         [TestMethod]
         public void itemReviewSuccessful()
         {
@@ -66,14 +78,15 @@ namespace WSEP212_TEST.IntegrationTests
         {
             createUserWithStore();
             createUser();
-            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2);
+            controller.addItemToShoppingCart("theotheruser", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            initPurchaseParameters();
         }
 
         [TestMethod]
         public void purchaseItemsSuccessful()
         {
             purchaseItemsInit();
-            var res = controller.purchaseItems("theotheruser", "ashdod");
+            var res = controller.purchaseItems("theotheruser", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
             Assert.AreEqual("theuser", res.getValue().usersToSend.First.Value);
         }
@@ -81,7 +94,8 @@ namespace WSEP212_TEST.IntegrationTests
         [TestMethod]
         public void purchaseItemsNoSuchUser()
         {
-            var res = controller.purchaseItems("theotheruser", "ashdod");
+            initPurchaseParameters();
+            var res = controller.purchaseItems("theotheruser", deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.IsNull(res.getValue());
         }
@@ -115,14 +129,6 @@ namespace WSEP212_TEST.IntegrationTests
             createUserWithStore();
             createUser();
             controller.appointStoreOwner("theuser", "theotheruser", storeID);
-        }
-
-        [TestMethod]
-        public void removeOwnerSuccessful()
-        {
-            removeOwnerInit();
-            var res = controller.removeStoreOwner("theuser", "theotheruser", storeID);
-            Assert.IsTrue(res.getTag());
         }
         
         [TestMethod]

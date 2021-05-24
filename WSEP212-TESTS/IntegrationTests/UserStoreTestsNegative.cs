@@ -2,8 +2,10 @@
 using System;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.ServiceLayer.Result;
+using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -21,8 +23,8 @@ namespace WSEP212_TESTS.IntegrationTests
             UserRepository.Instance.users.TryAdd(user1, false);
             UserRepository.Instance.users.TryAdd(user2, true);
             
-            Store store2 = new Store("t", "bb", new SalePolicy("default"), new PurchasePolicy("default"), user2);
-            Item item = new Item(3, "shoko", "taim retzah!", 12, "milk products");
+            Store store2 = new Store("t", "bb", new SalePolicyMock(), new PurchasePolicyMock(), user2);
+            Item item = new Item(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy);
             store2.storage.TryAdd(1, item);
             StoreRepository.Instance.stores.TryAdd(1,store2);
         }
@@ -104,8 +106,8 @@ namespace WSEP212_TESTS.IntegrationTests
             User u = new User("k"); //the user is not registered to the system
             String name = "store";
             String address = "holon";
-            SalePolicy salesPolicy = new SalePolicy("default");
-            PurchasePolicy purchasePolicy = new PurchasePolicy("default");
+            SalePolicyMock salesPolicy = new SalePolicyMock();
+            PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[4];
             list[0] = name;
@@ -129,7 +131,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = (double)12;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             u.addItemToStorage(parameters);
             Assert.IsTrue(parameters.result is NotImplementedException);
@@ -147,7 +149,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "bamba";
             list[3] = "taim retzah!";
             list[4] = (double)12;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user1.addItemToStorage(parameters);
             Assert.IsFalse(((ResultWithValue<int>)parameters.result).getTag());
@@ -165,7 +167,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = (double)12;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user2.addItemToStorage(parameters);
             Assert.IsFalse(((ResultWithValue<int>)parameters.result).getTag());
@@ -290,7 +292,7 @@ namespace WSEP212_TESTS.IntegrationTests
         public void editItemDetailsTestUserNotRegistered()
         {
             User u = new User("k"); //the user is not registered to the system
-            Item item = new Item(2,"shoko","milk",8.90,"milk");
+            Item item = new Item(2,"shoko","milk",8.90, ItemCategory.Dairy);
             item.itemName = "shoko moka";
             int storeID = 1;
             ThreadParameters parameters = new ThreadParameters();
@@ -312,7 +314,7 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             user1.changeState(new LoggedBuyerState(user1));
             int storeID = 6; //no such store
-            Item item = new Item(2,"shoko","milk",8.90,"milk");
+            Item item = new Item(2,"shoko","milk",8.90, ItemCategory.Dairy);
             item.itemName = "shoko moka";
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[7];
@@ -332,7 +334,7 @@ namespace WSEP212_TESTS.IntegrationTests
         public void editItemDetailsTestUserNoSuchItem()
         {
             int storeID = 1;
-            Item item = new Item(2, "shoko", "milk", 8.90, "milk");
+            Item item = new Item(2, "shoko", "milk", 8.90, ItemCategory.Dairy);
             item.itemName = "shoko moka";
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[7];
@@ -489,10 +491,10 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void purchaseItemsTestUserWithEmptyCart()
         {
-            string address = "moshe levi 3 beer sheva";
             ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[1];
-            list2[0] = address;
+            object[] list2 = new object[2];
+            list2[0] = new DeliveryParameters(user2.userName, "habanim", "Haifa", "Israel", "786598");
+            list2[1] = new PaymentParameters("68957221011", "1", "2021", user2.userName, "086", "207885623");
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
             Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
@@ -504,8 +506,9 @@ namespace WSEP212_TESTS.IntegrationTests
         public void purchaseItemsTestNoAddressWasGiven()
         {
             ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[1];
-            list2[0] = null;
+            object[] list2 = new object[2];
+            list2[0] = new DeliveryParameters(user2.userName, "habanim", "Haifa", "Israel", "786598");
+            list2[1] = new PaymentParameters("68957221011", "1", "2021", user2.userName, "086", "207885623");
             parameters2.parameters = list2;
             user2.purchaseItems(parameters2);
             Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());

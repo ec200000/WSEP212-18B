@@ -3,11 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
-    public class SalePolicy
+    public class SalePolicy : SalePolicyInterface
     {
         [Key]
         public String salesPolicyName { get; set; }
@@ -114,22 +116,22 @@ namespace WSEP212.DomainLayer
         }
 
         // returns the price of each item after sales
-        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
+        public ConcurrentDictionary<int, double> pricesAfterSalePolicy(ConcurrentDictionary<Item, double> itemsPrices, PurchaseDetails purchaseDetails)
         {
             ConcurrentDictionary<int, double> pricesAfterSale = new ConcurrentDictionary<int, double>();
             double itemPriceAfterSale;
             Sale policySales = buildSalePolicy();
-            foreach (Item item in items.Keys)
+            foreach (KeyValuePair<Item, double> itemPricePair in itemsPrices)
             {
                 if(policySales == null)
                 {
-                    itemPriceAfterSale = item.price;
+                    itemPriceAfterSale = itemPricePair.Value;
                 }
                 else
                 {
-                    itemPriceAfterSale = policySales.applySaleOnItem(item, purchaseDetails);
+                    itemPriceAfterSale = policySales.applySaleOnItem(itemPricePair.Key, itemPricePair.Value, purchaseDetails);
                 }
-                pricesAfterSale.TryAdd(item.itemID, itemPriceAfterSale);
+                pricesAfterSale.TryAdd(itemPricePair.Key.itemID, itemPriceAfterSale);
             }
             return pricesAfterSale;
         }

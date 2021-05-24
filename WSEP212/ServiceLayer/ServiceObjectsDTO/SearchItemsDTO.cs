@@ -10,9 +10,9 @@ namespace WSEP212.ServiceLayer.ServiceObjectsDTO
         public String keyWords { get; set; }
         public double minPrice { get; set; }
         public double maxPrice { get; set; }
-        public String category { get; set; }
+        public Int32 category { get; set; }
 
-        public SearchItemsDTO(String itemName, String keyWords, double minPrice, double maxPrice, String category)
+        public SearchItemsDTO(String itemName, String keyWords, double minPrice, double maxPrice, Int32 category)
         {
             this.itemName = itemName;
             this.keyWords = keyWords;

@@ -16,9 +16,9 @@ namespace WSEP212.ServiceLayer.ServiceObjectsDTO
         public ConcurrentDictionary<String, ItemReview> review;
         public double price;
         public int rank;
-        public String category;
+        public Int32 category;
 
-        public ItemDTO(int storeId, int quantity, string itemName, string description, ConcurrentDictionary<string, ItemReview> review, double price, string category)
+        public ItemDTO(int storeId, int quantity, string itemName, string description, ConcurrentDictionary<string, ItemReview> review, double price, Int32 category)
         {
             storeID = storeId;
             this.quantity = quantity;

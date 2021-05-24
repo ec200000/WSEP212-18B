@@ -20,21 +20,32 @@
 <div class="shoppingcartpurchasediv">
     @using (Html.BeginForm("TrypurchaseItems", "Home", FormMethod.Post))
     {
-        @Html.TextBoxFor(model => model.Address,new { placeholder = "Address",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.cardNumber,new { placeholder = "Card Number",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.month,new { placeholder = "Month",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.year,new { placeholder = "Year",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.holder,new { placeholder = "Card Holder",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.ccv,new { placeholder = "CCV",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.id,new { placeholder = "ID number",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.sendToName,new { placeholder = "Who to send",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.address,new { placeholder = "Address",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.city,new { placeholder = "City",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.country,new { placeholder = "Country",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.zip,new { placeholder = "Zip",@class="inputclassindex" })
+
         <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Purchase items</button>
     }
 </div>
     </body>
 </html>
 
-@if (TempData["alert"] != null)  
-{  
+@if (TempData["alert"] != null)
+{
     <script type="text/javascript">  
-                  window.onload = function() {  
-                      alert("@TempData["alert"]");  
-                  };  
-          </script>  
-} 
+            window.onload = function() {  
+                alert("@TempData["alert"]");  
+            };  
+        </script>  
+}
 
 @section Scripts {
     <script src="~/js/signalr.js"></script>

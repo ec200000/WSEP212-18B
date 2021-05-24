@@ -10,6 +10,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -43,6 +49,9 @@ namespace WSEP212.DomainLayer
         public String storeName { get; set; }
         public String storeAddress { get; set; }
         public bool activeStore { get; set; }
+        public SalePolicyInterface salesPolicy { get; set; }
+        public PurchasePolicyInterface purchasePolicy { get; set; }
+        public ConcurrentDictionary<int, PurchaseInvoice> purchasesHistory { get; set; }
         
         public string salePolicyName { get; set; }
         [ForeignKey("salePolicyName")]
@@ -69,8 +78,7 @@ namespace WSEP212.DomainLayer
         public DeliveryInterface deliverySystem { get; set; }
 
         public Store() {}
-
-        public Store(String storeName, String storeAddress, SalePolicy salesPolicy, PurchasePolicy purchasePolicy, User storeFounder)
+        public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = storeCounter;
@@ -79,8 +87,8 @@ namespace WSEP212.DomainLayer
             this.salesPolicy = salesPolicy;
             salePolicyName = salesPolicy.salesPolicyName;
             this.purchasePolicy = purchasePolicy;
-            this.purchasesHistory = new ConcurrentBag<PurchaseInvoice>();
             purchasePolicyName = purchasePolicy.purchasePolicyName;
+            this.purchasesHistory = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
 
@@ -93,7 +101,7 @@ namespace WSEP212.DomainLayer
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
 
-            this.deliverySystem = DeliverySystem.Instance;
+            this.deliverySystem = DeliverySystemAdapter.Instance;
         }
 
         public void addToDB()
@@ -123,12 +131,8 @@ namespace WSEP212.DomainLayer
         // if the item has the same name, category and price we treat the product as an existing product
         // the quantity of an existing product will update
         // returns the itemID of the item, otherwise -1
-        public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, String category)
+        public ResultWithValue<int> addItemToStorage(int quantity, String itemName, String description, double price, ItemCategory category)
         {
-            if (price <= 0 || itemName.Equals("") || category.Equals("") || quantity < 0)
-            {
-                return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
-            }
             // checks that the item not already exist
             foreach (KeyValuePair<int, Item> pairItem in storage)
             {
@@ -151,18 +155,24 @@ namespace WSEP212.DomainLayer
                 }
             }
             // item not exist - add new item to storage
-            Item newItem = new Item(quantity, itemName, description, price, category);
-            newItem.addToDB();
-            this.storage.TryAdd(newItem.itemID, newItem);
-            var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
-            if (res != null)
+            try {
+                Item newItem = new Item(quantity, itemName, description, price, category);
+                newItem.addToDB();
+                this.storage.TryAdd(newItem.itemID, newItem);
+                var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                if (res != null)
+                {
+                    res.storage = storage;
+                    if(!JToken.DeepEquals(res.StorageAsJson, this.StorageAsJson))
+                        res.StorageAsJson = this.StorageAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+                return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
+            } 
+            catch (ArithmeticException)
             {
-                res.storage = storage;
-                if(!JToken.DeepEquals(res.StorageAsJson, this.StorageAsJson))
-                    res.StorageAsJson = this.StorageAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
             }
-            return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
         }
 
         // Remove item from the store
@@ -227,7 +237,7 @@ namespace WSEP212.DomainLayer
         }
 
         // edit the personal details of an item
-        public RegularResult editItem(int itemID, String itemName, String description, double price, String category, int quantity)
+        public RegularResult editItem(int itemID, String itemName, String description, double price, ItemCategory category, int quantity)
         {
             // checks that the item exists
             if (storage.ContainsKey(itemID))
@@ -245,6 +255,21 @@ namespace WSEP212.DomainLayer
                 return res;
             }
             return new Failure("Item Not Exist In Storage");
+        }
+
+        public void supportPurchaseType(PurchaseType purchaseType)
+        {
+            purchasePolicy.supportPurchaseType(purchaseType);
+        }
+
+        public void unsupportPurchaseType(PurchaseType purchaseType)
+        {
+            purchasePolicy.unsupportPurchaseType(purchaseType);
+        }
+
+        public Boolean isStoreSupportPurchaseType(PurchaseType purchaseType)
+        {
+            return purchasePolicy.hasPurchaseTypeSupport(purchaseType);
         }
 
         // add a new purchase prediacte for the store
@@ -359,9 +384,9 @@ namespace WSEP212.DomainLayer
         // Apply the sales policy on a list of items
         // The function will return the price after discount for each of the items
         // <itemID, price>
-        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, int> items, PurchaseDetails purchaseDetails)
+        public ConcurrentDictionary<int, double> applySalesPolicy(ConcurrentDictionary<Item, double> itemsPrices, PurchaseDetails purchaseDetails)
         {
-            return salesPolicy.pricesAfterSalePolicy(items, purchaseDetails);
+            return salesPolicy.pricesAfterSalePolicy(itemsPrices, purchaseDetails);
         }
 
         // Apply the purchase policy on a list of items and their type of purchase
@@ -371,52 +396,31 @@ namespace WSEP212.DomainLayer
             return purchasePolicy.approveByPurchasePolicy(purchaseDetails);
         }
 
-        // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
-        public ResultWithValue<double> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, PurchaseType> itemsPurchaseType)
+        // create purchase details of the relevent purchase
+        private ResultWithValue<PurchaseDetails> createPurchaseDetails(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
-            ResultWithValue<ConcurrentDictionary<Item, int>> objItemsRes = getObjItems(items);
-            if (!objItemsRes.getTag())
+            ResultWithValue<ConcurrentDictionary<Item, int>> itemsQuantitiesRes = getObjItemsQuantities(items);
+            if (!itemsQuantitiesRes.getTag())
             {
-                return new FailureWithValue<double>(objItemsRes.getMessage(), -1);
+                return new FailureWithValue<PurchaseDetails>(itemsQuantitiesRes.getMessage(), null);
             }
-            PurchaseDetails purchaseDetails = new PurchaseDetails(buyer, objItemsRes.getValue(), itemsPurchaseType);
-
-            // checks the purchase can be made by the purchase policy
-            RegularResult purchasePolicyRes = applyPurchasePolicy(purchaseDetails);
-            if (purchasePolicyRes.getTag())
-            {
-                // checks that all the items available in the store storage
-                RegularResult availableItemsRes = purchaseItemsIfAvailable(items);
-                if (availableItemsRes.getTag())
-                {
-                    // calculate the price of each item after sales
-                    ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(objItemsRes.getValue(), purchaseDetails);
-                    double totalPrice = 0;
-                    foreach (KeyValuePair<int, double> itemPrice in pricesAfterSaleRes)
-                    {
-                        totalPrice += itemPrice.Value * items[itemPrice.Key];   // item price multiple by his quantity in the purchase
-                    }
-                    return new OkWithValue<double>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", totalPrice);
-                }
-                return new FailureWithValue<double>(availableItemsRes.getMessage(), -1);
-            }
-            return new FailureWithValue<double>(purchasePolicyRes.getMessage(), -1);
+            PurchaseDetails purchaseDetails = new PurchaseDetails(buyer, itemsQuantitiesRes.getValue(), itemsPurchasePrices);
+            return new OkWithValue<PurchaseDetails>("Purchase Details Created Successfully", purchaseDetails);
         }
 
-        private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItems(ConcurrentDictionary<int, int> items)
+        // returns the final price of a purchase - doesnt purchase the items, just calculate the final price!
+        public ResultWithValue<ConcurrentDictionary<int, double>> itemsAfterSalePrices(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
         {
-            ConcurrentDictionary<Item, int> objItems = new ConcurrentDictionary<Item, int>();
-            foreach (KeyValuePair<int, int> item in items)
+            ResultWithValue<PurchaseDetails> purchaseDetailsRes = createPurchaseDetails(buyer, items, itemsPurchasePrices);
+            ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
+            if (!purchaseDetailsRes.getTag() || !itemsPricesRes.getTag())
             {
-                int itemID = item.Key;
-                if (!storage.ContainsKey(itemID))
-                {
-                    return new FailureWithValue<ConcurrentDictionary<Item, int>>("One Or More Of The Items Not Exist In Storage", null);
-                }
-                Item objItem = storage[itemID];
-                objItems.TryAdd(objItem, item.Value);
+                return new FailureWithValue<ConcurrentDictionary<int, double>>(purchaseDetailsRes.getMessage(), null);
             }
-            return new OkWithValue<ConcurrentDictionary<Item, int>>("All Items Exist In Storage", objItems);
+
+            // calculate the price of each item after sales
+            ConcurrentDictionary<int, double> pricesAfterSaleRes = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
+            return new OkWithValue<ConcurrentDictionary<int, double>>("The Final Price Calculated For Each Of The Purchase Items", pricesAfterSaleRes);
         }
 
         // Purchase items from a store if all items are available in storage
@@ -454,6 +458,67 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        // purchase the items if the purchase request suitable with the store's policy and the products are also in stock
+        public ResultWithValue<ConcurrentDictionary<int, double>> purchaseItems(User buyer, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        {
+            ResultWithValue<PurchaseDetails> purchaseDetailsRes = createPurchaseDetails(buyer, items, itemsPurchasePrices);
+            if (!purchaseDetailsRes.getTag())
+            {
+                return new FailureWithValue<ConcurrentDictionary<int, double>>(purchaseDetailsRes.getMessage(), null);
+            }
+
+            // checks the purchase can be made by the purchase policy
+            RegularResult purchasePolicyRes = applyPurchasePolicy(purchaseDetailsRes.getValue());
+            if (purchasePolicyRes.getTag())
+            {
+                // checks that all the items available in the store storage
+                RegularResult availableItemsRes = purchaseItemsIfAvailable(items);
+                if (availableItemsRes.getTag())
+                {
+                    ResultWithValue<ConcurrentDictionary<Item, double>> itemsPricesRes = getObjItemsPrices(items, itemsPurchasePrices);
+                    // calculate the price of each item after sales
+                    ConcurrentDictionary<int, double> pricesAfterSale = applySalesPolicy(itemsPricesRes.getValue(), purchaseDetailsRes.getValue());
+                    return new OkWithValue<ConcurrentDictionary<int, double>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", pricesAfterSale);
+                }
+                return new FailureWithValue<ConcurrentDictionary<int, double>>(availableItemsRes.getMessage(), null);
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, double>>(purchasePolicyRes.getMessage(), null);
+        }
+
+        private ResultWithValue<ConcurrentDictionary<Item, int>> getObjItemsQuantities(ConcurrentDictionary<int, int> items)
+        {
+            ConcurrentDictionary<Item, int> objItemsQuantities = new ConcurrentDictionary<Item, int>();
+            Item objItem;
+            int itemID;
+            foreach (KeyValuePair<int, int> itemQuantityPair in items)
+            {
+                itemID = itemQuantityPair.Key;
+                if (!storage.ContainsKey(itemID))
+                {
+                    return new FailureWithValue<ConcurrentDictionary<Item, int>>("One Or More Of The Items Not Exist In Storage", null);
+                }
+                objItem = storage[itemID];
+                objItemsQuantities.TryAdd(objItem, itemQuantityPair.Value);
+            }
+            return new OkWithValue<ConcurrentDictionary<Item, int>>("All Items Exist In Storage", objItemsQuantities);
+        }
+
+        private ResultWithValue<ConcurrentDictionary<Item, double>> getObjItemsPrices(ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPurchasePrices)
+        {
+            ConcurrentDictionary<Item, double> objItemsPrices = new ConcurrentDictionary<Item, double>();
+            Item objItem;
+            foreach (int itemID in items.Keys)
+            {
+                if (!storage.ContainsKey(itemID))
+                {
+                    return new FailureWithValue<ConcurrentDictionary<Item, double>>("One Or More Of The Items Not Exist In Storage", null);
+                }
+                objItem = storage[itemID];
+                objItemsPrices.TryAdd(objItem, itemsPurchasePrices[itemID]);
+            }
+            return new OkWithValue<ConcurrentDictionary<Item, double>>("All Items Exist In Storage", objItemsPrices);
+        }
+
         // In case the purchase is canceled (payment is not made / system collapses) -
         // the items that were supposed to be purchased return to the store
         public void rollBackPurchase(ConcurrentDictionary<int, int> items)
@@ -465,14 +530,21 @@ namespace WSEP212.DomainLayer
         }
 
         // Deliver all the items to the address
-        // returns true if the delivery done successfully
-        public RegularResult deliverItems(String address, ConcurrentDictionary<int, int> items)
+        // returns transaction id if the delivery done successfully
+        public int deliverItems(DeliveryParameters deliveryParameters)
         {
             if (this.deliverySystem == null)
             {
                 this.deliverySystem = DeliverySystem.Instance;
             }
-            return this.deliverySystem.deliverItems(address, items);
+            return this.deliverySystem.deliverItems(deliveryParameters.sendToName, deliveryParameters.address, deliveryParameters.city,
+                deliveryParameters.country, deliveryParameters.zip);
+        }
+        
+        // cancel the delivery of the transaction id
+        public bool cancelDelivery(int transactionID)
+        {
+            return this.deliverySystem.cancelDelivery(transactionID);
         }
 
         // Adds a new store seller for this store
@@ -517,6 +589,25 @@ namespace WSEP212.DomainLayer
             return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
         }
 
+        // Removes a store seller from this store
+        public RegularResult removeStoreOwner(String sellerUserName)
+        {
+            if (storeSellersPermissions.ContainsKey(sellerUserName))
+            {
+                storeSellersPermissions.TryRemove(sellerUserName, out _);
+                foreach(KeyValuePair<string,SellerPermissions> val in storeSellersPermissions)
+                {
+                    if (val.Value.grantor.userName.Equals(sellerUserName))
+                    {
+                        storeSellersPermissions.TryRemove(val.Key, out _);
+                    }
+                }
+                return new Ok("The Store Seller Removed From The Store Successfully");
+            }
+            return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
+        }
+
+
         // checks if the user is seller in this store
         // if he is, returns his seller permissions in the store
         public ResultWithValue<SellerPermissions> getStoreSellerPermissions(String userName)
@@ -541,17 +632,24 @@ namespace WSEP212.DomainLayer
         }
 
         // Add purchase made by user in the store
-        public void addNewPurchase(PurchaseInvoice purchase)
+        public void addPurchaseInvoice(PurchaseInvoice purchase)
         {
             var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
             if (result != null)
             {
-                purchasesHistory.Add(purchase);
+                purchasesHistory.TryAdd(purchase.purchaseInvoiceID, purchase);
                 result.purchasesHistory = purchasesHistory;
                 if(!JToken.DeepEquals(result.PurchasesHistoryAsJson, this.PurchasesHistoryAsJson))
                     result.PurchasesHistoryAsJson = PurchasesHistoryAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
+        }
+        
+        // Remove purchase made by user in the store
+        // done only if the rollback function was called
+        public void removePurchaseInvoice(int purchaseInvoiceID)
+        {
+            purchasesHistory.TryRemove(purchaseInvoiceID, out _);
         }
     }
 }

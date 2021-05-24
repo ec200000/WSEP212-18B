@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -20,18 +22,18 @@ namespace WSEP212_TESTS.UnitTests
         public static void SetupAuth(TestContext context)
         {
             User user = new User("Sagiv", 21);
-            itemA = new Item(100, "bamba", "snack for childrens", 4.5, "snack");
-            itemB = new Item(500, "milk", "pasteurized milk", 8, "milk products");
-            itemC = new Item(100, "bisli", "snack for childrens", 4, "snack");
+            itemA = new Item(100, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks);
+            itemB = new Item(500, "milk", "pasteurized milk", 8, ItemCategory.Dairy);
+            itemC = new Item(100, "bisli", "snack for childrens", 4, ItemCategory.Snacks);
             ConcurrentDictionary<Item, int> shoppingBagItems = new ConcurrentDictionary<Item, int>();
             shoppingBagItems.TryAdd(itemA, 3);
             shoppingBagItems.TryAdd(itemB, 2);
             shoppingBagItems.TryAdd(itemC, 5);
-            ConcurrentDictionary<int, PurchaseType> itemsPurchaseType = new ConcurrentDictionary<int, PurchaseType>();
-            itemsPurchaseType.TryAdd(itemA.itemID, PurchaseType.ImmediatePurchase);
-            itemsPurchaseType.TryAdd(itemB.itemID, PurchaseType.ImmediatePurchase);
-            itemsPurchaseType.TryAdd(itemC.itemID, PurchaseType.ImmediatePurchase);
-            purchaseDetails = new PurchaseDetails(user, shoppingBagItems, itemsPurchaseType);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(itemA.itemID, 4.5);
+            itemsPrices.TryAdd(itemB.itemID, 8);
+            itemsPrices.TryAdd(itemC.itemID, 4);
+            purchaseDetails = new PurchaseDetails(user, shoppingBagItems, itemsPrices);
         }
 
         [TestMethod]

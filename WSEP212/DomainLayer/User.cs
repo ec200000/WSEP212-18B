@@ -10,6 +10,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -25,7 +32,7 @@ namespace WSEP212.DomainLayer
         [NotMapped]
         public ShoppingCart shoppingCart { get; set; }
         [NotMapped]
-        public ConcurrentBag<PurchaseInvoice> purchases
+        public ConcurrentDictionary<int, PurchaseInvoice> purchases
         {
             get;
             set;
@@ -60,7 +67,7 @@ namespace WSEP212.DomainLayer
             this.userAge = userAge;
             this.shoppingCart = new ShoppingCart(userName);
             shoppingCart.addToDB();
-            this.purchases = new ConcurrentBag<PurchaseInvoice>();
+            this.purchases = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
             this.isSystemManager = isSystemManager;
@@ -162,10 +169,11 @@ namespace WSEP212.DomainLayer
             int storeID = (int)param.parameters[0];
             int itemID = (int)param.parameters[1];
             int quantity = (int)param.parameters[2];
+            ItemPurchaseType purchaseType = (ItemPurchaseType)param.parameters[3];
             object res;
             try
             {
-                res = state.addItemToShoppingCart(storeID, itemID, quantity);
+                res = state.addItemToShoppingCart(storeID, itemID, quantity, purchaseType);
             }
             catch (NotImplementedException)
             {
@@ -194,18 +202,124 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
-        //edit item in shopping cart is equal to -> remove + add
 
-        // params: ?
+        // params: int storeID, int itemID, int updatedQuantity
+        // returns: bool
+        public void changeItemQuantityInShoppingCart(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int itemID = (int)param.parameters[1];
+            int updatedQuantity = (int)param.parameters[2];
+            object res;
+            try
+            {
+                res = state.changeItemQuantityInShoppingCart(storeID, itemID, updatedQuantity);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
+
+        // params: int storeID, int itemID, ItemPurchaseType itemPurchaseType
+        // returns: bool
+        public void changeItemPurchaseType(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int itemID = (int)param.parameters[1];
+            ItemPurchaseType itemPurchaseType = (ItemPurchaseType)param.parameters[2];
+            object res;
+            try
+            {
+                res = state.changeItemPurchaseType(storeID, itemID, itemPurchaseType);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
+
+        // params: int storeID, int itemID, double offerItemPrice
+        // returns: bool
+        public void submitPriceOffer(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            int itemID = (int)param.parameters[1];
+            double offerItemPrice = (double)param.parameters[2];
+            object res;
+            try
+            {
+                res = state.submitPriceOffer(storeID, itemID, offerItemPrice);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
+
+        // params: int storeID, int itemID, double counterOffer
+        // returns: bool
+        public void itemCounterOffer(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            String userName = (String)param.parameters[0];
+            int storeID = (int)param.parameters[1];
+            int itemID = (int)param.parameters[2];
+            double offerItemPrice = (double)param.parameters[3];
+            object res;
+            try
+            {
+                res = state.itemCounterOffer(userName, storeID, itemID, offerItemPrice);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
+
+        // params: String userName, int storeID, int itemID, PriceStatus priceStatus
+        // returns: bool
+        public void confirmPriceStatus(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            String userName = (String)param.parameters[0];
+            int storeID = (int)param.parameters[1];
+            int itemID = (int)param.parameters[2];
+            PriceStatus priceStatus = (PriceStatus)param.parameters[3];
+            object res;
+            try
+            {
+                res = state.confirmPriceStatus(userName, storeID, itemID, priceStatus);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set(); // signal we're done
+        }
+
         // returns: bool
         public void purchaseItems(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;
-            String address = (String)param.parameters[0];
+            DeliveryParameters deliveryParameters = (DeliveryParameters)param.parameters[0];
+            PaymentParameters paymentParameters = (PaymentParameters)param.parameters[1];
             object res;
             try
             {
-                res = state.purchaseItems(address);
+                res = state.purchaseItems(deliveryParameters, paymentParameters);
             }
             catch (NotImplementedException)
             {
@@ -222,8 +336,8 @@ namespace WSEP212.DomainLayer
             ThreadParameters param = (ThreadParameters)list;
             String storeName = (String)param.parameters[0];
             String storeAdress = (String)param.parameters[1];
-            PurchasePolicy purchasePolicy = (PurchasePolicy)param.parameters[2];
-            SalePolicy salesPolicy = (SalePolicy)param.parameters[3];
+            PurchasePolicyInterface purchasePolicy = (PurchasePolicyInterface)param.parameters[2];
+            SalePolicyInterface salesPolicy = (SalePolicyInterface)param.parameters[3];
             object res;
             try
             {
@@ -268,7 +382,7 @@ namespace WSEP212.DomainLayer
             String itemName = (String)param.parameters[2];
             String description = (String)param.parameters[3];
             double price = (double)param.parameters[4];
-            String category = (String)param.parameters[5];
+            ItemCategory category = (ItemCategory)param.parameters[5];
             object res;
             try
             {
@@ -313,7 +427,7 @@ namespace WSEP212.DomainLayer
             String itemName = (String)param.parameters[3];
             String description = (String)param.parameters[4];
             double price = (double)param.parameters[5];
-            String category = (String)param.parameters[6];
+            ItemCategory category = (ItemCategory)param.parameters[6];
             object res;
             try
             {
@@ -419,6 +533,46 @@ namespace WSEP212.DomainLayer
             try
             {
                 res = state.removeStoreOwner(ownerName, storeID);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, PurchaseType purchaseType
+        // returns: bool
+        public void supportPurchaseType(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            PurchaseType purchaseType = (PurchaseType)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.supportPurchaseType(storeID, purchaseType);
+            }
+            catch (NotImplementedException)
+            {
+                res = new NotImplementedException();
+            }
+            param.result = res;
+            param.eventWaitHandle.Set();
+        }
+
+        // params: int storeID, PurchaseType purchaseType
+        // returns: bool
+        public void unsupportPurchaseType(Object list)
+        {
+            ThreadParameters param = (ThreadParameters)list;
+            int storeID = (int)param.parameters[0];
+            PurchaseType purchaseType = (PurchaseType)param.parameters[1];
+            object res;
+            try
+            {
+                res = state.unsupportPurchaseType(storeID, purchaseType);
             }
             catch (NotImplementedException)
             {
@@ -677,12 +831,17 @@ namespace WSEP212.DomainLayer
             var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
             if (result != null)
             {
-                this.purchases.Add(info);
+                this.purchases.TryAdd(info.purchaseInvoiceID, info);
                 result.purchases = purchases;
                 if(!JToken.DeepEquals(result.PurchasesJson, this.PurchasesJson))
                     result.PurchasesJson = this.PurchasesJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
+        }
+        
+        public void removePurchase(int purchaseInvoiceID)
+        {
+            this.purchases.TryRemove(purchaseInvoiceID, out _);
         }
         
         public bool addSellerPermissions(SellerPermissions permissions)

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212.DomainLayer.PolicyPredicate;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DomainLayer.SalePolicy
 {
     public class DoubleSale : Sale
     {
@@ -26,11 +27,11 @@ namespace WSEP212.DomainLayer
             return firstSale.getSalePercentageOnItem(item, purchaseDetails) + secondSale.getSalePercentageOnItem(item, purchaseDetails);
         }
 
-        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
             // apply the two sales on the item
-            return item.price - ((item.price * salePercentage) / 100);
+            return purchaseItemPrice - ((purchaseItemPrice * salePercentage) / 100);
         }
     }
 }
