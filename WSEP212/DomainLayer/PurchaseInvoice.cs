@@ -11,11 +11,10 @@ namespace WSEP212.DomainLayer
 {
     public class PurchaseInvoice
     {
-        [Key]
-        [Column(Order=1)]
+        
         // static counter for the purchaseInvoices
         private static int invoiceCounter = 1;
-
+        [Key]
         public int purchaseInvoiceID { get; set; }
         public int storeID { get; set; }
         public String userName { get; set; }

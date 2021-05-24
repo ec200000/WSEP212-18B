@@ -211,6 +211,7 @@ namespace WSEP212.DomainLayer
                     // create purchase invoice
                     // if the purchase will be canceled, roll back will clean this invoices
                     PurchaseInvoice purchaseInvoice = new PurchaseInvoice(store.storeID, bagOwner, items, purchaseItemsRes.getValue(), DateTime.Now);
+                    purchaseInvoice.addToDB();
                     store.addPurchaseInvoice(purchaseInvoice);
                     user.addPurchase(purchaseInvoice);
                     return new OkWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), purchaseInvoice);
