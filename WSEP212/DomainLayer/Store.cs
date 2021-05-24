@@ -49,21 +49,19 @@ namespace WSEP212.DomainLayer
         public String storeName { get; set; }
         public String storeAddress { get; set; }
         public bool activeStore { get; set; }
-        public SalePolicyInterface salesPolicy { get; set; }
-        public PurchasePolicyInterface purchasePolicy { get; set; }
         public ConcurrentDictionary<int, PurchaseInvoice> purchasesHistory { get; set; }
         
         public string salePolicyName { get; set; }
         [ForeignKey("salePolicyName")]
-        public SalePolicy salesPolicy { get; set; }
+        public SalePolicyInterface salesPolicy { get; set; }
         public string purchasePolicyName { get; set; }
         [ForeignKey("purchasePolicyName")]
-        public PurchasePolicy purchasePolicy { get; set; }
-        public ConcurrentBag<PurchaseInvoice> purchasesHistory { get; set; }
+        public PurchasePolicyInterface purchasePolicy { get; set; }
+        
         public string PurchasesHistoryAsJson
         {
             get => JsonConvert.SerializeObject(purchasesHistory,settings);
-            set => purchasesHistory = JsonConvert.DeserializeObject<ConcurrentBag<PurchaseInvoice>>(value);
+            set => purchasesHistory = JsonConvert.DeserializeObject<ConcurrentDictionary<int, PurchaseInvoice>>(value);
         }
         // A data structure associated with a user name and seller permissions
         [NotMapped]
@@ -535,7 +533,7 @@ namespace WSEP212.DomainLayer
         {
             if (this.deliverySystem == null)
             {
-                this.deliverySystem = DeliverySystem.Instance;
+                this.deliverySystem = DeliverySystemAdapter.Instance;
             }
             return this.deliverySystem.deliverItems(deliveryParameters.sendToName, deliveryParameters.address, deliveryParameters.city,
                 deliveryParameters.country, deliveryParameters.zip);
@@ -597,7 +595,7 @@ namespace WSEP212.DomainLayer
                 storeSellersPermissions.TryRemove(sellerUserName, out _);
                 foreach(KeyValuePair<string,SellerPermissions> val in storeSellersPermissions)
                 {
-                    if (val.Value.grantor.userName.Equals(sellerUserName))
+                    if (val.Value.GrantorName.Equals(sellerUserName))
                     {
                         storeSellersPermissions.TryRemove(val.Key, out _);
                     }

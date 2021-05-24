@@ -76,9 +76,6 @@ namespace WSEP212.DomainLayer
             SystemDBAccess.Instance.Invoices.Add(this);
             SystemDBAccess.Instance.SaveChanges();
         }
-        public bool wasItemPurchased(int itemID)
-        {
-            return items.ContainsKey(itemID);
-        }
+        
     }
 }

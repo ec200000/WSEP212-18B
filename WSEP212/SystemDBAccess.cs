@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations.Model;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212

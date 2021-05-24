@@ -48,7 +48,7 @@ namespace WSEP212.DomainLayer
         public string PurchasesJson
         {
             get => JsonConvert.SerializeObject(purchases);
-            set => purchases = JsonConvert.DeserializeObject<ConcurrentBag<PurchaseInvoice>>(value);
+            set => purchases = JsonConvert.DeserializeObject<ConcurrentDictionary<int, PurchaseInvoice>>(value);
         }
         
         public string SellerPermissionsJson

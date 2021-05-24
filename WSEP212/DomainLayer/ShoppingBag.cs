@@ -18,7 +18,7 @@ namespace WSEP212.DomainLayer
         [Key]
         [ForeignKey("StoreIDRef")]
         public Store store { get; set; }
-        public User bagOwner { get; set; }
+        public string bagOwner { get; set; }
         // A data structure associated with a item ID and its quantity - more effective when there will be a sales policy
         // There is no need for a structure that allows threads use, since only a single user can use these actions on his shopping bag
         [NotMapped]
@@ -31,7 +31,7 @@ namespace WSEP212.DomainLayer
         
         public ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseTypes { get; set; }
 
-        public ShoppingBag(Store store, User bagOwner)
+        public ShoppingBag(Store store, string bagOwner)
         {
             this.store = store;
             this.bagOwner = bagOwner;
@@ -204,14 +204,15 @@ namespace WSEP212.DomainLayer
             // if all the items were approved
             if(itemsPrices.Count == itemsPurchaseTypes.Count)
             {
-                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(bagOwner, items, itemsPrices);
+                var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
+                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(user, items, itemsPrices);
                 if(purchaseItemsRes.getTag())
                 {
                     // create purchase invoice
                     // if the purchase will be canceled, roll back will clean this invoices
-                    PurchaseInvoice purchaseInvoice = new PurchaseInvoice(store.storeID, bagOwner.userName, items, purchaseItemsRes.getValue(), DateTime.Now);
+                    PurchaseInvoice purchaseInvoice = new PurchaseInvoice(store.storeID, bagOwner, items, purchaseItemsRes.getValue(), DateTime.Now);
                     store.addPurchaseInvoice(purchaseInvoice);
-                    bagOwner.addPurchase(purchaseInvoice);
+                    user.addPurchase(purchaseInvoice);
                     return new OkWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), purchaseInvoice);
                 }
                 return new FailureWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), null);
@@ -223,6 +224,7 @@ namespace WSEP212.DomainLayer
         // for all the items that not approved, not apply the sales on them
         public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> getItemsAfterSalePrices()
         {
+            var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
             ConcurrentDictionary<int, double> approvedItemsAndPrices = approvedItemsPrices();
             // build new shopping bag with only approved items
             ConcurrentDictionary<int, int> approvedItems = new ConcurrentDictionary<int, int>();
@@ -231,7 +233,7 @@ namespace WSEP212.DomainLayer
                 approvedItems.TryAdd(itemID, items[itemID]);
             }
             // calculate the price after sale for approved items only
-            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = store.itemsAfterSalePrices(bagOwner, approvedItems, approvedItemsAndPrices);
+            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = store.itemsAfterSalePrices(user, approvedItems, approvedItemsAndPrices);
             if(approvedAfterSale.getTag())
             {
                 ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPricesAndStatus = allItemsPricesAndStatus();
@@ -257,9 +259,10 @@ namespace WSEP212.DomainLayer
         // roll back purchase - returns all the items in the bag to the store
         public void rollBackPurchase(int purchaseInvoiceID)
         {
+            var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
             store.rollBackPurchase(items);
             store.removePurchaseInvoice(purchaseInvoiceID);
-            bagOwner.removePurchase(purchaseInvoiceID);
+            user.removePurchase(purchaseInvoiceID);
         }
 
         // Removes all the items in the shopping bag

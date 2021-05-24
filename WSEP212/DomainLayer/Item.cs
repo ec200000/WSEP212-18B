@@ -44,7 +44,7 @@ namespace WSEP212.DomainLayer
         }
         
         public Item(){}
-        public Item(int quantity, String itemName, String description, double price, String category)
+        public Item(int quantity, String itemName, String description, double price, ItemCategory category)
         {
             if (price <= 0 || itemName.Equals("") || category.Equals("") || !setQuantity(quantity))
             {
@@ -133,7 +133,7 @@ namespace WSEP212.DomainLayer
                    " Item category: " + category + " Item quantity: " + quantity+ " Item ID: "+itemID;
         }
 
-        public RegularResult editItem(String itemName, String description, double price, String category, int quantity)
+        public RegularResult editItem(String itemName, String description, double price, ItemCategory category, int quantity)
         {
             if (itemName.Equals("") || price <= 0 || category.Equals(""))
                 return new Failure("One Or More Of The New Item Details Are Invalid");

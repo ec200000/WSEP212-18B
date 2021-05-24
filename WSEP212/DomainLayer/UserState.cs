@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;

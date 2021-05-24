@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
