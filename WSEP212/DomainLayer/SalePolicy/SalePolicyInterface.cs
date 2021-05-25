@@ -16,6 +16,7 @@ namespace WSEP212.DomainLayer.SalePolicy
         [Key]
         public String salesPolicyName { get; set; }
         public ConcurrentDictionary<int, Sale> storeSales { get; set; } //TODO: JSON
+
         public int addSale(int salePercentage, ApplySaleOn saleOn, String saleDescription);
         public RegularResult removeSale(int saleID);
         public ResultWithValue<int> addSaleCondition(int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType);

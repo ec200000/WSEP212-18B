@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -14,6 +15,10 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
 {
     public class BadPurchasePolicyMock : PurchasePolicyInterface
     {
+        public String purchasePolicyName { get; set; }
+        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
+        public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
+
         public BadPurchasePolicyMock() { }
 
         // there is no predicates in this policy

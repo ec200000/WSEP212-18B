@@ -39,7 +39,7 @@ namespace WSEP212.DomainLayer
             set => permissionsInStore = JsonConvert.DeserializeObject<ConcurrentLinkedList<Permissions>>(value);
         }
 
-        public SellerPermissions(){}
+        public SellerPermissions() { }
 
         private SellerPermissions(string SellerName, int StoreID, string GrantorName, ConcurrentLinkedList<Permissions> permissionsInStore)
         {

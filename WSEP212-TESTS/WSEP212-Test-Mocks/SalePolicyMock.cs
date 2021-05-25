@@ -14,6 +14,9 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
 {
     public class SalePolicyMock : SalePolicyInterface
     {
+        public String salesPolicyName { get; set; }
+        public ConcurrentDictionary<int, Sale> storeSales { get; set; }
+
         public SalePolicyMock() { }
 
         // there are no sales in this policy
