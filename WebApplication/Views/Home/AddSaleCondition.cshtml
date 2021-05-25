@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
+@using WSEP212.DomainLayer.SalePolicy
+@inject IHttpContextAccessor HttpContextAccessor
+@model WebApplication.Models.SalesModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<h2>Adding Sale Condition:</h2>
+<div class="editsalepredicatesdiv">
+    @using (Html.BeginForm("AddSaleItemsList", "Home", FormMethod.Post))
+    {
+        <label for="storesList">Sales info list</label>
+        string[] saleList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sales_info");
+        @Html.DropDownListFor(model => model.saleinfo, new SelectList(saleList.OfType<string>().ToList()), new {@class = "custom-select"})
+        ;
+        SaleCompositionType[] arr = new[]
+        {
+            SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
+        };
+        string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+        <label for="storesList">Composition Type</label>
+        @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new { @class = "custom-select" })
+        ;
+        <h3>
+            Please fill in only one of the pridecates:
+        </h3>
+        @Html.TextBoxFor(model => model.numbersOfProducts, new {placeholder = "Numbers Of Products ShoppingBag from a particular product or category", @class = "inputclassindex"})
+        @Html.TextBoxFor(model => model.priceOfShoppingBag, new {placeholder = "Price Of The ShoppingBag", @class = "inputclassindex"})
+        @Html.TextBoxFor(model => model.ageOfUser, new {placeholder = "Age Of User", @class = "inputclassindex"})
+        <label for="storesList">Predicate Description</label>
+        @Html.TextBoxFor(model => model.predicateDescription,new { placeholder = "Predicate Description",@class="inputclassopenstore" })
+        <button class="btn btn-outline-primary" formaction="TryAddSaleCondition" type="submit">Add Sale Condition</button>
+    }
+</div>
+
+</body>
+</html>
+@if (TempData["alert"] != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function() {
+                alert("@TempData["alert"]");
+            };
+    </script>
+
+}
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+
+        connection.on('sendToUser', data => {
+            alert(data)
+        });
+
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+    </script>
+}
