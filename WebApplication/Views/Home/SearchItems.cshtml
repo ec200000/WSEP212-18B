@@ -25,19 +25,13 @@
 <div class="searchitemsdivsearch">
     @using (Html.BeginForm("TrySearchItems", "Home", FormMethod.Post))
     {
-        <div>
-            @Html.TextBoxFor(model => model.minPrice,new { placeholder = "Minimum price",@class="inputclassindex" })
-        </div>
-        <div>
-            @Html.TextBoxFor(model => model.maxPrice,new { placeholder = "Maximum price",@class="inputclassindex" })
-        </div>
-        <div>
-            @Html.TextBoxFor(model => model.keyWords,new { placeholder = "Key words",@class="inputclassindex" })
-        </div>
-        <div>
-             @using (Html.BeginForm("TrySearchItems", "Home", FormMethod.Post))
-             {
-                 <label for="storesList">Category List</label>
+        @Html.TextBoxFor(model => model.minPrice,new { placeholder = "Minimum price",@class="inputclassindex" })
+        
+        @Html.TextBoxFor(model => model.maxPrice,new { placeholder = "Maximum price",@class="inputclassindex" })
+        @Html.TextBoxFor(model => model.keyWords,new { placeholder = "Key words",@class="inputclassindex" })
+        
+
+        <label for="storesList">Category List</label>
                  ItemCategory[] arr = new[]
                  {
                      ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
@@ -48,8 +42,8 @@
                  string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
                  @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
                  ;
-             }
-        </div>
+             
+        
         <div>
             @Html.TextBoxFor(model => model.itemName,new { placeholder = "Item name",@class="inputclassindex" })
         </div>

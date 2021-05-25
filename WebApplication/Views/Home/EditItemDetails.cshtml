@@ -13,29 +13,21 @@
     @model WebApplication.Models.ItemModel
     @using (Html.BeginForm("TryEditDetails", "Home", FormMethod.Post))
     {
-        <div>
-            @Html.LabelFor(model => model.quantity,new { @class="inputclassindex" })
+        @Html.LabelFor(model => model.quantity,new { @class="inputclassindex" })
             @Html.EditorFor(model => model.quantity,new {@class="inputclassindex" })
-        </div>
         
-        <div>
+        
             @Html.LabelFor(model => model.itemName,new {@class="inputclassindex" })
             @Html.EditorFor(model => model.itemName,new {@class="inputclassindex" })
-        </div>
-
-        <div>
-            @Html.LabelFor(model => model.description,new {@class="inputclassindex" })
+        
+        @Html.LabelFor(model => model.description,new {@class="inputclassindex" })
             @Html.EditorFor(model => model.description,new {@class="inputclassindex" })
-        </div>
 
-        <div>
+        
             @Html.LabelFor(model => model.price,new {@class="inputclassindex" })
             @Html.EditorFor(model => model.price,new {@class="inputclassindex" })
-        </div>
-
-        <div>
-            @using (Html.BeginForm("TryEditDetails", "Home", FormMethod.Post))
-            {
+            
+            
                 <label for="storesList">Category List</label>
                 ItemCategory[] arr = new[]
                 {
@@ -48,8 +40,8 @@
                 @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
                 ;
                 @Html.EditorFor(model => model.category, new {@class = "inputclassindex"})
-            }
-        </div>
+            
+        
         
         <button style="margin-top: 15px" class="btn btn-outline-primary" type="submit">Edit Details</button>
     }
