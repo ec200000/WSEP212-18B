@@ -1331,7 +1331,7 @@ namespace WSEP212.DomainLayer
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {
-                    String errorMsg = "The user " + userName + " cannot perform the getStorePurchaseHistory action!";
+                    String errorMsg = "The user " + userName + " cannot perform the getUsersStores action!";
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
@@ -1339,7 +1339,7 @@ namespace WSEP212.DomainLayer
                 {
                     return new FailureWithValue<ConcurrentLinkedList<int>>("Cannot perform this action!", null);
                 }
-                return new OkWithValue<ConcurrentLinkedList<int>>("Get Store Purchase History Successfully", (ConcurrentLinkedList<int>)threadParameters.result);
+                return new OkWithValue<ConcurrentLinkedList<int>>("Get users store Successfully", (ConcurrentLinkedList<int>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
@@ -1383,7 +1383,7 @@ namespace WSEP212.DomainLayer
         {
             Store store;
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
-            if (storeRes.getTag())
+            if (!storeRes.getTag())
             {
                 return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
             }
@@ -1395,7 +1395,7 @@ namespace WSEP212.DomainLayer
         {
             Store store;
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
-            if (storeRes.getTag())
+            if (!storeRes.getTag())
             {
                 return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
             }

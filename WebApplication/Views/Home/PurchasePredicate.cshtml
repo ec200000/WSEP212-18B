@@ -15,16 +15,16 @@
 <div class="purchasepredicatediv">
     <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
 </div>
-<div class="purchasepredicatediv">
-    <input class="btn btn-outline-primary btn-lg" type="button" onclick="location.href='/Home/OpenStore';" value="Open Store" />
-   
-</div>
+
 <div class="purchasepredicatediv">
     @using (Html.BeginForm("TryRemovePurchasePredicate", "Home", FormMethod.Post))
     {
         <label for="storesList">Purchase Predicate</label>
         string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
-        @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        @if (purchasePredicate != null)
+        {
+            @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        }
         <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove purchase predicate</button>
     }
 </div>

@@ -11,7 +11,6 @@ namespace WSEP212.DomainLayer.SalePolicy
 {
     public class SalePolicy : SalePolicyInterface
     {
-        [Key]
         public String salesPolicyName { get; set; }
         public ConcurrentDictionary<int, Sale> storeSales { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,9 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -20,7 +24,30 @@ namespace WSEP212.DomainLayer
         private JsonSerializerSettings settings = new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale)
+                }
+            }
         };
         
         [NotMapped]
@@ -50,7 +77,7 @@ namespace WSEP212.DomainLayer
             {
                 throw new ArithmeticException();
             }
-            this.itemID = itemCounter;
+            this.itemID = SystemDBAccess.Instance.Items.Count() + 1;
             itemCounter++;
             this.itemName = itemName;
             this.description = description;

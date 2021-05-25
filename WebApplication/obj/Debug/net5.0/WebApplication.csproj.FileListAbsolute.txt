@@ -616,3 +616,8 @@ C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\V
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AddSale.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AddSaleCondition.cshtml.g.cs
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseTypes.cshtml.g.cs
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AddPredicate.cshtml.g.cs
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AddSale.cshtml.g.cs
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\Razor\Views\Home\AddSaleCondition.cshtml.g.cs
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchasePredicate.cshtml.g.cs
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\Razor\Views\Home\PurchaseTypes.cshtml.g.cs

@@ -34,7 +34,30 @@ namespace WSEP212.DomainLayer
         private JsonSerializerSettings settings = new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale)
+                }
+            }
         };
         
         // A data structure associated with a item ID and its item
@@ -51,13 +74,23 @@ namespace WSEP212.DomainLayer
         public bool activeStore { get; set; }
         public ConcurrentDictionary<int, PurchaseInvoice> purchasesHistory { get; set; }
         
-        public string salePolicyName { get; set; }
-        [ForeignKey("salePolicyName")]
+        [NotMapped]
         public SalePolicyInterface salesPolicy { get; set; }
-        public string purchasePolicyName { get; set; }
-        [ForeignKey("purchasePolicyName")]
-        public PurchasePolicyInterface purchasePolicy { get; set; }
         
+        public string SalesPolicyAsJson
+        {
+            get => JsonConvert.SerializeObject(salesPolicy,settings);
+            set => setSalesJson(value);
+        }
+
+        [NotMapped]
+        public PurchasePolicyInterface purchasePolicy { get; set; }
+        public string PurchasePolicyAsJson
+        {
+            get => JsonConvert.SerializeObject(purchasePolicy,settings);
+            set => setPurchaseJson(value);
+        }
+
         public string PurchasesHistoryAsJson
         {
             get => JsonConvert.SerializeObject(purchasesHistory,settings);
@@ -79,13 +112,13 @@ namespace WSEP212.DomainLayer
         public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
-            this.storeID = storeCounter;
+            this.storeID = StoreRepository.Instance.stores.Count + 1;
             storeCounter++;
             this.activeStore = true;
             this.salesPolicy = salesPolicy;
-            salePolicyName = salesPolicy.salesPolicyName;
+            SalesPolicyAsJson = JsonConvert.SerializeObject(salesPolicy,settings);
             this.purchasePolicy = purchasePolicy;
-            purchasePolicyName = purchasePolicy.purchasePolicyName;
+            PurchasePolicyAsJson = JsonConvert.SerializeObject(purchasePolicy,settings);
             this.purchasesHistory = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
@@ -102,6 +135,22 @@ namespace WSEP212.DomainLayer
             this.deliverySystem = DeliverySystemAdapter.Instance;
         }
 
+        public void setPurchaseJson(string json)
+        {
+            if(purchasePolicy is PurchasePolicyMock)
+                purchasePolicy = JsonConvert.DeserializeObject<PurchasePolicyMock>(json, settings);
+            else
+                purchasePolicy = JsonConvert.DeserializeObject<PurchasePolicy.PurchasePolicy>(json, settings);
+        }
+
+        public void setSalesJson(string json)
+        {
+            if(salesPolicy is SalePolicyMock)
+                salesPolicy = JsonConvert.DeserializeObject<SalePolicyMock>(json, settings);
+            else
+                salesPolicy = JsonConvert.DeserializeObject<SalePolicy.SalePolicy>(json, settings);
+        }
+        
         public void addToDB()
         {
             SystemDBAccess.Instance.Stores.Add(this);
@@ -278,6 +327,7 @@ namespace WSEP212.DomainLayer
             if (result != null)
             {
                 result.purchasePolicy = purchasePolicy;
+                result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
             return res;
@@ -291,6 +341,7 @@ namespace WSEP212.DomainLayer
             if (res.getTag() && result != null)
             {
                 result.purchasePolicy = purchasePolicy;
+                result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
 
@@ -305,6 +356,7 @@ namespace WSEP212.DomainLayer
             if (res.getTag() && result != null)
             {
                 result.purchasePolicy = purchasePolicy;
+                result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
 
@@ -325,6 +377,7 @@ namespace WSEP212.DomainLayer
             if (result != null)
             {
                 result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
 
@@ -339,6 +392,7 @@ namespace WSEP212.DomainLayer
             if (res.getTag() && result != null)
             {
                 result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
 
@@ -353,6 +407,7 @@ namespace WSEP212.DomainLayer
             if (res.getTag() && result != null)
             {
                 result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
 
@@ -367,6 +422,7 @@ namespace WSEP212.DomainLayer
             if (res.getTag() && result != null)
             {
                 result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
 

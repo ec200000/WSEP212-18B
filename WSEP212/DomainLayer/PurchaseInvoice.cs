@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
 
         public PurchaseInvoice(int storeID, String userName, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPrices, DateTime dateOfPurchase)
         {
-            this.purchaseInvoiceID = invoiceCounter;
+            this.purchaseInvoiceID = SystemDBAccess.Instance.Invoices.Count() + 1;
             invoiceCounter++;
             this.storeID = storeID;
             this.userName = userName;

@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -19,7 +21,7 @@ namespace WSEP212.DomainLayer
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
+            TypeNameHandling = TypeNameHandling.All,
             NullValueHandling = NullValueHandling.Ignore,
             SerializationBinder = new KnownTypesBinder
             {
@@ -30,7 +32,16 @@ namespace WSEP212.DomainLayer
                     typeof(PurchasePolicy.PurchasePolicy),
                     typeof(PurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
-                    typeof(ItemSubmitOfferPurchase)
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale)
                 }
             }
         };
