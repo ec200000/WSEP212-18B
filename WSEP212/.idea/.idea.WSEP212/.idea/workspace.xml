@@ -68,12 +68,9 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShowReviews.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
@@ -90,7 +87,6 @@
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreAcceptanceTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/NotificationsTest.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" />
@@ -99,7 +95,6 @@
       <option value="$PROJECT_DIR$/App.config" />
       <option value="$PROJECT_DIR$/../WebApplication/Web.config" />
       <option value="$PROJECT_DIR$/Program.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Configuration.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
@@ -113,12 +108,17 @@
       <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
       <option value="$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Models/PurchaseTypesModel.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -224,7 +224,7 @@
       <workItem from="1620387850359" duration="10422000" />
       <workItem from="1621066452387" duration="13519000" />
       <workItem from="1621678210954" duration="2619000" />
-      <workItem from="1621947478730" duration="3795000" />
+      <workItem from="1621947478730" duration="7403000" />
     </task>
     <task id="LOCAL-00001" summary="save">
       <created>1619199403309</created>
@@ -289,7 +289,19 @@
       <option name="presentableId" value="LOCAL‎00010" />
       <updated>1621951356311</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL‎00011" summary="abcdefg">
+      <created>1621951657907</created>
+      <option name="number" value="LOCAL‎00011" />
+      <option name="presentableId" value="LOCAL‎00011" />
+      <updated>1621951657907</updated>
+    </task>
+    <task id="LOCAL‎00012" summary="added purchase types edit">
+      <created>1621955248624</created>
+      <option name="number" value="LOCAL‎00012" />
+      <option name="presentableId" value="LOCAL‎00012" />
+      <updated>1621955248624</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +347,8 @@
     <MESSAGE value="changes revert" />
     <MESSAGE value="final" />
     <MESSAGE value="abcdefg" />
-    <option name="LAST_COMMIT_MESSAGE" value="abcdefg" />
+    <MESSAGE value="added purchase types edit" />
+    <option name="LAST_COMMIT_MESSAGE" value="added purchase types edit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
