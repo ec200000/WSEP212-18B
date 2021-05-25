@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
@@ -12,30 +13,39 @@
     @model WebApplication.Models.ItemModel
     @using (Html.BeginForm("TryAddItem", "Home", FormMethod.Post))
     {
-        <div>
+        
             @Html.EditorFor(model => model.quantity,new { htmlAttributes = new  {@class="inputclassitemactions" , @placeholder = "Quantity"}})
             @Html.ValidationMessageFor(model => model.quantity)
-        </div>
         
-        <div>
+        
+        
             @Html.TextBoxFor(model => model.itemName,new { placeholder = "Item name",@class="inputclassitemactions" })
             @Html.ValidationMessageFor(model => model.itemName)
-        </div>
         
-        <div>
+        
+        
             @Html.TextBoxFor(model => model.description,new { placeholder = "Description",@class="inputclassitemactions" })
             @Html.ValidationMessageFor(model => model.description)
-        </div>
         
-        <div>
+        
+      
             @Html.EditorFor(model => model.price,new { htmlAttributes = new  {@class="inputclassitemactions" , @placeholder = "Price"}})
             @Html.ValidationMessageFor(model => model.price)
-        </div>
-        
-        <div>
-            @Html.TextBoxFor(model => model.category,new { placeholder = "Category",@class="inputclassitemactions" })
-            @Html.ValidationMessageFor(model => model.category)
-        </div>
+            
+              
+                ItemCategory[] arr = new[]
+                {
+                    ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
+                    ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
+                    ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks, ItemCategory.Pastries,
+                    ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
+                };
+                string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
+                @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+                @Html.ValidationMessageFor(model => model.category)
+           
+       
         
         <button class="btn btn-outline-primary" type="submit" type="submit">Add Item To Store</button>
     }

@@ -1,2 +1,0 @@
-2021-05-14 16:38:01.929 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
-
