@@ -1,0 +1,2 @@
+2021-05-25 18:56:01.030 +03:00 [Error] In GetStorePurchaseHistory function, the error is: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+

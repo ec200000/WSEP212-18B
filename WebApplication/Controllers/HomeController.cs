@@ -178,11 +178,13 @@ namespace WebApplication.Controllers
             string[] arr = new string[lst.size];
             int i = 0;
             Node<PurchaseType> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
-            while(node.Next != null)
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = node.Value.ToString();
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
@@ -537,11 +539,13 @@ namespace WebApplication.Controllers
             int[] arr = new int[lst.size];
             int i = 0;
             Node<int> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
-            while(node.Next != null)
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = node.Value;
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
@@ -642,12 +646,14 @@ namespace WebApplication.Controllers
         {
             int[] arr = new int[lst.size];
             int i = 0;
-            Node<Item> node = lst.First; 
-            while(node.Next != null)
+            Node<Item> node = lst.First;
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = node.Value.itemID;
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
@@ -742,11 +748,13 @@ namespace WebApplication.Controllers
             string[] arr = new string[lst.size];
             int i = 0;
             Node<Item> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
-            while(node.Next != null)
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = "StoreID: "+storeID+" "+ node.Value.ToString();
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
@@ -1061,12 +1069,14 @@ namespace WebApplication.Controllers
             {
                 string[] arr = new string[items.size];
                 int i = 0;
-                Node<Item> node = items.First; 
-                while(node.Next != null)
+                Node<Item> node = items.First;
+                int size = items.size;
+                while(size > 0)
                 {
                     arr[i] = node.Value.ToString();
                     node = node.Next;
                     i++;
+                    size--;
                 }
                 HttpContext.Session.SetObject("itemsList", arr);
             }
@@ -1349,8 +1359,10 @@ namespace WebApplication.Controllers
                 return RedirectToAction("StoreActions");
             }
         }
-        public IActionResult PurchasePredicate(PredicateModel model)
+        public IActionResult PurchasePredicate(StoreModel model)
         {
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             SystemController systemController = SystemController.Instance;
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> info =
@@ -1371,7 +1383,7 @@ namespace WebApplication.Controllers
                 LinkedList<string> purchasepredicateList = new LinkedList<string>();
                 foreach (string purpre in storePredicatesDescription.getValue().Values)
                 {
-                    string purchasepredicate = "Predicate: " + purpre;
+                    string purchasepredicate = purpre;
                     purchasepredicateList.AddLast(purchasepredicate);
                 }
                 
@@ -1414,21 +1426,25 @@ namespace WebApplication.Controllers
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             Predicate<PurchaseDetails> newPred = null;
-            if (model.numbersOfProducts != null)
+            string description = "";
+            if (model.numbersOfProducts != 0)
             {
                 newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                description = $"number of products is bigger than: {model.numbersOfProducts.ToString()}";
             }
-            if (model.priceOfShoppingBag != null)
+            if (model.priceOfShoppingBag != 0)
             {
                 newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+                description = $"price of shopping bag is bigger than: {model.priceOfShoppingBag.ToString()}";
             }
-            if (model.ageOfUser != null)
+            if (model.ageOfUser != 0)
             {
                 newPred = pd => pd.userAge() >= model.ageOfUser;
+                description = $"age of user is bigger than: {model.ageOfUser.ToString()}";
             }
             if (newPred != null)
             {
-                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int) storeID, newPred,"");
+                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int) storeID, newPred,description);
                 if (res.getTag())
                 {
                     return RedirectToAction("PurchasePredicate");
@@ -1539,6 +1555,16 @@ namespace WebApplication.Controllers
         {
             model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
             HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            return View();
+        }
+
+        public IActionResult AddPredicate()
+        {
+            return View();
+        }
+        
+        public IActionResult AddSale()
+        {
             return View();
         }
     }

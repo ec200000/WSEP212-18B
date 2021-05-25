@@ -13,7 +13,6 @@ namespace WSEP212.DomainLayer.PurchasePolicy
 {
     public class PurchasePolicy : PurchasePolicyInterface
     {
-        [Key]
         public String purchasePolicyName { get; set; }
         public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
