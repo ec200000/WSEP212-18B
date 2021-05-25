@@ -188,14 +188,7 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetObject("stores", storesValues);
             return View();
         }
-        
-        public IActionResult GetStoreInformation(StoreModel model)
-        {
-            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
-            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
-            return View();
-        }
-        
+
         public IActionResult ItemActions(StoreModel model)
         {
             model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
@@ -1465,6 +1458,13 @@ namespace WebApplication.Controllers
             }
             HttpContext.Session.SetObject("finalPriceBeforeSale", finalPriceBeforeSale);
             return RedirectToAction("TryPriceBeforeSale");
+        }
+        
+        public IActionResult GetStoreInformation(StoreModel model)
+        {
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            return View();
         }
     }
 }

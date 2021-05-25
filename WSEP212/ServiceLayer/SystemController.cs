@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Text;
 using Microsoft.VisualBasic.CompilerServices;
 using WSEP212.DomainLayer;
@@ -387,13 +388,28 @@ namespace WSEP212.ServiceLayer
             return new Failure("the user is not a store owner!");
         }
 
+        private Permissions[] listToArray(ConcurrentLinkedList<Permissions> lst)
+        {
+            Permissions[] arr = new Permissions[lst.size];
+            int i = 0;
+            Node<Permissions> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            while(node.Next != null)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
+        
         public RegularResult hasPermission(string userName, int storeID, Permissions permission)
         {
             ResultWithValue<SellerPermissions> pers = StoreRepository.Instance.stores[storeID]
                 .getStoreSellerPermissions(userName);
             if (pers.getTag())
             {
-                if (pers.getValue().permissionsInStore.Contains(permission) || pers.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                var arrPer = listToArray(pers.getValue().permissionsInStore);
+                if (arrPer.Contains(permission) || arrPer.Contains(Permissions.AllPermissions))
                 {
                     return new Ok("the user has this permission");
                 }
