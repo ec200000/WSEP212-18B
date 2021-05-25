@@ -14,6 +14,7 @@ using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
 using WebApplication.Communication;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -167,6 +168,32 @@ namespace WebApplication.Controllers
         
         public IActionResult OpenStore()
         {
+            return View();
+        }
+        
+        private string[] listToArray(ConcurrentLinkedList<PurchaseType> lst)
+        {
+            string[] arr = new string[lst.size];
+            int i = 0;
+            Node<PurchaseType> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            while(node.Next != null)
+            {
+                arr[i] = node.Value.ToString();
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
+        
+        public IActionResult PurchaseTypes()
+        {
+            SystemController systemController = SystemController.Instance;
+            string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentLinkedList<PurchaseType> lst = systemController.getStorePurchaseTypes(userName, storeID);
+            HttpContext.Session.SetObject("storepurchasetypes", listToArray(lst));
+            HttpContext.Session.SetObject("purchasetypes", types);
             return View();
         }
         
@@ -1068,6 +1095,54 @@ namespace WebApplication.Controllers
             int predicate2 = int.Parse(predparts2[1]);
             int composetype = saleStringToEnum(model.compositionType);
             ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype, null);
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public int stringToEnumPT(string pred)
+        {
+            switch (pred)
+            {
+                case "ImmediatePurchase":
+                    return 0;
+                case "SubmitOfferPurchase":
+                    return 1;
+            }
+            return -1;
+        }
+        
+        public IActionResult TryRemovePurchaseType(PurchaseTypesModel model)
+        {
+            TempData["alert"] = null;
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.unsupportPurchaseType(userName, storeID, stringToEnumPT(model.purchaseType));
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult TryAddPurchaseType(PurchaseTypesModel model)
+        {
+            TempData["alert"] = null;
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.supportPurchaseType(userName, storeID, stringToEnumPT(model.purchaseType2));
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");

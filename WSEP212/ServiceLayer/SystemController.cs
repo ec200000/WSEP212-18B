@@ -111,6 +111,11 @@ namespace WSEP212.ServiceLayer
                 newSalesPolicy);
         }
 
+        public ConcurrentLinkedList<PurchaseType> getStorePurchaseTypes(string userName, int storeID)
+        {
+            return StoreRepository.Instance.stores[storeID].purchasePolicy.purchaseTypes;
+        }
+
         public ResultWithValue<NotificationDTO> itemReview(String userName, String review, int itemID, int storeID)
         {
             String info = $"ItemReview Event was triggered, with the parameters:" +
