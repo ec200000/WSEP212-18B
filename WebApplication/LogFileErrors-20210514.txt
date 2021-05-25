@@ -1,2 +1,0 @@
-2021-05-14 16:38:01.877 +03:00 [Error] No connection string named 'ourdb' could be found in the application config file.
-
