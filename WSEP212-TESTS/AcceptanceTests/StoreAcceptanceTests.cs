@@ -7,7 +7,6 @@ using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {

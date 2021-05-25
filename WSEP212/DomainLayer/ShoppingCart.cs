@@ -18,7 +18,21 @@ namespace WSEP212.DomainLayer
         private JsonSerializerSettings settings = new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase)
+                }
+            }
         };
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
@@ -26,7 +40,7 @@ namespace WSEP212.DomainLayer
         public string BagsAsJson
         {
             get => JsonConvert.SerializeObject(shoppingBags,settings);
-            set => shoppingBags = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ShoppingBag>>(value);
+            set => shoppingBags = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ShoppingBag>>(value,settings);
         }
 
         [Key]
