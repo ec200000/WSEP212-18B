@@ -54,7 +54,7 @@
             },
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[9.0.1, )"
+              "version": "[11.0.2, )"
             },
             "Serilog": {
               "target": "Package",

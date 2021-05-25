@@ -13,7 +13,6 @@ namespace WSEP212.DomainLayer.SalePolicy
 {
     public interface SalePolicyInterface
     {
-        [Key]
         public String salesPolicyName { get; set; }
         public ConcurrentDictionary<int, Sale> storeSales { get; set; } //TODO: JSON
         public int addSale(int salePercentage, ApplySaleOn saleOn, String saleDescription);

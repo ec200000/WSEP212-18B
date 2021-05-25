@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212_TEST.UnitTests.UnitTestMocks
+namespace WSEP212.DomainLayer
 {
     public class BadPurchasePolicyMock : PurchasePolicyInterface
     {
@@ -46,6 +42,9 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
             return new Failure("The Purchase Was Not Approved By The Purchase Policy");
         }
 
+        public string purchasePolicyName { get; set; }
+        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
+        public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
         public void supportPurchaseType(PurchaseType purchaseType) { }
 
         public void unsupportPurchaseType(PurchaseType purchaseType) { }

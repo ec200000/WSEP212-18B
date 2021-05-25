@@ -14,6 +14,27 @@ namespace WSEP212.DomainLayer
 {
     public class ShoppingBag
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase)
+                }
+            }
+        };
+        
         public int StoreIDRef { get; set; }
         [Key]
         [ForeignKey("StoreIDRef")]
@@ -28,9 +49,15 @@ namespace WSEP212.DomainLayer
             get => JsonConvert.SerializeObject(items);
             set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
         }
-        
+        [NotMapped]
         public ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseTypes { get; set; }
 
+        public string ItemsPurchaseTypesAsJson
+        {
+            get => JsonConvert.SerializeObject(itemsPurchaseTypes,settings);
+            set => itemsPurchaseTypes = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ItemPurchaseType>>(value,settings);
+        }
+        
         public ShoppingBag(Store store, string bagOwner)
         {
             this.store = store;

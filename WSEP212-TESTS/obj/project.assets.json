@@ -2229,7 +2229,7 @@
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Cryptography.Internal": "5.0.5",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "5.0.5",
-          "Newtonsoft.Json": "9.0.1",
+          "Newtonsoft.Json": "11.0.2",
           "Serilog": "2.10.1-dev-01285",
           "Serilog.Sinks.RollingFile": "3.3.1-dev-00771",
           "System.Collections.Concurrent": "4.3.0"
