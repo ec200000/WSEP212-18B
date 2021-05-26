@@ -7,25 +7,29 @@ using Serialize.Linq.Serializers;
 
 namespace WSEP212.DomainLayer
 {
+    [JsonConverter(typeof(LocalPredicateSerializer))]
     public class LocalPredicate<PurchaseDetails>
     {
-        [NotMapped]
-        [JsonIgnore]
         public Expression<Func<PurchaseDetails, double>> method { set; get; }
         public int biggerThan { set; get; }
         
-        private ExpressionSerializer ec = new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer());
+        /*private ExpressionSerializer ec = new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer());
         public string methodAsJson
         {
             get => new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer()).SerializeText(method);
             set => new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer()).DeserializeText(value).ToExpressionNode().ToExpression();
+        }*/
+
+        public LocalPredicate()
+        {
+            
         }
 
         public LocalPredicate(Expression<Func<PurchaseDetails, double>> method, int biggerThan)
         {
             this.method = method;
             this.biggerThan = biggerThan;
-            this.methodAsJson = new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer()).SerializeText(method);
+            //this.methodAsJson = new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer()).SerializeText(method);
         }
 
         public Predicate<PurchaseDetails> applyPredicate(PurchaseDetails details)

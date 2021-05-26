@@ -24,3 +24,15 @@
 
 2021-05-26 16:36:15.980 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
 
+2021-05-26 21:00:54.574 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Error setting value to 'PredAsJson' on 'WSEP212.DomainLayer.PolicyPredicate.SimplePredicate'.
+
+2021-05-26 21:35:18.365 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Error setting value to 'PredAsJson' on 'WSEP212.DomainLayer.PolicyPredicate.SimplePredicate'.
+
+2021-05-26 21:36:36.951 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Error setting value to 'PredAsJson' on 'WSEP212.DomainLayer.PolicyPredicate.SimplePredicate'.
+
+2021-05-26 21:38:21.998 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Error setting value to 'PredAsJson' on 'WSEP212.DomainLayer.PolicyPredicate.SimplePredicate'.
+
+2021-05-26 21:39:45.807 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Error reading JObject from JsonReader. Current JsonReader item is not an object: Null. Path '', line 1, position 4.
+
+2021-05-26 21:43:24.694 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Error setting value to 'PredAsJson' on 'WSEP212.DomainLayer.PolicyPredicate.SimplePredicate'.
+
