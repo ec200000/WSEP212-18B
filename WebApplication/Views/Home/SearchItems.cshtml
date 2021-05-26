@@ -19,6 +19,10 @@
         ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<ConcurrentDictionary<Store,ConcurrentLinkedList<Item>>>("allitems!");
         @Html.DropDownListFor(model => model.itemChosen, new SelectList(Model.items.OfType<string>().ToList()), new {@class = "custom-select"})
         @Html.TextBoxFor(model => model.quantity,new { placeholder = "Quantity",@class="inputclassindex" })
+        string[] types = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
+        @Html.DropDownListFor(model => model.purchaseType, new SelectList(types.OfType<string>().ToList()), new {@class = "custom-select"});
+        @Html.TextBoxFor(model => model.priceOffer,new { placeholder = "Price Offer",@class="inputclassindex" })
+
         <button class="btn btn-outline-primary" type="submit">Add Item To Shopping Cart</button>
         <button class="btn btn-outline-primary" type="submit" formaction="TryShowReviews">View Item's reviews</button>
     }

@@ -267,6 +267,8 @@ namespace WebApplication.Controllers
                 ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
                 allItemStrings(res);
             }
+            string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
+            HttpContext.Session.SetObject("purchasetypes", types);
             model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
             return View(model);
         }
@@ -357,7 +359,6 @@ namespace WebApplication.Controllers
             TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             //KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
-            // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO itemDto = new ItemDTO((int)HttpContext.Session.GetInt32(SessionStoreID),
                 model.quantity,
                 model.itemName,
@@ -386,7 +387,6 @@ namespace WebApplication.Controllers
             //if (model.minPrice == 0) model.minPrice = int.MinValue;
             if (model.maxPrice == 0) model.maxPrice = int.MaxValue;
             if (model.category == null) model.category = "";
-            // !!! TODO: fix category to work with ItemCategory !!!
             ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, 0);
             if (res != null)
             {
@@ -598,6 +598,45 @@ namespace WebApplication.Controllers
             }
         }
         
+        private Item[] itemListToArray2(ConcurrentLinkedList<Item> lst)
+        {
+            Item[] arr = new Item[lst.size];
+            int i = 0;
+            Node<Item> node = lst.First;
+            int size = lst.size;
+            while(size > 0)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+                size--;
+            }
+            return arr;
+        }
+
+        private Item findThisItem(ConcurrentLinkedList<Item> items, int itemID)
+        {
+            Item[] itms = itemListToArray2(items);
+            for (int i = 0; i < itms.Length; i++)
+            {
+                if (itms[i].itemID == itemID)
+                    return itms[i];
+            }
+            return null;
+        }
+
+        private double findItem(ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> stores, int itemID, int storeID)
+        {
+            foreach (var pair in stores)
+            {
+                if (pair.Key.storeID == storeID)
+                {
+                    return findThisItem(pair.Value, itemID).price;
+                }
+            }
+            return -1;
+        }
+        
         public IActionResult TryAddItemToShoppingCart(SearchModel model)
         {
             TempData["alert"] = null;
@@ -609,8 +648,13 @@ namespace WebApplication.Controllers
                 string[] store = authorsList[1].Split(" ");
                 int storeID = int.Parse(store[0]);
                 int itemID = int.Parse(authorsList[authorsList.Length - 1]);
-                // !!! TODO: ADD CHOOSE PURCHASE TYPE, AND PRICE TO OFFER (FOR IMMIDIATE INSERT THE REAL PRICE) !!!
-                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, 0, model.maxPrice);
+                int purchaseType = stringToEnumPT(model.purchaseType);
+                double price = findItem(systemController.getItemsInStoresInformation(), itemID, storeID);
+                if (purchaseType == 1)
+                {
+                    price = model.priceOffer;
+                }
+                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
                     return RedirectToAction("SearchItems");
