@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="wsep212B@wsep212b.database.windows.net">
+  <database-model serializer="dbm" dbms="AZURE" family-id="AZURE" format-version="4.20">
+    <root id="1">
+      <ServerVersion>12.0.2148</ServerVersion>
+      <Dbms>AZURE</Dbms>
+    </root>
+    <database id="2" parent="1" name="master">
+      <ObjectId>1</ObjectId>
+    </database>
+    <database id="3" parent="1" name="wsep212B">
+      <ObjectId>5</ObjectId>
+      <PermissionsCheckSum>1059020366</PermissionsCheckSum>
+      <Grants>5|database||1|connect|G
+</Grants>
+      <Current>1</Current>
+      <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+      <Fingerprint>5.44338/2DE91C42-66C9-473F-90E8-607B45A560C4@wsep212b</Fingerprint>
+    </database>
+    <login id="4" parent="1" name="##MS_DefinitionReader##">
+      <ObjectId>13</ObjectId>
+      <Type>server-role</Type>
+      <Enabled>1</Enabled>
+    </login>
+    <login id="5" parent="1" name="##MS_ServerStateManager##">
+      <ObjectId>12</ObjectId>
+      <Type>server-role</Type>
+      <Enabled>1</Enabled>
+    </login>
+    <login id="6" parent="1" name="##MS_ServerStateReader##">
+      <ObjectId>11</ObjectId>
+      <Type>server-role</Type>
+      <Enabled>1</Enabled>
+    </login>
+    <schema id="7" parent="3" name="INFORMATION_SCHEMA">
+      <ObjectId>3</ObjectId>
+    </schema>
+    <schema id="8" parent="3" name="db_accessadmin">
+      <ObjectId>16385</ObjectId>
+    </schema>
+    <schema id="9" parent="3" name="db_backupoperator">
+      <ObjectId>16389</ObjectId>
+    </schema>
+    <schema id="10" parent="3" name="db_datareader">
+      <ObjectId>16390</ObjectId>
+    </schema>
+    <schema id="11" parent="3" name="db_datawriter">
+      <ObjectId>16391</ObjectId>
+    </schema>
+    <schema id="12" parent="3" name="db_ddladmin">
+      <ObjectId>16387</ObjectId>
+    </schema>
+    <schema id="13" parent="3" name="db_denydatareader">
+      <ObjectId>16392</ObjectId>
+    </schema>
+    <schema id="14" parent="3" name="db_denydatawriter">
+      <ObjectId>16393</ObjectId>
+    </schema>
+    <schema id="15" parent="3" name="db_owner">
+      <ObjectId>16384</ObjectId>
+    </schema>
+    <schema id="16" parent="3" name="db_securityadmin">
+      <ObjectId>16386</ObjectId>
+    </schema>
+    <schema id="17" parent="3" name="dbo">
+      <ObjectId>1</ObjectId>
+      <IntrospectionTimestamp>2021-05-26.17:01:32.573</IntrospectionTimestamp>
+      <Current>1</Current>
+    </schema>
+    <schema id="18" parent="3" name="guest">
+      <ObjectId>2</ObjectId>
+    </schema>
+    <schema id="19" parent="3" name="sys">
+      <ObjectId>4</ObjectId>
+    </schema>
+    <role id="20" parent="3" name="public">
+      <ObjectId>0</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="21" parent="3" name="dbo">
+      <ObjectId>1</ObjectId>
+      <DefaultSchema>dbo</DefaultSchema>
+      <AuthType>instance</AuthType>
+    </role>
+    <role id="22" parent="3" name="guest">
+      <ObjectId>2</ObjectId>
+      <DefaultSchema>guest</DefaultSchema>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="23" parent="3" name="INFORMATION_SCHEMA">
+      <ObjectId>3</ObjectId>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="24" parent="3" name="sys">
+      <ObjectId>4</ObjectId>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="25" parent="3" name="db_owner">
+      <ObjectId>16384</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="26" parent="3" name="db_accessadmin">
+      <ObjectId>16385</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="27" parent="3" name="db_securityadmin">
+      <ObjectId>16386</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="28" parent="3" name="db_ddladmin">
+      <ObjectId>16387</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="29" parent="3" name="db_backupoperator">
+      <ObjectId>16389</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="30" parent="3" name="db_datareader">
+      <ObjectId>16390</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="31" parent="3" name="db_datawriter">
+      <ObjectId>16391</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="32" parent="3" name="db_denydatareader">
+      <ObjectId>16392</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <role id="33" parent="3" name="db_denydatawriter">
+      <ObjectId>16393</ObjectId>
+      <OwnerId>1</OwnerId>
+      <Type>database-role</Type>
+      <AuthType>none</AuthType>
+    </role>
+    <table id="34" parent="17" name="Authentications">
+      <ObjectId>226815870</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:03.583</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:03.583</ModifiedTimestamp>
+    </table>
+    <table id="35" parent="17" name="ItemReviews">
+      <ObjectId>66815300</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.533</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:04.013</ModifiedTimestamp>
+    </table>
+    <table id="36" parent="17" name="Items">
+      <ObjectId>130815528</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.950</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.950</ModifiedTimestamp>
+    </table>
+    <table id="37" parent="17" name="PurchaseInvoices">
+      <ObjectId>34815186</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.320</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.320</ModifiedTimestamp>
+    </table>
+    <table id="38" parent="17" name="SellerPermissions">
+      <ObjectId>162815642</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:03.163</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:03.163</ModifiedTimestamp>
+    </table>
+    <table id="39" parent="17" name="ShoppingCarts">
+      <ObjectId>2118298606</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:01.900</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:01.900</ModifiedTimestamp>
+    </table>
+    <table id="40" parent="17" name="Stores">
+      <ObjectId>194815756</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:03.373</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:03.373</ModifiedTimestamp>
+    </table>
+    <table id="41" parent="17" name="UserConnectionManagers">
+      <ObjectId>2815072</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.110</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.110</ModifiedTimestamp>
+    </table>
+    <table id="42" parent="17" name="Users">
+      <ObjectId>98815414</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.740</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:04.013</ModifiedTimestamp>
+    </table>
+    <table id="43" parent="17" name="__MigrationHistory">
+      <ObjectId>274816041</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:04.223</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:04.223</ModifiedTimestamp>
+    </table>
+    <column id="44" parent="34" name="k">
+      <Position>1</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="45" parent="34" name="UserInfoJson">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="46" parent="34" name="PK_dbo.Authentications">
+      <Position>1</Position>
+      <ColNames>k</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="47" parent="34" name="PK_dbo.Authentications">
+      <ObjectId>242815927</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:03.587</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:03.587</ModifiedTimestamp>
+      <ColNames>k</ColNames>
+      <UnderlyingIndexName>PK_dbo.Authentications</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="48" parent="35" name="UserNameRef">
+      <Position>1</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="35" name="ReviewsAsJson">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="50" parent="35" name="PK_dbo.ItemReviews">
+      <Position>1</Position>
+      <ColNames>UserNameRef</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <index id="51" parent="35" name="IX_UserNameRef">
+      <Position>2</Position>
+      <ColNames>UserNameRef</ColNames>
+    </index>
+    <key id="52" parent="35" name="PK_dbo.ItemReviews">
+      <ObjectId>82815357</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.533</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.533</ModifiedTimestamp>
+      <ColNames>UserNameRef</ColNames>
+      <UnderlyingIndexName>PK_dbo.ItemReviews</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="53" parent="35" name="FK_dbo.ItemReviews_dbo.Users_UserNameRef">
+      <ObjectId>258815984</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:04.013</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:04.013</ModifiedTimestamp>
+      <ColNames>UserNameRef</ColNames>
+      <RefTableId>98815414</RefTableId>
+      <RefTableName>Users</RefTableName>
+      <RefKeyName>PK_dbo.Users</RefKeyName>
+      <RefColNames>userName</RefColNames>
+    </foreign-key>
+    <column id="54" parent="36" name="itemID">
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="55" parent="36" name="quantity">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="36" name="itemName">
+      <Position>3</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="57" parent="36" name="description">
+      <Position>4</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="58" parent="36" name="price">
+      <Position>5</Position>
+      <DataType>float|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="59" parent="36" name="category">
+      <Position>6</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="60" parent="36" name="DictionaryAsJson">
+      <Position>7</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="61" parent="36" name="PK_dbo.Items">
+      <Position>1</Position>
+      <ColNames>itemID</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="62" parent="36" name="PK_dbo.Items">
+      <ObjectId>146815585</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.953</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.953</ModifiedTimestamp>
+      <ColNames>itemID</ColNames>
+      <UnderlyingIndexName>PK_dbo.Items</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="63" parent="37" name="purchaseInvoiceID">
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="64" parent="37" name="storeID">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="37" name="userName">
+      <Position>3</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="66" parent="37" name="dateOfPurchase">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="37" name="ItemsAsJson">
+      <Position>5</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="68" parent="37" name="PK_dbo.PurchaseInvoices">
+      <Position>1</Position>
+      <ColNames>purchaseInvoiceID</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="69" parent="37" name="PK_dbo.PurchaseInvoices">
+      <ObjectId>50815243</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.323</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.323</ModifiedTimestamp>
+      <ColNames>purchaseInvoiceID</ColNames>
+      <UnderlyingIndexName>PK_dbo.PurchaseInvoices</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="70" parent="38" name="SellerName">
+      <Position>1</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="71" parent="38" name="StoreID">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="72" parent="38" name="GrantorName">
+      <Position>3</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="73" parent="38" name="PermissionsInStoreAsJson">
+      <Position>4</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="74" parent="38" name="PK_dbo.SellerPermissions">
+      <Position>1</Position>
+      <ColNames>SellerName
+StoreID
+GrantorName</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="75" parent="38" name="PK_dbo.SellerPermissions">
+      <ObjectId>178815699</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:03.163</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:03.163</ModifiedTimestamp>
+      <ColNames>SellerName
+StoreID
+GrantorName</ColNames>
+      <UnderlyingIndexName>PK_dbo.SellerPermissions</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="76" parent="39" name="cartOwner">
+      <Position>1</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="77" parent="39" name="BagsAsJson">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="78" parent="39" name="PK_dbo.ShoppingCarts">
+      <Position>1</Position>
+      <ColNames>cartOwner</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="79" parent="39" name="PK_dbo.ShoppingCarts">
+      <ObjectId>2134298663</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:01.900</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:01.900</ModifiedTimestamp>
+      <ColNames>cartOwner</ColNames>
+      <UnderlyingIndexName>PK_dbo.ShoppingCarts</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="80" parent="40" name="storeID">
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="81" parent="40" name="StorageAsJson">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="82" parent="40" name="storeName">
+      <Position>3</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="83" parent="40" name="storeAddress">
+      <Position>4</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="84" parent="40" name="activeStore">
+      <Position>5</Position>
+      <DataType>bit|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="85" parent="40" name="SalesPolicyAsJson">
+      <Position>6</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="86" parent="40" name="PurchasePolicyAsJson">
+      <Position>7</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="87" parent="40" name="PurchasesHistoryAsJson">
+      <Position>8</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="88" parent="40" name="StoreSellersPermissionsAsJson">
+      <Position>9</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="89" parent="40" name="PredAsJson">
+      <Position>10</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="90" parent="40" name="PK_dbo.Stores">
+      <Position>1</Position>
+      <ColNames>storeID</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="91" parent="40" name="PK_dbo.Stores">
+      <ObjectId>210815813</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:03.373</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:03.373</ModifiedTimestamp>
+      <ColNames>storeID</ColNames>
+      <UnderlyingIndexName>PK_dbo.Stores</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="92" parent="41" name="delayedNotificationsLock">
+      <Position>1</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="93" parent="41" name="DelayedNotificationsAsJson">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="94" parent="41" name="PK_dbo.UserConnectionManagers">
+      <Position>1</Position>
+      <ColNames>delayedNotificationsLock</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="95" parent="41" name="PK_dbo.UserConnectionManagers">
+      <ObjectId>18815129</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.113</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.113</ModifiedTimestamp>
+      <ColNames>delayedNotificationsLock</ColNames>
+      <UnderlyingIndexName>PK_dbo.UserConnectionManagers</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="96" parent="42" name="userName">
+      <Position>1</Position>
+      <DataType>nvarchar(128 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="97" parent="42" name="userAge">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="98" parent="42" name="isSystemManager">
+      <Position>3</Position>
+      <DataType>bit|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="99" parent="42" name="PurchasesJson">
+      <Position>4</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <column id="100" parent="42" name="SellerPermissionsJson">
+      <Position>5</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+    </column>
+    <index id="101" parent="42" name="PK_dbo.Users">
+      <Position>1</Position>
+      <ColNames>userName</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="102" parent="42" name="PK_dbo.Users">
+      <ObjectId>114815471</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:02.740</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:02.740</ModifiedTimestamp>
+      <ColNames>userName</ColNames>
+      <UnderlyingIndexName>PK_dbo.Users</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="103" parent="43" name="MigrationId">
+      <Position>1</Position>
+      <DataType>nvarchar(150 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="104" parent="43" name="ContextKey">
+      <Position>2</Position>
+      <DataType>nvarchar(300 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="105" parent="43" name="Model">
+      <Position>3</Position>
+      <DataType>varbinary(max)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="106" parent="43" name="ProductVersion">
+      <Position>4</Position>
+      <DataType>nvarchar(32 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="107" parent="43" name="PK_dbo.__MigrationHistory">
+      <Position>1</Position>
+      <ColNames>MigrationId
+ContextKey</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="108" parent="43" name="PK_dbo.__MigrationHistory">
+      <ObjectId>290816098</ObjectId>
+      <CreatedTimestamp>2021-05-26.16:57:04.227</CreatedTimestamp>
+      <ModifiedTimestamp>2021-05-26.16:57:04.227</ModifiedTimestamp>
+      <ColNames>MigrationId
+ContextKey</ColNames>
+      <UnderlyingIndexName>PK_dbo.__MigrationHistory</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
