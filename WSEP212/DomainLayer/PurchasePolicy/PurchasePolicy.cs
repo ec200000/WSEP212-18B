@@ -52,7 +52,7 @@ namespace WSEP212.DomainLayer.PurchasePolicy
         // add new purchase predicate for the store purchase policy
         // add the predicate to the other predicates by composing them with AND Predicate - done by the build 
         // returns the id of the new purchase predicate
-        public int addPurchasePredicate(Predicate<PurchaseDetails> predicate, String predicateDescription) 
+        public int addPurchasePredicate(LocalPredicate<PurchaseDetails> predicate, String predicateDescription) 
         {
             SimplePredicate simplePredicate = new SimplePredicate(predicate, predicateDescription);
             purchasePredicates.TryAdd(simplePredicate.predicateID, simplePredicate);

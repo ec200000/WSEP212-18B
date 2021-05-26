@@ -694,3 +694,21 @@
 
 2021-05-25 23:44:01.342 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
 
+2021-05-25 23:57:29.315 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-25 23:57:35.317 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-25 23:57:35.417 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-25 23:57:37.232 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-25 23:57:42.837 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-25 23:57:46.246 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-25 23:57:47.957 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-25 23:57:47.963 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-25 23:57:51.642 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+

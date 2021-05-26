@@ -818,7 +818,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             try
             {

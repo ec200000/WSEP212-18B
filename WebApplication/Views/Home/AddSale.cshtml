@@ -17,7 +17,8 @@
         <h5>1. Sale On Item</h5>
         <label for="storesList">Items list</label>
         string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("itemsList");
-        @Html.DropDownListFor(model => model.itemID, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+        if(predList!=null)
+            @Html.DropDownListFor(model => model.itemID, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
         ;
         @Html.TextBoxFor(model => model.salePercentage,new { placeholder = "Sale Percentage",@class="inputclassopenstore" })
         @Html.TextBoxFor(model => model.saleDescription,new { placeholder = "Sale Description",@class="inputclassopenstore" })

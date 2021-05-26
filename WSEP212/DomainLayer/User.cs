@@ -28,7 +28,7 @@ namespace WSEP212.DomainLayer
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.All,
+            //TypeNameHandling = TypeNameHandling.Auto,
             NullValueHandling = NullValueHandling.Ignore,
             SerializationBinder = new KnownTypesBinder
             {
@@ -620,7 +620,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Predicate<PurchaseDetails> newPredicate = (Predicate<PurchaseDetails>)param.parameters[1];
+            LocalPredicate<PurchaseDetails> newPredicate = (LocalPredicate<PurchaseDetails>)param.parameters[1];
             String predDescription = (String)param.parameters[2];
             object res;
             try

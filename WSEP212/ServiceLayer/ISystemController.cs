@@ -35,7 +35,7 @@ namespace WSEP212.ServiceLayer
         public ConcurrentLinkedList<PurchaseType> getStorePurchaseTypes(String userName, int storeID); // USE CASE 4.2
         public RegularResult supportPurchaseType(String userName, int storeID, Int32 purchaseType); // USE CASE 4.2
         public RegularResult unsupportPurchaseType(String userName, int storeID, Int32 purchaseType); // USE CASE 4.2
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID); // USE CASE 4.2
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, 
             int secondPredicateID, Int32 typeOfComposition); // USE CASE 4.2

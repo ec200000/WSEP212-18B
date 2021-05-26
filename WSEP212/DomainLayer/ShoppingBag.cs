@@ -21,7 +21,7 @@ namespace WSEP212.DomainLayer
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.All,
+            //TypeNameHandling = TypeNameHandling.Auto,
             NullValueHandling = NullValueHandling.Ignore,
             SerializationBinder = new KnownTypesBinder
             {
@@ -33,15 +33,15 @@ namespace WSEP212.DomainLayer
                     typeof(PurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
                     typeof(ItemSubmitOfferPurchase),
-                   typeof(SimplePredicate),
-                   typeof(AndPredicates),
-                   typeof(OrPredicates),
-                   typeof(ConditioningPredicate),
-                   typeof(ConditionalSale),
-                   typeof(DoubleSale),
-                   typeof(MaxSale),
-                   typeof(XorSale),
-                   typeof(SimpleSale)
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale)
                 }
             }
         };

@@ -1,0 +1,26 @@
+2021-05-26 12:10:44.615 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Unable to find a constructor to use for type System.Linq.Expressions.Expression`1[System.Func`2[System.Int32,System.Int32]]. A class should either have a default constructor, one constructor with arguments or a constructor marked with the JsonConstructor attribute. Path 'method.Type', line 1, position 62.
+
+2021-05-26 12:12:42.867 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Type specified in JSON 'Expression1`1' was not resolved. Path 'method.$type', line 1, position 54.
+
+2021-05-26 15:59:01.333 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 15:59:45.792 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:00:37.096 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:01:49.362 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:04:06.572 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:04:21.593 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:05:07.913 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:21:13.053 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+
+2021-05-26 16:32:15.378 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Unable to serialize text.
+
+2021-05-26 16:33:29.218 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Unable to serialize text.
+
+2021-05-26 16:36:15.980 +03:00 [Error] In GetItemsInStoresInformation function, the error is: Object reference not set to an instance of an object.
+

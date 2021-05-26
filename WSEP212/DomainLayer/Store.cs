@@ -17,6 +17,10 @@ using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
+using Serialize.Linq;
+using Serialize.Linq.Extensions;
+using Serialize.Linq.Serializers;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace WSEP212.DomainLayer
 {
@@ -35,7 +39,7 @@ namespace WSEP212.DomainLayer
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.All,
+            TypeNameHandling = TypeNameHandling.Auto,
             NullValueHandling = NullValueHandling.Ignore,
             SerializationBinder = new KnownTypesBinder
             {
@@ -67,6 +71,9 @@ namespace WSEP212.DomainLayer
             get => JsonConvert.SerializeObject(storage,settings);
             set => storage = JsonConvert.DeserializeObject<ConcurrentDictionary<int, Item>>(value);
         }
+        
+        [NotMapped]
+        public LocalPredicate<int> pred;
         [Key]
         public int storeID { get; set; }
         public String storeName { get; set; }
@@ -108,6 +115,13 @@ namespace WSEP212.DomainLayer
         [JsonIgnore]
         public DeliveryInterface deliverySystem { get; set; }
 
+        private ExpressionSerializer ec = new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer());
+        public string PredAsJson
+        {
+            get => JsonConvert.SerializeObject(pred);
+            set => pred = JsonConvert.DeserializeObject<LocalPredicate<int>>(value);
+        }
+
         public Store() {}
         public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
@@ -122,6 +136,7 @@ namespace WSEP212.DomainLayer
             this.purchasesHistory = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
+            pred = new LocalPredicate<int>(x => x * 2, 5);
 
             // create the founder seller permissions
             ConcurrentLinkedList<Permissions> founderPermissions = new ConcurrentLinkedList<Permissions>();
@@ -320,7 +335,7 @@ namespace WSEP212.DomainLayer
         }
 
         // add a new purchase prediacte for the store
-        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public int addPurchasePredicate(LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             var res = this.purchasePolicy.addPurchasePredicate(newPredicate, predDescription);
             var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
@@ -330,7 +345,7 @@ namespace WSEP212.DomainLayer
                 result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
-            return res;
+            return 1;
         }
 
         // removes purchase prediacte from the store

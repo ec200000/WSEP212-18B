@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {}
+    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj": {
+    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj",
+        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
         "projectName": "WebApplication",
-        "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj",
-        "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\obj\\",
+        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -32,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj": {
-                "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj"
+              "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+                "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
               }
             }
           }
@@ -67,6 +63,10 @@
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
               "version": "[1.1.0, )"
+            },
+            "Serialize.Linq": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             }
           },
           "imports": [
@@ -91,21 +91,17 @@
         }
       }
     },
-    "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {
+    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
         "projectName": "WSEP212-TESTS",
-        "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
-        "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\obj\\",
+        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -119,11 +115,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj": {
-                "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj"
+              "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
+                "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj"
               },
-              "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj": {
-                "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj"
+              "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+                "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
               }
             }
           }
@@ -178,6 +174,10 @@
               "target": "Package",
               "version": "[3.16.1, )"
             },
+            "Serialize.Linq": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "xunit.core": {
               "target": "Package",
               "version": "[2.4.1, )"
@@ -211,21 +211,17 @@
         }
       }
     },
-    "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj": {
+    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj",
+        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\obj\\",
+        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -266,6 +262,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[11.0.2, )"
+            },
+            "Serialize.Linq": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             },
             "Serilog": {
               "target": "Package",

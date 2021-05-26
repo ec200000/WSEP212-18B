@@ -1,0 +1,442 @@
+2021-05-26 00:06:18.981 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:06:19.621 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:06:21.614 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:06:24.466 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:06:24.469 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:06:28.099 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 00:16:09.943 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:16:10.639 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:16:19.237 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:16:21.604 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:16:22.578 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:16:22.580 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:16:26.164 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 00:19:35.574 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:19:36.423 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:19:38.241 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:19:39.333 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:19:39.336 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:19:45.384 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: age of user is bigger than: 5
+
+2021-05-26 00:22:57.109 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:22:57.824 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:22:59.608 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:23:01.574 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:23:01.577 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:23:05.178 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: age of user is bigger than: 3
+
+2021-05-26 00:23:43.220 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:23:44.682 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:23:44.684 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:23:50.011 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 00:25:23.569 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:25:24.243 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:25:26.057 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:25:27.970 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:25:27.972 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:25:31.501 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: System.Predicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 00:25:31.981 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:25:31.985 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:29:34.660 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:29:35.401 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:29:58.083 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:30:01.175 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:31:12.350 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:31:13.041 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:31:18.677 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:31:20.598 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 00:32:08.568 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:32:13.231 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:33:51.313 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:33:52.279 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:34:08.919 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:07.956 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:36:09.036 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:11.417 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:19.010 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: shelly
+
+2021-05-26 00:36:19.649 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:21.979 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: shelly
+
+2021-05-26 00:36:23.745 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: shelly
+
+2021-05-26 00:36:25.006 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:27.024 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:34.865 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 0
+
+2021-05-26 00:36:38.381 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:40.231 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:43.213 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:44.339 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:45.547 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:46.238 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:50.522 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 00:36:50.555 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:55.885 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 00:36:55.891 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:36:57.980 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:36:59.014 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: shelly
+
+2021-05-26 00:36:59.622 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:37:03.573 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 00:37:03.580 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:38:53.468 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 00:38:54.662 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:38:58.939 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 00:38:59.652 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:39:25.782 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 00:40:08.415 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 00:40:25.489 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 10:10:27.417 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 10:10:31.135 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 10:10:31.165 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 10:10:32.803 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 10:10:38.497 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 10:10:40.939 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 10:13:24.056 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 10:13:28.079 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 10:13:28.113 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 10:13:29.505 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 10:13:35.097 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 10:13:37.549 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 10:20:53.552 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 10:20:56.848 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 10:20:56.879 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 10:20:58.357 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 10:21:03.207 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 10:21:05.659 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 12:10:43.823 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 12:10:44.260 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 12:12:41.945 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 12:12:42.414 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:56:33.603 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 15:56:38.720 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 15:56:41.791 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 15:56:41.814 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:56:43.154 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:56:47.822 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 15:56:50.373 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:56:52.603 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:56:58.610 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 0
+
+2021-05-26 15:57:00.543 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:03.181 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:57:04.720 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:07.296 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:11.376 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:12.370 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:57:12.371 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 15:57:14.196 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:19.379 +03:00 [Information] supportPurchaseType Event was triggered, with the parameters:userName: shelly, store ID: 1, purchase type: 1
+
+2021-05-26 15:57:19.386 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:23.887 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:57:28.221 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:57:31.694 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 15:57:31.705 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:57:40.673 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 15:59:00.590 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 15:59:01.025 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 15:59:44.734 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 15:59:45.231 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:00:36.153 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:00:36.630 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:01:48.798 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:02:01.390 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:02:12.486 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:03:59.459 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:04:18.094 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:04:21.559 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:04:58.931 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:05:02.051 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:05:45.747 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:17:49.855 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:17:53.337 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:17:53.379 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:17:54.839 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:18:00.287 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 16:20:07.752 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:20:11.196 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:20:11.259 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:20:13.262 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:20:19.292 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 16:20:22.238 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:20:48.851 +03:00 [Information] Logout Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:21:12.254 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:21:12.694 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:31:22.630 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:31:30.165 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:31:30.276 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:31:31.951 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:31:36.532 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 16:31:39.590 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:31:41.961 +03:00 [Information] Logout Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:32:14.382 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:32:14.941 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:33:28.213 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:33:28.884 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:35:24.369 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:35:28.826 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:35:28.913 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:35:31.079 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:35:37.106 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 16:35:40.180 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:35:43.015 +03:00 [Information] Logout Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:36:14.763 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:36:15.426 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:40:18.416 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:40:22.532 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:40:22.632 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:40:24.363 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:40:30.021 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 16:40:33.357 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:40:35.838 +03:00 [Information] Logout Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:41:13.738 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:41:14.391 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:41:17.088 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:57:10.894 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:57:15.148 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:57:15.280 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:57:16.964 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:57:21.953 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: shelly, store name: shokobo, purchase policy: default, sales policy: default
+
+2021-05-26 16:57:24.927 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:57:27.890 +03:00 [Information] Logout Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:58:29.425 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
+
+2021-05-26 16:58:30.082 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:58:32.900 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:58:48.012 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:58:48.032 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 16:58:51.756 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: shelly, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 16:58:53.542 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:58:53.547 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 16:59:10.144 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:59:12.115 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:59:12.857 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:59:19.392 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 0
+
+2021-05-26 16:59:21.584 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 16:59:24.735 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:59:27.847 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: shelly, store ID: 1, item ID: 1
+
+2021-05-26 16:59:27.907 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:59:53.813 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 16:59:55.240 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: shelly
+
+2021-05-26 16:59:56.346 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 17:00:00.421 +03:00 [Information] supportPurchaseType Event was triggered, with the parameters:userName: shelly, store ID: 1, purchase type: 1
+
+2021-05-26 17:00:00.426 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 17:00:05.654 +03:00 [Information] unsupportPurchaseType Event was triggered, with the parameters:userName: shelly, store ID: 1, purchase type: 1
+
+2021-05-26 17:00:05.672 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 17:00:17.417 +03:00 [Information] supportPurchaseType Event was triggered, with the parameters:userName: shelly, store ID: 1, purchase type: 0
+
+2021-05-26 17:00:17.426 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+
+2021-05-26 17:00:21.660 +03:00 [Information] unsupportPurchaseType Event was triggered, with the parameters:userName: shelly, store ID: 1, purchase type: 0
+
+2021-05-26 17:00:21.680 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
+

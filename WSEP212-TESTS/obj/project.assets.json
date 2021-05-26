@@ -1130,6 +1130,15 @@
           }
         }
       },
+      "Serialize.Linq/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Serialize.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Serialize.Linq.dll": {}
+        }
+      },
       "Serilog/2.10.1-dev-01285": {
         "type": "package",
         "compile": {
@@ -2210,6 +2219,7 @@
           "Microsoft.AspNetCore.Authentication.Certificate": "5.0.5",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "Serialize.Linq": "2.0.0",
           "WSEP212": "1.0.0"
         },
         "compile": {
@@ -2230,6 +2240,7 @@
           "Microsoft.AspNetCore.Cryptography.Internal": "5.0.5",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "5.0.5",
           "Newtonsoft.Json": "11.0.2",
+          "Serialize.Linq": "2.0.0",
           "Serilog": "2.10.1-dev-01285",
           "Serilog.Sinks.RollingFile": "3.3.1-dev-00771",
           "System.Collections.Concurrent": "4.3.0"
@@ -4349,6 +4360,24 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Serialize.Linq/2.0.0": {
+      "sha512": "mURyXDcdqHvdqlgOKlWWjD210Q83ltASrNB6TTSsSiNPVuxGMghzGc2bt5DzY8T608Bu1NP01lESlaNkpMpcRA==",
+      "type": "package",
+      "path": "serialize.linq/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net40/Serialize.Linq.dll",
+        "lib/net45/Serialize.Linq.dll",
+        "lib/net5.0/Serialize.Linq.dll",
+        "lib/netstandard1.3/Serialize.Linq.dll",
+        "lib/netstandard2.0/Serialize.Linq.dll",
+        "lib/uap10.0.10240/Serialize.Linq.dll",
+        "serialize.linq.2.0.0.nupkg.sha512",
+        "serialize.linq.nuspec"
       ]
     },
     "Serilog/2.10.1-dev-01285": {
@@ -7782,6 +7811,7 @@
       "Microsoft.NET.Test.Sdk >= 16.9.4",
       "NUnit >= 3.12.0",
       "NUnit3TestAdapter >= 3.16.1",
+      "Serialize.Linq >= 2.0.0",
       "WSEP212 >= 1.0.0",
       "WebApplication >= 1.0.0",
       "xunit.core >= 2.4.1",
@@ -7789,24 +7819,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\irisk\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ec200\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
       "projectName": "WSEP212-TESTS",
-      "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
-      "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212-TESTS\\obj\\",
+      "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+      "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7820,11 +7845,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj": {
-              "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WebApplication\\WebApplication.csproj"
+            "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
+              "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj"
             },
-            "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj": {
-              "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj"
+            "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+              "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
             }
           }
         }
@@ -7878,6 +7903,10 @@
           "NUnit3TestAdapter": {
             "target": "Package",
             "version": "[3.16.1, )"
+          },
+          "Serialize.Linq": {
+            "target": "Package",
+            "version": "[2.0.0, )"
           },
           "xunit.core": {
             "target": "Package",

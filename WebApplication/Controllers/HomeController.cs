@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -189,8 +190,13 @@ namespace WebApplication.Controllers
             return arr;
         }
         
-        public IActionResult PurchaseTypes()
+        public IActionResult PurchaseTypes(StoreModel model)
         {
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
             SystemController systemController = SystemController.Instance;
             string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
             string userName = HttpContext.Session.GetString(SessionName);
@@ -1025,8 +1031,13 @@ namespace WebApplication.Controllers
             return -1;
         }
 
-        public IActionResult EditSalePredicates()
+        public IActionResult EditSalePredicates(StoreModel model)
         {
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -1193,22 +1204,29 @@ namespace WebApplication.Controllers
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             int composetype = saleStringToEnum(model.compositionType);
             SimplePredicate typeCondition = null;
+            LocalPredicate<PurchaseDetails> pred = null;
             Predicate<PurchaseDetails> newPred = null;
             if (model.numbersOfProducts != null)
             {
-                newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.numbersOfProducts);
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
             }
 
             if (model.priceOfShoppingBag != null)
             {
-                newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.totalPurchasePrice();
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.priceOfShoppingBag);
+                //newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
             }
 
             if (model.ageOfUser != null)
             {
-                newPred = pd => pd.userAge() >= model.ageOfUser;
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.userAge();
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.ageOfUser);
+                //newPred = pd => pd.userAge() >= model.ageOfUser;
             }
-            typeCondition = new SimplePredicate(newPred, model.saleDescription);
+            typeCondition = new SimplePredicate(pred, model.saleDescription);
             int saleID = 0;
             if (model.saleinfo != null)
             {
@@ -1361,8 +1379,11 @@ namespace WebApplication.Controllers
         }
         public IActionResult PurchasePredicate(StoreModel model)
         {
-            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
-            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
             SystemController systemController = SystemController.Instance;
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> info =
@@ -1425,26 +1446,35 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            Predicate<PurchaseDetails> newPred = null;
+            LocalPredicate<PurchaseDetails> pred = null;
+            //Predicate<PurchaseDetails> newPred = null;
             string description = "";
             if (model.numbersOfProducts != 0)
             {
-                newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.numbersOfProducts);
                 description = $"number of products is bigger than: {model.numbersOfProducts.ToString()}";
             }
             if (model.priceOfShoppingBag != 0)
             {
-                newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.totalPurchasePrice();
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.priceOfShoppingBag);
+                //newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
                 description = $"price of shopping bag is bigger than: {model.priceOfShoppingBag.ToString()}";
             }
             if (model.ageOfUser != 0)
             {
-                newPred = pd => pd.userAge() >= model.ageOfUser;
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.userAge();
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.ageOfUser);
+                //newPred = pd => pd.userAge() >= model.ageOfUser;
                 description = $"age of user is bigger than: {model.ageOfUser.ToString()}";
             }
-            if (newPred != null)
+            if (pred != null)
             {
-                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int) storeID, newPred,description);
+                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int) storeID, pred, description);
                 if (res.getTag())
                 {
                     return RedirectToAction("PurchasePredicate");

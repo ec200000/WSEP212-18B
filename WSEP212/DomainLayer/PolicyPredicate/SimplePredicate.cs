@@ -7,16 +7,16 @@ namespace WSEP212.DomainLayer.PolicyPredicate
 {
     public class SimplePredicate : SalePredicate
     {
-        public Predicate<PurchaseDetails> predicate { get; set; }
+        public LocalPredicate<PurchaseDetails> predicate { get; set; }
 
-        public SimplePredicate(Predicate<PurchaseDetails> predicate, String predicateDescription) : base(predicateDescription)
+        public SimplePredicate(LocalPredicate<PurchaseDetails> predicate, String predicateDescription) : base(predicateDescription)
         {
             this.predicate = predicate;
         }
 
         public override bool applyPrediacte(PurchaseDetails purchaseDetails)
         {
-            return this.predicate(purchaseDetails);
+            return this.predicate.applyPredicate(purchaseDetails)(purchaseDetails);
         }
     }
 }

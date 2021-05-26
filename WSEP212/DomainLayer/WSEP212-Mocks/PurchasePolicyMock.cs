@@ -13,7 +13,7 @@ namespace WSEP212.DomainLayer
         public PurchasePolicyMock() { }
 
         // there is no predicates in this policy
-        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, string predDescription)
+        public int addPurchasePredicate(LocalPredicate<PurchaseDetails> newPredicate, string predDescription)
         {
             return -1;
         }

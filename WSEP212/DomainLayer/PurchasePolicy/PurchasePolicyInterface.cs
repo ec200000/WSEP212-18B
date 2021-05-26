@@ -20,7 +20,7 @@ namespace WSEP212.DomainLayer.PurchasePolicy
         public void supportPurchaseType(PurchaseType purchaseType);
         public void unsupportPurchaseType(PurchaseType purchaseType);
         public Boolean hasPurchaseTypeSupport(PurchaseType purchaseType);
-        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, String predDescription);
+        public int addPurchasePredicate(LocalPredicate<PurchaseDetails> newPredicate, String predDescription);
         public RegularResult removePurchasePredicate(int predicateID);
         public ResultWithValue<int> composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
         public ConcurrentDictionary<int, String> getPurchasePredicatesDescriptions();

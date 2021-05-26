@@ -305,7 +305,7 @@ namespace WSEP212.ServiceLayer
         }
 
         public ResultWithValue<int> addPurchasePredicate(string userName, int storeID,
-            Predicate<PurchaseDetails> newPredicate, String predDescription)
+            LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             String info = $"addPurchasePredicate Event was triggered, with the parameter: " +
                           $"user name: {userName}, storeID: {storeID}, newPredicate: {newPredicate}, predDescription: {predDescription}";
