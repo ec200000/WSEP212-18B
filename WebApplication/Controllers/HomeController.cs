@@ -1091,7 +1091,7 @@ namespace WebApplication.Controllers
                 }
                 HttpContext.Session.SetObject("itemsList", arr);
             }
-            return RedirectToAction("TryAddSale");
+            return RedirectToAction("AddSale");
         }
         public int categorytoenum(string pred)
         {
@@ -1163,15 +1163,15 @@ namespace WebApplication.Controllers
                     model.saleDescription);
                 if (res.getTag())
                 {
-                    return RedirectToAction("TryAddSale");
+                    return RedirectToAction("AddSale");
                 }
                 else
                 {
                     TempData["alert"] = res.getMessage();
-                    return RedirectToAction("TryAddSale");
+                    return RedirectToAction("AddSale");
                 }
             }
-            return RedirectToAction("TryAddSale");
+            return RedirectToAction("AddSale");
         }
         public IActionResult TryAllSales(SalesModel model)
         {
@@ -1189,11 +1189,11 @@ namespace WebApplication.Controllers
                     i++;
                 }
                 HttpContext.Session.SetObject("sales_info", saleidanddesc);
-                return RedirectToAction("TryAllSales");
+                return RedirectToAction("AddSale");
             }
             else
             {
-                return RedirectToAction("TryAllSales");
+                return RedirectToAction("AddSale");
             }
         }
 
@@ -1239,12 +1239,12 @@ namespace WebApplication.Controllers
                 systemController.addSaleCondition(userName, (int)storeID, saleID, typeCondition, composetype);
             if (salecond.getTag())
             {
-                return RedirectToAction("TryAddSale");
+                return RedirectToAction("AddSale");
             }
             else
             {
                 TempData["alert"] = salecond.getMessage();
-                return RedirectToAction("TryAddSale");
+                return RedirectToAction("AddSale");
             }
         }
         
@@ -1594,6 +1594,16 @@ namespace WebApplication.Controllers
         }
         
         public IActionResult AddSale()
+        {
+            return View();
+        }
+        
+        public IActionResult AddSaleCondition()
+        {
+            return View();
+        }
+        
+        public IActionResult EditPurchasePredicates()
         {
             return View();
         }

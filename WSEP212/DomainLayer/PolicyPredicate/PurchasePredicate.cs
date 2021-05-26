@@ -14,6 +14,7 @@ namespace WSEP212.DomainLayer.PolicyPredicate
         public int predicateID { get; set; }
         public String predicateDescription { get; set; }
 
+        public PurchasePredicate() {}
         public PurchasePredicate(String predicateDescription)
         {
             this.predicateID = predicateCounter;

@@ -736,6 +736,122 @@
 
 2021-05-26 18:05:38.557 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
 
+2021-05-26 20:47:37.741 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 20:47:42.462 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 20:47:42.494 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:47:43.885 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 20:47:47.743 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 20:47:50.231 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 20:47:51.570 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:48:00.920 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 20:48:02.914 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 20:48:11.019 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:48:18.801 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 20:48:19.918 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:48:19.920 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 20:48:28.180 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 2
+
+2021-05-26 20:48:38.609 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:48:38.611 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 20:49:16.730 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: age of user is bigger than: 15
+
+2021-05-26 20:49:19.619 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:49:19.623 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 20:49:40.005 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
+2021-05-26 20:50:04.213 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 20:50:04.706 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:50:44.532 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 20:50:45.037 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:53:13.845 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 20:53:14.343 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 20:59:44.513 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 20:59:58.097 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:00:31.439 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:00:50.258 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:02:40.816 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:03:10.807 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:06:49.279 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:06:59.498 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:09:06.869 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:09:12.654 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:09:12.701 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:09:14.506 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 21:09:19.216 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 21:09:21.751 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 21:09:24.519 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:09:32.696 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 21:09:34.674 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 21:09:41.851 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:09:41.858 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 21:09:45.148 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 21:09:46.030 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:09:46.032 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 21:09:49.330 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: age of user is bigger than: 15
+
+2021-05-26 21:09:50.205 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:09:50.207 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 21:09:55.509 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
+2021-05-26 21:10:37.910 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:10:44.972 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:13:51.555 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:13:56.606 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 21:14:47.413 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 21:14:51.549 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
 2021-05-26 21:00:49.273 +03:00 [Information] Register Event was triggered, with the parameters: user name: shelly
 
 2021-05-26 21:00:53.898 +03:00 [Information] Login Event was triggered, with the parameters: user name: shelly
@@ -889,4 +1005,298 @@
 2021-05-26 21:55:02.421 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
 
 2021-05-26 21:55:11.386 +03:00 [Information] addSale Event was triggered, with the parameter: user name: shelly, storeID: 1, salePercentage: 12, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: cool
+
+2021-05-26 22:03:55.044 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 22:04:01.556 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 22:04:01.596 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:04:04.140 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:04:09.073 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 22:04:11.584 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:04:14.748 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:04:24.597 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 22:04:26.588 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:04:29.624 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:04:33.365 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 22:06:49.513 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 12, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: cool
+
+2021-05-26 22:11:49.756 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 22:11:50.274 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:11:51.957 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:11:53.281 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 22:12:17.011 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 12, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: cool
+
+2021-05-26 22:13:07.003 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:11.446 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:15.824 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:19.748 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:25.242 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:29.103 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:33.064 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:40.468 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:49.245 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:13:53.388 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:03.242 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:07.321 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:08.193 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:09.056 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:09.914 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:10.774 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:11.634 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:12.501 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:13.362 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:15.274 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:16.137 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:16.996 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:17.854 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:18.714 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:19.584 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:20.459 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:21.339 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:22.237 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:23.102 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:23.968 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:24.830 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:25.697 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:26.579 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:27.440 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:28.302 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:29.168 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:30.034 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:30.898 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:31.765 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:37.670 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:38.538 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:39.403 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:40.271 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:41.133 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:41.995 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:42.856 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:43.720 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:44.587 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:45.451 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:46.320 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:47.185 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:48.051 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:48.916 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:49.786 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:50.653 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:51.521 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:52.392 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:53.261 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:14:54.141 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:25.054 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:25.924 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:26.796 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:27.663 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:28.538 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:29.412 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:30.286 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:31.154 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:32.029 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:32.901 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:33.767 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:34.633 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:35.503 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:36.369 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:37.237 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:38.112 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:38.992 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:39.877 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:40.746 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:15:41.613 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:42.507 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:43.397 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:44.283 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:45.167 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:46.049 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:46.937 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:47.817 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:48.700 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:49.586 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:50.485 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:51.401 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:52.306 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:53.206 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:54.114 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:55.052 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:55.988 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:56.884 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:57.793 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:58.693 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:16:59.656 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 0, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: 
+
+2021-05-26 22:19:33.052 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 22:19:38.071 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 22:19:38.147 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:19:39.865 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:19:44.586 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 22:19:47.119 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:19:49.647 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:19:56.947 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 22:19:58.929 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:20:01.939 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 22:20:07.749 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 12, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: cool
+
+2021-05-26 22:20:16.666 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:20:22.702 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 22:20:39.839 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:20:54.089 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 22:20:55.214 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:20:57.246 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:21:31.916 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris, delivery Params: WSEP212.ServiceLayer.ServiceObjectsDTO.DeliveryParametersDTO, payment Params: WSEP212.ServiceLayer.ServiceObjectsDTO.PaymentParametersDTO
+
+2021-05-26 22:21:38.914 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:21:43.152 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 22:21:46.585 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: iris, review: only with bisli, store ID: 1, item ID: 1
+
+2021-05-26 22:21:49.491 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 22:21:59.178 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 22:22:01.596 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:22:14.979 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:22:19.827 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 22:22:30.030 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:25:44.894 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 22:25:45.397 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 22:25:48.278 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 22:25:49.308 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
 

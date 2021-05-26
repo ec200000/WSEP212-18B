@@ -59,7 +59,10 @@ namespace WSEP212.DomainLayer
                     typeof(DoubleSale),
                     typeof(MaxSale),
                     typeof(XorSale),
-                    typeof(SimpleSale)
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
                 }
             }
         };
