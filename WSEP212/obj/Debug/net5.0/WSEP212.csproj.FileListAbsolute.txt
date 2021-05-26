@@ -197,3 +197,4 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\bin\Debug\net5.0\Serialize.Linq.dll
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\bin\Debug\net5.0\Serialize.Linq.dll

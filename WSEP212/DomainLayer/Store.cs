@@ -72,8 +72,6 @@ namespace WSEP212.DomainLayer
             set => storage = JsonConvert.DeserializeObject<ConcurrentDictionary<int, Item>>(value);
         }
         
-        [NotMapped]
-        public LocalPredicate<int> pred;
         [Key]
         public int storeID { get; set; }
         public String storeName { get; set; }
@@ -115,13 +113,6 @@ namespace WSEP212.DomainLayer
         [JsonIgnore]
         public DeliveryInterface deliverySystem { get; set; }
 
-        private ExpressionSerializer ec = new ExpressionSerializer(new Serialize.Linq.Serializers.JsonSerializer());
-        public string PredAsJson
-        {
-            get => JsonConvert.SerializeObject(pred);
-            set => pred = JsonConvert.DeserializeObject<LocalPredicate<int>>(value);
-        }
-
         public Store() {}
         public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
@@ -136,7 +127,6 @@ namespace WSEP212.DomainLayer
             this.purchasesHistory = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
-            pred = new LocalPredicate<int>(x => x * 2, 5);
 
             // create the founder seller permissions
             ConcurrentLinkedList<Permissions> founderPermissions = new ConcurrentLinkedList<Permissions>();
@@ -342,7 +332,7 @@ namespace WSEP212.DomainLayer
             if (result != null)
             {
                 result.purchasePolicy = purchasePolicy;
-                result.PurchasePolicyAsJson = PurchasePolicyAsJson;
+                //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 SystemDBAccess.Instance.SaveChanges();
             }
             return 1;

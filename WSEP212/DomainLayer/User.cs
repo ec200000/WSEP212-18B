@@ -28,7 +28,7 @@ namespace WSEP212.DomainLayer
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            //TypeNameHandling = TypeNameHandling.Auto,
+            TypeNameHandling = TypeNameHandling.Auto,
             NullValueHandling = NullValueHandling.Ignore,
             SerializationBinder = new KnownTypesBinder
             {

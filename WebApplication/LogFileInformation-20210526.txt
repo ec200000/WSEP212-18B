@@ -440,3 +440,299 @@
 
 2021-05-26 17:00:21.680 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: shelly
 
+2021-05-26 17:04:55.493 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:05:00.895 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:05:00.940 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:05:03.744 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:05:08.305 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 17:05:10.940 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:05:12.660 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:05:21.027 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 17:05:23.021 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:05:25.639 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:05:28.710 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:05:28.726 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:06:09.270 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:06:09.792 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:06:52.333 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:08:07.783 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:08:18.788 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:15:06.840 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:15:07.362 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:15:10.811 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:20:04.443 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:20:09.186 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:20:09.229 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:20:11.201 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:20:14.966 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 17:20:17.667 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:20:23.582 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:20:32.421 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 17:20:34.407 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:20:36.560 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:20:38.749 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:24:28.122 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:24:32.883 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:24:32.961 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:24:34.624 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:24:39.049 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 17:24:41.772 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:24:43.314 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:24:50.859 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 17:24:52.876 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:24:54.912 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:24:57.003 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:25:48.974 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:25:55.838 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:26:55.231 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris, delivery Params: WSEP212.ServiceLayer.ServiceObjectsDTO.DeliveryParametersDTO, payment Params: WSEP212.ServiceLayer.ServiceObjectsDTO.PaymentParametersDTO
+
+2021-05-26 17:27:02.596 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:27:06.087 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 17:27:09.361 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: iris, review: only with bisli, store ID: 1, item ID: 1
+
+2021-05-26 17:27:12.242 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 17:27:14.218 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:27:21.097 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:27:50.562 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:27:51.085 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:28:02.592 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:28:04.824 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:28:08.732 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:35:54.429 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:35:58.771 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:35:58.814 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:36:00.328 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:36:04.309 +03:00 [Information] OpenStore Event was triggered, with the parameter:user name: iris, store name: yum, purchase policy: default, sales policy: default
+
+2021-05-26 17:36:06.870 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:36:07.885 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:36:14.856 +03:00 [Information] AddItemToStorage Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 0
+
+2021-05-26 17:36:16.877 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:36:21.494 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:36:23.991 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:36:35.775 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:36:45.653 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:37:07.882 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris, delivery Params: WSEP212.ServiceLayer.ServiceObjectsDTO.DeliveryParametersDTO, payment Params: WSEP212.ServiceLayer.ServiceObjectsDTO.PaymentParametersDTO
+
+2021-05-26 17:37:15.109 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:37:20.023 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 17:37:23.258 +03:00 [Information] ItemReview Event was triggered, with the parameters:user name: iris, review: only with bisli, store ID: 1, item ID: 1
+
+2021-05-26 17:37:26.154 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 17:37:30.314 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:37:55.767 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:37:56.276 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:38:03.057 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: iris, store ID: 1, item ID: 1
+
+2021-05-26 17:38:38.500 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:38:41.325 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:38:43.227 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:39:08.851 +03:00 [Information] PurchaseItems Event was triggered, with the parameter:user name: iris, delivery Params: WSEP212.ServiceLayer.ServiceObjectsDTO.DeliveryParametersDTO, payment Params: WSEP212.ServiceLayer.ServiceObjectsDTO.PaymentParametersDTO
+
+2021-05-26 17:39:16.447 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:39:29.776 +03:00 [Information] GetUserPurchaseHistory Event was triggered, with the parameter:user name: iris
+
+2021-05-26 17:40:19.012 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:40:36.635 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:40:41.465 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:40:41.466 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:40:45.249 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 17:42:56.516 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:42:57.028 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:43:01.320 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:43:04.517 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:43:04.518 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:43:07.301 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 2
+
+2021-05-26 17:47:41.753 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:47:42.256 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:47:45.452 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:47:47.246 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:47:47.250 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:47:51.957 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 6
+
+2021-05-26 17:49:36.454 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:49:37.071 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:49:39.985 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:49:41.432 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:49:41.434 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:49:45.043 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 6
+
+2021-05-26 17:51:40.777 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:51:41.287 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:51:44.659 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:51:45.557 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:51:45.559 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:51:48.858 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 6
+
+2021-05-26 17:53:23.123 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:53:23.625 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:53:26.900 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:53:27.767 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:53:27.769 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:54:25.170 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 6
+
+2021-05-26 17:57:38.136 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 17:57:38.754 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:57:41.552 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 17:57:43.081 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 17:57:43.083 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 17:58:44.833 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 6
+
+2021-05-26 18:00:54.647 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 18:00:55.209 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:00:58.068 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 18:01:00.062 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:01:00.065 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 18:01:20.533 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 6
+
+2021-05-26 18:04:52.806 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-26 18:04:53.264 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:04:56.245 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-26 18:04:57.236 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:04:57.237 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 18:05:00.577 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: number of products is bigger than: 3
+
+2021-05-26 18:05:01.698 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:05:01.699 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 18:05:08.962 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 18:05:08.967 +03:00 [Information] removePurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, predicateID: 1
+
+2021-05-26 18:05:09.840 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:05:09.841 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 18:05:27.265 +03:00 [Information] addPurchasePredicate Event was triggered, with the parameter: user name: iris, storeID: 1, newPredicate: WSEP212.DomainLayer.LocalPredicate`1[WSEP212.DomainLayer.PurchaseDetails], predDescription: age of user is bigger than: 15
+
+2021-05-26 18:05:28.151 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:05:28.152 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-26 18:05:38.555 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-26 18:05:38.557 +03:00 [Information] getStorePredicatesDescription Event was triggered, with the parameters:store ID: 1
+
