@@ -12,17 +12,16 @@
 <body>
 <h2>Please choose one of the sales options:</h2>
 <div class="editsalepredicatesdiv">
-    @using (Html.BeginForm("AddSaleItemsList", "Home", FormMethod.Post))
+    @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
     {
         <h5>1. Sale On Item</h5>
         <label for="storesList">Items list</label>
         string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("itemsList");
-        if(predList!=null)
-            @Html.DropDownListFor(model => model.itemID, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+        @Html.DropDownListFor(model => model.itemID, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
         ;
         @Html.TextBoxFor(model => model.salePercentage,new { placeholder = "Sale Percentage",@class="inputclassopenstore" })
         @Html.TextBoxFor(model => model.saleDescription,new { placeholder = "Sale Description",@class="inputclassopenstore" })
-        <button class="btn btn-outline-primary" formaction="TryAddSale" type="submit">Add Sale</button>
+        <button class="btn btn-outline-primary" type="submit">Add Sale</button>
     }
 </div>
 <div class="editsalepredicatesdiv">

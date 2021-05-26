@@ -116,6 +116,8 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
             ShoppingCartItems(res);
+            TryPriceBeforeSale(model);
+            TryPriceAftereSale(model);
             return View();
         }
 
@@ -1059,7 +1061,7 @@ namespace WebApplication.Controllers
                 return RedirectToAction("StoreActions");
             }
         }
-        public IActionResult AddSaleItemsList()
+        public IActionResult AddSale()
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
@@ -1091,7 +1093,7 @@ namespace WebApplication.Controllers
                 }
                 HttpContext.Session.SetObject("itemsList", arr);
             }
-            return RedirectToAction("AddSale");
+            return View();
         }
         public int categorytoenum(string pred)
         {
@@ -1173,7 +1175,7 @@ namespace WebApplication.Controllers
             }
             return RedirectToAction("AddSale");
         }
-        public IActionResult TryAllSales(SalesModel model)
+        private void TryAllSales()
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
@@ -1189,11 +1191,6 @@ namespace WebApplication.Controllers
                     i++;
                 }
                 HttpContext.Session.SetObject("sales_info", saleidanddesc);
-                return RedirectToAction("AddSale");
-            }
-            else
-            {
-                return RedirectToAction("AddSale");
             }
         }
 
@@ -1592,14 +1589,40 @@ namespace WebApplication.Controllers
         {
             return View();
         }
-        
-        public IActionResult AddSale()
-        {
-            return View();
-        }
-        
+
         public IActionResult AddSaleCondition()
         {
+            TryAllSales();
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> itemsandstores = systemController.getItemsInStoresInformation();
+            Store store = null;
+            ConcurrentLinkedList<Item> items = null;
+            foreach (var storeid in itemsandstores.Keys)
+            {
+                if (storeid.storeID == storeID)
+                {
+                    store = storeid;
+                    items = itemsandstores.GetValueOrDefault(storeid);
+                    break;
+                }
+            }
+            if (items != null)
+            {
+                string[] arr = new string[items.size];
+                int i = 0;
+                Node<Item> node = items.First;
+                int size = items.size;
+                while(size > 0)
+                {
+                    arr[i] = node.Value.ToString();
+                    node = node.Next;
+                    i++;
+                    size--;
+                }
+                HttpContext.Session.SetObject("itemsList", arr);
+            }
             return View();
         }
         
