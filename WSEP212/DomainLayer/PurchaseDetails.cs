@@ -33,10 +33,6 @@ namespace WSEP212.DomainLayer
             }
             return totalPrice;
         }
-        public double userAge()
-        {
-            return user.userAge;
-        }
 
         public double totalPurchasePriceAfterSale(Sale sale)
         {
@@ -80,6 +76,11 @@ namespace WSEP212.DomainLayer
                 }
             }
             return false;
+        }
+
+        public int userAge()
+        {
+            return user.userAge;
         }
     }
 }

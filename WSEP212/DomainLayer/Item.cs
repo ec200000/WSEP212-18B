@@ -14,6 +14,7 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -45,7 +46,10 @@ namespace WSEP212.DomainLayer
                     typeof(DoubleSale),
                     typeof(MaxSale),
                     typeof(XorSale),
-                    typeof(SimpleSale)
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
                 }
             }
         };
