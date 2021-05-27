@@ -1300,15 +1300,6 @@ namespace WebApplication.Controllers
             String pre = model.predicate;
             string[] s = pre.Split(": ");
             int predicateIDDD = int.Parse(s[s.Length - 1]);;
-            int predicateID = 0;
-            foreach (string purpre in salesPredicatesDescription.getValue().Values)
-            {
-                if (purpre.Equals(model.predicate))
-                {
-                    predicateID = salesPredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
-                    break;
-                }
-            }
             RegularResult res = systemController.removeSale(userName, (int)storeID, predicateIDDD);
             if (res.getTag())
             {
