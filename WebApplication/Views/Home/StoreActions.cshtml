@@ -21,10 +21,12 @@
         @Html.DropDownListFor(model => model.storeInfo, new SelectList(StoresList.OfType<string>().ToList()), new {@class = "custom-select"});
         
             <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ItemActions" type="submit">See Items In Store</button>
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Get Store Information</button>
         
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Purchase Predicates</button>
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="GetStoreInformation">Edit Store's Sale Predicates</button>
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="PurchaseTypes">Edit Store's Purchase Types</button>    
+        
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="PurchasePredicate">Edit Store's Purchase Predicates</button>
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="EditSalePredicates">Edit Store's Sale Predicates</button>
     }
 </div>
 </body>

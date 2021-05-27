@@ -1130,6 +1130,15 @@
           }
         }
       },
+      "Serialize.Linq/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Serialize.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Serialize.Linq.dll": {}
+        }
+      },
       "Serilog/2.10.1-dev-01285": {
         "type": "package",
         "compile": {
@@ -2210,6 +2219,7 @@
           "Microsoft.AspNetCore.Authentication.Certificate": "5.0.5",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "Serialize.Linq": "2.0.0",
           "WSEP212": "1.0.0"
         },
         "compile": {
@@ -2229,7 +2239,8 @@
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Cryptography.Internal": "5.0.5",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "5.0.5",
-          "Newtonsoft.Json": "9.0.1",
+          "Newtonsoft.Json": "11.0.2",
+          "Serialize.Linq": "2.0.0",
           "Serilog": "2.10.1-dev-01285",
           "Serilog.Sinks.RollingFile": "3.3.1-dev-00771",
           "System.Collections.Concurrent": "4.3.0"
@@ -4349,6 +4360,24 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Serialize.Linq/2.0.0": {
+      "sha512": "mURyXDcdqHvdqlgOKlWWjD210Q83ltASrNB6TTSsSiNPVuxGMghzGc2bt5DzY8T608Bu1NP01lESlaNkpMpcRA==",
+      "type": "package",
+      "path": "serialize.linq/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net40/Serialize.Linq.dll",
+        "lib/net45/Serialize.Linq.dll",
+        "lib/net5.0/Serialize.Linq.dll",
+        "lib/netstandard1.3/Serialize.Linq.dll",
+        "lib/netstandard2.0/Serialize.Linq.dll",
+        "lib/uap10.0.10240/Serialize.Linq.dll",
+        "serialize.linq.2.0.0.nupkg.sha512",
+        "serialize.linq.nuspec"
       ]
     },
     "Serilog/2.10.1-dev-01285": {
@@ -7782,6 +7811,7 @@
       "Microsoft.NET.Test.Sdk >= 16.9.4",
       "NUnit >= 3.12.0",
       "NUnit3TestAdapter >= 3.16.1",
+      "Serialize.Linq >= 2.0.0",
       "WSEP212 >= 1.0.0",
       "WebApplication >= 1.0.0",
       "xunit.core >= 2.4.1",
@@ -7879,6 +7909,10 @@
             "target": "Package",
             "version": "[3.16.1, )"
           },
+          "Serialize.Linq": {
+            "target": "Package",
+            "version": "[2.0.0, )"
+          },
           "xunit.core": {
             "target": "Package",
             "version": "[2.4.1, )"
@@ -7910,6 +7944,12 @@
     }
   },
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",

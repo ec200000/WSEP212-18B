@@ -36,7 +36,7 @@ namespace WSEP212.DomainLayer
 
         public RegularResult supportPurchaseType(String userName, int storeID, PurchaseType purchaseType);
         public RegularResult unsupportPurchaseType(String userName, int storeID, PurchaseType purchaseType);
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription);
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID);
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
         public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID);

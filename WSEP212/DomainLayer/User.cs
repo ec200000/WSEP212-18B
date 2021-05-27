@@ -23,6 +23,39 @@ namespace WSEP212.DomainLayer
 {
     public class User
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
+                }
+            }
+        };
+        
         [Key]
         public String userName { get; set; }
         public int userAge { get; set; }
@@ -38,23 +71,25 @@ namespace WSEP212.DomainLayer
             set;
         }
         [NotMapped]
-        public ConcurrentLinkedList<SellerPermissions> sellerPermissions
+        public LinkedList<SellerPermissions> sellerPermissions
         {
             get;
             set;
         }
+        [NotMapped]
+        private readonly string linkedListLock = String.Empty;
         public bool isSystemManager { get; set; }
 
         public string PurchasesJson
         {
-            get => JsonConvert.SerializeObject(purchases);
-            set => purchases = JsonConvert.DeserializeObject<ConcurrentDictionary<int, PurchaseInvoice>>(value);
+            get => JsonConvert.SerializeObject(purchases, settings);
+            set => purchases = JsonConvert.DeserializeObject<ConcurrentDictionary<int, PurchaseInvoice>>(value, settings);
         }
         
         public string SellerPermissionsJson
         {
-            get => JsonConvert.SerializeObject(sellerPermissions);
-            set => sellerPermissions = JsonConvert.DeserializeObject<ConcurrentLinkedList<SellerPermissions>>(value);
+            get => JsonConvert.SerializeObject(sellerPermissions, settings);
+            set => sellerPermissions = JsonConvert.DeserializeObject<LinkedList<SellerPermissions>>(value, settings);
         }
 
         public User()
@@ -68,7 +103,7 @@ namespace WSEP212.DomainLayer
             this.shoppingCart = new ShoppingCart(userName);
             shoppingCart.addToDB();
             this.purchases = new ConcurrentDictionary<int, PurchaseInvoice>();
-            this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
+            this.sellerPermissions = new LinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
             this.isSystemManager = isSystemManager;
             
@@ -588,7 +623,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Predicate<PurchaseDetails> newPredicate = (Predicate<PurchaseDetails>)param.parameters[1];
+            LocalPredicate<PurchaseDetails> newPredicate = (LocalPredicate<PurchaseDetails>)param.parameters[1];
             String predDescription = (String)param.parameters[2];
             object res;
             try
@@ -850,10 +885,13 @@ namespace WSEP212.DomainLayer
             var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
             if (result != null)
             {
-                result.SellerPermissionsJson = this.SellerPermissionsJson;
-                res = this.sellerPermissions.TryAdd(permissions);
-                result.sellerPermissions = this.sellerPermissions;
-                SystemDBAccess.Instance.SaveChanges();
+                lock (linkedListLock)
+                {
+                    this.sellerPermissions.AddFirst(permissions);
+                    result.SellerPermissionsJson = this.SellerPermissionsJson;
+                    result.sellerPermissions = this.sellerPermissions;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
             }
             return res;
         }

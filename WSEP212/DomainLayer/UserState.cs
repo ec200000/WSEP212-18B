@@ -106,7 +106,7 @@ namespace WSEP212.DomainLayer
         // * Store Policies Management * //
         public abstract RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType);
         public abstract RegularResult unsupportPurchaseType(int storeID, PurchaseType purchaseType);
-        public abstract ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
+        public abstract ResultWithValue<int> addPurchasePredicate(int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription);
         public abstract RegularResult removePurchasePredicate(int storeID, int predicateID);
         public abstract ResultWithValue<int> composePurchasePredicates(int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
         public abstract ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription);

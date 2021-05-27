@@ -9,7 +9,6 @@ using System.Collections.Concurrent;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.PurchasePolicy;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.PurchaseTypes;

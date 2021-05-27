@@ -18,5 +18,9 @@ namespace WebApplication.Models
         public string category { get; set; }
         
         public bool flag { get; set; }
+        
+        public string purchaseType { get; set; }
+        
+        public double priceOffer { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
@@ -21,18 +22,17 @@ namespace WSEP212.DomainLayer
 
         public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
-            while(sellerPermissions.Value != null)
+            foreach (var sellerPermissions in this.user.sellerPermissions)
             {
-                if(sellerPermissions.Value.StoreID == storeID) // if the user works at the store
+                if(sellerPermissions.StoreID == storeID) // if the user works at the store
                 {
-                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.StorageManagment))
+                    var arrlist = listToArray(sellerPermissions.permissionsInStore);
+                    if (arrlist.Contains(Permissions.AllPermissions) || arrlist.Contains(Permissions.StorageManagment))
                     {
-                        return StoreRepository.Instance.getStore(sellerPermissions.Value.StoreID).getValue().addItemToStorage(quantity, itemName, description, price, category);
+                        return StoreRepository.Instance.getStore(sellerPermissions.StoreID).getValue().addItemToStorage(quantity, itemName, description, price, category);
                     }
                     return new FailureWithValue<int>("The User Has No Permission To Add Item To This Store", -1);
                 }
-                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return new FailureWithValue<int>("The User Is Not Store Seller Of This Store", -1);
         }
@@ -93,22 +93,37 @@ namespace WSEP212.DomainLayer
         {
             throw new NotImplementedException();
         }
+        
+        private Permissions[] listToArray(ConcurrentLinkedList<Permissions> lst)
+        {
+            Permissions[] arr = new Permissions[lst.size];
+            int i = 0;
+            Node<Permissions> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            int size = lst.size;
+            while(size > 0)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+                size--;
+            }
+            return arr;
+        }
 
         private RegularResult hasPermissionInStore(int storeID, Permissions permission)
         {
             // checks if the user has the permissions for permission
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First;
-            while (sellerPermissions.Value != null)
+            foreach (var sellerPermissions in this.user.sellerPermissions)
             {
-                if (sellerPermissions.Value.StoreID == storeID) // if the user works at the store
+                if (sellerPermissions.StoreID == storeID) // if the user works at the store
                 {
-                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(permission))
+                    var arrlist = listToArray(sellerPermissions.permissionsInStore);
+                    if (arrlist.Contains(Permissions.AllPermissions) || arrlist.Contains(permission))
                     {
                         return new Ok("The User Has Permission To Do The Action");
                     }
                     return new Failure("The User Has No Permission To Edit Store Manager Permissions");
                 }
-                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return new Failure("The User Is Not Store Seller Of This Store");
         }
@@ -146,7 +161,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if(storeSellerRes.getTag())
                 {
-                    if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                    var arrlist = listToArray(storeSellerRes.getValue().permissionsInStore);
+                    if (arrlist.Contains(Permissions.AllPermissions))
                         return new Failure("Can't edit store's owner permissions!");
                     storeSellerRes.getValue().setPermissions(permissions);
                     return new Ok("Edit Manager Permissions Successfully");
@@ -168,15 +184,14 @@ namespace WSEP212.DomainLayer
 
         public override ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>> getOfficialsInformation(int storeID)
         {
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
-            while(sellerPermissions.Value != null)
+            foreach (var sellerPermissions in this.user.sellerPermissions)
             {
-                if (sellerPermissions.Value.StoreID == storeID) // if the user works at the store
+                if (sellerPermissions.StoreID == storeID) // if the user works at the store
                 {
-                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.size!=0)
-                        return StoreRepository.Instance.getStore(sellerPermissions.Value.StoreID).getValue().getStoreOfficialsInfo(); // getting all users permissions
+                    var arrlist = listToArray(sellerPermissions.permissionsInStore);
+                    if (arrlist.Contains(Permissions.AllPermissions) || arrlist.Length!=0)
+                        return StoreRepository.Instance.getStore(sellerPermissions.StoreID).getValue().getStoreOfficialsInfo(); // getting all users permissions
                 }
-                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return null;
         }
@@ -184,15 +199,15 @@ namespace WSEP212.DomainLayer
         public override ConcurrentDictionary<int, PurchaseInvoice> getStorePurchaseHistory(int storeID)
         {
             if (!StoreRepository.Instance.getStore(storeID).getTag()) return null;
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
-            while(sellerPermissions.Value != null)
+            // going over the user's permissions to check if he is a store manager or owner
+            foreach (var sellerPermissions in this.user.sellerPermissions)
             {
-                if (sellerPermissions.Value.StoreID == storeID) // if the user works at the store
+                if (sellerPermissions.StoreID == storeID) // if the user works at the store
                 {
-                    if (sellerPermissions.Value.permissionsInStore.Contains(Permissions.AllPermissions) || sellerPermissions.Value.permissionsInStore.Contains(Permissions.GetOfficialsInformation))
-                        return StoreRepository.Instance.getStore(sellerPermissions.Value.StoreID).getValue().purchasesHistory; // getting the store's purchase history
+                    var arrlist = listToArray(sellerPermissions.permissionsInStore);
+                    if (arrlist.Contains(Permissions.AllPermissions) || arrlist.Contains(Permissions.GetOfficialsInformation))
+                        return StoreRepository.Instance.getStore(sellerPermissions.StoreID).getValue().purchasesHistory; // getting the store's purchase history
                 }
-                sellerPermissions = sellerPermissions.Next; // checking the next store
             }
             return null;
         }
@@ -407,7 +422,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, managerName);
                 if (storeSellerRes.getTag())
                 {
-                    if (storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                    var arrlist = listToArray(storeSellerRes.getValue().permissionsInStore);
+                    if (arrlist.Contains(Permissions.AllPermissions))
                         return new Failure("You can't remove a store owner!");
                     if (!storeSellerRes.getValue().GrantorName.Equals(this.user.userName))
                         return new Failure("Only who appointed you, can remove you!");
@@ -417,7 +433,7 @@ namespace WSEP212.DomainLayer
                     {
                         if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))
                         {
-                            userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue(), out _);
+                            userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue());
                             return new Ok("Remove Store Manager Successfully");
                         }
                         return new Failure("The User Is Not Store Manager In This Store");
@@ -451,7 +467,8 @@ namespace WSEP212.DomainLayer
                 ResultWithValue<SellerPermissions> storeSellerRes = getStoreSellerPermissions(storeID, ownerName);
                 if (storeSellerRes.getTag())
                 {
-                    if (!storeSellerRes.getValue().permissionsInStore.Contains(Permissions.AllPermissions))
+                    var arrList = listToArray(storeSellerRes.getValue().permissionsInStore);
+                    if (!arrList.Contains(Permissions.AllPermissions))
                         return new Failure("You can't remove a store manager!");
                     if (!storeSellerRes.getValue().GrantorName.Equals(this.user.userName))
                         return new Failure("Only who appointed you, can remove you!");
@@ -461,7 +478,7 @@ namespace WSEP212.DomainLayer
                     {
                         if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))
                         {
-                            userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue(), out _);
+                            userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue());
                             return new Ok("Remove Store Owner Successfully");
                         }
                         return new Failure("The User Is Not Store Owner In This Store");
@@ -473,7 +490,7 @@ namespace WSEP212.DomainLayer
             return hasPermissionRes;
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             // checks store exists
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
@@ -597,11 +614,10 @@ namespace WSEP212.DomainLayer
         public override ConcurrentLinkedList<int> getUsersStores()
         {
             ConcurrentLinkedList<int> list = new ConcurrentLinkedList<int>();
-            Node<SellerPermissions> sellerPermissions = this.user.sellerPermissions.First; // going over the user's permissions to check if he is a store manager or owner
-            while(sellerPermissions.Value != null)
+            // going over the user's permissions to check if he is a store manager or owner
+            foreach (var sellerPermissions in this.user.sellerPermissions)
             {
-                list.TryAdd(sellerPermissions.Value.StoreID);
-                sellerPermissions = sellerPermissions.Next;
+                list.TryAdd(sellerPermissions.StoreID);
             }
             return list;
         }

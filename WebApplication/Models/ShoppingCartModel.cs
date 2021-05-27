@@ -19,5 +19,7 @@ namespace WebApplication.Models
         public string city { get; set; }
         public string country { get; set; }
         public string zip { get; set; }
+        public int priceBeforeSale { get; set; }
+        public int priceAfterSale { get; set; }
     }
 }

@@ -6,14 +6,50 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class ShoppingBag
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
+                }
+            }
+        };
+        
         public int StoreIDRef { get; set; }
         [Key]
         [ForeignKey("StoreIDRef")]
@@ -28,9 +64,15 @@ namespace WSEP212.DomainLayer
             get => JsonConvert.SerializeObject(items);
             set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
         }
-        
+        [NotMapped]
         public ConcurrentDictionary<int, ItemPurchaseType> itemsPurchaseTypes { get; set; }
 
+        public string ItemsPurchaseTypesAsJson
+        {
+            get => JsonConvert.SerializeObject(itemsPurchaseTypes,settings);
+            set => itemsPurchaseTypes = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ItemPurchaseType>>(value,settings);
+        }
+        
         public ShoppingBag(Store store, string bagOwner)
         {
             this.store = store;
@@ -170,7 +212,7 @@ namespace WSEP212.DomainLayer
         }
 
         // returns the prices of the items in the shopping bags, and their status
-        private ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
+        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
         {
             ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPrices = new ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>();
             KeyValuePair<double, PriceStatus> itemStatus;

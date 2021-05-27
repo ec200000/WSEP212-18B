@@ -77,5 +77,10 @@ namespace WSEP212.DomainLayer
             }
             return false;
         }
+
+        public int userAge()
+        {
+            return user.userAge;
+        }
     }
 }

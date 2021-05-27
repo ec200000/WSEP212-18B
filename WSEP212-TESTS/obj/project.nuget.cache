@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Kn97p8mJLXG3J81beeYiOX+9SNVSNUHe9IyBgY52S2VL8dBa6OnIyeVJY9ltJw7n+pGLzgpHAwfVwz+rtXUXJQ==",
+  "dgSpecHash": "2G+JkzBKLVlhdu1C0g1AKBigiTQfXc9SaWhOPsWxWEAxWgslN0xGz6wu90fQIhShLigIAG3qk7os8dkMWeyvOQ==",
   "success": true,
   "projectFilePath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
   "expectedPackageFiles": [
@@ -73,6 +73,7 @@
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\שגיב משיח\\.nuget\\packages\\serialize.linq\\2.0.0\\serialize.linq.2.0.0.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\serilog\\2.10.1-dev-01285\\serilog.2.10.1-dev-01285.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\serilog.sinks.file\\3.2.0\\serilog.sinks.file.3.2.0.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\serilog.sinks.rollingfile\\3.3.1-dev-00771\\serilog.sinks.rollingfile.3.3.1-dev-00771.nupkg.sha512",
@@ -147,6 +148,12 @@
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.3\\xunit.runner.visualstudio.2.4.3.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212-TESTS\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",

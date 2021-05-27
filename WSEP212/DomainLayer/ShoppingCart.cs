@@ -6,8 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -18,7 +21,33 @@ namespace WSEP212.DomainLayer
         private JsonSerializerSettings settings = new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
+                }
+            }
         };
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
@@ -26,7 +55,7 @@ namespace WSEP212.DomainLayer
         public string BagsAsJson
         {
             get => JsonConvert.SerializeObject(shoppingBags,settings);
-            set => shoppingBags = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ShoppingBag>>(value);
+            set => shoppingBags = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ShoppingBag>>(value,settings);
         }
 
         [Key]

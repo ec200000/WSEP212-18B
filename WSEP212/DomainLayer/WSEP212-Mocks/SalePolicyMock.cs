@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
-namespace WSEP212_TEST.UnitTests.UnitTestMocks
+namespace WSEP212.DomainLayer
 {
     public class SalePolicyMock : SalePolicyInterface
     {
@@ -20,6 +15,9 @@ namespace WSEP212_TEST.UnitTests.UnitTestMocks
         public SalePolicyMock() { }
 
         // there are no sales in this policy
+        public string salesPolicyName { get; set; }
+        public ConcurrentDictionary<int, Sale> storeSales { get; set; }
+
         public int addSale(int salePercentage, ApplySaleOn saleOn, string saleDescription)
         {
             return -1;

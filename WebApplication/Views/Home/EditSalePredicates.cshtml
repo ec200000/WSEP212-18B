@@ -13,7 +13,8 @@
     <div class="editsalepredicatesdiv">
         @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
-            <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Add Sale Predicate (not working)</button>
+            <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddSale';" value="Add Sale" />
+            <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddSaleCondition';" value="Add Sale Condition" />
         }
     </div>
     <div class="editsalepredicatesdiv">
@@ -24,8 +25,7 @@
             @Html.DropDownListFor(model => model.predicate, new SelectList(predList.OfType<string>().ToList()), new { @class = "custom-select" });
 
             <button class="btn btn-outline-primary" formaction="TryRemoveSalePredicate" type="submit">Remove Sale Predicate</button>
-
-            <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Add Sale Condition (not working)</button>
+            
         }
     </div>
     <div class="editsalepredicatesdiv">
@@ -35,7 +35,7 @@
             SaleCompositionType[] arr = new[]
             {
             SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
-        };
+            };
             string[] permissions = Array.ConvertAll(arr, value => value.ToString());
             <label for="storesList">First predicate</label>
             @Html.DropDownListFor(model => model.firstPred, new SelectList(predList.OfType<string>().ToList()), new { @class = "custom-select" })
@@ -43,7 +43,7 @@
             <label for="storesList">Second predicate</label>
             @Html.DropDownListFor(model => model.secondPred, new SelectList(predList.OfType<string>().ToList()), new { @class = "custom-select" })
             ;
-            <label for="storesList">compositionType</label>
+            <label for="storesList">Composition Type</label>
             @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new { @class = "custom-select" })
             ;
 

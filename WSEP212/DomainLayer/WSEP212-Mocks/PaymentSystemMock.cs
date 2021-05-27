@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 
-namespace WSEP212_TEST.UnitTests.UnitTestMocks
+namespace WSEP212.DomainLayer
 {
     public class PaymentSystemMock : PaymentInterface
     {

@@ -78,17 +78,15 @@ namespace WSEP212.DomainLayer
             User seller = UserRepository.Instance.findUserByUserName(SellerName).getValue();
             if (seller.sellerPermissions != null)
             {
-                Node<SellerPermissions> sellerPermissions = seller.sellerPermissions.First;
-                while(sellerPermissions.Value != null)
+                foreach(var sellerPermissions in seller.sellerPermissions)
                 {
-                    if (sellerPermissions.Value.StoreID != 0)
+                    if (sellerPermissions.StoreID != 0)
                     {
-                        if (StoreID == sellerPermissions.Value.StoreID)
+                        if (StoreID == sellerPermissions.StoreID)
                         {
-                            return sellerPermissions.Value;
+                            return sellerPermissions;
                         }
                     }
-                    sellerPermissions = sellerPermissions.Next;
                 }
             }
             var sellerPer = new SellerPermissions(SellerName, StoreID, GrantorName, permissions);

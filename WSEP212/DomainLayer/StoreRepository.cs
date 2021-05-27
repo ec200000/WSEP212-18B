@@ -22,7 +22,12 @@ namespace WSEP212.DomainLayer
         {
             stores = new ConcurrentDictionary<int, Store>();
             var storeList = SystemDBAccess.Instance.Stores.ToList();
-            storeList.ForEach(s => stores.TryAdd(s.storeID, s));
+            storeList.ForEach(s =>
+            {
+               s.setPurchaseJson(s.PurchasePolicyAsJson);
+               s.setSalesJson(s.SalesPolicyAsJson);
+               stores.TryAdd(s.storeID, s);
+            });
         }  
         
         private static readonly Lazy<StoreRepository> lazy
