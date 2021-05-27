@@ -1,0 +1,2 @@
+2021-05-27 18:26:40.197 +03:00 [Error] In Register function, the error is: An error occurred while updating the entries. See the inner exception for details.
+
