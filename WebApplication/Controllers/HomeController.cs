@@ -1246,22 +1246,22 @@ namespace WebApplication.Controllers
             int composetype = saleStringToEnum(model.compositionType);
             SimplePredicate typeCondition = null;
             LocalPredicate<PurchaseDetails> pred = null;
-            Predicate<PurchaseDetails> newPred = null;
-            if (model.numbersOfProducts != null)
+            //Predicate<PurchaseDetails> newPred = null;
+            if (model.numbersOfProducts != 0)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();
                 pred = new LocalPredicate<PurchaseDetails>(exp, model.numbersOfProducts);
                 //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
             }
 
-            if (model.priceOfShoppingBag != null)
+            if (model.priceOfShoppingBag != 0)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.totalPurchasePrice();
                 pred = new LocalPredicate<PurchaseDetails>(exp, model.priceOfShoppingBag);
                 //newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
             }
 
-            if (model.ageOfUser != null)
+            if (model.ageOfUser != 0)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.userAge();
                 pred = new LocalPredicate<PurchaseDetails>(exp, model.ageOfUser);

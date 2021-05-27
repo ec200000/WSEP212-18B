@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="wsep212B@wsep212b.database.windows.net">
-  <database-model serializer="dbm" dbms="AZURE" family-id="AZURE" format-version="4.21">
+  <database-model serializer="dbm" dbms="AZURE" family-id="AZURE" format-version="4.20">
     <root id="1">
       <ServerVersion>12.0.2148</ServerVersion>
       <Dbms>AZURE</Dbms>
@@ -11,7 +11,8 @@
     <database id="3" parent="1" name="wsep212B">
       <ObjectId>5</ObjectId>
       <PermissionsCheckSum>1059020366</PermissionsCheckSum>
-      <Grants>5|database||1|connect|G</Grants>
+      <Grants>5|database||1|connect|G
+</Grants>
       <Current>1</Current>
       <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
       <Fingerprint>5.44338/2DE91C42-66C9-473F-90E8-607B45A560C4@wsep212b</Fingerprint>
@@ -63,7 +64,7 @@
     </schema>
     <schema id="17" parent="3" name="dbo">
       <ObjectId>1</ObjectId>
-      <IntrospectionTimestamp>2021-05-27.18:26:01.253</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2021-05-27.19:55:38.617</IntrospectionTimestamp>
       <Current>1</Current>
     </schema>
     <schema id="18" parent="3" name="guest">
