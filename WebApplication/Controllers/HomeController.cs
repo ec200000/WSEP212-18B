@@ -1299,7 +1299,7 @@ namespace WebApplication.Controllers
                 systemController.getStoreSalesDescription((int)storeID);
             String pre = model.predicate;
             string[] s = pre.Split(": ");
-            int predicateIDDD = int.Parse(s[s.Length - 1]);;
+            int predicateIDDD = int.Parse(s[s.Length - 1]);
             RegularResult res = systemController.removeSale(userName, (int)storeID, predicateIDDD);
             if (res.getTag())
             {
