@@ -1297,6 +1297,9 @@ namespace WebApplication.Controllers
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ResultWithValue<ConcurrentDictionary<int, string>> salesPredicatesDescription =
                 systemController.getStoreSalesDescription((int)storeID);
+            String pre = model.predicate;
+            string[] s = pre.Split(": ");
+            int predicateIDDD = int.Parse(s[s.Length - 1]);;
             int predicateID = 0;
             foreach (string purpre in salesPredicatesDescription.getValue().Values)
             {
@@ -1306,7 +1309,7 @@ namespace WebApplication.Controllers
                     break;
                 }
             }
-            RegularResult res = systemController.removeSale(userName, (int)storeID, predicateID);
+            RegularResult res = systemController.removeSale(userName, (int)storeID, predicateIDDD);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");

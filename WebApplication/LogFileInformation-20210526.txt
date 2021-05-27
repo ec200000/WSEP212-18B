@@ -1362,3 +1362,7 @@
 
 2021-05-26 22:49:46.987 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
 
+2021-05-26 23:15:00.997 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
+2021-05-26 23:15:00.997 +03:00 [Information] Register Event was triggered, with the parameters: user name: iris
+
