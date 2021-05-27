@@ -21,4 +21,10 @@
       <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="DomainLayer\Configuration.cs" />
+      <Compile Remove="SystemDBAccess.cs" />
+      <Compile Remove="DomainLayer\KnownTypesBinder.cs" />
+    </ItemGroup>
+
 </Project>

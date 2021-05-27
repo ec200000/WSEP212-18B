@@ -104,6 +104,52 @@
 
 2021-05-27 20:00:31.877 +03:00 [Information] getItemsAfterSalePrices Event was triggered, with the parameters:userName: iris
 
+2021-05-27 20:31:09.848 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-27 20:31:10.348 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:31:13.256 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-27 20:31:15.320 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:31:16.302 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:31:24.523 +03:00 [Information] addSale Event was triggered, with the parameter: user name: iris, storeID: 1, salePercentage: 12, saleOn: WSEP212.DomainLayer.SalePolicy.SaleOn.SaleOnAllStore, saleDescription: cool
+
+2021-05-27 20:31:25.565 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:31:30.725 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-27 20:31:31.850 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:31:36.585 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:31:36.588 +03:00 [Information] removeSale Event was triggered, with the parameter: user name: iris, storeID: 1, saleID: 0
+
+2021-05-27 20:31:36.829 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-27 20:31:39.145 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-27 20:31:41.030 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:35:01.776 +03:00 [Information] Login Event was triggered, with the parameters: user name: iris
+
+2021-05-27 20:35:02.443 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:35:04.296 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-27 20:35:06.085 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:35:07.688 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:35:07.691 +03:00 [Information] removeSale Event was triggered, with the parameter: user name: iris, storeID: 1, saleID: 1
+
+2021-05-27 20:35:09.354 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: iris
+
+2021-05-27 20:35:11.069 +03:00 [Information] getStoreSalesDescription Event was triggered, with the parameters:store ID: 1
+
+2021-05-27 20:37:22.163 +03:00 [Information] Logout Event was triggered, with the parameter: user name: iris
+
 2021-05-27 20:10:21.190 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
 
 2021-05-27 20:10:29.824 +03:00 [Information] Login Event was triggered, with the parameters: user name: a
