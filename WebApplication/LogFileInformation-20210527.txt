@@ -104,3 +104,31 @@
 
 2021-05-27 20:00:31.877 +03:00 [Information] getItemsAfterSalePrices Event was triggered, with the parameters:userName: iris
 
+2021-05-27 20:10:21.190 +03:00 [Information] Register Event was triggered, with the parameters: user name: a
+
+2021-05-27 20:10:29.824 +03:00 [Information] Login Event was triggered, with the parameters: user name: a
+
+2021-05-27 20:10:29.887 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:11:30.826 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:11:30.833 +03:00 [Information] AddItemToShoppingCart Event was triggered, with the parameters:user name: a, store ID: 1, item ID: 1
+
+2021-05-27 20:11:31.962 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:11:34.356 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: a
+
+2021-05-27 20:11:34.367 +03:00 [Information] ViewShoppingCart Event was triggered, with the parameter: user name: a
+
+2021-05-27 20:11:34.394 +03:00 [Information] getItemsAfterSalePrices Event was triggered, with the parameters:userName: a
+
+2021-05-27 20:11:38.385 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: a
+
+2021-05-27 20:14:28.694 +03:00 [Information] Register Event was triggered, with the parameters: user name: q
+
+2021-05-27 20:14:35.953 +03:00 [Information] Login Event was triggered, with the parameters: user name: q
+
+2021-05-27 20:14:36.040 +03:00 [Information] GetItemsInStoresInformation Event was triggered
+
+2021-05-27 20:14:45.093 +03:00 [Information] Get user's stores Event was triggered, with the parameter: user name: q
+

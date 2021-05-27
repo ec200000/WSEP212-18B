@@ -623,3 +623,4 @@ C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\bin\Debug\net5.0\Serialize.Linq.dll
 C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\bin\Debug\net5.0\Serialize.Linq.dll
 C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\obj\Debug\net5.0\Razor\Views\Home\BidsReview.cshtml.g.cs
+C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WebApplication\obj\Debug\net5.0\Razor\Views\Home\BidsReview.cshtml.g.cs
