@@ -18,7 +18,6 @@ using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
-using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -1246,7 +1245,6 @@ namespace WebApplication.Controllers
             int composetype = saleStringToEnum(model.compositionType);
             SimplePredicate typeCondition = null;
             LocalPredicate<PurchaseDetails> pred = null;
-            Predicate<PurchaseDetails> newPred = null;
             if (model.numbersOfProducts != null)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();

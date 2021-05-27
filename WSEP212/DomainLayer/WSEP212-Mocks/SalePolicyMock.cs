@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy;
@@ -13,10 +14,6 @@ namespace WSEP212.DomainLayer
         public ConcurrentDictionary<int, Sale> storeSales { get; set; }
 
         public SalePolicyMock() { }
-
-        // there are no sales in this policy
-        public string salesPolicyName { get; set; }
-        public ConcurrentDictionary<int, Sale> storeSales { get; set; }
 
         public int addSale(int salePercentage, ApplySaleOn saleOn, string saleDescription)
         {
