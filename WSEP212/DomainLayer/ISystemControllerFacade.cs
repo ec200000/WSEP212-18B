@@ -24,7 +24,7 @@ namespace WSEP212.DomainLayer
         public RegularResult continueAsGuest(String userName);
         public RegularResult logout(String userName);
 
-        public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice);
+        public ResultWithValue<ConcurrentLinkedList<string>> addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice);
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity);
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, PurchaseType purchaseType, double startPrice);

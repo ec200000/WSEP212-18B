@@ -69,12 +69,15 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.logout(userName);
         }
 
-        public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice)
+        public ResultWithValue<NotificationDTO> addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice)
         {
             String info = $"AddItemToShoppingCart Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, item ID: {itemID}";
             Logger.Instance.writeInformationEventToLog(info);
-            return SystemControllerFacade.Instance.addItemToShoppingCart(userName, storeID, itemID, quantity, (PurchaseType)purchaseType, startPrice);
+            ResultWithValue<ConcurrentLinkedList<string>> res = SystemControllerFacade.Instance.addItemToShoppingCart(userName, storeID, itemID, quantity, (PurchaseType)purchaseType, startPrice);
+            return res.getTag() ? new OkWithValue<NotificationDTO>(res.getMessage(),
+                new NotificationDTO(res.getValue(), $"The user {userName} submit new price offer fot item {itemID}.\n please review this offer")) :
+                new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
 
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID)
