@@ -657,6 +657,15 @@ namespace WebApplication.Controllers
                 ResultWithValue<NotificationDTO> res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
+                    if (res.getValue() != null)
+                    {
+                        Node<string> node = res.getValue().usersToSend.First;
+                        while (node.Next != null)
+                        {
+                            SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                            node = node.Next;
+                        }
+                    }
                     return RedirectToAction("SearchItems");
                 }
                 else

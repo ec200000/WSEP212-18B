@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
@@ -17,6 +18,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         int itemID;
         int storeID;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         public void testInit()
         {
             controller.register("b", 18, "123456");

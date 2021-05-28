@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -17,6 +18,12 @@ namespace WSEP212_TESTS.UnitTests
         private ShoppingBag shoppingBag;
         private ItemPurchaseType purchaseType;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [TestInitialize]
         public void beforeTests()
         {
