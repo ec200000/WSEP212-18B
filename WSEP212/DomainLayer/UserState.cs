@@ -40,7 +40,7 @@ namespace WSEP212.DomainLayer
 
 
         // * Purchase Items Functions *//
-        public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity, ItemPurchaseType purchaseType)
+        public ResultWithValue<ConcurrentLinkedList<string>> addItemToShoppingCart(int storeID, int itemID, int quantity, ItemPurchaseType purchaseType)
         {
             RegularResult res = this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity, purchaseType);
             if (res.getTag() && Authentication.Instance.usersInfo.ContainsKey(this.user.userName))
@@ -51,8 +51,16 @@ namespace WSEP212.DomainLayer
                     result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
                     SystemDBAccess.Instance.SaveChanges();
                 }
+
+                // returns store owners to send notification only if purchase type is submit offer
+                if(purchaseType.getPurchaseType() == PurchaseType.SubmitOfferPurchase)
+                {
+                    ConcurrentLinkedList<string> storeOwners = StoreRepository.Instance.getStoreOwners(storeID);
+                    return new OkWithValue<ConcurrentLinkedList<string>>(res.getMessage(), storeOwners);
+                }
+                return new OkWithValue<ConcurrentLinkedList<string>>(res.getMessage(), null);
             }
-            return res;
+            return new FailureWithValue<ConcurrentLinkedList<string>>(res.getMessage(), null);
         }
         public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
         {
