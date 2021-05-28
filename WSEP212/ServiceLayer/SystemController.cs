@@ -76,7 +76,7 @@ namespace WSEP212.ServiceLayer
             Logger.Instance.writeInformationEventToLog(info);
             ResultWithValue<ConcurrentLinkedList<string>> res = SystemControllerFacade.Instance.addItemToShoppingCart(userName, storeID, itemID, quantity, (PurchaseType)purchaseType, startPrice);
             return res.getTag() ? new OkWithValue<NotificationDTO>(res.getMessage(),
-                    new NotificationDTO(res.getValue(), $"The user {userName} submit new price offer fot item {itemID}.\n please review this offer")) :
+                    new NotificationDTO(res.getValue(), $"The user: {userName}, submit new price offer for item: {itemID}; with price: {startPrice}!\n please review this offer")) :
                 new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
 

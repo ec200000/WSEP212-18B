@@ -15,6 +15,10 @@
         string[] ItemsListAndStores = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("shoppingCart");
         @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()), new {@class = "custom-select"});
         <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove Item From Shopping Cart</button>
+        
+        @Html.TextBoxFor(model => model.newOffer,new { placeholder = "Change offer",@class="inputclassopenstore" })
+
+        <button class="btn btn-outline-primary" type="submit" formaction="ChangeOffer">Change Offer</button>
     }
 </div>
 <div class="shoppingcartpurchasediv">

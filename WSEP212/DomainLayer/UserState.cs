@@ -51,7 +51,6 @@ namespace WSEP212.DomainLayer
                     result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
                     SystemDBAccess.Instance.SaveChanges();
                 }
-
                 // returns store owners to send notification only if purchase type is submit offer
                 if(purchaseType.getPurchaseType() == PurchaseType.SubmitOfferPurchase)
                 {
