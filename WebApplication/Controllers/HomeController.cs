@@ -654,7 +654,7 @@ namespace WebApplication.Controllers
                 {
                     price = model.priceOffer;
                 }
-                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
+                ResultWithValue<NotificationDTO> res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
                     return RedirectToAction("SearchItems");

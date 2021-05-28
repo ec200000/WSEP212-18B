@@ -21,7 +21,7 @@ namespace WSEP212.ServiceLayer
         public RegularResult continueAsGuest(String userName); // USE CASE 2.1
         public RegularResult logout(String userName); // USE CASE 3.1
 
-        public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice); // USE CASE 2.7
+        public ResultWithValue<NotificationDTO> addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice); // USE CASE 2.7
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID); // USE CASE 2.8
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity); // USE CASE 2.8
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, Int32 purchaseType, double startPrice); // USE CASE 2.8
