@@ -1694,6 +1694,15 @@ namespace WebApplication.Controllers
                 string[] strs = itemID.Split(":");
                 int item = int.Parse(strs[strs.Length - 1]);
                 ResultWithValue<NotificationDTO> res = systemController.submitPriceOffer(userName, (int) storeID, item, model.newOffer);
+                if (res.getValue() != null)
+                {
+                    Node<string> node = res.getValue().usersToSend.First;
+                    while (node.Next != null)
+                    {
+                        SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        node = node.Next;
+                    }
+                }
             }
             return RedirectToAction("StoreActions");
         }
@@ -1713,6 +1722,15 @@ namespace WebApplication.Controllers
                 string[] strs6 = strs5[0].Split(":");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user,userName, (int) storeID, item, 2);
+                if (res.getValue() != null)
+                {
+                    Node<string> node = res.getValue().usersToSend.First;
+                    while (node.Next != null)
+                    {
+                        SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        node = node.Next;
+                    }
+                }
             }
             return RedirectToAction("StoreActions");
         }
@@ -1732,6 +1750,15 @@ namespace WebApplication.Controllers
                 string[] strs6 = strs5[0].Split(":");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
+                if (res.getValue() != null)
+                {
+                    Node<string> node = res.getValue().usersToSend.First;
+                    while (node.Next != null)
+                    {
+                        SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        node = node.Next;
+                    }
+                }
             }
             return RedirectToAction("StoreActions");
         }
@@ -1754,6 +1781,15 @@ namespace WebApplication.Controllers
                 string[] strs6 = strs5[0].Split(":");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.itemCounterOffer(user,userName, (int) storeID, item, price);
+                if (res.getValue() != null)
+                {
+                    Node<string> node = res.getValue().usersToSend.First;
+                    while (node.Next != null)
+                    {
+                        SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        node = node.Next;
+                    }
+                }
             }
             return RedirectToAction("StoreActions");
         }
