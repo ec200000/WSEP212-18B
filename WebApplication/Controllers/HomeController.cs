@@ -657,6 +657,7 @@ namespace WebApplication.Controllers
                 ResultWithValue<NotificationDTO> res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
+                    HttpContext.Session.SetObject("allbids",res.getValue());
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
@@ -1680,6 +1681,10 @@ namespace WebApplication.Controllers
 
         public IActionResult BidsReview()
         {
+            NotificationDTO nots = HttpContext.Session.GetObject<NotificationDTO>("allbids");
+            string userName = HttpContext.Session.GetString(SessionName);
+            string[] bids = HttpContext.Session.GetObject<string[]>("bids");
+            
             return View();
         }
         
