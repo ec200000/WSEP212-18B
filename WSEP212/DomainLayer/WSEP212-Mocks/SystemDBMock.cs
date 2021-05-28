@@ -2,12 +2,13 @@
 using System.Data.Common;
 using System.Data.Entity;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
-    public class SystemDBMock : DbContext
+    public class SystemDBMock : DBInterface
     {
         
         private static readonly Lazy<SystemDBMock> lazy

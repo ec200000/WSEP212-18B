@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
@@ -21,6 +22,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         SystemController systemController = SystemController.Instance;
         private int itemID;
         //private Item item;
+        
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
         
         [TestInitialize]
         public void testInit()
