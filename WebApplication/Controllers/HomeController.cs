@@ -1668,5 +1668,10 @@ namespace WebApplication.Controllers
         {
             return View();
         }
+
+        public IActionResult BidsReview()
+        {
+            return View();
+        }
     }
 }
