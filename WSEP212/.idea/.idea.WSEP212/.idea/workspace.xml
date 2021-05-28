@@ -5,9 +5,7 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="final">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="final" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +54,7 @@
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Shared/Error.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewImports.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/_ViewStart.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WebApplication/Views/Home/BidsReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/bf/ba5589be/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/Razor/Views/Home/GetStoreInformation.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5d/c5c23a33/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -74,8 +73,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5d9052ea-f7f1-4cee-ba33-54d67e75008a/console.sql" />
-      <option value="$PROJECT_DIR$/../WebApplication/Startup.cs" />
       <option value="$PROJECT_DIR$/App.config" />
       <option value="$PROJECT_DIR$/../WebApplication/Web.config" />
       <option value="$PROJECT_DIR$/Program.cs" />
@@ -111,7 +108,6 @@
       <option value="$PROJECT_DIR$/DomainLayer/LocalPredicate.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/LocalPredicateSerializer.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/BidsModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
       <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/ItemPurchaseType.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Configuration.cs" />
@@ -123,8 +119,11 @@
       <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
       <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Models/ShoppingCartModel.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -237,7 +236,7 @@
       <workItem from="1622051745508" duration="5296000" />
       <workItem from="1622129053190" duration="7194000" />
       <workItem from="1622147032823" duration="74000" />
-      <workItem from="1622210966101" duration="3251000" />
+      <workItem from="1622210966101" duration="4260000" />
     </task>
     <task id="LOCAL-00001" summary="save">
       <created>1619199403309</created>
@@ -380,7 +379,13 @@
       <option name="presentableId" value="LOCAL‎00023" />
       <updated>1622217475613</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL‎00024" summary="made add item to shopping cart to return notifications DTO">
+      <created>1622219507327</created>
+      <option name="number" value="LOCAL‎00024" />
+      <option name="presentableId" value="LOCAL‎00024" />
+      <updated>1622219507327</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -449,45 +454,6 @@
           <line>116</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\Authentication\Authentication.cs" initialLine="116" containingFunctionPresentation="method 'insertUserInfo'" />
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>651</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="651" containingFunctionPresentation="method 'TryAddItemToShoppingCart'">
-            <startOffsets>
-              <option value="26439" />
-            </startOffsets>
-            <endOffsets>
-              <option value="26528" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>656</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="656" containingFunctionPresentation="method 'TryAddItemToShoppingCart'">
-            <startOffsets>
-              <option value="26666" />
-            </startOffsets>
-            <endOffsets>
-              <option value="26808" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>650</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="650" containingFunctionPresentation="method 'TryAddItemToShoppingCart'">
-            <startOffsets>
-              <option value="26368" />
-            </startOffsets>
-            <endOffsets>
-              <option value="26422" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/ShoppingBag.cs</url>
