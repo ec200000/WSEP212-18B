@@ -1682,5 +1682,80 @@ namespace WebApplication.Controllers
         {
             return View();
         }
+        
+        public IActionResult ChangeOffer(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.itemID;
+            if (itemID != null && itemID != "")
+            {
+                string[] strs = itemID.Split(":");
+                int item = int.Parse(strs[strs.Length - 1]);
+                ResultWithValue<NotificationDTO> res = systemController.submitPriceOffer(userName, (int) storeID, item, model.newOffer);
+            }
+            return RedirectToAction("StoreActions");
+        }
+        
+        public IActionResult DiclineBid(BidsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.bid;
+            if (itemID != null && itemID != "")
+            {
+                string[] strs = itemID.Split(";");
+                string[] strs2 = strs[0].Split(":");
+                int item = int.Parse(strs2[1]);
+                string[] strs5 = strs[0].Split(",");
+                string[] strs6 = strs5[0].Split(":");
+                string user = strs6[1];
+                ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user,userName, (int) storeID, item, 2);
+            }
+            return RedirectToAction("StoreActions");
+        }
+        
+        public IActionResult ApproveBid(BidsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.bid;
+            if (itemID != null && itemID != "")
+            {
+                string[] strs = itemID.Split(";");
+                string[] strs2 = strs[0].Split(":");
+                int item = int.Parse(strs2[1]);
+                string[] strs5 = strs[0].Split(",");
+                string[] strs6 = strs5[0].Split(":");
+                string user = strs6[1];
+                ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
+            }
+            return RedirectToAction("StoreActions");
+        }
+        
+        public IActionResult CounterOffer(BidsModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.bid;
+            if (itemID != null && itemID != "")
+            {
+                string[] strs = itemID.Split(";");
+                string[] strs2 = strs[0].Split(":");
+                int item = int.Parse(strs2[1]);
+                string[] strs3 = strs[1].Split("!");
+                string[] strs4 = strs3[0].Split(":");
+                double price = double.Parse(strs4[1]);
+                string[] strs5 = strs[0].Split(",");
+                string[] strs6 = strs5[0].Split(":");
+                string user = strs6[1];
+                ResultWithValue<NotificationDTO> res = systemController.itemCounterOffer(user,userName, (int) storeID, item, price);
+            }
+            return RedirectToAction("StoreActions");
+        }
     }
 }
