@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212.DataAccessLayer
 {
@@ -16,6 +17,7 @@ namespace WSEP212.DataAccessLayer
         public DbSet<PurchaseInvoice> Invoices { get; set; }
         public DbSet<SellerPermissions> Permissions { get; set; }
         public DbSet<UserConnectionManager> DelayedNotifications { get; set; }
+        public DbSet<BidInfo> Bids { get; set; }
         
         public DBInterface(string conn) : base(conn){}
         public DBInterface(DbConnection connection, bool b) : base(connection, b) {}

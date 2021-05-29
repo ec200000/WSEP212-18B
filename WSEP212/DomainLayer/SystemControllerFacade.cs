@@ -1402,5 +1402,52 @@ namespace WSEP212.DomainLayer
             store = storeRes.getValue();
             return new OkWithValue<ConcurrentDictionary<int, String>>("Store Exist", store.getSalesDescriptions());
         }
+
+        public RegularResult addBidOffer(string userName, int storeId, int itemId, string buyer, double offerItemPrice)
+        {
+            User user;
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (userRes.getTag())
+            {
+                user = userRes.getValue();
+                SellerPermissions pers = null;
+                LinkedListNode<SellerPermissions> node = user.sellerPermissions.First;
+                while (node.Next != null)
+                {
+                    if (node.Value.SellerName.Equals(userName) && node.Value.StoreID == storeId)
+                    {
+                        pers = node.Value;
+                        break;
+                    }
+                    node = node.Next;
+                }
+                if(pers!=null)
+                    return pers.addBid(itemId, buyer, offerItemPrice);
+            }
+            return new Failure("could not add bid");
+        }
+        public RegularResult removeBidOffer(string userName, int storeId, int itemId, string buyer)
+        {
+            User user;
+            ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+            if (userRes.getTag())
+            {
+                user = userRes.getValue();
+                SellerPermissions pers = null;
+                LinkedListNode<SellerPermissions> node = user.sellerPermissions.First;
+                while (node.Next != null)
+                {
+                    if (node.Value.SellerName.Equals(userName) && node.Value.StoreID == storeId)
+                    {
+                        pers = node.Value;
+                        break;
+                    }
+                    node = node.Next;
+                }
+                if(pers!=null)
+                    return pers.removeBid(itemId, buyer);
+            }
+            return new Failure("could not remove bid");
+        }
     }
 }

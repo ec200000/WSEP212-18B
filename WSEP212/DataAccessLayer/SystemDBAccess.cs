@@ -8,6 +8,7 @@ using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212
 {
@@ -93,5 +94,6 @@ namespace WSEP212
         public DbSet<PurchaseInvoice> Invoices { get; set; }
         public DbSet<SellerPermissions> Permissions { get; set; }
         public DbSet<UserConnectionManager> DelayedNotifications { get; set; }
+        public DbSet<BidInfo> Bids { get; set; }
     }
 }

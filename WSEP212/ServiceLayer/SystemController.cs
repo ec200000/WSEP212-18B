@@ -43,9 +43,10 @@ namespace WSEP212.ServiceLayer
 
         public void initRepo()
         {
-            
+
             UserRepository.Instance.initRepo();
         }
+
         public RegularResult register(String userName, int userAge, String password)
         {
             String info = $"Register Event was triggered, with the parameters: " +
@@ -69,15 +70,20 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.logout(userName);
         }
 
-        public ResultWithValue<NotificationDTO> addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice)
+        public ResultWithValue<NotificationDTO> addItemToShoppingCart(String userName, int storeID, int itemID,
+            int quantity, Int32 purchaseType, double startPrice)
         {
             String info = $"AddItemToShoppingCart Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}, item ID: {itemID}";
             Logger.Instance.writeInformationEventToLog(info);
-            ResultWithValue<ConcurrentLinkedList<string>> res = SystemControllerFacade.Instance.addItemToShoppingCart(userName, storeID, itemID, quantity, (PurchaseType)purchaseType, startPrice);
-            return res.getTag() ? new OkWithValue<NotificationDTO>(res.getMessage(),
-                    new NotificationDTO(res.getValue(), $"The user: {userName}, submit new price offer for item: {itemID}; with price: {startPrice}!\n please review this offer")) :
-                new FailureWithValue<NotificationDTO>(res.getMessage(), null);
+            ResultWithValue<ConcurrentLinkedList<string>> res =
+                SystemControllerFacade.Instance.addItemToShoppingCart(userName, storeID, itemID, quantity,
+                    (PurchaseType) purchaseType, startPrice);
+            return res.getTag()
+                ? new OkWithValue<NotificationDTO>(res.getMessage(),
+                    new NotificationDTO(res.getValue(),
+                        $"The user: {userName}, submit new price offer for item: {itemID}; with price: {startPrice}!\n please review this offer"))
+                : new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
 
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID)
@@ -88,14 +94,16 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.removeItemFromShoppingCart(userName, storeID, itemID);
         }
 
-        public ResultWithValue<NotificationDTO> purchaseItems(String userName, DeliveryParametersDTO deliveryParametersDTO, PaymentParametersDTO paymentParametersDTO)
+        public ResultWithValue<NotificationDTO> purchaseItems(String userName,
+            DeliveryParametersDTO deliveryParametersDTO, PaymentParametersDTO paymentParametersDTO)
         {
             String info = $"PurchaseItems Event was triggered, with the parameter:" +
                           $"user name: {userName}, delivery Params: {deliveryParametersDTO}, payment Params: {paymentParametersDTO}";
             Logger.Instance.writeInformationEventToLog(info);
             DeliveryParameters deliveryParameters = new DeliveryParameters(deliveryParametersDTO);
             PaymentParameters paymentParameters = new PaymentParameters(paymentParametersDTO);
-            var usersToSendRes = SystemControllerFacade.Instance.purchaseItems(userName, deliveryParameters, paymentParameters);
+            var usersToSendRes =
+                SystemControllerFacade.Instance.purchaseItems(userName, deliveryParameters, paymentParameters);
             return usersToSendRes.getTag()
                 ? new OkWithValue<NotificationDTO>(usersToSendRes.getMessage(),
                     new NotificationDTO(usersToSendRes.getValue(),
@@ -144,7 +152,7 @@ namespace WSEP212.ServiceLayer
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.addItemToStorage(userName, storeID, item.quantity, item.itemName,
-                item.description, item.price, (ItemCategory)item.category);
+                item.description, item.price, (ItemCategory) item.category);
         }
 
         public RegularResult removeItemFromStorage(String userName, int storeID, int itemID)
@@ -166,7 +174,7 @@ namespace WSEP212.ServiceLayer
                           $"user name: {userName}, store ID: {storeID}, item ID: {item.itemID}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.editItemDetails(userName, storeID, item.itemID, item.quantity,
-                item.itemName, item.description, item.price, (ItemCategory)item.category);
+                item.itemName, item.description, item.price, (ItemCategory) item.category);
         }
 
         public RegularResult appointStoreManager(String userName, String managerName, int storeID)
@@ -218,7 +226,7 @@ namespace WSEP212.ServiceLayer
                     new NotificationDTO(null, $"The user {userName} has fired you! You are no longer store owner!"))
                 : new FailureWithValue<NotificationDTO>(res.getMessage(), null);
         }
-        
+
         public ResultWithValue<NotificationDTO> removeStoreOwner(String userName, String ownerName, int storeID)
         {
             String info = $"RemoveStoreManager Event was triggered, with the parameters:" +
@@ -240,7 +248,8 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getOfficialsInformation(userName, storeID);
         }
 
-        public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getStorePurchaseHistory(String userName, int storeID)
+        public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getStorePurchaseHistory(String userName,
+            int storeID)
         {
             String info = $"GetStorePurchaseHistory Event was triggered, with the parameters:" +
                           $"user name: {userName}, store ID: {storeID}";
@@ -248,8 +257,9 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getStorePurchaseHistory(userName, storeID);
         }
 
-        public ResultWithValue<ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>>> getUsersPurchaseHistory(
-            String userName)
+        public ResultWithValue<ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>>>
+            getUsersPurchaseHistory(
+                String userName)
         {
             String info = $"GetUsersPurchaseHistory Event was triggered, with the parameter:" +
                           $"user name: {userName}";
@@ -257,8 +267,9 @@ namespace WSEP212.ServiceLayer
             return SystemControllerFacade.Instance.getUsersPurchaseHistory(userName);
         }
 
-        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> getStoresPurchaseHistory(
-            String userName)
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>
+            getStoresPurchaseHistory(
+                String userName)
         {
             String info = $"GetStoresPurchaseHistory Event was triggered, with the parameter:" +
                           $"user name: {userName}";
@@ -305,6 +316,22 @@ namespace WSEP212.ServiceLayer
                           $"user name: {userName}";
             Logger.Instance.writeInformationEventToLog(info);
             return SystemControllerFacade.Instance.viewShoppingCart(userName);
+        }
+
+        public RegularResult addBidOffer(String userName, int storeID, int itemID, string buyer, double offerItemPrice)
+        {
+            String info = $"addBidOffer Event was triggered, with the parameter: " +
+                          $"user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.addBidOffer(userName, storeID, itemID, buyer, offerItemPrice);
+        }
+        
+        public RegularResult removeBidOffer(String userName, int storeID, int itemID, string buyer)
+        {
+            String info = $"removeBidOffer Event was triggered, with the parameter: " +
+                          $"user name: {userName}";
+            Logger.Instance.writeInformationEventToLog(info);
+            return SystemControllerFacade.Instance.removeBidOffer(userName, storeID, itemID, buyer);
         }
 
         public ResultWithValue<int> addPurchasePredicate(string userName, int storeID,

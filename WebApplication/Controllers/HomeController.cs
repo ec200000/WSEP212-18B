@@ -664,6 +664,7 @@ namespace WebApplication.Controllers
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                            systemController.addBidOffer(node.Value, (int) storeID, itemID, userName, price);
                             node = node.Next;
                         }
                     }
@@ -1705,6 +1706,8 @@ namespace WebApplication.Controllers
                     while (node.Next != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        systemController.removeBidOffer(node.Value, (int)storeID, item, userName);
+                        systemController.addBidOffer(node.Value, (int) storeID, item, userName, model.newOffer);
                         node = node.Next;
                     }
                 }
@@ -1733,6 +1736,7 @@ namespace WebApplication.Controllers
                     while (node.Next != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        systemController.removeBidOffer(node.Value, (int)storeID, item, user);
                         node = node.Next;
                     }
                 }
@@ -1761,6 +1765,7 @@ namespace WebApplication.Controllers
                     while (node.Next != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        systemController.removeBidOffer(node.Value, (int)storeID, item, user);
                         node = node.Next;
                     }
                 }

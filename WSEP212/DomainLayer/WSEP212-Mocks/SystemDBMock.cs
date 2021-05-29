@@ -5,6 +5,7 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212.DomainLayer
 {
@@ -32,6 +33,7 @@ namespace WSEP212.DomainLayer
         public virtual DbSet<PurchaseInvoice> Invoices { get; set; }
         public virtual DbSet<SellerPermissions> Permissions { get; set; }
         public virtual DbSet<UserConnectionManager> DelayedNotifications { get; set; }
+        public virtual DbSet<BidInfo> Bids { get; set; }
         
         public void Init() => Database.Initialize(true);
 
