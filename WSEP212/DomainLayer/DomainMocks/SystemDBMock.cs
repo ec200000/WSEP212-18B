@@ -16,7 +16,7 @@ namespace WSEP212.DomainLayer
 
         public static SystemDBMock Instance => lazy.Value;
         
-        public SystemDBMock() : base("Server=tcp:wsep212b18.database.windows.net,1433;Database=wsep212Btest;User ID=wsep212b@wsep212Btest;Password=Ab123456;Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
+        public SystemDBMock() : base("Server=tcp:wsep212b18.database.windows.net,1433;Database=wsep212Btest;User ID=wsep212b@wsep212b18;Password=Ab123456;Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
         {
             Init();
             Database.CommandTimeout = 120;
