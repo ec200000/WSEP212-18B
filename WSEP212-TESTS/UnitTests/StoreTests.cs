@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
@@ -243,7 +244,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
             RegularResult addNewStoreSellerBool1 = store.addNewStoreSeller(aviTheSeller);
             Assert.IsTrue(addNewStoreSellerBool1.getTag());
             RegularResult addNewStoreSellerBool2 = store.addNewStoreSeller(aviTheSeller);
@@ -255,7 +256,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
             store.addNewStoreSeller(aviTheSeller);
             RegularResult removeStoreSellerBool1 = store.removeStoreSeller("avi");
             Assert.IsTrue(removeStoreSellerBool1.getTag());
@@ -268,7 +269,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
             store.addNewStoreSeller(aviTheSeller);
             ResultWithValue<SellerPermissions> result = store.getStoreSellerPermissions("avi");
             Assert.IsTrue(result.getTag());
@@ -283,7 +284,7 @@ namespace WSEP212_TESTS.UnitTests
             perms.TryAdd(Permissions.AllPermissions);
             int numOfRecords = info.Count;
             Assert.AreEqual(numOfRecords, 1);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(new User("avi"), this.store, new User("admin"), perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
             store.addNewStoreSeller(aviTheSeller);
             Assert.AreEqual(store.getStoreOfficialsInfo().Count, 2);
         }

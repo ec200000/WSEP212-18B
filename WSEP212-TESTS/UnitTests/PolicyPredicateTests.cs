@@ -87,11 +87,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void composedPredicateMetTest()
         {
-            LocalPredicate<PurchaseDetails> p1 = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 60);
-            PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 60");
-            Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
+            LocalPredicate<PurchaseDetails> p1 = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 40);
+            PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 40");
+            LocalPredicate<PurchaseDetails> p2 = new LocalPredicate<PurchaseDetails>(pd => pd.numOfSpecificItem(itemB.itemID), 5);
             PurchasePredicate sp2 = new SimplePredicate(p2, "more then 5 milk in bag");
-            Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
+            LocalPredicate<PurchaseDetails> p3 = new LocalPredicate<PurchaseDetails>(pd => pd.user.userAge, 18);
             PurchasePredicate sp3 = new SimplePredicate(p3, "user age is bigger then 18");
             PurchasePredicate orPP = new OrPredicates(sp1, sp2);
             PurchasePredicate andPP = new AndPredicates(sp3, orPP);
@@ -101,11 +101,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void composedPredicateNotMetTest()
         {
-            Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
-            PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 60");
-            Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
+            LocalPredicate<PurchaseDetails> p1 = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 40);
+            PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 40");
+            LocalPredicate<PurchaseDetails> p2 = new LocalPredicate<PurchaseDetails>(pd => pd.numOfSpecificItem(itemB.itemID), 5);
             PurchasePredicate sp2 = new SimplePredicate(p2, "more then 5 milk in bag");
-            Predicate<PurchaseDetails> p3 = pd => pd.user.userAge >= 18;
+            LocalPredicate<PurchaseDetails> p3 = new LocalPredicate<PurchaseDetails>(pd => pd.user.userAge, 18);
             PurchasePredicate sp3 = new SimplePredicate(p3, "user age is bigger then 18");
             PurchasePredicate andPP = new AndPredicates(sp1, sp2);
             PurchasePredicate andPP2 = new AndPredicates(sp3, andPP);

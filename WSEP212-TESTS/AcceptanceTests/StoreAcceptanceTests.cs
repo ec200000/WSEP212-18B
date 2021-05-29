@@ -40,7 +40,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("theuser123", "habanim", "Haifa", "Israel", "786598");
             PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theuser123", "086", "207885623");
 
-            RegularResult result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);//adding an item
+            ResultWithValue<NotificationDTO> result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);//adding an item
             Assert.IsTrue(result.getTag());
             ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("theuser123", deliveryParameters, paymentParameters);
             Assert.IsTrue(result2.getTag());
@@ -108,7 +108,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("theuser123", "habanim", "Haifa", "Israel", "786598");
             PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theuser123", "086", "207885623");
 
-            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             Assert.IsTrue(res.getTag());
             ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser123", deliveryParameters, paymentParameters);
             Assert.IsTrue(res2.getTag());
@@ -123,7 +123,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             Assert.IsTrue(res.getTag());
             ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", null, itemID, storeID);
             Assert.IsFalse(result.getTag());
