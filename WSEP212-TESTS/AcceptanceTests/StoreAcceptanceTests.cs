@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -17,6 +18,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static int itemID;
         public static int storeID;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {

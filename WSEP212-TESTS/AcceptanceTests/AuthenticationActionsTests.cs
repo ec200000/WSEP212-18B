@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 
@@ -9,6 +10,12 @@ namespace WSEP212_TESTS.AcceptanceTests
     public class AuthenticationActionsTests
     {
         SystemController controller = SystemController.Instance;
+
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
         
         public void testInit()
         {

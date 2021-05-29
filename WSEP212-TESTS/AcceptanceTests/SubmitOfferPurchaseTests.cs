@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WSEP212;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -26,6 +27,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         private int approvedType = 0;
         private int rejectedType = 2;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {

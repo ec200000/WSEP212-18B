@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchasePolicy;
@@ -20,6 +21,12 @@ namespace WSEP212_TESTS.UnitTests
         private static int storeItemID;
         private static ShoppingBag shoppingBag;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {

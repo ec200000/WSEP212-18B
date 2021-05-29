@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
@@ -19,6 +20,12 @@ namespace WSEP212_TESTS.IntegrationTests
         private static DeliveryParametersDTO deliveryParameters;
         private static PaymentParametersDTO paymentParameters;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [TestCleanup]
         public void testClean()
         {

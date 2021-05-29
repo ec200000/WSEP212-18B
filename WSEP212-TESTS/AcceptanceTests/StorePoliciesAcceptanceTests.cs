@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
+using WSEP212;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
@@ -21,6 +22,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static int storeID;
         public static PaymentParametersDTO paymentParameters;
         public static DeliveryParametersDTO deliveryParameters;
+        
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
         
         [TestInitialize]
         public void SetupAuth()

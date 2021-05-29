@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
@@ -18,6 +19,12 @@ namespace WSEP212_TESTS.UnitTests
         public static Item itemB;
         public static Item itemC;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {

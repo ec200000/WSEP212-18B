@@ -3,6 +3,7 @@ using WSEP212.DomainLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -12,6 +13,12 @@ namespace WSEP212_TESTS.UnitTests
         private static User user;
         private static Item potato;
 
+        [ClassInitialize]
+        public void init()
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
