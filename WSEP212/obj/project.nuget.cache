@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2pxrs9vzj3cbp5N10Sjgp7C4/z3g9GCAvP6H/ONDwNZTBm9q4YKpK3asW/59zVGuva6mlGNBWur2oBGOh1ANWA==",
+  "dgSpecHash": "iL9Vyd80uUwUKIDi5kt6u8JabVeQAlsE3FeAQZQDD0WgzH+mGqkAafwdpU8C8NUFtkRKPzwPUvttZFyBrolkWA==",
   "success": true,
-  "projectFilePath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+  "projectFilePath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.5\\microsoft.aspnetcore.cryptography.internal.5.0.5.nupkg.sha512",

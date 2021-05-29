@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3M2QJU/GVdlJMCxnPAGfvf40u7KhXPfNQ7PSs0uRKyXUyYcGWu716XcE3PyyQqaJDVNLhpQuYkUX9D/uyw5eog==",
+  "dgSpecHash": "miEgtGjo2HueUsF9h+shcF7G60crDg2BGgVE9FhzU7IErXjWkmhOwp2Pdicb4EZjDiVZYw6AN23qXNjbPbZlLQ==",
   "success": true,
-  "projectFilePath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+  "projectFilePath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\שגיב משיח\\.nuget\\packages\\microsoft.aspnet.signalr.core\\2.4.2\\microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512",

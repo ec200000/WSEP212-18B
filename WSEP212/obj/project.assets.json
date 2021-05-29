@@ -2877,11 +2877,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
       "projectName": "WSEP212",
-      "projectPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
       "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
-      "outputPath": "D:\\Software Engineering\\שנה ג\\סמסטר ו\\סדנא ליישום פרויקט תוכנה\\WSEP212-18B\\WSEP212\\obj\\",
+      "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
