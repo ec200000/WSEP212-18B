@@ -9,8 +9,8 @@ namespace WSEP212.DomainLayer.PurchaseTypes
 {
     public abstract class ItemPurchaseType
     {
-        protected PriceStatus priceStatus { get; set; }
-        protected double itemPrice { get; set; }
+        public PriceStatus priceStatus { get; set; }
+        public double itemPrice { get; set; }
 
         public PriceStatus getPriceStatus()
         {

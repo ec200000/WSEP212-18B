@@ -1245,21 +1245,22 @@ namespace WebApplication.Controllers
             int composetype = saleStringToEnum(model.compositionType);
             SimplePredicate typeCondition = null;
             LocalPredicate<PurchaseDetails> pred = null;
-            if (model.numbersOfProducts != null)
+            //Predicate<PurchaseDetails> newPred = null;
+            if (model.numbersOfProducts != 0)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();
                 pred = new LocalPredicate<PurchaseDetails>(exp, model.numbersOfProducts);
                 //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
             }
 
-            if (model.priceOfShoppingBag != null)
+            if (model.priceOfShoppingBag != 0)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.totalPurchasePrice();
                 pred = new LocalPredicate<PurchaseDetails>(exp, model.priceOfShoppingBag);
                 //newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
             }
 
-            if (model.ageOfUser != null)
+            if (model.ageOfUser != 0)
             {
                 Expression<Func<PurchaseDetails, double>> exp = pd => pd.userAge();
                 pred = new LocalPredicate<PurchaseDetails>(exp, model.ageOfUser);
@@ -1295,16 +1296,10 @@ namespace WebApplication.Controllers
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             ResultWithValue<ConcurrentDictionary<int, string>> salesPredicatesDescription =
                 systemController.getStoreSalesDescription((int)storeID);
-            int predicateID = 0;
-            foreach (string purpre in salesPredicatesDescription.getValue().Values)
-            {
-                if (purpre.Equals(model.predicate))
-                {
-                    predicateID = salesPredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
-                    break;
-                }
-            }
-            RegularResult res = systemController.removeSale(userName, (int)storeID, predicateID);
+            String pre = model.predicate;
+            string[] s = pre.Split(": ");
+            int predicateIDDD = int.Parse(s[s.Length - 1]);
+            RegularResult res = systemController.removeSale(userName, (int)storeID, predicateIDDD);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
