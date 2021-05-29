@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -49,6 +51,40 @@ namespace WSEP212.DomainLayer
             RegularResult res = insertNewUser(systemManager, "123456");
             if (!res.getTag())
                 throw new SystemException("Couldn't create a system manager");
+        }
+        
+        public class JsonUsers
+        {
+            public IList<JsonUser> users;
+        }
+        public class JsonUser
+        {
+            public string username;
+            public int userAge;
+            public bool isSystemManager;
+        }
+        
+        public void Init()
+        {
+            string jsonFilePath = "init.json";
+            string json = File.ReadAllText(jsonFilePath);
+            dynamic array = JsonConvert.DeserializeObject(json);
+            // CREATE USERS
+            string loggedUser = array.loggedUser;
+            foreach(var item in array.users)
+            {
+                string username = item.username;
+                string userAge = item.userAge;
+                string isSystemManager = item.isSystemManager;
+                User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
+                if (isSystemManager.Equals("true"))
+                    user.changeState(new SystemManagerState(user));
+                else if (loggedUser.Equals(username))
+                    user.changeState(new LoggedBuyerState(user));
+                else
+                    user.changeState(new GuestBuyerState(user));
+                insertNewUser(user, "123456");
+            }
         }
         
         public RegularResult insertNewUser(User newUser, String password)

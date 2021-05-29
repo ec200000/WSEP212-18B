@@ -6,42 +6,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="final">
-      <change afterPath="$PROJECT_DIR$/DomainLayer/PurchaseTypes/BidInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WebApplication/init.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAccessLayer/DBInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessLayer/DBInterface.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/WSEP212-Mocks/SystemDBMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/WSEP212-Mocks/SystemDBMock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,15 +76,12 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ItemReview.cs" />
       <option value="$PROJECT_DIR$/SystemDBAccess.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" />
       <option value="$PROJECT_DIR$/Configuration.txt" />
-      <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
       <option value="$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Models/PurchaseTypesModel.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
@@ -148,16 +114,19 @@
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
       <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
       <option value="$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/BidInfo.cs" />
       <option value="$PROJECT_DIR$/DataAccessLayer/DBInterface.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/WSEP212-Mocks/SystemDBMock.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/init.json" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -271,7 +240,7 @@
       <workItem from="1622129053190" duration="7194000" />
       <workItem from="1622147032823" duration="74000" />
       <workItem from="1622210966101" duration="7663000" />
-      <workItem from="1622301068656" duration="4686000" />
+      <workItem from="1622301068656" duration="6429000" />
     </task>
     <task id="LOCAL-00001" summary="save">
       <created>1619199403309</created>
@@ -438,7 +407,13 @@
       <option name="presentableId" value="LOCAL‎00027" />
       <updated>1622222865498</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL‎00028" summary="added bid object">
+      <created>1622306623389</created>
+      <option name="number" value="LOCAL‎00028" />
+      <option name="presentableId" value="LOCAL‎00028" />
+      <updated>1622306623389</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +468,8 @@
     <MESSAGE value="made add item to shopping cart to return notifications DTO" />
     <MESSAGE value="added offers for shopping carts" />
     <MESSAGE value="bids in the meantime" />
-    <option name="LAST_COMMIT_MESSAGE" value="bids in the meantime" />
+    <MESSAGE value="added bid object" />
+    <option name="LAST_COMMIT_MESSAGE" value="added bid object" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

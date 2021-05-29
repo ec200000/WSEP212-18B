@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualBasic.CompilerServices;
+using Newtonsoft.Json;
 using WSEP212.DomainLayer;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
@@ -43,8 +45,71 @@ namespace WSEP212.ServiceLayer
 
         public void initRepo()
         {
+            try
+            {
+                UserRepository.Instance.initRepo();
+                //UserRepository.Instance.createSystemManager();
+                UserRepository.Instance.Init();
+                //StoreRepository.Instance.Init();
+                SystemController.Instance.Init();
+            }
+            catch (SystemException e)
+            {
+                Logger.Instance.writeErrorEventToLog(e.Message);
+            }
+        }
+
+        public void Init()
+        {
+            string jsonFilePath = "init.json";
+            string json = File.ReadAllText(jsonFilePath);
+            dynamic array = JsonConvert.DeserializeObject(json);
+
+            // CREATE STORES
+            foreach (var item in array.stores)
+            {
+                string storeOpener = item.storeOpener;
+                string storeName = item.storeName;
+                string storeAddress = item.storeAddress;
+                openStore(storeOpener, storeName, storeAddress, "0", "0");
+            }
+
+            // ADD ITEMS
+            foreach (var item in array.items)
+            {
+                string userAdded = item.userAdded;
+                string storeName = item.storeName;
+                string storeID = item.storeID;
+                string itemName = item.itemName;
+                string itemPrice = item.itemPrice;
+                string itemQuantity = item.itemQuantity;
+                string description = item.description;
+                int category = int.Parse(item.category);
+                addItemToStorage(userAdded, int.Parse(storeID),
+                    new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
+                        new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice), category));
+            }
+
+            // APPOINT
+            foreach (var item in array.appoints)
+            {
+                string manager = item.manager;
+                string appoint = item.appoint;
+                string storeName = item.storeName;
+                string storeID = item.storeID;
+                appointStoreManager(manager, appoint, int.Parse(storeID));
+                ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
+                foreach (var perm in item.permissions)
+                {
+                    if (perm.ToString().Equals("StorageManagment"))
+                        perms.TryAdd((int)Permissions.StorageManagment);
+                }
+                editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
+            }
 
             UserRepository.Instance.initRepo();
+            string loggedUser = array.loggedUser;
+            logout(loggedUser);
         }
 
         public RegularResult register(String userName, int userAge, String password)

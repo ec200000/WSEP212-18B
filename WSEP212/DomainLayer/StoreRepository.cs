@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PurchasePolicy;
@@ -35,6 +37,22 @@ namespace WSEP212.DomainLayer
 
         public static StoreRepository Instance
             => lazy.Value;
+        
+        public void Init()
+        {
+            string jsonFilePath = "init.json";
+            string json = File.ReadAllText(jsonFilePath);
+            dynamic array = JsonConvert.DeserializeObject(json);
+            // CREATE STORES
+            foreach (var item in array.stores)
+            {
+                string storeOpener = item.storeOpener;
+                string storeName = item.storeName;
+                string storeAddress = item.storeAddress;
+                addStore(storeName, storeAddress, new SalePolicy.SalePolicy("0"), new PurchasePolicy.PurchasePolicy("0"),
+                    UserRepository.Instance.findUserByUserName(storeOpener).getValue());
+            }
+        }
 
         
         public ResultWithValue<int> addStore(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
