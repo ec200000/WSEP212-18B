@@ -21,5 +21,7 @@ namespace WebApplication.Models
         public string zip { get; set; }
         public int priceBeforeSale { get; set; }
         public int priceAfterSale { get; set; }
+        
+        public double newOffer { get; set; }
     }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
@@ -20,7 +22,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         private int storeID;
         SystemController systemController = SystemController.Instance;
         private int itemID;
-        //private Item item;
+
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
+        {
+            SystemDBAccess.mock = true;
+        }
         
         [TestInitialize]
         public void testInit()

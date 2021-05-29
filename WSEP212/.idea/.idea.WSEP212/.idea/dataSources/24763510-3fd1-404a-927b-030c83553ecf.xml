@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="wsep212Dep@wsep212b18.database.windows.net">
+<dataSource name="wsep212B@wsep212b.database.windows.net">
   <database-model serializer="dbm" dbms="AZURE" family-id="AZURE" format-version="4.21">
     <root id="1">
       <ServerVersion>12.0.2148</ServerVersion>

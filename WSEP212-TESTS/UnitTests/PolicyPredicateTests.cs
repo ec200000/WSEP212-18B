@@ -3,7 +3,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
@@ -21,6 +23,8 @@ namespace WSEP212_TESTS.UnitTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             User user = new User("Sagiv", 21);
             itemA = new Item(100, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks);
             itemB = new Item(500, "milk", "pasteurized milk", 8, ItemCategory.Dairy);

@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
@@ -14,6 +16,13 @@ namespace WSEP212_TESTS.IntegrationTests
     {
         private User user1;
         private User user2;
+        
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
+        {
+            SystemDBAccess.mock = true;
+        }
+        
         [TestInitialize]
         public void testInit()
         {

@@ -20,6 +20,7 @@ using WSEP212.ServiceLayer.Result;
 using Serialize.Linq;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Serializers;
+using WSEP212.DataAccessLayer;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace WSEP212.DomainLayer

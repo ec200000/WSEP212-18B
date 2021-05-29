@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
+using WSEP212;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
@@ -8,6 +9,7 @@ using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 using System.Linq.Expressions;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -21,6 +23,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static int storeID;
         public static PaymentParametersDTO paymentParameters;
         public static DeliveryParametersDTO deliveryParameters;
+        
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
+        {
+            SystemDBAccess.mock = true;
+        }
         
         [TestInitialize]
         public void SetupAuth()

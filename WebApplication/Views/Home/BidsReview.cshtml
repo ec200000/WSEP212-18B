@@ -17,13 +17,13 @@
         string[] bidsList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("bids");
         @Html.DropDownListFor(model => model.bid, new SelectList(bidsList.OfType<string>().ToList()), new {@class = "custom-select"});
 
-        <button class="btn btn-outline-primary" formaction="TryRemoveSalePredicate" type="submit">Dicline Bid</button>
+        <button class="btn btn-outline-primary" formaction="DiclineBid" type="submit">Dicline Bid</button>
 
-        <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Approve Bid</button>
+        <button class="btn btn-outline-primary" type="submit" formaction="ApproveBid">Approve Bid</button>
         
         @Html.TextBoxFor(model => model.newBid,new { placeholder = "Counter offer",@class="inputclassopenstore" })
 
-        <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Counter offer</button>
+        <button class="btn btn-outline-primary" type="submit" formaction="CounterOffer">Counter Offer</button>
     }
 </div>
 </body>

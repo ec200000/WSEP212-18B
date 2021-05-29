@@ -5,6 +5,7 @@ using System.Text;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using System.Data.Entity;
 using System.Linq;
+using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer

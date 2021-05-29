@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
+using WSEP212;
+using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.PurchasePolicy;
@@ -27,6 +29,8 @@ namespace WSEP212_TESTS.IntegrationTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             user = new User("Sagiv", 21);
             store = new Store("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
