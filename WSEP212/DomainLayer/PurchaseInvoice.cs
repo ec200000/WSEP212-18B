@@ -1,25 +1,38 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace WSEP212.DomainLayer
 {
     public class PurchaseInvoice
     {
+        
         // static counter for the purchaseInvoices
         private static int invoiceCounter = 1;
-
+        [Key]
         public int purchaseInvoiceID { get; set; }
         public int storeID { get; set; }
         public String userName { get; set; }
         // A data structure associated with a item ID and its quantity
+        [NotMapped]
         public ConcurrentDictionary<int, int> items { get; set; }
         public ConcurrentDictionary<int, double> itemsPrices { get; set; }
         public DateTime dateOfPurchase { get; set; }
+        
+        public string ItemsAsJson
+        {
+            get => JsonConvert.SerializeObject(items);
+            set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
+        }
 
         public PurchaseInvoice(int storeID, String userName, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPrices, DateTime dateOfPurchase)
         {
-            this.purchaseInvoiceID = invoiceCounter;
+            this.purchaseInvoiceID = SystemDBAccess.Instance.Invoices.Count() + 1;
             invoiceCounter++;
             this.storeID = storeID;
             this.userName = userName;
@@ -53,9 +66,15 @@ namespace WSEP212.DomainLayer
                          ", Item quantity: " + item.Value + 
                          ", In Store ID: " + storeID + ";";
             }
-
             value = value.Substring(0, value.Length - 1);
             return value;
         }
+        
+        public void addToDB()
+        {
+            SystemDBAccess.Instance.Invoices.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
+        }
+        
     }
 }

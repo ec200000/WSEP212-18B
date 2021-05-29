@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
@@ -11,6 +17,10 @@ using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
+using Serialize.Linq;
+using Serialize.Linq.Extensions;
+using Serialize.Linq.Serializers;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace WSEP212.DomainLayer
 {
@@ -24,27 +34,99 @@ namespace WSEP212.DomainLayer
         // static counter for the storeIDs of diffrent stores
         private static int storeCounter = 1;
 
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
+                }
+            }
+        };
+        
         // A data structure associated with a item ID and its item
         public ConcurrentDictionary<int, Item> storage { get; set; }
+        public string StorageAsJson
+        {
+            get => JsonConvert.SerializeObject(storage,settings);
+            set => storage = JsonConvert.DeserializeObject<ConcurrentDictionary<int, Item>>(value);
+        }
+        
+        [Key]
         public int storeID { get; set; }
         public String storeName { get; set; }
         public String storeAddress { get; set; }
         public bool activeStore { get; set; }
-        public SalePolicyInterface salesPolicy { get; set; }
-        public PurchasePolicyInterface purchasePolicy { get; set; }
         public ConcurrentDictionary<int, PurchaseInvoice> purchasesHistory { get; set; }
+        
+        [NotMapped]
+        public SalePolicyInterface salesPolicy { get; set; }
+        
+        public string SalesPolicyAsJson
+        {
+            get => JsonConvert.SerializeObject(salesPolicy,settings);
+            set => setSalesJson(value);
+        }
+
+        [NotMapped]
+        public PurchasePolicyInterface purchasePolicy { get; set; }
+        public string PurchasePolicyAsJson
+        {
+            get => JsonConvert.SerializeObject(purchasePolicy,settings);
+            set => setPurchaseJson(value);
+        }
+
+        public string PurchasesHistoryAsJson
+        {
+            get => JsonConvert.SerializeObject(purchasesHistory,settings);
+            set => purchasesHistory = JsonConvert.DeserializeObject<ConcurrentDictionary<int, PurchaseInvoice>>(value);
+        }
         // A data structure associated with a user name and seller permissions
+        [NotMapped]
         public ConcurrentDictionary<String, SellerPermissions> storeSellersPermissions { get; set; }
+        public string StoreSellersPermissionsAsJson
+        {
+            get => JsonConvert.SerializeObject(storeSellersPermissions,settings);
+            set => storeSellersPermissions = JsonConvert.DeserializeObject<ConcurrentDictionary<String, SellerPermissions>>(value);
+        }
+        [NotMapped]
+        [JsonIgnore]
         public DeliveryInterface deliverySystem { get; set; }
 
+        public Store() {}
         public Store(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
         {
             this.storage = new ConcurrentDictionary<int, Item>();
-            this.storeID = storeCounter;
+            this.storeID = StoreRepository.Instance.stores.Count + 1;
             storeCounter++;
             this.activeStore = true;
             this.salesPolicy = salesPolicy;
+            SalesPolicyAsJson = JsonConvert.SerializeObject(salesPolicy,settings);
             this.purchasePolicy = purchasePolicy;
+            PurchasePolicyAsJson = JsonConvert.SerializeObject(purchasePolicy,settings);
             this.purchasesHistory = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.storeName = storeName;
             this.storeAddress = storeAddress;
@@ -53,14 +135,35 @@ namespace WSEP212.DomainLayer
             ConcurrentLinkedList<Permissions> founderPermissions = new ConcurrentLinkedList<Permissions>();
             founderPermissions.TryAdd(Permissions.AllPermissions);   // founder has all permisiions
 
-            SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder, this, null, founderPermissions);
-
+            SellerPermissions storeFounderPermissions = SellerPermissions.getSellerPermissions(storeFounder.userName, this.storeID, "", founderPermissions);
+            
             this.storeSellersPermissions = new ConcurrentDictionary<String, SellerPermissions>();
             this.storeSellersPermissions.TryAdd(storeFounder.userName, storeFounderPermissions);
 
             this.deliverySystem = DeliverySystemAdapter.Instance;
         }
 
+        public void setPurchaseJson(string json)
+        {
+            if(purchasePolicy is PurchasePolicyMock)
+                purchasePolicy = JsonConvert.DeserializeObject<PurchasePolicyMock>(json, settings);
+            else
+                purchasePolicy = JsonConvert.DeserializeObject<PurchasePolicy.PurchasePolicy>(json, settings);
+        }
+
+        public void setSalesJson(string json)
+        {
+            if(salesPolicy is SalePolicyMock)
+                salesPolicy = JsonConvert.DeserializeObject<SalePolicyMock>(json, settings);
+            else
+                salesPolicy = JsonConvert.DeserializeObject<SalePolicy.SalePolicy>(json, settings);
+        }
+        
+        public void addToDB()
+        {
+            SystemDBAccess.Instance.Stores.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
+        }
         // Check if the item exist and available in the store
         public RegularResult isAvailableInStorage(int itemID, int quantity)
         {
@@ -92,14 +195,33 @@ namespace WSEP212.DomainLayer
                 if (item.itemName.Equals(itemName) && item.category.Equals(category) && item.price == price)   // the item already exist
                 {
                     if (item.setQuantity(quantity))
-                        return new OkWithValue<int>("The Item Is Already In Storage, The Quantity Of The Item Has Been Updated Accordingly", pairItem.Key);
+                    {
+                        var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                        if (result != null)
+                        {
+                            result.storage = storage;
+                            if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
+                                result.StorageAsJson = this.StorageAsJson;
+                            SystemDBAccess.Instance.SaveChanges();
+                            return new OkWithValue<int>("The Item Is Already In Storage, The Quantity Of The Item Has Been Updated Accordingly", pairItem.Key);
+                        }
+                    }
                     return new FailureWithValue<int>("One Or More Of The Item Details Are Invalid", -1);
                 }
             }
             // item not exist - add new item to storage
             try {
                 Item newItem = new Item(quantity, itemName, description, price, category);
+                newItem.addToDB();
                 this.storage.TryAdd(newItem.itemID, newItem);
+                var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                if (res != null)
+                {
+                    res.storage = storage;
+                    if(!JToken.DeepEquals(res.StorageAsJson, this.StorageAsJson))
+                        res.StorageAsJson = this.StorageAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
                 return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
             } 
             catch (ArithmeticException)
@@ -114,8 +236,21 @@ namespace WSEP212.DomainLayer
         {
             if (storage.ContainsKey(itemID))
             {
-                storage.TryRemove(itemID, out _);
-                return new Ok("Item Was Successfully Removed From The Store's Storage");
+                var res = storage.TryRemove(itemID, out _);
+                if (res)
+                {
+                    var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                    if (result != null)
+                    {
+                        result.storage = storage;
+                        if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
+                            result.StorageAsJson = this.StorageAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
+                        return new Ok("Item Was Successfully Removed From The Store's Storage");
+                    }
+                    return new Failure("Could not remove the item!");
+                }
+                
             }
             return new Failure("Item Not Exist In Storage");
         }
@@ -128,7 +263,18 @@ namespace WSEP212.DomainLayer
             {
                 Item item = storage[itemID];
                 if (item.changeQuantity(numOfItems))
+                {
+                    var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                    if (result != null)
+                    {
+                        result.storage = storage;
+                        if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
+                            result.StorageAsJson = this.StorageAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
+                        return new Ok("Item Was Successfully Removed From The Store's Storage");
+                    }
                     return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
+                }
                 return new Failure("Item quantity can't be negative");
 
             }
@@ -148,19 +294,20 @@ namespace WSEP212.DomainLayer
         // edit the personal details of an item
         public RegularResult editItem(int itemID, String itemName, String description, double price, ItemCategory category, int quantity)
         {
-            if (itemName.Equals("") || price <= 0 || category.Equals(""))
-                return new Failure("One Or More Of The New Item Details Are Invalid");
             // checks that the item exists
             if (storage.ContainsKey(itemID))
             {
                 Item item = storage[itemID];
-                item.itemName = itemName;
-                item.description = description;
-                item.price = price;
-                item.category = category;
-                if (item.setQuantity(quantity))
-                    return new Ok("Item Details Have Been Successfully Updated In The Store");
-                return new Failure("Item quantity can't be negative");
+                var res = item.editItem(itemName, description, price, category, quantity);
+                var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                if (res.getTag() && result != null)
+                {
+                    result.storage = storage;
+                    if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
+                        result.StorageAsJson = this.StorageAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+                return res;
             }
             return new Failure("Item Not Exist In Storage");
         }
@@ -181,21 +328,47 @@ namespace WSEP212.DomainLayer
         }
 
         // add a new purchase prediacte for the store
-        public int addPurchasePredicate(Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public int addPurchasePredicate(LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
-            return this.purchasePolicy.addPurchasePredicate(newPredicate, predDescription);
+            var res = this.purchasePolicy.addPurchasePredicate(newPredicate, predDescription);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (result != null)
+            {
+                result.purchasePolicy = purchasePolicy;
+                //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+            return 1;
         }
 
         // removes purchase prediacte from the store
         public RegularResult removePurchasePredicate(int predicateID)
         {
-            return this.purchasePolicy.removePurchasePredicate(predicateID);
+            var res = this.purchasePolicy.removePurchasePredicate(predicateID);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (res.getTag() && result != null)
+            {
+                result.purchasePolicy = purchasePolicy;
+                result.PurchasePolicyAsJson = PurchasePolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+
+            return res;
         }
 
         // compose two predicates by the type of predicate 
         public ResultWithValue<int> composePurchasePredicates(int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition)
         {
-            return this.purchasePolicy.composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
+            var res = this.purchasePolicy.composePurchasePredicates(firstPredicateID, secondPredicateID, typeOfComposition);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (res.getTag() && result != null)
+            {
+                result.purchasePolicy = purchasePolicy;
+                result.PurchasePolicyAsJson = PurchasePolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+
+            return res;
         }
 
         // returns the descriptions of all preds for presenting them to the user
@@ -207,25 +380,61 @@ namespace WSEP212.DomainLayer
         // add new sale for the store sale policy
         public int addSale(int salePercentage, ApplySaleOn saleOn, String saleDescription)
         {
-            return this.salesPolicy.addSale(salePercentage, saleOn, saleDescription);
+            var res = this.salesPolicy.addSale(salePercentage, saleOn, saleDescription);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (result != null)
+            {
+                result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+
+            return res;
         }
 
         // remove sale from the store sale policy
         public RegularResult removeSale(int saleID)
         {
-            return this.salesPolicy.removeSale(saleID);
+            var res = this.salesPolicy.removeSale(saleID);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (res.getTag() && result != null)
+            {
+                result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+
+            return res;
         }
 
         // add conditional for getting the sale
         public ResultWithValue<int> addSaleCondition(int saleID, SimplePredicate condition, SalePredicateCompositionType compositionType)
         {
-            return this.salesPolicy.addSaleCondition(saleID, condition, compositionType);
+            var res = this.salesPolicy.addSaleCondition(saleID, condition, compositionType);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (res.getTag() && result != null)
+            {
+                result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+
+            return res;
         }
 
         // compose two sales by the type of sale 
         public ResultWithValue<int> composeSales(int firstSaleID, int secondSaleID, SaleCompositionType typeOfComposition, SimplePredicate selectionRule)
         {
-            return this.salesPolicy.composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
+            var res = this.salesPolicy.composeSales(firstSaleID, secondSaleID, typeOfComposition, selectionRule);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (res.getTag() && result != null)
+            {
+                result.salesPolicy = salesPolicy;
+                result.SalesPolicyAsJson = SalesPolicyAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
+
+            return res;
         }
 
         // returns the descriptions of all sales for presenting them to the user
@@ -291,7 +500,7 @@ namespace WSEP212.DomainLayer
                     if (itemAvailableRes.getTag())
                     {
                         RegularResult changeQuantityRes = changeItemQuantity(itemID, -1 * quantity);
-                        if (changeQuantityRes.getTag())
+                        if(changeQuantityRes.getTag())
                         {
                             updatedItems.TryAdd(itemID, quantity);
                         }
@@ -386,10 +595,14 @@ namespace WSEP212.DomainLayer
         // returns transaction id if the delivery done successfully
         public int deliverItems(DeliveryParameters deliveryParameters)
         {
+            if (this.deliverySystem == null)
+            {
+                this.deliverySystem = DeliverySystemAdapter.Instance;
+            }
             return this.deliverySystem.deliverItems(deliveryParameters.sendToName, deliveryParameters.address, deliveryParameters.city,
                 deliveryParameters.country, deliveryParameters.zip);
         }
-
+        
         // cancel the delivery of the transaction id
         public bool cancelDelivery(int transactionID)
         {
@@ -401,10 +614,18 @@ namespace WSEP212.DomainLayer
         {
             lock (addStoreSellerLock)
             {
-                String sellerUserName = sellerPermissions.seller.userName;
+                String sellerUserName = sellerPermissions.SellerName;
                 if (!storeSellersPermissions.ContainsKey(sellerUserName))
                 {
                     storeSellersPermissions.TryAdd(sellerUserName, sellerPermissions);
+                    var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                    if (result != null)
+                    {
+                        result.storeSellersPermissions = storeSellersPermissions;
+                        if(!JToken.DeepEquals(result.StoreSellersPermissionsAsJson, this.StoreSellersPermissionsAsJson))
+                            result.StoreSellersPermissionsAsJson = StoreSellersPermissionsAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
+                    }
                     return new Ok("The New Store Seller Added To The Store Successfully");
                 }
                 return new Failure("The Store Seller Is Already Defined As A Seller In This Store");
@@ -417,6 +638,14 @@ namespace WSEP212.DomainLayer
             if (storeSellersPermissions.ContainsKey(sellerUserName))
             {
                 storeSellersPermissions.TryRemove(sellerUserName, out _);
+                var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+                if (result != null)
+                {
+                    result.storeSellersPermissions = storeSellersPermissions;
+                    if(!JToken.DeepEquals(result.StoreSellersPermissionsAsJson, this.StoreSellersPermissionsAsJson))
+                        result.StoreSellersPermissionsAsJson = StoreSellersPermissionsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
                 return new Ok("The Store Seller Removed From The Store Successfully");
             }
             return new Failure("The Store Seller Is Not Defined As A Seller In This Store");
@@ -430,7 +659,7 @@ namespace WSEP212.DomainLayer
                 storeSellersPermissions.TryRemove(sellerUserName, out _);
                 foreach(KeyValuePair<string,SellerPermissions> val in storeSellersPermissions)
                 {
-                    if (val.Value.grantor.userName.Equals(sellerUserName))
+                    if (val.Value.GrantorName.Equals(sellerUserName))
                     {
                         storeSellersPermissions.TryRemove(val.Key, out _);
                     }
@@ -459,7 +688,7 @@ namespace WSEP212.DomainLayer
             foreach (KeyValuePair<string, SellerPermissions> sellerEntry in storeSellersPermissions)
             {
                 SellerPermissions seller = sellerEntry.Value;
-                officialsInfo.TryAdd(seller.seller.userName, seller.permissionsInStore);
+                officialsInfo.TryAdd(seller.SellerName, seller.permissionsInStore);
             }
             return officialsInfo;
         }
@@ -467,9 +696,17 @@ namespace WSEP212.DomainLayer
         // Add purchase made by user in the store
         public void addPurchaseInvoice(PurchaseInvoice purchase)
         {
-            purchasesHistory.TryAdd(purchase.purchaseInvoiceID, purchase);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (result != null)
+            {
+                purchasesHistory.TryAdd(purchase.purchaseInvoiceID, purchase);
+                result.purchasesHistory = purchasesHistory;
+                if(!JToken.DeepEquals(result.PurchasesHistoryAsJson, this.PurchasesHistoryAsJson))
+                    result.PurchasesHistoryAsJson = PurchasesHistoryAsJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
         }
-
+        
         // Remove purchase made by user in the store
         // done only if the rollback function was called
         public void removePurchaseInvoice(int purchaseInvoiceID)

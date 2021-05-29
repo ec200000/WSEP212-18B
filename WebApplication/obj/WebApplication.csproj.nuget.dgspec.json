@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {}
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+        "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
         "projectName": "WebApplication",
-        "projectPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
-        "packagesPath": "C:\\Users\\talsk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
+        "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+        "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\talsk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-                "projectPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+              "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+                "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
               }
             }
           }
@@ -67,6 +67,10 @@
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
               "version": "[1.1.0, )"
+            },
+            "Serialize.Linq": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             }
           },
           "imports": [
@@ -91,20 +95,20 @@
         }
       }
     },
-    "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\talsk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\talsk\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
+        "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\talsk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -142,6 +146,14 @@
             "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
               "target": "Package",
               "version": "[5.0.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[11.0.2, )"
+            },
+            "Serialize.Linq": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             },
             "Serilog": {
               "target": "Package",

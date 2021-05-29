@@ -38,6 +38,7 @@
           "Microsoft.AspNetCore.Authentication.Certificate": "5.0.5",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "Serialize.Linq": "2.0.0",
           "WSEP212": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "5.0.0.0",
@@ -675,6 +676,17 @@
           }
         }
       },
+      "Serialize.Linq/2.0.0": {
+        "runtime": {
+          "lib/net5.0/Serialize.Linq.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/Serialize.Linq.dll": {}
+        }
+      },
       "Serilog/2.10.1-dev-01285": {
         "runtime": {
           "lib/netstandard2.1/Serilog.dll": {
@@ -1027,6 +1039,8 @@
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Cryptography.Internal": "5.0.5",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "5.0.5",
+          "Newtonsoft.Json": "11.0.2",
+          "Serialize.Linq": "2.0.0",
           "Serilog": "2.10.1-dev-01285",
           "Serilog.Sinks.RollingFile": "3.3.1-dev-00771",
           "System.Collections.Concurrent": "4.3.0"
@@ -3074,6 +3088,13 @@
       "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "Serialize.Linq/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mURyXDcdqHvdqlgOKlWWjD210Q83ltASrNB6TTSsSiNPVuxGMghzGc2bt5DzY8T608Bu1NP01lESlaNkpMpcRA==",
+      "path": "serialize.linq/2.0.0",
+      "hashPath": "serialize.linq.2.0.0.nupkg.sha512"
     },
     "Serilog/2.10.1-dev-01285": {
       "type": "package",

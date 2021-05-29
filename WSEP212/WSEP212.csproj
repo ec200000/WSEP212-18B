@@ -14,9 +14,17 @@
       <PackageReference Include="EntityFramework" Version="6.4.4" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.Internal" Version="5.0.5" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.5" />
+      <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+      <PackageReference Include="Serialize.Linq" Version="2.0.0" />
       <PackageReference Include="Serilog" Version="2.10.1-dev-01285" />
       <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.1-dev-00771" />
       <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="DomainLayer\Configuration.cs" />
+      <Compile Remove="SystemDBAccess.cs" />
+      <Compile Remove="DomainLayer\KnownTypesBinder.cs" />
     </ItemGroup>
 
 </Project>

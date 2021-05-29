@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.ServiceLayer.Result;
@@ -19,8 +21,15 @@ namespace WSEP212.DomainLayer
         StoreRepository()
         {
             stores = new ConcurrentDictionary<int, Store>();
+            var storeList = SystemDBAccess.Instance.Stores.ToList();
+            storeList.ForEach(s =>
+            {
+               s.setPurchaseJson(s.PurchasePolicyAsJson);
+               s.setSalesJson(s.SalesPolicyAsJson);
+               stores.TryAdd(s.storeID, s);
+            });
         }  
-        private static readonly object padlock = new object();  
+        
         private static readonly Lazy<StoreRepository> lazy
             = new Lazy<StoreRepository>(() => new StoreRepository());
 
@@ -45,6 +54,7 @@ namespace WSEP212.DomainLayer
                 else
                 {
                     Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
+                    store.addToDB();
                     int storeID = store.storeID;
                     stores.TryAdd(storeID, store);
                     return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
@@ -65,6 +75,9 @@ namespace WSEP212.DomainLayer
                     }
                 }
             }
+
+            //if (SystemDBAccess.Instance.Stores.Find(storeName) != null)
+            //    return true;
             return false;
         }
 
@@ -152,7 +165,7 @@ namespace WSEP212.DomainLayer
             foreach (var sellerPer in store.storeSellersPermissions.Values)
             {
                 if(sellerPer.isStoreOwner())
-                    officials.TryAdd(sellerPer.seller.userName);
+                    officials.TryAdd(sellerPer.SellerName);
             }
             return officials;
         }

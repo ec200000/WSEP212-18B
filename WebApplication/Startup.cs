@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApplication.Communication;
+using WSEP212.ServiceLayer;
 
 namespace WebApplication
 {
@@ -20,6 +21,7 @@ namespace WebApplication
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            SystemController.Instance.initRepo();
         }
 
         public IConfiguration Configuration { get; }
@@ -71,6 +73,7 @@ namespace WebApplication
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddSingleton<IUserConnectionManager, UserConnectionManager>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

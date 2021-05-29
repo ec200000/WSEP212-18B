@@ -7,6 +7,7 @@ using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
@@ -20,7 +21,7 @@ namespace WSEP212.ServiceLayer
         public RegularResult continueAsGuest(String userName); // USE CASE 2.1
         public RegularResult logout(String userName); // USE CASE 3.1
 
-        public RegularResult addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice); // USE CASE 2.7
+        public ResultWithValue<NotificationDTO> addItemToShoppingCart(String userName, int storeID, int itemID, int quantity, Int32 purchaseType, double startPrice); // USE CASE 2.7
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID); // USE CASE 2.8
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity); // USE CASE 2.8
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, Int32 purchaseType, double startPrice); // USE CASE 2.8
@@ -31,9 +32,10 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
 
+        public ConcurrentLinkedList<PurchaseType> getStorePurchaseTypes(String userName, int storeID); // USE CASE 4.2
         public RegularResult supportPurchaseType(String userName, int storeID, Int32 purchaseType); // USE CASE 4.2
         public RegularResult unsupportPurchaseType(String userName, int storeID, Int32 purchaseType); // USE CASE 4.2
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID); // USE CASE 4.2
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, 
             int secondPredicateID, Int32 typeOfComposition); // USE CASE 4.2

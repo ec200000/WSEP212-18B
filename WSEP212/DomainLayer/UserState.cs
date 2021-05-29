@@ -1,6 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.AuthenticationSystem;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PolicyPredicate;
@@ -22,7 +29,7 @@ namespace WSEP212.DomainLayer
         }
 
         // * User Management In The System * //
-        public abstract RegularResult register(String userName, int userAge, String password);
+        public abstract RegularResult register(User newUser, String password);
 
         public abstract RegularResult login(String userName, String password);   
         public abstract RegularResult loginAsSystemManager(String userName, String password);
@@ -33,13 +40,41 @@ namespace WSEP212.DomainLayer
 
 
         // * Purchase Items Functions *//
-        public RegularResult addItemToShoppingCart(int storeID, int itemID, int quantity, ItemPurchaseType purchaseType)
+        public ResultWithValue<ConcurrentLinkedList<string>> addItemToShoppingCart(int storeID, int itemID, int quantity, ItemPurchaseType purchaseType)
         {
-            return this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity, purchaseType);
+            RegularResult res = this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity, purchaseType);
+            if (res.getTag() && Authentication.Instance.usersInfo.ContainsKey(this.user.userName))
+            {
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
+                if (result != null)
+                {
+                    result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+
+                // returns store owners to send notification only if purchase type is submit offer
+                if(purchaseType.getPurchaseType() == PurchaseType.SubmitOfferPurchase)
+                {
+                    ConcurrentLinkedList<string> storeOwners = StoreRepository.Instance.getStoreOwners(storeID);
+                    return new OkWithValue<ConcurrentLinkedList<string>>(res.getMessage(), storeOwners);
+                }
+                return new OkWithValue<ConcurrentLinkedList<string>>(res.getMessage(), null);
+            }
+            return new FailureWithValue<ConcurrentLinkedList<string>>(res.getMessage(), null);
         }
         public RegularResult removeItemFromShoppingCart(int storeID, int itemID)
         {
-            return this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+            RegularResult res = this.user.shoppingCart.removeItemFromShoppingBag(storeID, itemID);
+            if (res.getTag() && Authentication.Instance.usersInfo.ContainsKey(this.user.userName))
+            {
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
+                if (result != null)
+                {
+                    result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+            }
+            return res;
         }
         public RegularResult changeItemQuantityInShoppingCart(int storeID, int itemID, int updatedQuantity)
         {
@@ -79,7 +114,7 @@ namespace WSEP212.DomainLayer
         // * Store Policies Management * //
         public abstract RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType);
         public abstract RegularResult unsupportPurchaseType(int storeID, PurchaseType purchaseType);
-        public abstract ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
+        public abstract ResultWithValue<int> addPurchasePredicate(int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription);
         public abstract RegularResult removePurchasePredicate(int storeID, int predicateID);
         public abstract ResultWithValue<int> composePurchasePredicates(int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
         public abstract ResultWithValue<int> addSale(int storeID, int salePercentage, ApplySaleOn saleOn, String saleDescription);

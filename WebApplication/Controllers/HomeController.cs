@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,10 @@ using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
 using WebApplication.Communication;
+using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -110,6 +115,8 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
             ShoppingCartItems(res);
+            TryPriceBeforeSale(model);
+            TryPriceAftereSale(model);
             return View();
         }
 
@@ -135,7 +142,6 @@ namespace WebApplication.Controllers
                     storesAndItems.AddLast(storeAndItem + item);
                 }
             }
-
             string[] strs = storesAndItems.ToArray();
             HttpContext.Session.SetObject("shoppingCart", strs);
         }
@@ -169,6 +175,39 @@ namespace WebApplication.Controllers
             return View();
         }
         
+        private string[] listToArray(ConcurrentLinkedList<PurchaseType> lst)
+        {
+            string[] arr = new string[lst.size];
+            int i = 0;
+            Node<PurchaseType> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
+            int size = lst.size;
+            while(size > 0)
+            {
+                arr[i] = node.Value.ToString();
+                node = node.Next;
+                i++;
+                size--;
+            }
+            return arr;
+        }
+        
+        public IActionResult PurchaseTypes(StoreModel model)
+        {
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
+            SystemController systemController = SystemController.Instance;
+            string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentLinkedList<PurchaseType> lst = systemController.getStorePurchaseTypes(userName, storeID);
+            HttpContext.Session.SetObject("storepurchasetypes", listToArray(lst));
+            HttpContext.Session.SetObject("purchasetypes", types);
+            return View();
+        }
+        
         public IActionResult StoreActions()
         {
             SystemController systemController = SystemController.Instance;
@@ -185,14 +224,7 @@ namespace WebApplication.Controllers
             HttpContext.Session.SetObject("stores", storesValues);
             return View();
         }
-        
-        public IActionResult GetStoreInformation(StoreModel model)
-        {
-            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
-            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
-            return View();
-        }
-        
+
         public IActionResult ItemActions(StoreModel model)
         {
             model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
@@ -234,6 +266,8 @@ namespace WebApplication.Controllers
                 ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> res = systemController.getItemsInStoresInformation();
                 allItemStrings(res);
             }
+            string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
+            HttpContext.Session.SetObject("purchasetypes", types);
             model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
             return View(model);
         }
@@ -254,10 +288,10 @@ namespace WebApplication.Controllers
             return View(model);
         }
 
-        private string reviewsToString(ConcurrentDictionary<String, ItemUserReviews> reviews)
+        private string reviewsToString(ConcurrentDictionary<String, ItemReview> reviews)
         {
             string reviewsStr = "";
-            foreach (ItemUserReviews review in reviews.Values)
+            foreach (ItemReview review in reviews.Values)
             {
                 reviewsStr += review + "\n";
             }
@@ -284,6 +318,7 @@ namespace WebApplication.Controllers
         
         public IActionResult Subscribe(UserModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.register(model.UserName, model.Age, model.Password);
             if (res.getTag())
@@ -302,6 +337,7 @@ namespace WebApplication.Controllers
         
         public IActionResult ContinueAsGuest(UserModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.continueAsGuest(model.UserName);
             if (res.getTag())
@@ -319,9 +355,9 @@ namespace WebApplication.Controllers
         
         public IActionResult TryEditDetails(ItemModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             //KeyValuePair<Item, int> pair = StoreRepository.Instance.getItemByID(model.itemID);
-            // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO itemDto = new ItemDTO((int)HttpContext.Session.GetInt32(SessionStoreID),
                 model.quantity,
                 model.itemName,
@@ -350,7 +386,6 @@ namespace WebApplication.Controllers
             //if (model.minPrice == 0) model.minPrice = int.MinValue;
             if (model.maxPrice == 0) model.maxPrice = int.MaxValue;
             if (model.category == null) model.category = "";
-            // !!! TODO: fix category to work with ItemCategory !!!
             ConcurrentDictionary<Item,int> res = systemController.searchItems(model.itemName, model.keyWords,model.minPrice, model.maxPrice, 0);
             if (res != null)
             {
@@ -367,6 +402,7 @@ namespace WebApplication.Controllers
 
         public IActionResult TryReviewItem(ReviewModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<NotificationDTO> res = systemController.itemReview(HttpContext.Session.GetString(SessionName), model.review, (int)HttpContext.Session.GetInt32(SessionItemID), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
@@ -390,6 +426,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryAppointManager(AppointModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.appointStoreManager(HttpContext.Session.GetString(SessionName),
                 model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
@@ -406,6 +443,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryAppointOwner(AppointModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.appointStoreOwner(HttpContext.Session.GetString(SessionName),
                 model.userName, (int)HttpContext.Session.GetInt32(SessionStoreID));
@@ -422,6 +460,7 @@ namespace WebApplication.Controllers
 
         public IActionResult TryLogin(UserModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             RegularResult res = systemController.login(model.UserName, model.Password);
             string userName = model.UserName;
@@ -458,6 +497,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryLogout(UserModel model)
         {
+            TempData["alert"] = null;
             if (HttpContext.Session.GetInt32(SessionLogin) != 3)
             {
                 SystemController systemController = SystemController.Instance;
@@ -485,6 +525,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryOpenStore(StoreModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             ResultWithValue<int> res = systemController.openStore(userName, model.storeName, model.storeAddress, model.purchasePolicy, model.salesPolicy);
@@ -505,23 +546,26 @@ namespace WebApplication.Controllers
             int[] arr = new int[lst.size];
             int i = 0;
             Node<int> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
-            while(node.Next != null)
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = node.Value;
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
 
         public IActionResult TryAddItem(ItemModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO item = new ItemDTO((int) storeID, model.quantity, model.itemName, model.description,
-                new ConcurrentDictionary<string, ItemUserReviews>(), model.price, 0);
+                new ConcurrentDictionary<string, ItemReview>(), model.price, 0);
             ResultWithValue<int> res = systemController.addItemToStorage(userName, (int)storeID, item);
             if (res.getTag())
             {
@@ -537,6 +581,7 @@ namespace WebApplication.Controllers
         
         public IActionResult TryRemoveItem(ItemModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -552,8 +597,48 @@ namespace WebApplication.Controllers
             }
         }
         
+        private Item[] itemListToArray2(ConcurrentLinkedList<Item> lst)
+        {
+            Item[] arr = new Item[lst.size];
+            int i = 0;
+            Node<Item> node = lst.First;
+            int size = lst.size;
+            while(size > 0)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+                size--;
+            }
+            return arr;
+        }
+
+        private Item findThisItem(ConcurrentLinkedList<Item> items, int itemID)
+        {
+            Item[] itms = itemListToArray2(items);
+            for (int i = 0; i < itms.Length; i++)
+            {
+                if (itms[i].itemID == itemID)
+                    return itms[i];
+            }
+            return null;
+        }
+
+        private double findItem(ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> stores, int itemID, int storeID)
+        {
+            foreach (var pair in stores)
+            {
+                if (pair.Key.storeID == storeID)
+                {
+                    return findThisItem(pair.Value, itemID).price;
+                }
+            }
+            return -1;
+        }
+        
         public IActionResult TryAddItemToShoppingCart(SearchModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             if (model.itemChosen != null)
@@ -562,8 +647,13 @@ namespace WebApplication.Controllers
                 string[] store = authorsList[1].Split(" ");
                 int storeID = int.Parse(store[0]);
                 int itemID = int.Parse(authorsList[authorsList.Length - 1]);
-                // !!! TODO: ADD CHOOSE PURCHASE TYPE, AND PRICE TO OFFER (FOR IMMIDIATE INSERT THE REAL PRICE) !!!
-                RegularResult res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, 0, model.maxPrice);
+                int purchaseType = stringToEnumPT(model.purchaseType);
+                double price = findItem(systemController.getItemsInStoresInformation(), itemID, storeID);
+                if (purchaseType == 1)
+                {
+                    price = model.priceOffer;
+                }
+                ResultWithValue<NotificationDTO> res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
                     return RedirectToAction("SearchItems");
@@ -582,11 +672,13 @@ namespace WebApplication.Controllers
 
         public IActionResult TryShowPurchaseHistory(PurchaseModel model)
         {
+            TempData["alert"] = null;
             return RedirectToAction("ItemReview", model);
         }
 
         public IActionResult TryShowShoppingCart()
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ShoppingCart> res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
@@ -605,12 +697,14 @@ namespace WebApplication.Controllers
         {
             int[] arr = new int[lst.size];
             int i = 0;
-            Node<Item> node = lst.First; 
-            while(node.Next != null)
+            Node<Item> node = lst.First;
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = node.Value.itemID;
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
@@ -705,11 +799,13 @@ namespace WebApplication.Controllers
             string[] arr = new string[lst.size];
             int i = 0;
             Node<Item> node = lst.First; // going over the user's permissions to check if he is a store manager or owner
-            while(node.Next != null)
+            int size = lst.size;
+            while(size > 0)
             {
                 arr[i] = "StoreID: "+storeID+" "+ node.Value.ToString();
                 node = node.Next;
                 i++;
+                size--;
             }
             return arr;
         }
@@ -721,6 +817,7 @@ namespace WebApplication.Controllers
         }
         public IActionResult TryRemoveItemFromShoppingCart(ShoppingCartModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -747,10 +844,14 @@ namespace WebApplication.Controllers
         }
         public IActionResult TrypurchaseItems(ShoppingCartModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            // !!! TODO: CHANGE FUNCTION TO GET PAYMENT AND DELIVERY PARAMETERS !!!
-            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, null, null);
+            PaymentParametersDTO payment = new PaymentParametersDTO(model.cardNumber, model.month, model.year,
+                model.holder, model.ccv, model.id);
+            DeliveryParametersDTO delivery =
+                new DeliveryParametersDTO(model.sendToName, model.address, model.city, model.country, model.zip);
+            ResultWithValue<NotificationDTO> res = systemController.purchaseItems(userName, delivery, payment);
             if (res.getTag())
             {
                 Node<string> node = res.getValue().usersToSend.First;
@@ -770,6 +871,7 @@ namespace WebApplication.Controllers
         
         public IActionResult UsersPurchaseHistory()
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<string, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getUsersPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
@@ -796,6 +898,7 @@ namespace WebApplication.Controllers
         
         public IActionResult StoresPurchaseHistory()
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
@@ -822,6 +925,7 @@ namespace WebApplication.Controllers
         
         public IActionResult StorePurchaseHistory()
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
@@ -845,6 +949,7 @@ namespace WebApplication.Controllers
         
         public IActionResult ViewOfficials()
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<string,ConcurrentLinkedList<Permissions>>> res = systemController.getOfficialsInformation(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag()&&res.getValue()!=null&&res.getValue().Count!=0)
@@ -872,6 +977,7 @@ namespace WebApplication.Controllers
         
         public IActionResult RemoveManager(OfficialsModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -891,6 +997,7 @@ namespace WebApplication.Controllers
         
         public IActionResult RemoveOwner(OfficialsModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -922,6 +1029,7 @@ namespace WebApplication.Controllers
         
         public IActionResult AddManagerPermission(OfficialsModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -968,8 +1076,13 @@ namespace WebApplication.Controllers
             return -1;
         }
 
-        public IActionResult EditSalePredicates()
+        public IActionResult EditSalePredicates(StoreModel model)
         {
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
@@ -980,7 +1093,7 @@ namespace WebApplication.Controllers
                 int i = 0;
                 foreach (KeyValuePair<int,string> pred in res.getValue())
                 {
-                    preds[i] = pred.Value+ "; " + pred.Key.ToString();
+                    preds[i] = pred.Value+ ": " + pred.Key.ToString();
                     i++;
                 }
                 HttpContext.Session.SetObject("sale_predicates", preds);
@@ -991,16 +1104,202 @@ namespace WebApplication.Controllers
                 return RedirectToAction("StoreActions");
             }
         }
-        
-        public IActionResult TryRemoveSalePredicate(SalesModel model)
+        public IActionResult AddSale()
         {
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            string pred = model.predicate;
-            string[] predparts = pred.Split(";");
-            int predicate = int.Parse(predparts[1]); 
-            RegularResult res = systemController.removeSale(userName, (int)storeID, predicate);
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> itemsandstores = systemController.getItemsInStoresInformation();
+            Store store = null;
+            ConcurrentLinkedList<Item> items = null;
+            foreach (var storeid in itemsandstores.Keys)
+            {
+                if (storeid.storeID == storeID)
+                {
+                    store = storeid;
+                    items = itemsandstores.GetValueOrDefault(storeid);
+                    break;
+                }
+            }
+            if (items != null)
+            {
+                string[] arr = new string[items.size];
+                int i = 0;
+                Node<Item> node = items.First;
+                int size = items.size;
+                while(size > 0)
+                {
+                    arr[i] = node.Value.ToString();
+                    node = node.Next;
+                    i++;
+                    size--;
+                }
+                HttpContext.Session.SetObject("itemsList", arr);
+            }
+            return View();
+        }
+        public int categorytoenum(string pred)
+        {
+            switch (pred)
+            {
+                case "AllCategories":
+                    return 0;
+                case "Dairy":
+                    return 1;
+                case "Meat":
+                    return 2;
+                case "Clothing":
+                    return 3;
+                case "Footwear":
+                    return 4;
+                case "Cleaners":
+                    return 5;
+                case "Vegetables":
+                    return 6;
+                case "Electronics":
+                    return 7;
+                case "Health":
+                    return 8;
+                case "Sport":
+                    return 9;
+                case "Dinnerware":
+                    return 10;
+                case "Fruits":
+                    return 11;
+                case "Snacks":
+                    return 12;
+                case "Pastries":
+                    return 13;
+                case "Drinks":
+                    return 14;
+                case "Tools":
+                    return 15;
+                case "Other":
+                    return 16;
+            }
+            return -1;
+        }
+        public IActionResult TryAddSale(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ApplySaleOn typeSale = null;
+            if (model.itemID != null)
+            {
+                string itemid = model.itemID;
+                string[] s = itemid.Split(": ");
+                int itemidd = int.Parse(s[s.Length - 1]);
+                typeSale = new SaleOnItem(itemidd);
+            }
+            else if (model.category != null)
+            {
+                string category = model.category; 
+                typeSale = new SaleOnCategory((ItemCategory)categorytoenum(category));
+            }
+            else
+            {
+                typeSale = new SaleOnAllStore();
+            }
+
+            if (typeSale != null)
+            {
+                ResultWithValue<int> res = systemController.addSale(userName, (int) storeID, model.salePercentage, typeSale,
+                    model.saleDescription);
+                if (res.getTag())
+                {
+                    return RedirectToAction("AddSale");
+                }
+                else
+                {
+                    TempData["alert"] = res.getMessage();
+                    return RedirectToAction("AddSale");
+                }
+            }
+            return RedirectToAction("AddSale");
+        }
+        private void TryAllSales()
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ResultWithValue<ConcurrentDictionary<int, string>> salesinfo = systemController.getStoreSalesDescription((int)storeID);
+            if (salesinfo.getTag())
+            {
+                string[] saleidanddesc = new string[salesinfo.getValue().Count];
+                int i = 0;
+                foreach (KeyValuePair<int,string> pred in salesinfo.getValue())
+                {
+                    saleidanddesc[i] = pred.Value+ ": " + pred.Key.ToString();
+                    i++;
+                }
+                HttpContext.Session.SetObject("sales_info", saleidanddesc);
+            }
+        }
+
+        public IActionResult TryAddSaleCondition(SalesModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            int composetype = saleStringToEnum(model.compositionType);
+            SimplePredicate typeCondition = null;
+            LocalPredicate<PurchaseDetails> pred = null;
+            //Predicate<PurchaseDetails> newPred = null;
+            if (model.numbersOfProducts != 0)
+            {
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.numbersOfProducts);
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+            }
+
+            if (model.priceOfShoppingBag != 0)
+            {
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.totalPurchasePrice();
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.priceOfShoppingBag);
+                //newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+            }
+
+            if (model.ageOfUser != 0)
+            {
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.userAge();
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.ageOfUser);
+                //newPred = pd => pd.userAge() >= model.ageOfUser;
+            }
+            typeCondition = new SimplePredicate(pred, model.saleDescription);
+            int saleID = 0;
+            if (model.saleinfo != null)
+            {
+                string saleid = model.saleinfo;
+                string[] s = saleid.Split(": ");
+                saleID = int.Parse(s[s.Length - 1]);
+            }
+
+            ResultWithValue<int> salecond =
+                systemController.addSaleCondition(userName, (int)storeID, saleID, typeCondition, composetype);
+            if (salecond.getTag())
+            {
+                return RedirectToAction("AddSale");
+            }
+            else
+            {
+                TempData["alert"] = salecond.getMessage();
+                return RedirectToAction("AddSale");
+            }
+        }
+        
+        public IActionResult TryRemoveSalePredicate(SalesModel model)
+        {
+            TempData["alert"] = null;
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ResultWithValue<ConcurrentDictionary<int, string>> salesPredicatesDescription =
+                systemController.getStoreSalesDescription((int)storeID);
+            String pre = model.predicate;
+            string[] s = pre.Split(": ");
+            int predicateIDDD = int.Parse(s[s.Length - 1]);
+            RegularResult res = systemController.removeSale(userName, (int)storeID, predicateIDDD);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
@@ -1028,17 +1327,32 @@ namespace WebApplication.Controllers
         
         public IActionResult ComposeSalePredicates(SalesModel model)
         {
+            TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            string firstpred = model.firstPred;
-            string[] predparts1 = firstpred.Split(";");
-            int predicate1 = int.Parse(predparts1[1]);
-            string secondpred = model.secondPred;
-            string[] predparts2 = secondpred.Split(";");
-            int predicate2 = int.Parse(predparts2[1]);
+            ResultWithValue<ConcurrentDictionary<int, string>> salePredicatesDescription =
+                systemController.getStoreSalesDescription((int)storeID);
+            int predicate1ID = 0;
+            int predicate2ID = 0;
+            foreach (string purpre in salePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.firstPred))
+                {
+                    predicate1ID = salePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            foreach (string purpre in salePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.secondPred))
+                {
+                    predicate2ID = salePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
             int composetype = saleStringToEnum(model.compositionType);
-            ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1,predicate2,composetype, null);
+            ResultWithValue<int> res = systemController.composeSales(userName, (int)storeID, predicate1ID,predicate2ID,composetype, null);
             if (res.getTag())
             {
                 return RedirectToAction("StoreActions");
@@ -1048,6 +1362,310 @@ namespace WebApplication.Controllers
                 TempData["alert"] = res.getMessage();
                 return RedirectToAction("StoreActions");
             }
+        }
+        
+        public int stringToEnumPT(string pred)
+        {
+            switch (pred)
+            {
+                case "ImmediatePurchase":
+                    return 0;
+                case "SubmitOfferPurchase":
+                    return 1;
+            }
+            return -1;
+        }
+        
+        public IActionResult TryRemovePurchaseType(PurchaseTypesModel model)
+        {
+            TempData["alert"] = null;
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.unsupportPurchaseType(userName, storeID, stringToEnumPT(model.purchaseType));
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        
+        public IActionResult TryAddPurchaseType(PurchaseTypesModel model)
+        {
+            TempData["alert"] = null;
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            RegularResult res = systemController.supportPurchaseType(userName, storeID, stringToEnumPT(model.purchaseType2));
+            if (res.getTag())
+            {
+                return RedirectToAction("StoreActions");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("StoreActions");
+            }
+        }
+        public IActionResult PurchasePredicate(StoreModel model)
+        {
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
+            SystemController systemController = SystemController.Instance;
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> info =
+                systemController.getItemsInStoresInformation();
+            Store store = null;
+            foreach (var storeid in info.Keys)
+            {
+                if (storeid.storeID == storeID)
+                {
+                    store = storeid;
+                    break;
+                }
+            }
+            if (store != null)
+            {
+                ResultWithValue<ConcurrentDictionary<int, string>> storePredicatesDescription =
+                    systemController.getStorePredicatesDescription((int)storeID);
+                LinkedList<string> purchasepredicateList = new LinkedList<string>();
+                foreach (string purpre in storePredicatesDescription.getValue().Values)
+                {
+                    string purchasepredicate = purpre;
+                    purchasepredicateList.AddLast(purchasepredicate);
+                }
+                
+                string[] strs = purchasepredicateList.ToArray();
+                HttpContext.Session.SetObject("PurchasePredicate", strs);
+            }
+            return View();
+        }
+        public IActionResult TryRemovePurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ResultWithValue<ConcurrentDictionary<int, string>> storePredicatesDescription =
+                systemController.getStorePredicatesDescription((int)storeID);
+            int predicateID = 0;
+            foreach (string purpre in storePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.predicate))
+                {
+                    predicateID = storePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            RegularResult res = systemController.removePurchasePredicate(userName, (int)storeID, predicateID);
+                if (res.getTag())
+                {
+                    return RedirectToAction("PurchasePredicate");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("PurchasePredicate");
+                }
+        }
+
+        public IActionResult TryAddPurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            LocalPredicate<PurchaseDetails> pred = null;
+            //Predicate<PurchaseDetails> newPred = null;
+            string description = "";
+            if (model.numbersOfProducts != 0)
+            {
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.numOfItemsInPurchase();
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.numbersOfProducts);
+                description = $"number of products is bigger than: {model.numbersOfProducts.ToString()}";
+            }
+            if (model.priceOfShoppingBag != 0)
+            {
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.totalPurchasePrice();
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.priceOfShoppingBag);
+                //newPred = pd => pd.totalPurchasePrice() >= model.priceOfShoppingBag;
+                description = $"price of shopping bag is bigger than: {model.priceOfShoppingBag.ToString()}";
+            }
+            if (model.ageOfUser != 0)
+            {
+                Expression<Func<PurchaseDetails, double>> exp = pd => pd.userAge();
+                //newPred = pd => pd.numOfItemsInPurchase() >= model.numbersOfProducts;
+                pred = new LocalPredicate<PurchaseDetails>(exp, model.ageOfUser);
+                //newPred = pd => pd.userAge() >= model.ageOfUser;
+                description = $"age of user is bigger than: {model.ageOfUser.ToString()}";
+            }
+            if (pred != null)
+            {
+                ResultWithValue<int> res = systemController.addPurchasePredicate(userName, (int) storeID, pred, description);
+                if (res.getTag())
+                {
+                    return RedirectToAction("PurchasePredicate");
+                }
+                else
+                {
+                    ViewBag.Alert = res.getMessage();
+                    return RedirectToAction("PurchasePredicate");
+                }
+            }
+            else
+            {
+                return RedirectToAction("PurchasePredicate");
+            }
+        }
+        
+        public int composePurchasePredicateStringToEnum(string pred)
+        {
+            switch (pred)
+            {
+                case "AndComposition":
+                    return 0;
+                case "OrComposition":
+                    return 1;
+                case "ConditionalComposition":
+                    return 2;
+            }
+            return -1;
+        }
+        
+        public IActionResult TryComposePurchasePredicate(PredicateModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ResultWithValue<ConcurrentDictionary<int, string>> storePredicatesDescription =
+                systemController.getStorePredicatesDescription((int)storeID);
+            int predicate1ID = 0;
+            int predicate2ID = 0;
+            foreach (string purpre in storePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.firstPred))
+                {
+                    predicate1ID = storePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+            foreach (string purpre in storePredicatesDescription.getValue().Values)
+            {
+                if (purpre.Equals(model.secondPred))
+                {
+                    predicate2ID = storePredicatesDescription.getValue().FirstOrDefault(x => x.Value == purpre).Key;
+                    break;
+                }
+            }
+
+            int compositionTypee = composePurchasePredicateStringToEnum(model.compositionType);
+            ResultWithValue<int> res = systemController.composePurchasePredicates(userName, (int)storeID, predicate1ID,predicate2ID,compositionTypee);
+            if (res.getTag())
+            {
+                return RedirectToAction("PurchasePredicate");
+            }
+            else
+            {
+                ViewBag.Alert = res.getMessage();
+                return RedirectToAction("PurchasePredicate");
+            }
+        }
+
+        public IActionResult TryPriceAftereSale(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>
+                pricesAfterSale = systemController.getItemsAfterSalePrices(userName);
+            double finalPriceAfterSale = 0;
+            foreach (ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> dict in pricesAfterSale.getValue().Values)
+            {
+                foreach (KeyValuePair<double, PriceStatus> keyValuePair in dict.Values)
+                {
+                    finalPriceAfterSale = finalPriceAfterSale + keyValuePair.Key;
+                }
+            }
+            HttpContext.Session.SetObject("finalPriceAfterSale", finalPriceAfterSale);
+            return RedirectToAction("TryPriceAftereSale");
+        }
+        public IActionResult TryPriceBeforeSale(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
+            ConcurrentDictionary<int, ShoppingBag> shoppingBagss = res.shoppingBags;
+
+            double finalPriceBeforeSale = 0;
+            foreach (ShoppingBag shopBag in shoppingBagss.Values)
+            {
+                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> prices = shopBag.allItemsPricesAndStatus();
+                foreach (KeyValuePair<double, PriceStatus> keyValuePair in prices.Values)
+                {
+                    finalPriceBeforeSale = finalPriceBeforeSale + keyValuePair.Key;
+                }
+            }
+            HttpContext.Session.SetObject("finalPriceBeforeSale", finalPriceBeforeSale);
+            return RedirectToAction("TryPriceBeforeSale");
+        }
+        
+        public IActionResult GetStoreInformation(StoreModel model)
+        {
+            model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+            HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            return View();
+        }
+
+        public IActionResult AddPredicate()
+        {
+            return View();
+        }
+
+        public IActionResult AddSaleCondition()
+        {
+            TryAllSales();
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> itemsandstores = systemController.getItemsInStoresInformation();
+            Store store = null;
+            ConcurrentLinkedList<Item> items = null;
+            foreach (var storeid in itemsandstores.Keys)
+            {
+                if (storeid.storeID == storeID)
+                {
+                    store = storeid;
+                    items = itemsandstores.GetValueOrDefault(storeid);
+                    break;
+                }
+            }
+            if (items != null)
+            {
+                string[] arr = new string[items.size];
+                int i = 0;
+                Node<Item> node = items.First;
+                int size = items.size;
+                while(size > 0)
+                {
+                    arr[i] = node.Value.ToString();
+                    node = node.Next;
+                    i++;
+                    size--;
+                }
+                HttpContext.Session.SetObject("itemsList", arr);
+            }
+            return View();
+        }
+        
+        public IActionResult EditPurchasePredicates()
+        {
+            return View();
         }
     }
 }

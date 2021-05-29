@@ -34,9 +34,9 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.login(userName, "123456");
             storeID = controller.openStore(userName, "SagivStore", "somewhere", "DEFAULT", "DEFAULT").getValue();
             controller.supportPurchaseType(userName, storeID, submitOfferPurchaseType);
-            ItemDTO itemA = new ItemDTO(storeID, 10, "yammy", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemUserReviews>(), 5.0, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
+            ItemDTO itemA = new ItemDTO(storeID, 10, "yammy", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemReview>(), 5.0, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
             itemIDA = controller.addItemToStorage(userName, storeID, itemA).getValue();
-            ItemDTO itemB = new ItemDTO(storeID, 10, "tasty", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemUserReviews>(), 7.5, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
+            ItemDTO itemB = new ItemDTO(storeID, 10, "tasty", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemReview>(), 7.5, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
             itemIDB = controller.addItemToStorage(userName, storeID, itemB).getValue();
 
             deliveryParameters = new DeliveryParametersDTO("guest", "habanim", "Haifa", "Israel", "786598");

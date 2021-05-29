@@ -1,8 +1,15 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PolicyPredicate;
@@ -16,24 +23,92 @@ namespace WSEP212.DomainLayer
 {
     public class User
     {
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
+                }
+            }
+        };
+        
+        [Key]
         public String userName { get; set; }
         public int userAge { get; set; }
+        [NotMapped]
+        [JsonIgnore]
         public UserState state { get; set; }
+        [NotMapped]
         public ShoppingCart shoppingCart { get; set; }
-        public ConcurrentDictionary<int, PurchaseInvoice> purchases { get; set; }
-        public ConcurrentLinkedList<SellerPermissions> sellerPermissions { get; set; }
-        public ConcurrentLinkedList<ItemUserReviews> myReviews { get; set; }
+        [NotMapped]
+        public ConcurrentDictionary<int, PurchaseInvoice> purchases
+        {
+            get;
+            set;
+        }
+        [NotMapped]
+        public LinkedList<SellerPermissions> sellerPermissions
+        {
+            get;
+            set;
+        }
+        [NotMapped]
+        private readonly string linkedListLock = String.Empty;
         public bool isSystemManager { get; set; }
+
+        public string PurchasesJson
+        {
+            get => JsonConvert.SerializeObject(purchases, settings);
+            set => purchases = JsonConvert.DeserializeObject<ConcurrentDictionary<int, PurchaseInvoice>>(value, settings);
+        }
+        
+        public string SellerPermissionsJson
+        {
+            get => JsonConvert.SerializeObject(sellerPermissions, settings);
+            set => sellerPermissions = JsonConvert.DeserializeObject<LinkedList<SellerPermissions>>(value, settings);
+        }
+
+        public User()
+        {
+        }
 
         public User(String userName, int userAge = int.MinValue, bool isSystemManager = false)
         {
             this.userName = userName;
             this.userAge = userAge;
-            this.shoppingCart = new ShoppingCart(this);
+            this.shoppingCart = new ShoppingCart(userName);
+            shoppingCart.addToDB();
             this.purchases = new ConcurrentDictionary<int, PurchaseInvoice>();
-            this.sellerPermissions = new ConcurrentLinkedList<SellerPermissions>();
-            this.myReviews = new ConcurrentLinkedList<ItemUserReviews>();
+            this.sellerPermissions = new LinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
+            this.isSystemManager = isSystemManager;
+            
+            SystemDBAccess.Instance.Users.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
         }
 
         public void changeState(UserState state)
@@ -46,13 +121,12 @@ namespace WSEP212.DomainLayer
         public void register(Object list)
         {
             ThreadParameters param = (ThreadParameters)list; // getting the thread parameters object for the function
-            String username = (String)param.parameters[0]; // getting the first argument
-            int userAge = (int)param.parameters[1]; // getting the second argument
-            String password = (String)param.parameters[2]; // getting the third argument
+            User newUser = (User)param.parameters[0]; // getting the first argument
+            String password = (String)param.parameters[1]; // getting the second argument
             object res;
             try
             {
-                res = state.register(username, userAge, password);  // calling the function of the user's state
+                res = state.register(newUser, password);  // calling the function of the user's state
             }
             catch (NotImplementedException)
             {
@@ -72,6 +146,10 @@ namespace WSEP212.DomainLayer
             object res;
             try
             {
+                if (this.state == null)
+                {
+                    this.state = new GuestBuyerState(this);
+                }
                 res = state.login(username, password);
             }
             catch (NotImplementedException)
@@ -545,7 +623,7 @@ namespace WSEP212.DomainLayer
         {
             ThreadParameters param = (ThreadParameters)list;
             int storeID = (int)param.parameters[0];
-            Predicate<PurchaseDetails> newPredicate = (Predicate<PurchaseDetails>)param.parameters[1];
+            LocalPredicate<PurchaseDetails> newPredicate = (LocalPredicate<PurchaseDetails>)param.parameters[1];
             String predDescription = (String)param.parameters[2];
             object res;
             try
@@ -785,17 +863,37 @@ namespace WSEP212.DomainLayer
 
         public void addPurchase(PurchaseInvoice info)
         {
-            this.purchases.TryAdd(info.purchaseInvoiceID, info);
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
+            if (result != null)
+            {
+                this.purchases.TryAdd(info.purchaseInvoiceID, info);
+                result.purchases = purchases;
+                if(!JToken.DeepEquals(result.PurchasesJson, this.PurchasesJson))
+                    result.PurchasesJson = this.PurchasesJson;
+                SystemDBAccess.Instance.SaveChanges();
+            }
         }
-
+        
         public void removePurchase(int purchaseInvoiceID)
         {
             this.purchases.TryRemove(purchaseInvoiceID, out _);
         }
-
+        
         public bool addSellerPermissions(SellerPermissions permissions)
         {
-            return this.sellerPermissions.TryAdd(permissions);
+            var res = false;
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
+            if (result != null)
+            {
+                lock (linkedListLock)
+                {
+                    this.sellerPermissions.AddFirst(permissions);
+                    result.SellerPermissionsJson = this.SellerPermissionsJson;
+                    result.sellerPermissions = this.sellerPermissions;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+            }
+            return res;
         }
         
         public void getUsersStores(Object list)

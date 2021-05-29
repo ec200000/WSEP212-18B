@@ -10,6 +10,7 @@ using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
@@ -23,7 +24,7 @@ namespace WSEP212.DomainLayer
         public RegularResult continueAsGuest(String userName);
         public RegularResult logout(String userName);
 
-        public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice);
+        public ResultWithValue<ConcurrentLinkedList<string>> addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice);
         public RegularResult removeItemFromShoppingCart(String userName, int storeID, int itemID);
         public RegularResult changeItemQuantityInShoppingCart(String userName, int storeID, int itemID, int updatedQuantity);
         public RegularResult changeItemPurchaseType(String userName, int storeID, int itemID, PurchaseType purchaseType, double startPrice);
@@ -35,7 +36,7 @@ namespace WSEP212.DomainLayer
 
         public RegularResult supportPurchaseType(String userName, int storeID, PurchaseType purchaseType);
         public RegularResult unsupportPurchaseType(String userName, int storeID, PurchaseType purchaseType);
-        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription);
+        public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription);
         public RegularResult removePurchasePredicate(String userName, int storeID, int predicateID);
         public ResultWithValue<int> composePurchasePredicates(String userName, int storeID, int firstPredicateID, int secondPredicateID, PurchasePredicateCompositionType typeOfComposition);
         public ResultWithValue<ConcurrentDictionary<int, string>> getStorePredicatesDescription(int storeID);

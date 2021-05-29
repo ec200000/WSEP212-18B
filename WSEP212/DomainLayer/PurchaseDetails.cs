@@ -54,28 +54,21 @@ namespace WSEP212.DomainLayer
             return numOfItems;
         }
 
-        public bool atLeastNQuantity(int itemID, int itemQuantity)
-        {
-            foreach (KeyValuePair<Item, int> itemAndQuantity in shoppingBagItems)
-            {
-                if(itemAndQuantity.Key.itemID == itemID)
-                {
-                    return itemAndQuantity.Value >= itemQuantity;
-                }
-            }
-            return false;
-        }
-
-        public bool atMostNQuantity(int itemID, int itemQuantity)
+        public int numOfSpecificItem(int itemID)
         {
             foreach (KeyValuePair<Item, int> itemAndQuantity in shoppingBagItems)
             {
                 if (itemAndQuantity.Key.itemID == itemID)
                 {
-                    return itemAndQuantity.Value <= itemQuantity;
+                    return itemAndQuantity.Value;
                 }
             }
-            return false;
+            return 0;
+        }
+
+        public int userAge()
+        {
+            return user.userAge;
         }
     }
 }

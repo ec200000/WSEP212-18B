@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212.DomainLayer.AuthenticationSystem;
+using System.Data.Entity;
+using System.Linq;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -17,14 +19,32 @@ namespace WSEP212.DomainLayer
         public static UserRepository Instance
             => lazy.Value;
 
-        private UserRepository() {
-            users = new ConcurrentDictionary<User, bool>();
+        private UserRepository()
+        {
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 
+        public void initRepo()
+        {
+            users = new ConcurrentDictionary<User, bool>(); 
+            var usersList =  SystemDBAccess.Instance.Users.ToList();
+            var cartsList = SystemDBAccess.Instance.Carts.ToList();
+            foreach (var user in usersList)
+            {
+                foreach (var cart in cartsList)
+                {
+                    if (cart.cartOwner.Equals(user.userName))
+                    {
+                        user.shoppingCart = cart;
+                        break;
+                    }
+                }
+                users.TryAdd(user, false); //when the system is starting no user is logged in
+            }
+        }
         public void createSystemManager()
         {
-            User systemManager = new User("big manager");
+            User systemManager = new User("big manager", 25, true);
             systemManager.changeState(new SystemManagerState(systemManager));
             RegularResult res = insertNewUser(systemManager, "123456");
             if (!res.getTag())

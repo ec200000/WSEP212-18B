@@ -1,5 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer.PolicyPredicate
 @inject IHttpContextAccessor HttpContextAccessor
+@model WebApplication.Models.PredicateModel
+@{
+    ViewData["Title"] = "Purchase Predicate";
+}
 <!DOCTYPE html>
 
 <html>
@@ -10,24 +15,36 @@
 <div class="purchasepredicatediv">
     <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
 </div>
-@model WebApplication.Models.AppointModel
+
 <div class="purchasepredicatediv">
-    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    @using (Html.BeginForm("TryRemovePurchasePredicate", "Home", FormMethod.Post))
     {
-        string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
-
-        <button class="btn btn-outline-primary" formaction="TryAppointManager" type="submit">Remove Predicate</button>
-
-      //  string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
+        <label for="storesList">Purchase Predicate</label>
+        string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
+        @if (purchasePredicate != null)
+        {
+            @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        }
+        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove purchase predicate</button>
+    }
+</div>
+<div class="purchasepredicatediv">
+    @using (Html.BeginForm("TryComposePurchasePredicate", "Home", FormMethod.Post))
+    {
+        PurchasePredicateCompositionType[] arr = new[]
+        {
+            PurchasePredicateCompositionType.AndComposition, PurchasePredicateCompositionType.OrComposition, PurchasePredicateCompositionType.ConditionalComposition
+        };
+        string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+        string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
+        <label for="storesList">First predicate</label>
+        @Html.DropDownListFor(model => model.firstPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        <label for="storesList">Second predicate</label>
+        @Html.DropDownListFor(model => model.secondPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+        <label for="storesList">compositionType</label>
+        @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"});
         
-        //string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
-        
-       // string[] AllUsers = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("allUsers");
-        @Html.DropDownListFor(model => model.userName, new SelectList(AllUsers.OfType<string>().ToList()), new {@class = "custom-select"});
-        <button class="btn btn-outline-primary" formaction="TryAppointOwner" type="submit">Compose Predicates</button>
+        <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Compose purchase predicate</button>
     }
 </div>
 </body>
@@ -40,4 +57,22 @@
                 alert("@TempData["alert"]");  
             };  
         </script>  
+}
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+
+        connection.on('sendToUser', data => {
+            alert(data)
+        });
+
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+    </script>
 }

@@ -3,14 +3,15 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
-    public class ShoppingCartTests
+    public class 
+    ShoppingCartTests
     {
         private Store storeA;
         private Store storeB;
@@ -38,7 +39,7 @@ namespace WSEP212_TESTS.UnitTests
             purchaseType = new ItemImmediatePurchase(10);
 
             User buyer = new User("Sagiv", 21);
-            shoppingCart = new ShoppingCart(buyer);
+            shoppingCart = new ShoppingCart(buyer.userName);
         }
 
         [TestCleanup]

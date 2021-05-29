@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -39,10 +40,11 @@ namespace WSEP212.DomainLayer
                     return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
                 }
 
-                Object[] paramsList = { userName, userAge, password };
+                
+                User newUser = new User(userName, userAge);
+                Object[] paramsList = { newUser, password };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
-                User newUser = new User(userName, userAge);
                 ThreadPool.QueueUserWorkItem(newUser.register, threadParameters); //creating the job
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if(threadParameters.result is NotImplementedException)
@@ -140,7 +142,7 @@ namespace WSEP212.DomainLayer
             return itemPurchaseType;
         }
 
-        public RegularResult addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice)
+        public ResultWithValue<ConcurrentLinkedList<string>> addItemToShoppingCart(string userName, int storeID, int itemID, int quantity, PurchaseType purchaseType, double startPrice)
         {
             try
             {
@@ -166,12 +168,12 @@ namespace WSEP212.DomainLayer
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
-                return (RegularResult)threadParameters.result;
+                return (ResultWithValue<ConcurrentLinkedList<string>>)threadParameters.result;
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In AddItemToShoppingCart function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message, null);
             }
         }
 
@@ -816,7 +818,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public ResultWithValue<int> addPurchasePredicate(string userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             try
             {
@@ -1329,7 +1331,7 @@ namespace WSEP212.DomainLayer
                 threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
                 if (threadParameters.result is NotImplementedException)
                 {
-                    String errorMsg = "The user " + userName + " cannot perform the getStorePurchaseHistory action!";
+                    String errorMsg = "The user " + userName + " cannot perform the getUsersStores action!";
                     Logger.Instance.writeWarningEventToLog(errorMsg);
                     throw new NotImplementedException(); //there is no permission to perform this task
                 }
@@ -1337,7 +1339,7 @@ namespace WSEP212.DomainLayer
                 {
                     return new FailureWithValue<ConcurrentLinkedList<int>>("Cannot perform this action!", null);
                 }
-                return new OkWithValue<ConcurrentLinkedList<int>>("Get Store Purchase History Successfully", (ConcurrentLinkedList<int>)threadParameters.result);
+                return new OkWithValue<ConcurrentLinkedList<int>>("Get users store Successfully", (ConcurrentLinkedList<int>)threadParameters.result);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
@@ -1381,7 +1383,7 @@ namespace WSEP212.DomainLayer
         {
             Store store;
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
-            if (storeRes.getTag())
+            if (!storeRes.getTag())
             {
                 return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
             }
@@ -1393,7 +1395,7 @@ namespace WSEP212.DomainLayer
         {
             Store store;
             ResultWithValue<Store> storeRes = StoreRepository.Instance.getStore(storeID);
-            if (storeRes.getTag())
+            if (!storeRes.getTag())
             {
                 return new FailureWithValue<ConcurrentDictionary<int, string>>("store not exist", null);
             }

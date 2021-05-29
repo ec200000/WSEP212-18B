@@ -1,6 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
 {
@@ -8,8 +15,20 @@ namespace WSEP212.DomainLayer
     {
         private static Dictionary<string, List<string>> userConnectionMap;
         private static ConcurrentDictionary<string, List<string>> delayedNotifications;
+        [NotMapped]
         private static string userConnectionMapLocker = string.Empty;
-        private static string delayedNotificationsLock = string.Empty;
+        [Key]
+        public string delayedNotificationsLock
+        {
+            get => string.Empty;
+            set => delayedNotificationsLock = value;
+        }
+        
+        public string DelayedNotificationsAsJson
+        {
+            get => JsonConvert.SerializeObject(delayedNotifications);
+            set => delayedNotifications = JsonConvert.DeserializeObject<ConcurrentDictionary<string, List<string>>>(value);
+        }
         
         private static readonly Lazy<UserConnectionManager> lazy
             = new Lazy<UserConnectionManager>(() => new UserConnectionManager());
@@ -21,6 +40,9 @@ namespace WSEP212.DomainLayer
         {
             userConnectionMap = new Dictionary<string, List<string>>();
             delayedNotifications = new ConcurrentDictionary<string, List<string>>();
+            var delayNot = SystemDBAccess.Instance.DelayedNotifications.ToList();
+            if (delayNot.Count > 0)
+                delayedNotifications = JsonConvert.DeserializeObject<ConcurrentDictionary<string, List<string>>>(delayNot[0].DelayedNotificationsAsJson);
         }
         public void KeepUserConnection(string userId, string connectionId)
         {
@@ -66,7 +88,8 @@ namespace WSEP212.DomainLayer
             var conn = new List<string>();
             lock (userConnectionMapLocker)
             {
-                conn = userConnectionMap[userId];
+                if(userConnectionMap.ContainsKey(userId))
+                    conn = userConnectionMap[userId];
             }
             return conn;
         }
@@ -78,6 +101,19 @@ namespace WSEP212.DomainLayer
                 if (!delayedNotifications.ContainsKey(userName))
                     delayedNotifications[userName] = new List<string>();
                 delayedNotifications[userName].Add(msg);
+                DelayedNotificationsAsJson = JsonConvert.SerializeObject(delayedNotifications);
+                var result = SystemDBAccess.Instance.DelayedNotifications.Find(string.Empty);
+                if (result != null)
+                {
+                    if(!JToken.DeepEquals(result.DelayedNotificationsAsJson, this.DelayedNotificationsAsJson))
+                        result.DelayedNotificationsAsJson = this.DelayedNotificationsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
+                else //first time - 
+                {
+                    this.DelayedNotificationsAsJson = JsonConvert.SerializeObject(delayedNotifications);
+                    SystemDBAccess.Instance.DelayedNotifications.Add(this);
+                }
             }
         }
 

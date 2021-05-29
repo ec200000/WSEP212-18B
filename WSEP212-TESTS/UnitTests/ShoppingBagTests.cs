@@ -5,7 +5,6 @@ using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -25,7 +24,7 @@ namespace WSEP212_TESTS.UnitTests
             bagOwner = new User("Sagiv", 21);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
-            shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner);
+            shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner.userName);
             purchaseType = new ItemImmediatePurchase(10);
         }
 

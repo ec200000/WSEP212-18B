@@ -9,6 +9,7 @@ using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -25,7 +26,7 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -164,11 +165,10 @@ namespace WSEP212.DomainLayer
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
-
-        public override RegularResult register(String userName, int userAge, String password)
+        
+        public override RegularResult register(User newUser, String password)
         {
-            User user = new User(userName, userAge);
-            return UserRepository.Instance.insertNewUser(user, password);
+            return UserRepository.Instance.insertNewUser(newUser, password);
         }
         
         public override RegularResult continueAsGuest(String userName)

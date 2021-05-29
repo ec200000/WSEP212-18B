@@ -1,24 +1,80 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class ShoppingCart
     {
-        public User cartOwner { get; set; }
+        [JsonIgnore]
+        private JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            NullValueHandling = NullValueHandling.Ignore,
+            SerializationBinder = new KnownTypesBinder
+            {
+                KnownTypes = new List<Type>
+                {
+                    typeof(SalePolicy.SalePolicy),
+                    typeof(SalePolicyMock),
+                    typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(PurchasePolicyMock),
+                    typeof(ItemImmediatePurchase),
+                    typeof(ItemSubmitOfferPurchase),
+                    typeof(SimplePredicate),
+                    typeof(AndPredicates),
+                    typeof(OrPredicates),
+                    typeof(ConditioningPredicate),
+                    typeof(ConditionalSale),
+                    typeof(DoubleSale),
+                    typeof(MaxSale),
+                    typeof(XorSale),
+                    typeof(SimpleSale),
+                    typeof(SaleOnAllStore),
+                    typeof(SaleOnCategory),
+                    typeof(SaleOnItem)
+                }
+            }
+        };
         // A data structure associated with a store ID and its shopping cart for a customer
         public ConcurrentDictionary<int, ShoppingBag> shoppingBags { get; set; }
-
-        public ShoppingCart(User cartOwner)
+        
+        public string BagsAsJson
         {
-            this.cartOwner = cartOwner;
-            this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
+            get => JsonConvert.SerializeObject(shoppingBags,settings);
+            set => shoppingBags = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ShoppingBag>>(value,settings);
         }
 
+        [Key]
+        public string cartOwner { get; set; } 
+        public ShoppingCart(string userName)
+        {
+            this.shoppingBags = new ConcurrentDictionary<int, ShoppingBag>();
+            this.cartOwner = userName;
+        }
+        
+        public ShoppingCart()
+        {
+        }
+
+        public void addToDB()
+        {
+            SystemDBAccess.Instance.Carts.Add(this);
+            SystemDBAccess.Instance.SaveChanges();
+        }
         // return true if the shopping cart is empty
         public bool isEmpty()
         {
@@ -35,7 +91,18 @@ namespace WSEP212.DomainLayer
                 if (shoppingBagRes.getTag())
                 {
                     RegularResult addItemRes = shoppingBagRes.getValue().addItem(itemID, quantity, purchaseType);
-                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                    if (!addItemRes.getTag())
+                    {
+                        removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                        return new Failure("Could not add items to the shopping bag!");
+                    }
+                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                    if (result != null)
+                    {
+                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                            result.BagsAsJson = this.BagsAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
+                    }
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -51,7 +118,17 @@ namespace WSEP212.DomainLayer
             if (shoppingBagRes.getTag())
             {
                 RegularResult removeItemRes = shoppingBagRes.getValue().removeItem(itemID);
-                removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                if (removeItemRes.getTag())
+                {
+                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                }
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                if (result != null)
+                {
+                    if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                        result.BagsAsJson = this.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
                 return removeItemRes;
             }
             return new Failure(shoppingBagRes.getMessage());
@@ -67,7 +144,17 @@ namespace WSEP212.DomainLayer
                 if (shoppingBagRes.getTag())
                 {
                     RegularResult changeQuantityRes = shoppingBagRes.getValue().changeItemQuantity(itemID, updatedQuantity);
-                    removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                    if (changeQuantityRes.getTag())
+                    {
+                        removeShoppingBagIfEmpty(shoppingBagRes.getValue());
+                    }
+                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                    if (result != null)
+                    {
+                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                            result.BagsAsJson = this.BagsAsJson;
+                        SystemDBAccess.Instance.SaveChanges();
+                    }
                     return changeQuantityRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -152,6 +239,13 @@ namespace WSEP212.DomainLayer
                     }
                     purchaseInvoices.TryAdd(storeID, shoppingBagPriceRes.getValue());
                 }
+                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                if (result != null)
+                {
+                    if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                        result.BagsAsJson = this.BagsAsJson;
+                    SystemDBAccess.Instance.SaveChanges();
+                }
                 return new OkWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", purchaseInvoices);
             }
         }
@@ -181,6 +275,13 @@ namespace WSEP212.DomainLayer
                 {
                     shoppingBags[storeID].rollBackPurchase(storeInvoicePair.Value.purchaseInvoiceID);
                 }
+            }
+            var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+            if (result != null)
+            {
+                if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                    result.BagsAsJson = this.BagsAsJson;
+                SystemDBAccess.Instance.SaveChanges();
             }
         }
 
