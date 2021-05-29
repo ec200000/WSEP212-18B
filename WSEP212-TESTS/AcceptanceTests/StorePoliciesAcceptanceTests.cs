@@ -9,6 +9,7 @@ using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 using System.Linq.Expressions;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -24,7 +25,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static DeliveryParametersDTO deliveryParameters;
         
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }

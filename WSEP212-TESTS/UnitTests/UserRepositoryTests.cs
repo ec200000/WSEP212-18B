@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using WSEP212;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 
 namespace WSEP212_TESTS.UnitTests
@@ -13,7 +14,7 @@ namespace WSEP212_TESTS.UnitTests
         private User user2;
         
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }

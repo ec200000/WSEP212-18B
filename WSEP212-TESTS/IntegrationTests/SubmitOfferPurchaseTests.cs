@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
@@ -26,14 +27,10 @@ namespace WSEP212_TESTS.IntegrationTests
         private static int itemIDB;
 
         [ClassInitialize]
-        public void init()
-        {
-            SystemDBAccess.mock = true;
-        }
-        
-        [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             user = new User("Sagiv", 21);
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Delta", "Ashdod", new SalePolicy("DEFUALT"), new PurchasePolicy("DEFUALT"), new User("admin"));
             store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();

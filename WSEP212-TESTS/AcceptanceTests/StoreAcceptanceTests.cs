@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
@@ -19,14 +20,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static int storeID;
 
         [ClassInitialize]
-        public void init()
-        {
-            SystemDBAccess.mock = true;
-        }
-        
-        [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             RegularResult result = controller.register("theuser123", 18, "123456");
             controller.login("theuser123", "123456");
             storeID = controller.openStore("theuser123", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();

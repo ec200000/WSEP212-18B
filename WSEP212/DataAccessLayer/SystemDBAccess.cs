@@ -9,7 +9,7 @@ using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 
-namespace WSEP212
+namespace WSEP212.DataAccessLayer
 {
     public class SystemDBAccess : DBInterface
     {
@@ -23,7 +23,7 @@ namespace WSEP212
         {
             Init();
             Database.CommandTimeout = 120;
-            Database.SetInitializer<SystemDBAccess>(new MigrateDatabaseToLatestVersion<SystemDBAccess, WSEP212.DomainLayer.Configuration>());
+            Database.SetInitializer<SystemDBAccess>(new MigrateDatabaseToLatestVersion<SystemDBAccess, Configuration>());
         }
         
         public SystemDBAccess(DbConnection connection) : base(connection, false)

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
@@ -20,7 +21,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         int storeID;
 
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }

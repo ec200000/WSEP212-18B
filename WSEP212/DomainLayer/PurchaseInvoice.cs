@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212.DomainLayer
 {

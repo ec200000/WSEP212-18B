@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
@@ -19,7 +20,7 @@ namespace WSEP212_TESTS.UnitTests
         private ItemPurchaseType purchaseType;
 
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }

@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
