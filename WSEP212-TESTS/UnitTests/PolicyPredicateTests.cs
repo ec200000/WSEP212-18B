@@ -39,11 +39,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void simplePredicateMetTest()
         {
-            Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
+            LocalPredicate<PurchaseDetails> predicate = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 40);
             SimplePredicate policyPredicate = new SimplePredicate(predicate, "price is more then 40");
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
 
-            predicate = pd => pd.atLeastNQuantity(itemC.itemID, 5);
+            predicate = new LocalPredicate<PurchaseDetails>(pd => pd.numOfSpecificItem(itemC.itemID), 5);
             policyPredicate = new SimplePredicate(predicate, "more then 5 bisli in bag");
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
         }
@@ -51,11 +51,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void simplePredicateNotMetTest()
         {
-            Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
+            LocalPredicate<PurchaseDetails> predicate = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 60);
             SimplePredicate policyPredicate = new SimplePredicate(predicate, "price is more then 40");
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
 
-            predicate = pd => pd.atLeastNQuantity(itemA.itemID, 5);
+            predicate = new LocalPredicate<PurchaseDetails>(pd => pd.numOfSpecificItem(itemA.itemID), 5);
             policyPredicate = new SimplePredicate(predicate, "more then 5 bamba in bag");
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
         }
@@ -64,9 +64,9 @@ namespace WSEP212_TESTS.UnitTests
         public void conditioningPredicateMetTest()
         {
             // only if total price > 40 then you can buy 5 or more milk
-            Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 40;
+            LocalPredicate<PurchaseDetails> predicate = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 40);
             PurchasePredicate onlyif = new SimplePredicate(predicate, "price is more then 40");
-            Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
+            LocalPredicate<PurchaseDetails> then = new LocalPredicate<PurchaseDetails>(pd => pd.numOfSpecificItem(itemC.itemID), 5);
             PurchasePredicate onlythen = new SimplePredicate(then, "more then 5 bisli in bag");
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsTrue(policyPredicate.applyPrediacte(purchaseDetails));
@@ -76,9 +76,9 @@ namespace WSEP212_TESTS.UnitTests
         public void conditioningPredicateNotMetTest()
         {
             // only if total price > 60 then you can buy 5 or more milk
-            Predicate<PurchaseDetails> predicate = pd => pd.totalPurchasePrice() > 60;
+            LocalPredicate<PurchaseDetails> predicate = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 60);
             PurchasePredicate onlyif = new SimplePredicate(predicate, "price is more then 60");
-            Predicate<PurchaseDetails> then = pd => pd.atLeastNQuantity(itemC.itemID, 5);
+            LocalPredicate<PurchaseDetails> then = new LocalPredicate<PurchaseDetails>(pd => pd.numOfSpecificItem(itemC.itemID), 5);
             PurchasePredicate onlythen = new SimplePredicate(then, "more then 5 bisli in bag");
             ConditioningPredicate policyPredicate = new ConditioningPredicate(onlyif, onlythen);
             Assert.IsFalse(policyPredicate.applyPrediacte(purchaseDetails));
@@ -87,7 +87,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void composedPredicateMetTest()
         {
-            Predicate<PurchaseDetails> p1 = pd => pd.totalPurchasePrice() > 60;
+            LocalPredicate<PurchaseDetails> p1 = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 60);
             PurchasePredicate sp1 = new SimplePredicate(p1, "price is more then 60");
             Predicate<PurchaseDetails> p2 = pd => pd.atMostNQuantity(itemB.itemID, 5);
             PurchasePredicate sp2 = new SimplePredicate(p2, "more then 5 milk in bag");
