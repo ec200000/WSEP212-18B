@@ -20,6 +20,7 @@ using WSEP212.ServiceLayer.Result;
 using Serialize.Linq;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Serializers;
+using WSEP212.DataAccessLayer;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace WSEP212.DomainLayer
@@ -162,7 +163,8 @@ namespace WSEP212.DomainLayer
         public void addToDB()
         {
             SystemDBAccess.Instance.Stores.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
         // Check if the item exist and available in the store
         public RegularResult isAvailableInStorage(int itemID, int quantity)
@@ -202,7 +204,8 @@ namespace WSEP212.DomainLayer
                             result.storage = storage;
                             if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                                 result.StorageAsJson = this.StorageAsJson;
-                            SystemDBAccess.Instance.SaveChanges();
+                            lock(SystemDBAccess.savelock)
+                                SystemDBAccess.Instance.SaveChanges();
                             return new OkWithValue<int>("The Item Is Already In Storage, The Quantity Of The Item Has Been Updated Accordingly", pairItem.Key);
                         }
                     }
@@ -220,7 +223,8 @@ namespace WSEP212.DomainLayer
                     res.storage = storage;
                     if(!JToken.DeepEquals(res.StorageAsJson, this.StorageAsJson))
                         res.StorageAsJson = this.StorageAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
             } 
@@ -245,7 +249,8 @@ namespace WSEP212.DomainLayer
                         result.storage = storage;
                         if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                             result.StorageAsJson = this.StorageAsJson;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                         return new Ok("Item Was Successfully Removed From The Store's Storage");
                     }
                     return new Failure("Could not remove the item!");
@@ -270,7 +275,8 @@ namespace WSEP212.DomainLayer
                         result.storage = storage;
                         if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                             result.StorageAsJson = this.StorageAsJson;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                         return new Ok("Item Was Successfully Removed From The Store's Storage");
                     }
                     return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
@@ -305,7 +311,8 @@ namespace WSEP212.DomainLayer
                     result.storage = storage;
                     if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                         result.StorageAsJson = this.StorageAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)   
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return res;
             }
@@ -336,7 +343,8 @@ namespace WSEP212.DomainLayer
             {
                 result.purchasePolicy = purchasePolicy;
                 //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
             return 1;
         }
@@ -350,9 +358,9 @@ namespace WSEP212.DomainLayer
             {
                 result.purchasePolicy = purchasePolicy;
                 result.PurchasePolicyAsJson = PurchasePolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
-
             return res;
         }
 
@@ -365,7 +373,8 @@ namespace WSEP212.DomainLayer
             {
                 result.purchasePolicy = purchasePolicy;
                 result.PurchasePolicyAsJson = PurchasePolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
 
             return res;
@@ -386,7 +395,8 @@ namespace WSEP212.DomainLayer
             {
                 result.salesPolicy = salesPolicy;
                 result.SalesPolicyAsJson = SalesPolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
 
             return res;
@@ -401,7 +411,8 @@ namespace WSEP212.DomainLayer
             {
                 result.salesPolicy = salesPolicy;
                 result.SalesPolicyAsJson = SalesPolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
 
             return res;
@@ -416,7 +427,8 @@ namespace WSEP212.DomainLayer
             {
                 result.salesPolicy = salesPolicy;
                 result.SalesPolicyAsJson = SalesPolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
 
             return res;
@@ -431,7 +443,8 @@ namespace WSEP212.DomainLayer
             {
                 result.salesPolicy = salesPolicy;
                 result.SalesPolicyAsJson = SalesPolicyAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
 
             return res;
@@ -624,7 +637,8 @@ namespace WSEP212.DomainLayer
                         result.storeSellersPermissions = storeSellersPermissions;
                         if(!JToken.DeepEquals(result.StoreSellersPermissionsAsJson, this.StoreSellersPermissionsAsJson))
                             result.StoreSellersPermissionsAsJson = StoreSellersPermissionsAsJson;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return new Ok("The New Store Seller Added To The Store Successfully");
                 }
@@ -644,7 +658,8 @@ namespace WSEP212.DomainLayer
                     result.storeSellersPermissions = storeSellersPermissions;
                     if(!JToken.DeepEquals(result.StoreSellersPermissionsAsJson, this.StoreSellersPermissionsAsJson))
                         result.StoreSellersPermissionsAsJson = StoreSellersPermissionsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return new Ok("The Store Seller Removed From The Store Successfully");
             }
@@ -703,7 +718,8 @@ namespace WSEP212.DomainLayer
                 result.purchasesHistory = purchasesHistory;
                 if(!JToken.DeepEquals(result.PurchasesHistoryAsJson, this.PurchasesHistoryAsJson))
                     result.PurchasesHistoryAsJson = PurchasesHistoryAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
         }
         

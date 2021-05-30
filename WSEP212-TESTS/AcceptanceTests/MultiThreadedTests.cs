@@ -4,6 +4,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
@@ -21,10 +22,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         private int storeID;
         SystemController systemController = SystemController.Instance;
         private int itemID;
-        //private Item item;
-        
+
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }
@@ -211,7 +211,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void addItemToShoppingCartTest()
         {
-            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok", null), 
+                res2 = new OkWithValue<NotificationDTO>("ok", null), res3 = new OkWithValue<NotificationDTO>("ok", null);
 
             Thread t1 = new Thread(() =>
             {
@@ -221,7 +222,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res1 = new Failure("not implemented exception");
+                    res1 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
                 
             });
@@ -233,7 +234,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res2 = new Failure("not implemented exception");
+                    res2 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
             });
             Thread t3 = new Thread(() =>
@@ -244,7 +245,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res3 = new Failure("not implemented exception");
+                    res3 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
             });
 
@@ -264,7 +265,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void removeItemFromShoppingCart()
         {
-            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok", null), 
+                res2 = new OkWithValue<NotificationDTO>("ok", null), res3 = new OkWithValue<NotificationDTO>("ok", null);
+            RegularResult resRem1 = new Ok("ok"), resRem2 = new Ok("ok"), resRem3 = new Ok("ok");
             
             Thread t1 = new Thread(() =>
             {
@@ -272,11 +275,11 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res1.getTag())
-                        res1 = systemController.removeItemFromShoppingCart("a", storeID, itemID);
+                        resRem1 = systemController.removeItemFromShoppingCart("a", storeID, itemID);
                 }
                 catch (NotImplementedException)
                 {
-                    res1 = new Failure("not implemented exception");
+                    resRem1 = new Failure("not implemented exception");
                 }
                 
             });
@@ -286,11 +289,11 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
                     if (res2.getTag())
-                        res2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
+                        resRem2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
                 }
                 catch (NotImplementedException)
                 {
-                    res2 = new Failure("not implemented exception");
+                    resRem2 = new Failure("not implemented exception");
                 }
             });
             Thread t3 = new Thread(() =>
@@ -299,12 +302,12 @@ namespace WSEP212_TESTS.AcceptanceTests
                 {
                     res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12, (int)PurchaseType.ImmediatePurchase, 12);
                     if(res3.getTag())
-                        res3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
+                        resRem3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
                         
                 }
                 catch (NotImplementedException)
                 {
-                    res3 = new Failure("not implemented exception");
+                    resRem3 = new Failure("not implemented exception");
                 }
             });
 
@@ -316,15 +319,16 @@ namespace WSEP212_TESTS.AcceptanceTests
             t2.Join();
             t3.Join();
             
-            Assert.IsTrue(res1.getTag()); 
-            Assert.IsFalse(res2.getTag()); 
-            Assert.IsFalse(res3.getTag());
+            Assert.IsTrue(resRem1.getTag()); 
+            Assert.IsFalse(resRem2.getTag()); 
+            Assert.IsFalse(resRem3.getTag());
         }
 
         [TestMethod]
         public void purchaseItemsTest()
         {
-            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok"), res3 = new Ok("ok");
+            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok", null), 
+                res2 = new OkWithValue<NotificationDTO>("ok", null), res3 = new OkWithValue<NotificationDTO>("ok", null);
             ResultWithValue<NotificationDTO> res4 =
                     new OkWithValue<NotificationDTO>("ok", null),
                 res5 = new OkWithValue<NotificationDTO>("ok", null),
@@ -347,7 +351,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res1 = new Failure("not implemented exception");
+                    res1 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
                 
             });
@@ -361,7 +365,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res2 = new Failure("not implemented exception");
+                    res2 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
             });
             Thread t3 = new Thread(() =>
@@ -375,7 +379,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res3 = new Failure("not implemented exception");
+                    res3 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
             });
 
@@ -448,9 +452,9 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void deleteItemAndTryToBuyItTest()
         {
-            RegularResult res1 = new Ok("ok"), res2 = new Ok("ok");
-            ResultWithValue<NotificationDTO> res3 =
-                new OkWithValue<NotificationDTO>("ok", null);
+            RegularResult res1 = new Ok("ok");
+            ResultWithValue<NotificationDTO> res2 = new OkWithValue<NotificationDTO>("ok", null),
+                res3 = new OkWithValue<NotificationDTO>("ok", null);
 
             DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("lol", "habanim", "Haifa", "Israel", "786598");
             PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "5", "2022", "lol", "086", "312258713");
@@ -477,7 +481,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 }
                 catch (NotImplementedException)
                 {
-                    res2 = new Failure("not implemented exception");
+                    res2 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
                 }
             });
 

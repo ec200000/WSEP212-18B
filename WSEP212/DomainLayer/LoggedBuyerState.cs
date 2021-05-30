@@ -298,6 +298,25 @@ namespace WSEP212.DomainLayer
             return addStoreRes;
         }
 
+        private void removeBid(int storeID, int itemID)
+        {
+            SellerPermissions per = null;
+            foreach (var perm in this.user.sellerPermissions)
+            {
+                if (perm.StoreID == storeID)
+                {
+                    per = perm;
+                    break;
+                }
+            }
+
+            if (per != null)
+            {
+                per.removeBid(itemID, this.user.userName);
+            }
+                
+        }
+
         public override ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
         {
             // checks user exists
@@ -313,6 +332,7 @@ namespace WSEP212.DomainLayer
                 RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
                 if(res.getTag())
                 {
+                    removeBid(storeID, itemID);
                     return new OkWithValue<string>(res.getMessage(), userName);
                 }
                 return new FailureWithValue<string>(res.getMessage(), userName);

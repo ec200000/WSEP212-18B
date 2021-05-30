@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.Migrations;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DataAccessLayer
 {
     internal sealed class Configuration : DbMigrationsConfiguration<SystemDBAccess>
     {

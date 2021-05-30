@@ -9,6 +9,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
@@ -108,7 +109,8 @@ namespace WSEP212.DomainLayer
             this.isSystemManager = isSystemManager;
             
             SystemDBAccess.Instance.Users.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
 
         public void changeState(UserState state)
@@ -870,7 +872,8 @@ namespace WSEP212.DomainLayer
                 result.purchases = purchases;
                 if(!JToken.DeepEquals(result.PurchasesJson, this.PurchasesJson))
                     result.PurchasesJson = this.PurchasesJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
         }
         
@@ -890,7 +893,8 @@ namespace WSEP212.DomainLayer
                     this.sellerPermissions.AddFirst(permissions);
                     result.SellerPermissionsJson = this.SellerPermissionsJson;
                     result.sellerPermissions = this.sellerPermissions;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
             }
             return res;

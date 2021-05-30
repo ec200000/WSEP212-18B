@@ -118,6 +118,8 @@ namespace WebApplication.Controllers
             ShoppingCartItems(res);
             TryPriceBeforeSale(model);
             TryPriceAftereSale(model);
+            string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
+            HttpContext.Session.SetObject("purchasetypes", types);
             return View();
         }
 
@@ -135,7 +137,7 @@ namespace WebApplication.Controllers
             foreach (ShoppingBag shopBag in shoppingBagss.Values)
             {
                 int storeid = shopBag.store.storeID;
-                string storeAndItem = "StoreID:" + storeid;
+                string storeAndItem = "StoreID:" + storeid+",";
                 foreach (int itemID in shopBag.items.Keys)
                 {
                     string item = " ItemsID:" + itemID;
@@ -564,9 +566,8 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO item = new ItemDTO((int) storeID, model.quantity, model.itemName, model.description,
-                new ConcurrentDictionary<string, ItemReview>(), model.price, 0);
+                new ConcurrentDictionary<string, ItemReview>(), model.price, categorytoenum(model.category));
             ResultWithValue<int> res = systemController.addItemToStorage(userName, (int)storeID, item);
             if (res.getTag())
             {
@@ -657,12 +658,14 @@ namespace WebApplication.Controllers
                 ResultWithValue<NotificationDTO> res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
-                    if (res.getValue() != null)
+                    //HttpContext.Session.SetObject("allbids",res.getValue());
+                    if (res.getValue() != null && purchaseType == 1)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                            systemController.addBidOffer(node.Value, (int) storeID, itemID, userName, price);
                             node = node.Next;
                         }
                     }
@@ -830,13 +833,16 @@ namespace WebApplication.Controllers
             TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            //int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string itemID = model.itemID;
             if (itemID!=null && itemID != "")
             {
-                string[] strs = itemID.Split(":");
-                int item = int.Parse(strs[strs.Length - 1]);
-                RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
+                string[] strs = itemID.Split(",");
+                string[] itemstr = strs[1].Split(":");
+                int item = int.Parse(itemstr[itemstr.Length - 1]);
+                string[] storestr = strs[0].Split(":");
+                int store = int.Parse(storestr[storestr.Length - 1]);
+                RegularResult res = systemController.removeItemFromShoppingCart(userName, store, item);
                 if (res.getTag())
                 {
                     return RedirectToAction("ShoppingCart");
@@ -957,6 +963,20 @@ namespace WebApplication.Controllers
             }
         }
         
+        private Permissions[] persListToArray(ConcurrentLinkedList<Permissions> lst)
+        {
+            Permissions[] arr = new Permissions[lst.size];
+            int i = 0;
+            Node<Permissions> node = lst.First;
+            while(node.Next != null)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
+        
         public IActionResult ViewOfficials()
         {
             TempData["alert"] = null;
@@ -969,7 +989,8 @@ namespace WebApplication.Controllers
                 foreach (string name in res.getValue().Keys)
                 {
                     value[i] = name;
-                    if (res.getValue()[name].Contains(Permissions.AllPermissions))
+                    Permissions[] pers = persListToArray(res.getValue()[name]);
+                    if (pers.Contains(Permissions.AllPermissions))
                         value[i] += ", Store Owner";
                     else
                         value[i] += ", Store Manager";
@@ -1474,15 +1495,15 @@ namespace WebApplication.Controllers
                 }
             }
             RegularResult res = systemController.removePurchasePredicate(userName, (int)storeID, predicateID);
-                if (res.getTag())
-                {
-                    return RedirectToAction("PurchasePredicate");
-                }
-                else
-                {
-                    ViewBag.Alert = res.getMessage();
-                    return RedirectToAction("PurchasePredicate");
-                }
+            if (res.getTag())
+            {
+                return RedirectToAction("PurchasePredicate");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("PurchasePredicate");
+            }
         }
 
         public IActionResult TryAddPurchasePredicate(PredicateModel model)
@@ -1525,7 +1546,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("PurchasePredicate");
                 }
             }
@@ -1583,7 +1604,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("PurchasePredicate");
             }
         }
@@ -1678,8 +1699,34 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public IActionResult BidsReview()
+        public IActionResult BidsReview(StoreModel model)
         {
+            if (model.storeInfo != null)
+            {
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
+            }
+            string userName = HttpContext.Session.GetString(SessionName);
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            LinkedList<SellerPermissions> storeFounderPermissions =
+                UserRepository.Instance.findUserByUserName(userName).getValue().sellerPermissions;
+            SellerPermissions per = null;
+            foreach (var perm in storeFounderPermissions)
+            {
+                if (perm.StoreID == storeID)
+                {
+                    per = perm;
+                    break;
+                }
+            }
+
+            BidInfo[] bids = per.bids.Values.ToArray();
+            string[] bidsstr = new string[bids.Length];
+            for (int i = 0; i < bids.Length; i++)
+            {
+                bidsstr[i] = bids[i].ToString();
+            }
+            HttpContext.Session.SetObject("bids", bidsstr);
             return View();
         }
         
@@ -1700,6 +1747,8 @@ namespace WebApplication.Controllers
                     while (node.Next != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        systemController.removeBidOffer(node.Value, (int)storeID, item, userName);
+                        systemController.addBidOffer(node.Value, (int) storeID, item, userName, model.newOffer);
                         node = node.Next;
                     }
                 }
@@ -1719,7 +1768,7 @@ namespace WebApplication.Controllers
                 string[] strs2 = strs[0].Split(":");
                 int item = int.Parse(strs2[1]);
                 string[] strs5 = strs[0].Split(",");
-                string[] strs6 = strs5[0].Split(":");
+                string[] strs6 = strs5[0].Split("-");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user,userName, (int) storeID, item, 2);
                 if (res.getValue() != null)
@@ -1728,6 +1777,7 @@ namespace WebApplication.Controllers
                     while (node.Next != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        systemController.removeBidOffer(node.Value, (int)storeID, item, user);
                         node = node.Next;
                     }
                 }
@@ -1747,8 +1797,8 @@ namespace WebApplication.Controllers
                 string[] strs2 = strs[0].Split(":");
                 int item = int.Parse(strs2[1]);
                 string[] strs5 = strs[0].Split(",");
-                string[] strs6 = strs5[0].Split(":");
-                string user = strs6[1];
+                string[] strs6 = strs5[0].Split("-");
+                string user = strs6[1].TrimStart();
                 ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
                 if (res.getValue() != null)
                 {
@@ -1756,6 +1806,7 @@ namespace WebApplication.Controllers
                     while (node.Next != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
+                        systemController.removeBidOffer(node.Value, (int)storeID, item, user);
                         node = node.Next;
                     }
                 }
@@ -1778,7 +1829,7 @@ namespace WebApplication.Controllers
                 string[] strs4 = strs3[0].Split(":");
                 double price = double.Parse(strs4[1]);
                 string[] strs5 = strs[0].Split(",");
-                string[] strs6 = strs5[0].Split(":");
+                string[] strs6 = strs5[0].Split("-");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.itemCounterOffer(user,userName, (int) storeID, item, price);
                 if (res.getValue() != null)
@@ -1790,6 +1841,27 @@ namespace WebApplication.Controllers
                         node = node.Next;
                     }
                 }
+            }
+            return RedirectToAction("StoreActions");
+        }
+        
+        public IActionResult ChangePurchaseType(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.itemID;
+            if (itemID != null && itemID != "")
+            {
+                string[] strs = itemID.Split(":");
+                int item = int.Parse(strs[strs.Length - 1]);
+                RegularResult res = systemController.changeItemPurchaseType(userName, (int) storeID, item, stringToEnumPT(model.purchaseType), model.newOffer);
+                if (res.getTag())
+                {
+                    return RedirectToAction("StoreActions");
+                }
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("StoreActions");
             }
             return RedirectToAction("StoreActions");
         }

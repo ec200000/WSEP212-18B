@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
@@ -49,8 +50,10 @@ namespace WSEP212.DomainLayer
                 if (result != null)
                 {
                     result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
+
                 // returns store owners to send notification only if purchase type is submit offer
                 if(purchaseType.getPurchaseType() == PurchaseType.SubmitOfferPurchase)
                 {
@@ -70,7 +73,8 @@ namespace WSEP212.DomainLayer
                 if (result != null)
                 {
                     result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
             }
             return res;

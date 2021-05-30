@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
 using WSEP212;
+using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.PurchasePolicy;
@@ -26,14 +27,10 @@ namespace WSEP212_TESTS.IntegrationTests
         public static int milkID;
 
         [ClassInitialize]
-        public void init()
-        {
-            SystemDBAccess.mock = true;
-        }
-        
-        [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             user = new User("Sagiv", 21);
             store = new Store("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
@@ -76,7 +73,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void approvedByPurchasePolicySimpleTest()
         {
-            Predicate<PurchaseDetails> pred = pd => pd.numOfItemsInPurchase() >= 2;
+            LocalPredicate<PurchaseDetails> pred = new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 2);
             int predicateID = store.addPurchasePredicate(pred, "more then 2 items in bag");
 
             ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
@@ -89,11 +86,11 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void approvedByPurchasePolicyComplexTest()
         {
-            Predicate<PurchaseDetails> pred1 = pd => pd.numOfItemsInPurchase() >= 2;
+            LocalPredicate<PurchaseDetails> pred1 = new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 2);
             int predID1 = store.addPurchasePredicate(pred1, "more then 2 items in bag");
-            Predicate<PurchaseDetails> pred2 = pd => pd.totalPurchasePrice() >= 100;
+            LocalPredicate<PurchaseDetails> pred2 = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 100);
             int predID2 = store.addPurchasePredicate(pred2, "price is more then 100");
-            Predicate<PurchaseDetails> pred3 = pd => pd.user.userAge >= 18;
+            LocalPredicate<PurchaseDetails> pred3 = new LocalPredicate<PurchaseDetails>(pd => pd.user.userAge, 18);
             int predID3 = store.addPurchasePredicate(pred3, "user age is more then 18");
             int composedID = store.composePurchasePredicates(predID2, predID3, PurchasePredicateCompositionType.OrComposition).getValue();
 
@@ -108,7 +105,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void rejectedByPurchasePolicySimpleTest()
         {
-            Predicate<PurchaseDetails> pred = pd => pd.numOfItemsInPurchase() >= 20;
+            LocalPredicate<PurchaseDetails> pred = new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 20);
             int predicateID = store.addPurchasePredicate(pred, "more then 20 items in bag");
 
             ResultWithValue<ConcurrentDictionary<int, double>> purchaseRes = store.purchaseItems(user, shoppingBagItems, itemsPrices);
@@ -120,11 +117,11 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void rejectedByPurchasePolicyComplexTest()
         {
-            Predicate<PurchaseDetails> pred1 = pd => pd.numOfItemsInPurchase() >= 2;
+            LocalPredicate<PurchaseDetails> pred1 = new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 2);
             int predID1 = store.addPurchasePredicate(pred1, "more then 2 items in bag");
-            Predicate<PurchaseDetails> pred2 = pd => pd.totalPurchasePrice() >= 100;
+            LocalPredicate<PurchaseDetails> pred2 = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 100);
             int predID2 = store.addPurchasePredicate(pred2, "price is more then 100");
-            Predicate<PurchaseDetails> pred3 = pd => pd.user.userAge >= 18;
+            LocalPredicate<PurchaseDetails> pred3 = new LocalPredicate<PurchaseDetails>(pd => pd.user.userAge, 18);
             int predID3 = store.addPurchasePredicate(pred3, "user age is more then 18");
             int composedID = store.composePurchasePredicates(predID2, predID3, PurchasePredicateCompositionType.ConditionalComposition).getValue();
 
@@ -191,7 +188,7 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
-            Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 40;
+            LocalPredicate<PurchaseDetails> pred = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 40);
             SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 40");
             saleID = store.addSaleCondition(saleID, predicate, SalePredicateCompositionType.AndComposition).getValue();
 
@@ -207,7 +204,7 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             ApplySaleOn saleOn = new SaleOnCategory(ItemCategory.Snacks);
             int saleID = store.addSale(50, saleOn, "50% sale on sancks");
-            Predicate<PurchaseDetails> pred = pd => pd.totalPurchasePrice() > 50;
+            LocalPredicate<PurchaseDetails> pred = new LocalPredicate<PurchaseDetails>(pd => pd.totalPurchasePrice(), 50);
             SimplePredicate predicate = new SimplePredicate(pred, "total proce is more then 50");
             saleID = store.addSaleCondition(saleID, predicate, SalePredicateCompositionType.AndComposition).getValue();
 

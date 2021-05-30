@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Newtonsoft.Json;
-using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212.DomainLayer.AuthenticationSystem
 {
@@ -125,7 +125,8 @@ namespace WSEP212.DomainLayer.AuthenticationSystem
             {
                 usersInfo.TryAdd(userName, encryptPassword(password));
                 result.UserInfoJson = this.UserInfoJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
             else //first time - no passwords are saved
             {

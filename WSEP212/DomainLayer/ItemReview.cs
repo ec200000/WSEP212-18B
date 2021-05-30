@@ -6,6 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
@@ -20,6 +21,7 @@ namespace WSEP212.DomainLayer
         };
         
         [Key]
+        [Column(Order=1)]
         public string UserNameRef{ get; set; }
         
         [ForeignKey("UserNameRef")]
@@ -27,15 +29,20 @@ namespace WSEP212.DomainLayer
         [NotMapped]
         public ConcurrentLinkedList<string> reviews { get; set; }
         
+        [Key]
+        [Column(Order=2)]
+        public int itemID{ get; set; }
+        
         public string ReviewsAsJson
         {
             get => JsonConvert.SerializeObject(reviews,settings);
             set => reviews = JsonConvert.DeserializeObject<ConcurrentLinkedList<string>>(value);
         }
 
-        public ItemReview(User user)
+        public ItemReview(User user, int itemID)
         {
             this.reviewer = user;
+            this.itemID = itemID;
             UserNameRef = user.userName;
             reviews = new ConcurrentLinkedList<string>();
         }
@@ -43,7 +50,8 @@ namespace WSEP212.DomainLayer
         public void addToDB()
         {
             SystemDBAccess.Instance.ItemReviewes.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
         public ItemReview(){}
 
@@ -56,7 +64,8 @@ namespace WSEP212.DomainLayer
                 res = this.reviews.TryAdd(review);
                 result.reviews = reviews;
                 result.ReviewsAsJson = this.ReviewsAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
             return res;
         }

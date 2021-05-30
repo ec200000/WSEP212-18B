@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using System.Data.Entity;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
@@ -19,7 +21,7 @@ namespace WSEP212_TESTS.UnitTests
         private ItemPurchaseType purchaseType;
 
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }
@@ -27,11 +29,25 @@ namespace WSEP212_TESTS.UnitTests
         [TestInitialize]
         public void beforeTests()
         {
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+
+            UserRepository.Instance.initRepo();
+            User user = new User("admin", 80);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), user);
             bagOwner = new User("Sagiv", 21);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
-            shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner);
+            shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner.userName);
             purchaseType = new ItemImmediatePurchase(10);
         }
 

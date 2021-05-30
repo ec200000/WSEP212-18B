@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 
 namespace WSEP212.DomainLayer
@@ -40,7 +41,9 @@ namespace WSEP212.DomainLayer
         {
             userConnectionMap = new Dictionary<string, List<string>>();
             delayedNotifications = new ConcurrentDictionary<string, List<string>>();
-            var delayNot = SystemDBAccess.Instance.DelayedNotifications.ToList();
+            List<UserConnectionManager> delayNot = new List<UserConnectionManager>();
+            if (!SystemDBAccess.Instance.DelayedNotifications.Any())
+                delayNot = SystemDBAccess.Instance.DelayedNotifications.ToList();
             if (delayNot.Count > 0)
                 delayedNotifications = JsonConvert.DeserializeObject<ConcurrentDictionary<string, List<string>>>(delayNot[0].DelayedNotificationsAsJson);
         }
@@ -107,7 +110,8 @@ namespace WSEP212.DomainLayer
                 {
                     if(!JToken.DeepEquals(result.DelayedNotificationsAsJson, this.DelayedNotificationsAsJson))
                         result.DelayedNotificationsAsJson = this.DelayedNotificationsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 else //first time - 
                 {

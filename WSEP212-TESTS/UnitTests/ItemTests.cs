@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using WSEP212;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -14,40 +15,20 @@ namespace WSEP212_TESTS.UnitTests
         private static Item potato;
 
         [ClassInitialize]
-        public void init()
-        {
-            SystemDBAccess.mock = true;
-        }
-        
-        [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             potato = new Item(5, "potato", "vegetable", 1.5, ItemCategory.Vegetables);
             user = new User("Sagiv");
-            ItemReview review = ItemReview.getItemUserReviews(potato, user);
-            review.addReview("yummy");
-            potato.addUserReviews(review);
         }
 
         [TestMethod]
         public void addReviewTest()
         {
-            ItemReview review = ItemReview.getItemUserReviews(potato, user);
-            review.addReview("the potato was very tasty!");
-            potato.addUserReviews(review);
+            potato.addReview(user.userName, "the potato was very tasty!");
             Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
             Assert.AreEqual("the potato was very tasty!", potato.reviews["Sagiv"].reviews.First.Value);
-            review.addReview("5/5!!!");
-            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
-            Assert.AreEqual("5/5!!!", potato.reviews["Sagiv"].reviews.First.Value);
-        }
-
-        [TestMethod]
-        public void removeReviewTest()
-        {
-            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
-            potato.removeUserReviews(user.userName);
-            Assert.IsFalse(potato.reviews.ContainsKey("Sagiv"));
         }
 
         [TestMethod]

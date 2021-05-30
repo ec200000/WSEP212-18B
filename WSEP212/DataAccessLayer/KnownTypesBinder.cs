@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace WSEP212.DomainLayer
+namespace WSEP212.DataAccessLayer
 {
     public class KnownTypesBinder : ISerializationBinder
     {

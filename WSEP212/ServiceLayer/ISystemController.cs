@@ -28,6 +28,8 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<NotificationDTO> submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice); // USE CASE 2.8
         public ResultWithValue<NotificationDTO> itemCounterOffer(String storeManager, String userName, int storeID, int itemID, double counterOffer); // USE CASE 2.8
         public ResultWithValue<NotificationDTO> confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, Int32 priceStatus); // USE CASE 2.8
+        public RegularResult addBidOffer(String userName, int storeID, int itemID, string buyer, double offerItemPrice); // USE CASE 2.8
+        public RegularResult removeBidOffer(string userName, int storeID, int itemId, string buyer);
         public ResultWithValue<NotificationDTO> purchaseItems(string userName, DeliveryParametersDTO deliveryParameters, PaymentParametersDTO paymentParameters); // USE CASE 2.9
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2

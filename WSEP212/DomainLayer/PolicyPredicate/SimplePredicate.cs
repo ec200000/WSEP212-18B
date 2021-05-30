@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Newtonsoft.Json;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
-using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer.PolicyPredicate
 {

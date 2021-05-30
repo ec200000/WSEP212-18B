@@ -31,6 +31,8 @@ namespace WSEP212.DomainLayer
         public ResultWithValue<ConcurrentLinkedList<string>> submitPriceOffer(String userName, int storeID, int itemID, double offerItemPrice);
         public ResultWithValue<string> itemCounterOffer(String storeManager, String userName, int storeID, int itemID, double counterOffer);
         public ResultWithValue<string> confirmPriceStatus(String storeManager, String userToConfirm, int storeID, int itemID, PriceStatus priceStatus);
+        public RegularResult addBidOffer(string userName, int storeID, int itemId, string buyer, double offerItemPrice);
+        public RegularResult removeBidOffer(string userName, int storeID, int itemId, string buyer);
         public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems(string userName, DeliveryParameters deliveryParameters, PaymentParameters paymentParameters); 
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy);
 

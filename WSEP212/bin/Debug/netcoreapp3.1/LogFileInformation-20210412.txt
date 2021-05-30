@@ -1,6 +1,0 @@
-2021-04-12 12:46:49.313 +03:00 [Information] SearchItemsByCategory Event was triggered, with the parameters:item name: shoko, key words: , meminimal price: -1.7976931348623157E+308, maximal price: 1.7976931348623157E+308, category: 
-
-2021-04-12 12:49:24.263 +03:00 [Information] SearchItemsByCategory Event was triggered, with the parameters:item name: shoko, key words: , meminimal price: -1.7976931348623157E+308, maximal price: 1.7976931348623157E+308, category: 
-
-2021-04-12 12:50:53.815 +03:00 [Information] SearchItemsByCategory Event was triggered, with the parameters:item name: shoko, key words: , meminimal price: -1.7976931348623157E+308, maximal price: 1.7976931348623157E+308, category: 
-

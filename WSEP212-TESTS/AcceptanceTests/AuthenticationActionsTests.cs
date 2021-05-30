@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
+using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 
@@ -12,7 +13,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         SystemController controller = SystemController.Instance;
 
         [ClassInitialize]
-        public void init()
+        public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
         }
