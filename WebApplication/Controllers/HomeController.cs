@@ -18,6 +18,7 @@ using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers
@@ -117,6 +118,8 @@ namespace WebApplication.Controllers
             ShoppingCartItems(res);
             TryPriceBeforeSale(model);
             TryPriceAftereSale(model);
+            string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
+            HttpContext.Session.SetObject("purchasetypes", types);
             return View();
         }
 
@@ -563,9 +566,8 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
             int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
-            // !!! TODO: fix category to work with ItemCategory !!!
             ItemDTO item = new ItemDTO((int) storeID, model.quantity, model.itemName, model.description,
-                new ConcurrentDictionary<string, ItemReview>(), model.price, 0);
+                new ConcurrentDictionary<string, ItemReview>(), model.price, categorytoenum(model.category));
             ResultWithValue<int> res = systemController.addItemToStorage(userName, (int)storeID, item);
             if (res.getTag())
             {
@@ -1799,6 +1801,26 @@ namespace WebApplication.Controllers
                         node = node.Next;
                     }
                 }
+            }
+            return RedirectToAction("StoreActions");
+        }
+        
+        public IActionResult ChangePurchaseType(ShoppingCartModel model)
+        {
+            SystemController systemController = SystemController.Instance;
+            string userName = HttpContext.Session.GetString(SessionName);
+            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            string itemID = model.itemID;
+            if (itemID != null && itemID != "")
+            {
+                string[] strs = itemID.Split(":");
+                int item = int.Parse(strs[strs.Length - 1]);
+                RegularResult res = systemController.changeItemPurchaseType(userName, (int) storeID, item, stringToEnumPT(model.purchaseType), model.newOffer);
+                if (res.getTag())
+                {
+                    return RedirectToAction("StoreActions");
+                }
+                
             }
             return RedirectToAction("StoreActions");
         }

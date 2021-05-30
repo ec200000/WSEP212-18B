@@ -28,7 +28,10 @@ namespace WSEP212_TESTS.UnitTests
         [TestInitialize]
         public void beforeTests()
         {
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            //if(SystemDBMock.Instance.Database.Exists())
+            //    SystemDBMock.Instance.Database.Delete();
+            User user = new User("admin");
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), user);
             bagOwner = new User("Sagiv", 21);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
