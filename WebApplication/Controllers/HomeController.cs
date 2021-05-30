@@ -1483,7 +1483,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("PurchasePredicate");
                 }
         }
@@ -1528,7 +1528,7 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
-                    ViewBag.Alert = res.getMessage();
+                    TempData["alert"] = res.getMessage();
                     return RedirectToAction("PurchasePredicate");
                 }
             }
@@ -1586,7 +1586,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                ViewBag.Alert = res.getMessage();
+                TempData["alert"] = res.getMessage();
                 return RedirectToAction("PurchasePredicate");
             }
         }
@@ -1820,7 +1820,8 @@ namespace WebApplication.Controllers
                 {
                     return RedirectToAction("StoreActions");
                 }
-                
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("StoreActions");
             }
             return RedirectToAction("StoreActions");
         }
