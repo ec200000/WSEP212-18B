@@ -18,6 +18,7 @@ namespace WSEP212_TESTS.UnitTests
         private static Store store;
         private static int itemAID;
         private static int itemBID;
+        private static User user;
 
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
@@ -36,7 +37,7 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
             
             UserRepository.Instance.initRepo();
-            User user = new User("admin", 80);
+            user = new User("admin", 80);
             UserRepository.Instance.insertNewUser(user, "123456");
             
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
@@ -50,12 +51,10 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void addStoreTest()
         {
-            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             Assert.IsTrue(addStoreBool.getTag());
             int newStoreID = addStoreBool.getValue();
-            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             Assert.IsFalse(addStoreBool.getTag());
             StoreRepository.Instance.removeStore(newStoreID);
         }
@@ -63,11 +62,11 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void removeStoreTest()
         {
-            int storeID = store.storeID;
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            int storeID = addStoreBool.getValue();
+            
             RegularResult removeStoreBool = StoreRepository.Instance.removeStore(storeID);
             Assert.IsTrue(removeStoreBool.getTag());
-            removeStoreBool = StoreRepository.Instance.removeStore(storeID);
-            Assert.IsFalse(removeStoreBool.getTag());
         }
 
         [TestMethod]

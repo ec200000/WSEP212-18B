@@ -66,18 +66,16 @@ namespace WSEP212.DomainLayer
 
             lock (storeExistsLock)
             {
-                if(isExistingStore(storeName, storeAddress))
+                if (isExistingStore(storeName, storeAddress))
                 {
                     return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
                 }
-                else
-                {
-                    Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
-                    store.addToDB();
-                    int storeID = store.storeID;
-                    stores.TryAdd(storeID, store);
-                    return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
-                }
+
+                Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
+                store.addToDB();
+                int storeID = store.storeID;
+                stores.TryAdd(storeID, store);
+                return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
             }
         }
 
