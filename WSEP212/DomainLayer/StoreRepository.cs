@@ -104,7 +104,11 @@ namespace WSEP212.DomainLayer
         {
             if (stores.ContainsKey(storeID))
             {
+                var storeToRemove = stores[storeID];
                 stores.TryRemove(storeID, out _);
+                SystemDBAccess.Instance.Stores.Remove(storeToRemove);
+                lock (SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
                 return new Ok("The Store Was Removed From The Store Repository Successfully");
             }
             return new Failure("The Store Is Not Exist In The Store Repository");
