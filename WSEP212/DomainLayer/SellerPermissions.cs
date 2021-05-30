@@ -19,7 +19,6 @@ namespace WSEP212.DomainLayer
 {
     public class SellerPermissions
     {
-
         [Key] 
         [Column(Order = 1)]
         public string SellerName{ get; set; }
