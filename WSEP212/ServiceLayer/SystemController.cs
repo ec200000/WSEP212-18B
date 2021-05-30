@@ -84,10 +84,10 @@ namespace WSEP212.ServiceLayer
                 string itemPrice = item.itemPrice;
                 string itemQuantity = item.itemQuantity;
                 string description = item.description;
-                int category = int.Parse(item.category);
+                string category = item.category;
                 addItemToStorage(userAdded, int.Parse(storeID),
                     new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
-                        new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice), category));
+                        new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice), int.Parse(category)));
             }
 
             // APPOINT

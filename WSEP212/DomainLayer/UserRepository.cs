@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -29,7 +30,7 @@ namespace WSEP212.DomainLayer
         public void initRepo()
         {
             users = new ConcurrentDictionary<User, bool>(); 
-            var usersList =  SystemDBAccess.Instance.Users.ToList();
+            var usersList = SystemDBAccess.Instance.Users.ToList();
             var cartsList = SystemDBAccess.Instance.Carts.ToList();
             foreach (var user in usersList)
             {

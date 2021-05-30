@@ -1,10 +1,13 @@
-﻿using System.Data.Entity.Infrastructure.Design;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Infrastructure.Design;
 using System.Linq;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212.DomainLayer.PurchaseTypes
 {
     public class BidInfo
     {
+        [Key]
         public int bidID { get; set; }
         
         public int itemID { get; set; }
