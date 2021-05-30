@@ -125,7 +125,8 @@ namespace WSEP212.DomainLayer.AuthenticationSystem
             {
                 usersInfo.TryAdd(userName, encryptPassword(password));
                 result.UserInfoJson = this.UserInfoJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
             else //first time - no passwords are saved
             {

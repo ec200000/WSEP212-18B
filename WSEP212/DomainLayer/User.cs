@@ -109,7 +109,8 @@ namespace WSEP212.DomainLayer
             this.isSystemManager = isSystemManager;
             
             SystemDBAccess.Instance.Users.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
 
         public void changeState(UserState state)
@@ -871,7 +872,8 @@ namespace WSEP212.DomainLayer
                 result.purchases = purchases;
                 if(!JToken.DeepEquals(result.PurchasesJson, this.PurchasesJson))
                     result.PurchasesJson = this.PurchasesJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
         }
         
@@ -891,7 +893,8 @@ namespace WSEP212.DomainLayer
                     this.sellerPermissions.AddFirst(permissions);
                     result.SellerPermissionsJson = this.SellerPermissionsJson;
                     result.sellerPermissions = this.sellerPermissions;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
             }
             return res;

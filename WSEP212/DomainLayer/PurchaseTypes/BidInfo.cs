@@ -28,5 +28,11 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             this.itemPrice = price;
             this.bidID = SystemDBAccess.Instance.Bids.Count() + 1;
         }
+
+        public override string ToString()
+        {
+            return
+                $"The user- {buyer}, submit new price offer for item: {itemID}; with price: {itemPrice}!\n please review this offer";
+        }
     }
 }

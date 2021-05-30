@@ -50,7 +50,8 @@ namespace WSEP212.DomainLayer
                 if (result != null)
                 {
                     result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
 
                 // returns store owners to send notification only if purchase type is submit offer
@@ -72,7 +73,8 @@ namespace WSEP212.DomainLayer
                 if (result != null)
                 {
                     result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
             }
             return res;

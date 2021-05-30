@@ -658,7 +658,7 @@ namespace WebApplication.Controllers
                 ResultWithValue<NotificationDTO> res = systemController.addItemToShoppingCart(userName, storeID, itemID, model.quantity, purchaseType, price);
                 if (res.getTag())
                 {
-                    HttpContext.Session.SetObject("allbids",res.getValue());
+                    //HttpContext.Session.SetObject("allbids",res.getValue());
                     if (res.getValue() != null && purchaseType == 1)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
@@ -963,6 +963,20 @@ namespace WebApplication.Controllers
             }
         }
         
+        private Permissions[] persListToArray(ConcurrentLinkedList<Permissions> lst)
+        {
+            Permissions[] arr = new Permissions[lst.size];
+            int i = 0;
+            Node<Permissions> node = lst.First;
+            while(node.Next != null)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
+        
         public IActionResult ViewOfficials()
         {
             TempData["alert"] = null;
@@ -975,7 +989,8 @@ namespace WebApplication.Controllers
                 foreach (string name in res.getValue().Keys)
                 {
                     value[i] = name;
-                    if (res.getValue()[name].Contains(Permissions.AllPermissions))
+                    Permissions[] pers = persListToArray(res.getValue()[name]);
+                    if (pers.Contains(Permissions.AllPermissions))
                         value[i] += ", Store Owner";
                     else
                         value[i] += ", Store Manager";
@@ -1480,15 +1495,15 @@ namespace WebApplication.Controllers
                 }
             }
             RegularResult res = systemController.removePurchasePredicate(userName, (int)storeID, predicateID);
-                if (res.getTag())
-                {
-                    return RedirectToAction("PurchasePredicate");
-                }
-                else
-                {
-                    TempData["alert"] = res.getMessage();
-                    return RedirectToAction("PurchasePredicate");
-                }
+            if (res.getTag())
+            {
+                return RedirectToAction("PurchasePredicate");
+            }
+            else
+            {
+                TempData["alert"] = res.getMessage();
+                return RedirectToAction("PurchasePredicate");
+            }
         }
 
         public IActionResult TryAddPurchasePredicate(PredicateModel model)
@@ -1684,16 +1699,34 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public IActionResult BidsReview()
+        public IActionResult BidsReview(StoreModel model)
         {
-            if (HttpContext.Session.GetObject<string[]>("bids") == null)
+            if (model.storeInfo != null)
             {
-                HttpContext.Session.SetObject("bids", new string[0]);
+                model.storeID = int.Parse(model.storeInfo.Split(",")[0].Substring(10));
+                HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
             }
-            NotificationDTO nots = HttpContext.Session.GetObject<NotificationDTO>("allbids");
             string userName = HttpContext.Session.GetString(SessionName);
-            string[] bids = HttpContext.Session.GetObject<string[]>("bids");
-            
+            int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
+            LinkedList<SellerPermissions> storeFounderPermissions =
+                UserRepository.Instance.findUserByUserName(userName).getValue().sellerPermissions;
+            SellerPermissions per = null;
+            foreach (var perm in storeFounderPermissions)
+            {
+                if (perm.StoreID == storeID)
+                {
+                    per = perm;
+                    break;
+                }
+            }
+
+            BidInfo[] bids = per.bids.Values.ToArray();
+            string[] bidsstr = new string[bids.Length];
+            for (int i = 0; i < bids.Length; i++)
+            {
+                bidsstr[i] = bids[i].ToString();
+            }
+            HttpContext.Session.SetObject("bids", bidsstr);
             return View();
         }
         
@@ -1735,7 +1768,7 @@ namespace WebApplication.Controllers
                 string[] strs2 = strs[0].Split(":");
                 int item = int.Parse(strs2[1]);
                 string[] strs5 = strs[0].Split(",");
-                string[] strs6 = strs5[0].Split(":");
+                string[] strs6 = strs5[0].Split("-");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user,userName, (int) storeID, item, 2);
                 if (res.getValue() != null)
@@ -1764,8 +1797,8 @@ namespace WebApplication.Controllers
                 string[] strs2 = strs[0].Split(":");
                 int item = int.Parse(strs2[1]);
                 string[] strs5 = strs[0].Split(",");
-                string[] strs6 = strs5[0].Split(":");
-                string user = strs6[1];
+                string[] strs6 = strs5[0].Split("-");
+                string user = strs6[1].TrimStart();
                 ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
                 if (res.getValue() != null)
                 {
@@ -1796,7 +1829,7 @@ namespace WebApplication.Controllers
                 string[] strs4 = strs3[0].Split(":");
                 double price = double.Parse(strs4[1]);
                 string[] strs5 = strs[0].Split(",");
-                string[] strs6 = strs5[0].Split(":");
+                string[] strs6 = strs5[0].Split("-");
                 string user = strs6[1];
                 ResultWithValue<NotificationDTO> res = systemController.itemCounterOffer(user,userName, (int) storeID, item, price);
                 if (res.getValue() != null)

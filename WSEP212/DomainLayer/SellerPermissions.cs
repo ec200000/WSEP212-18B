@@ -66,7 +66,8 @@ namespace WSEP212.DomainLayer
             SystemDBAccess.Instance.Permissions.Add(this);
             try
             {
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
             catch (DbEntityValidationException e)
             {
@@ -110,10 +111,25 @@ namespace WSEP212.DomainLayer
         {
             return StoreID;
         }
+        
+        private Permissions[] persListToArray(ConcurrentLinkedList<Permissions> lst)
+        {
+            Permissions[] arr = new Permissions[lst.size];
+            int i = 0;
+            Node<Permissions> node = lst.First;
+            while(node.Next != null)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
 
         public bool isStoreOwner()
         {
-            return permissionsInStore.Contains(Permissions.AllPermissions);
+            Permissions[] pers = persListToArray(permissionsInStore);
+            return pers.Contains(Permissions.AllPermissions);
         }
 
         public void setPermissions(ConcurrentLinkedList<Permissions> newPer)
@@ -124,7 +140,8 @@ namespace WSEP212.DomainLayer
                 result.permissionsInStore = newPer;
                 if(!JToken.DeepEquals(result.PermissionsInStoreAsJson, this.PermissionsInStoreAsJson))
                     result.PermissionsInStoreAsJson = this.PermissionsInStoreAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
                 this.permissionsInStore = newPer;
             }
         }
@@ -135,11 +152,11 @@ namespace WSEP212.DomainLayer
             var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.GrantorName == this.GrantorName && i.SellerName == this.SellerName && i.StoreID == this.StoreID);
             if (result != null)
             {
-                result.bids.TryAdd(bidInfo.bidID, bidInfo);
+                this.bids.TryAdd(bidInfo.bidID, bidInfo);
                 if(!JToken.DeepEquals(result.BidsAsJson, this.BidsAsJson))
                     result.BidsAsJson = this.BidsAsJson;
-                SystemDBAccess.Instance.SaveChanges();
-                this.bids = result.bids;
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
                 return new Ok("added a new bid");
             }
             return new Failure("bid adding failed");
@@ -166,7 +183,8 @@ namespace WSEP212.DomainLayer
                     result.bids.TryRemove(bidID);
                     if(!JToken.DeepEquals(result.BidsAsJson, this.BidsAsJson))
                         result.BidsAsJson = this.BidsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                     this.bids = result.bids;
                     return new Ok("removed the bid");
                 }
