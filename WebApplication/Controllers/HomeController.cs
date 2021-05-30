@@ -18,7 +18,6 @@ using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
-using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WebApplication.Controllers

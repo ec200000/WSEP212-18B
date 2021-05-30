@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
@@ -24,16 +25,11 @@ namespace WSEP212_TESTS.UnitTests
         private static PaymentParameters paymentParameters;
 
         [ClassInitialize]
-        public void init()
-        {
-            SystemDBAccess.mock = true;
-        }
-        
-        [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
-            user = new User("check name");
+            SystemDBAccess.mock = true;
 
+            user = new User("check name");
             registerAndLogin();
             storeID1 = openStore("Store1", "Holon");
             itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, ItemCategory.Dairy);

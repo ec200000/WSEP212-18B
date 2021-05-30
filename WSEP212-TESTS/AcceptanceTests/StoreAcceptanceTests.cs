@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
@@ -19,14 +20,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static int storeID;
 
         [ClassInitialize]
-        public void init()
-        {
-            SystemDBAccess.mock = true;
-        }
-        
-        [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+
             RegularResult result = controller.register("theuser123", 18, "123456");
             controller.login("theuser123", "123456");
             storeID = controller.openStore("theuser123", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
@@ -47,7 +44,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("theuser123", "habanim", "Haifa", "Israel", "786598");
             PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theuser123", "086", "207885623");
 
-            RegularResult result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);//adding an item
+            ResultWithValue<NotificationDTO> result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);//adding an item
             Assert.IsTrue(result.getTag());
             ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("theuser123", deliveryParameters, paymentParameters);
             Assert.IsTrue(result2.getTag());
@@ -115,7 +112,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("theuser123", "habanim", "Haifa", "Israel", "786598");
             PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theuser123", "086", "207885623");
 
-            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             Assert.IsTrue(res.getTag());
             ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser123", deliveryParameters, paymentParameters);
             Assert.IsTrue(res2.getTag());
@@ -130,7 +127,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             Assert.IsTrue(res.getTag());
             ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", null, itemID, storeID);
             Assert.IsFalse(result.getTag());

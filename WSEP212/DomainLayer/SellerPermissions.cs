@@ -10,6 +10,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
@@ -50,7 +51,7 @@ namespace WSEP212.DomainLayer
             set => bids = JsonConvert.DeserializeObject<ConcurrentDictionary<int, BidInfo>>(value);
         }
 
-        public SellerPermissions(){}
+        public SellerPermissions() { }
 
         private SellerPermissions(string SellerName, int StoreID, string GrantorName, ConcurrentLinkedList<Permissions> permissionsInStore)
         {
