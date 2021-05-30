@@ -14,21 +14,17 @@ namespace WSEP212_TESTS.UnitTests
     [TestClass]
     public class ShoppingBagTests
     {
-        private Store shoppingBagStore;
-        private User bagOwner;
-        private int storeItemID;
-        private ShoppingBag shoppingBag;
-        private ItemPurchaseType purchaseType;
+        private static Store shoppingBagStore;
+        private static User bagOwner;
+        private static int storeItemID;
+        private static ShoppingBag shoppingBag;
+        private static ItemPurchaseType purchaseType;
 
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-        }
-        
-        [TestInitialize]
-        public void beforeTests()
-        {
+            
             SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
             SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
             SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
@@ -49,12 +45,6 @@ namespace WSEP212_TESTS.UnitTests
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner.userName);
             purchaseType = new ItemImmediatePurchase(10);
-        }
-
-        [TestCleanup]
-        public void afterTests()
-        {
-            StoreRepository.Instance.removeStore(shoppingBagStore.storeID);
         }
 
         [TestMethod]

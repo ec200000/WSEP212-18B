@@ -28,12 +28,19 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-        }
-        
-        [TestInitialize]
-        public void SetupAuth()
-        {
-            RegularResult result = controller.register("theuser", 18, "123456");
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
+            controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
             int itemID = controller.addItemToStorage("theuser", storeID, new ItemDTO(storeID, 500, "bamba", "snack for childrens", new ConcurrentDictionary<string, ItemReview>(), 4.5, (int)ItemCategory.Snacks)).getValue();
@@ -46,13 +53,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             paymentParameters = new PaymentParametersDTO("5042005811", "4", "2024", "theuser", "023", "025845318");
         }
 
-        [TestCleanup]
-        public void testClean()
-        {
-            UserRepository.Instance.users.Clear();
-            StoreRepository.Instance.stores.Clear();
-        }    
-        
         [TestMethod]
         public void noPolicyTest()
         {

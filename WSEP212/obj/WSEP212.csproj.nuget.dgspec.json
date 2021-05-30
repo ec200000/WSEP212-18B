@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
+        "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -71,6 +75,10 @@
             "System.Collections.Concurrent": {
               "target": "Package",
               "version": "[4.3.0, )"
+            },
+            "dotnet-restore-test": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             }
           },
           "imports": [

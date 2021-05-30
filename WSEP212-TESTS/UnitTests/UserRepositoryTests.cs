@@ -10,28 +10,30 @@ namespace WSEP212_TESTS.UnitTests
     [TestClass]
     public class UserRepositoryTest
     {
-        private User user1;
-        private User user2;
+        private static User user1;
+        private static User user2;
         
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-        }
-        
-        [TestInitialize]
-        public void testInit()
-        {
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
+            UserRepository.Instance.initRepo();
             user1 = new User("a");
+            UserRepository.Instance.insertNewUser(user1, "123456");
             user2 = new User("b");
-            UserRepository.Instance.users.TryAdd(user1, false);
-            UserRepository.Instance.users.TryAdd(user2, true);
-        }
-
-        [TestCleanup]
-        public void testClean()
-        {
-            UserRepository.Instance.users.Clear();
+            UserRepository.Instance.insertNewUser(user2, "123456");
         }
 
         [TestMethod]

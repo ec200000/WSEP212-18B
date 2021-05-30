@@ -95,7 +95,7 @@ namespace WSEP212.DomainLayer
                     if (!addItemRes.getTag())
                     {
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
-                        return new Failure("Could not add items to the shopping bag!");
+                        return addItemRes;
                     }
                     var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
                     if (result != null)

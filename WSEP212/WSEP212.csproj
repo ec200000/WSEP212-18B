@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="dotnet-restore-test" Version="1.0.3" />
       <PackageReference Include="EntityFramework" Version="6.4.4" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.Internal" Version="5.0.5" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.5" />

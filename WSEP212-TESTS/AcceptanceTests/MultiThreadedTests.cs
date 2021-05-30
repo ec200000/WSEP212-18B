@@ -18,43 +18,42 @@ namespace WSEP212_TESTS.AcceptanceTests
     [TestClass]
     public class MultiThreadedTests
     {
-
-        private int storeID;
-        SystemController systemController = SystemController.Instance;
-        private int itemID;
+        private static SystemController systemController = SystemController.Instance;
+        
+        private static int storeID;
+        private static int itemID;
 
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-        }
-        
-        [TestInitialize]
-        public void testInit()
-        {
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
             systemController.register("lol", 18, "123456");
             systemController.register("mol", 18, "1234");
             systemController.register("pol", 18, "123");
             RegularResult res = systemController.login("lol", "123456");
-            Console.WriteLine(res.getMessage());
             res = systemController.login("mol", "1234");
-            Console.WriteLine(res.getMessage());
+            
             ResultWithValue<int> val = systemController.openStore("mol", "t", "bb", "DEFAULT", "DEFAULT");
             ItemDTO item = new ItemDTO(val.getValue(),30, "shoko", "taim retzah!", new ConcurrentDictionary<string, ItemReview>(),12, (int)ItemCategory.Dairy);
             ResultWithValue<int> val2 = systemController.addItemToStorage("mol", val.getValue(), item);
-            this.storeID = val.getValue();
-            this.itemID = val2.getValue();
+            storeID = val.getValue();
+            itemID = val2.getValue();
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID].purchasePolicy = new PurchasePolicyMock();
             StoreRepository.Instance.stores[storeID].salesPolicy = new SalePolicyMock();
-        }
-
-        [TestCleanup]
-        public void testClean()
-        {
-            UserRepository.Instance.users.Clear();
-            StoreRepository.Instance.stores.Clear();
         }
 
         [TestMethod]

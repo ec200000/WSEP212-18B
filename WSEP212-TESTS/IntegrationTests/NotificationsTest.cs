@@ -25,6 +25,17 @@ namespace WSEP212_TESTS.IntegrationTests
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
         }
         
         [TestCleanup]

@@ -16,29 +16,37 @@ namespace WSEP212_TESTS.UnitTests
     [TestClass]
     public class StoreTests
     {
-        private Store store;
-        private int sodaID;
+        private static Store store;
+        private static int sodaID;
+        private static User user;
 
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-        }
-        
-        [TestInitialize]
-        public void Initialize()
-        {
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
+            UserRepository.Instance.initRepo();
+            User admin = new User("admin", 80);
+            UserRepository.Instance.insertNewUser(admin, "123456");
+            user = new User("avi", 20);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
-            this.store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
-            this.sodaID = this.store.addItemToStorage(3, "soda-stream", "great drink", 150, ItemCategory.Drinks).getValue();
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            StoreRepository.Instance.removeStore(store.storeID);
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), admin);
+            store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
+            sodaID = store.addItemToStorage(3, "soda-stream", "great drink", 150, ItemCategory.Drinks).getValue();
         }
 
         [TestMethod]
@@ -108,7 +116,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             store.changeItemQuantity(sodaID, 4);
             int quantity = store.getItemById(sodaID).getValue().quantity;
-            Assert.AreEqual(7, quantity);
+            Assert.AreEqual(4, quantity);
         }
 
         [TestMethod]
@@ -252,7 +260,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(user.userName, store.storeID, "admin", perms);
             RegularResult addNewStoreSellerBool1 = store.addNewStoreSeller(aviTheSeller);
             Assert.IsTrue(addNewStoreSellerBool1.getTag());
             RegularResult addNewStoreSellerBool2 = store.addNewStoreSeller(aviTheSeller);
@@ -264,11 +272,11 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(user.userName, store.storeID, "admin", perms);
             store.addNewStoreSeller(aviTheSeller);
-            RegularResult removeStoreSellerBool1 = store.removeStoreSeller("avi");
+            RegularResult removeStoreSellerBool1 = store.removeStoreSeller(user.userName);
             Assert.IsTrue(removeStoreSellerBool1.getTag());
-            RegularResult removeStoreSellerBool2 = store.removeStoreSeller("avi");
+            RegularResult removeStoreSellerBool2 = store.removeStoreSeller(user.userName);
             Assert.IsFalse(removeStoreSellerBool2.getTag());
         }
 
@@ -277,7 +285,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentLinkedList<Permissions> perms = new ConcurrentLinkedList<Permissions>();
             perms.TryAdd(Permissions.AllPermissions);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(user.userName, store.storeID, "admin", perms);
             store.addNewStoreSeller(aviTheSeller);
             ResultWithValue<SellerPermissions> result = store.getStoreSellerPermissions("avi");
             Assert.IsTrue(result.getTag());
@@ -292,7 +300,7 @@ namespace WSEP212_TESTS.UnitTests
             perms.TryAdd(Permissions.AllPermissions);
             int numOfRecords = info.Count;
             Assert.AreEqual(numOfRecords, 1);
-            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions("avi", this.store.storeID, "admin", perms);
+            SellerPermissions aviTheSeller = SellerPermissions.getSellerPermissions(user.userName, store.storeID, "admin", perms);
             store.addNewStoreSeller(aviTheSeller);
             Assert.AreEqual(store.getStoreOfficialsInfo().Count, 2);
         }

@@ -9,6 +9,9 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5e567fe9_002Dd0b1_002D4e01_002Da651_002D2677557cf400/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShoppingBagTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ShoppingBagTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ShoppingCartTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.StoreRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.StoreTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
