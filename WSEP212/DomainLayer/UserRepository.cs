@@ -72,19 +72,22 @@ namespace WSEP212.DomainLayer
             dynamic array = JsonConvert.DeserializeObject(json);
             // CREATE USERS
             string loggedUser = array.loggedUser;
-            foreach(var item in array.users)
+            if (!SystemDBAccess.Instance.Users.Any())
             {
-                string username = item.username;
-                string userAge = item.userAge;
-                string isSystemManager = item.isSystemManager;
-                User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
-                if (isSystemManager.Equals("true"))
-                    user.changeState(new SystemManagerState(user));
-                else if (loggedUser.Equals(username))
-                    user.changeState(new LoggedBuyerState(user));
-                else
-                    user.changeState(new GuestBuyerState(user));
-                insertNewUser(user, "123456");
+                foreach (var item in array.users)
+                {
+                    string username = item.username;
+                    string userAge = item.userAge;
+                    string isSystemManager = item.isSystemManager;
+                    User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
+                    if (isSystemManager.Equals("true"))
+                        user.changeState(new SystemManagerState(user));
+                    else if (loggedUser.Equals(username))
+                        user.changeState(new LoggedBuyerState(user));
+                    else
+                        user.changeState(new GuestBuyerState(user));
+                    insertNewUser(user, "123456");
+                }
             }
         }
         

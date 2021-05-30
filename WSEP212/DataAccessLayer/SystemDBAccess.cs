@@ -20,7 +20,7 @@ namespace WSEP212.DataAccessLayer
 
         public static DBInterface Instance => mock ? SystemDBMock.Instance : lazy.Value;
 
-        public SystemDBAccess() : base("Server=tcp:wsep212b18.database.windows.net,1433;Database=wsep212Dep;User ID=wsep212b@wsep212Dep;Password=Ab123456;Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
+        public SystemDBAccess() : base("Server=tcp:wsep212b18.database.windows.net,1433;Database=wsep212Dep;User ID=wsep212b@wsep212b18;Password=Ab123456;Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
         {
             Init();
             Database.CommandTimeout = 120;

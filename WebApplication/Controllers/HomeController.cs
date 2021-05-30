@@ -137,7 +137,7 @@ namespace WebApplication.Controllers
             foreach (ShoppingBag shopBag in shoppingBagss.Values)
             {
                 int storeid = shopBag.store.storeID;
-                string storeAndItem = "StoreID:" + storeid;
+                string storeAndItem = "StoreID:" + storeid+",";
                 foreach (int itemID in shopBag.items.Keys)
                 {
                     string item = " ItemsID:" + itemID;
@@ -659,7 +659,7 @@ namespace WebApplication.Controllers
                 if (res.getTag())
                 {
                     HttpContext.Session.SetObject("allbids",res.getValue());
-                    if (res.getValue() != null)
+                    if (res.getValue() != null && purchaseType == 1)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
                         while (node.Next != null)
@@ -833,13 +833,16 @@ namespace WebApplication.Controllers
             TempData["alert"] = null;
             SystemController systemController = SystemController.Instance;
             string userName = HttpContext.Session.GetString(SessionName);
-            int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
+            //int? storeID = HttpContext.Session.GetInt32(SessionStoreID);
             string itemID = model.itemID;
             if (itemID!=null && itemID != "")
             {
-                string[] strs = itemID.Split(":");
-                int item = int.Parse(strs[strs.Length - 1]);
-                RegularResult res = systemController.removeItemFromShoppingCart(userName, (int)storeID, item);
+                string[] strs = itemID.Split(",");
+                string[] itemstr = strs[1].Split(":");
+                int item = int.Parse(itemstr[itemstr.Length - 1]);
+                string[] storestr = strs[0].Split(":");
+                int store = int.Parse(storestr[storestr.Length - 1]);
+                RegularResult res = systemController.removeItemFromShoppingCart(userName, store, item);
                 if (res.getTag())
                 {
                     return RedirectToAction("ShoppingCart");
@@ -1683,6 +1686,10 @@ namespace WebApplication.Controllers
 
         public IActionResult BidsReview()
         {
+            if (HttpContext.Session.GetObject<string[]>("bids") == null)
+            {
+                HttpContext.Session.SetObject("bids", new string[0]);
+            }
             NotificationDTO nots = HttpContext.Session.GetObject<NotificationDTO>("allbids");
             string userName = HttpContext.Session.GetString(SessionName);
             string[] bids = HttpContext.Session.GetObject<string[]>("bids");

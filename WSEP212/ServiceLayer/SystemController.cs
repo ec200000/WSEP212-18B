@@ -8,6 +8,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json;
 using WSEP212.DomainLayer;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -65,51 +66,56 @@ namespace WSEP212.ServiceLayer
             string json = File.ReadAllText(jsonFilePath);
             dynamic array = JsonConvert.DeserializeObject(json);
 
-            // CREATE STORES
-            foreach (var item in array.stores)
+            if (!SystemDBAccess.Instance.Stores.Any())
             {
-                string storeOpener = item.storeOpener;
-                string storeName = item.storeName;
-                string storeAddress = item.storeAddress;
-                openStore(storeOpener, storeName, storeAddress, "0", "0");
-            }
-
-            // ADD ITEMS
-            foreach (var item in array.items)
-            {
-                string userAdded = item.userAdded;
-                string storeName = item.storeName;
-                string storeID = item.storeID;
-                string itemName = item.itemName;
-                string itemPrice = item.itemPrice;
-                string itemQuantity = item.itemQuantity;
-                string description = item.description;
-                string category = item.category;
-                addItemToStorage(userAdded, int.Parse(storeID),
-                    new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
-                        new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice), int.Parse(category)));
-            }
-
-            // APPOINT
-            foreach (var item in array.appoints)
-            {
-                string manager = item.manager;
-                string appoint = item.appoint;
-                string storeName = item.storeName;
-                string storeID = item.storeID;
-                appointStoreManager(manager, appoint, int.Parse(storeID));
-                ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
-                foreach (var perm in item.permissions)
+                // CREATE STORES
+                foreach (var item in array.stores)
                 {
-                    if (perm.ToString().Equals("StorageManagment"))
-                        perms.TryAdd((int)Permissions.StorageManagment);
+                    string storeOpener = item.storeOpener;
+                    string storeName = item.storeName;
+                    string storeAddress = item.storeAddress;
+                    openStore(storeOpener, storeName, storeAddress, "0", "0");
                 }
-                editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
-            }
 
-            UserRepository.Instance.initRepo();
-            string loggedUser = array.loggedUser;
-            logout(loggedUser);
+                // ADD ITEMS
+                foreach (var item in array.items)
+                {
+                    string userAdded = item.userAdded;
+                    string storeName = item.storeName;
+                    string storeID = item.storeID;
+                    string itemName = item.itemName;
+                    string itemPrice = item.itemPrice;
+                    string itemQuantity = item.itemQuantity;
+                    string description = item.description;
+                    string category = item.category;
+                    addItemToStorage(userAdded, int.Parse(storeID),
+                        new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
+                            new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice),
+                            int.Parse(category)));
+                }
+
+                // APPOINT
+                foreach (var item in array.appoints)
+                {
+                    string manager = item.manager;
+                    string appoint = item.appoint;
+                    string storeName = item.storeName;
+                    string storeID = item.storeID;
+                    appointStoreManager(manager, appoint, int.Parse(storeID));
+                    ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
+                    foreach (var perm in item.permissions)
+                    {
+                        if (perm.ToString().Equals("StorageManagment"))
+                            perms.TryAdd((int) Permissions.StorageManagment);
+                    }
+
+                    editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
+                }
+
+                UserRepository.Instance.initRepo();
+                string loggedUser = array.loggedUser;
+                logout(loggedUser);
+            }
         }
 
         public RegularResult register(String userName, int userAge, String password)
