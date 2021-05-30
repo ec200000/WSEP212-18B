@@ -85,15 +85,15 @@ namespace WSEP212.DataAccessLayer
                     .WillCascadeOnDelete();*/
         }
 
-        public DbSet<Item> Items { get; set; }
-        public DbSet<ItemReview> ItemReviewes { get; set; }
-        public DbSet<Store> Stores { get; set; }
-        public DbSet<ShoppingCart> Carts { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Authentication> UsersInfo { get; set; }
-        public DbSet<PurchaseInvoice> Invoices { get; set; }
-        public DbSet<SellerPermissions> Permissions { get; set; }
-        public DbSet<UserConnectionManager> DelayedNotifications { get; set; }
-        public DbSet<BidInfo> Bids { get; set; }
+        public override DbSet<Item> Items { get; set; }
+        public override DbSet<ItemReview> ItemReviewes { get; set; }
+        public override DbSet<Store> Stores { get; set; }
+        public override DbSet<ShoppingCart> Carts { get; set; }
+        public override DbSet<User> Users { get; set; }
+        public override DbSet<Authentication> UsersInfo { get; set; }
+        public override DbSet<PurchaseInvoice> Invoices { get; set; }
+        public override DbSet<SellerPermissions> Permissions { get; set; }
+        public override DbSet<UserConnectionManager> DelayedNotifications { get; set; }
+        public override DbSet<BidInfo> Bids { get; set; }
     }
 }
