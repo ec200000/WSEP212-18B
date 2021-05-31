@@ -157,16 +157,6 @@ namespace WSEP212.DomainLayer
             return users.TryRemove(userToRemove, out _) && Authentication.Instance.removeUserInfo(userToRemove.userName);
         }
 
-        public bool updateUser(User userToUpdate)
-        {
-            bool userStatus;
-            if(users.TryRemove(userToUpdate, out userStatus))
-            {
-                return users.TryAdd(userToUpdate, userStatus);
-            }
-            return false;
-        }
-
         //<param>: String userName
         //<returns>: If found -> user returned, otherwise null is returned
         public ResultWithValue<User> findUserByUserName(String userName)

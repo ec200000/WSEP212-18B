@@ -915,6 +915,24 @@ namespace WSEP212.DomainLayer
             param.result = res;
             param.eventWaitHandle.Set(); // signal we're done
         }
+        
+        public bool removeSellerPermissions(SellerPermissions permissions)
+        {
+            var res = false;
+            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
+            if (result != null)
+            {
+                lock (linkedListLock)
+                {
+                    this.sellerPermissions.Remove(permissions);
+                    result.SellerPermissionsJson = this.SellerPermissionsJson;
+                    result.sellerPermissions = this.sellerPermissions;
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
+                }
+            }
+            return res;
+        }
 
     }
 }

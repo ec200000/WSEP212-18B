@@ -41,7 +41,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             User newUser = new User("iris");
             UserRepository.Instance.insertNewUser(newUser, "12345");
-            Assert.AreEqual(3, UserRepository.Instance.users.Count);
             UserRepository.Instance.users.TryGetValue(newUser, out var res);
             Assert.IsFalse(res);
         }
@@ -49,7 +48,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void changeUserLoginStatusTest()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, true, "123"); //register -> login
+            UserRepository.Instance.changeUserLoginStatus(user1, true, "123456"); //register -> login
             UserRepository.Instance.users.TryGetValue(user1, out var res3); 
             Assert.IsTrue(res3);
         }
@@ -57,7 +56,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void changeUserLoginStatusTestFails()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, false, "123");
+            UserRepository.Instance.changeUserLoginStatus(user1, true, "123");
             UserRepository.Instance.users.TryGetValue(user1, out var res1);
             Assert.IsFalse(res1);
             
@@ -70,7 +69,7 @@ namespace WSEP212_TESTS.UnitTests
         public void removeExistingUserTest()
         {
             UserRepository.Instance.removeUser(user1); //removing existing user
-            Assert.AreEqual(1, UserRepository.Instance.users.Count);
+            Assert.IsFalse(UserRepository.Instance.users.ContainsKey(user1));
         }
 
         [TestMethod]
@@ -78,40 +77,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             User u = new User("c");
             Assert.IsFalse(UserRepository.Instance.removeUser(u)); //removing user that do not exists
-        }
-
-        [TestMethod]
-        public void updateUserTest()
-        {
-            ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();
-            items.TryAdd(10, 1);
-            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
-            itemsPrices.TryAdd(10, 1.2);
-            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", items, itemsPrices, DateTime.Now);
-            user1.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo); //updating the user
-            UserRepository.Instance.updateUser(user1);
-            Assert.AreEqual(2, UserRepository.Instance.users.Count);
-            bool found = false;
-            foreach (var u in UserRepository.Instance.users.Keys)
-            {
-                if (u.userName.Equals(user1.userName))
-                {
-                    Assert.AreEqual(1, u.purchases.Count);
-                    u.purchases.TryGetValue(purchaseInfo.purchaseInvoiceID, out var p);
-                    Assert.AreEqual(1.2, p.getPurchaseTotalPrice());
-                    found = true;
-                }
-            }
-            if(!found)
-                Assert.IsTrue(false); //didn't find the user to update
-
-            User user3 = new User("c");
-            UserRepository.Instance.updateUser(user3);
-            Assert.AreEqual(2, UserRepository.Instance.users.Count); //shouldn't add the user3 because it's not in the DB
-            var keys = UserRepository.Instance.users.Keys;
-            var res = keys.Contains(user1) && keys.Contains(user2); //no other users were added
-            
-            Assert.IsTrue(res);
         }
 
         [TestMethod]
