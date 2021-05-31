@@ -726,5 +726,6 @@ namespace WSEP212.DomainLayer
         {
             purchasesHistory.TryRemove(purchaseInvoiceID, out _);
         }
+        
     }
 }
