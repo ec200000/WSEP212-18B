@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {}
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+        "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
         "projectName": "WebApplication",
-        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
-        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
+        "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
+        "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-                "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+              "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+                "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
               }
             }
           }
@@ -91,17 +95,21 @@
         }
       }
     },
-    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+        "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
         "projectName": "WSEP212-TESTS",
-        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
-        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
+        "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\WSEP212-TESTS.csproj",
+        "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212-TESTS\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -115,11 +123,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
-                "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj"
+              "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj": {
+                "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj"
               },
-              "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
-                "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
+              "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+                "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj"
               }
             }
           }
@@ -211,17 +219,21 @@
         }
       }
     },
-    "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
+    "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "projectUniqueName": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
         "projectName": "WSEP212",
-        "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-        "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
+        "projectPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+        "packagesPath": "C:\\Users\\שגיב משיח\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\שגיב משיח\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\שגיב משיח\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
