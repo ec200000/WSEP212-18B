@@ -94,7 +94,8 @@ namespace WSEP212.DomainLayer
         public void addToDB()
         {
             SystemDBAccess.Instance.Items.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
 
         // Add new review about an item
@@ -106,7 +107,7 @@ namespace WSEP212.DomainLayer
             }
             else
             {
-                ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue());
+                ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue(), this.itemID);
                 areview.addToDB();
                 areview.addReview(review);
                 reviews.TryAdd(username, areview);
@@ -117,7 +118,8 @@ namespace WSEP212.DomainLayer
                 result.reviews = reviews;
                 if(!JToken.DeepEquals(result.DictionaryAsJson, this.DictionaryAsJson))
                     result.DictionaryAsJson = this.DictionaryAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
         }
 
@@ -132,7 +134,8 @@ namespace WSEP212.DomainLayer
                     if (result != null)
                     {
                         result.quantity = quantity;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return true;
                 }
@@ -151,7 +154,8 @@ namespace WSEP212.DomainLayer
                     if (result != null)
                     {
                         result.quantity = quantity;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return true;
                 }
@@ -183,7 +187,8 @@ namespace WSEP212.DomainLayer
                     result.price = price;
                     result.category = category;
                     result.quantity = quantity;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return new Ok("Item Details Have Been Successfully Updated In The Store");
             }

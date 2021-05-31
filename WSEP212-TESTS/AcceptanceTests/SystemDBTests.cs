@@ -42,7 +42,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             user = new User("check", 12, false);
             store = new Store("Biga", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             item = new Item(100, "bamba", "taim!", 5.0, ItemCategory.Snacks);
-            review = new ItemReview(user);
+            review = new ItemReview(user, item.itemID);
             cart = new ShoppingCart(user.userName);
             
             ConcurrentDictionary<int, int> items = new ConcurrentDictionary<int, int>();

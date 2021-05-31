@@ -14,6 +14,8 @@ namespace WSEP212.DataAccessLayer
 {
     public class SystemDBAccess : DBInterface
     {
+        public static readonly object savelock = new object();
+        
         public static bool mock = false;
         private static readonly Lazy<SystemDBAccess> lazy
             = new Lazy<SystemDBAccess>(() => new SystemDBAccess());
