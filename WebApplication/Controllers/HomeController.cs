@@ -919,17 +919,21 @@ namespace WebApplication.Controllers
             ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
             if (res.getTag())
             {
+                double totalIncome = 0;
                 string value = "";
                 foreach (KeyValuePair<int, ConcurrentDictionary<int, PurchaseInvoice>> invs in res.getValue())
                 {
                     foreach (PurchaseInvoice inv in invs.Value.Values)
                     {
                         value += inv.ToString() + "\n" + ";";
+                        if(inv.dateOfPurchase.Date.Equals(DateTime.Today))
+                            totalIncome += inv.getPurchaseTotalPrice();
                     }
                 }
                 if(value!="")
                     value = value.Substring(0, value.Length - 1);
                 HttpContext.Session.SetString("Stores_history", value);
+                HttpContext.Session.SetString("stores_income", totalIncome.ToString());
                 return View();
             }
             else
@@ -945,15 +949,19 @@ namespace WebApplication.Controllers
             SystemController systemController = SystemController.Instance;
             ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> res = systemController.getStorePurchaseHistory(HttpContext.Session.GetString(SessionName), (int)HttpContext.Session.GetInt32(SessionStoreID));
             if (res.getTag())
-            {
+            { 
+                double totalIncome = 0;
                 string value = "";
                 foreach (PurchaseInvoice inv in res.getValue().Values)
                 {
                     value += inv.ToString() + "\n" + ";";
+                    if(inv.dateOfPurchase.Date.Equals(DateTime.Today))
+                        totalIncome += inv.getPurchaseTotalPrice();
                 }
                 if(value!="")
                     value = value.Substring(0, value.Length - 1);
                 HttpContext.Session.SetString("store_history", value);
+                HttpContext.Session.SetString("store_income", totalIncome.ToString());
                 return View();
             }
             else
