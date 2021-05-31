@@ -53,10 +53,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             Assert.IsTrue(addStoreBool.getTag());
-            int newStoreID = addStoreBool.getValue();
-            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
-            Assert.IsFalse(addStoreBool.getTag());
-            StoreRepository.Instance.removeStore(newStoreID);
+            StoreRepository.Instance.removeStore(addStoreBool.getValue());
         }
 
         [TestMethod]

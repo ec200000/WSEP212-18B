@@ -32,9 +32,6 @@ namespace WSEP212.DomainLayer
         private readonly object purchaseItemsLock = new object();
         private readonly object addStoreSellerLock = new object();
 
-        // static counter for the storeIDs of diffrent stores
-        private static int storeCounter = 1;
-
         [JsonIgnore]
         private JsonSerializerSettings settings = new JsonSerializerSettings
         {
@@ -122,7 +119,6 @@ namespace WSEP212.DomainLayer
         {
             this.storage = new ConcurrentDictionary<int, Item>();
             this.storeID = StoreRepository.Instance.stores.Count + 1;
-            storeCounter++;
             this.activeStore = true;
             this.salesPolicy = salesPolicy;
             SalesPolicyAsJson = JsonConvert.SerializeObject(salesPolicy,settings);
