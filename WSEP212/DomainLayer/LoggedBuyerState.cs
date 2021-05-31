@@ -272,18 +272,13 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult logout(String userName)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if (findUserRes.getTag())
+            RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(userName, false, null);
+            if (loginStateRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), false, null);
-                if (loginStateRes.getTag())
-                {
-                    this.user.changeState(new GuestBuyerState(this.user));
-                    return new Ok("The User Has Successfully Logged Out");
-                }
-                return loginStateRes;
+                this.user.changeState(new GuestBuyerState(this.user));
+                return new Ok("The User Has Successfully Logged Out");
             }
-            return new Failure(findUserRes.getMessage());
+            return loginStateRes;
         }
 
         public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)

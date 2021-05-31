@@ -36,7 +36,7 @@ namespace WSEP212_TESTS.IntegrationTests
             user = new User("check name");
             user3 = new User("b"); //logged
             UserRepository.Instance.insertNewUser(user3, "123456");
-            UserRepository.Instance.changeUserLoginStatus(user3, true, "123456");
+            UserRepository.Instance.changeUserLoginStatus(user3.userName, true, "123456");
         }
 
         public bool registerAndLogin()

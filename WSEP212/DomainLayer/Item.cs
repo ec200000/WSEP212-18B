@@ -54,10 +54,7 @@ namespace WSEP212.DomainLayer
                 }
             }
         };
-        
-        [NotMapped]
-        private static int itemCounter = 1;
-        
+
         private readonly object quantitylock = new object();
         [Key]
         public int itemID { get; set; }   // different item ID for same item in different stores -> example: water is 2 in store A, and 3 in store B
@@ -83,7 +80,6 @@ namespace WSEP212.DomainLayer
                 throw new ArithmeticException();
             }
             this.itemID = SystemDBAccess.Instance.Items.Count() + 1;
-            itemCounter++;
             this.itemName = itemName;
             this.description = description;
             this.reviews = new ConcurrentDictionary<string, ItemReview>();

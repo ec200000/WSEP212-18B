@@ -37,7 +37,7 @@ namespace WSEP212_TESTS.IntegrationTests
             user2 = new User("b"); //logged
             UserRepository.Instance.insertNewUser(user1, "123456");
             UserRepository.Instance.insertNewUser(user2, "123456");
-            UserRepository.Instance.changeUserLoginStatus(user2, true, "123456");
+            UserRepository.Instance.changeUserLoginStatus(user2.userName, true, "123456");
             
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("t", "bb", new SalePolicyMock(), new PurchasePolicyMock(), user2);
             StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue()

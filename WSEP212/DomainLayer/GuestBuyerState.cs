@@ -112,18 +112,13 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult login(string userName, string password)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if(findUserRes.getTag())
+            RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(userName, true, password);
+            if(loginStateRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
-                if(loginStateRes.getTag())
-                {
-                    user.changeState(new LoggedBuyerState(user));
-                    return new Ok("The User Has Successfully Logged In");
-                }
-                return loginStateRes;
+                user.changeState(new LoggedBuyerState(user));
+                return new Ok("The User Has Successfully Logged In");
             }
-            return new Failure("username and password don't match");
+            return loginStateRes;
         }
 
         public override RegularResult loginAsSystemManager(string userName, string password)

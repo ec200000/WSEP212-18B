@@ -119,12 +119,12 @@ namespace WSEP212.DomainLayer
         }
 
         //status is true: register -> login, otherwise: login -> logout
-        public RegularResult changeUserLoginStatus(User user, bool status, String passwordToValidate)
+        public RegularResult changeUserLoginStatus(String userName, bool status, String passwordToValidate)
         {
             bool oldStatus;
             if(status) //need to verify it's password
             {
-                ResultWithValue<String> userPasswordRes = getUserPassword(user.userName);
+                ResultWithValue<String> userPasswordRes = getUserPassword(userName);
                 if(userPasswordRes.getTag()) //found password in DB
                 {
                     bool res = Authentication.Instance.validatePassword(userPasswordRes.getValue(),passwordToValidate);
@@ -137,16 +137,20 @@ namespace WSEP212.DomainLayer
 
             lock (changeStatusLock)
             {
-                if(users.TryGetValue(user, out oldStatus))
+                ResultWithValue<User> userRes = findUserByUserName(userName);
+                if (userRes.getTag())
                 {
-                    if(oldStatus != status)
+                    if(users.TryGetValue(userRes.getValue(), out oldStatus))
                     {
-                        users.TryUpdate(user, status, oldStatus);
-                        return new Ok("User Change Login Status Successfully");
+                        if(oldStatus != status)
+                        {
+                            users.TryUpdate(userRes.getValue(), status, oldStatus);
+                            return new Ok("User Change Login Status Successfully");
+                        }
+                        return new Failure("The User Is Already In The Same Login Status");
                     }
-                    return new Failure("The User Is Already In The Same Login Status");
                 }
-                return new Failure("System Fails To Find The Login Status Of The User");
+                return new Failure("System Fails To Find The Login User");
             }
             
         }

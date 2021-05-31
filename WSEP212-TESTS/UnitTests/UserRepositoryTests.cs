@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using WSEP212;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -48,21 +49,24 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void changeUserLoginStatusTest()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, true, "123456"); //register -> login
-            UserRepository.Instance.users.TryGetValue(user1, out var res3); 
-            Assert.IsTrue(res3);
+            UserRepository.Instance.changeUserLoginStatus(user1.userName, true, "123456"); //register -> login
+            User user = UserRepository.Instance.findUserByUserName(user1.userName).getValue();
+            Assert.IsTrue(UserRepository.Instance.users[user]);
+            
+            UserRepository.Instance.changeUserLoginStatus(user1.userName, false, "123456"); //login -> register
         }
 
         [TestMethod]
         public void changeUserLoginStatusTestFails()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, true, "123");
-            UserRepository.Instance.users.TryGetValue(user1, out var res1);
-            Assert.IsFalse(res1);
+            RegularResult res = UserRepository.Instance.changeUserLoginStatus(user1.userName, true, "123");
+            User u1 = UserRepository.Instance.findUserByUserName(user1.userName).getValue();
+            Console.WriteLine(res.getMessage());
+            Assert.IsFalse(UserRepository.Instance.users[u1]);
             
-            UserRepository.Instance.changeUserLoginStatus(user2, false, null); //login -> logout
-            UserRepository.Instance.users.TryGetValue(user2, out var res4); 
-            Assert.IsFalse(res4);
+            UserRepository.Instance.changeUserLoginStatus(user2.userName, false, null); //login -> logout
+            User u2 = UserRepository.Instance.findUserByUserName(user2.userName).getValue();
+            Assert.IsFalse(UserRepository.Instance.users[u2]);
         }
 
         [TestMethod]
@@ -70,6 +74,8 @@ namespace WSEP212_TESTS.UnitTests
         {
             UserRepository.Instance.removeUser(user1); //removing existing user
             Assert.IsFalse(UserRepository.Instance.users.ContainsKey(user1));
+            
+            UserRepository.Instance.insertNewUser(user1, "123456");
         }
 
         [TestMethod]
@@ -109,15 +115,15 @@ namespace WSEP212_TESTS.UnitTests
             ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
             itemsPrices.TryAdd(10, 1.2);
             PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, itemsPrices, DateTime.Now);
-            User user3 = new User("c");
+            User user3 = new User("d");
             user3.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo);
             UserRepository.Instance.users.TryAdd(user3, false);
             var res = UserRepository.Instance.getAllUsersPurchaseHistory();
             Assert.IsNotNull(res);
-            Assert.AreEqual(3, res.Count); //3 users
+            Assert.AreEqual(5, res.Count); // 5 users
             foreach (var p in res)
             {
-                Assert.AreEqual(p.Key.Equals("c") ? 1 : 0, p.Value.Count);
+                Assert.AreEqual(p.Key.Equals("d") ? 1 : 0, p.Value.Count);
             }
         }
     }

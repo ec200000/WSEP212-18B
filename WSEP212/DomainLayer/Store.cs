@@ -211,8 +211,9 @@ namespace WSEP212.DomainLayer
             // item not exist - add new item to storage
             try {
                 Item newItem = new Item(quantity, itemName, description, price, category);
+                int newItemID = newItem.itemID;
                 newItem.addToDB();
-                this.storage.TryAdd(newItem.itemID, newItem);
+                this.storage.TryAdd(newItemID, newItem);
                 var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                 if (res != null)
                 {
@@ -222,7 +223,7 @@ namespace WSEP212.DomainLayer
                     lock(SystemDBAccess.savelock)
                         SystemDBAccess.Instance.SaveChanges();
                 }
-                return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItem.itemID);
+                return new OkWithValue<int>("The Item Was Successfully Added To The Store Storage", newItemID);
             } 
             catch (ArithmeticException)
             {
