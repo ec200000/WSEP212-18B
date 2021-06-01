@@ -9,6 +9,7 @@ using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -36,10 +37,18 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
             SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
 
+            UserRepository.Instance.initRepo();
             User user = new User("Sagiv", 21);
-            itemA = new Item(100, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks);
-            itemB = new Item(500, "milk", "pasteurized milk", 8, ItemCategory.Dairy);
-            itemC = new Item(100, "bisli", "snack for childrens", 4, ItemCategory.Snacks);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            Store store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
+            ResultWithValue<int> addItemRes = store.addItemToStorage(100, "bamba", "snack for childrens", 4.5, ItemCategory.Snacks);
+            itemA = store.getItemById(addItemRes.getValue()).getValue();
+            addItemRes = store.addItemToStorage(500, "milk", "pasteurized milk", 10, ItemCategory.Dairy);
+            itemB = store.getItemById(addItemRes.getValue()).getValue();
+            addItemRes = store.addItemToStorage(100, "bisli", "snack for childrens", 4, ItemCategory.Snacks);
+            itemC = store.getItemById(addItemRes.getValue()).getValue();
             ConcurrentDictionary<Item, int> shoppingBagItems = new ConcurrentDictionary<Item, int>();
             shoppingBagItems.TryAdd(itemA, 3);
             shoppingBagItems.TryAdd(itemB, 2);
@@ -49,6 +58,13 @@ namespace WSEP212_TESTS.UnitTests
             itemsPrices.TryAdd(itemB.itemID, 8);
             itemsPrices.TryAdd(itemC.itemID, 4);
             purchaseDetails = new PurchaseDetails(user, shoppingBagItems, itemsPrices);
+        }
+
+        [ClassCleanup]
+        public static void cleanUp()
+        {
+            User user = UserRepository.Instance.findUserByUserName("Sagiv").getValue();
+            UserRepository.Instance.removeUser(user);
         }
 
         [TestMethod]

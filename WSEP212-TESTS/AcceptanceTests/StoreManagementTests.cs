@@ -41,7 +41,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("b", 18, "123456");
             controller.register("r", 18, "123456");
             RegularResult result = controller.login("b", "123456");
-            storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
+            ResultWithValue<int> res = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT");
+            storeID = res.getValue();
             ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }

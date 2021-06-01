@@ -279,7 +279,6 @@ namespace WSEP212.DomainLayer
                     return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
                 }
                 return new Failure("Item quantity can't be negative");
-
             }
             return new Failure("Item Is Not Exist In Storage");
         }

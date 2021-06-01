@@ -24,6 +24,7 @@ namespace WSEP212.DomainLayer
 
         private UserRepository()
         {
+            initRepo();
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 

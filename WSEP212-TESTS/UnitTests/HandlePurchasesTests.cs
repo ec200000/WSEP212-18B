@@ -40,7 +40,8 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
             SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
 
-            user = new User("check name");
+            UserRepository.Instance.initRepo();
+            user = new User("David");
             registerAndLogin();
             storeID1 = openStore("Store1", "Holon");
             itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, ItemCategory.Dairy);
@@ -61,6 +62,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             String password = "1234";
             RegularResult insertUserRes = UserRepository.Instance.insertNewUser(user, password);
+            Console.WriteLine(insertUserRes.getMessage());
             Assert.IsTrue(insertUserRes.getTag());
             user.changeState(new LoggedBuyerState(user));
         }

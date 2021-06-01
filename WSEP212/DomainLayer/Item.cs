@@ -149,7 +149,7 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
                     if (result != null)
                     {
-                        result.quantity = quantity;
+                        result.quantity = this.quantity;
                         lock(SystemDBAccess.savelock)
                             SystemDBAccess.Instance.SaveChanges();
                     }

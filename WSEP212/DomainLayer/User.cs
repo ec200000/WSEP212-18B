@@ -896,8 +896,9 @@ namespace WSEP212.DomainLayer
                     lock(SystemDBAccess.savelock)
                         SystemDBAccess.Instance.SaveChanges();
                 }
+                return true;
             }
-            return res;
+            return false;
         }
         
         public void getUsersStores(Object list)

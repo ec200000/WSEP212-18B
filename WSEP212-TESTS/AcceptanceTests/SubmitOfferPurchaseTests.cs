@@ -45,14 +45,15 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
             SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
 
-            userName = "Sagiv";
+            userName = "Din";
             controller.register(userName, 21, "123456");
             controller.login(userName, "123456");
-            storeID = controller.openStore(userName, "SagivStore", "somewhere", "DEFAULT", "DEFAULT").getValue();
+            ResultWithValue<int> storeIDRes = controller.openStore(userName, "DinStore", "somewhere", "DEFAULT", "DEFAULT");
+            storeID = storeIDRes.getValue();
             controller.supportPurchaseType(userName, storeID, submitOfferPurchaseType);
-            ItemDTO itemA = new ItemDTO(storeID, 10, "yammy", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemReview>(), 5.0, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
+            ItemDTO itemA = new ItemDTO(storeID, 100, "yammy", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemReview>(), 5.0, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
             itemIDA = controller.addItemToStorage(userName, storeID, itemA).getValue();
-            ItemDTO itemB = new ItemDTO(storeID, 10, "tasty", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemReview>(), 7.5, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
+            ItemDTO itemB = new ItemDTO(storeID, 100, "tasty", "wow", new ConcurrentDictionary<string, WSEP212.DomainLayer.ItemReview>(), 7.5, (int)WSEP212.DomainLayer.ItemCategory.Dairy);
             itemIDB = controller.addItemToStorage(userName, storeID, itemB).getValue();
 
             deliveryParameters = new DeliveryParametersDTO("guest", "habanim", "Haifa", "Israel", "786598");
@@ -69,7 +70,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void simpleSubmitOfferPurchaseTest()
         {
-            controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 4.5);
+            ResultWithValue<NotificationDTO> res1 = controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 4.5);
             controller.confirmPriceStatus(userName, "guest", storeID, itemIDA, approvedType);
             ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
@@ -102,7 +103,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void counterOfferPurchaseTest()
         {
-            controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 2.0);
+            ResultWithValue<NotificationDTO> r = controller.addItemToShoppingCart("guest", storeID, itemIDA, 1, submitOfferPurchaseType, 2.0);
+            Console.WriteLine(r.getMessage());
             controller.itemCounterOffer(userName, "guest", storeID, itemIDA, 4.5);
             ResultWithValue<NotificationDTO> res = controller.purchaseItems("guest", deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());

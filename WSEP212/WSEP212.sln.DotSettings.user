@@ -1,12 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FBD9100B_002D11D2_002D4D9F_002DAC6E_002DE7299ABDF513_002Fd_003AControllers_002Ff_003AHomeController_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=06e445bc_002Dcf02_002D4ee7_002D8f69_002D0496936679f1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;WSEP212-TESTS&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS" Presentation="&amp;lt;WSEP212-TESTS&amp;gt;" /&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5e567fe9_002Dd0b1_002D4e01_002Da651_002D2677557cf400/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShoppingBagTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5e567fe9_002Dd0b1_002D4e01_002Da651_002D2677557cf400/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShoppingBagTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ShoppingBagTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ShoppingCartTests&lt;/TestId&gt;&#xD;
@@ -14,6 +12,20 @@
     &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.StoreTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.UserRepositoryTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.SaleTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.PurchaseTypeTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.PolicyPredicateTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ItemTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.HandlePurchasesTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ExternalSystemsAPITests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.SystemDBTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8157fb8b_002D0a7c_002D4602_002Dbf71_002Da3726c3a847b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SubmitOfferPurchaseTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.SubmitOfferPurchaseTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StorePoliciesAcceptanceTests+StorePoliciesManagementTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StorePoliciesAcceptanceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StoreManagementTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

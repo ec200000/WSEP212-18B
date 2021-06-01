@@ -37,8 +37,12 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
             SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
             SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
+            UserRepository.Instance.initRepo();
+            User admin = new User("admin");
+            UserRepository.Instance.insertNewUser(admin, "123456");
 
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicy("DEFUALT"), new PurchasePolicy("DEFUALT"), new User("admin"));
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicy("DEFUALT"), new PurchasePolicy("DEFUALT"), admin);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             UserRepository.Instance.insertNewUser(new User("Sagiv", 21), "qwerty");
