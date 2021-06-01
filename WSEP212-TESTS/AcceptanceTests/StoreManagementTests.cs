@@ -19,8 +19,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         int itemID;
         int storeID;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
             SystemDBAccess.mock = true;
             
@@ -139,6 +139,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInitRegStore();
 
             RegularResult res = controller.appointStoreOwner("b", "w", storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
             res = controller.appointStoreOwner("b", "w", storeID);
             Assert.IsFalse(res.getTag());
@@ -182,6 +183,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             newPermissions.TryAdd(3);
             newPermissions.TryAdd(5);
             RegularResult res = controller.editManagerPermissions("b", "abc", newPermissions, storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
         }
 
@@ -228,6 +230,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInitStoreWithManager2();
 
             ResultWithValue<NotificationDTO> res = controller.removeStoreManager("b", "abcd", storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
         }
 
@@ -263,8 +266,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void getOfficialsInformationTest()
         {
             testInitStoreWithManager3();
-            
-            Assert.IsTrue(controller.getOfficialsInformation("b", storeID).getTag());
+
+            var res = controller.getOfficialsInformation("b", storeID);
+            Console.WriteLine(res.getMessage());
+            Assert.IsTrue(res.getTag());
         }
 
         [TestMethod]
