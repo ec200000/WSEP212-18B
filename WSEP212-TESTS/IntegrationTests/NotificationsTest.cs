@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212;
 using WSEP212.DataAccessLayer;
@@ -21,21 +23,42 @@ namespace WSEP212_TESTS.IntegrationTests
         private static DeliveryParametersDTO deliveryParameters;
         private static PaymentParametersDTO paymentParameters;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
             SystemDBAccess.mock = true;
-            
-            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
-            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
-            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
-            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
-            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
-            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
-            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
-            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
-            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
-            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            /*if(SystemDBAccess.Instance.UsersInfo.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Authentications");
+            if(SystemDBAccess.Instance.Carts.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE ShoppingCarts");
+            if(SystemDBAccess.Instance.Bids.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE BidsInfoes");
+            if(SystemDBAccess.Instance.Invoices.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE PurchaseInvoices");
+            if(SystemDBAccess.Instance.Permissions.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE SellerPermissions");
+            if(SystemDBAccess.Instance.ItemReviewes.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE ItemReviews");
+            if(SystemDBAccess.Instance.DelayedNotifications.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE UserConnectionManagers");
+            if(SystemDBAccess.Instance.Items.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Items");
+            if(SystemDBAccess.Instance.Stores.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Stores");
+            if(SystemDBAccess.Instance.Users.Any())
+                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
+            SystemDBAccess.Instance.SaveChanges();*/
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users.ToList());
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores.ToList());
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items.ToList());
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids.ToList());
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts.ToList());
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices.ToList());
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions.ToList());
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications.ToList());
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes.ToList());
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo.ToList());
+            SystemDBAccess.Instance.SaveChanges();
         }
         
         [TestCleanup]

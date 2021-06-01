@@ -31,16 +31,17 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             SystemDBAccess.mock = true;
             
-            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
-            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
-            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
-            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
-            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
-            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
-            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
-            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
-            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
-            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users.ToList());
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores.ToList());
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items.ToList());
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids.ToList());
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts.ToList());
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices.ToList());
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions.ToList());
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications.ToList());
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes.ToList());
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo.ToList());
+            SystemDBAccess.Instance.SaveChanges();
 
             user = new User("Sagiv", 21);
             store = new Store("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);

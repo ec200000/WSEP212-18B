@@ -446,7 +446,18 @@ namespace WSEP212.DomainLayer
                     RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().SellerName);
                     if(removeFromStoreRes.getTag())
                     {
-                        if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))
+                        bool found = false;
+                        foreach (var sellerPermissions in userRes.getValue().sellerPermissions)
+                        {
+                            if (sellerPermissions.GrantorName.Equals(storeSellerRes.getValue().GrantorName) &&
+                                sellerPermissions.SellerName.Equals(storeSellerRes.getValue().SellerName) &&
+                                sellerPermissions.StoreID == storeSellerRes.getValue().StoreID)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(found)
                         {
                             userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue());
                             return new Ok("Remove Store Manager Successfully");

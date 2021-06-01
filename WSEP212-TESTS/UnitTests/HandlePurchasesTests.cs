@@ -29,17 +29,18 @@ namespace WSEP212_TESTS.UnitTests
         {
             SystemDBAccess.mock = true;
             
-            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
-            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
-            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
-            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
-            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
-            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
-            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
-            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
-            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
-            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
-
+            SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
+            SystemDBAccess.Instance.Carts.RemoveRange(SystemDBAccess.Instance.Carts);
+            SystemDBAccess.Instance.Invoices.RemoveRange(SystemDBAccess.Instance.Invoices);
+            SystemDBAccess.Instance.Items.RemoveRange(SystemDBAccess.Instance.Items);
+            SystemDBAccess.Instance.Permissions.RemoveRange(SystemDBAccess.Instance.Permissions);
+            SystemDBAccess.Instance.Stores.RemoveRange(SystemDBAccess.Instance.Stores);
+            SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users);
+            SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
+            SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
+            SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
+            
             UserRepository.Instance.initRepo();
             user = new User("David");
             registerAndLogin();
@@ -116,7 +117,7 @@ namespace WSEP212_TESTS.UnitTests
             list[3] = new ItemImmediatePurchase(10.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
-            Assert.IsTrue(((RegularResult) parameters.result).getTag());
+            Assert.IsTrue(((ResultWithValue<ConcurrentLinkedList<string>>) parameters.result).getTag());
         }
 
         public static void initWithAnotherStore()
@@ -160,6 +161,7 @@ namespace WSEP212_TESTS.UnitTests
             StoreRepository.Instance.stores[storeID1].purchasePolicy = new BadPurchasePolicyMock();
             ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
+            Console.WriteLine(res.getMessage());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 0);

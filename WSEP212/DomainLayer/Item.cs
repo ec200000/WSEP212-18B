@@ -56,7 +56,7 @@ namespace WSEP212.DomainLayer
         };
 
         private readonly object quantitylock = new object();
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int itemID { get; set; }   // different item ID for same item in different stores -> example: water is 2 in store A, and 3 in store B
         public int quantity { get; set; }
         public String itemName { get; set; }

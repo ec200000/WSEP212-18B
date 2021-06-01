@@ -73,7 +73,7 @@ namespace WSEP212.DomainLayer
             set => storage = JsonConvert.DeserializeObject<ConcurrentDictionary<int, Item>>(value);
         }
         
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int storeID { get; set; }
         public String storeName { get; set; }
         public String storeAddress { get; set; }
