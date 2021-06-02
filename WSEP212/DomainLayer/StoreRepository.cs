@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
@@ -36,6 +38,22 @@ namespace WSEP212.DomainLayer
 
         public static StoreRepository Instance
             => lazy.Value;
+        
+        public void Init()
+        {
+            string jsonFilePath = "init.json";
+            string json = File.ReadAllText(jsonFilePath);
+            dynamic array = JsonConvert.DeserializeObject(json);
+            // CREATE STORES
+            foreach (var item in array.stores)
+            {
+                string storeOpener = item.storeOpener;
+                string storeName = item.storeName;
+                string storeAddress = item.storeAddress;
+                addStore(storeName, storeAddress, new SalePolicy.SalePolicy("0"), new PurchasePolicy.PurchasePolicy("0"),
+                    UserRepository.Instance.findUserByUserName(storeOpener).getValue());
+            }
+        }
 
         
         public ResultWithValue<int> addStore(String storeName, String storeAddress, SalePolicyInterface salesPolicy, PurchasePolicyInterface purchasePolicy, User storeFounder)
@@ -48,18 +66,16 @@ namespace WSEP212.DomainLayer
 
             lock (storeExistsLock)
             {
-                if(isExistingStore(storeName, storeAddress))
+                if (isExistingStore(storeName, storeAddress))
                 {
                     return new FailureWithValue<int>("The Store Already Exist In The Store Repository", -1);
                 }
-                else
-                {
-                    Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
-                    store.addToDB();
-                    int storeID = store.storeID;
-                    stores.TryAdd(storeID, store);
-                    return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
-                }
+
+                Store store = new Store(storeName, storeAddress, salesPolicy, purchasePolicy, storeFounder);
+                store.addToDB();
+                int storeID = store.storeID;
+                stores.TryAdd(storeID, store);
+                return new OkWithValue<int>("The Store Was Added To The Store Repository Successfully", storeID);
             }
         }
 
@@ -86,7 +102,17 @@ namespace WSEP212.DomainLayer
         {
             if (stores.ContainsKey(storeID))
             {
+                var storeToRemove = stores[storeID];
+                var pers = storeToRemove.storeSellersPermissions.Values;
+                foreach (var name in storeToRemove.storeSellersPermissions)
+                {
+                    UserRepository.Instance.findUserByUserName(name.Key).getValue().removeSellerPermissions(name.Value);
+                }
                 stores.TryRemove(storeID, out _);
+                SystemDBAccess.Instance.Stores.Remove(storeToRemove);
+                SystemDBAccess.Instance.Permissions.RemoveRange(pers);
+                lock (SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
                 return new Ok("The Store Was Removed From The Store Repository Successfully");
             }
             return new Failure("The Store Is Not Exist In The Store Repository");

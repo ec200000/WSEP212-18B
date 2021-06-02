@@ -272,18 +272,13 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult logout(String userName)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if (findUserRes.getTag())
+            RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(userName, false, null);
+            if (loginStateRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), false, null);
-                if (loginStateRes.getTag())
-                {
-                    this.user.changeState(new GuestBuyerState(this.user));
-                    return new Ok("The User Has Successfully Logged Out");
-                }
-                return loginStateRes;
+                this.user.changeState(new GuestBuyerState(this.user));
+                return new Ok("The User Has Successfully Logged Out");
             }
-            return new Failure(findUserRes.getMessage());
+            return loginStateRes;
         }
 
         public override ResultWithValue<int> openStore(String storeName, String storeAddress, PurchasePolicyInterface purchasePolicy, SalePolicyInterface salesPolicy)
@@ -296,6 +291,25 @@ namespace WSEP212.DomainLayer
                 this.user.addSellerPermissions(sellerPermissionsRes.getValue());
             }
             return addStoreRes;
+        }
+
+        private void removeBid(int storeID, int itemID)
+        {
+            SellerPermissions per = null;
+            foreach (var perm in this.user.sellerPermissions)
+            {
+                if (perm.StoreID == storeID)
+                {
+                    per = perm;
+                    break;
+                }
+            }
+
+            if (per != null)
+            {
+                per.removeBid(itemID, this.user.userName);
+            }
+                
         }
 
         public override ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
@@ -313,6 +327,7 @@ namespace WSEP212.DomainLayer
                 RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
                 if(res.getTag())
                 {
+                    removeBid(storeID, itemID);
                     return new OkWithValue<string>(res.getMessage(), userName);
                 }
                 return new FailureWithValue<string>(res.getMessage(), userName);
@@ -431,7 +446,18 @@ namespace WSEP212.DomainLayer
                     RegularResult removeFromStoreRes = storeRes.getValue().removeStoreSeller(storeSellerRes.getValue().SellerName);
                     if(removeFromStoreRes.getTag())
                     {
-                        if(userRes.getValue().sellerPermissions.Contains(storeSellerRes.getValue()))
+                        bool found = false;
+                        foreach (var sellerPermissions in userRes.getValue().sellerPermissions)
+                        {
+                            if (sellerPermissions.GrantorName.Equals(storeSellerRes.getValue().GrantorName) &&
+                                sellerPermissions.SellerName.Equals(storeSellerRes.getValue().SellerName) &&
+                                sellerPermissions.StoreID == storeSellerRes.getValue().StoreID)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(found)
                         {
                             userRes.getValue().sellerPermissions.Remove(storeSellerRes.getValue());
                             return new Ok("Remove Store Manager Successfully");

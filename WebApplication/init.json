@@ -1,0 +1,50 @@
+﻿{
+  "users": [
+    {
+      "username": "u1",
+      "userAge": "20",
+      "isSystemManager": "true"
+    },
+    {
+      "username": "u2",
+      "userAge": "20",
+      "isSystemManager": "false"
+    },
+    {
+      "username": "u3",
+      "userAge": "20",
+      "isSystemManager": "false"
+    }
+  ],
+  "loggedUser": "u2",
+  "stores": [
+    {
+      "storeOpener": "u2",
+      "storeName": "s1",
+      "storeAddress": "Holon"
+    }
+  ],
+  "items": [
+    {
+      "userAdded": "u2",
+      "storeName": "s1",
+      "storeID": "1",
+      "description": "snack",
+      "category": "0",
+      "itemName": "Bamba",
+      "itemPrice": "30",
+      "itemQuantity": "20"
+    }
+  ],
+  "appoints": [
+    {
+      "manager": "u2",
+      "appoint": "u3",
+      "storeName": "s1",
+      "storeID": "1",
+      "permissions": [
+        "StorageManagment"
+      ]
+    }
+  ]
+}

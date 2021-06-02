@@ -7,9 +7,6 @@
     <title>title</title>
 </head>
 <body>
-<div class="purchasepredicatediv">
-    <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddPredicate';" value="Add Predicate" />
-</div>
 @model WebApplication.Models.PurchaseTypesModel
 <div class="purchasepredicatediv">
     @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))

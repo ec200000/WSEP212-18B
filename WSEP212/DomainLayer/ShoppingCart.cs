@@ -74,7 +74,8 @@ namespace WSEP212.DomainLayer
         public void addToDB()
         {
             SystemDBAccess.Instance.Carts.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
         // return true if the shopping cart is empty
         public bool isEmpty()
@@ -95,14 +96,15 @@ namespace WSEP212.DomainLayer
                     if (!addItemRes.getTag())
                     {
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
-                        return new Failure("Could not add items to the shopping bag!");
+                        return addItemRes;
                     }
                     var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
                     if (result != null)
                     {
                         if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
                             result.BagsAsJson = this.BagsAsJson;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return addItemRes;
                 }
@@ -128,7 +130,8 @@ namespace WSEP212.DomainLayer
                 {
                     if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
                         result.BagsAsJson = this.BagsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return removeItemRes;
             }
@@ -154,7 +157,8 @@ namespace WSEP212.DomainLayer
                     {
                         if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
                             result.BagsAsJson = this.BagsAsJson;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return changeQuantityRes;
                 }
@@ -245,7 +249,8 @@ namespace WSEP212.DomainLayer
                 {
                     if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
                         result.BagsAsJson = this.BagsAsJson;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return new OkWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", purchaseInvoices);
             }
@@ -282,7 +287,8 @@ namespace WSEP212.DomainLayer
             {
                 if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
                     result.BagsAsJson = this.BagsAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
         }
 

@@ -54,12 +54,9 @@ namespace WSEP212.DomainLayer
                 }
             }
         };
-        
-        [NotMapped]
-        private static int itemCounter = 1;
-        
+
         private readonly object quantitylock = new object();
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int itemID { get; set; }   // different item ID for same item in different stores -> example: water is 2 in store A, and 3 in store B
         public int quantity { get; set; }
         public String itemName { get; set; }
@@ -83,7 +80,6 @@ namespace WSEP212.DomainLayer
                 throw new ArithmeticException();
             }
             this.itemID = SystemDBAccess.Instance.Items.Count() + 1;
-            itemCounter++;
             this.itemName = itemName;
             this.description = description;
             this.reviews = new ConcurrentDictionary<string, ItemReview>();
@@ -94,7 +90,8 @@ namespace WSEP212.DomainLayer
         public void addToDB()
         {
             SystemDBAccess.Instance.Items.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
 
         // Add new review about an item
@@ -106,7 +103,7 @@ namespace WSEP212.DomainLayer
             }
             else
             {
-                ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue());
+                ItemReview areview = new ItemReview(UserRepository.Instance.findUserByUserName(username).getValue(), this.itemID);
                 areview.addToDB();
                 areview.addReview(review);
                 reviews.TryAdd(username, areview);
@@ -117,7 +114,8 @@ namespace WSEP212.DomainLayer
                 result.reviews = reviews;
                 if(!JToken.DeepEquals(result.DictionaryAsJson, this.DictionaryAsJson))
                     result.DictionaryAsJson = this.DictionaryAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
         }
 
@@ -132,7 +130,8 @@ namespace WSEP212.DomainLayer
                     if (result != null)
                     {
                         result.quantity = quantity;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return true;
                 }
@@ -150,8 +149,9 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == this.itemID);
                     if (result != null)
                     {
-                        result.quantity = quantity;
-                        SystemDBAccess.Instance.SaveChanges();
+                        result.quantity = this.quantity;
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return true;
                 }
@@ -183,7 +183,8 @@ namespace WSEP212.DomainLayer
                     result.price = price;
                     result.category = category;
                     result.quantity = quantity;
-                    SystemDBAccess.Instance.SaveChanges();
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
                 }
                 return new Ok("Item Details Have Been Successfully Updated In The Store");
             }

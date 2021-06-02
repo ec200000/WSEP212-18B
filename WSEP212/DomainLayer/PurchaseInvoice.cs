@@ -30,6 +30,8 @@ namespace WSEP212.DomainLayer
             get => JsonConvert.SerializeObject(items);
             set => items = JsonConvert.DeserializeObject<ConcurrentDictionary<int, int>>(value);
         }
+        
+        public PurchaseInvoice(){}
 
         public PurchaseInvoice(int storeID, String userName, ConcurrentDictionary<int, int> items, ConcurrentDictionary<int, double> itemsPrices, DateTime dateOfPurchase)
         {
@@ -74,7 +76,8 @@ namespace WSEP212.DomainLayer
         public void addToDB()
         {
             SystemDBAccess.Instance.Invoices.Add(this);
-            SystemDBAccess.Instance.SaveChanges();
+            lock(SystemDBAccess.savelock)
+                SystemDBAccess.Instance.SaveChanges();
         }
         
     }

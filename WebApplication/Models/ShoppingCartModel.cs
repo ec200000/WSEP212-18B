@@ -23,5 +23,6 @@ namespace WebApplication.Models
         public int priceAfterSale { get; set; }
         
         public double newOffer { get; set; }
+        public string purchaseType { get; set; }
     }
 }

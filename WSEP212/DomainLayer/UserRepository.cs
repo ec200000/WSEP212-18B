@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer.Result;
 
@@ -22,13 +24,14 @@ namespace WSEP212.DomainLayer
 
         private UserRepository()
         {
+            initRepo();
         }
         public ConcurrentDictionary<User,bool> users { get; set; }
 
         public void initRepo()
         {
             users = new ConcurrentDictionary<User, bool>(); 
-            var usersList =  SystemDBAccess.Instance.Users.ToList();
+            var usersList = SystemDBAccess.Instance.Users.ToList();
             var cartsList = SystemDBAccess.Instance.Carts.ToList();
             foreach (var user in usersList)
             {
@@ -50,6 +53,43 @@ namespace WSEP212.DomainLayer
             RegularResult res = insertNewUser(systemManager, "123456");
             if (!res.getTag())
                 throw new SystemException("Couldn't create a system manager");
+        }
+        
+        public class JsonUsers
+        {
+            public IList<JsonUser> users;
+        }
+        public class JsonUser
+        {
+            public string username;
+            public int userAge;
+            public bool isSystemManager;
+        }
+        
+        public void Init()
+        {
+            string jsonFilePath = "init.json";
+            string json = File.ReadAllText(jsonFilePath);
+            dynamic array = JsonConvert.DeserializeObject(json);
+            // CREATE USERS
+            string loggedUser = array.loggedUser;
+            if (!SystemDBAccess.Instance.Users.Any())
+            {
+                foreach (var item in array.users)
+                {
+                    string username = item.username;
+                    string userAge = item.userAge;
+                    string isSystemManager = item.isSystemManager;
+                    User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
+                    if (isSystemManager.Equals("true"))
+                        user.changeState(new SystemManagerState(user));
+                    else if (loggedUser.Equals(username))
+                        user.changeState(new LoggedBuyerState(user));
+                    else
+                        user.changeState(new GuestBuyerState(user));
+                    insertNewUser(user, "123456");
+                }
+            }
         }
         
         public RegularResult insertNewUser(User newUser, String password)
@@ -80,12 +120,12 @@ namespace WSEP212.DomainLayer
         }
 
         //status is true: register -> login, otherwise: login -> logout
-        public RegularResult changeUserLoginStatus(User user, bool status, String passwordToValidate)
+        public RegularResult changeUserLoginStatus(String userName, bool status, String passwordToValidate)
         {
             bool oldStatus;
             if(status) //need to verify it's password
             {
-                ResultWithValue<String> userPasswordRes = getUserPassword(user.userName);
+                ResultWithValue<String> userPasswordRes = getUserPassword(userName);
                 if(userPasswordRes.getTag()) //found password in DB
                 {
                     bool res = Authentication.Instance.validatePassword(userPasswordRes.getValue(),passwordToValidate);
@@ -98,16 +138,20 @@ namespace WSEP212.DomainLayer
 
             lock (changeStatusLock)
             {
-                if(users.TryGetValue(user, out oldStatus))
+                ResultWithValue<User> userRes = findUserByUserName(userName);
+                if (userRes.getTag())
                 {
-                    if(oldStatus != status)
+                    if(users.TryGetValue(userRes.getValue(), out oldStatus))
                     {
-                        users.TryUpdate(user, status, oldStatus);
-                        return new Ok("User Change Login Status Successfully");
+                        if(oldStatus != status)
+                        {
+                            users.TryUpdate(userRes.getValue(), status, oldStatus);
+                            return new Ok("User Change Login Status Successfully");
+                        }
+                        return new Failure("The User Is Already In The Same Login Status");
                     }
-                    return new Failure("The User Is Already In The Same Login Status");
                 }
-                return new Failure("System Fails To Find The Login Status Of The User");
+                return new Failure("System Fails To Find The Login User");
             }
             
         }
@@ -116,16 +160,6 @@ namespace WSEP212.DomainLayer
         public bool removeUser(User userToRemove)
         {
             return users.TryRemove(userToRemove, out _) && Authentication.Instance.removeUserInfo(userToRemove.userName);
-        }
-
-        public bool updateUser(User userToUpdate)
-        {
-            bool userStatus;
-            if(users.TryRemove(userToUpdate, out userStatus))
-            {
-                return users.TryAdd(userToUpdate, userStatus);
-            }
-            return false;
         }
 
         //<param>: String userName

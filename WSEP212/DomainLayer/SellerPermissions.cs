@@ -12,12 +12,13 @@ using Newtonsoft.Json.Linq;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
 {
     public class SellerPermissions
     {
-
         [Key] 
         [Column(Order = 1)]
         public string SellerName{ get; set; }
@@ -30,6 +31,9 @@ namespace WSEP212.DomainLayer
         [Column(Order=3)]
         public string GrantorName{ get; set; }
         
+        [NotMapped]
+        public ConcurrentDictionary<int, BidInfo> bids { get; set; }
+        
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
         [NotMapped]
         public ConcurrentLinkedList<Permissions> permissionsInStore { get; private set; }
@@ -38,6 +42,12 @@ namespace WSEP212.DomainLayer
         {
             get => JsonConvert.SerializeObject(permissionsInStore);
             set => permissionsInStore = JsonConvert.DeserializeObject<ConcurrentLinkedList<Permissions>>(value);
+        }
+        
+        public string BidsAsJson
+        {
+            get => JsonConvert.SerializeObject(bids);
+            set => bids = JsonConvert.DeserializeObject<ConcurrentDictionary<int, BidInfo>>(value);
         }
 
         public SellerPermissions() { }
@@ -48,6 +58,7 @@ namespace WSEP212.DomainLayer
             this.StoreID = StoreID;
             this.GrantorName = GrantorName;
             this.permissionsInStore = permissionsInStore;
+            this.bids = new ConcurrentDictionary<int, BidInfo>();
         }
 
         public void addToDB()
@@ -55,7 +66,8 @@ namespace WSEP212.DomainLayer
             SystemDBAccess.Instance.Permissions.Add(this);
             try
             {
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
             }
             catch (DbEntityValidationException e)
             {
@@ -99,10 +111,25 @@ namespace WSEP212.DomainLayer
         {
             return StoreID;
         }
+        
+        private Permissions[] persListToArray(ConcurrentLinkedList<Permissions> lst)
+        {
+            Permissions[] arr = new Permissions[lst.size];
+            int i = 0;
+            Node<Permissions> node = lst.First;
+            while(node.Next != null)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+            }
+            return arr;
+        }
 
         public bool isStoreOwner()
         {
-            return permissionsInStore.Contains(Permissions.AllPermissions);
+            Permissions[] pers = persListToArray(permissionsInStore);
+            return pers.Contains(Permissions.AllPermissions);
         }
 
         public void setPermissions(ConcurrentLinkedList<Permissions> newPer)
@@ -113,10 +140,56 @@ namespace WSEP212.DomainLayer
                 result.permissionsInStore = newPer;
                 if(!JToken.DeepEquals(result.PermissionsInStoreAsJson, this.PermissionsInStoreAsJson))
                     result.PermissionsInStoreAsJson = this.PermissionsInStoreAsJson;
-                SystemDBAccess.Instance.SaveChanges();
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
                 this.permissionsInStore = newPer;
             }
         }
 
+        public RegularResult addBid(int itemId, string buyer, double price)
+        {
+            BidInfo bidInfo = new BidInfo(itemId, buyer, price);
+            var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.GrantorName == this.GrantorName && i.SellerName == this.SellerName && i.StoreID == this.StoreID);
+            if (result != null)
+            {
+                this.bids.TryAdd(bidInfo.bidID, bidInfo);
+                if(!JToken.DeepEquals(result.BidsAsJson, this.BidsAsJson))
+                    result.BidsAsJson = this.BidsAsJson;
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
+                return new Ok("added a new bid");
+            }
+            return new Failure("bid adding failed");
+        }
+
+        private KeyValuePair<int,BidInfo> findBid(int itemId, string buyer)
+        {
+            foreach (var bid in bids)
+            {
+                if (bid.Value.itemID == itemId && bid.Value.buyer.Equals(buyer))
+                    return bid;
+            }
+            return new KeyValuePair<int, BidInfo>(-1, null);
+        }
+        
+        public RegularResult removeBid(int itemId, string buyer)
+        {
+            var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.GrantorName == this.GrantorName && i.SellerName == this.SellerName && i.StoreID == this.StoreID);
+            if (result != null)
+            {
+                KeyValuePair<int,BidInfo> bidID = findBid(itemId, buyer);
+                if (bidID.Key != -1)
+                {
+                    result.bids.TryRemove(bidID);
+                    if(!JToken.DeepEquals(result.BidsAsJson, this.BidsAsJson))
+                        result.BidsAsJson = this.BidsAsJson;
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
+                    this.bids = result.bids;
+                    return new Ok("removed the bid");
+                }
+            }
+            return new Failure("bid removing failed");
+        }
     }
 }

@@ -16,17 +16,12 @@ namespace WSEP212.DomainLayer
         
         public override RegularResult loginAsSystemManager(string userName, string password)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if(findUserRes.getTag())
+            RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(userName, true, password);
+            if(loginStateRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
-                if(loginStateRes.getTag())
-                {
-                    return new Ok("The User Has Successfully Logged In");
-                }
-                return loginStateRes;
+                return new Ok("The User Has Successfully Logged In");
             }
-            return new Failure(findUserRes.getMessage());
+            return loginStateRes;
         }
 
         public override ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getStoresPurchaseHistory()

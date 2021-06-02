@@ -28,8 +28,21 @@ namespace WSEP212_TESTS.UnitTests
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-
-            user = new User("check name");
+            
+            SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
+            SystemDBAccess.Instance.Carts.RemoveRange(SystemDBAccess.Instance.Carts);
+            SystemDBAccess.Instance.Invoices.RemoveRange(SystemDBAccess.Instance.Invoices);
+            SystemDBAccess.Instance.Items.RemoveRange(SystemDBAccess.Instance.Items);
+            SystemDBAccess.Instance.Permissions.RemoveRange(SystemDBAccess.Instance.Permissions);
+            SystemDBAccess.Instance.Stores.RemoveRange(SystemDBAccess.Instance.Stores);
+            SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users);
+            SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
+            SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
+            SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
+            
+            UserRepository.Instance.initRepo();
+            user = new User("David");
             registerAndLogin();
             storeID1 = openStore("Store1", "Holon");
             itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, ItemCategory.Dairy);
@@ -50,6 +63,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             String password = "1234";
             RegularResult insertUserRes = UserRepository.Instance.insertNewUser(user, password);
+            Console.WriteLine(insertUserRes.getMessage());
             Assert.IsTrue(insertUserRes.getTag());
             user.changeState(new LoggedBuyerState(user));
         }
@@ -103,7 +117,7 @@ namespace WSEP212_TESTS.UnitTests
             list[3] = new ItemImmediatePurchase(10.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
-            Assert.IsTrue(((RegularResult) parameters.result).getTag());
+            Assert.IsTrue(((ResultWithValue<ConcurrentLinkedList<string>>) parameters.result).getTag());
         }
 
         public static void initWithAnotherStore()
@@ -147,6 +161,7 @@ namespace WSEP212_TESTS.UnitTests
             StoreRepository.Instance.stores[storeID1].purchasePolicy = new BadPurchasePolicyMock();
             ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
+            Console.WriteLine(res.getMessage());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 0);

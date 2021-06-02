@@ -15,65 +15,61 @@ namespace WSEP212_TESTS.UnitTests
     [TestClass]
     public class StoreRepositoryTests
     {
-        private Store store;
-        private int itemAID;
-        private int itemBID;
+        private static Store store;
+        private static int itemAID;
+        private static int itemBID;
+        private static User user;
 
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
             SystemDBAccess.mock = true;
-        }
-        
-        [TestInitialize]
-        public void Initialize()
-        {
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
+            UserRepository.Instance.initRepo();
+            user = new User("admin", 80);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
-            this.store = StoreRepository.Instance.getStore(storeIdRes.getValue()).getValue();
+            ResultWithValue<int> storeIdRes = StoreRepository.Instance.addStore("Mega", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            store = StoreRepository.Instance.getStore(storeIdRes.getValue()).getValue();
             itemAID = store.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             itemBID = store.addItemToStorage(50, "white masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
-        }
-
-        [TestCleanup]
-        public void afterTests()
-        {
-            UserRepository.Instance.users.Clear();
-            foreach (Store store in StoreRepository.Instance.stores.Values)
-            {
-                store.storage.Clear();
-            }
-            StoreRepository.Instance.stores.Clear();
         }
 
         [TestMethod]
         public void addStoreTest()
         {
-            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             Assert.IsTrue(addStoreBool.getTag());
-            int newStoreID = addStoreBool.getValue();
-            addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
-            Assert.IsFalse(addStoreBool.getTag());
-            StoreRepository.Instance.removeStore(newStoreID);
+            StoreRepository.Instance.removeStore(addStoreBool.getValue());
         }
 
         [TestMethod]
         public void removeStoreTest()
         {
-            int storeID = this.store.storeID;
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            int storeID = addStoreBool.getValue();
+            
             RegularResult removeStoreBool = StoreRepository.Instance.removeStore(storeID);
             Assert.IsTrue(removeStoreBool.getTag());
-            removeStoreBool = StoreRepository.Instance.removeStore(storeID);
-            Assert.IsFalse(removeStoreBool.getTag());
         }
 
         [TestMethod]
         public void getStoreTest()
         {
-            int storeID = this.store.storeID;
+            int storeID = store.storeID;
             ResultWithValue<Store> getStoreBool = StoreRepository.Instance.getStore(storeID);
             Assert.IsTrue(getStoreBool.getTag());
         }
@@ -111,7 +107,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void getAllStoresPurchsesHistoryTest()
         {
-            int storeID = this.store.storeID;
+            int storeID = store.storeID;
             ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> storesPurchases = StoreRepository.Instance.getAllStoresPurchsesHistory();
             Assert.AreEqual(1, storesPurchases.Count);
             Assert.AreEqual(0, storesPurchases[storeID].Count);
@@ -122,7 +118,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> storeItemsInfo = StoreRepository.Instance.getStoresAndItemsInfo();
             Assert.AreEqual(1, storeItemsInfo.Count);
-            ConcurrentLinkedList<Item> items = storeItemsInfo[this.store];
+            ConcurrentLinkedList<Item> items = storeItemsInfo[store];
             Node<Item> itemNode = items.First;
             while (itemNode.Value != null)
             {
