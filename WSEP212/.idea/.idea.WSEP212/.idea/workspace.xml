@@ -5,7 +5,9 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save" />
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -238,7 +240,7 @@
       <workItem from="1622476891645" duration="1305000" />
       <workItem from="1622485290854" duration="607000" />
       <workItem from="1622544047198" duration="9488000" />
-      <workItem from="1622893075563" duration="666000" />
+      <workItem from="1622893075563" duration="2012000" />
     </task>
     <task id="LOCAL-00001" summary="save">
       <created>1619199403309</created>
@@ -494,7 +496,13 @@
       <option name="presentableId" value="LOCAL‎00041" />
       <updated>1622893726634</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL‎00042" summary="fixed bugs">
+      <created>1622894042266</created>
+      <option name="number" value="LOCAL‎00042" />
+      <option name="presentableId" value="LOCAL‎00042" />
+      <updated>1622894042266</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,58 +672,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="134" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Startup.cs</url>
-          <line>70</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Startup.cs" initialLine="67" containingFunctionPresentation="method 'readConfigurationFile'">
-            <startOffsets>
-              <option value="2444" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2482" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="135" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Startup.cs</url>
-          <line>67</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Startup.cs" initialLine="66" containingFunctionPresentation="method 'readConfigurationFile'">
-            <startOffsets>
-              <option value="2325" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2370" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="136" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Startup.cs</url>
-          <line>62</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Startup.cs" initialLine="61" containingFunctionPresentation="method 'readConfigurationFile'">
-            <startOffsets>
-              <option value="2124" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2159" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="137" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WebApplication/Startup.cs</url>
-          <line>63</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Startup.cs" initialLine="62" containingFunctionPresentation="method 'readConfigurationFile'">
-            <startOffsets>
-              <option value="2176" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2207" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="138" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

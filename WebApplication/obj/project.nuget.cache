@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kvntPQOyzeCRkky3zKQ91bLOnBq5XZEReVrjD1BZ3mWfHh+r9e7JQ2REEseV2QwL5gMZD8nTe6uSGuugSTsGGg==",
+  "dgSpecHash": "GIXoBZ9YQ+LdFJoqPFpbMdVonrDcxCWZNRzy1++m7WUONKemndJy/B+ZZjZxpaka0UROD6IOhK5kkx9CF/qhPg==",
   "success": true,
   "projectFilePath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
@@ -65,6 +65,7 @@
     "C:\\Users\\ec200\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\ec200\\.nuget\\packages\\netstandard.library\\1.6.0\\netstandard.library.1.6.0.nupkg.sha512",
     "C:\\Users\\ec200\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\ec200\\.nuget\\packages\\postsharp\\4.3.23\\postsharp.4.3.23.nupkg.sha512",
     "C:\\Users\\ec200\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Users\\ec200\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\ec200\\.nuget\\packages\\runtime.native.system.io.compression\\4.1.0\\runtime.native.system.io.compression.4.1.0.nupkg.sha512",
@@ -186,6 +187,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.SignalR.Core",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PostSharp 4.3.23' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PostSharp",
       "targetGraphs": [
         "net5.0"
       ]

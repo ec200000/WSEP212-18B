@@ -21,5 +21,6 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\ec200\.nuget\packages\microsoft.codeanalysis.analyzers\1.1.0</PkgMicrosoft_CodeAnalysis_Analyzers>
     <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\ec200\.nuget\packages\entityframework\6.4.4</PkgEntityFramework>
+    <PkgPostSharp Condition=" '$(PkgPostSharp)' == '' ">C:\Users\ec200\.nuget\packages\postsharp\4.3.23</PkgPostSharp>
   </PropertyGroup>
 </Project>
