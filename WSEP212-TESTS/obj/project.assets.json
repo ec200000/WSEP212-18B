@@ -1318,6 +1318,15 @@
           "build/netcoreapp2.1/NUnit3TestAdapter.props": {}
         }
       },
+      "PostSharp/4.3.23": {
+        "type": "package",
+        "compile": {
+          "lib/net35-client/PostSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net35-client/PostSharp.dll": {}
+        }
+      },
       "runtime.native.System/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -3431,6 +3440,7 @@
           "Microsoft.AspNetCore.Authentication.Certificate": "5.0.5",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "PostSharp": "4.3.23",
           "Serialize.Linq": "2.0.0",
           "WSEP212": "1.0.0"
         },
@@ -5743,6 +5753,30 @@
         "build/netcoreapp2.1/nunit.engine.dll",
         "nunit3testadapter.3.16.1.nupkg.sha512",
         "nunit3testadapter.nuspec"
+      ]
+    },
+    "PostSharp/4.3.23": {
+      "sha512": "hq+8CeDKui5cPd3ami4rG8oS1LKK0gI7jbaOQ867Eu8E77h9w5XYsMa/Rky99tSzH48E5cLwDJj63gli6Fwu3A==",
+      "type": "package",
+      "path": "postsharp/4.3.23",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35-client/PostSharp.dll",
+        "lib/net35-client/PostSharp.xml",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8/PostSharp.dll",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8/PostSharp.xml",
+        "postsharp.4.3.23.nupkg.sha512",
+        "postsharp.nuspec",
+        "tools/PostSharp-Tools.exe",
+        "tools/PostSharp.MSBuild.v4.3.23.Release.dll",
+        "tools/PostSharp.Version.properties",
+        "tools/PostSharp.properties",
+        "tools/PostSharp.targets",
+        "tools/PostSharp.tasks",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "runtime.native.System/4.3.0": {
@@ -11298,6 +11332,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.SignalR.Core",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PostSharp 4.3.23' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PostSharp",
       "targetGraphs": [
         "net5.0"
       ]
