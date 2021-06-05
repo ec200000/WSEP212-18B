@@ -7,30 +7,43 @@
 <body>
 <div class="openstorediv">
     @model WebApplication.Models.StoreModel
-    @using (Html.BeginForm("TryOpenStore", "Home", FormMethod.Post))
+    @using WSEP212.DomainLayer.SystemLoggers
+    @try
     {
-        <div>
-            @Html.TextBoxFor(model => model.storeName,new { placeholder = "Store Name",@class="inputclassopenstore" })
-            @Html.ValidationMessageFor(model => model.storeName)
-        </div>
+        @using (Html.BeginForm("TryOpenStore", "Home", FormMethod.Post))
+        {
+            <div>
+                @Html.TextBoxFor(model => model.storeName,new { placeholder = "Store Name",@class="inputclassopenstore" })
+                @Html.ValidationMessageFor(model => model.storeName)
+            </div>
         
-        <div>
-            @Html.TextBoxFor(model => model.storeAddress,new { placeholder = "Store Address",@class="inputclassopenstore" })
-            @Html.ValidationMessageFor(model => model.storeAddress)
-        </div>
+            <div>
+                @Html.TextBoxFor(model => model.storeAddress,new { placeholder = "Store Address",@class="inputclassopenstore" })
+                @Html.ValidationMessageFor(model => model.storeAddress)
+            </div>
         
-        <div>
-            @Html.TextBoxFor(model => model.salesPolicy,new { placeholder = "Sales Policy",@class="inputclassopenstore" })
-            @Html.ValidationMessageFor(model => model.salesPolicy)
-        </div>
+            <div>
+                @Html.TextBoxFor(model => model.salesPolicy,new { placeholder = "Sales Policy",@class="inputclassopenstore" })
+                @Html.ValidationMessageFor(model => model.salesPolicy)
+            </div>
         
-        <div>
-            @Html.TextBoxFor(model => model.purchasePolicy,new { placeholder = "Purchase Policy",@class="inputclassopenstore" })
-            @Html.ValidationMessageFor(model => model.purchasePolicy)
-        </div>
+            <div>
+                @Html.TextBoxFor(model => model.purchasePolicy,new { placeholder = "Purchase Policy",@class="inputclassopenstore" })
+                @Html.ValidationMessageFor(model => model.purchasePolicy)
+            </div>
         
-        <button class="btn btn-outline-primary" type="submit">OpenStore</button>
+            <button class="btn btn-outline-primary" type="submit">OpenStore</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

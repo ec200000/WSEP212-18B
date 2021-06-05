@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Collections.Concurrent;
 @using System;
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Users Purchase History";
@@ -10,7 +11,9 @@
 <html>
 <body>
     @model WebApplication.Models.PurchaseModel
-    <div class="storespurchasehistorydiv">
+<div class="storespurchasehistorydiv">
+    @try
+    {
         @using (Html.BeginForm("TryShowPurchaseHistory", "Home", FormMethod.Post))
         {
             string totalIncome = HttpContextAccessor.HttpContext.Session.GetString("stores_income");
@@ -18,7 +21,17 @@
             string purchases = HttpContextAccessor.HttpContext.Session.GetString("Stores_history");
             <h6>@purchases</h6>
         }
-    </div>
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
 </body>
 </html>
 

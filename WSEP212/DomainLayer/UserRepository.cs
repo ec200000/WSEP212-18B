@@ -102,6 +102,7 @@ namespace WSEP212.DomainLayer
                 }
                 users.TryAdd(newUser, false);
                 Authentication.Instance.insertUserInfo(newUser.userName, password);
+                newUser.addToDB();
                 return new Ok("Registration To The System Was Successful");
             }
         }

@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer
 @using WSEP212.DomainLayer.SalePolicy
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.SalesModel
 <!DOCTYPE html>
@@ -12,46 +13,82 @@
 <body>
 <h2>Please choose one of the sales options:</h2>
 <div class="editsalepredicatesdiv">
-    @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
+    @try
     {
-        <h5>1. Sale On Item</h5>
-        <label for="storesList">Items list</label>
-        string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("itemsList");
-        @Html.DropDownListFor(model => model.itemID, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
-        ;
-        @Html.TextBoxFor(model => model.salePercentage,new { placeholder = "Sale Percentage",@class="inputclassopenstore" })
-        @Html.TextBoxFor(model => model.saleDescription,new { placeholder = "Sale Description",@class="inputclassopenstore" })
-        <button class="btn btn-outline-primary" type="submit">Add Sale</button>
-    }
-</div>
-<div class="editsalepredicatesdiv">
-    @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
-    {
-        <h5>2. Sale On All Store</h5>
-        @Html.TextBoxFor(model => model.salePercentage,new { placeholder = "Sale Percentage",@class="inputclassopenstore" })
-        @Html.TextBoxFor(model => model.saleDescription,new { placeholder = "Sale Description",@class="inputclassopenstore" })
-        <button class="btn btn-outline-primary" formaction="TryAddSale" type="submit">Add Sale</button>
-    }
-</div>
-<div class="editsalepredicatesdiv">
-    @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
-    {
-        <h5>3. Sale On Category</h5>
-        <label for="storesList">Category List</label>
-        ItemCategory[] arr = new[]
+        @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
         {
-            ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
-            ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
-            ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks,ItemCategory.Pastries,
-            ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
-        };
-        string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
-        @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
-        ;
-        @Html.TextBoxFor(model => model.salePercentage,new { placeholder = "Sale Percentage",@class="inputclassopenstore" })
-        @Html.TextBoxFor(model => model.saleDescription,new { placeholder = "Sale Description",@class="inputclassopenstore" })
-        <button class="btn btn-outline-primary" formaction="TryAddSale" type="submit">Add Sale</button>
+            <h5>1. Sale On Item</h5>
+            <label for="storesList">Items list</label>
+            string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("itemsList");
+            @Html.DropDownListFor(model => model.itemID, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            @Html.TextBoxFor(model => model.salePercentage, new {placeholder = "Sale Percentage", @class = "inputclassopenstore"})
+            @Html.TextBoxFor(model => model.saleDescription, new {placeholder = "Sale Description", @class = "inputclassopenstore"})
+            <button class="btn btn-outline-primary" type="submit">Add Sale</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
+<div class="editsalepredicatesdiv">
+    @try
+    {
+        @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
+        {
+            <h5>2. Sale On All Store</h5>
+            @Html.TextBoxFor(model => model.salePercentage, new {placeholder = "Sale Percentage", @class = "inputclassopenstore"})
+            @Html.TextBoxFor(model => model.saleDescription, new {placeholder = "Sale Description", @class = "inputclassopenstore"})
+            <button class="btn btn-outline-primary" formaction="TryAddSale" type="submit">Add Sale</button>
+        }
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
+<div class="editsalepredicatesdiv">
+    @try
+    {
+        @using (Html.BeginForm("TryAddSale", "Home", FormMethod.Post))
+        {
+            <h5>3. Sale On Category</h5>
+            <label for="storesList">Category List</label>
+            ItemCategory[] arr = new[]
+            {
+                ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
+                ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
+                ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks, ItemCategory.Pastries,
+                ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
+            };
+            string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
+            @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            @Html.TextBoxFor(model => model.salePercentage, new {placeholder = "Sale Percentage", @class = "inputclassopenstore"})
+            @Html.TextBoxFor(model => model.saleDescription, new {placeholder = "Sale Description", @class = "inputclassopenstore"})
+            <button class="btn btn-outline-primary" formaction="TryAddSale" type="submit">Add Sale</button>
+        }
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

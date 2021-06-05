@@ -5,54 +5,71 @@
 
 <html>
 <body>
+@using WSEP212.DomainLayer.SystemLoggers
 @model WebApplication.Models.UserModel
 <div class="indexdiv">
     <h2 id="h2index">
         Welcome! Please Register:
     </h2>
-    @using (Html.BeginForm("Subscribe", "Home", FormMethod.Post))
+    @try
     {
-        <div>
-            @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclassindex" })
-            @Html.ValidationMessageFor(model => model.UserName)
-        </div>
+        @using (Html.BeginForm("Subscribe", "Home", FormMethod.Post))
+        {
+            <div>
+                @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclassindex" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
         
-        <div>
-            @Html.TextBoxFor(model => model.Age,new { placeholder = "Age",@class="inputclassindex" })
-            @Html.ValidationMessageFor(model => model.Age)
-        </div>
+            <div>
+                @Html.TextBoxFor(model => model.Age,new { placeholder = "Age",@class="inputclassindex" })
+                @Html.ValidationMessageFor(model => model.Age)
+            </div>
         
-        <div>
-            @Html.PasswordFor(model => model.Password,new { placeholder = "Password",@class="inputclassindex" })
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+            <div>
+                @Html.PasswordFor(model => model.Password,new { placeholder = "Password",@class="inputclassindex" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
         
-        <button class="btn btn-outline-primary" type="submit">Register</button>
+            <button class="btn btn-outline-primary" type="submit">Register</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div>
     <h2 id="orInIndexpage">OR</h2>
 </div>
 
 <div class="indexcontinueasquestdiv">
-    @using (Html.BeginForm("ContinueAsGuest", "Home", FormMethod.Post))
+    @try
     {
-        <div>
-            @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclassindex" })
-            @Html.ValidationMessageFor(model => model.UserName)
-        </div>
-        
-        <button class="btn btn-outline-primary" type="submit">Continue As Guest</button>
+        @using (Html.BeginForm("ContinueAsGuest", "Home", FormMethod.Post))
+        {
+            <div>
+                @Html.TextBoxFor(model => model.UserName, new {placeholder = "User Name", @class = "inputclassindex"})
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+
+            <button class="btn btn-outline-primary" type="submit">Continue As Guest</button>
+        }
+    }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+            msg += inner.Message;
+        Logger.Instance.writeErrorEventToLog(msg);
     }
 </div>
 
-<!--- <div class="container">
-    <input type="text" id="txtMessage" />
-    <input type="button" id="sendMessage" value="Send" onclick="sendMessage();" />
- 
-    <div id="DisplayMessages"></div>
- 
-</div>--->
 </body>
 </html> 
 
