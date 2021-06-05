@@ -1211,6 +1211,11 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
+                if (user.isSystemManager)
+                {
+                    user.state = new SystemManagerState(user);
+                }
+
                 Object[] paramsList = { userName, password };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;

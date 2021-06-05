@@ -23,16 +23,16 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             SystemDBAccess.mock = true;
             
-            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users.ToList());
-            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores.ToList());
-            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items.ToList());
-            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids.ToList());
-            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts.ToList());
-            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices.ToList());
-            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions.ToList());
-            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications.ToList());
-            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes.ToList());
-            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo.ToList());
+            SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users.ToList());
+            SystemDBAccess.Instance.Stores.RemoveRange(SystemDBAccess.Instance.Stores.ToList());
+            SystemDBAccess.Instance.Items.RemoveRange(SystemDBAccess.Instance.Items.ToList());
+            SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids.ToList());
+            SystemDBAccess.Instance.Carts.RemoveRange(SystemDBAccess.Instance.Carts.ToList());
+            SystemDBAccess.Instance.Invoices.RemoveRange(SystemDBAccess.Instance.Invoices.ToList());
+            SystemDBAccess.Instance.Permissions.RemoveRange(SystemDBAccess.Instance.Permissions.ToList());
+            SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications.ToList());
+            SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes.ToList());
+            SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo.ToList());
             SystemDBAccess.Instance.SaveChanges();
             
             user = new User("check name");

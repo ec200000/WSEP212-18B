@@ -17,7 +17,7 @@ namespace WSEP212.DomainLayer.ExternalPaymentSystem
             => lazy.Value;
 
         private static readonly HttpClient client = new HttpClient();
-        private static readonly String webAddressAPI = "https://cs-bgu-wsep.herokuapp.com/";
+        public static string webAddressAPI { get; set; }
 
         private PaymentSystemAPI() { }
 

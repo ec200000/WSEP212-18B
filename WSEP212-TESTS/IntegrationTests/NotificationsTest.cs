@@ -28,36 +28,36 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             SystemDBAccess.mock = true;
             /*if(SystemDBAccess.Instance.UsersInfo.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Authentications");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Authentications");
             if(SystemDBAccess.Instance.Carts.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE ShoppingCarts");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE ShoppingCarts");
             if(SystemDBAccess.Instance.Bids.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE BidsInfoes");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE BidsInfoes");
             if(SystemDBAccess.Instance.Invoices.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE PurchaseInvoices");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE PurchaseInvoices");
             if(SystemDBAccess.Instance.Permissions.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE SellerPermissions");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE SellerPermissions");
             if(SystemDBAccess.Instance.ItemReviewes.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE ItemReviews");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE ItemReviews");
             if(SystemDBAccess.Instance.DelayedNotifications.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE UserConnectionManagers");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE UserConnectionManagers");
             if(SystemDBAccess.Instance.Items.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Items");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Items");
             if(SystemDBAccess.Instance.Stores.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Stores");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Stores");
             if(SystemDBAccess.Instance.Users.Any())
-                SystemDBMock.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
+                SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
             SystemDBAccess.Instance.SaveChanges();*/
-            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users.ToList());
-            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores.ToList());
-            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items.ToList());
-            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids.ToList());
-            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts.ToList());
-            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices.ToList());
-            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions.ToList());
-            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications.ToList());
-            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes.ToList());
-            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo.ToList());
+            SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users.ToList());
+            SystemDBAccess.Instance.Stores.RemoveRange(SystemDBAccess.Instance.Stores.ToList());
+            SystemDBAccess.Instance.Items.RemoveRange(SystemDBAccess.Instance.Items.ToList());
+            SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids.ToList());
+            SystemDBAccess.Instance.Carts.RemoveRange(SystemDBAccess.Instance.Carts.ToList());
+            SystemDBAccess.Instance.Invoices.RemoveRange(SystemDBAccess.Instance.Invoices.ToList());
+            SystemDBAccess.Instance.Permissions.RemoveRange(SystemDBAccess.Instance.Permissions.ToList());
+            SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications.ToList());
+            SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes.ToList());
+            SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo.ToList());
             SystemDBAccess.Instance.SaveChanges();
         }
         

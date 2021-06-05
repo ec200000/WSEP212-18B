@@ -18,8 +18,8 @@ namespace WSEP212.DomainLayer.ExternalDeliverySystem
             => lazy.Value;
 
         private static readonly HttpClient client = new HttpClient();
-        private static readonly String webAddressAPI = "https://cs-bgu-wsep.herokuapp.com/";
-
+        public static string webAddressAPI { get; set; }
+        
         private DeliverySystemAPI() { }
 
         private async Task<bool> HttpHandshakeAsync()
