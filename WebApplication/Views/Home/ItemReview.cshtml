@@ -5,16 +5,29 @@
 
 <html>
 <body>
-    @model WebApplication.Models.ReviewModel
-    <div class="itemreviewdiv">
+@model WebApplication.Models.ReviewModel
+@using WSEP212.DomainLayer.SystemLoggers
+<div class="itemreviewdiv">
+    @try
+    {
         @using (Html.BeginForm("TryReviewItem", "Home", FormMethod.Post))
         {
 
-            @Html.TextBoxFor(model => model.review,new { placeholder = "Your review...",@class="inputclasslogin" })
+            @Html.TextBoxFor(model => model.review, new {placeholder = "Your review...", @class = "inputclasslogin"})
             @Html.ValidationMessageFor(model => model.review)
             <button class="btn btn-outline-primary" type="submit">Review Item</button>
         }
-    </div>
+    }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+            msg += inner.Message;
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+
+</div>
 </body>
 </html>
 

@@ -3,6 +3,7 @@
 @using WSEP212.DomainLayer
 @using System.Collections.Concurrent
 @using WSEP212.DomainLayer.ConcurrentLinkedList
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 
@@ -13,19 +14,31 @@
 <body>
 <div class="searchitemsdivaddview">
     @model WebApplication.Models.SearchModel
-    @using (Html.BeginForm("TryAddItemToShoppingCart", "Home", FormMethod.Post))
+    @try
     {
-        <label for="storesList">Items List</label>
-        ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<ConcurrentDictionary<Store,ConcurrentLinkedList<Item>>>("allitems!");
-        @Html.DropDownListFor(model => model.itemChosen, new SelectList(Model.items.OfType<string>().ToList()), new {@class = "custom-select"})
-        @Html.TextBoxFor(model => model.quantity,new { placeholder = "Quantity",@class="inputclassindex" })
-        string[] types = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
-        @Html.DropDownListFor(model => model.purchaseType, new SelectList(types.OfType<string>().ToList()), new {@class = "custom-select"});
-        @Html.TextBoxFor(model => model.priceOffer,new { placeholder = "Price Offer",@class="inputclassindex" })
+        @using (Html.BeginForm("TryAddItemToShoppingCart", "Home", FormMethod.Post))
+        {
+            <label for="storesList">Items List</label>
+            ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<ConcurrentDictionary<Store,ConcurrentLinkedList<Item>>>("allitems!");
+            @Html.DropDownListFor(model => model.itemChosen, new SelectList(Model.items.OfType<string>().ToList()), new {@class = "custom-select"})
+            @Html.TextBoxFor(model => model.quantity,new { placeholder = "Quantity",@class="inputclassindex" })
+            string[] types = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
+            @Html.DropDownListFor(model => model.purchaseType, new SelectList(types.OfType<string>().ToList()), new {@class = "custom-select"});
+            @Html.TextBoxFor(model => model.priceOffer,new { placeholder = "Price Offer",@class="inputclassindex" })
 
-        <button class="btn btn-outline-primary" type="submit">Add Item To Shopping Cart</button>
-        <button class="btn btn-outline-primary" type="submit" formaction="TryShowReviews">View Item's reviews</button>
+            <button class="btn btn-outline-primary" type="submit">Add Item To Shopping Cart</button>
+            <button class="btn btn-outline-primary" type="submit" formaction="TryShowReviews">View Item's reviews</button>
+        } 
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="searchitemsdivsearch">
     @using (Html.BeginForm("TrySearchItems", "Home", FormMethod.Post))

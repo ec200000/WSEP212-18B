@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer.PolicyPredicate
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.PredicateModel
 @{
@@ -17,16 +18,29 @@
 </div>
 
 <div class="purchasepredicatediv">
-    @using (Html.BeginForm("TryRemovePurchasePredicate", "Home", FormMethod.Post))
+    @try
     {
-        <label for="storesList">Purchase Predicate</label>
-        string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
-        @if (purchasePredicate != null)
+        @using (Html.BeginForm("TryRemovePurchasePredicate", "Home", FormMethod.Post))
         {
-            @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
+            <label for="storesList">Purchase Predicate</label>
+            string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
+            @if (purchasePredicate != null)
+            {
+                @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+            }
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove purchase predicate</button>
         }
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove purchase predicate</button>
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="purchasepredicatediv">
     @using (Html.BeginForm("TryComposePurchasePredicate", "Home", FormMethod.Post))

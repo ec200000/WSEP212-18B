@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer
+@using WSEP212.DomainLayer.SystemLoggers
 @using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.StoreModel
@@ -11,21 +12,33 @@
 </head>
 <body>
 <div class="getstoreinformationdiv">
-    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    @try
     {
-        string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
-        int store = (int)HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
-        @if (SystemController.Instance.hasPermission(name, store, Permissions.GetStorePurchaseHistory).getTag())
+        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
-            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="StorePurchaseHistory" type="submit">Get Store's Purchase History</button>
-        }
-        @if (SystemController.Instance.hasPermission(name, store, Permissions.GetOfficialsInformation).getTag())
-        {
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="AppointOfficials">Appoint Officials</button>
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.GetStorePurchaseHistory).getTag())
+            {
+                <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="StorePurchaseHistory" type="submit">Get Store's Purchase History</button>
+            }
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.GetOfficialsInformation).getTag())
+            {
+                <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="AppointOfficials">Appoint Officials</button>
 
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="ViewOfficials">View Officials</button>
+                <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="ViewOfficials">View Officials</button>
+            }
         }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

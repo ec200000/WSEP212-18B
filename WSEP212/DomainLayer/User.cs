@@ -102,17 +102,19 @@ namespace WSEP212.DomainLayer
             this.userName = userName;
             this.userAge = userAge;
             this.shoppingCart = new ShoppingCart(userName);
-            shoppingCart.addToDB();
             this.purchases = new ConcurrentDictionary<int, PurchaseInvoice>();
             this.sellerPermissions = new LinkedList<SellerPermissions>();
             this.state = new GuestBuyerState(this);
             this.isSystemManager = isSystemManager;
-            
+        }
+
+        public void addToDB() //will save only logged buyers
+        {
+            shoppingCart.addToDB();
             SystemDBAccess.Instance.Users.Add(this);
             lock(SystemDBAccess.savelock)
                 SystemDBAccess.Instance.SaveChanges();
         }
-
         public void changeState(UserState state)
         {
             this.state = state;
