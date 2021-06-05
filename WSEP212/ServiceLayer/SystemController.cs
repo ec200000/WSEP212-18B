@@ -67,9 +67,9 @@ namespace WSEP212.ServiceLayer
                     string storeOpener = item.storeOpener;
                     string storeName = item.storeName;
                     string storeAddress = item.storeAddress;
-                    //if (SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeName == storeName) == null) {
+                    if (SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeName == storeName) == null) {
                         openStore(storeOpener, storeName, storeAddress, "0", "0");
-                    //}
+                    }
                 }
 
                 // ADD ITEMS
@@ -83,12 +83,12 @@ namespace WSEP212.ServiceLayer
                     string itemQuantity = item.itemQuantity;
                     string description = item.description;
                     string category = item.category;
-                    //if (SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemName == itemName) == null) {
+                    if (SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemName == itemName) == null) {
                         addItemToStorage(userAdded, int.Parse(storeID),
                             new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
                                 new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice),
                                 int.Parse(category)));
-                    //}
+                    }
                 }
 
                 // APPOINT
@@ -98,7 +98,7 @@ namespace WSEP212.ServiceLayer
                     string appoint = item.appoint;
                     string storeName = item.storeName;
                     string storeID = item.storeID;
-                    //if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager) == null)
+                    if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager) == null)
                     {
                         appointStoreManager(manager, appoint, int.Parse(storeID));
                         ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();

@@ -78,7 +78,7 @@ namespace WSEP212.DomainLayer
                 string username = item.username;
                 string userAge = item.userAge;
                 string isSystemManager = item.isSystemManager;
-                //if (SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == username) == null)
+                if (SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == username) == null)
                 {
                     User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
                     if (isSystemManager.Equals("true"))
