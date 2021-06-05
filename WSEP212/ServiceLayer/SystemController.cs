@@ -60,42 +60,46 @@ namespace WSEP212.ServiceLayer
                 string jsonFilePath = "init.json";
                 string json = File.ReadAllText(jsonFilePath);
                 dynamic array = JsonConvert.DeserializeObject(json);
-
-                if (!SystemDBAccess.Instance.Stores.Any())
+                
+                // CREATE STORES
+                foreach (var item in array.stores)
                 {
-                    // CREATE STORES
-                    foreach (var item in array.stores)
-                    {
-                        string storeOpener = item.storeOpener;
-                        string storeName = item.storeName;
-                        string storeAddress = item.storeAddress;
+                    string storeOpener = item.storeOpener;
+                    string storeName = item.storeName;
+                    string storeAddress = item.storeAddress;
+                    //if (SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeName == storeName) == null) {
                         openStore(storeOpener, storeName, storeAddress, "0", "0");
-                    }
+                    //}
+                }
 
-                    // ADD ITEMS
-                    foreach (var item in array.items)
-                    {
-                        string userAdded = item.userAdded;
-                        string storeName = item.storeName;
-                        string storeID = item.storeID;
-                        string itemName = item.itemName;
-                        string itemPrice = item.itemPrice;
-                        string itemQuantity = item.itemQuantity;
-                        string description = item.description;
-                        string category = item.category;
+                // ADD ITEMS
+                foreach (var item in array.items)
+                {
+                    string userAdded = item.userAdded;
+                    string storeName = item.storeName;
+                    string storeID = item.storeID;
+                    string itemName = item.itemName;
+                    string itemPrice = item.itemPrice;
+                    string itemQuantity = item.itemQuantity;
+                    string description = item.description;
+                    string category = item.category;
+                    //if (SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemName == itemName) == null) {
                         addItemToStorage(userAdded, int.Parse(storeID),
                             new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
                                 new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice),
                                 int.Parse(category)));
-                    }
+                    //}
+                }
 
-                    // APPOINT
-                    foreach (var item in array.appoints)
+                // APPOINT
+                foreach (var item in array.appoints)
+                {
+                    string manager = item.manager;
+                    string appoint = item.appoint;
+                    string storeName = item.storeName;
+                    string storeID = item.storeID;
+                    //if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager) == null)
                     {
-                        string manager = item.manager;
-                        string appoint = item.appoint;
-                        string storeName = item.storeName;
-                        string storeID = item.storeID;
                         appointStoreManager(manager, appoint, int.Parse(storeID));
                         ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
                         foreach (var perm in item.permissions)
@@ -106,11 +110,11 @@ namespace WSEP212.ServiceLayer
 
                         editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
                     }
+                }
 
-                    UserRepository.Instance.initRepo();
-                    string loggedUser = array.loggedUser;
-                    logout(loggedUser);
-                } 
+                UserRepository.Instance.initRepo();
+                string loggedUser = array.loggedUser;
+                logout(loggedUser);
             }
             catch (SystemException e)
             {
