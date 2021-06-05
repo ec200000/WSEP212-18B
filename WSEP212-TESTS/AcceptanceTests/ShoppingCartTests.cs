@@ -7,6 +7,7 @@ using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PurchaseTypes;
+using WSEP212.DomainLayer.SalePolicy.SaleOn;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -54,7 +55,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("b", 18, "123456");
             RegularResult result = controller.login("b", "123456");
             storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
+            ItemDTO item = new ItemDTO(1, 100, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
@@ -191,6 +192,45 @@ namespace WSEP212_TESTS.AcceptanceTests
             ResultWithValue<NotificationDTO> res1 = controller.purchaseItems("bb", deliveryParameters, paymentParameters);
 
             Assert.IsFalse(res1.getTag()); 
+        }
+        
+        [TestMethod]
+        public void itemsQuantitiesTest()
+        {
+            testInit();
+            
+            controller.addItemToShoppingCart("a", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            var quantitiesRes = controller.bagItemsQuantities("a", storeID);
+            Assert.IsTrue(quantitiesRes.getTag());
+            Assert.AreEqual(1, quantitiesRes.getValue().Count); // one item
+            Assert.AreEqual(2, quantitiesRes.getValue()[itemID]); // quantity
+        }
+        
+        [TestMethod]
+        public void itemsPriceBeforeSaleTest()
+        {
+            testInit();
+            
+            controller.addItemToShoppingCart("a", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            var priceRes = controller.getItemsBeforeSalePrices("a");
+            Assert.IsTrue(priceRes.getTag());
+            Assert.AreEqual(1, priceRes.getValue().Count); // one shopping bag
+            Assert.AreEqual(1, priceRes.getValue()[storeID].Count); // one item
+            Assert.AreEqual(2.4, priceRes.getValue()[storeID][itemID].Key); // price
+        }
+        
+        [TestMethod]
+        public void itemsPriceAfterSaleTest()
+        {
+            testInit();
+            controller.addSale("b", storeID, 50, new SaleOnItem(itemID), "New Sale!");
+            
+            controller.addItemToShoppingCart("a", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
+            var priceRes = controller.getItemsAfterSalePrices("a");
+            Assert.IsTrue(priceRes.getTag());
+            Assert.AreEqual(1, priceRes.getValue().Count); // one shopping bag
+            Assert.AreEqual(1, priceRes.getValue()[storeID].Count); // one item
+            Assert.AreEqual(1.2, priceRes.getValue()[storeID][itemID].Key); // price
         }
     }
 }

@@ -210,6 +210,12 @@ namespace WSEP212.DomainLayer
             }
             return new Failure("The Item Not Exist In The Shopping Bag");
         }
+        
+        // returns all items in bag with their quantities
+        public ConcurrentDictionary<int, int> viewItemsQuantities()
+        {
+            return this.items;
+        }
 
         // returns the prices of the items in the shopping bags, and their status
         public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
@@ -222,6 +228,42 @@ namespace WSEP212.DomainLayer
                 itemsPrices.TryAdd(itemPurchaseType.Key, itemStatus);
             }
             return itemsPrices;
+        }
+        
+        // calculate the final price of each item in the bag, after sales
+        // for all the items that not approved, not apply the sales on them
+        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> getItemsAfterSalePrices()
+        {
+            var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
+            ConcurrentDictionary<int, double> approvedItemsAndPrices = approvedItemsPrices();
+            // build new shopping bag with only approved items
+            ConcurrentDictionary<int, int> approvedItems = new ConcurrentDictionary<int, int>();
+            foreach (int itemID in approvedItemsAndPrices.Keys)
+            {
+                approvedItems.TryAdd(itemID, items[itemID]);
+            }
+            // calculate the price after sale for approved items only
+            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = store.itemsAfterSalePrices(user, approvedItems, approvedItemsAndPrices);
+            if(approvedAfterSale.getTag())
+            {
+                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPricesAndStatus = allItemsPricesAndStatus();
+                int itemID;
+                double prevPrice, salePrice;
+                // update all approved items price after sale 
+                foreach (KeyValuePair<int, double> itemPriceSale in approvedAfterSale.getValue())
+                {
+                    itemID = itemPriceSale.Key;
+                    prevPrice = itemsPricesAndStatus[itemID].Key;
+                    salePrice = itemPriceSale.Value;
+                    if (salePrice < prevPrice)
+                    {
+                        KeyValuePair<double, PriceStatus> salePriceAndStatus = new KeyValuePair<double, PriceStatus>(salePrice, PriceStatus.Approved);
+                        itemsPricesAndStatus[itemID] = salePriceAndStatus;
+                    }
+                }
+                return itemsPricesAndStatus;
+            }
+            return null;
         }
 
         // returns all the approved items and their prices out of all the items in the bag
@@ -261,42 +303,6 @@ namespace WSEP212.DomainLayer
                 return new FailureWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), null);
             }
             return new FailureWithValue<PurchaseInvoice>("One Or More Of The Items Price Weren't Approved Yet", null);
-        }
-
-        // calculate the final price of each item in the bag, after sales
-        // for all the items that not approved, not apply the sales on them
-        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> getItemsAfterSalePrices()
-        {
-            var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
-            ConcurrentDictionary<int, double> approvedItemsAndPrices = approvedItemsPrices();
-            // build new shopping bag with only approved items
-            ConcurrentDictionary<int, int> approvedItems = new ConcurrentDictionary<int, int>();
-            foreach (int itemID in approvedItemsAndPrices.Keys)
-            {
-                approvedItems.TryAdd(itemID, items[itemID]);
-            }
-            // calculate the price after sale for approved items only
-            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = store.itemsAfterSalePrices(user, approvedItems, approvedItemsAndPrices);
-            if(approvedAfterSale.getTag())
-            {
-                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPricesAndStatus = allItemsPricesAndStatus();
-                int itemID;
-                double prevPrice, salePrice;
-                // update all approved items price after sale 
-                foreach (KeyValuePair<int, double> itemPriceSale in approvedAfterSale.getValue())
-                {
-                    itemID = itemPriceSale.Key;
-                    prevPrice = itemsPricesAndStatus[itemID].Key;
-                    salePrice = itemPriceSale.Value;
-                    if (salePrice < prevPrice)
-                    {
-                        KeyValuePair<double, PriceStatus> salePriceAndStatus = new KeyValuePair<double, PriceStatus>(salePrice, PriceStatus.Approved);
-                        itemsPricesAndStatus[itemID] = salePriceAndStatus;
-                    }
-                }
-                return itemsPricesAndStatus;
-            }
-            return null;
         }
 
         // roll back purchase - returns all the items in the bag to the store
