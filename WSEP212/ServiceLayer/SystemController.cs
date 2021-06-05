@@ -1362,6 +1362,46 @@ namespace WSEP212.ServiceLayer
             
         }
 
+        public ResultWithValue<ConcurrentDictionary<int, int>> bagItemsQuantities(String userName, int storeID)
+        {
+            try
+            {
+                String info = $"bagItemsQuantities Event was triggered, with the parameters:" +
+                              $"userName: {userName}, storeID: {storeID}";
+                Logger.Instance.writeInformationEventToLog(info);
+                return SystemControllerFacade.Instance.bagItemsQuantities(userName, storeID);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, int>>("failed", null);
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName)
+        {
+            try
+            {
+                String info = $"getItemsBeforeSalePrices Event was triggered, with the parameters:" +
+                              $"userName: {userName}";
+                Logger.Instance.writeInformationEventToLog(info);
+                return SystemControllerFacade.Instance.getItemsBeforeSalePrices(userName);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("failed", null);
+        }
+
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName)
         {
             try
@@ -1379,9 +1419,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-
             return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("failed", null);
-            
         }
     }
 }
