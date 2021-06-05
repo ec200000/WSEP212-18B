@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Shopping Cart";
@@ -9,22 +10,36 @@
 <body>
 <div class="shoppingcartremovediv">
     @model WebApplication.Models.ShoppingCartModel
-    @using (Html.BeginForm("TryRemoveItemFromShoppingCart", "Home", FormMethod.Post))
+    @try
     {
-        <label for="storesList">Items List</label>
-        string[] ItemsListAndStores = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("shoppingCart");
-        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()), new {@class = "custom-select"});
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove Item From Shopping Cart</button>
+        @using (Html.BeginForm("TryRemoveItemFromShoppingCart", "Home", FormMethod.Post))
+        {
+            <label for="storesList">Items List</label>
+            string[] ItemsListAndStores = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("shoppingCart");
+            @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()), new {@class = "custom-select"});
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove Item From Shopping Cart</button>
         
-        @Html.TextBoxFor(model => model.newOffer,new { placeholder = "Change offer",@class="inputclassopenstore" })
+            @Html.TextBoxFor(model => model.newOffer,new { placeholder = "Change offer",@class="inputclassopenstore" })
 
-        <button class="btn btn-outline-primary" type="submit" formaction="ChangeOffer">Change Offer</button>
+            <button class="btn btn-outline-primary" type="submit" formaction="ChangeOffer">Change Offer</button>
                                                                                               
-        string[] types2 = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
-        @Html.DropDownListFor(model => model.purchaseType, new SelectList(types2.OfType<string>().ToList()), new {@class = "custom-select"});
+            string[] types2 = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
+            @Html.DropDownListFor(model => model.purchaseType, new SelectList(types2.OfType<string>().ToList()), new {@class = "custom-select"});
 
-        <button class="btn btn-outline-primary" type="submit" formaction="ChangePurchaseType">Change Purchase Type</button>
+            <button class="btn btn-outline-primary" type="submit" formaction="ChangePurchaseType">Change Purchase Type</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="shoppingcartpurchasediv">
     @using (Html.BeginForm("TryPriceAftereSale", "Home", FormMethod.Post))

@@ -5,12 +5,27 @@
     <title>title</title>
 </head>
 <body>
+@using WSEP212.DomainLayer.SystemLoggers
 @model WebApplication.Models.UserModel
 <div class="logoutdiv">
-    @using (Html.BeginForm("TryLogout", "Home", FormMethod.Post))
+    @try
     {
-        <button class="btn btn-outline-primary" type="submit">Logout</button>
+        @using (Html.BeginForm("TryLogout", "Home", FormMethod.Post))
+        {
+            <button class="btn btn-outline-primary" type="submit">Logout</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

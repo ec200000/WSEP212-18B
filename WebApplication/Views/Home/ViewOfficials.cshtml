@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer
+@using WSEP212.DomainLayer.SystemLoggers
 @using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.OfficialsModel
@@ -11,39 +12,70 @@
 </head>
 <body>
 <div class="viewofficialsdiv">
-    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    @try
     {
-        string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
-        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()), new {@class = "custom-select"});
-        string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
-        int store = (int)HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
-        @if (SystemController.Instance.hasPermission(name, store, Permissions.RemoveStoreManager).getTag())
+        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
-            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="RemoveManager" type="submit">Remove Manager</button>
-        }
-        @if (SystemController.Instance.isStoreOwner(name, store).getTag())
-        {
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="RemoveOwner">Remove Owner</button>
+            string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
+            @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.RemoveStoreManager).getTag())
+            {
+                <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="RemoveManager" type="submit">Remove Manager</button>
+            }
+            @if (SystemController.Instance.isStoreOwner(name, store).getTag())
+            {
+                <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" formaction="RemoveOwner">Remove Owner</button>
+            }
         }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="viewofficialsdiv">
-    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    @try
     {
-        string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
-        Permissions[] arr = new[]
+        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
-            Permissions.StorageManagment, Permissions.AppointStoreManager, Permissions.AppointStoreOwner,
-            Permissions.EditManagmentPermissions, Permissions.GetOfficialsInformation, Permissions.RemoveStoreManager,
-            Permissions.StorePoliciesManagement, Permissions.GetStorePurchaseHistory
-        };
-        string[] permissions = Array.ConvertAll(arr, value => value.ToString());
-        @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()), new {@class = "custom-select"});
-        
-        @Html.DropDownListFor(model => model.Permission, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"});
-        
-        <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="AddManagerPermission" type="submit">Add Manager Permission</button>
+            string[] usersList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("officials");
+            Permissions[] arr = new[]
+            {
+                Permissions.StorageManagment, Permissions.AppointStoreManager, Permissions.AppointStoreOwner,
+                Permissions.EditManagmentPermissions, Permissions.GetOfficialsInformation, Permissions.RemoveStoreManager,
+                Permissions.StorePoliciesManagement, Permissions.GetStorePurchaseHistory
+            };
+            string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+            @Html.DropDownListFor(model => model.UserName, new SelectList(usersList.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+
+            @Html.DropDownListFor(model => model.Permission, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+
+            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="AddManagerPermission" type="submit">Add Manager Permission</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 
 <!DOCTYPE html>
@@ -11,16 +12,18 @@
 <body>
 <div class="edititemdetailsdiv">
     @model WebApplication.Models.ItemModel
-    @using (Html.BeginForm("TryEditDetails", "Home", FormMethod.Post))
+    @try
     {
-        @Html.LabelFor(model => model.quantity,new { @class="inputclassindex" })
+        @using (Html.BeginForm("TryEditDetails", "Home", FormMethod.Post))
+        {
+            @Html.LabelFor(model => model.quantity,new { @class="inputclassindex" })
             @Html.EditorFor(model => model.quantity,new {@class="inputclassindex" })
         
         
             @Html.LabelFor(model => model.itemName,new {@class="inputclassindex" })
             @Html.EditorFor(model => model.itemName,new {@class="inputclassindex" })
         
-        @Html.LabelFor(model => model.description,new {@class="inputclassindex" })
+            @Html.LabelFor(model => model.description,new {@class="inputclassindex" })
             @Html.EditorFor(model => model.description,new {@class="inputclassindex" })
 
         
@@ -28,23 +31,35 @@
             @Html.EditorFor(model => model.price,new {@class="inputclassindex" })
             
             
-                <label for="storesList">Category List</label>
-                ItemCategory[] arr = new[]
-                {
-                    ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
-                    ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
-                    ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks,ItemCategory.Pastries,
-                    ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
-                };
-                string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
-                @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
-                ;
-                @Html.EditorFor(model => model.category, new {@class = "inputclassindex"})
+            <label for="storesList">Category List</label>
+            ItemCategory[] arr = new[]
+            {
+                ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
+                ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
+                ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks,ItemCategory.Pastries,
+                ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
+            };
+            string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
+            @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            @Html.EditorFor(model => model.category, new {@class = "inputclassindex"})
             
         
         
-        <button style="margin-top: 15px" class="btn btn-outline-primary" type="submit">Edit Details</button>
+            <button style="margin-top: 15px" class="btn btn-outline-primary" type="submit">Edit Details</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

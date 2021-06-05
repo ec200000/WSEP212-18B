@@ -12,18 +12,24 @@ using WSEP212.DomainLayer.PurchaseTypes;
 
 namespace WSEP212.DataAccessLayer
 {
-    public class SystemDBAccess : DBInterface
+    public class SystemDBAccess : DbContext
     {
+        public static string server { get; set; }
+        public static string database { get; set; }
+        public static string userID { get; set; }
+        public static string password { get; set; }
+        
         public static readonly object savelock = new object();
         
         public static bool mock = false;
         private static readonly Lazy<SystemDBAccess> lazy
             = new Lazy<SystemDBAccess>(() => new SystemDBAccess());
 
-        public static DBInterface Instance => mock ? SystemDBMock.Instance : lazy.Value;
+        public static SystemDBAccess Instance => lazy.Value;
 
-        public SystemDBAccess() : base("Server=tcp:wsep212b18.database.windows.net,1433;Database=wsep212Dep;User ID=wsep212b@wsep212b18;Password=Ab123456;Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
+        public SystemDBAccess()
         {
+            new DbContext($"Server=tcp: {server}.database.windows.net,1433;Database={database};User ID={userID};Password={password};Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;");
             Init();
             Database.CommandTimeout = 120;
             Database.SetInitializer<SystemDBAccess>(new MigrateDatabaseToLatestVersion<SystemDBAccess, Configuration>());
@@ -87,15 +93,15 @@ namespace WSEP212.DataAccessLayer
                     .WillCascadeOnDelete();*/
         }
 
-        public override DbSet<Item> Items { get; set; }
-        public override DbSet<ItemReview> ItemReviewes { get; set; }
-        public override DbSet<Store> Stores { get; set; }
-        public override DbSet<ShoppingCart> Carts { get; set; }
-        public override DbSet<User> Users { get; set; }
-        public override DbSet<Authentication> UsersInfo { get; set; }
-        public override DbSet<PurchaseInvoice> Invoices { get; set; }
-        public override DbSet<SellerPermissions> Permissions { get; set; }
-        public override DbSet<UserConnectionManager> DelayedNotifications { get; set; }
-        public override DbSet<BidInfo> Bids { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemReview> ItemReviewes { get; set; }
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<ShoppingCart> Carts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Authentication> UsersInfo { get; set; }
+        public DbSet<PurchaseInvoice> Invoices { get; set; }
+        public DbSet<SellerPermissions> Permissions { get; set; }
+        public DbSet<UserConnectionManager> DelayedNotifications { get; set; }
+        public DbSet<BidInfo> Bids { get; set; }
     }
 }
