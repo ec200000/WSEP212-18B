@@ -5,27 +5,40 @@
     <title>title</title>
 </head>
 <body>
+@using WSEP212.DomainLayer.SystemLoggers
 @model WebApplication.Models.UserModel
 <div class="logindiv">
     <h2>
         Please Login:
-        </h2>
-    @using (Html.BeginForm("TryLogin", "Home", FormMethod.Post))
+    </h2>
+    @try
     {
-        <div>
-            @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclasslogin", @id="nameBox" })
-            @Html.ValidationMessageFor(model => model.UserName)
-        </div>
+        @using (Html.BeginForm("TryLogin", "Home", FormMethod.Post))
+        {
+            <div>
+                @Html.TextBoxFor(model => model.UserName,new { placeholder = "User Name",@class="inputclasslogin", @id="nameBox" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
 
-        <div>
-            @Html.PasswordFor(model => model.Password,new { placeholder = "Password",@class="inputclasslogin" })
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+            <div>
+                @Html.PasswordFor(model => model.Password,new { placeholder = "Password",@class="inputclasslogin" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
 
-        <button class="btn btn-outline-primary" type="submit" formaction="TryLogin" value="Login" onclick="saveConn()">Login</button>
+            <button class="btn btn-outline-primary" type="submit" formaction="TryLogin" value="Login" onclick="saveConn()">Login</button>
 
-        <button style="margin-left: 5px" class="btn btn-outline-primary" type="submit" formaction="LoginAsSystemManager">Login As System Manager</button>
+            <button style="margin-left: 5px" class="btn btn-outline-primary" type="submit" formaction="LoginAsSystemManager">Login As System Manager</button>
+        }
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+            msg += inner.Message;
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

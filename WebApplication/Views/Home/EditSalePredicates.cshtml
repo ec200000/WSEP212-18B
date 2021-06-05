@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer
 @using WSEP212.DomainLayer.SalePolicy
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.SalesModel
 <!DOCTYPE html>
@@ -10,31 +11,58 @@
     <title>title</title>
 </head>
 <body>
-    <div class="editsalepredicatesdiv">
+<div class="editsalepredicatesdiv">
+    @try
+    {
         @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
-            <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddSale';" value="Add Sale" />
-            <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddSaleCondition';" value="Add Sale Condition" />
+            <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddSale';" value="Add Sale"/>
+            <input class="btn btn-outline-primary" type="button" onclick="location.href='/Home/AddSaleCondition';" value="Add Sale Condition"/>
         }
-    </div>
-    <div class="editsalepredicatesdiv">
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+   
+</div>
+<div class="editsalepredicatesdiv">
+    @try
+    {
         @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
             <label for="storesList">Sale predicates</label>
             string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
-            @Html.DropDownListFor(model => model.predicate, new SelectList(predList.OfType<string>().ToList()), new { @class = "custom-select" });
+            @Html.DropDownListFor(model => model.predicate, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
 
             <button class="btn btn-outline-primary" formaction="TryRemoveSalePredicate" type="submit">Remove Sale Predicate</button>
-            
+
         }
-    </div>
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
     <div class="editsalepredicatesdiv">
+    @try
+    {
         @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
         {
             string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
             SaleCompositionType[] arr = new[]
             {
-            SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
+                SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
             };
             string[] permissions = Array.ConvertAll(arr, value => value.ToString());
             <label for="storesList">First predicate</label>
@@ -49,6 +77,16 @@
 
             <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ComposeSalePredicates" type="submit">Compose Sale Predicates (without xor)</button>
         }
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+        
     </div>
 </body>
 </html>

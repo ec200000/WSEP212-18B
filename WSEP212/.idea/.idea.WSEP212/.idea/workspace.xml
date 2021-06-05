@@ -6,19 +6,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/StorePoliciesManagementTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/StorePoliciesManagementTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/SubmitOfferPurchaseTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/SubmitOfferPurchaseTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTestsNegative.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTestsNegative.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/Store.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/Store.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WSEP212.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/WSEP212.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AddPredicate.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AddPredicate.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSale.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSale.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSaleCondition.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSaleCondition.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +53,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="add_db" />
+        <entry key="$PROJECT_DIR$/.." value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -52,8 +69,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DataAccessLayer/Configuration.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/OpenStore.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ViewOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
@@ -95,7 +110,6 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DomainLayer/LocalPredicate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1A1/ThreadPool.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2273FCE3-1D2A-430C-A940-EB675292B981/8/DefaultHttpContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
@@ -180,7 +194,9 @@
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Models/ShoppingCartModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataAccessLayer/Configuration.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/Login.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoreActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
@@ -207,6 +223,7 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoreActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ShoppingBag.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DomainLayer/LocalPredicate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoresPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditSalePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
@@ -214,6 +231,7 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/PurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/SearchItems.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
@@ -241,32 +259,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/DomainLayer/WSEP212-Mocks/SystemDBMock.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ISystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/init.json" />
-      <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/BidInfo.cs" />
-      <option value="$PROJECT_DIR$/DataAccessLayer/DBInterface.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/DomainMocks/SystemDBMock.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Models/ShoppingCartModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/PurchaseInvoice.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SearchItems.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ShoppingBag.cs" />
-      <option value="$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ShoppingBagTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ShoppingCartTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ExternalSystemsAPITests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/AuthenticationActionsTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/ShoppingCartTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreAcceptanceTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreRepositoryTests.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
@@ -278,10 +270,8 @@
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/PolicyPredicateTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ItemTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StorePoliciesAcceptanceTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SubmitOfferPurchaseTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/Item.cs" />
@@ -292,6 +282,34 @@
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTestsNegative.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AddPredicate.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AddSale.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AddSaleCondition.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" />
+      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -650,7 +668,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622564770642</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="save">
+      <created>1622882677046</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1622882677046</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -729,12 +754,6 @@
           <line>116</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\Authentication\Authentication.cs" initialLine="116" containingFunctionPresentation="method 'insertUserInfo'" />
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ServiceLayer/SystemController.cs</url>
-          <line>76</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\ServiceLayer\SystemController.cs" initialLine="73" containingFunctionPresentation="method 'Init'" />
-          <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
@@ -862,6 +881,32 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs</url>
+          <line>170</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\GuestBuyerState.cs" initialLine="170" containingFunctionPresentation="method 'continueAsGuest'">
+            <startOffsets>
+              <option value="7270" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7301" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs</url>
+          <line>171</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\GuestBuyerState.cs" initialLine="171" containingFunctionPresentation="method 'continueAsGuest'">
+            <startOffsets>
+              <option value="7314" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7364" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="128" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

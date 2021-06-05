@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 
@@ -9,18 +10,32 @@
 <body>
 @model WebApplication.Models.PurchaseTypesModel
 <div class="purchasepredicatediv">
-    @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+    @try
     {
-        string[] types = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("storepurchasetypes");
-        @Html.DropDownListFor(model => model.purchaseType, new SelectList(types.OfType<string>().ToList()), new {@class = "custom-select"});
+        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+        {
+            string[] types = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("storepurchasetypes");
+            @Html.DropDownListFor(model => model.purchaseType, new SelectList(types.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
 
-        <button class="btn btn-outline-primary" formaction="TryRemovePurchaseType" type="submit">Remove Purchase Type</button>
-        
-        string[] types2 = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
-        @Html.DropDownListFor(model => model.purchaseType2, new SelectList(types2.OfType<string>().ToList()), new {@class = "custom-select"});
+            <button class="btn btn-outline-primary" formaction="TryRemovePurchaseType" type="submit">Remove Purchase Type</button>
 
-        <button class="btn btn-outline-primary" formaction="TryAddPurchaseType" type="submit">Add Purchase Type</button>
+            string[] types2 = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
+            @Html.DropDownListFor(model => model.purchaseType2, new SelectList(types2.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+
+            <button class="btn btn-outline-primary" formaction="TryAddPurchaseType" type="submit">Add Purchase Type</button>
+        }
     }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 </body>
 </html>

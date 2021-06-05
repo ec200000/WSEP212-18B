@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Http
 @using WSEP212.DomainLayer
 @using Microsoft.AspNetCore.Components.Web.Virtualization
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 
@@ -11,8 +12,10 @@
 <body>
 <div class="itemactionsadddiv">
     @model WebApplication.Models.ItemModel
-    @using (Html.BeginForm("TryAddItem", "Home", FormMethod.Post))
+    @try
     {
+        @using (Html.BeginForm("TryAddItem", "Home", FormMethod.Post))
+        {
         
             @Html.EditorFor(model => model.quantity,new { htmlAttributes = new  {@class="inputclassitemactions" , @placeholder = "Quantity"}})
             @Html.ValidationMessageFor(model => model.quantity)
@@ -33,45 +36,81 @@
             @Html.ValidationMessageFor(model => model.price)
             
               
-                ItemCategory[] arr = new[]
-                {
-                    ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
-                    ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
-                    ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks, ItemCategory.Pastries,
-                    ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
-                };
-                string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
-                @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
-                ;
-                @Html.ValidationMessageFor(model => model.category)
+            ItemCategory[] arr = new[]
+            {
+                ItemCategory.AllCategories, ItemCategory.Dairy, ItemCategory.Meat, ItemCategory.Clothing,
+                ItemCategory.Footwear, ItemCategory.Cleaners, ItemCategory.Vegetables, ItemCategory.Electronics, ItemCategory.Health,
+                ItemCategory.Sport, ItemCategory.Dinnerware, ItemCategory.Fruits, ItemCategory.Snacks, ItemCategory.Pastries,
+                ItemCategory.Drinks, ItemCategory.Tools, ItemCategory.Other
+            };
+            string[] itemCategory = Array.ConvertAll(arr, value => value.ToString());
+            @Html.DropDownListFor(model => model.category, new SelectList(itemCategory.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            @Html.ValidationMessageFor(model => model.category)
            
        
         
-        <button class="btn btn-outline-primary" type="submit" type="submit">Add Item To Store</button>
+            <button class="btn btn-outline-primary" type="submit" type="submit">Add Item To Store</button>
+        }
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+            msg += inner.Message;
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="itemactionsremovediv">
-    @using (Html.BeginForm("TryRemoveItem", "Home", FormMethod.Post))
+    @try
     {
-        <label for="storesList">Items List</label>
-        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID"); 
-        int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str); 
-        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()), new {@class = "custom-select"});
+        @using (Html.BeginForm("TryRemoveItem", "Home", FormMethod.Post))
+        {
+            <label for="storesList">Items List</label>
+            string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str);
+            @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()), new {@class = "custom-select"})
+            ;
 
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" type="submit">Remove Item From Store</button>
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" type="submit">Remove Item From Store</button>
+        } 
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+            msg += inner.Message;
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="itemactionseditdiv">
-    @using (Html.BeginForm("EditItemDetails", "Home", FormMethod.Post))
+    @try
     {
-        <label for="storesList">Items List</label>
-        string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID"); 
-        int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str); 
-        @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()), new {@class = "custom-select"});
+        @using (Html.BeginForm("EditItemDetails", "Home", FormMethod.Post))
+        {
+            <label for="storesList">Items List</label>
+            string str = "items" + HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            int[] ItemsList = HttpContextAccessor.HttpContext.Session.GetObject<int[]>(str);
+            @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsList.OfType<int>().ToList()), new {@class = "custom-select"})
+            ;
 
 
-        <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" type="submit">Edit Item's Details</button>
+            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit" type="submit">Edit Item's Details</button>
+        } 
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+            msg += inner.Message;
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+
 </div>
 </body>
 </html>

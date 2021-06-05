@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Collections.Concurrent;
 @using System;
+@using WSEP212.DomainLayer.SystemLoggers
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Purchase History";
@@ -10,16 +11,29 @@
 <html>
 <body>
     @model WebApplication.Models.PurchaseModel
-    <div class="purchasehistorydiv">
+<div class="purchasehistorydiv">
+    @try
+    {
         @using (Html.BeginForm("TryShowPurchaseHistory", "Home", FormMethod.Post))
         {
             <label for="storesList">Purchase history</label>
             string purchases = HttpContextAccessor.HttpContext.Session.GetString("_History");
             string[] singleItems = purchases.Split(";");
-            @Html.DropDownListFor(model => model.itemInfo, new SelectList(singleItems.OfType<string>().ToList()), new {@class = "custom-select"});
+            @Html.DropDownListFor(model => model.itemInfo, new SelectList(singleItems.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
             <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Add Review</button>
         }
-    </div>
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+             msg += inner.Message;
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
 </body>
 </html>
 
