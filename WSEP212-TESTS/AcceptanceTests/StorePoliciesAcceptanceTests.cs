@@ -9,6 +9,7 @@ using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
 using System.Linq.Expressions;
+using WebApplication;
 using WSEP212.DataAccessLayer;
 
 namespace WSEP212_TESTS.AcceptanceTests
@@ -25,6 +26,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
 
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -37,7 +39,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
-
+            SystemDBAccess.Instance.SaveChanges();
+            
             controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();

@@ -5,33 +5,7 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WSEP212.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/WSEP212.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" afterDir="false" />
-    </list>
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="fixed some tests" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -226,6 +200,7 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditSalePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/PurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
@@ -241,6 +216,7 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/ISystemController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/PurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/HandlePurchases.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212-TESTS/AcceptanceTests/AuthenticationActionsTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Store.cs" root0="SKIP_HIGHLIGHTING" />
@@ -258,18 +234,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Item.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/StorePoliciesManagementTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/SubmitOfferPurchaseTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTestsNegative.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
       <option value="$PROJECT_DIR$/DataAccessLayer/DBInterface.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/DomainMocks/SystemDBMock.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ItemTests.cs" />
@@ -309,6 +273,18 @@
       <option value="$PROJECT_DIR$/WSEP212.csproj" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/AuthenticationActionsTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/ShoppingCartTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreAcceptanceTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StorePoliciesAcceptanceTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SubmitOfferPurchaseTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -322,7 +298,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite&#10;azure" />
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35074627" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35107118" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -698,7 +674,21 @@
       <option name="presentableId" value="LOCAL‎00043" />
       <updated>1622898314278</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="save">
+      <created>1622910281732</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1622910281732</updated>
+    </task>
+    <task id="LOCAL-00045" summary="fixed some tests">
+      <created>1622915068275</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1622915068275</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -736,7 +726,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="abcdefg" />
     <MESSAGE value="added purchase types edit" />
     <MESSAGE value="half working code :)" />
     <MESSAGE value="meanwhile" />
@@ -756,12 +745,13 @@
     <MESSAGE value="remove unused" />
     <MESSAGE value="fix remove of store" />
     <MESSAGE value="fix tests" />
-    <MESSAGE value="save" />
     <MESSAGE value="added configuration file, fixed system manager" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main' into bug_fixes_itay&#10;&#10;# Conflicts:&#10;#&#9;WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache&#10;#&#9;WSEP212-TESTS/obj/project.nuget.cache&#10;#&#9;WSEP212/.idea/.idea.WSEP212/.idea/workspace.xml&#10;#&#9;WSEP212/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache&#10;#&#9;WSEP212/obj/project.nuget.cache&#10;#&#9;WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache&#10;#&#9;WebApplication/obj/project.nuget.cache" />
     <MESSAGE value="fixed bugs" />
     <MESSAGE value="very good" />
-    <option name="LAST_COMMIT_MESSAGE" value="very good" />
+    <MESSAGE value="save" />
+    <MESSAGE value="fixed some tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -785,12 +775,6 @@
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/UserState.cs</url>
-          <line>48</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\UserState.cs" initialLine="48" containingFunctionPresentation="method 'addItemToShoppingCart'" />
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
           <line>1182</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="663" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
@@ -810,49 +794,49 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs</url>
-          <line>130</line>
+          <line>133</line>
           <properties documentPath="C:\Users\שגיב משיח\RiderProjects\WSEP212-18B\WSEP212-TESTS\AcceptanceTests\StoreManagementTests.cs" initialLine="130" containingFunctionPresentation="method 'appointStoreManagerNoPermissionTest'" />
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>104</line>
+          <line>106</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="81" containingFunctionPresentation="method 'itemReviewSuccessful'" />
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>105</line>
+          <line>107</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="82" containingFunctionPresentation="method 'itemReviewSuccessful'" />
           <option name="timeStamp" value="121" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>74</line>
+          <line>76</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="51" containingFunctionPresentation="method 'createUserWithStore'" />
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
-          <line>285</line>
+          <line>280</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="285" containingFunctionPresentation="method 'openStore'" />
           <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
-          <line>230</line>
+          <line>225</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="230" containingFunctionPresentation="method 'itemReview'" />
           <option name="timeStamp" value="124" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>154</line>
+          <line>156</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="131" containingFunctionPresentation="method 'removeManagerSuccessful'" />
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>72</line>
+          <line>74</line>
           <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="50" containingFunctionPresentation="method 'createUserWithStore'" />
           <option name="timeStamp" value="126" />
         </line-breakpoint>
@@ -861,6 +845,84 @@
           <line>44</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\UserConnectionManager.cs" initialLine="44" containingFunctionPresentation="constructor 'UserConnectionManager'" />
           <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
+          <line>98</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="87" containingFunctionPresentation="method 'addStoreTest'">
+            <startOffsets>
+              <option value="4444" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4486" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
+          <line>114</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="101" containingFunctionPresentation="method 'addItemToStorageTest'">
+            <startOffsets>
+              <option value="4991" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5031" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
+          <line>146</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="129" containingFunctionPresentation="method 'addCartTest'">
+            <startOffsets>
+              <option value="6067" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6107" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
+          <line>170</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="157" containingFunctionPresentation="method 'addSellerPermissionTest'">
+            <startOffsets>
+              <option value="6897" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6950" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs</url>
+          <line>109</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\MultiThreadedTests.cs" initialLine="109" containingFunctionPresentation="method 'registerTest'">
+            <startOffsets>
+              <option value="4698" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4727" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs</url>
+          <line>151</line>
+          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\MultiThreadedTests.cs" initialLine="151" containingFunctionPresentation="method 'loginTest'">
+            <startOffsets>
+              <option value="6003" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6118" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="154" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

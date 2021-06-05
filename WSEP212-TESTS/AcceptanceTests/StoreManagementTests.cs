@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
@@ -22,6 +23,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestInitialize]
         public void SetupAuth()
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -34,6 +36,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
         }
         
         public void testInit()

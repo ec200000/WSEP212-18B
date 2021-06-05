@@ -887,18 +887,20 @@ namespace WSEP212.DomainLayer
         public bool addSellerPermissions(SellerPermissions permissions)
         {
             var res = false;
-            var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
-            if (result != null)
+            lock (SystemDBAccess.savelock)
             {
-                lock (linkedListLock)
+                var result = SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName.Equals(this.userName));
+                if (result != null)
                 {
-                    this.sellerPermissions.AddFirst(permissions);
-                    result.SellerPermissionsJson = this.SellerPermissionsJson;
-                    result.sellerPermissions = this.sellerPermissions;
-                    lock(SystemDBAccess.savelock)
+                    lock (linkedListLock)
+                    {
+                        this.sellerPermissions.AddFirst(permissions);
+                        result.SellerPermissionsJson = this.SellerPermissionsJson;
+                        result.sellerPermissions = this.sellerPermissions;
                         SystemDBAccess.Instance.SaveChanges();
+                    }
+                    return true;
                 }
-                return true;
             }
             return false;
         }

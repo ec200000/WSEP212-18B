@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication;
 using WSEP212;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
@@ -13,9 +14,10 @@ namespace WSEP212_TESTS.AcceptanceTests
     {
         SystemController controller = SystemController.Instance;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -28,6 +30,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
         }
         
         public void testInit()
@@ -54,27 +57,20 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException), "user that is logged in, can perform this action again")]
         public void loginTest()
         {
             testInit();
             RegularResult result = controller.login("a", "123");
             Assert.IsTrue(result.getTag());
-            RegularResult result2 = controller.login("a", "123"); //already logged
-            //should  throw exception
-            Assert.IsFalse(true); //if it gets here - no exception was thrown
         }
         
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public void logoutTest()
         {
             testInit();
+            controller.login("b", "123456");
             RegularResult result = controller.logout("b");
             Assert.IsTrue(result.getTag());
-            RegularResult result2 = controller.logout("a"); //not logged in
-            //should throw exception
-            Assert.IsFalse(true); //if it gets here - no exception was thrown
         }
     }
 }
