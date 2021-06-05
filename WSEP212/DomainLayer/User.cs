@@ -894,6 +894,8 @@ namespace WSEP212.DomainLayer
                 {
                     lock (linkedListLock)
                     {
+                        if (sellerPermissions.Contains(permissions))
+                            return false;
                         this.sellerPermissions.AddFirst(permissions);
                         result.SellerPermissionsJson = this.SellerPermissionsJson;
                         result.sellerPermissions = this.sellerPermissions;

@@ -21,8 +21,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         int itemID;
         int storeID;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
             Startup.readConfigurationFile();
             SystemDBAccess.mock = true;

@@ -124,18 +124,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult res = controller.appointStoreManager("b", "no such user", storeID);
             Assert.IsFalse(res.getTag());
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void appointStoreManagerNoPermissionTest()
-        {
-            testInit();
-
-            controller.appointStoreManager("moon", "r", storeID); //cant perform this action
-            Assert.IsFalse(true);
-        }
-
-
+        
         [TestMethod]
         public void appointStoreOwnerTest()
         {
@@ -164,16 +153,6 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             RegularResult res = controller.appointStoreOwner("b", "no such user", storeID);
             Assert.IsFalse(res.getTag());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void appointStoreOwnerNoPermissionTest()
-        {
-            testInit();
-
-            controller.appointStoreOwner("moon", "w", storeID); //cant perform this action
-            Assert.IsFalse(true);
         }
 
         [TestMethod]
@@ -215,19 +194,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void editManagerPermissionsNoPermissionTest()
-        {
-            testInitStoreWithManager();
-            ConcurrentLinkedList<int> newPermissions = new ConcurrentLinkedList<int>();
-            newPermissions.TryAdd(3);
-            newPermissions.TryAdd(5);
-
-            controller.editManagerPermissions("moon", "r", newPermissions, storeID); //no permission to do so
-            Assert.IsFalse(true);
-        }
-
-        [TestMethod]
         public void removeStoreManagerTest()
         {
             testInitStoreWithManager2();
@@ -254,17 +220,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             ResultWithValue<NotificationDTO> res = controller.removeStoreManager("b", "abcd", -1);
             Assert.IsFalse(res.getTag());
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void removeStoreManagerNoPermissionTest()
-        {
-            testInitStoreWithManager2();
-
-            controller.removeStoreManager("moon", "abcd", storeID); //no permission to do so
-            Assert.IsFalse(true);
-        }
-
+        
         [TestMethod]
         public void getOfficialsInformationTest()
         {
@@ -273,16 +229,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             var res = controller.getOfficialsInformation("b", storeID);
             Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void getOfficialsInformationNoPermissionTest()
-        {
-            testInitStoreWithManager3();
-
-            controller.getOfficialsInformation("moon", storeID); //guest user - no permissions to do so
-            Assert.IsFalse(true);
         }
     }
 }

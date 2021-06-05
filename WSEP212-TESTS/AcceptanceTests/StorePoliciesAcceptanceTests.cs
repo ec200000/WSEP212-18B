@@ -40,7 +40,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
             SystemDBAccess.Instance.SaveChanges();
-            
+
             controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();

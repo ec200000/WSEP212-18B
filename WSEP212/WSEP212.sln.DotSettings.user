@@ -16,8 +16,12 @@
       &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.StoreTests&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.UserRepositoryTest&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ConfigurationTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.ShoppingCartTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StoreManagementTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StoreAcceptanceTests&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;ProjectFolder&gt;F6569108-5FF8-4E1D-A6C8-622D90AA879B/d:IntegrationTests&lt;/ProjectFolder&gt;&#xD;
+    &lt;ProjectFile&gt;F6569108-5FF8-4E1D-A6C8-622D90AA879B/d:AcceptanceTests/f:StorePoliciesAcceptanceTests.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/SpawnedProcessesKnownList/=sqlservr_002Eexe/@EntryIndexedValue">KillOrphaned</s:String>
