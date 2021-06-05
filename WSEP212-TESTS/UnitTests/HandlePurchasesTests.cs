@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
@@ -7,6 +8,7 @@ using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ExternalDeliverySystem;
 using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.PurchasePolicy;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
@@ -27,6 +29,7 @@ namespace WSEP212_TESTS.UnitTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -144,12 +147,14 @@ namespace WSEP212_TESTS.UnitTests
         public void TestPurchaseWithFailingDeliveryMock()
         {
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
-            StoreRepository.Instance.stores[storeID1].deliverySystem = BadDeliverySystemMock.Instance;
+            DeliveryInterface.mock = true;
+            //StoreRepository.Instance.stores[storeID1].deliverySystem = BadDeliverySystemMock.Instance;
             ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 0);
+            DeliveryInterface.mock = false;
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].storage[itemID1].quantity, 10);
         }
 
@@ -158,13 +163,15 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
-            StoreRepository.Instance.stores[storeID1].purchasePolicy = new BadPurchasePolicyMock();
+            StoreRepository.Instance.getStore(storeID1).getValue().purchasePolicy = new BadPurchasePolicyMock();
+            PurchasePolicyInterface.mock = true;
             ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Console.WriteLine(res.getMessage());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 0);
+            PurchasePolicyInterface.mock = false;
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].storage[itemID1].quantity, 10);
         }
 
@@ -186,6 +193,5 @@ namespace WSEP212_TESTS.UnitTests
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].storage[itemID1].quantity, 8);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID2].storage[itemID2].quantity, 8);
         }
-
     }
 }

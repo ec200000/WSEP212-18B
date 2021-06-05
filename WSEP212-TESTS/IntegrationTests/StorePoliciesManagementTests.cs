@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
+using WebApplication;
 using WSEP212;
 using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer.Result;
@@ -29,6 +30,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users.ToList());
@@ -44,7 +46,9 @@ namespace WSEP212_TESTS.IntegrationTests
             SystemDBAccess.Instance.SaveChanges();
 
             user = new User("Sagiv", 21);
-            store = new Store("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Adidas", "Rabinovich 35, Holon", new SalePolicy("DEFAULT"), new PurchasePolicy("DEFAULT"), user);
+            store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             store.deliverySystem = DeliverySystemMock.Instance;
 
