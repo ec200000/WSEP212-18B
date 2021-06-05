@@ -5,38 +5,26 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" afterDir="false" />
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="added try catch in external systems">
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AddPredicate.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AddPredicate.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSale.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSale.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSaleCondition.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AddSaleCondition.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/WebApplication.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/WebApplication.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +76,7 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AppointOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ItemReview.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ISystemControllerFacade.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F758DD2F-9E4C-41A0-B7A1-63138D66F75D/A/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
@@ -132,6 +121,7 @@
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StorePurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/StoreRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/HandlePurchases.cs" root0="SKIP_HIGHLIGHTING" />
@@ -214,6 +204,7 @@
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/AddPredicate.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/SystemController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AddPredicate.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ISystemControllerFacade.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/02/ffef2a5f/CreateDatabaseIfNotExists`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -259,9 +250,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreRepositoryTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SystemManagerState.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/GuestBuyerState.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/UserRepositoryTests.cs" />
@@ -310,6 +298,9 @@
       <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -675,7 +666,21 @@
       <option name="project" value="LOCAL" />
       <updated>1622882677046</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="fixed: stability issues, removed guest from db and added transactions">
+      <created>1622890805994</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1622890805994</updated>
+    </task>
+    <task id="LOCAL-00041" summary="added try catch in external systems">
+      <created>1622892381695</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1622892381695</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -713,8 +718,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="added shopping cart DB" />
-    <MESSAGE value="DB without repos" />
     <MESSAGE value="changes revert" />
     <MESSAGE value="final" />
     <MESSAGE value="abcdefg" />
@@ -738,7 +741,9 @@
     <MESSAGE value="fix remove of store" />
     <MESSAGE value="fix tests" />
     <MESSAGE value="save" />
-    <option name="LAST_COMMIT_MESSAGE" value="save" />
+    <MESSAGE value="fixed: stability issues, removed guest from db and added transactions" />
+    <MESSAGE value="added try catch in external systems" />
+    <option name="LAST_COMMIT_MESSAGE" value="added try catch in external systems" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -757,7 +762,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>657</line>
+          <line>672</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="657" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="38" />
         </line-breakpoint>
@@ -769,7 +774,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>663</line>
+          <line>678</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="663" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="41" />
         </line-breakpoint>

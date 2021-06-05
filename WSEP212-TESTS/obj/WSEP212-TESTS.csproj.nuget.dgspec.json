@@ -68,6 +68,10 @@
               "target": "Package",
               "version": "[1.1.0, )"
             },
+            "PostSharp": {
+              "target": "Package",
+              "version": "[4.3.23, )"
+            },
             "Serialize.Linq": {
               "target": "Package",
               "version": "[2.0.0, )"
@@ -307,9 +311,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
