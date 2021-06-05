@@ -6,7 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/configuration.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/configuration.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="db_tests" />
+        <entry key="$PROJECT_DIR$/.." value="bug_fixes_itay" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -84,7 +84,6 @@
       <option value="$PROJECT_DIR$/DomainLayer/DomainMocks/SystemDBMock.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ItemTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/PolicyPredicateTests.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
       <option value="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Program.cs" />
@@ -119,6 +118,7 @@
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" />
       <option value="$PROJECT_DIR$/WSEP212.csproj" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -240,7 +240,7 @@
       <workItem from="1622476891645" duration="1305000" />
       <workItem from="1622485290854" duration="607000" />
       <workItem from="1622544047198" duration="9488000" />
-      <workItem from="1622893075563" duration="2012000" />
+      <workItem from="1622893075563" duration="2380000" />
     </task>
     <task id="LOCAL-00001" summary="save">
       <created>1619199403309</created>
@@ -502,7 +502,13 @@
       <option name="presentableId" value="LOCAL‎00042" />
       <updated>1622894042266</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL‎00043" summary="very good">
+      <created>1622898314278</created>
+      <option name="number" value="LOCAL‎00043" />
+      <option name="presentableId" value="LOCAL‎00043" />
+      <updated>1622898314278</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -540,7 +546,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="final" />
     <MESSAGE value="abcdefg" />
     <MESSAGE value="added purchase types edit" />
     <MESSAGE value="half working code :)" />
@@ -565,7 +570,8 @@
     <MESSAGE value="added configuration file, fixed system manager" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main' into bug_fixes_itay&#10;&#10;# Conflicts:&#10;#&#9;WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache&#10;#&#9;WSEP212-TESTS/obj/project.nuget.cache&#10;#&#9;WSEP212/.idea/.idea.WSEP212/.idea/workspace.xml&#10;#&#9;WSEP212/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache&#10;#&#9;WSEP212/obj/project.nuget.cache&#10;#&#9;WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache&#10;#&#9;WebApplication/obj/project.nuget.cache" />
     <MESSAGE value="fixed bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed bugs" />
+    <MESSAGE value="very good" />
+    <option name="LAST_COMMIT_MESSAGE" value="very good" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -584,7 +590,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>656</line>
+          <line>1173</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="657" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="38" />
         </line-breakpoint>
@@ -596,7 +602,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>662</line>
+          <line>1182</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="663" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="41" />
         </line-breakpoint>
