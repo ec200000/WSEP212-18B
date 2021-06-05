@@ -1,22 +1,47 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using WSEP212.ConcurrentLinkedList;
+using Newtonsoft.Json;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212.DomainLayer.AuthenticationSystem
 {
     public class Authentication
     {
-        private ConcurrentDictionary<String,String> usersInfo { get; set; }
+        [NotMapped]
+        public ConcurrentDictionary<String,String> usersInfo { get; set; }
+
+        [Key] 
+        public string k { get; set; }
+        public string UserInfoJson
+        {
+            get => JsonConvert.SerializeObject(usersInfo);
+            set => usersInfo = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(value);
+        }
         private static readonly Lazy<Authentication> lazy
-            = new Lazy<Authentication>(() => new Authentication());
+            = new Lazy<Authentication>(() => new Authentication("1"));
 
         public static Authentication Instance
             => lazy.Value;
 
-        private Authentication() { usersInfo = new ConcurrentDictionary<string, string>();}
+        public Authentication()
+        {
+        }
+
+        private Authentication(string c)
+        {
+            k = "1";
+            usersInfo = new ConcurrentDictionary<string, string>();
+            //if(SystemDBAccess.Instance.UsersInfo != null && SystemDBAccess.Instance.UsersInfo.Find(1)!=null)
+            //      usersInfo = new ConcurrentDictionary<string, string>(SystemDBAccess.Instance.UsersInfo.Find(1).usersInfo);
+            var auth = SystemDBAccess.Instance.UsersInfo.Find("1");
+            if(auth != null)
+                usersInfo = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(auth.UserInfoJson);
+        }
 
         public string encryptPassword(string password)
         {
@@ -92,24 +117,23 @@ namespace WSEP212.DomainLayer.AuthenticationSystem
                 | ((uint)(buffer[offset + 3]));
         }
 
-        /*public string encryptpassword(string password)
-        {
-            byte[] data = system.text.encoding.ascii.getbytes(password);
-            data = new system.security.cryptography.sha256managed().computehash(data);
-            string hash = system.text.encoding.ascii.getstring(data);
-            return hash;
-        }
-
-        public bool validatePassword(String passwordToValidate, String userPassword) //the user password is already encrypted
-        {
-            string passwordToValidateHash = encryptPassword(passwordToValidate);
-
-            return passwordToValidateHash.Equals(userPassword);
-        }*/
-
         public void insertUserInfo(string userName, string password)
         {
-            usersInfo.TryAdd(userName, encryptPassword(password));
+            //var result = SystemDBAccess.Instance.UsersInfo.SingleOrDefault(a => a.usersInfo == this.usersInfo);
+            var result = SystemDBAccess.Instance.UsersInfo.Find("1");
+            if (result != null)
+            {
+                usersInfo.TryAdd(userName, encryptPassword(password));
+                result.UserInfoJson = this.UserInfoJson;
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
+            }
+            else //first time - no passwords are saved
+            {
+                usersInfo.TryAdd(userName, encryptPassword(password));
+                this.UserInfoJson = JsonConvert.SerializeObject(usersInfo);
+                SystemDBAccess.Instance.UsersInfo.Add(this);
+            }
         }
 
         public bool removeUserInfo(string userName)

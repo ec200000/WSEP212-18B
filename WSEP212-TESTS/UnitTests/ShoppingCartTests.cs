@@ -1,52 +1,74 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
-    public class ShoppingCartTests
+    public class 
+    ShoppingCartTests
     {
-        private Store storeA;
-        private Store storeB;
-        private int itemAID;
-        private int itemBID;
-        private ShoppingCart shoppingCart;
+        private static Store storeA;
+        private static Store storeB;
+        private static int itemAID;
+        private static int itemBID;
+        private static ShoppingCart shoppingCart;
+        private static ItemPurchaseType purchaseType;
 
-        [TestInitialize]
-        public void beforeTests()
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
             SalePolicyMock salesPolicy = new SalePolicyMock();
             PurchasePolicyMock purchasePolicy = new PurchasePolicyMock();
-            User user = new User("admin");
+            
+            UserRepository.Instance.initRepo();
+            User user = new User("admin", 80);
+            UserRepository.Instance.insertNewUser(user, "123456");
 
-            ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", salesPolicy, purchasePolicy, user);
-            ResultWithValue<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Holon", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreARes = StoreRepository.Instance.addStore("SUPER PHARAM", "Tel-Aviv", salesPolicy, purchasePolicy, user);
+            ResultWithValue<int> addStoreBRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Haifa", salesPolicy, purchasePolicy, user);
             storeA = StoreRepository.Instance.getStore(addStoreARes.getValue()).getValue();
             storeB = StoreRepository.Instance.getStore(addStoreBRes.getValue()).getValue();
 
-            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
-            itemBID = storeB.addItemToStorage(50, "black masks", "protects against infection of covid-19", 10, "health").getValue();
+            itemAID = storeA.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
+            itemBID = storeB.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
+            purchaseType = new ItemImmediatePurchase(10);
 
-            shoppingCart = new ShoppingCart();
+            User buyer = new User("Sagiv", 21);
+            UserRepository.Instance.insertNewUser(buyer, "123456");
+            shoppingCart = new ShoppingCart(buyer.userName);
         }
 
         [TestCleanup]
         public void afterTests()
         {
-            StoreRepository.Instance.removeStore(storeA.storeID);
-            StoreRepository.Instance.removeStore(storeB.storeID);
+            shoppingCart.clearShoppingCart();
         }
 
         [TestMethod]
-        public void ShoppingCartTest()
+        public void shoppingCartTest()
         {
             Assert.IsTrue(shoppingCart.isEmpty());
         }
@@ -55,7 +77,7 @@ namespace WSEP212_TESTS.UnitTests
         public void isEmptyTest()
         {
             Assert.IsTrue(shoppingCart.isEmpty());
-            shoppingCart.addItemToShoppingBag(storeA.storeID, itemAID, 5);
+            shoppingCart.addItemToShoppingBag(storeA.storeID, itemAID, 5, purchaseType);
             Assert.IsFalse(shoppingCart.isEmpty());
 
             shoppingCart.clearShoppingCart();
@@ -67,12 +89,12 @@ namespace WSEP212_TESTS.UnitTests
             int storeAID = storeA.storeID;
             int storeBID = storeB.storeID;
 
-            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10).getTag());
+            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10, purchaseType).getTag());
             Assert.IsTrue(shoppingCart.shoppingBags.ContainsKey(storeAID));
             Assert.IsTrue(shoppingCart.shoppingBags[storeAID].items.ContainsKey(itemAID));
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeAID].items[itemAID]);
 
-            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20).getTag());
+            Assert.IsTrue(shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20, purchaseType).getTag());
             Assert.AreEqual(2, shoppingCart.shoppingBags.Count);
             Assert.IsTrue(shoppingCart.shoppingBags.ContainsKey(storeBID));
             Assert.IsTrue(shoppingCart.shoppingBags[storeBID].items.ContainsKey(itemBID));
@@ -84,7 +106,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(-1, itemAID, 5).getTag());   // should fail because there is no such store ID
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(-1, itemAID, 5, purchaseType).getTag());   // should fail because there is no such store ID
             Assert.IsTrue(shoppingCart.isEmpty());
         }
 
@@ -93,7 +115,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemBID, 5).getTag());   // should fail because there is no such item ID in the store
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemBID, 5, purchaseType).getTag());   // should fail because there is no such item ID in the store
             Assert.IsTrue(shoppingCart.isEmpty());
         }
 
@@ -102,10 +124,10 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 600).getTag());   // should fail because there is no enough of the item in storage
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, 600, purchaseType).getTag());   // should fail because there is no enough of the item in storage
             Assert.IsTrue(shoppingCart.isEmpty());
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, -1).getTag());   // should fail because it is not possible to add a item with negative quantity
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, -1, purchaseType).getTag());   // should fail because it is not possible to add a item with negative quantity
             Assert.IsTrue(shoppingCart.isEmpty());
         }
 
@@ -114,7 +136,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
 
-            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, -1).getTag());   // should fail because it is not possible to add a item with negative quantity
+            Assert.IsFalse(shoppingCart.addItemToShoppingBag(storeAID, itemAID, -1, purchaseType).getTag());   // should fail because it is not possible to add a item with negative quantity
             Assert.IsTrue(shoppingCart.isEmpty());
         }
 
@@ -123,8 +145,8 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
             int storeBID = storeB.storeID;
-            shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10);
-            shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20);
+            shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10, purchaseType);
+            shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20, purchaseType);
 
             Assert.IsTrue(shoppingCart.removeItemFromShoppingBag(storeAID, itemAID).getTag());
             Assert.AreEqual(1, shoppingCart.shoppingBags.Count);
@@ -140,8 +162,8 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
             int storeBID = storeB.storeID;
-            shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10);
-            shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20);
+            shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10, purchaseType);
+            shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20, purchaseType);
 
             Assert.IsFalse(shoppingCart.removeItemFromShoppingBag(-1, itemAID).getTag());   // should fail because there is no such store ID
             Assert.IsFalse(shoppingCart.shoppingBags[storeAID].isEmpty());
@@ -153,8 +175,8 @@ namespace WSEP212_TESTS.UnitTests
         {
             int storeAID = storeA.storeID;
             int storeBID = storeB.storeID;
-            shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10);
-            shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20);
+            shoppingCart.addItemToShoppingBag(storeAID, itemAID, 10, purchaseType);
+            shoppingCart.addItemToShoppingBag(storeBID, itemBID, 20, purchaseType);
 
             Assert.IsFalse(shoppingCart.removeItemFromShoppingBag(storeAID, itemBID).getTag());   // should fail because there is no such item ID in the store
             Assert.IsFalse(shoppingCart.shoppingBags[storeAID].isEmpty());
@@ -165,7 +187,7 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemQuantityInShoppingBagTest()
         {
             int storeID = storeA.storeID, itemID = itemAID;
-            shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
+            shoppingCart.addItemToShoppingBag(storeID, itemID, 10, purchaseType);
 
             Assert.IsTrue(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 5).getTag()); 
             Assert.AreEqual(5, shoppingCart.shoppingBags[storeID].items[itemID]);
@@ -179,7 +201,7 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemQuantityInBagNoSuchStoreTest()
         {
             int storeID = storeA.storeID, itemID = itemAID;
-            shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
+            shoppingCart.addItemToShoppingBag(storeID, itemID, 10, purchaseType);
 
             Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(-1, itemID, 5).getTag());   // should fail because there is no such store ID
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
@@ -189,7 +211,7 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemQuantityInBagNoSuchItemTest()
         {
             int storeID = storeA.storeID, itemID = itemAID;
-            shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
+            shoppingCart.addItemToShoppingBag(storeID, itemID, 10, purchaseType);
 
             Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, -1, 5).getTag());    // should fail because there is no such item ID in the store
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
@@ -199,7 +221,7 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemQuantityInBagNotEnoughStorageTest()
         {
             int storeID = storeA.storeID, itemID = itemAID;
-            shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
+            shoppingCart.addItemToShoppingBag(storeID, itemID, 10, purchaseType);
 
             Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, 600).getTag());   // should fail because there is no enough of the item in storage
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
@@ -212,44 +234,36 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemNegQuantityInBagTest()
         {
             int storeID = storeA.storeID, itemID = itemAID;
-            shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
+            shoppingCart.addItemToShoppingBag(storeID, itemID, 10, purchaseType);
 
             Assert.IsFalse(shoppingCart.changeItemQuantityInShoppingBag(storeID, itemID, -1).getTag());   // should fail because -1 is not a valid quantity
             Assert.AreEqual(10, shoppingCart.shoppingBags[storeID].items[itemID]);
         }
 
         [TestMethod]
-        public void purchaseItemsInCartTest()
-        {
-            shoppingCart.addItemToShoppingBag(storeA.storeID, itemAID, 3);
-            shoppingCart.addItemToShoppingBag(storeB.storeID, itemBID, 5);
-            User user = new User("admin");
-            ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>> purchaseTypes = new ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseType>>();
-            ConcurrentDictionary<int, PurchaseType> purchaseTypeA = new ConcurrentDictionary<int, PurchaseType>();
-            purchaseTypeA.TryAdd(itemAID, PurchaseType.ImmediatePurchase);
-            ConcurrentDictionary<int, PurchaseType> purchaseTypeB = new ConcurrentDictionary<int, PurchaseType>();
-            purchaseTypeB.TryAdd(itemBID, PurchaseType.ImmediatePurchase);
-            purchaseTypes.TryAdd(storeA.storeID, purchaseTypeA);
-            purchaseTypes.TryAdd(storeB.storeID, purchaseTypeB);
-            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
-            StoreRepository.Instance.stores[storeA.storeID].deliverySystem = DeliverySystemMock.Instance;
-            StoreRepository.Instance.stores[storeB.storeID].deliverySystem = DeliverySystemMock.Instance;
-
-            ResultWithValue<ConcurrentDictionary<int, double>> result = shoppingCart.purchaseItemsInCart(user, purchaseTypes);
-            Assert.IsTrue(result.getTag());
-            Assert.AreEqual(10 * 3, result.getValue()[storeA.storeID]);
-            Assert.AreEqual(10 * 5, result.getValue()[storeB.storeID]);
-        }
-
-        [TestMethod]
         public void clearShoppingCartTest()
         {
             int storeID = storeA.storeID, itemID = itemAID;
-            shoppingCart.addItemToShoppingBag(storeID, itemID, 10);
+            RegularResult res = shoppingCart.addItemToShoppingBag(storeID, itemID, 10, purchaseType);
             Assert.IsFalse(shoppingCart.isEmpty());   // should not be empty - 1 shopping bag with 10 items
 
             shoppingCart.clearShoppingCart();
             Assert.IsTrue(shoppingCart.isEmpty());   // should be empty after clearing the shopping cart
+        }
+        
+        [TestMethod]
+        public void purchaseItemsInCartTest()
+        {
+            shoppingCart.addItemToShoppingBag(storeA.storeID, itemAID, 3, purchaseType);
+            shoppingCart.addItemToShoppingBag(storeB.storeID, itemBID, 5, purchaseType);
+            HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
+            StoreRepository.Instance.stores[storeA.storeID].deliverySystem = DeliverySystemMock.Instance;
+            StoreRepository.Instance.stores[storeB.storeID].deliverySystem = DeliverySystemMock.Instance;
+
+            ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> result = shoppingCart.purchaseItemsInCart();
+            Assert.IsTrue(result.getTag());
+            Assert.AreEqual(10 * 3, result.getValue()[storeA.storeID].getPurchaseTotalPrice());
+            Assert.AreEqual(10 * 5, result.getValue()[storeB.storeID].getPurchaseTotalPrice());
         }
     }
 }

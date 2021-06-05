@@ -22,7 +22,7 @@ namespace WSEP212.DomainLayer.SalePolicy
 
         public abstract ConditionalSale addSaleCondition(SimplePredicate condition, SalePredicateCompositionType compositionType);
         public abstract int getSalePercentageOnItem(Item item, PurchaseDetails purchaseDetails);
-        public abstract double applySaleOnItem(Item item, PurchaseDetails purchaseDetails);
+        public abstract double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails);
         public override String ToString()
         {
             return this.saleDescription;

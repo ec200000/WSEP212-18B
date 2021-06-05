@@ -1,36 +1,50 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using System.Data.Entity;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
     public class ShoppingBagTests
     {
-        private Store shoppingBagStore;
-        private int storeItemID;
-        private ShoppingBag shoppingBag;
+        private static Store shoppingBagStore;
+        private static User bagOwner;
+        private static int storeItemID;
+        private static ShoppingBag shoppingBag;
+        private static ItemPurchaseType purchaseType;
 
-        [TestInitialize]
-        public void beforeTests()
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
         {
-            ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
-            purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);
-            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicyMock(), new PurchasePolicyMock(), new User("admin"));
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+
+            UserRepository.Instance.initRepo();
+            User user = new User("admin", 80);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            bagOwner = new User("Sagiv", 21);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
-            storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, "health").getValue();
-            shoppingBag = new ShoppingBag(shoppingBagStore);
-        }
-
-        [TestCleanup]
-        public void afterTests()
-        {
-            StoreRepository.Instance.removeStore(shoppingBagStore.storeID);
+            storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
+            shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner.userName);
+            purchaseType = new ItemImmediatePurchase(10);
         }
 
         [TestMethod]
@@ -44,7 +58,7 @@ namespace WSEP212_TESTS.UnitTests
         public void isEmptyTest()
         {
             Assert.IsTrue(shoppingBag.isEmpty());
-            shoppingBag.addItem(storeItemID, 2);
+            shoppingBag.addItem(storeItemID, 2, purchaseType);
             Assert.IsFalse(shoppingBag.isEmpty());
 
             shoppingBag.clearShoppingBag();
@@ -55,17 +69,13 @@ namespace WSEP212_TESTS.UnitTests
         {
             int itemID = storeItemID;
 
-            Assert.IsTrue(shoppingBag.addItem(itemID, 5).getTag());
+            Assert.IsTrue(shoppingBag.addItem(itemID, 5, purchaseType).getTag());
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out int quantity));
             Assert.AreEqual(5, quantity);
 
-            Assert.IsTrue(shoppingBag.addItem(itemID, 15).getTag());
+            Assert.IsFalse(shoppingBag.addItem(itemID, 15, purchaseType).getTag());
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
-            Assert.AreEqual(20, quantity);
-
-            Assert.IsFalse(shoppingBag.addItem(itemID, 481).getTag());   // should fail because there is no enough of the item in storage
-            Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out quantity));
-            Assert.AreEqual(20, quantity);
+            Assert.AreEqual(5, quantity);
 
             shoppingBag.removeItem(itemID);
 
@@ -77,13 +87,13 @@ namespace WSEP212_TESTS.UnitTests
         {
             int itemID = storeItemID;
             
-            Assert.IsFalse(shoppingBag.addItem(-1, 5).getTag());   // should fail because there is no such item ID
+            Assert.IsFalse(shoppingBag.addItem(-1, 5, purchaseType).getTag());   // should fail because there is no such item ID
             Assert.IsFalse(shoppingBag.items.ContainsKey(-1));
 
-            Assert.IsFalse(shoppingBag.addItem(itemID, 0).getTag());   // should fail because it is not possible to add a item with quantity 0
+            Assert.IsFalse(shoppingBag.addItem(itemID, 0, purchaseType).getTag());   // should fail because it is not possible to add a item with quantity 0
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));
 
-            Assert.IsFalse(shoppingBag.addItem(itemID, -5).getTag());   // should fail because it is not possible to add a item with negative quantity
+            Assert.IsFalse(shoppingBag.addItem(itemID, -5, purchaseType).getTag());   // should fail because it is not possible to add a item with negative quantity
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));
         }
 
@@ -92,7 +102,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             int itemID = storeItemID;
 
-            shoppingBag.addItem(itemID, 5);
+            shoppingBag.addItem(itemID, 5, purchaseType);
             Assert.IsTrue(shoppingBag.removeItem(itemID).getTag());
             Assert.IsFalse(shoppingBag.items.ContainsKey(itemID));
         }
@@ -110,7 +120,7 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemQuantityTest()
         {
             int itemID = storeItemID;
-            shoppingBag.addItem(itemID, 5);
+            shoppingBag.addItem(itemID, 5, purchaseType);
 
             Assert.IsTrue(shoppingBag.changeItemQuantity(itemID, 10).getTag());
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out int quantity));
@@ -125,7 +135,7 @@ namespace WSEP212_TESTS.UnitTests
         public void changeItemQuantityTestFail()
         {
             int itemID = storeItemID;
-            shoppingBag.addItem(itemID, 3);
+            shoppingBag.addItem(itemID, 3, purchaseType);
             
             Assert.IsFalse(shoppingBag.changeItemQuantity(itemID, 1000).getTag());   // should fail because there is no enough of the item in storage
             Assert.IsTrue(shoppingBag.items.TryGetValue(itemID, out int quantity));
@@ -145,23 +155,20 @@ namespace WSEP212_TESTS.UnitTests
         public void purchaseItemsInBagTest()
         {
             int itemID = storeItemID;
-            shoppingBag.addItem(itemID, 5);
-            User user = new User("admin");
-            ConcurrentDictionary<int, PurchaseType> purchaseType = new ConcurrentDictionary<int, PurchaseType>();
-            purchaseType.TryAdd(itemID, PurchaseType.ImmediatePurchase);
+            shoppingBag.addItem(itemID, 5, purchaseType);
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[shoppingBagStore.storeID].deliverySystem = DeliverySystemMock.Instance;
 
-            ResultWithValue<double> result = shoppingBag.purchaseItemsInBag(user, purchaseType);
+            ResultWithValue<PurchaseInvoice> result = shoppingBag.purchaseItemsInBag();
             Assert.IsTrue(result.getTag());
-            Assert.AreEqual(10 * 5, result.getValue());
+            Assert.AreEqual(10 * 5, result.getValue().getPurchaseTotalPrice());
         }
 
         [TestMethod]
         public void clearShoppingBagTest()
         {
             int itemID = storeItemID;
-            shoppingBag.addItem(itemID, 5);
+            shoppingBag.addItem(itemID, 5, purchaseType);
             Assert.IsFalse(shoppingBag.isEmpty());   // should not be empty - 5 items
             shoppingBag.clearShoppingBag();
             Assert.IsTrue(shoppingBag.isEmpty());   // should be empty after clearing the shopping bag

@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
+using WSEP212.DataAccessLayer;
+using WSEP212.DomainLayer;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 
@@ -9,6 +12,23 @@ namespace WSEP212_TESTS.AcceptanceTests
     public class AuthenticationActionsTests
     {
         SystemController controller = SystemController.Instance;
+
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
+        {
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+        }
         
         public void testInit()
         {

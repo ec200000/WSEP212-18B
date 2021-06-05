@@ -33,10 +33,10 @@ namespace WSEP212.DomainLayer.SalePolicy
             return 0;
         }
 
-        public override double applySaleOnItem(Item item, PurchaseDetails purchaseDetails)
+        public override double applySaleOnItem(Item item, double purchaseItemPrice, PurchaseDetails purchaseDetails)
         {
             int salePercentage = getSalePercentageOnItem(item, purchaseDetails);
-            return item.price - ((item.price * salePercentage) / 100);
+            return purchaseItemPrice - ((purchaseItemPrice * salePercentage) / 100);
         }
     }
 }

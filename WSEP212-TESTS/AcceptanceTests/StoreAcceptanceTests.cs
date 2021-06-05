@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.AcceptanceTests
 {
@@ -20,6 +22,19 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+
             RegularResult result = controller.register("theuser123", 18, "123456");
             controller.login("theuser123", "123456");
             storeID = controller.openStore("theuser123", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
@@ -28,7 +43,7 @@ namespace WSEP212_TESTS.AcceptanceTests
 
         public void testInit()
         {
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("theuser123", storeID, item).getValue();
         }
 
@@ -37,10 +52,15 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2);//adding an item
+            DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("theuser123", "habanim", "Haifa", "Israel", "786598");
+            PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theuser123", "086", "207885623");
+
+            ResultWithValue<NotificationDTO> result = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);//adding an item
             Assert.IsTrue(result.getTag());
-            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("theuser123", "ashdod");
+            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("theuser123", deliveryParameters, paymentParameters);
             Assert.IsTrue(result2.getTag());
+
+            controller.removeItemFromShoppingCart("theuser123", storeID, itemID);
         }
 
         [TestMethod]
@@ -48,7 +68,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("a", "beer sheva"); //nothing in the cart
+            DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("a", "habanim", "Haifa", "Israel", "786598");
+            PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "a", "086", "207885623");
+
+            ResultWithValue<NotificationDTO> result2 = controller.purchaseItems("a", deliveryParameters, paymentParameters); //nothing in the cart
             Assert.IsFalse(result2.getTag());
         }
 
@@ -97,12 +120,17 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2);
+            DeliveryParametersDTO deliveryParameters = new DeliveryParametersDTO("theuser123", "habanim", "Haifa", "Israel", "786598");
+            PaymentParametersDTO paymentParameters = new PaymentParametersDTO("68957221011", "1", "2021", "theuser123", "086", "207885623");
+
+            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             Assert.IsTrue(res.getTag());
-            ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser123", "ashdod");
+            ResultWithValue<NotificationDTO> res2 = controller.purchaseItems("theuser123", deliveryParameters, paymentParameters);
             Assert.IsTrue(res2.getTag());
             ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
+
+            controller.removeItemFromShoppingCart("theuser123", storeID, itemID);
         }
 
         [TestMethod]
@@ -110,10 +138,12 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            RegularResult res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2);
+            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
             Assert.IsTrue(res.getTag());
             ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", null, itemID, storeID);
             Assert.IsFalse(result.getTag());
+
+            controller.removeItemFromShoppingCart("theuser123", storeID, itemID);
         }
 
         [TestMethod]
@@ -130,7 +160,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToStorageTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
@@ -146,7 +176,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void addItemToStorageByGuestTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             controller.addItemToStorage("moon", storeID, itemDto);//guest user - can't perform this action
             Assert.IsFalse(true);
@@ -193,7 +223,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void editItemDetailsTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             ResultWithValue<int> res = controller.addItemToStorage("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
@@ -209,7 +239,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void editItemDetailsByGuestTest()
         {
             ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemUserReviews>(), 1.34, "snacks");
+                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
 
             controller.editItemDetails("blue", storeID, itemDto); //guest user - can't perform this action
             Assert.IsFalse(true);

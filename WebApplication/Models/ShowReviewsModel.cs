@@ -7,7 +7,7 @@ namespace WebApplication.Models
     public class ShowReviewsModel
     {
         public int itemID { get; set; }
-        public ConcurrentDictionary<String, ItemUserReviews> reviews { get; set; }
+        public ConcurrentDictionary<String, ItemReview> reviews { get; set; }
         
         public string reviewsStrings { get; set; }
     }

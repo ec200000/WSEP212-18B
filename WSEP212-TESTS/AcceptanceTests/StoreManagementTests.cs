@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 using WSEP212.ServiceLayer;
 using WSEP212.ServiceLayer.ServiceObjectsDTO;
@@ -16,13 +19,31 @@ namespace WSEP212_TESTS.AcceptanceTests
         int itemID;
         int storeID;
 
+        [TestInitialize]
+        public void SetupAuth()
+        {
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+        }
+        
         public void testInit()
         {
             controller.register("b", 18, "123456");
             controller.register("r", 18, "123456");
             RegularResult result = controller.login("b", "123456");
-            storeID = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemUserReviews>(), 2.4, "diary");
+            ResultWithValue<int> res = controller.openStore("b", "store1", "somewhere", "DEFAULT", "DEFAULT");
+            storeID = res.getValue();
+            ItemDTO item = new ItemDTO(1, 10, "yammy", "wow", new ConcurrentDictionary<string, ItemReview>(), 2.4, (int)ItemCategory.Dairy);
             itemID = controller.addItemToStorage("b", storeID, item).getValue();
         }
         
@@ -118,6 +139,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInitRegStore();
 
             RegularResult res = controller.appointStoreOwner("b", "w", storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
             res = controller.appointStoreOwner("b", "w", storeID);
             Assert.IsFalse(res.getTag());
@@ -161,6 +183,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             newPermissions.TryAdd(3);
             newPermissions.TryAdd(5);
             RegularResult res = controller.editManagerPermissions("b", "abc", newPermissions, storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
         }
 
@@ -207,6 +230,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             testInitStoreWithManager2();
 
             ResultWithValue<NotificationDTO> res = controller.removeStoreManager("b", "abcd", storeID);
+            Console.WriteLine(res.getMessage());
             Assert.IsTrue(res.getTag());
         }
 
@@ -242,8 +266,10 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void getOfficialsInformationTest()
         {
             testInitStoreWithManager3();
-            
-            Assert.IsTrue(controller.getOfficialsInformation("b", storeID).getTag());
+
+            var res = controller.getOfficialsInformation("b", storeID);
+            Console.WriteLine(res.getMessage());
+            Assert.IsTrue(res.getTag());
         }
 
         [TestMethod]

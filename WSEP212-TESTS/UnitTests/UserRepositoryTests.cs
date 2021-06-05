@@ -1,27 +1,40 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Concurrent;
+using WSEP212;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
+using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212_TESTS.UnitTests
 {
     [TestClass]
     public class UserRepositoryTest
     {
-        private User user1;
-        private User user2;
-        [TestInitialize]
-        public void testInit()
+        private static User user1;
+        private static User user2;
+        
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
         {
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+            
+            UserRepository.Instance.initRepo();
             user1 = new User("a");
+            UserRepository.Instance.insertNewUser(user1, "123456");
             user2 = new User("b");
-            UserRepository.Instance.users.TryAdd(user1, false);
-            UserRepository.Instance.users.TryAdd(user2, true);
-        }
-
-        [TestCleanup]
-        public void testClean()
-        {
-            UserRepository.Instance.users.Clear();
+            UserRepository.Instance.insertNewUser(user2, "123456");
         }
 
         [TestMethod]
@@ -29,7 +42,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             User newUser = new User("iris");
             UserRepository.Instance.insertNewUser(newUser, "12345");
-            Assert.AreEqual(3, UserRepository.Instance.users.Count);
             UserRepository.Instance.users.TryGetValue(newUser, out var res);
             Assert.IsFalse(res);
         }
@@ -37,28 +49,33 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void changeUserLoginStatusTest()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, true, "123"); //register -> login
-            UserRepository.Instance.users.TryGetValue(user1, out var res3); 
-            Assert.IsTrue(res3);
+            UserRepository.Instance.changeUserLoginStatus(user1.userName, true, "123456"); //register -> login
+            User user = UserRepository.Instance.findUserByUserName(user1.userName).getValue();
+            Assert.IsTrue(UserRepository.Instance.users[user]);
+            
+            UserRepository.Instance.changeUserLoginStatus(user1.userName, false, "123456"); //login -> register
         }
 
         [TestMethod]
         public void changeUserLoginStatusTestFails()
         {
-            UserRepository.Instance.changeUserLoginStatus(user1, false, "123");
-            UserRepository.Instance.users.TryGetValue(user1, out var res1);
-            Assert.IsFalse(res1);
+            RegularResult res = UserRepository.Instance.changeUserLoginStatus(user1.userName, true, "123");
+            User u1 = UserRepository.Instance.findUserByUserName(user1.userName).getValue();
+            Console.WriteLine(res.getMessage());
+            Assert.IsFalse(UserRepository.Instance.users[u1]);
             
-            UserRepository.Instance.changeUserLoginStatus(user2, false, null); //login -> logout
-            UserRepository.Instance.users.TryGetValue(user2, out var res4); 
-            Assert.IsFalse(res4);
+            UserRepository.Instance.changeUserLoginStatus(user2.userName, false, null); //login -> logout
+            User u2 = UserRepository.Instance.findUserByUserName(user2.userName).getValue();
+            Assert.IsFalse(UserRepository.Instance.users[u2]);
         }
 
         [TestMethod]
         public void removeExistingUserTest()
         {
             UserRepository.Instance.removeUser(user1); //removing existing user
-            Assert.AreEqual(1, UserRepository.Instance.users.Count);
+            Assert.IsFalse(UserRepository.Instance.users.ContainsKey(user1));
+            
+            UserRepository.Instance.insertNewUser(user1, "123456");
         }
 
         [TestMethod]
@@ -66,36 +83,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             User u = new User("c");
             Assert.IsFalse(UserRepository.Instance.removeUser(u)); //removing user that do not exists
-        }
-
-        [TestMethod]
-        public void updateUserTest()
-        {
-            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, 1.2, DateTime.Now);
-            user1.purchases.Add(purchaseInfo); //updating the user
-            UserRepository.Instance.updateUser(user1);
-            Assert.AreEqual(2, UserRepository.Instance.users.Count);
-            bool found = false;
-            foreach (var u in UserRepository.Instance.users.Keys)
-            {
-                if (u.userName.Equals(user1.userName))
-                {
-                    Assert.AreEqual(1, u.purchases.Count);
-                    u.purchases.TryPeek(out var p);
-                    Assert.AreEqual(1.2, p.totalPrice);
-                    found = true;
-                }
-            }
-            if(!found)
-                Assert.IsTrue(false); //didn't find the user to update
-
-            User user3 = new User("c");
-            UserRepository.Instance.updateUser(user3);
-            Assert.AreEqual(2, UserRepository.Instance.users.Count); //shouldn't add the user3 because it's not in the DB
-            var keys = UserRepository.Instance.users.Keys;
-            var res = keys.Contains(user1) && keys.Contains(user2); //no other users were added
-            
-            Assert.IsTrue(res);
         }
 
         [TestMethod]
@@ -125,16 +112,18 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void getAllUsersPurchaseHistoryTest()
         {
-            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, 1.2, DateTime.Now);
-            User user3 = new User("c");
-            user3.purchases.Add(purchaseInfo);
+            ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
+            itemsPrices.TryAdd(10, 1.2);
+            PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, itemsPrices, DateTime.Now);
+            User user3 = new User("d");
+            user3.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo);
             UserRepository.Instance.users.TryAdd(user3, false);
             var res = UserRepository.Instance.getAllUsersPurchaseHistory();
             Assert.IsNotNull(res);
-            Assert.AreEqual(3, res.Count); //3 users
+            Assert.AreEqual(5, res.Count); // 5 users
             foreach (var p in res)
             {
-                Assert.AreEqual(p.Key.Equals("c") ? 1 : 0, p.Value.Count);
+                Assert.AreEqual(p.Key.Equals("d") ? 1 : 0, p.Value.Count);
             }
         }
     }

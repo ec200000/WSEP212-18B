@@ -1,10 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
-using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -12,24 +16,40 @@ namespace WSEP212_TESTS.UnitTests
     public class HandlePurchasesTests
     {
         private static User user;
-        private static User user3;
         private static int storeID1;
         private static int storeID2;
         private static int itemID1;
         private static int itemID2;
 
+        private static DeliveryParameters deliveryParameters;
+        private static PaymentParameters paymentParameters;
+
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
-            user = new User("check name");
-            user3 = new User("b"); //logged
-            user3.changeState(new LoggedBuyerState(user3));
-            UserRepository.Instance.users.TryAdd(user3, true);
-
+            SystemDBAccess.mock = true;
+            
+            SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
+            SystemDBAccess.Instance.Carts.RemoveRange(SystemDBAccess.Instance.Carts);
+            SystemDBAccess.Instance.Invoices.RemoveRange(SystemDBAccess.Instance.Invoices);
+            SystemDBAccess.Instance.Items.RemoveRange(SystemDBAccess.Instance.Items);
+            SystemDBAccess.Instance.Permissions.RemoveRange(SystemDBAccess.Instance.Permissions);
+            SystemDBAccess.Instance.Stores.RemoveRange(SystemDBAccess.Instance.Stores);
+            SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users);
+            SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
+            SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
+            SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
+            
+            UserRepository.Instance.initRepo();
+            user = new User("David");
             registerAndLogin();
             storeID1 = openStore("Store1", "Holon");
-            itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, "milk items");
+            itemID1 = addItemToStorage(storeID1, "shoko tara", 10, "taim!", 10.0, ItemCategory.Dairy);
             addItemToShoppingCart(storeID1, itemID1, 2);
+
+            deliveryParameters = new DeliveryParameters(user.userName, "habanim", "Haifa", "Israel", "786598");
+            paymentParameters = new PaymentParameters("68957221011", "1", "2021", user.userName, "086", "207885623");
         }
         
         [ClassCleanup]
@@ -43,6 +63,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             String password = "1234";
             RegularResult insertUserRes = UserRepository.Instance.insertNewUser(user, password);
+            Console.WriteLine(insertUserRes.getMessage());
             Assert.IsTrue(insertUserRes.getTag());
             user.changeState(new LoggedBuyerState(user));
         }
@@ -70,7 +91,7 @@ namespace WSEP212_TESTS.UnitTests
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
         
-        public static int addItemToStorage(int storeID, String itemName, int quantity, String description, double price, String category)
+        public static int addItemToStorage(int storeID, String itemName, int quantity, String description, double price, ItemCategory category)
         {
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[6];
@@ -89,19 +110,20 @@ namespace WSEP212_TESTS.UnitTests
         public static void addItemToShoppingCart(int storeID, int itemID, int quantity)
         {
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = storeID;
             list[1] = itemID;
             list[2] = quantity;
+            list[3] = new ItemImmediatePurchase(10.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
-            Assert.IsTrue(((RegularResult) parameters.result).getTag());
+            Assert.IsTrue(((ResultWithValue<ConcurrentLinkedList<string>>) parameters.result).getTag());
         }
 
         public static void initWithAnotherStore()
         {
             storeID2 = openStore("Store2", "Holon");
-            itemID2 = addItemToStorage(storeID2, "shoko tnova", 10, "taim!", 9.5, "milk items");
+            itemID2 = addItemToStorage(storeID2, "shoko tnova", 10, "taim!", 9.5, ItemCategory.Dairy);
             addItemToShoppingCart(storeID2, itemID2, 2);
         }
         
@@ -110,7 +132,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = BadPaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -123,7 +145,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = BadDeliverySystemMock.Instance;
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
@@ -137,8 +159,9 @@ namespace WSEP212_TESTS.UnitTests
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].purchasePolicy = new BadPurchasePolicyMock();
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
+            Console.WriteLine(res.getMessage());
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 0);
@@ -154,7 +177,7 @@ namespace WSEP212_TESTS.UnitTests
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID2].deliverySystem = DeliverySystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].purchasePolicy = new PurchasePolicyMock();
-            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, "habanim");
+            ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(user.purchases.Count, 2);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 0);

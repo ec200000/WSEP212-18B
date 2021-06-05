@@ -3,6 +3,8 @@ using WSEP212.DomainLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WSEP212;
+using WSEP212.DataAccessLayer;
 
 namespace WSEP212_TESTS.UnitTests
 {
@@ -15,32 +17,38 @@ namespace WSEP212_TESTS.UnitTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
-            potato = new Item(5, "potato", "vegetable", 1.5, "vegetables");
-            user = new User("Sagiv");
-            ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(potato, user);
-            userReviews.addReview("yummy");
-            potato.addUserReviews(userReviews);
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids);
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts);
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices);
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items);
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions);
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores);
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users);
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications);
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes);
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo);
+
+            potato = new Item(5, "potato", "vegetable", 1.5, ItemCategory.Vegetables);
+            UserRepository.Instance.initRepo();
+            user = new User("Dana", 21);
+            UserRepository.Instance.insertNewUser(user, "123456");
+        }
+        
+        [ClassCleanup]
+        public static void cleanUp()
+        {
+            User user = UserRepository.Instance.findUserByUserName("Dana").getValue();
+            UserRepository.Instance.removeUser(user);
         }
 
         [TestMethod]
         public void addReviewTest()
         {
-            ItemUserReviews userReviews = ItemUserReviews.getItemUserReviews(potato, user);
-            userReviews.addReview("the potato was very tasty!");
-            potato.addUserReviews(userReviews);
-            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
-            Assert.AreEqual("the potato was very tasty!", potato.reviews["Sagiv"].reviews.First.Value);
-            userReviews.addReview("5/5!!!");
-            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
-            Assert.AreEqual("5/5!!!", potato.reviews["Sagiv"].reviews.First.Value);
-        }
-
-        [TestMethod]
-        public void removeReviewTest()
-        {
-            Assert.IsTrue(potato.reviews.ContainsKey("Sagiv"));
-            potato.removeUserReviews(user.userName);
-            Assert.IsFalse(potato.reviews.ContainsKey("Sagiv"));
+            potato.addReview(user.userName, "the potato was very tasty!");
+            Assert.IsTrue(potato.reviews.ContainsKey("Dana"));
+            Assert.AreEqual("the potato was very tasty!", potato.reviews["Dana"].reviews.First.Value);
         }
 
         [TestMethod]

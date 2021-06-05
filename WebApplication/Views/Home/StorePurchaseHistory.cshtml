@@ -13,6 +13,8 @@
     <div class="storespurchasehistorydiv">
         @using (Html.BeginForm("TryShowPurchaseHistory", "Home", FormMethod.Post))
         {
+            string totalIncome = HttpContextAccessor.HttpContext.Session.GetString("store_income");
+            <h2>Total Income: @totalIncome</h2>
             string purchases = HttpContextAccessor.HttpContext.Session.GetString("store_history");
             <h6>@purchases</h6>
         }

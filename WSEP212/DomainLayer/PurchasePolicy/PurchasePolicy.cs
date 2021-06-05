@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
+using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer.PurchasePolicy
@@ -10,19 +15,64 @@ namespace WSEP212.DomainLayer.PurchasePolicy
     public class PurchasePolicy : PurchasePolicyInterface
     {
         public String purchasePolicyName { get; set; }
-        //public ConcurrentLinkedList<PurchaseType> purchaseRoutes { get; set; }
+        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
 
         public PurchasePolicy(String purchasePolicyName)
         {
             this.purchasePolicyName = purchasePolicyName;
+            this.purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
+            this.purchaseTypes.TryAdd(PurchaseType.ImmediatePurchase);
             this.purchasePredicates = new ConcurrentDictionary<int, PurchasePredicate>();
+        }
+        
+        private PurchaseType[] listToArray(ConcurrentLinkedList<PurchaseType> lst)
+        {
+            PurchaseType[] arr = new PurchaseType[lst.size];
+            int i = 0;
+            Node<PurchaseType> node = lst.First; 
+            int size = lst.size;
+            while(size > 0)
+            {
+                arr[i] = node.Value;
+                node = node.Next;
+                i++;
+                size--;
+            }
+            return arr;
+        }
+
+        // add support for new purchase type
+        public void supportPurchaseType(PurchaseType purchaseType)
+        {
+            var arr = listToArray(purchaseTypes);
+            if(!arr.Contains(purchaseType))
+            {
+                purchaseTypes.TryAdd(purchaseType);
+            }
+        }
+
+        // remove the purchase type from the store - not supporting it
+        public void unsupportPurchaseType(PurchaseType purchaseType)
+        {
+            var arr = listToArray(purchaseTypes);
+            if(arr.Contains(purchaseType))
+            {
+                purchaseTypes.Remove(purchaseType, out _);
+            }
+        }
+
+        // return true only if the store support the purchase type
+        public Boolean hasPurchaseTypeSupport(PurchaseType purchaseType)
+        {
+            var arr = listToArray(purchaseTypes);
+            return arr.Contains(purchaseType);
         }
 
         // add new purchase predicate for the store purchase policy
         // add the predicate to the other predicates by composing them with AND Predicate - done by the build 
         // returns the id of the new purchase predicate
-        public int addPurchasePredicate(Predicate<PurchaseDetails> predicate, String predicateDescription) 
+        public int addPurchasePredicate(LocalPredicate<PurchaseDetails> predicate, String predicateDescription) 
         {
             SimplePredicate simplePredicate = new SimplePredicate(predicate, predicateDescription);
             purchasePredicates.TryAdd(simplePredicate.predicateID, simplePredicate);

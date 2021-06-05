@@ -1,0 +1,4 @@
+﻿The system connects to Azure Database at address wsep212.database.windows.net
+Database username: wsep212
+Database password: Ab123456
+The system uses external payment and delivery systems at address https://cs-bgu-wsep.herokuapp.com/

@@ -1,32 +1,50 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
+using WSEP212;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
-using WSEP212_TEST.UnitTests.UnitTestMocks;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
     [TestClass]
     public class UserStoreTests
     {
-        User user;
-        private User user3;
+        private static User user;
+        private static User user3;
 
-        [TestInitialize]
-        public void testInit()
+        [ClassInitialize]
+        public static void SetupAuth(TestContext context)
         {
-            this.user = new User("check name");
+            SystemDBAccess.mock = true;
+            
+            SystemDBMock.Instance.Users.RemoveRange(SystemDBMock.Instance.Users.ToList());
+            SystemDBMock.Instance.Stores.RemoveRange(SystemDBMock.Instance.Stores.ToList());
+            SystemDBMock.Instance.Items.RemoveRange(SystemDBMock.Instance.Items.ToList());
+            SystemDBMock.Instance.Bids.RemoveRange(SystemDBMock.Instance.Bids.ToList());
+            SystemDBMock.Instance.Carts.RemoveRange(SystemDBMock.Instance.Carts.ToList());
+            SystemDBMock.Instance.Invoices.RemoveRange(SystemDBMock.Instance.Invoices.ToList());
+            SystemDBMock.Instance.Permissions.RemoveRange(SystemDBMock.Instance.Permissions.ToList());
+            SystemDBMock.Instance.DelayedNotifications.RemoveRange(SystemDBMock.Instance.DelayedNotifications.ToList());
+            SystemDBMock.Instance.ItemReviewes.RemoveRange(SystemDBMock.Instance.ItemReviewes.ToList());
+            SystemDBMock.Instance.UsersInfo.RemoveRange(SystemDBMock.Instance.UsersInfo.ToList());
+            SystemDBAccess.Instance.SaveChanges();
+            
+            user = new User("check name");
             user3 = new User("b"); //logged
-            user3.changeState(new LoggedBuyerState(user3));
-            UserRepository.Instance.users.TryAdd(user3, true);
+            UserRepository.Instance.insertNewUser(user3, "123456");
+            UserRepository.Instance.changeUserLoginStatus(user3.userName, true, "123456");
         }
 
         public bool registerAndLogin()
         {
             String password = "1234";
-            RegularResult insertUserRes = UserRepository.Instance.insertNewUser(this.user, password);
+            RegularResult insertUserRes = UserRepository.Instance.insertNewUser(user, password);
             if (insertUserRes.getTag())
             {
                 user.changeState(new LoggedBuyerState(user));
@@ -37,7 +55,7 @@ namespace WSEP212_TESTS.IntegrationTests
 
         public bool logout()
         {
-            this.user.changeState(new GuestBuyerState(this.user));
+            user.changeState(new GuestBuyerState(user));
             return true;
         }
         
@@ -89,7 +107,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = 12.0;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
@@ -105,7 +123,7 @@ namespace WSEP212_TESTS.IntegrationTests
             list[2] = "shoko";
             list[3] = "taim retzah!";
             list[4] = 12.0;
-            list[5] = "milk products";
+            list[5] = ItemCategory.Dairy;
             parameters.parameters = list;
             user3.addItemToStorage(parameters);
             return ((ResultWithValue<int>)parameters.result).getValue();
@@ -115,7 +133,7 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             User user2 = new User("new user");
             String password = "1234";
-            return UserRepository.Instance.insertNewUser(this.user, password).getTag();
+            return UserRepository.Instance.insertNewUser(user, password).getTag();
         }
         
         public bool addNewManager()
@@ -136,10 +154,11 @@ namespace WSEP212_TESTS.IntegrationTests
             int itemID = 1;
             int quantity = 2;
             ThreadParameters parameters = new ThreadParameters();
-            object[] list = new object[3];
+            object[] list = new object[4];
             list[0] = storeID;
             list[1] = itemID;
             list[2] = quantity;
+            list[3] = new ItemImmediatePurchase(12.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
             return (bool) parameters.result;
@@ -158,7 +177,7 @@ namespace WSEP212_TESTS.IntegrationTests
 
         public void switchToSystemManager()
         {
-            user.changeState(new SystemManagerState(this.user));
+            user.changeState(new SystemManagerState(user));
         }
 
         [TestCleanup]
@@ -315,7 +334,7 @@ namespace WSEP212_TESTS.IntegrationTests
                     list[2] = "bamba";
                     list[3] = "taim retzah!";
                     list[4] = 1.23;
-                    list[5] = "snacks";
+                    list[5] = ItemCategory.Snacks;
                     parameters.parameters = list;
                     user.addItemToStorage(parameters);
                     Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].storage.Count);
@@ -442,15 +461,16 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
-                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy).getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
-                object[] list = new object[3];
+                object[] list = new object[4];
                 list[0] = storeID;
                 list[1] = itemID;
                 list[2] = quantity;
+                list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
                 RegularResult res = (RegularResult)(parameters.result);
@@ -464,15 +484,16 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             if (registerAndLogin())
             {
-                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), this.user).getValue();
+                int storeID = StoreRepository.Instance.addStore("store", "Bat Yam", new SalePolicyMock(), new PurchasePolicyMock(), user).getValue();
                 Store store = StoreRepository.Instance.getStore(storeID).getValue();
-                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, "milk products").getValue();
+                int itemID = store.addItemToStorage(3, "shoko", "taim retzah!", 12, ItemCategory.Dairy).getValue();
                 int quantity = 2;
                 ThreadParameters parameters = new ThreadParameters();
-                object[] list = new object[3];
+                object[] list = new object[4];
                 list[0] = storeID;
                 list[1] = itemID;
                 list[2] = quantity;
+                list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
                 if (((RegularResult)parameters.result).getTag())
@@ -642,7 +663,7 @@ namespace WSEP212_TESTS.IntegrationTests
                             parameters2.parameters = list2;
                             user.purchaseItems(parameters2);
                             Assert.IsTrue(((RegularResult)parameters2.result).getTag());
-                            Assert.AreEqual(1, this.user.purchases.Count);
+                            Assert.AreEqual(1, user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }
                     }
@@ -676,7 +697,7 @@ namespace WSEP212_TESTS.IntegrationTests
                         parameters2.parameters = list2;
                         user.purchaseItems(parameters2);
                         Assert.IsTrue(((RegularResult)parameters2.result).getTag());
-                        Assert.AreEqual(1, this.user.purchases.Count);
+                        Assert.AreEqual(1, user.purchases.Count);
                         Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                     }
                 }
@@ -711,7 +732,7 @@ namespace WSEP212_TESTS.IntegrationTests
                             parameters2.parameters = list2;
                             user.purchaseItems(parameters2);
                             Assert.IsTrue(((RegularResult)parameters2.result).getTag());
-                            Assert.AreEqual(1, this.user.purchases.Count);
+                            Assert.AreEqual(1, user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }
                     }

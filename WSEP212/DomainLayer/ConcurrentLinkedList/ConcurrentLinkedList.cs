@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
+using WSEP212.ConcurrentLinkedList;
 
-namespace WSEP212.ConcurrentLinkedList
+namespace WSEP212.DomainLayer.ConcurrentLinkedList
 {
     public class ConcurrentLinkedList<T> : IConcurrentLinkedList<T>
     {
@@ -14,7 +14,10 @@ namespace WSEP212.ConcurrentLinkedList
         private Node<T> _first;
         private readonly Node<T> _dummy;
         private readonly ConcurrentDictionary<int, ThreadState<T>> _threads;
-        public int size;
+        public int size
+        {
+            get => calculateSize();
+        }
 
         public ConcurrentLinkedList()
         {
@@ -22,9 +25,21 @@ namespace WSEP212.ConcurrentLinkedList
             _dummy = new Node<T>();
             _threads = new ConcurrentDictionary<int, ThreadState<T>>();
             _first = new Node<T>(default(T), NodeState.REM, -1);
-            size = 0;
         }
 
+        private int calculateSize()
+        {
+            int size = 0;
+            var current = _first;
+            while (current != null)
+            {
+                if(current.State == NodeState.INS || current.State == NodeState.DAT)
+                    size++;
+                current = current.Next;
+            }
+
+            return Math.Max(_counter,size);
+        }
         /// <summary>
         /// Attempts to add the specified value to the <see cref="ConcurrentLinkedList{T}"/>.
         /// </summary>
@@ -42,8 +57,6 @@ namespace WSEP212.ConcurrentLinkedList
                 node.State = NodeState.INV;
             }
 
-            if (insertionResult) size++;
-
             return insertionResult;
         }
 
@@ -57,7 +70,6 @@ namespace WSEP212.ConcurrentLinkedList
             Enlist(node);
             var removeResult = HelpRemove(node, value, out result);
             node.State = NodeState.INV;
-            if (removeResult) size--;
             return removeResult;
         }
 
@@ -228,6 +240,5 @@ namespace WSEP212.ConcurrentLinkedList
             var threadState = _threads[threadId];
             return threadState.Pending && threadState.Phase <= phase;
         }
-
     }
 }

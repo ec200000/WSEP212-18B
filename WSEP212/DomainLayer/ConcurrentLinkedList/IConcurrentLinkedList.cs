@@ -1,4 +1,6 @@
-﻿namespace WSEP212.ConcurrentLinkedList
+﻿using WSEP212.DomainLayer.ConcurrentLinkedList;
+
+namespace WSEP212.ConcurrentLinkedList
 {
     public interface IConcurrentLinkedList<T>
     {

@@ -6,8 +6,10 @@ using System.Threading;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
+using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
+using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -18,13 +20,13 @@ namespace WSEP212.DomainLayer
         {
         }
 
-        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, String category)
+        public override ResultWithValue<int> addItemToStorage(int storeID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ResultWithValue<int> addPurchasePredicate(int storeID, Predicate<PurchaseDetails> newPredicate, String predDescription)
+        public override ResultWithValue<int> addPurchasePredicate(int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -66,7 +68,7 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, String category)
+        public override RegularResult editItemDetails(int storeID, int itemID, int quantity, String itemName, String description, double price, ItemCategory category)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
@@ -84,19 +86,19 @@ namespace WSEP212.DomainLayer
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ConcurrentBag<PurchaseInvoice> getStorePurchaseHistory(int storeID)
+        public override ConcurrentDictionary<int, PurchaseInvoice> getStorePurchaseHistory(int storeID)
         {
             throw new NotImplementedException();
             // only store managers and store owners can do that (logged buyers)
         }
 
-        public override ConcurrentDictionary<int, ConcurrentBag<PurchaseInvoice>> getStoresPurchaseHistory()
+        public override ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>> getStoresPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
         }
 
-        public override ConcurrentDictionary<String, ConcurrentBag<PurchaseInvoice>> getUsersPurchaseHistory()
+        public override ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> getUsersPurchaseHistory()
         {
             throw new NotImplementedException();
             // only system managers can do that
@@ -110,18 +112,13 @@ namespace WSEP212.DomainLayer
 
         public override RegularResult login(string userName, string password)
         {
-            ResultWithValue<User> findUserRes = UserRepository.Instance.findUserByUserName(userName);
-            if(findUserRes.getTag())
+            RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(userName, true, password);
+            if(loginStateRes.getTag())
             {
-                RegularResult loginStateRes = UserRepository.Instance.changeUserLoginStatus(findUserRes.getValue(), true, password);
-                if(loginStateRes.getTag())
-                {
-                    user.changeState(new LoggedBuyerState(user));
-                    return new Ok("The User Has Successfully Logged In");
-                }
-                return loginStateRes;
+                user.changeState(new LoggedBuyerState(user));
+                return new Ok("The User Has Successfully Logged In");
             }
-            return new Failure("username and password don't match");
+            return loginStateRes;
         }
 
         public override RegularResult loginAsSystemManager(string userName, string password)
@@ -140,10 +137,33 @@ namespace WSEP212.DomainLayer
             // only logged buyers can do that
         }
 
-        public override RegularResult register(String userName, int userAge, String password)
+        public override RegularResult supportPurchaseType(int storeID, PurchaseType purchaseType)
         {
-            User user = new User(userName, userAge);
-            return UserRepository.Instance.insertNewUser(user, password);
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override RegularResult unsupportPurchaseType(int storeID, PurchaseType purchaseType)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<string> confirmPriceStatus(String userName, int storeID, int itemID, PriceStatus priceStatus)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+
+        public override ResultWithValue<string> itemCounterOffer(String userName, int storeID, int itemID, double counterOffer)
+        {
+            throw new NotImplementedException();
+            // only store managers and store owners can do that (logged buyers)
+        }
+        
+        public override RegularResult register(User newUser, String password)
+        {
+            return UserRepository.Instance.insertNewUser(newUser, password);
         }
         
         public override RegularResult continueAsGuest(String userName)
