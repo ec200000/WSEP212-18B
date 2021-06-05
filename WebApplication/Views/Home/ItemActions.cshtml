@@ -58,7 +58,9 @@
         var msg = e.Message + " ";
         var inner = e.InnerException;
         if (inner != null)
+        {
             msg += inner.Message;
+        }
         Logger.Instance.writeErrorEventToLog(msg);
     }
     
@@ -82,7 +84,9 @@
         var msg = e.Message + " ";
         var inner = e.InnerException;
         if (inner != null)
+        {
             msg += inner.Message;
+        }
         Logger.Instance.writeErrorEventToLog(msg);
     }
     
@@ -107,7 +111,9 @@
         var msg = e.Message + " ";
         var inner = e.InnerException;
         if (inner != null)
+        {
             msg += inner.Message;
+        }
         Logger.Instance.writeErrorEventToLog(msg);
     }
 
