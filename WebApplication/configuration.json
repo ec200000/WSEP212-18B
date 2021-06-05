@@ -1,0 +1,18 @@
+﻿{
+  "tests": "false",
+  "db": [
+    {
+      "database": "wsep212Dep",
+      "server": "wsep212b18",
+      "userID": "wsep212b@wsep212b18",
+      "password": "Ab123456"
+    },
+    {
+      "database": "wsep212Btest",
+      "server": "wsep212b18",
+      "userID": "wsep212b@wsep212b18",
+      "password": "Ab123456"
+    }
+  ],
+  "external": "https://cs-bgu-wsep.herokuapp.com/"
+}

@@ -8,6 +8,11 @@ namespace WSEP212.DataAccessLayer
 {
     public class DBInterface : DbContext
     {
+        public static string server { get; set; }
+        public static string database { get; set; }
+        public static string userID { get; set; }
+        public static string password { get; set; }
+        
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemReview> ItemReviewes { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
