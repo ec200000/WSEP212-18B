@@ -32,6 +32,7 @@ namespace WSEP212.DomainLayer
                     typeof(SalePolicyMock),
                     typeof(PurchasePolicy.PurchasePolicy),
                     typeof(PurchasePolicyMock),
+                    typeof(BadPurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
                     typeof(ItemSubmitOfferPurchase),
                     typeof(SimplePredicate),

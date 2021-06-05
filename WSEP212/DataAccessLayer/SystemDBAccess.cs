@@ -27,9 +27,8 @@ namespace WSEP212.DataAccessLayer
 
         public static SystemDBAccess Instance => lazy.Value;
 
-        public SystemDBAccess()
+        public SystemDBAccess() : base($"Server=tcp: {server}.database.windows.net,1433;Database={database};User ID={userID};Password={password};Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;")
         {
-            new DbContext($"Server=tcp: {server}.database.windows.net,1433;Database={database};User ID={userID};Password={password};Connection Timeout=30;Trusted_Connection=False;Encrypt=True;PersistSecurityInfo=True;MultipleActiveResultSets=True;");
             Init();
             Database.CommandTimeout = 120;
             Database.SetInitializer<SystemDBAccess>(new MigrateDatabaseToLatestVersion<SystemDBAccess, Configuration>());

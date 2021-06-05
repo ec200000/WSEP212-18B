@@ -103,6 +103,8 @@ namespace WSEP212.DomainLayer
                 }
             }
             var sellerPer = new SellerPermissions(SellerName, StoreID, GrantorName, permissions);
+            if(StoreRepository.Instance.getStore(StoreID).getTag())
+                StoreRepository.Instance.getStore(StoreID).getValue().addNewStoreSeller(sellerPer);
             sellerPer.addToDB();
             return sellerPer;
         }
