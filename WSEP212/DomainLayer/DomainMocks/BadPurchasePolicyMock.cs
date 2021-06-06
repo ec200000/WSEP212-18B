@@ -10,11 +10,16 @@ namespace WSEP212.DomainLayer
 {
     public class BadPurchasePolicyMock : PurchasePolicyInterface
     {
+        //singelton
+        private static readonly Lazy<BadPurchasePolicyMock> lazy
+            = new Lazy<BadPurchasePolicyMock>(() => new BadPurchasePolicyMock());
+
+        public static BadPurchasePolicyMock Instance
+            => lazy.Value;
+        
         public String purchasePolicyName { get; set; }
         public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
-
-        public BadPurchasePolicyMock() { }
 
         // there is no predicates in this policy
         public int addPurchasePredicate(LocalPredicate<PurchaseDetails> newPredicate, string predDescription)

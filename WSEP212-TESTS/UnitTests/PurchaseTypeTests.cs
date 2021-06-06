@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApplication;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
@@ -25,6 +26,7 @@ namespace WSEP212_TESTS.UnitTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -37,6 +39,7 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
             
             UserRepository.Instance.initRepo();
             User admin = new User("admin");
@@ -44,6 +47,7 @@ namespace WSEP212_TESTS.UnitTests
 
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Ashdod", new SalePolicy("DEFUALT"), new PurchasePolicy("DEFUALT"), admin);
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
+            shoppingBagStore.unsupportPurchaseType(PurchaseType.ImmediatePurchase);
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             UserRepository.Instance.insertNewUser(new User("Sagiv", 21), "qwerty");
             shoppingBag = new ShoppingBag(shoppingBagStore, "Sagiv");

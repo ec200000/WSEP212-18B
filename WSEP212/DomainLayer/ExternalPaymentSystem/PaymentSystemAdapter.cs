@@ -24,12 +24,22 @@ namespace WSEP212.DomainLayer.ExternalPaymentSystem
 
         public int paymentCharge(string cardNumber, string month, string year, string holder, string ccv, string id, double price)
         {
-            return this.paymentSystemAPI.paymentChargeAsync(cardNumber, month, year, holder, ccv, id, price).Result;
+            if(!PaymentInterface.mock)
+                return this.paymentSystemAPI.paymentChargeAsync(cardNumber, month, year, holder, ccv, id, price).Result;
+            else
+            {
+                return BadPaymentSystemMock.Instance.paymentCharge(cardNumber,month,year,holder,ccv,id,price);
+            }
         }
 
         public bool cancelPaymentCharge(int transactionID)
         {
-            return this.paymentSystemAPI.cancelPaymentChargeAsync(transactionID).Result;
+            if(!PaymentInterface.mock)
+                return this.paymentSystemAPI.cancelPaymentChargeAsync(transactionID).Result;
+            else
+            {
+                return BadPaymentSystemMock.Instance.cancelPaymentCharge(transactionID);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
@@ -22,6 +23,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -34,6 +36,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
+            SystemDBAccess.Instance.SaveChanges();
 
             RegularResult result = controller.register("theuser123", 18, "123456");
             controller.login("theuser123", "123456");
@@ -106,16 +109,6 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void openStoreWithGuestTest()
-        {
-            testInit();
-
-            ResultWithValue<int> res = controller.openStore("a", "gg", "kk", "default", "default"); //guest cant open
-            Assert.IsFalse(true); //should throw exception - if its here, nothing was thrown
-        }
-
-        [TestMethod]
         public void itemReviewTest()
         {
             testInit();
@@ -129,31 +122,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsTrue(res2.getTag());
             ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", "wow", itemID, storeID); //logged
             Assert.IsTrue(result.getTag());
-
-            controller.removeItemFromShoppingCart("theuser123", storeID, itemID);
-        }
-
-        [TestMethod]
-        public void itemEmptyReviewTest()
-        {
-            testInit();
-
-            ResultWithValue<NotificationDTO> res = controller.addItemToShoppingCart("theuser123", storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 2.4);
-            Assert.IsTrue(res.getTag());
-            ResultWithValue<NotificationDTO> result = controller.itemReview("theuser123", null, itemID, storeID);
-            Assert.IsFalse(result.getTag());
-
-            controller.removeItemFromShoppingCart("theuser123", storeID, itemID);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void itemReviewByGuestest()
-        {
-            testInit();
-
-            controller.itemReview("moon", "boo", itemID, storeID); //guest user can't perform this action
-            Assert.IsFalse(true);
         }
 
         [TestMethod]
@@ -169,17 +137,6 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             int bisliID = res.getValue();
             controller.removeItemFromStorage("theuser123", storeID, bisliID);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void addItemToStorageByGuestTest()
-        {
-            ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
-
-            controller.addItemToStorage("moon", storeID, itemDto);//guest user - can't perform this action
-            Assert.IsFalse(true);
         }
 
         [TestMethod]
@@ -208,16 +165,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             RegularResult result = controller.removeItemFromStorage("theuser123", -1, itemID); //no such store
             Assert.IsFalse(result.getTag());
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void removeItemFromStorageByGuestTest()
-        {
-            testInit();
-
-            RegularResult result = controller.removeItemFromStorage("booo", storeID, itemID);//guest user - can't perform this action
-            Assert.IsFalse(result.getTag());
-        }
+        
 
         [TestMethod]
         public void editItemDetailsTest()
@@ -232,17 +180,6 @@ namespace WSEP212_TESTS.AcceptanceTests
             itemDto.price = 7.9;
             RegularResult result = controller.editItemDetails("theuser123", storeID, itemDto);
             Assert.IsTrue(res.getTag());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void editItemDetailsByGuestTest()
-        {
-            ItemDTO itemDto = new ItemDTO(storeID, 57, "bisli", "very good snack",
-                new ConcurrentDictionary<string, ItemReview>(), 1.34, (int)ItemCategory.Snacks);
-
-            controller.editItemDetails("blue", storeID, itemDto); //guest user - can't perform this action
-            Assert.IsFalse(true);
         }
     }
 }

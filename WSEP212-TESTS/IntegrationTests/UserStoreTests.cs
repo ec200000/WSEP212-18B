@@ -2,13 +2,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using WebApplication;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
+using WSEP212.DomainLayer.ExternalDeliverySystem;
+using WSEP212.DomainLayer.ExternalPaymentSystem;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.ServiceLayer.Result;
+using WSEP212.ServiceLayer.ServiceObjectsDTO;
 
 namespace WSEP212_TESTS.IntegrationTests
 {
@@ -17,10 +21,13 @@ namespace WSEP212_TESTS.IntegrationTests
     {
         private static User user;
         private static User user3;
+        private DeliveryParameters deliveryParameters;
+        private PaymentParameters paymentParameters;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users.ToList());
@@ -38,7 +45,15 @@ namespace WSEP212_TESTS.IntegrationTests
             user = new User("check name");
             user3 = new User("b"); //logged
             UserRepository.Instance.insertNewUser(user3, "123456");
-            UserRepository.Instance.changeUserLoginStatus(user3.userName, true, "123456");
+            initPurchaseParameters();
+            user3.changeState(new LoggedBuyerState(user3));
+            //UserRepository.Instance.changeUserLoginStatus(user3.userName, true, "123456");
+        }
+        
+        private void initPurchaseParameters()
+        {
+            deliveryParameters = new DeliveryParameters("theotheruser", "habanim", "Haifa", "Israel", "786598");
+            paymentParameters = new PaymentParameters("68957221011", "1", "2021", "theotheruser", "086", "207885623");
         }
 
         public bool registerAndLogin()
@@ -80,7 +95,6 @@ namespace WSEP212_TESTS.IntegrationTests
         
         public int openStore2()
         {
-            //Store.resetStoreCounter();
             String name = "store";
             String address = "holon";
             SalePolicyMock salesPolicy = new SalePolicyMock();
@@ -93,7 +107,6 @@ namespace WSEP212_TESTS.IntegrationTests
             list[3] = salesPolicy;
             parameters.parameters = list;
             user3.openStore(parameters);
-            
             return ((ResultWithValue<int>)parameters.result).getValue();
         }
 
@@ -148,7 +161,7 @@ namespace WSEP212_TESTS.IntegrationTests
             return (bool) parameters.result;
         }
 
-        public bool addItemToShoppingCart()
+        public ResultWithValue<ConcurrentLinkedList<string>> addItemToShoppingCart()
         {
             int storeID = 1;
             int itemID = 1;
@@ -161,18 +174,19 @@ namespace WSEP212_TESTS.IntegrationTests
             list[3] = new ItemImmediatePurchase(12.0);
             parameters.parameters = list;
             user.addItemToShoppingCart(parameters);
-            return (bool) parameters.result;
+            return (ResultWithValue<ConcurrentLinkedList<string>>) parameters.result;
         }
 
-        public bool purchaseItems()
+        public ResultWithValue<ConcurrentLinkedList<string>> purchaseItems()
         {
             string address = "moshe levi 3 beer sheva";
             ThreadParameters parameters2 = new ThreadParameters();
-            object[] list2 = new object[1];
-            list2[0] = address;
+            object[] list2 = new object[2];
+            list2[0] = deliveryParameters;
+            list2[1] = paymentParameters;
             parameters2.parameters = list2;
             user.purchaseItems(parameters2);
-            return (bool)parameters2.result;
+            return (ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result;
         }
 
         public void switchToSystemManager()
@@ -210,9 +224,8 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[3];
-            list[0] = user.userName;
-            list[1] = 18;
-            list[2] = "1234";
+            list[0] = user;
+            list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             Assert.IsTrue(((RegularResult)parameters.result).getTag());
@@ -225,9 +238,8 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[3];
-            list[0] = user.userName;
-            list[1] = 18;
-            list[2] = "1234";
+            list[0] = user;
+            list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             if (((RegularResult)parameters.result).getTag())
@@ -248,9 +260,8 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[3];
-            list[0] = user.userName;
-            list[1] = 18;
-            list[2] = "1234";
+            list[0] = user;
+            list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             if (((RegularResult)parameters.result).getTag())
@@ -272,9 +283,8 @@ namespace WSEP212_TESTS.IntegrationTests
         {
             ThreadParameters parameters = new ThreadParameters();
             object[] list = new object[3];
-            list[0] = user.userName;
-            list[1] = 18;
-            list[2] = "1234";
+            list[0] = user;
+            list[1] = "1234";
             parameters.parameters = list;
             user.register(parameters);
             if (((RegularResult)parameters.result).getTag())
@@ -354,9 +364,9 @@ namespace WSEP212_TESTS.IntegrationTests
                     int itemID = addItemToStorage();
                     if (itemID > 0)
                     {
-                        if (addItemToShoppingCart())
+                        if (addItemToShoppingCart().getTag())
                         {
-                            if (purchaseItems())
+                            if (purchaseItems().getTag())
                             {
                                 String review = "best shoko ever!!";
                                 ThreadParameters parameters = new ThreadParameters();
@@ -366,7 +376,7 @@ namespace WSEP212_TESTS.IntegrationTests
                                 list[2] = storeID;
                                 parameters.parameters = list;
                                 user.itemReview(parameters);
-                                Assert.IsTrue(((RegularResult)parameters.result).getTag());
+                                Assert.IsTrue(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
                                 Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage[1].reviews.Count);
                             }
                         }
@@ -394,8 +404,8 @@ namespace WSEP212_TESTS.IntegrationTests
                         list[2] = storeID;
                         parameters.parameters = list;
                         user.itemReview(parameters);
-                        Assert.IsFalse(((RegularResult)parameters.result).getTag());
-                        Assert.AreEqual(1, StoreRepository.Instance.stores[1].storage[1].reviews.Count);
+                        Assert.IsFalse(((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag());
+                        Assert.AreEqual(0, StoreRepository.Instance.stores[1].storage[1].reviews.Count);
                     }
                 }
             }
@@ -473,7 +483,7 @@ namespace WSEP212_TESTS.IntegrationTests
                 list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
-                RegularResult res = (RegularResult)(parameters.result);
+                ResultWithValue<ConcurrentLinkedList<string>> res = (ResultWithValue<ConcurrentLinkedList<string>>)(parameters.result);
                 Assert.IsTrue(res.getTag());
                 Assert.AreEqual(1, user.shoppingCart.shoppingBags[storeID].items.Count);
             }
@@ -496,7 +506,7 @@ namespace WSEP212_TESTS.IntegrationTests
                 list[3] = new ItemImmediatePurchase(12.0);
                 parameters.parameters = list;
                 user.addItemToShoppingCart(parameters);
-                if (((RegularResult)parameters.result).getTag())
+                if (((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag())
                 {
                     ThreadParameters parameters2 = new ThreadParameters();
                     object[] list2 = new object[2];
@@ -648,21 +658,23 @@ namespace WSEP212_TESTS.IntegrationTests
                     {
                         int quantity = 2;
                         ThreadParameters parameters = new ThreadParameters();
-                        object[] list = new object[3];
+                        object[] list = new object[4];
                         list[0] = storeID;
                         list[1] = itemID;
                         list[2] = quantity;
+                        list[3] = new ItemImmediatePurchase(12.0);
                         parameters.parameters = list;
                         user.addItemToShoppingCart(parameters);
-                        if (((RegularResult)parameters.result).getTag())
+                        if (((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag())
                         {
                             string address = "moshe levi 3 beer sheva";
                             ThreadParameters parameters2 = new ThreadParameters();
-                            object[] list2 = new object[1];
-                            list2[0] = address;
+                            object[] list2 = new object[2];
+                            list2[0] = deliveryParameters;
+                            list2[1] = paymentParameters;
                             parameters2.parameters = list2;
                             user.purchaseItems(parameters2);
-                            Assert.IsTrue(((RegularResult)parameters2.result).getTag());
+                            Assert.IsTrue(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
                             Assert.AreEqual(1, user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }
@@ -670,40 +682,7 @@ namespace WSEP212_TESTS.IntegrationTests
                 }
             }
         }
-        
-        [TestMethod]
-        public void TestPurchaseItemsGuestUser()
-        {
-            int storeID = openStore2();
-            if (storeID > 0)
-            {
-                int itemID = addItemToStorage2();
-                if (itemID > 0)
-                {
-                    int quantity = 2;
-                    ThreadParameters parameters = new ThreadParameters();
-                    object[] list = new object[3];
-                    list[0] = storeID;
-                    list[1] = itemID;
-                    list[2] = quantity;
-                    parameters.parameters = list;
-                    user.addItemToShoppingCart(parameters);
-                    if (((RegularResult)parameters.result).getTag())
-                    {
-                        string address = "moshe levi 3 beer sheva";
-                        ThreadParameters parameters2 = new ThreadParameters();
-                        object[] list2 = new object[1];
-                        list2[0] = address;
-                        parameters2.parameters = list2;
-                        user.purchaseItems(parameters2);
-                        Assert.IsTrue(((RegularResult)parameters2.result).getTag());
-                        Assert.AreEqual(1, user.purchases.Count);
-                        Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
-                    }
-                }
-            }
-        }
-        
+
         [TestMethod]
         public void TestGetStorePurchaseHistory()
         {
@@ -717,21 +696,23 @@ namespace WSEP212_TESTS.IntegrationTests
                     {
                         int quantity = 2;
                         ThreadParameters parameters = new ThreadParameters();
-                        object[] list = new object[3];
+                        object[] list = new object[4];
                         list[0] = storeID;
                         list[1] = itemID;
                         list[2] = quantity;
+                        list[3] = new ItemImmediatePurchase(12.0);
                         parameters.parameters = list;
                         user.addItemToShoppingCart(parameters);
-                        if (((RegularResult)parameters.result).getTag())
+                        if (((ResultWithValue<ConcurrentLinkedList<string>>)parameters.result).getTag())
                         {
                             string address = "moshe levi 3 beer sheva";
                             ThreadParameters parameters2 = new ThreadParameters();
-                            object[] list2 = new object[1];
-                            list2[0] = address;
+                            object[] list2 = new object[2];
+                            list2[0] = deliveryParameters;
+                            list2[1] = paymentParameters;
                             parameters2.parameters = list2;
                             user.purchaseItems(parameters2);
-                            Assert.IsTrue(((RegularResult)parameters2.result).getTag());
+                            Assert.IsTrue(((ResultWithValue<ConcurrentLinkedList<string>>)parameters2.result).getTag());
                             Assert.AreEqual(1, user.purchases.Count);
                             Assert.AreEqual(1, StoreRepository.Instance.stores[storeID].purchasesHistory.Count);
                         }
@@ -751,7 +732,7 @@ namespace WSEP212_TESTS.IntegrationTests
                     int itemID = addItemToStorage();
                     if (itemID > 0)
                     {
-                        if (purchaseItems())
+                        if (purchaseItems().getTag())
                         {
                             switchToSystemManager();
                             ThreadParameters parameters2 = new ThreadParameters();
@@ -776,7 +757,7 @@ namespace WSEP212_TESTS.IntegrationTests
                     int itemID = addItemToStorage();
                     if (itemID > 0)
                     {
-                        if (purchaseItems())
+                        if (purchaseItems().getTag())
                         {
                             switchToSystemManager();
                             ThreadParameters parameters2 = new ThreadParameters();

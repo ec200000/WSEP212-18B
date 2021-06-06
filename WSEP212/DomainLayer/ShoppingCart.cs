@@ -33,6 +33,7 @@ namespace WSEP212.DomainLayer
                     typeof(SalePolicyMock),
                     typeof(PurchasePolicy.PurchasePolicy),
                     typeof(PurchasePolicyMock),
+                    typeof(BadPurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
                     typeof(ItemSubmitOfferPurchase),
                     typeof(SimplePredicate),
@@ -98,14 +99,19 @@ namespace WSEP212.DomainLayer
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                         return addItemRes;
                     }
-                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
-                    if (result != null)
+
+                    lock (SystemDBAccess.savelock)
                     {
-                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
-                            result.BagsAsJson = this.BagsAsJson;
-                        lock(SystemDBAccess.savelock)
+                        var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                        if (result != null)
+                        {
+                            if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                                result.BagsAsJson = this.BagsAsJson;
+                       
                             SystemDBAccess.Instance.SaveChanges();
+                        }  
                     }
+                    
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());

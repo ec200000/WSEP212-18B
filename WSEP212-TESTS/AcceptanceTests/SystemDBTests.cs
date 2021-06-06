@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
@@ -27,6 +28,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -39,10 +41,12 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
-
+            SystemDBAccess.Instance.SaveChanges();
+            
             UserRepository.Instance.initRepo();
-            User user = new User("check", 12, false);
+            user = new User("check", 12, false);
             UserRepository.Instance.insertNewUser(user, "123456");
+            user.changeState(new LoggedBuyerState(user));
             UserRepository.Instance.changeUserLoginStatus(user.userName, true, "123456");
             
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Biga", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
@@ -65,51 +69,59 @@ namespace WSEP212_TESTS.AcceptanceTests
         }
 
         [TestMethod]
-        public void registerTest()
-        {
-            SystemDBAccess.Instance.Users.Add(user);
-            Assert.AreEqual(1, SystemDBAccess.Instance.Users.Count());
-        }
-        
-        [TestMethod]
         public void unregisterTest()
         {
             SystemDBAccess.Instance.Users.Remove(user);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(0, SystemDBAccess.Instance.Users.Count());
         }
         
         [TestMethod]
-        public void addStoreTest()
+        public void registerTest()
         {
-            SystemDBAccess.Instance.Stores.Add(store);
-            Assert.AreEqual(1, SystemDBAccess.Instance.Stores.Count());
+            SystemDBAccess.Instance.Users.Add(user);
+            SystemDBAccess.Instance.SaveChanges();
+            Assert.AreEqual(1, SystemDBAccess.Instance.Users.Count());
+            
         }
         
         [TestMethod]
         public void removeStoreTest()
         {
             SystemDBAccess.Instance.Stores.Remove(store);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(0, SystemDBAccess.Instance.Stores.Count());
         }
         
         [TestMethod]
-        public void addItemToStorageTest()
+        public void addStoreTest()
         {
-            SystemDBAccess.Instance.Items.Add(item);
-            Assert.AreEqual(1, SystemDBAccess.Instance.Items.Count());
+            SystemDBAccess.Instance.Stores.Add(store);
+            SystemDBAccess.Instance.SaveChanges();
+            Assert.AreEqual(1, SystemDBAccess.Instance.Stores.Count());
         }
         
         [TestMethod]
         public void removeItemFromStorageTest()
         {
             SystemDBAccess.Instance.Items.Remove(item);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(0, SystemDBAccess.Instance.Items.Count());
         }
-
+        
+        [TestMethod]
+        public void addItemToStorageTest()
+        {
+            SystemDBAccess.Instance.Items.Add(item);
+            SystemDBAccess.Instance.SaveChanges();
+            Assert.AreEqual(1, SystemDBAccess.Instance.Items.Count());
+        }
+        
         [TestMethod]
         public void addReviewTest()
         {
             SystemDBAccess.Instance.ItemReviewes.Add(review);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(1, SystemDBAccess.Instance.ItemReviewes.Count());
         }
         
@@ -117,49 +129,48 @@ namespace WSEP212_TESTS.AcceptanceTests
         public void removeReviewTest()
         {
             SystemDBAccess.Instance.ItemReviewes.Remove(review);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(0, SystemDBAccess.Instance.ItemReviewes.Count());
+        }
+
+        [TestMethod]
+        public void removeCartTest()
+        {
+            SystemDBAccess.Instance.Carts.Remove(cart);
+            SystemDBAccess.Instance.SaveChanges();
+            Assert.AreEqual(0, SystemDBAccess.Instance.Carts.Count());
         }
         
         [TestMethod]
         public void addCartTest()
         {
             SystemDBAccess.Instance.Carts.Add(cart);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(1, SystemDBAccess.Instance.Carts.Count());
         }
-        
-        [TestMethod]
-        public void removeCartTest()
-        {
-            SystemDBAccess.Instance.Carts.Remove(cart);
-            Assert.AreEqual(0, SystemDBAccess.Instance.Carts.Count());
-        }
-        
+
         [TestMethod]
         public void addInvoiceTest()
         {
             SystemDBAccess.Instance.Invoices.Add(invoice);
+            SystemDBAccess.Instance.SaveChanges();
             Assert.AreEqual(1, SystemDBAccess.Instance.Invoices.Count());
-        }
-        
-        [TestMethod]
-        public void removeInvoiceTest()
-        {
-            SystemDBAccess.Instance.Invoices.Remove(invoice);
-            Assert.AreEqual(0, SystemDBAccess.Instance.Invoices.Count());
-        }
-        
-        [TestMethod]
-        public void addSellerPermissionTest()
-        {
-            SystemDBAccess.Instance.Permissions.Add(permissions);
-            Assert.AreEqual(1, SystemDBAccess.Instance.Permissions.Count());
         }
         
         [TestMethod]
         public void removeSellerPermissionTest()
         {
             SystemDBAccess.Instance.Permissions.Remove(permissions);
-            Assert.AreEqual(0, SystemDBAccess.Instance.Permissions.Count());
+            SystemDBAccess.Instance.SaveChanges();
+            Assert.AreEqual(1, SystemDBAccess.Instance.Permissions.Count());
+        }
+        
+        [TestMethod]
+        public void addSellerPermissionTest()
+        {
+            SystemDBAccess.Instance.Permissions.Add(permissions);
+            SystemDBAccess.Instance.SaveChanges();
+            Assert.AreEqual(2, SystemDBAccess.Instance.Permissions.Count());
         }
     }
 }

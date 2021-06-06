@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApplication;
 using WSEP212;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DataAccessLayer;
@@ -23,12 +24,14 @@ namespace WSEP212_TESTS.IntegrationTests
     {
         private static Store store;
         private static User user;
+        private static User admin;
         private static int itemIDA;
         private static int itemIDB;
 
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Users.RemoveRange(SystemDBAccess.Instance.Users.ToList());
@@ -44,6 +47,10 @@ namespace WSEP212_TESTS.IntegrationTests
             SystemDBAccess.Instance.SaveChanges();
 
             user = new User("Sagiv", 21);
+            UserRepository.Instance.insertNewUser(user, "123456");
+            admin = new User("admin");
+            UserRepository.Instance.insertNewUser(admin, "123456");
+            admin.changeState(new LoggedBuyerState(admin));
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Delta", "Ashdod", new SalePolicy("DEFUALT"), new PurchasePolicy("DEFUALT"), new User("admin"));
             store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             store.supportPurchaseType(PurchaseType.ImmediatePurchase);
