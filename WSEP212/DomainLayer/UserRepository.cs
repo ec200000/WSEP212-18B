@@ -73,13 +73,13 @@ namespace WSEP212.DomainLayer
             dynamic array = JsonConvert.DeserializeObject(json);
             // CREATE USERS
             string loggedUser = array.loggedUser;
-            if (!SystemDBAccess.Instance.Users.Any())
+            foreach (var item in array.users)
             {
-                foreach (var item in array.users)
+                string username = item.username;
+                string userAge = item.userAge;
+                string isSystemManager = item.isSystemManager;
+                if (SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == username) == null)
                 {
-                    string username = item.username;
-                    string userAge = item.userAge;
-                    string isSystemManager = item.isSystemManager;
                     User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
                     if (isSystemManager.Equals("true"))
                         user.changeState(new SystemManagerState(user));
