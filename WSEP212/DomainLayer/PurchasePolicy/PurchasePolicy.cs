@@ -58,7 +58,10 @@ namespace WSEP212.DomainLayer.PurchasePolicy
             var arr = listToArray(purchaseTypes);
             if(arr.Contains(purchaseType))
             {
-                purchaseTypes.Remove(purchaseType, out _);
+                if (purchaseTypes.size == 1)
+                    purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
+                else
+                    purchaseTypes.Remove(purchaseType, out _);
             }
         }
 

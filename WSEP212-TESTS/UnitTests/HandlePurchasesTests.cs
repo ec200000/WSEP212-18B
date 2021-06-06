@@ -148,7 +148,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             DeliveryInterface.mock = true;
-            //StoreRepository.Instance.stores[storeID1].deliverySystem = BadDeliverySystemMock.Instance;
             ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(user.purchases.Count, 0);
@@ -163,7 +162,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             HandlePurchases.Instance.paymentSystem = PaymentSystemMock.Instance;
             StoreRepository.Instance.stores[storeID1].deliverySystem = DeliverySystemMock.Instance;
-            StoreRepository.Instance.getStore(storeID1).getValue().purchasePolicy = new BadPurchasePolicyMock();
             PurchasePolicyInterface.mock = true;
             ResultWithValue<ConcurrentLinkedList<string>> res = HandlePurchases.Instance.purchaseItems(user, deliveryParameters, paymentParameters);
             Assert.IsFalse(res.getTag());
@@ -171,8 +169,8 @@ namespace WSEP212_TESTS.UnitTests
             Assert.AreEqual(user.purchases.Count, 0);
             Assert.AreEqual(user.shoppingCart.shoppingBags.Count, 1);
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].purchasesHistory.Count, 0);
-            PurchasePolicyInterface.mock = false;
             Assert.AreEqual(StoreRepository.Instance.stores[storeID1].storage[itemID1].quantity, 10);
+            PurchasePolicyInterface.mock = false;
         }
 
         [TestMethod]
