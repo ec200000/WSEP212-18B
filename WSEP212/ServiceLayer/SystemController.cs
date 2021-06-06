@@ -60,6 +60,10 @@ namespace WSEP212.ServiceLayer
                 string jsonFilePath = "init.json";
                 string json = File.ReadAllText(jsonFilePath);
                 dynamic array = JsonConvert.DeserializeObject(json);
+                string loggedUser = array.loggedUser;
+                User u = UserRepository.Instance.findUserByUserName(loggedUser).getValue();
+                if(u.state==null)
+                    login(loggedUser, "123456");
                 
                 // CREATE STORES
                 foreach (var item in array.stores)
@@ -98,7 +102,8 @@ namespace WSEP212.ServiceLayer
                     string appoint = item.appoint;
                     string storeName = item.storeName;
                     string storeID = item.storeID;
-                    if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager) == null)
+                    int id = int.Parse(storeID);
+                    if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager && p.StoreID == id) == null)
                     {
                         appointStoreManager(manager, appoint, int.Parse(storeID));
                         ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
@@ -107,14 +112,13 @@ namespace WSEP212.ServiceLayer
                             if (perm.ToString().Equals("StorageManagment"))
                                 perms.TryAdd((int) Permissions.StorageManagment);
                         }
-
                         editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
                     }
                 }
-
-                UserRepository.Instance.initRepo();
-                string loggedUser = array.loggedUser;
+                
                 logout(loggedUser);
+                
+                UserRepository.Instance.initRepo();
             }
             catch (SystemException e)
             {

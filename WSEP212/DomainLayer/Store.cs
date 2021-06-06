@@ -236,6 +236,7 @@ namespace WSEP212.DomainLayer
         // If the item has n quantity in the store, all the n will be deleted
         public RegularResult removeItemFromStorage(int itemID)
         {
+            Item item = storage[itemID];
             if (storage.ContainsKey(itemID))
             {
                 var res = storage.TryRemove(itemID, out _);
@@ -244,12 +245,18 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                     if (result != null)
                     {
-                        //result.storage = storage;
-                        if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
-                            result.StorageAsJson = this.StorageAsJson;
-                        lock(SystemDBAccess.savelock)
-                            SystemDBAccess.Instance.SaveChanges();
-                        return new Ok("Item Was Successfully Removed From The Store's Storage");
+                        var res2 = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == itemID);
+                        if (res2 != null)
+                        {
+                            SystemDBAccess.Instance.Items.Remove(res2);
+                            //result.storage = storage;
+                            if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
+                                result.StorageAsJson = this.StorageAsJson;
+                            lock(SystemDBAccess.savelock)
+                                SystemDBAccess.Instance.SaveChanges();
+                            return new Ok("Item Was Successfully Removed From The Store's Storage");
+                        }
+                        
                     }
                     return new Failure("Could not remove the item!");
                 }
