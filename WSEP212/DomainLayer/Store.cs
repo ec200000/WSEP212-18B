@@ -342,8 +342,9 @@ namespace WSEP212.DomainLayer
                 //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 lock(SystemDBAccess.savelock)
                     SystemDBAccess.Instance.SaveChanges();
+                return res;
             }
-            return 1;
+            return -1;
         }
 
         // removes purchase prediacte from the store

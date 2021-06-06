@@ -10,11 +10,16 @@ namespace WSEP212.DomainLayer
 {
     public class PurchasePolicyMock : PurchasePolicyInterface
     {
+        //singelton
+        private static readonly Lazy<PurchasePolicyMock> lazy
+            = new Lazy<PurchasePolicyMock>(() => new PurchasePolicyMock());
+
+        public static PurchasePolicyMock Instance
+            => lazy.Value;
+        
         public String purchasePolicyName { get; set; }
         public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
-
-        public PurchasePolicyMock() { }
 
         // there is no predicates in this policy
         public int addPurchasePredicate(LocalPredicate<PurchaseDetails> newPredicate, string predDescription)
@@ -43,6 +48,8 @@ namespace WSEP212.DomainLayer
         // approve all the purchases
         public RegularResult approveByPurchasePolicy(PurchaseDetails purchaseDetails)
         {
+            if (PurchasePolicyInterface.mock)
+                return BadPurchasePolicyMock.Instance.approveByPurchasePolicy(purchaseDetails);
             return new Ok("Purchase Approved By The Purchase Policy");
         }
 
