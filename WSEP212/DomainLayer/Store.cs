@@ -46,6 +46,7 @@ namespace WSEP212.DomainLayer
                     typeof(SalePolicy.SalePolicy),
                     typeof(SalePolicyMock),
                     typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(BadPurchasePolicyMock),
                     typeof(PurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
                     typeof(ItemSubmitOfferPurchase),
@@ -197,7 +198,7 @@ namespace WSEP212.DomainLayer
                         var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                         if (result != null)
                         {
-                            result.storage = storage;
+                            //result.storage = storage;
                             if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                                 result.StorageAsJson = this.StorageAsJson;
                             lock(SystemDBAccess.savelock)
@@ -217,7 +218,7 @@ namespace WSEP212.DomainLayer
                 var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                 if (res != null)
                 {
-                    res.storage = storage;
+                    //res.storage = storage;
                     if(!JToken.DeepEquals(res.StorageAsJson, this.StorageAsJson))
                         res.StorageAsJson = this.StorageAsJson;
                     lock(SystemDBAccess.savelock)
@@ -243,7 +244,7 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                     if (result != null)
                     {
-                        result.storage = storage;
+                        //result.storage = storage;
                         if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                             result.StorageAsJson = this.StorageAsJson;
                         lock(SystemDBAccess.savelock)
@@ -269,7 +270,7 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                     if (result != null)
                     {
-                        result.storage = storage;
+                        //result.storage = storage;
                         if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                             result.StorageAsJson = this.StorageAsJson;
                         lock(SystemDBAccess.savelock)
@@ -304,7 +305,7 @@ namespace WSEP212.DomainLayer
                 var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                 if (res.getTag() && result != null)
                 {
-                    result.storage = storage;
+                    //result.storage = storage;
                     if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                         result.StorageAsJson = this.StorageAsJson;
                     lock(SystemDBAccess.savelock)   

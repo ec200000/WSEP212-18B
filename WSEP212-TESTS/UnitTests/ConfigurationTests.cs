@@ -18,7 +18,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void configurationSuccess()
         {
-            Assert.AreEqual(SystemDBAccess.database, "wsep212Dep");
+            Assert.AreEqual(SystemDBAccess.database, "wsep212Btest");
             Assert.AreEqual(SystemDBAccess.server, "wsep212b18");
             Assert.AreEqual(SystemDBAccess.userID, "wsep212b@wsep212b18");
             Assert.AreEqual(SystemDBAccess.password, "Ab123456");

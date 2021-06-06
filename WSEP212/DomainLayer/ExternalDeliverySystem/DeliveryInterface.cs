@@ -8,6 +8,7 @@ namespace WSEP212.DomainLayer.ExternalDeliverySystem
 {
     public interface DeliveryInterface
     {
+        public static bool mock = false;
         public int deliverItems(string sendToName, string address, string city, string country, string zip);
         public bool cancelDelivery(int transactionID);
     }

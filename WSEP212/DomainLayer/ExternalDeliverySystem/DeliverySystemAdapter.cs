@@ -23,12 +23,22 @@ namespace WSEP212.DomainLayer.ExternalDeliverySystem
 
         public int deliverItems(string sendToName, string address, string city, string country, string zip)
         {
-            return this.deliverySystemAPI.deliverItemsAsync(sendToName, address, city, country, zip).Result;
+            if(!DeliveryInterface.mock)
+                return this.deliverySystemAPI.deliverItemsAsync(sendToName, address, city, country, zip).Result;
+            else
+            {
+                return BadDeliverySystemMock.Instance.deliverItems(sendToName, address, city, country, zip);
+            }
         }
 
         public bool cancelDelivery(int transactionID)
         {
-            return this.deliverySystemAPI.cancelDeliveryAsync(transactionID).Result;
+            if(!DeliveryInterface.mock)
+                return this.deliverySystemAPI.cancelDeliveryAsync(transactionID).Result;
+            else
+            {
+                return BadDeliverySystemMock.Instance.cancelDelivery(transactionID);
+            }
         }
     }
 }

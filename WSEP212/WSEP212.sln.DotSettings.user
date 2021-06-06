@@ -1,12 +1,31 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FBD9100B_002D11D2_002D4D9F_002DAC6E_002DE7299ABDF513_002Fd_003AControllers_002Ff_003AHomeController_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=06e445bc_002Dcf02_002D4ee7_002D8f69_002D0496936679f1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;WSEP212-TESTS&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.PurchaseTypeTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\ec200\AppData\Local\JetBrains\Rider2020.3\resharper-host\temp\Rider\vAny\CoverageData\_WSEP212.-2112122613\Snapshot\snapshot.utdcvr</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6ded7058_002Dfaac_002D445a_002Da1a5_002D9e7bc4d247f6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ExternalSystemsAPITests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ExternalSystemsAPITests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.HandlePurchasesTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ItemTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.PolicyPredicateTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.PurchaseTypeTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.SaleTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ShoppingBagTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ShoppingCartTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.StoreRepositoryTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.StoreTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.UserRepositoryTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.UnitTests.ConfigurationTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.ShoppingCartTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StoreManagementTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;MSTest::F6569108-5FF8-4E1D-A6C8-622D90AA879B::net5.0::WSEP212_TESTS.AcceptanceTests.StoreAcceptanceTests&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFolder&gt;F6569108-5FF8-4E1D-A6C8-622D90AA879B/d:IntegrationTests&lt;/ProjectFolder&gt;&#xD;
+    &lt;ProjectFile&gt;F6569108-5FF8-4E1D-A6C8-622D90AA879B/d:AcceptanceTests/f:StorePoliciesAcceptanceTests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/SpawnedProcessesKnownList/=sqlservr_002Eexe/@EntryIndexedValue">KillOrphaned</s:String>
+	
 	
 	
 	

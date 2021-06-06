@@ -27,8 +27,8 @@ namespace WebApplication
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            SystemController.Instance.initRepo();
             readConfigurationFile();
+            SystemController.Instance.initRepo();
         }
 
         public IConfiguration Configuration { get; }
