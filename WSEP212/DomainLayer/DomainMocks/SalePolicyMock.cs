@@ -10,10 +10,15 @@ namespace WSEP212.DomainLayer
 {
     public class SalePolicyMock : SalePolicyInterface
     {
+        //singelton
+        private static readonly Lazy<SalePolicyMock> lazy
+            = new Lazy<SalePolicyMock>(() => new SalePolicyMock());
+
+        public static SalePolicyMock Instance
+            => lazy.Value;
+        
         public String salesPolicyName { get; set; }
         public ConcurrentDictionary<int, Sale> storeSales { get; set; }
-
-        public SalePolicyMock() { }
 
         public int addSale(int salePercentage, ApplySaleOn saleOn, string saleDescription)
         {

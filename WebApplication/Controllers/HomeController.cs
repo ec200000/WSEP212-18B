@@ -2684,14 +2684,18 @@ namespace WebApplication.Controllers
                 string userName = HttpContext.Session.GetString(SessionName);
                 ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>
                     pricesAfterSale = systemController.getItemsAfterSalePrices(userName);
+                ConcurrentDictionary<int, int> itemsQuantities;
                 double finalPriceAfterSale = 0;
-                foreach (ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> dict in pricesAfterSale.getValue().Values)
+                foreach (KeyValuePair<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> dict in
+                    pricesAfterSale.getValue())
                 {
-                    foreach (KeyValuePair<double, PriceStatus> keyValuePair in dict.Values)
+                    itemsQuantities = systemController.bagItemsQuantities(userName, dict.Key).getValue();
+                    foreach (KeyValuePair<int, KeyValuePair<double, PriceStatus>> itemPrice in dict.Value)
                     {
-                        finalPriceAfterSale = finalPriceAfterSale + keyValuePair.Key;
+                        finalPriceAfterSale += itemPrice.Value.Key * itemsQuantities[itemPrice.Key];
                     }
                 }
+
                 HttpContext.Session.SetObject("finalPriceAfterSale", finalPriceAfterSale);
                 return RedirectToAction("TryPriceAftereSale");
             }
@@ -2707,24 +2711,27 @@ namespace WebApplication.Controllers
 
             return null;
         }
+
         public IActionResult TryPriceBeforeSale(ShoppingCartModel model)
         {
             try
             {
                 SystemController systemController = SystemController.Instance;
                 string userName = HttpContext.Session.GetString(SessionName);
-                ShoppingCart res = systemController.viewShoppingCart(HttpContext.Session.GetString(SessionName)).getValue();
-                ConcurrentDictionary<int, ShoppingBag> shoppingBagss = res.shoppingBags;
-
+                ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>
+                    pricesBeforeSale = systemController.getItemsBeforeSalePrices(userName);
+                ConcurrentDictionary<int, int> itemsQuantities;
                 double finalPriceBeforeSale = 0;
-                foreach (ShoppingBag shopBag in shoppingBagss.Values)
+                foreach (KeyValuePair<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> dict in
+                    pricesBeforeSale.getValue())
                 {
-                    ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> prices = shopBag.allItemsPricesAndStatus();
-                    foreach (KeyValuePair<double, PriceStatus> keyValuePair in prices.Values)
+                    itemsQuantities = systemController.bagItemsQuantities(userName, dict.Key).getValue();
+                    foreach (KeyValuePair<int, KeyValuePair<double, PriceStatus>> itemPrice in dict.Value)
                     {
-                        finalPriceBeforeSale = finalPriceBeforeSale + keyValuePair.Key;
+                        finalPriceBeforeSale += itemPrice.Value.Key * itemsQuantities[itemPrice.Key];
                     }
                 }
+
                 HttpContext.Session.SetObject("finalPriceBeforeSale", finalPriceBeforeSale);
                 return RedirectToAction("TryPriceBeforeSale");
             }
@@ -2740,7 +2747,7 @@ namespace WebApplication.Controllers
 
             return null;
         }
-        
+
         public IActionResult GetStoreInformation(StoreModel model)
         {
             try

@@ -77,14 +77,9 @@ namespace WSEP212.DomainLayer
                 ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
                 pers.TryAdd(appointeepermission);  // new seller permissions
                 SellerPermissions permissions = SellerPermissions.getSellerPermissions(sellerRes.getValue().userName, storeRes.getValue().storeID, grantor.userName, pers);
-                RegularResult addSellerRes = storeRes.getValue().addNewStoreSeller(permissions);
-                if (addSellerRes.getTag())
-                {
-                    if(sellerRes.getValue().addSellerPermissions(permissions))
-                        return new Ok("The Appointment Of The New Seller To The Store Made Successfully");
-                    return new Failure("Could not add seller permission");
-                }
-                return addSellerRes;
+                if(sellerRes.getValue().addSellerPermissions(permissions))
+                    return new Ok("The Appointment Of The New Seller To The Store Made Successfully");
+                return new Failure("Could not add seller permission");
             }
             return hasPermissionRes;
         }

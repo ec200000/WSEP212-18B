@@ -60,42 +60,51 @@ namespace WSEP212.ServiceLayer
                 string jsonFilePath = "init.json";
                 string json = File.ReadAllText(jsonFilePath);
                 dynamic array = JsonConvert.DeserializeObject(json);
-
-                if (!SystemDBAccess.Instance.Stores.Any())
+                string loggedUser = array.loggedUser;
+                User u = UserRepository.Instance.findUserByUserName(loggedUser).getValue();
+                if(u.state==null)
+                    login(loggedUser, "123456");
+                
+                // CREATE STORES
+                foreach (var item in array.stores)
                 {
-                    // CREATE STORES
-                    foreach (var item in array.stores)
-                    {
-                        string storeOpener = item.storeOpener;
-                        string storeName = item.storeName;
-                        string storeAddress = item.storeAddress;
+                    string storeOpener = item.storeOpener;
+                    string storeName = item.storeName;
+                    string storeAddress = item.storeAddress;
+                    if (SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeName == storeName) == null) {
                         openStore(storeOpener, storeName, storeAddress, "0", "0");
                     }
+                }
 
-                    // ADD ITEMS
-                    foreach (var item in array.items)
-                    {
-                        string userAdded = item.userAdded;
-                        string storeName = item.storeName;
-                        string storeID = item.storeID;
-                        string itemName = item.itemName;
-                        string itemPrice = item.itemPrice;
-                        string itemQuantity = item.itemQuantity;
-                        string description = item.description;
-                        string category = item.category;
+                // ADD ITEMS
+                foreach (var item in array.items)
+                {
+                    string userAdded = item.userAdded;
+                    string storeName = item.storeName;
+                    string storeID = item.storeID;
+                    string itemName = item.itemName;
+                    string itemPrice = item.itemPrice;
+                    string itemQuantity = item.itemQuantity;
+                    string description = item.description;
+                    string category = item.category;
+                    if (SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemName == itemName) == null) {
                         addItemToStorage(userAdded, int.Parse(storeID),
                             new ItemDTO(int.Parse(storeID), int.Parse(itemQuantity), itemName, description,
                                 new ConcurrentDictionary<string, ItemReview>(), double.Parse(itemPrice),
                                 int.Parse(category)));
                     }
+                }
 
-                    // APPOINT
-                    foreach (var item in array.appoints)
+                // APPOINT
+                foreach (var item in array.appoints)
+                {
+                    string manager = item.manager;
+                    string appoint = item.appoint;
+                    string storeName = item.storeName;
+                    string storeID = item.storeID;
+                    int id = int.Parse(storeID);
+                    if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager && p.StoreID == id) == null)
                     {
-                        string manager = item.manager;
-                        string appoint = item.appoint;
-                        string storeName = item.storeName;
-                        string storeID = item.storeID;
                         appointStoreManager(manager, appoint, int.Parse(storeID));
                         ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
                         foreach (var perm in item.permissions)
@@ -103,14 +112,13 @@ namespace WSEP212.ServiceLayer
                             if (perm.ToString().Equals("StorageManagment"))
                                 perms.TryAdd((int) Permissions.StorageManagment);
                         }
-
                         editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
                     }
-
-                    UserRepository.Instance.initRepo();
-                    string loggedUser = array.loggedUser;
-                    logout(loggedUser);
-                } 
+                }
+                
+                logout(loggedUser);
+                
+                UserRepository.Instance.initRepo();
             }
             catch (SystemException e)
             {
@@ -1362,6 +1370,46 @@ namespace WSEP212.ServiceLayer
             
         }
 
+        public ResultWithValue<ConcurrentDictionary<int, int>> bagItemsQuantities(String userName, int storeID)
+        {
+            try
+            {
+                String info = $"bagItemsQuantities Event was triggered, with the parameters:" +
+                              $"userName: {userName}, storeID: {storeID}";
+                Logger.Instance.writeInformationEventToLog(info);
+                return SystemControllerFacade.Instance.bagItemsQuantities(userName, storeID);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, int>>("failed", null);
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName)
+        {
+            try
+            {
+                String info = $"getItemsBeforeSalePrices Event was triggered, with the parameters:" +
+                              $"userName: {userName}";
+                Logger.Instance.writeInformationEventToLog(info);
+                return SystemControllerFacade.Instance.getItemsBeforeSalePrices(userName);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("failed", null);
+        }
+
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName)
         {
             try
@@ -1379,9 +1427,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-
             return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("failed", null);
-            
         }
     }
 }

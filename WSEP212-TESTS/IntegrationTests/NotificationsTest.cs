@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication;
 using WSEP212;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
@@ -26,6 +27,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestInitialize]
         public void SetupAuth()
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             /*if(SystemDBAccess.Instance.UsersInfo.Any())
                 SystemDBAccess.Instance.Database.ExecuteSqlCommand("TRUNCATE TABLE Authentications");

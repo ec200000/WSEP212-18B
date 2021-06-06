@@ -33,6 +33,7 @@ namespace WSEP212.DomainLayer
                     typeof(SalePolicyMock),
                     typeof(PurchasePolicy.PurchasePolicy),
                     typeof(PurchasePolicyMock),
+                    typeof(BadPurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
                     typeof(ItemSubmitOfferPurchase),
                     typeof(SimplePredicate),
@@ -98,14 +99,19 @@ namespace WSEP212.DomainLayer
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                         return addItemRes;
                     }
-                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
-                    if (result != null)
+
+                    lock (SystemDBAccess.savelock)
                     {
-                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
-                            result.BagsAsJson = this.BagsAsJson;
-                        lock(SystemDBAccess.savelock)
+                        var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
+                        if (result != null)
+                        {
+                            if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                                result.BagsAsJson = this.BagsAsJson;
+                       
                             SystemDBAccess.Instance.SaveChanges();
+                        }  
                     }
+                    
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -254,6 +260,30 @@ namespace WSEP212.DomainLayer
                 }
                 return new OkWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", purchaseInvoices);
             }
+        }
+        
+        // returns all items in bag with their quantities
+        public ResultWithValue<ConcurrentDictionary<int, int>> bagItemsQuantities(int storeID)
+        {
+            if (shoppingBags.ContainsKey(storeID))
+            {
+                return new OkWithValue<ConcurrentDictionary<int, int>>("Quantities Of The Items Found Successfully", shoppingBags[storeID].viewItemsQuantities());
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, int>>("The Store ID Doesn't Exist In The Shopping Cart", null);
+        }
+
+        // calculate the final price of each item in the cart, before sales
+        // returns <storeID, <itemID, <priceAfterSale, status>>>
+        public ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> getItemsBeforeSalePrices()
+        {
+            ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> pricesBeforeSale = new ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>();
+            ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> bagAfterSale;
+            foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
+            {
+                bagAfterSale = shoppingBag.Value.allItemsPricesAndStatus();
+                pricesBeforeSale.TryAdd(shoppingBag.Key, bagAfterSale);
+            }
+            return pricesBeforeSale;
         }
 
         // calculate the final price of each item in the cart, after sales

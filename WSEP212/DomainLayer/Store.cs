@@ -46,6 +46,7 @@ namespace WSEP212.DomainLayer
                     typeof(SalePolicy.SalePolicy),
                     typeof(SalePolicyMock),
                     typeof(PurchasePolicy.PurchasePolicy),
+                    typeof(BadPurchasePolicyMock),
                     typeof(PurchasePolicyMock),
                     typeof(ItemImmediatePurchase),
                     typeof(ItemSubmitOfferPurchase),
@@ -197,7 +198,7 @@ namespace WSEP212.DomainLayer
                         var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                         if (result != null)
                         {
-                            result.storage = storage;
+                            //result.storage = storage;
                             if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                                 result.StorageAsJson = this.StorageAsJson;
                             lock(SystemDBAccess.savelock)
@@ -217,7 +218,7 @@ namespace WSEP212.DomainLayer
                 var res = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                 if (res != null)
                 {
-                    res.storage = storage;
+                    //res.storage = storage;
                     if(!JToken.DeepEquals(res.StorageAsJson, this.StorageAsJson))
                         res.StorageAsJson = this.StorageAsJson;
                     lock(SystemDBAccess.savelock)
@@ -235,6 +236,7 @@ namespace WSEP212.DomainLayer
         // If the item has n quantity in the store, all the n will be deleted
         public RegularResult removeItemFromStorage(int itemID)
         {
+            Item item = storage[itemID];
             if (storage.ContainsKey(itemID))
             {
                 var res = storage.TryRemove(itemID, out _);
@@ -243,12 +245,18 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                     if (result != null)
                     {
-                        result.storage = storage;
-                        if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
-                            result.StorageAsJson = this.StorageAsJson;
-                        lock(SystemDBAccess.savelock)
-                            SystemDBAccess.Instance.SaveChanges();
-                        return new Ok("Item Was Successfully Removed From The Store's Storage");
+                        var res2 = SystemDBAccess.Instance.Items.SingleOrDefault(i => i.itemID == itemID);
+                        if (res2 != null)
+                        {
+                            SystemDBAccess.Instance.Items.Remove(res2);
+                            //result.storage = storage;
+                            if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
+                                result.StorageAsJson = this.StorageAsJson;
+                            lock(SystemDBAccess.savelock)
+                                SystemDBAccess.Instance.SaveChanges();
+                            return new Ok("Item Was Successfully Removed From The Store's Storage");
+                        }
+                        
                     }
                     return new Failure("Could not remove the item!");
                 }
@@ -269,7 +277,7 @@ namespace WSEP212.DomainLayer
                     var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                     if (result != null)
                     {
-                        result.storage = storage;
+                        //result.storage = storage;
                         if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                             result.StorageAsJson = this.StorageAsJson;
                         lock(SystemDBAccess.savelock)
@@ -304,7 +312,7 @@ namespace WSEP212.DomainLayer
                 var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
                 if (res.getTag() && result != null)
                 {
-                    result.storage = storage;
+                    //result.storage = storage;
                     if(!JToken.DeepEquals(result.StorageAsJson, this.StorageAsJson))
                         result.StorageAsJson = this.StorageAsJson;
                     lock(SystemDBAccess.savelock)   
@@ -341,8 +349,9 @@ namespace WSEP212.DomainLayer
                 //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
                 lock(SystemDBAccess.savelock)
                     SystemDBAccess.Instance.SaveChanges();
+                return res;
             }
-            return 1;
+            return -1;
         }
 
         // removes purchase prediacte from the store

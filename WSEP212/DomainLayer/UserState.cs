@@ -46,14 +46,16 @@ namespace WSEP212.DomainLayer
             RegularResult res = this.user.shoppingCart.addItemToShoppingBag(storeID, itemID, quantity, purchaseType);
             if (res.getTag() && Authentication.Instance.usersInfo.ContainsKey(this.user.userName))
             {
-                var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
-                if (result != null)
+                lock (SystemDBAccess.savelock)
                 {
-                    result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
-                    lock(SystemDBAccess.savelock)
+                    var result = SystemDBAccess.Instance.Carts.SingleOrDefault(s => s.cartOwner.Equals(this.user.shoppingCart.cartOwner));
+                    if (result != null)
+                    {
+                        result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
+                    
                         SystemDBAccess.Instance.SaveChanges();
+                    } 
                 }
-
                 // returns store owners to send notification only if purchase type is submit offer
                 if(purchaseType.getPurchaseType() == PurchaseType.SubmitOfferPurchase)
                 {

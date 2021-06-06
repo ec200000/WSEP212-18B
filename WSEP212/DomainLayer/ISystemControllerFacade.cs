@@ -65,6 +65,8 @@ namespace WSEP212.DomainLayer
         public RegularResult loginAsSystemManager(string userName, string password);
         public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
         public ResultWithValue<ConcurrentDictionary<int, PurchaseInvoice>> getUserPurchaseHistory(string userName);
+        public ResultWithValue<ConcurrentDictionary<int, int>> bagItemsQuantities(String userName, int storeID);
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName);
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName);
         public ConcurrentDictionary<Store, ConcurrentLinkedList<Item>> getItemsInStoresInformation();
         public ConcurrentDictionary<Item, int> searchItems(SearchItemsDTO searchItemsDTO);

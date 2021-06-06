@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using WebApplication;
 using WSEP212;
 using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer;
@@ -17,6 +18,7 @@ namespace WSEP212_TESTS.UnitTests
         [ClassInitialize]
         public static void SetupAuth(TestContext context)
         {
+            Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
             
             SystemDBAccess.Instance.Bids.RemoveRange(SystemDBAccess.Instance.Bids);
@@ -29,7 +31,8 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBAccess.Instance.DelayedNotifications.RemoveRange(SystemDBAccess.Instance.DelayedNotifications);
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
-            
+            SystemDBAccess.Instance.SaveChanges();
+
             UserRepository.Instance.initRepo();
             user1 = new User("a");
             UserRepository.Instance.insertNewUser(user1, "123456");
@@ -67,15 +70,6 @@ namespace WSEP212_TESTS.UnitTests
             UserRepository.Instance.changeUserLoginStatus(user2.userName, false, null); //login -> logout
             User u2 = UserRepository.Instance.findUserByUserName(user2.userName).getValue();
             Assert.IsFalse(UserRepository.Instance.users[u2]);
-        }
-
-        [TestMethod]
-        public void removeExistingUserTest()
-        {
-            UserRepository.Instance.removeUser(user1); //removing existing user
-            Assert.IsFalse(UserRepository.Instance.users.ContainsKey(user1));
-            
-            UserRepository.Instance.insertNewUser(user1, "123456");
         }
 
         [TestMethod]
@@ -120,7 +114,7 @@ namespace WSEP212_TESTS.UnitTests
             UserRepository.Instance.users.TryAdd(user3, false);
             var res = UserRepository.Instance.getAllUsersPurchaseHistory();
             Assert.IsNotNull(res);
-            Assert.AreEqual(5, res.Count); // 5 users
+            Assert.AreEqual(4, res.Count); // 4 users
             foreach (var p in res)
             {
                 Assert.AreEqual(p.Key.Equals("d") ? 1 : 0, p.Value.Count);

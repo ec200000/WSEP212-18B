@@ -1268,6 +1268,43 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        public ResultWithValue<ConcurrentDictionary<int, int>> bagItemsQuantities(String userName, int storeID)
+        {
+            try
+            {
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    return new FailureWithValue<ConcurrentDictionary<int, int>>(userRes.getMessage(), null);
+                }
+                return userRes.getValue().shoppingCart.bagItemsQuantities(storeID);
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In bagItemsQuantities function, the error is: {e.Message}");
+                return new FailureWithValue<ConcurrentDictionary<int, int>>(e.Message, null);
+            }
+        }
+
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName)
+        {
+            try
+            {
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(userRes.getMessage(), null);
+                }
+                ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> itemsPrices = userRes.getValue().shoppingCart.getItemsBeforeSalePrices();
+                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("Return User Items Prices Before Sales", itemsPrices);
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In getItemsBeforeSalePrices function, the error is: {e.Message}");
+                return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(e.Message, null);
+            }
+        }
+
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName)
         {
             try
@@ -1278,11 +1315,11 @@ namespace WSEP212.DomainLayer
                     return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(userRes.getMessage(), null);
                 }
                 ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> itemsPrices = userRes.getValue().shoppingCart.getItemsAfterSalePrices();
-                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("Return User Items Prices Afetr Sales", itemsPrices);
+                return new OkWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("Return User Items Prices After Sales", itemsPrices);
             }
             catch (Exception e) when (!(e is NotImplementedException))
             {
-                Logger.Instance.writeErrorEventToLog($"In GetUserPurchaseHistory function, the error is: {e.Message}");
+                Logger.Instance.writeErrorEventToLog($"In getItemsAfterSalePrices function, the error is: {e.Message}");
                 return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(e.Message, null);
             }
         }

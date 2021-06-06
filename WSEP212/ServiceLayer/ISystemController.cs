@@ -70,6 +70,8 @@ namespace WSEP212.ServiceLayer
         public RegularResult loginAsSystemManager(string userName, string password);
         public ResultWithValue<ShoppingCart> viewShoppingCart(string userName);
 
+        public ResultWithValue<ConcurrentDictionary<int, int>> bagItemsQuantities(String userName, int storeID);
+        public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName);
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName);
         public ResultWithValue<ConcurrentLinkedList<int>> getUsersStores(String userName);
         public RegularResult isStoreOwner(string userName, int storeID);
