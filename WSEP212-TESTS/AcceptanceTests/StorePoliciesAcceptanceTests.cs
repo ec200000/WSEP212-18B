@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WSEP212.DomainLayer;
 using System.Collections.Concurrent;
 using WSEP212;
@@ -19,6 +20,7 @@ namespace WSEP212_TESTS.AcceptanceTests
     {
         public static SystemController controller = SystemController.Instance;
         public static int milkID;
+        public static int bambaID;
         public static int storeID;
         public static PaymentParametersDTO paymentParameters;
         public static DeliveryParametersDTO deliveryParameters;
@@ -44,25 +46,32 @@ namespace WSEP212_TESTS.AcceptanceTests
             controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");
             storeID = controller.openStore("theuser", "store", "somewhere", "DEFAULT", "DEFAULT").getValue();
-            int itemID = controller.addItemToStorage("theuser", storeID,
+            bambaID = controller.addItemToStorage("theuser", storeID,
                 new ItemDTO(storeID, 500, "bamba", "snack for childrens",
                     new ConcurrentDictionary<string, ItemReview>(), 4.5, (int) ItemCategory.Snacks)).getValue();
-            controller.addItemToShoppingCart("theuser", storeID, itemID, 2, 0, 4.5);
             milkID = controller.addItemToStorage("theuser", storeID,
                 new ItemDTO(storeID, 500, "milk", "pasteurized milk", new ConcurrentDictionary<string, ItemReview>(), 8,
                     (int) ItemCategory.Dairy)).getValue();
-            controller.addItemToShoppingCart("theuser", storeID, milkID, 2, 0, 8);
-            itemID = controller.addItemToStorage("theuser", storeID,
-                new ItemDTO(storeID, 500, "bisli", "snack for childrens",
-                    new ConcurrentDictionary<string, ItemReview>(), 4, (int) ItemCategory.Snacks)).getValue();
-            controller.addItemToShoppingCart("theuser", storeID, itemID, 5, 0, 4);
             deliveryParameters = new DeliveryParametersDTO("theuser", "Rebinovich", "Holon", "Israel", "521036");
             paymentParameters = new PaymentParametersDTO("5042005811", "4", "2024", "theuser", "023", "025845318");
+        }
+
+        private void addItemsForPurchase()
+        {
+            controller.addItemToShoppingCart("theuser", storeID, bambaID, 2, 0, 4.5);
+            controller.addItemToShoppingCart("theuser", storeID, milkID, 2, 0, 8);
+        }
+        
+        private void cleanShoppingCart()
+        {
+            controller.removeItemFromShoppingCart("theuser", storeID, bambaID);
+            controller.removeItemFromShoppingCart("theuser", storeID, milkID);
         }
 
         [TestMethod]
         public void noPolicyTest()
         {
+            addItemsForPurchase();
             ResultWithValue<NotificationDTO> purchaseRes =
                 controller.purchaseItems("theuser", deliveryParameters, paymentParameters);
             Assert.IsTrue(purchaseRes.getTag());
@@ -71,6 +80,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void approvedByPurchasePolicySimpleTest()
         {
+            addItemsForPurchase();
             LocalPredicate<PurchaseDetails> localPredicate =
                 new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 2);
             controller.addPurchasePredicate("theuser", storeID, localPredicate,
@@ -83,6 +93,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void approvedByPurchasePolicyComplexTest()
         {
+            addItemsForPurchase();
             LocalPredicate<PurchaseDetails> itemsInBag =
                 new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 2);
             int predID1 = controller.addPurchasePredicate("theuser", storeID, itemsInBag, "more than 2 items in bag")
@@ -106,6 +117,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void rejectedByPurchasePolicySimpleTest()
         {
+            addItemsForPurchase();
             LocalPredicate<PurchaseDetails> itemsInBag =
                 new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 20);
             int predicateID = controller
@@ -114,11 +126,13 @@ namespace WSEP212_TESTS.AcceptanceTests
                 controller.purchaseItems("theuser", deliveryParameters, paymentParameters);
             Assert.IsFalse(purchaseRes.getTag());
             controller.removePurchasePredicate("theuser", storeID, predicateID);
+            cleanShoppingCart();
         }
 
         [TestMethod]
         public void rejectedByPurchasePolicyComplexTest()
         {
+            addItemsForPurchase();
             LocalPredicate<PurchaseDetails> itemsInBag =
                 new LocalPredicate<PurchaseDetails>(pd => pd.numOfItemsInPurchase(), 2);
             int predID1 = controller.addPurchasePredicate("theuser", storeID, itemsInBag, "more than 2 items in bag")
@@ -135,13 +149,16 @@ namespace WSEP212_TESTS.AcceptanceTests
             ResultWithValue<NotificationDTO> purchaseRes =
                 controller.purchaseItems("theuser", deliveryParameters, paymentParameters);
             Assert.IsFalse(purchaseRes.getTag());
+            Console.WriteLine(purchaseRes.getMessage());
             controller.removePurchasePredicate("theuser", storeID, predID1);
             controller.removePurchasePredicate("theuser", storeID, composedID);
+            cleanShoppingCart();
         }
 
         [TestMethod]
         public void appliedSaleSimpleTest()
         {
+            addItemsForPurchase();
             int saleID = controller.addSale("theuser", storeID, 50, new SaleOnCategory(ItemCategory.Snacks),
                 "50% sale on snacks").getValue();
             ResultWithValue<NotificationDTO> purchaseRes =
@@ -153,6 +170,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void appliedSaleComplexTest()
         {
+            addItemsForPurchase();
             int saleID1 = controller.addSale("theuser", storeID, 50, new SaleOnCategory(ItemCategory.Snacks),
                 "50% sale on snacks").getValue();
             int saleID2 = controller.addSale("theuser", storeID, 50, new SaleOnItem(milkID), "50% sale on milk")
@@ -167,12 +185,12 @@ namespace WSEP212_TESTS.AcceptanceTests
                 controller.purchaseItems("theuser", deliveryParameters, paymentParameters);
             Assert.IsTrue(purchaseRes.getTag());
             controller.removePurchasePredicate("theuser", storeID, composedID);
-
         }
 
         [TestMethod]
         public void appliedConditionalSaleTest()
         {
+            addItemsForPurchase();
             int saleID = controller.addSale("theuser", storeID, 50, new SaleOnCategory(ItemCategory.Snacks),
                 "50% sale on snacks").getValue();
             LocalPredicate<PurchaseDetails> totalBagPrice =
@@ -189,6 +207,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         [TestMethod]
         public void notAppliedConditionalSaleTest()
         {
+            addItemsForPurchase();
             int saleID = controller.addSale("theuser", storeID, 50, new SaleOnCategory(ItemCategory.Snacks),
                 "50% sale on snacks").getValue();
             LocalPredicate<PurchaseDetails> totalBagPrice =
