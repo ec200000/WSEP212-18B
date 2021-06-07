@@ -127,7 +127,7 @@ namespace WSEP212_TESTS.IntegrationTests
             ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0, store.storeID);
             addItemToShoppingCart(store.storeID, itemIDA, 2, submitOfferPurchaseA);
             // can do the purchase
-            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved, "");
+            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved, "admin");
             ResultWithValue<ConcurrentLinkedList<String>> purchaseRes = purchaseItems();
             Assert.IsTrue(purchaseRes.getTag());
             Assert.AreEqual(1, user.purchases.Count);

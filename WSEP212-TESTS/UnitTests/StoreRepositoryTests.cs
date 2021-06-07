@@ -38,6 +38,7 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
             SystemDBAccess.Instance.SaveChanges();
+            StoreRepository.Instance.stores.Clear();
 
             UserRepository.Instance.initRepo();
             user = new User("admin", 80);
@@ -54,7 +55,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void addStoreTest()
         {
-            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega2", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             Assert.IsTrue(addStoreBool.getTag());
             StoreRepository.Instance.removeStore(addStoreBool.getValue());
         }
@@ -62,7 +63,7 @@ namespace WSEP212_TESTS.UnitTests
         [TestMethod]
         public void removeStoreTest()
         {
-            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
+            ResultWithValue<int> addStoreBool = StoreRepository.Instance.addStore("Mega3", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             int storeID = addStoreBool.getValue();
             
             RegularResult removeStoreBool = StoreRepository.Instance.removeStore(storeID);

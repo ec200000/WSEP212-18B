@@ -40,6 +40,7 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
             SystemDBAccess.Instance.SaveChanges();
+            StoreRepository.Instance.stores.Clear();
             
             UserRepository.Instance.initRepo();
             User admin = new User("admin");
@@ -175,7 +176,7 @@ namespace WSEP212_TESTS.UnitTests
             RegularResult res = shoppingBag.counterOffer(storeItemID, 8.0);
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(8.0, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
-            Assert.AreEqual(PriceStatus.Approved, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
+            Assert.AreEqual(PriceStatus.CounterOffer, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
 
             unsupportAndCleanBag(PurchaseType.SubmitOfferPurchase);
         }
