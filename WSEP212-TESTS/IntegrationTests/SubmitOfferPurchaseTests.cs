@@ -124,10 +124,10 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void simpleSuccessfulSubmitPurchaseTest()
         {
-            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0);
+            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0, store.storeID);
             addItemToShoppingCart(store.storeID, itemIDA, 2, submitOfferPurchaseA);
             // can do the purchase
-            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved);
+            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved, "");
             ResultWithValue<ConcurrentLinkedList<String>> purchaseRes = purchaseItems();
             Assert.IsTrue(purchaseRes.getTag());
             Assert.AreEqual(1, user.purchases.Count);
@@ -139,7 +139,7 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void simpleFailierSubmitPurchaseTest()
         {
-            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0);
+            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0, store.storeID);
             addItemToShoppingCart(store.storeID, itemIDA, 2, submitOfferPurchaseA);
             // do not approve the offer - cannot do the purchase
             ResultWithValue<ConcurrentLinkedList<String>> purchaseRes = purchaseItems();
@@ -153,12 +153,12 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void submitAndImmediatePurchaseTest()
         {
-            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0);
+            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(9.0, store.storeID);
             addItemToShoppingCart(store.storeID, itemIDA, 2, submitOfferPurchaseA);
             ItemImmediatePurchase immediatePurchaseB = new ItemImmediatePurchase(10.0);
             addItemToShoppingCart(store.storeID, itemIDB, 2, immediatePurchaseB);
             // can do the purchase
-            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved);
+            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved, "admin");
 
             ResultWithValue<ConcurrentLinkedList<String>> purchaseRes = purchaseItems();
             Assert.IsTrue(purchaseRes.getTag());
@@ -171,19 +171,19 @@ namespace WSEP212_TESTS.IntegrationTests
         [TestMethod]
         public void complexPurchaseTest()
         {
-            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(5.0);
+            ItemSubmitOfferPurchase submitOfferPurchaseA = new ItemSubmitOfferPurchase(5.0, store.storeID);
             addItemToShoppingCart(store.storeID, itemIDA, 2, submitOfferPurchaseA);
             ItemImmediatePurchase immediatePurchaseB = new ItemImmediatePurchase(10.0);
             addItemToShoppingCart(store.storeID, itemIDB, 2, immediatePurchaseB);
             // reject
-            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Rejected);
+            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Rejected, "admin");
 
             ResultWithValue<ConcurrentLinkedList<String>> purchaseRes = purchaseItems();
             Assert.IsFalse(purchaseRes.getTag());
 
             submitOffer(store.storeID, itemIDA, 9.0);
             // approve
-            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved);
+            user.shoppingCart.itemPriceStatusDecision(store.storeID, itemIDA, PriceStatus.Approved, "admin");
 
             purchaseRes = purchaseItems();
             Assert.IsTrue(purchaseRes.getTag());

@@ -10,6 +10,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
     {
         Approved,
         Pending,
-        Rejected
+        Rejected,
+        CounterOffer
     }
 }

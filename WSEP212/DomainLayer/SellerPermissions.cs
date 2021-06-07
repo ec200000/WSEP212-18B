@@ -32,7 +32,7 @@ namespace WSEP212.DomainLayer
         public string GrantorName{ get; set; }
         
         [NotMapped]
-        public ConcurrentDictionary<int, BidInfo> bids { get; set; }
+        public ConcurrentDictionary<int, BidInfo> bids { get; set; } // with bid id
         
         // Only the grantor can update the permissions of the grantee - no need for thread safe collection
         [NotMapped]

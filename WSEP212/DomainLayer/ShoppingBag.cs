@@ -195,7 +195,7 @@ namespace WSEP212.DomainLayer
                 RegularResult changingPriceRes = purchaseType.changeItemPrice(counterOffer);
                 if (changingPriceRes.getTag())
                 {
-                    return purchaseType.changeItemPriceStatus(PriceStatus.Approved);
+                    return purchaseType.changeItemPriceStatus(PriceStatus.CounterOffer);
                 }
                 return changingPriceRes;
             }
@@ -203,11 +203,11 @@ namespace WSEP212.DomainLayer
         }
 
         // update the status of the price - can be done only by store owners & managers
-        public RegularResult itemPriceStatusDecision(int itemID, PriceStatus priceStatus)
+        public RegularResult itemPriceStatusDecision(int itemID, PriceStatus priceStatus, string userName)
         {
             if (itemsPurchaseTypes.ContainsKey(itemID))
             {
-                return itemsPurchaseTypes[itemID].changeItemPriceStatus(priceStatus);
+                return itemsPurchaseTypes[itemID].changeItemPriceStatus(priceStatus, userName);
             }
             return new Failure("The Item Not Exist In The Shopping Bag");
         }
@@ -273,7 +273,8 @@ namespace WSEP212.DomainLayer
             ConcurrentDictionary<int, double> itemsPrices = new ConcurrentDictionary<int, double>();
             foreach (KeyValuePair<int, ItemPurchaseType> itemPurchaseType in itemsPurchaseTypes)
             {
-                if(itemPurchaseType.Value.getPriceStatus().Equals(PriceStatus.Approved))
+                if(itemPurchaseType.Value.getPriceStatus().Equals(PriceStatus.Approved) ||
+                   itemPurchaseType.Value.getPriceStatus().Equals(PriceStatus.CounterOffer))
                 {
                     itemsPrices.TryAdd(itemPurchaseType.Key, itemPurchaseType.Value.getCurrentPrice());
                 }

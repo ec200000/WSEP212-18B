@@ -319,7 +319,7 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes = hasPermissionInStore(storeID, Permissions.ConfirmPurchasePrice);
             if (hasPermissionRes.getTag())
             {
-                RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus);
+                RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus, this.user.userName);
                 if(res.getTag())
                 {
                     removeBid(storeID, itemID);

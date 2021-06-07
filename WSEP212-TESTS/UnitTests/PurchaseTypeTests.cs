@@ -106,7 +106,7 @@ namespace WSEP212_TESTS.UnitTests
         public void submitOfferSuccessfullyTest()
         {
             supportPurchaseType(PurchaseType.SubmitOfferPurchase);
-            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5);
+            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5, storeItemID);
             RegularResult resu = shoppingBag.addItem(storeItemID, 2, purchaseType);
             Assert.AreEqual(7.5, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
             Assert.AreEqual(PriceStatus.Pending, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
@@ -123,10 +123,10 @@ namespace WSEP212_TESTS.UnitTests
         public void approveOfferSuccessfullyTest()
         {
             supportPurchaseType(PurchaseType.SubmitOfferPurchase);
-            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5);
+            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5, storeItemID);
             shoppingBag.addItem(storeItemID, 2, purchaseType);
 
-            RegularResult res = shoppingBag.itemPriceStatusDecision(storeItemID, PriceStatus.Approved);
+            RegularResult res = shoppingBag.itemPriceStatusDecision(storeItemID, PriceStatus.Approved, "admin");
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(7.5, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
             Assert.AreEqual(PriceStatus.Approved, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
@@ -138,10 +138,10 @@ namespace WSEP212_TESTS.UnitTests
         public void rejectOfferSuccessfullyTest()
         {
             supportPurchaseType(PurchaseType.SubmitOfferPurchase);
-            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5);
+            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5, storeItemID);
             shoppingBag.addItem(storeItemID, 2, purchaseType);
 
-            RegularResult res = shoppingBag.itemPriceStatusDecision(storeItemID, PriceStatus.Rejected);
+            RegularResult res = shoppingBag.itemPriceStatusDecision(storeItemID, PriceStatus.Rejected, "admin");
             Assert.IsTrue(res.getTag());
             Assert.AreEqual(7.5, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
             Assert.AreEqual(PriceStatus.Rejected, shoppingBag.itemsPurchaseTypes[storeItemID].getPriceStatus());
@@ -156,7 +156,7 @@ namespace WSEP212_TESTS.UnitTests
             ItemPurchaseType purchaseType = new ItemImmediatePurchase(10.0);
             shoppingBag.addItem(storeItemID, 2, purchaseType);
 
-            RegularResult res = shoppingBag.itemPriceStatusDecision(storeItemID, PriceStatus.Rejected);
+            RegularResult res = shoppingBag.itemPriceStatusDecision(storeItemID, PriceStatus.Rejected, "");
             // cannot change status of immediate purchase - always approved
             Assert.IsFalse(res.getTag());
             Assert.AreEqual(10.0, shoppingBag.itemsPurchaseTypes[storeItemID].getCurrentPrice());
@@ -169,7 +169,7 @@ namespace WSEP212_TESTS.UnitTests
         public void countingOfferTest()
         {
             supportPurchaseType(PurchaseType.SubmitOfferPurchase);
-            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5);
+            ItemPurchaseType purchaseType = new ItemSubmitOfferPurchase(7.5, storeItemID);
             shoppingBag.addItem(storeItemID, 2, purchaseType);
 
             RegularResult res = shoppingBag.counterOffer(storeItemID, 8.0);
