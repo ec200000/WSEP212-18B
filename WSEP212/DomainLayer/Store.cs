@@ -236,9 +236,9 @@ namespace WSEP212.DomainLayer
         // If the item has n quantity in the store, all the n will be deleted
         public RegularResult removeItemFromStorage(int itemID)
         {
-            Item item = storage[itemID];
             if (storage.ContainsKey(itemID))
             {
+                Item item = storage[itemID];
                 var res = storage.TryRemove(itemID, out _);
                 if (res)
                 {

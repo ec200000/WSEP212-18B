@@ -41,10 +41,13 @@ namespace WSEP212_TESTS.UnitTests
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
             SystemDBAccess.Instance.SaveChanges();
+            
+            StoreRepository.Instance.stores.Clear();
 
             UserRepository.Instance.initRepo();
             User user = new User("Sagiv", 21);
             UserRepository.Instance.insertNewUser(user, "123456");
+            user.changeState(new LoggedBuyerState(user));
             
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("Mega", "Holon", new SalePolicyMock(), new PurchasePolicyMock(), user);
             Store store = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();

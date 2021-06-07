@@ -21,7 +21,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
         }
 
         // item price of immediate purchase is always approve 
-        public override RegularResult changeItemPriceStatus(PriceStatus status)
+        public override RegularResult changeItemPriceStatus(PriceStatus status, string userName  = "")
         {
             return new Failure("Cannot Change Immediate Purchase Item Price Status");
         }
