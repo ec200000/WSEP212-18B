@@ -24,8 +24,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         private static int storeID;
         private static int itemID;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
             Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
@@ -41,6 +41,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
             SystemDBAccess.Instance.SaveChanges();
+            
+            StoreRepository.Instance.stores.Clear();
             
             systemController.register("lol", 18, "123456");
             systemController.register("mol", 18, "1234");
@@ -290,8 +292,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 try
                 {
                     res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
-                    if (res2.getTag())
-                        resRem2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
+                    resRem2 = systemController.removeItemFromShoppingCart("mol", storeID, -1);
                 }
                 catch (NotImplementedException)
                 {
@@ -303,8 +304,7 @@ namespace WSEP212_TESTS.AcceptanceTests
                 try
                 {
                     res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 12, (int)PurchaseType.ImmediatePurchase, 12);
-                    if(res3.getTag())
-                        resRem3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
+                    resRem3 = systemController.removeItemFromShoppingCart("lol", -1, itemID);
                         
                 }
                 catch (NotImplementedException)
