@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
 @using WSEP212.DomainLayer.PolicyPredicate
 @using WSEP212.DomainLayer.SystemLoggers
+@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.PredicateModel
 @{
@@ -22,14 +24,19 @@
     {
         @using (Html.BeginForm("TryRemovePurchasePredicate", "Home", FormMethod.Post))
         {
-            <label for="storesList">Purchase Predicate</label>
-            string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
-            @if (purchasePredicate != null)
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.StorePoliciesManagement).getTag())
             {
-                @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"})
-                ;
+                <label for="storesList">Purchase Predicate</label>
+                string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
+                @if (purchasePredicate != null)
+                {
+                    @Html.DropDownListFor(model => model.predicate, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"})
+                    ;
+                }
+                <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove purchase predicate</button>
             }
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove purchase predicate</button>
         }
     }
     catch (Exception e)
@@ -47,20 +54,28 @@
 <div class="purchasepredicatediv">
     @using (Html.BeginForm("TryComposePurchasePredicate", "Home", FormMethod.Post))
     {
-        PurchasePredicateCompositionType[] arr = new[]
+        string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+        int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+        @if (SystemController.Instance.hasPermission(name, store, Permissions.StorePoliciesManagement).getTag())
         {
-            PurchasePredicateCompositionType.AndComposition, PurchasePredicateCompositionType.OrComposition, PurchasePredicateCompositionType.ConditionalComposition
-        };
-        string[] permissions = Array.ConvertAll(arr, value => value.ToString());
-        string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
-        <label for="storesList">First predicate</label>
-        @Html.DropDownListFor(model => model.firstPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
-        <label for="storesList">Second predicate</label>
-        @Html.DropDownListFor(model => model.secondPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"});
-        <label for="storesList">compositionType</label>
-        @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"});
-        
-        <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Compose purchase predicate</button>
+            PurchasePredicateCompositionType[] arr = new[]
+            {
+                PurchasePredicateCompositionType.AndComposition, PurchasePredicateCompositionType.OrComposition, PurchasePredicateCompositionType.ConditionalComposition
+            };
+            string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+            string[] purchasePredicate = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("PurchasePredicate");
+            <label for="storesList">First predicate</label>
+            @Html.DropDownListFor(model => model.firstPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            <label for="storesList">Second predicate</label>
+            @Html.DropDownListFor(model => model.secondPred, new SelectList(purchasePredicate.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+            <label for="storesList">compositionType</label>
+            @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+
+            <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Compose purchase predicate</button>
+        }
     }
 </div>
 </body>
