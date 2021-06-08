@@ -1653,6 +1653,71 @@ namespace WebApplication.Controllers
             return null;
         }
         
+        public IActionResult DailyVisitors()
+        {
+            try
+            {
+                TempData["alert"] = null;
+                SystemController systemController = SystemController.Instance;
+                ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
+                if (res.getTag())
+                {
+                    double totalIncome = 0;
+                    string value = "";
+                    foreach (KeyValuePair<int, ConcurrentDictionary<int, PurchaseInvoice>> invs in res.getValue())
+                    {
+                        foreach (PurchaseInvoice inv in invs.Value.Values)
+                        {
+                            value += inv.ToString() + "\n" + ";";
+                            if(inv.dateOfPurchase.Date.Equals(DateTime.Today))
+                                totalIncome += inv.getPurchaseTotalPrice();
+                        }
+                    }
+                    if(value!="")
+                        value = value.Substring(0, value.Length - 1);
+                    HttpContext.Session.SetString("Stores_history", value);
+                    HttpContext.Session.SetString("stores_income", totalIncome.ToString());
+                    return View();
+                }
+                else
+                {
+                    TempData["alert"] = res.getMessage();
+                    return View();
+                }
+            }
+            catch (SystemException e)
+            {
+                var m = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    m += inner.Message;
+                Logger.Instance.writeErrorEventToLog(m);
+                System.Environment.Exit(-1);
+            }
+
+            return null;
+        }
+        
+        public IActionResult TryDailyVisitors(PurchaseModel model)
+        {
+            try
+            {
+                TempData["alert"] = null;
+                return RedirectToAction("DailyVisitors", model);
+            }
+            catch (SystemException e)
+            {
+                var m = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    m += inner.Message;
+                Logger.Instance.writeErrorEventToLog(m);
+                System.Environment.Exit(-1);
+            }
+
+            return null;
+        }
+        
         public IActionResult StorePurchaseHistory()
         {
             try

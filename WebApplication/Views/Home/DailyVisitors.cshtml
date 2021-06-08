@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Collections.Concurrent;
+@using System;
+@using WSEP212.DomainLayer.SystemLoggers
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Daily Visitors";
+}
+<!DOCTYPE html>
+
+<html>
+<body>
+    @model WebApplication.Models.PurchaseModel
+<div class="dailyvisitors">
+    @try
+    {
+        @using (Html.BeginForm("TryDailyVisitors", "Home", FormMethod.Post))
+        {
+            string totalIncome = HttpContextAccessor.HttpContext.Session.GetString("stores_income");
+            <h2>Total Income: @totalIncome</h2>
+            string purchases = HttpContextAccessor.HttpContext.Session.GetString("Stores_history");
+            <h6>@purchases</h6>
+        }
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
+</body>
+</html>
+
+@if (TempData["alert"] != null)
+{
+    <script type="text/javascript">  
+            window.onload = function() {  
+                alert("@TempData["alert"]");  
+            };  
+        </script>  
+}
+
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
+     
+        connection.on('sendToUser', data => {
+             alert(data)
+        });
+        
+        connection.start().then(() => {
+            console.log("connection started");
+            connection.invoke('GetConnectionId').then(function (connectionId) {
+                //alert(connectionId);
+            });
+        });
+      </script>
+}
