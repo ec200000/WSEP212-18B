@@ -56,6 +56,7 @@ namespace WSEP212_TESTS.UnitTests
             UserRepository.Instance.insertNewUser(user2, "123456");
             user3 = new User("avi3", 20);
             UserRepository.Instance.insertNewUser(user3, "123456");
+            admin.changeState(new LoggedBuyerState(admin));
 
             ConcurrentLinkedList<PurchaseType> purchaseRoutes = new ConcurrentLinkedList<PurchaseType>();
             purchaseRoutes.TryAdd(PurchaseType.ImmediatePurchase);

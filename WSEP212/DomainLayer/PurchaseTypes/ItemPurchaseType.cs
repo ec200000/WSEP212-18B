@@ -23,7 +23,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
         }
 
         public abstract PurchaseType getPurchaseType();
-        public abstract RegularResult changeItemPriceStatus(PriceStatus status);
+        public abstract RegularResult changeItemPriceStatus(PriceStatus status, string userName = "");
         // change the item price - Depending on the different types of purchase
         public abstract RegularResult changeItemPrice(double newItemPrice);
     }

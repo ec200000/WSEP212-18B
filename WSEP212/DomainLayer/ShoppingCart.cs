@@ -215,12 +215,12 @@ namespace WSEP212.DomainLayer
 
         // update the status of the price
         // can be done only by store owners & managers
-        public RegularResult itemPriceStatusDecision(int storeID, int itemID, PriceStatus priceStatus)
+        public RegularResult itemPriceStatusDecision(int storeID, int itemID, PriceStatus priceStatus, string userName)
         {
             ResultWithValue<ShoppingBag> shoppingBagRes = getStoreShoppingBag(storeID);
             if (shoppingBagRes.getTag())
             {
-                RegularResult updateStatusRes = shoppingBagRes.getValue().itemPriceStatusDecision(itemID, priceStatus);
+                RegularResult updateStatusRes = shoppingBagRes.getValue().itemPriceStatusDecision(itemID, priceStatus, userName);
                 removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                 return updateStatusRes;
             }

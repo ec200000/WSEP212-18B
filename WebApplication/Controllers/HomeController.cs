@@ -3004,11 +3004,12 @@ namespace WebApplication.Controllers
                     ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
                     if (res.getValue() != null)
                     {
+                        systemController.removeBidOffer(userName, (int)storeID, item, user);
                         Node<string> node = res.getValue().usersToSend.First;
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
-                            systemController.removeBidOffer(node.Value, (int)storeID, item, user);
+                            //systemController.removeBidOffer(node.Value, (int)storeID, item, user); //TODO: CHANGE
                             node = node.Next;
                         }
                     }
@@ -3056,6 +3057,13 @@ namespace WebApplication.Controllers
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
                             node = node.Next;
                         }
+                    }
+                    ConcurrentLinkedList<string> storeOwners = StoreRepository.Instance.getStoreOwners((int)storeID);
+                    Node<string> node2 = storeOwners.First;
+                    while (node2.Next != null)
+                    {
+                        systemController.removeBidOffer(node2.Value, (int)storeID, item, user);
+                        node2 = node2.Next;
                     }
                 }
                 return RedirectToAction("StoreActions");

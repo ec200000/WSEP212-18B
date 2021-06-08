@@ -127,7 +127,7 @@ namespace WSEP212.DomainLayer
             }
         }
 
-        private ItemPurchaseType createItemPurchaseType(PurchaseType purchaseType, double startPrice)
+        private ItemPurchaseType createItemPurchaseType(PurchaseType purchaseType, double startPrice, int storeID)
         {
             ItemPurchaseType itemPurchaseType = null;
             switch(purchaseType)
@@ -136,7 +136,7 @@ namespace WSEP212.DomainLayer
                     itemPurchaseType = new ItemImmediatePurchase(startPrice);
                     break;
                 case PurchaseType.SubmitOfferPurchase:
-                    itemPurchaseType = new ItemSubmitOfferPurchase(startPrice);
+                    itemPurchaseType = new ItemSubmitOfferPurchase(startPrice, storeID);
                     break;
             }
             return itemPurchaseType;
@@ -156,7 +156,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                ItemPurchaseType itemPurchaseType = createItemPurchaseType(purchaseType, startPrice);
+                ItemPurchaseType itemPurchaseType = createItemPurchaseType(purchaseType, startPrice, storeID);
                 Object[] paramsList = { storeID, itemID, quantity, itemPurchaseType };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;
@@ -257,7 +257,7 @@ namespace WSEP212.DomainLayer
                 }
                 else user = userRes.getValue();
 
-                ItemPurchaseType itemPurchaseType = createItemPurchaseType(purchaseType, startPrice);
+                ItemPurchaseType itemPurchaseType = createItemPurchaseType(purchaseType, startPrice, storeID);
                 Object[] paramsList = { storeID, itemID, itemPurchaseType };
                 ThreadParameters threadParameters = new ThreadParameters();
                 threadParameters.parameters = paramsList;

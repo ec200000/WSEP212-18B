@@ -113,7 +113,7 @@ namespace WSEP212_TESTS.AcceptanceTests
         {
             testInit();
 
-            ResultWithValue<NotificationDTO> result = controller.addItemToShoppingCart("b", storeID, itemID, 100, (int)PurchaseType.ImmediatePurchase, 2.4); //over quantity
+            ResultWithValue<NotificationDTO> result = controller.addItemToShoppingCart("b", storeID, itemID, 101, (int)PurchaseType.ImmediatePurchase, 2.4); //over quantity
             Assert.IsFalse(result.getTag());
         }
 

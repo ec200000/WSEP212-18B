@@ -44,6 +44,7 @@ namespace WSEP212_TESTS.UnitTests
             UserRepository.Instance.insertNewUser(user, "123456");
             ResultWithValue<int> addStoreRes = StoreRepository.Instance.addStore("SUPER PHARAM", "Bat-Yam", new SalePolicyMock(), new PurchasePolicyMock(), user);
             bagOwner = new User("Sagiv", 21);
+            UserRepository.Instance.insertNewUser(bagOwner, "123456");
             shoppingBagStore = StoreRepository.Instance.getStore(addStoreRes.getValue()).getValue();
             storeItemID = shoppingBagStore.addItemToStorage(500, "black masks", "protects against infection of covid-19", 10, ItemCategory.Health).getValue();
             shoppingBag = new ShoppingBag(shoppingBagStore, bagOwner.userName);
