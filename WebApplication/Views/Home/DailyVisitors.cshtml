@@ -14,13 +14,16 @@
 <div class="dailyvisitors">
     @try
     {
-        @using (Html.BeginForm("TryDailyVisitors", "Home", FormMethod.Post))
+        <div style="width: 50%;">
+            <canvas id="myChart"></canvas>
+        </div>
+        /**@using (Html.BeginForm("TryDailyVisitors", "Home", FormMethod.Post))
         {
             string totalIncome = HttpContextAccessor.HttpContext.Session.GetString("stores_income");
             <h2>Total Income: @totalIncome</h2>
             string purchases = HttpContextAccessor.HttpContext.Session.GetString("Stores_history");
             <h6>@purchases</h6>
-        }
+        }*/
     }
     catch (Exception e)
     {
@@ -48,7 +51,51 @@
 
 @section Scripts {
     <script src="~/js/signalr.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const labels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+    ];
+    const data = {
+      labels: [
+        'Guests',
+        'Regular Users',
+        'Store Managers',
+        'Store Owners',
+        'System Managers'
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [@(((int[])TempData["data"])[0]), @(((int[])TempData["data"])[1]), @(((int[])TempData["data"])[2]), @(((int[])TempData["data"])[3]), @(((int[])TempData["data"])[4])],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(0, 255, 0)',
+          'rgb(255, 153, 204)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+    const config = {
+      type: 'pie',
+      data,
+      options: {}
+    };
+    </script>
+    <script>
+      // === include 'setup' then 'config' above ===
+    
+      var myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    </script>
     <script>
         let connection = new signalR.HubConnectionBuilder().withUrl("/notifications").build();
      

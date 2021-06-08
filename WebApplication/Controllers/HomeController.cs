@@ -1657,7 +1657,10 @@ namespace WebApplication.Controllers
         {
             try
             {
-                TempData["alert"] = null;
+                PieChart data = new PieChart();
+                //HttpContext.Session.SetObject("pieChartData", data.GetPieChartData());
+                TempData["data"] = data.GetPieChartData();
+                /**TempData["alert"] = null;
                 SystemController systemController = SystemController.Instance;
                 ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
                 if (res.getTag())
@@ -1683,7 +1686,8 @@ namespace WebApplication.Controllers
                 {
                     TempData["alert"] = res.getMessage();
                     return View();
-                }
+                }**/
+                return View();
             }
             catch (SystemException e)
             {
@@ -1703,7 +1707,7 @@ namespace WebApplication.Controllers
             try
             {
                 TempData["alert"] = null;
-                return RedirectToAction("DailyVisitors", model);
+                return RedirectToAction("ItemReview", model);
             }
             catch (SystemException e)
             {
