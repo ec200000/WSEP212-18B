@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "4QZF5eC/wgz44b+jqSrMhxdtRKqlKdOM6QJAPvkDA+tQO/+zs8VRIA5qMVP8GDj5odYXZnUr6ilNjra4az9aLA==",
+  "dgSpecHash": "c25CikaINaz69iBCNm6HOlPXO+/Lsc0DA+b4GVBunbbCmUm/mYNx1kpRBX4JzPk0jBK4wIUlPml11emkBHDxVA==",
   "success": true,
   "projectFilePath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\irisk\\.nuget\\packages\\dotnet-restore-test\\1.0.3\\dotnet-restore-test.1.0.3.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\libuv\\1.9.0\\libuv.1.9.0.nupkg.sha512",
-    "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnet.signalr.core\\2.4.2\\microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.5\\microsoft.aspnetcore.cryptography.internal.5.0.5.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.5\\microsoft.aspnetcore.cryptography.keyderivation.5.0.5.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\1.1.0\\microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512",
@@ -138,16 +137,5 @@
     "C:\\Users\\irisk\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512",
     "C:\\Users\\irisk\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.SignalR.Core",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    }
-  ]
+  "logs": []
 }

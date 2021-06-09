@@ -2,6 +2,7 @@
 @using WSEP212.DomainLayer
 @using WSEP212.DomainLayer.SalePolicy
 @using WSEP212.DomainLayer.SystemLoggers
+@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @model WebApplication.Models.SalesModel
 <!DOCTYPE html>
@@ -14,72 +15,87 @@
 <div class="editsalepredicatesdiv">
     @try
     {
-        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+        string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+        int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+        @if (SystemController.Instance.hasPermission(name, store, Permissions.StorePoliciesManagement).getTag())
         {
-            <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Add Sale Predicate (not working)</button>
-        }
-    }
-    catch (Exception e)
-    {
-         var msg = e.Message + " ";
-         var inner = e.InnerException;
-         if (inner != null)
-         {
-             msg += inner.Message;
-         }
-         Logger.Instance.writeErrorEventToLog(msg);
-    }
-    
-</div>
-<div class="editsalepredicatesdiv">
-    @try
-    {
-        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
-        {
-            <label for="storesList">Sale predicates</label>
-            string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
-            @Html.DropDownListFor(model => model.predicate, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
-            ;
-
-            <button class="btn btn-outline-primary" formaction="TryRemoveSalePredicate" type="submit">Remove Sale Predicate</button>
-
-            <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Add Sale Condition (not working)</button>
-        }
-    }
-    catch (Exception e)
-    {
-         var msg = e.Message + " ";
-         var inner = e.InnerException;
-         if (inner != null)
-         {
-             msg += inner.Message;
-         }
-         Logger.Instance.writeErrorEventToLog(msg);
-    }
-    
-</div>
-<div class="editsalepredicatesdiv">
-    @try
-    {
-        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
-        {
-            string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
-            SaleCompositionType[] arr = new[]
+            @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
             {
-                SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
-            };
-            string[] permissions = Array.ConvertAll(arr, value => value.ToString());
-            <label for="storesList">First predicate</label>
-            @Html.DropDownListFor(model => model.firstPred, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
-            ;
-            <label for="storesList">Second predicate</label>
-            @Html.DropDownListFor(model => model.secondPred, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
-            ;
-            <label for="storesList">compositionType</label>
-            @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"})
-            ;
+                <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Add Sale Predicate (not working)</button>
+            }
+        }
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
+<div class="editsalepredicatesdiv">
+    @try
+    {
+        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+        {
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.StorePoliciesManagement).getTag())
+            {
+                <label for="storesList">Sale predicates</label>
+                string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
+                @Html.DropDownListFor(model => model.predicate, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
 
-            <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ComposeSalePredicates" type="submit">Compose Sale Predicates (without xor)</button>
+                <button class="btn btn-outline-primary" formaction="TryRemoveSalePredicate" type="submit">Remove Sale Predicate</button>
+
+                <button class="btn btn-outline-primary" type="submit" formaction="StoreActions">Add Sale Condition (not working)</button>
+            }
+        }
+    }
+    catch (Exception e)
+    {
+         var msg = e.Message + " ";
+         var inner = e.InnerException;
+         if (inner != null)
+         {
+             msg += inner.Message;
+         }
+         Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
+<div class="editsalepredicatesdiv">
+    @try
+    {
+        @using (Html.BeginForm("ItemActions", "Home", FormMethod.Post))
+        {
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.StorePoliciesManagement).getTag())
+            {
+                string[] predList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("sale_predicates");
+                SaleCompositionType[] arr = new[]
+                {
+                    SaleCompositionType.XorComposition, SaleCompositionType.MaxComposition, SaleCompositionType.DoubleComposition
+                };
+                string[] permissions = Array.ConvertAll(arr, value => value.ToString());
+                <label for="storesList">First predicate</label>
+                @Html.DropDownListFor(model => model.firstPred, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+                <label for="storesList">Second predicate</label>
+                @Html.DropDownListFor(model => model.secondPred, new SelectList(predList.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+                <label for="storesList">compositionType</label>
+                @Html.DropDownListFor(model => model.compositionType, new SelectList(permissions.OfType<string>().ToList()), new {@class = "custom-select"})
+                ;
+
+                <button style="margin-top: 20px" class="btn btn-outline-primary" formaction="ComposeSalePredicates" type="submit">Compose Sale Predicates (without xor)</button>
+            }
         }
     }
     catch (Exception e)

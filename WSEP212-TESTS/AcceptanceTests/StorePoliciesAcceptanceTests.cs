@@ -23,8 +23,8 @@ namespace WSEP212_TESTS.AcceptanceTests
         public static PaymentParametersDTO paymentParameters;
         public static DeliveryParametersDTO deliveryParameters;
 
-        [ClassInitialize]
-        public static void SetupAuth(TestContext context)
+        [TestInitialize]
+        public void SetupAuth()
         {
             Startup.readConfigurationFile();
             SystemDBAccess.mock = true;
@@ -40,6 +40,8 @@ namespace WSEP212_TESTS.AcceptanceTests
             SystemDBAccess.Instance.ItemReviewes.RemoveRange(SystemDBAccess.Instance.ItemReviewes);
             SystemDBAccess.Instance.UsersInfo.RemoveRange(SystemDBAccess.Instance.UsersInfo);
             SystemDBAccess.Instance.SaveChanges();
+            
+            StoreRepository.Instance.stores.Clear();
 
             controller.register("theuser", 18, "123456");
             controller.login("theuser", "123456");

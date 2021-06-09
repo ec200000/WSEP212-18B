@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Collections.Concurrent;
 @using System;
+@using WSEP212.DomainLayer
 @using WSEP212.DomainLayer.SystemLoggers
+@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Users Purchase History";
@@ -16,10 +18,15 @@
     {
         @using (Html.BeginForm("TryShowPurchaseHistory", "Home", FormMethod.Post))
         {
-            string totalIncome = HttpContextAccessor.HttpContext.Session.GetString("store_income");
-            <h2>Total Income: @totalIncome</h2>
-            string purchases = HttpContextAccessor.HttpContext.Session.GetString("store_history");
-            <h6>@purchases</h6>
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.GetStorePurchaseHistory).getTag())
+            {
+                string totalIncome = HttpContextAccessor.HttpContext.Session.GetString("store_income");
+                <h2>Total Income: @totalIncome</h2>
+                string purchases = HttpContextAccessor.HttpContext.Session.GetString("store_history");
+                <h6>@purchases</h6>
+            }
         }
     }
     catch (Exception e)
