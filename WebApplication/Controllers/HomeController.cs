@@ -15,6 +15,7 @@ using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
 using PostSharp.Aspects;
 using WebApplication.Communication;
+using WebApplication.Publisher;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
@@ -29,10 +30,12 @@ namespace WebApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHubContext<NotificationHub> _notificationUserHubContext;
-        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationUserHubContext)
+        private readonly IHubContext<ChartNotifications> _chartHubContext;
+        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationUserHubContext, IHubContext<ChartNotifications> chartHubContext)
         {
             _logger = logger;
             _notificationUserHubContext = notificationUserHubContext;
+            _chartHubContext = chartHubContext;
         }
 
         const string SessionName = "_Name";  

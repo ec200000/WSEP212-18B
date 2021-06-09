@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.SystemLoggers;
 
@@ -17,8 +18,8 @@ namespace WSEP212.DomainLayer
         {
             return this.pieChartData;
         }
-  
-        public PieChart()
+
+        public void SetPieChartData()
         {
             pieChartData = new int[5];
             pieChartData[0] = GuestsCounter();  
@@ -27,13 +28,16 @@ namespace WSEP212.DomainLayer
             pieChartData[3] = OwnerCounter();
             pieChartData[4] = SystemManagerCounter();
         }
+        public PieChart()
+        {
+        }
 
         private int GuestsCounter()
         {
             int counter = 0;
-            foreach (var userKey in UserRepository.Instance.users)
+            foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (userKey.Value && userKey.Key.state is GuestBuyerState)
+                if (!Authentication.Instance.usersInfo.ContainsKey(userKey.userName) && !userKey.sellerPermissions.Any())
                     counter++;
             }
             return counter;
@@ -42,9 +46,9 @@ namespace WSEP212.DomainLayer
         private int BuyerCounter()
         {
             int counter = 0;
-            foreach (var userKey in UserRepository.Instance.users)
+            foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (userKey.Value && !userKey.Key.isSystemManager && userKey.Key.state is LoggedBuyerState && userKey.Key.sellerPermissions.Count == 0)
+                if (!userKey.isSystemManager && Authentication.Instance.usersInfo.ContainsKey(userKey.userName) && userKey.sellerPermissions.Count == 0)
                     counter++;
             }
             return counter;
@@ -54,18 +58,18 @@ namespace WSEP212.DomainLayer
         {
             int counter = 0;
             bool flag = false;
-            foreach (var userKey in UserRepository.Instance.users)
+            foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (userKey.Value && userKey.Key.state is LoggedBuyerState)
+                if (Authentication.Instance.usersInfo.ContainsKey(userKey.userName))
                 {
-                    foreach (var perm in userKey.Key.sellerPermissions)
+                    foreach (var perm in userKey.sellerPermissions)
                     {
                         var perms = persListToArray(perm.permissionsInStore);
                         if (perms.Contains(Permissions.AllPermissions))
                             flag = true;
                     }
 
-                    if (!flag && userKey.Key.sellerPermissions.Count > 0)
+                    if (!flag && userKey.sellerPermissions.Count > 0)
                         counter++;
                     flag = false;
                 }
@@ -76,11 +80,11 @@ namespace WSEP212.DomainLayer
         private int OwnerCounter()
         {
             int counter = 0; 
-            foreach (var userKey in UserRepository.Instance.users)
+            foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (userKey.Value && userKey.Key.state is LoggedBuyerState)
+                if (Authentication.Instance.usersInfo.ContainsKey(userKey.userName))
                 {
-                    foreach (var perm in userKey.Key.sellerPermissions)
+                    foreach (var perm in userKey.sellerPermissions)
                     {
                         var perms = persListToArray(perm.permissionsInStore);
                         if (perms.Contains(Permissions.AllPermissions))
@@ -99,7 +103,7 @@ namespace WSEP212.DomainLayer
             int counter = 0; 
             foreach (var userKey in UserRepository.Instance.users)
             {
-                if (userKey.Value && userKey.Key.isSystemManager)
+                if (userKey.Key.isSystemManager)
                 {
                     counter++;
                 }
@@ -131,11 +135,7 @@ namespace WSEP212.DomainLayer
                 Logger.Instance.writeErrorEventToLog(m);
                 System.Environment.Exit(-1);
             }
-
             return null;
         }
-
-        
-        
     }
 }

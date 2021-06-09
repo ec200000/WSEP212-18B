@@ -1,0 +1,8 @@
+{
+  "name": "WebApplication",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "underscore": "^1.13.1"
+  }
+}
