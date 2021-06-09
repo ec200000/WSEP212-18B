@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using WSEP212.DomainLayer
 @using WSEP212.DomainLayer.SystemLoggers
+@using WSEP212.ServiceLayer
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Add Predicate";
@@ -17,13 +19,18 @@
     {
         @using (Html.BeginForm("TryAddPurchasePredicate", "Home", FormMethod.Post))
         {
-            <h3>
-                Please fill in only one of the pridecates:
-            </h3>
-            @Html.TextBoxFor(model => model.numbersOfProducts, new {placeholder = "Numbers Of Products ShoppingBag from a particular product or category", @class = "inputclassindex"})
-            @Html.TextBoxFor(model => model.priceOfShoppingBag, new {placeholder = "Price Of The ShoppingBag", @class = "inputclassindex"})
-            @Html.TextBoxFor(model => model.ageOfUser, new {placeholder = "Age Of User", @class = "inputclassindex"})
-            <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Add purchase predicate</button>
+            string name = HttpContextAccessor.HttpContext.Session.GetString("_Name");
+            int store = (int) HttpContextAccessor.HttpContext.Session.GetInt32("_StoreID");
+            @if (SystemController.Instance.hasPermission(name, store, Permissions.StorePoliciesManagement).getTag())
+            {
+                <h3>
+                    Please fill in only one of the pridecates:
+                </h3>
+                @Html.TextBoxFor(model => model.numbersOfProducts, new {placeholder = "Numbers Of Products ShoppingBag from a particular product or category", @class = "inputclassindex"})
+                @Html.TextBoxFor(model => model.priceOfShoppingBag, new {placeholder = "Price Of The ShoppingBag", @class = "inputclassindex"})
+                @Html.TextBoxFor(model => model.ageOfUser, new {placeholder = "Age Of User", @class = "inputclassindex"})
+                <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Add purchase predicate</button>
+            }
         }
     }
     catch (Exception e)
