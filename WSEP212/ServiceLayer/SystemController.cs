@@ -1390,6 +1390,26 @@ namespace WSEP212.ServiceLayer
             return new FailureWithValue<ConcurrentDictionary<int, int>>("failed", null);
         }
 
+        public ResultWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> offerItemsPricesAndStatus(string userName)
+        {
+            try
+            {
+                String info = $"offerItemsPricesAndStatus Event was triggered, with the parameters:" +
+                              $"userName: {userName}";
+                Logger.Instance.writeInformationEventToLog(info);
+                return SystemControllerFacade.Instance.offerItemsPricesAndStatus(userName);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new FailureWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>("failed", null);
+        }
+
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName)
         {
             try
