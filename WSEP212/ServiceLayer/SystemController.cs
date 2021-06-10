@@ -245,8 +245,8 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<NotificationDTO> purchaseItems(String userName,
             DeliveryParametersDTO deliveryParametersDTO, PaymentParametersDTO paymentParametersDTO)
         {
-            using (DbContextTransaction transaction = SystemDBAccess.Instance.Database.BeginTransaction())
-            {
+            //using (DbContextTransaction transaction = SystemDBAccess.Instance.Database.BeginTransaction())
+            //{
                 try
                 {
                     String info = $"PurchaseItems Event was triggered, with the parameter:" +
@@ -261,7 +261,7 @@ namespace WSEP212.ServiceLayer
                             new NotificationDTO(usersToSendRes.getValue(),
                                 $"The user {userName} has purchased your item"))
                         : new FailureWithValue<NotificationDTO>(usersToSendRes.getMessage(), null);
-                    transaction.Commit();
+                    //transaction.Commit();
                     return res;
                 }
                 catch (SystemException e)
@@ -271,9 +271,9 @@ namespace WSEP212.ServiceLayer
                     if (inner != null)
                         msg += inner.Message;
                     Logger.Instance.writeErrorEventToLog(msg);
-                    transaction.Rollback(); //deletes all the changes that were made in the db
+                    //transaction.Rollback(); //deletes all the changes that were made in the db
                 }
-            }
+            //}
             return new FailureWithValue<NotificationDTO>("failed",null);
             
         }
@@ -281,8 +281,8 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy)
         {
-            using (DbContextTransaction transaction = SystemDBAccess.Instance.Database.BeginTransaction())
-            {
+            //using (DbContextTransaction transaction = SystemDBAccess.Instance.Database.BeginTransaction())
+            //{
                 try
                 {
                     String info = $"OpenStore Event was triggered, with the parameter:" +
@@ -292,7 +292,7 @@ namespace WSEP212.ServiceLayer
                     SalePolicy newSalesPolicy = new SalePolicy(salesPolicy);
                     var res = SystemControllerFacade.Instance.openStore(userName, storeName, storeAddress, newPurchasePolicy,
                         newSalesPolicy);
-                    transaction.Commit();
+                    //transaction.Commit();
                     return res;
                 }
                 catch (SystemException e)
@@ -302,9 +302,9 @@ namespace WSEP212.ServiceLayer
                     if (inner != null)
                         msg += inner.Message;
                     Logger.Instance.writeErrorEventToLog(msg);
-                    transaction.Rollback();
+                    //transaction.Rollback();
                 }
-            }
+            //}
 
             
             return new FailureWithValue<int>("failed",-1);

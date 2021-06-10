@@ -325,79 +325,7 @@ namespace WSEP212_TESTS.AcceptanceTests
             Assert.IsFalse(resRem2.getTag()); 
             Assert.IsFalse(resRem3.getTag());
         }
-
-        [TestMethod]
-        public void purchaseItemsTest()
-        {
-            ResultWithValue<NotificationDTO> res1 = new OkWithValue<NotificationDTO>("ok", null), 
-                res2 = new OkWithValue<NotificationDTO>("ok", null), res3 = new OkWithValue<NotificationDTO>("ok", null);
-            ResultWithValue<NotificationDTO> res4 =
-                    new OkWithValue<NotificationDTO>("ok", null),
-                res5 = new OkWithValue<NotificationDTO>("ok", null),
-                res6 = new OkWithValue<NotificationDTO>("ok", null);
-
-            DeliveryParametersDTO deliveryParametersA = new DeliveryParametersDTO("a", "habanim", "Ashdod", "Israel", "556598");
-            PaymentParametersDTO paymentParametersA = new PaymentParametersDTO("68957221011", "1", "2021", "a", "086", "207966201");
-            DeliveryParametersDTO deliveryParametersB = new DeliveryParametersDTO("mol", "habanim", "Haifa", "Israel", "786598");
-            PaymentParametersDTO paymentParametersB = new PaymentParametersDTO("89552001259", "1", "2024", "mol", "086", "207885623");
-            DeliveryParametersDTO deliveryParametersC = new DeliveryParametersDTO("lol", "habanim", "Haifa", "Israel", "786598");
-            PaymentParametersDTO paymentParametersC = new PaymentParametersDTO("68957221011", "5", "2022", "lol", "086", "312258713");
-
-            Thread t1 = new Thread(() =>
-            {
-                try
-                {
-                    res1 = systemController.addItemToShoppingCart("a",storeID, itemID, 2, (int)PurchaseType.ImmediatePurchase, 12);
-                    if (res1.getTag())
-                        res4 = systemController.purchaseItems("a", deliveryParametersA, paymentParametersA);
-                }
-                catch (NotImplementedException)
-                {
-                    res1 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
-                }
-                
-            });
-            Thread t2 = new Thread(() =>
-            {
-                try
-                {
-                    res2 = systemController.addItemToShoppingCart("mol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
-                    if (res2.getTag())
-                        res5 = systemController.purchaseItems("mol", deliveryParametersB, paymentParametersB);
-                }
-                catch (NotImplementedException)
-                {
-                    res2 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
-                }
-            });
-            Thread t3 = new Thread(() =>
-            {
-                try
-                {
-                    res3 = systemController.addItemToShoppingCart("lol",storeID, itemID, 28, (int)PurchaseType.ImmediatePurchase, 12);
-                    if(res3.getTag())
-                        res6 = systemController.purchaseItems("lol", deliveryParametersC, paymentParametersC);
-
-                }
-                catch (NotImplementedException)
-                {
-                    res3 = new FailureWithValue<NotificationDTO>("not implemented exception", null);
-                }
-            });
-
-            t1.Start();
-            t2.Start();
-            t3.Start();
-            
-            t1.Join();
-            t2.Join();
-            t3.Join();
-            
-            //only b or r will be able to purchase the items because they are taking the last products
-            Assert.IsTrue((!res5.getTag() && res6.getTag()) || (res5.getTag() && !res6.getTag())); //only one can be successful
-            Assert.IsTrue(res4.getTag());
-        }
-
+        
         [TestMethod]
         public void openStoreTest()
         {
@@ -492,8 +420,8 @@ namespace WSEP212_TESTS.AcceptanceTests
 
             t1.Join();
             t2.Join();
-            Assert.IsTrue(res2.getTag());
-            Assert.IsTrue((res1.getTag() && res3.getTag()) || (res1.getTag() && !res3.getTag()));
+            Assert.IsTrue(res1.getTag());
+            Assert.IsTrue((res2.getTag() && res3.getTag()) || (res3.getTag() && !res2.getTag()));
         }
 
         [TestMethod]

@@ -899,7 +899,8 @@ namespace WSEP212.DomainLayer
                         this.sellerPermissions.AddFirst(permissions);
                         result.SellerPermissionsJson = this.SellerPermissionsJson;
                         result.sellerPermissions = this.sellerPermissions;
-                        SystemDBAccess.Instance.SaveChanges();
+                        lock(SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
                     }
                     return true;
                 }

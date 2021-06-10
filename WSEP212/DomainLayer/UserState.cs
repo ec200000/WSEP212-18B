@@ -54,8 +54,8 @@ namespace WSEP212.DomainLayer
                         if (result != null)
                         {
                             result.BagsAsJson = this.user.shoppingCart.BagsAsJson;
-                    
-                            SystemDBAccess.Instance.SaveChanges();
+                            lock(SystemDBAccess.savelock)
+                                SystemDBAccess.Instance.SaveChanges();
                         } 
                     }
                 }
