@@ -99,19 +99,20 @@ namespace WSEP212.DomainLayer
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                         return addItemRes;
                     }
-
+                    ShoppingCart? result;
                     lock (SystemDBAccess.savelock)
                     {
-                        var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
-                        if (result != null)
-                        {
-                            if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
-                                result.BagsAsJson = this.BagsAsJson;
-                       
-                            SystemDBAccess.Instance.SaveChanges();
-                        }  
+                        result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
                     }
-                    
+
+                    if (result != null)
+                    {
+                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                            result.BagsAsJson = this.BagsAsJson;
+                        lock (SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
+                    }
+
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());
@@ -260,6 +261,22 @@ namespace WSEP212.DomainLayer
                 }
                 return new OkWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("The Purchase Can Be Made, The Items Are Available In Storage And The Final Price Calculated For Each Item", purchaseInvoices);
             }
+        }
+        
+        // returns the prices and status of items that has submit offer purchase type
+        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> offerItemsPricesAndStatus()
+        {
+            ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> cartPricesAndStatus = new ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>();
+            ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> bagPricesAndStatus;
+            foreach (KeyValuePair<int, ShoppingBag> shoppingBag in shoppingBags)
+            {
+                bagPricesAndStatus = shoppingBag.Value.offerItemsPricesAndStatus();
+                foreach (KeyValuePair<int, KeyValuePair<double, PriceStatus>> newItem in bagPricesAndStatus)
+                {
+                    cartPricesAndStatus.TryAdd(newItem.Key, newItem.Value);
+                }
+            }
+            return cartPricesAndStatus;
         }
         
         // returns all items in bag with their quantities

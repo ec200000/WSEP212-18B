@@ -1286,6 +1286,25 @@ namespace WSEP212.DomainLayer
             }
         }
 
+        public ResultWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> offerItemsPricesAndStatus(string userName)
+        {
+            try
+            {
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (!userRes.getTag())
+                {
+                    return new FailureWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>(userRes.getMessage(), null);
+                }
+                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPrices = userRes.getValue().shoppingCart.offerItemsPricesAndStatus();
+                return new OkWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>("Return User Items Prices Before Sales", itemsPrices);
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In offerItemsPricesAndStatus function, the error is: {e.Message}");
+                return new FailureWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>(e.Message, null);
+            }
+        }
+
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName)
         {
             try

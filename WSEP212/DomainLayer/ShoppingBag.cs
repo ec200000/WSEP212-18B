@@ -217,6 +217,22 @@ namespace WSEP212.DomainLayer
         {
             return this.items;
         }
+        
+        // returns the prices and status of items that has submit offer purchase type
+        public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> offerItemsPricesAndStatus()
+        {
+            ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPrices = new ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>();
+            KeyValuePair<double, PriceStatus> itemStatus;
+            foreach (KeyValuePair<int, ItemPurchaseType> itemPurchaseType in itemsPurchaseTypes)
+            {
+                if (itemPurchaseType.Value.getPurchaseType() == PurchaseType.SubmitOfferPurchase)
+                {
+                    itemStatus = new KeyValuePair<double, PriceStatus>(itemPurchaseType.Value.getCurrentPrice(), itemPurchaseType.Value.getPriceStatus());
+                    itemsPrices.TryAdd(itemPurchaseType.Key, itemStatus);
+                }
+            }
+            return itemsPrices;
+        }
 
         // returns the prices of the items in the shopping bags, and their status
         public ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> allItemsPricesAndStatus()
@@ -291,7 +307,8 @@ namespace WSEP212.DomainLayer
             if(itemsPrices.Count == itemsPurchaseTypes.Count)
             {
                 var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
-                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(user, items, itemsPrices);
+                Store s = StoreRepository.Instance.stores[store.storeID];
+                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = s.purchaseItems(user, items, itemsPrices);
                 if(purchaseItemsRes.getTag())
                 {
                     // create purchase invoice
