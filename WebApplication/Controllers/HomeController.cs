@@ -3063,7 +3063,7 @@ namespace WebApplication.Controllers
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
                     string user = strs6[1];
-                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user,userName, (int) storeID, item, 2);
+                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(userName, user, (int) storeID, item, 2);
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
@@ -3106,7 +3106,7 @@ namespace WebApplication.Controllers
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
                     string user = strs6[1].TrimStart();
-                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
+                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus( userName, user, (int) storeID, item, 0);
                     if (res.getValue() != null)
                     {
                         systemController.removeBidOffer(userName, (int)storeID, item, user);

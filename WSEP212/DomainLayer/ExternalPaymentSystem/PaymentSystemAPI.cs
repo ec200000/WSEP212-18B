@@ -75,7 +75,7 @@ namespace WSEP212.DomainLayer.ExternalPaymentSystem
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var msg = e.Message + " ";
                 var inner = e.InnerException;

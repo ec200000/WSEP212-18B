@@ -5,7 +5,7 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/WSEP212-TESTS.csproj.nuget.dgspec.json" afterDir="false" />
@@ -16,6 +16,9 @@
       <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayer/SystemController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WSEP212.csproj.nuget.dgspec.json" afterDir="false" />
@@ -24,10 +27,7 @@
       <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Models/ShoppingCartModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Models/ShoppingCartModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Publisher/ChartNotifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Publisher/ChartNotifications.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Publisher/TimedHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Publisher/TimedHostedService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/configuration.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/configuration.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/WebApplication.csproj.nuget.dgspec.json" afterDir="false" />
@@ -52,7 +52,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="shelly_bids_ux" />
+        <entry key="$PROJECT_DIR$/.." value="fix_tests" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -67,272 +67,96 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/OpenStore.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ViewOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/GuestBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/PurchaseInvoice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/917010EA-8F23-45DE-AD3D-F26FDF1EEBBA/8/ConcurrentDictionary.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/PurchaseInvoice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Models/ShoppingCartModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/PurchaseInvoice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Item.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/ISystemController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/OpenStore.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AppointOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ItemReview.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ISystemControllerFacade.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F758DD2F-9E4C-41A0-B7A1-63138D66F75D/A/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/2C4/AsyncValueTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/SellerPermissions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/StoreRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6476FC3E-B436-4C36-896A-AB6F57E16ECC/26/9b536b8e/MethodInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/40/String.Manipulation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/2C5/AsyncVoidMethodBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D32DB49E-5E34-4072-9DA3-1845C03DDC3A/33/8b995280/JsonSerializerInternalReader.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D32DB49E-5E34-4072-9DA3-1845C03DDC3A/63/97e5718b/JsonSerializerInternalWriter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ServiceLayer/SystemController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1A1/ThreadPool.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2273FCE3-1D2A-430C-A940-EB675292B981/8/DefaultHttpContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/B3/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ShowReviews.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/HandlePurchases.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ISystemControllerFacade.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/SearchItems.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AF09C1A9-9462-4091-BC1A-622423C31F29/cc/fef01fa8/DefaultSqlExecutionStrategy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditPurchasePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/StoreRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StorePurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/StoreRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/HandlePurchases.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Item.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AppointOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/GuestBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/UsersPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Store.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/ISystemController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ViewOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/GuestBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/2C2/AsyncTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/SellerPermissions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2A987135-B09E-4E79-A1D3-224AFA7D6FCA/13/HubConnectionHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2A987135-B09E-4E79-A1D3-224AFA7D6FCA/28/DefaultHubDispatcher.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DomainLayer/Permissions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2A987135-B09E-4E79-A1D3-224AFA7D6FCA/26/DefaultHubActivator.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/AddSale.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ShowReviews.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ShoppingCart.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StorePurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212-TESTS/UnitTests/ShoppingCartTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/cf/c40df046/InternalContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/9B/Lazy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/ISystemController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/StoreRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ItemReview.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/GuestBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ShoppingCart.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AddPredicate.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Privacy.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditSalePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/package-lock.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D32DB49E-5E34-4072-9DA3-1845C03DDC3A/7a/cc6caf3b/JsonSerializerInternalWriter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6476FC3E-B436-4C36-896A-AB6F57E16ECC/00/42966789/MethodInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoresPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/AddSale.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AppointOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/7d/7fd7bd96/EntityCommandExecutionException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/package-lock.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Item.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ShoppingCart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/BidsReview.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ShoppingBag.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Models/ShoppingCartModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DataAccessLayer/Configuration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D32DB49E-5E34-4072-9DA3-1845C03DDC3A/87/ecfdc3bf/JsonSerializerInternalReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/Login.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoreActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ISystemControllerFacade.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditSalePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/UsersPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AF09C1A9-9462-4091-BC1A-622423C31F29/34/5c40e4bb/DefaultSqlExecutionStrategy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/AddPredicate.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/SystemController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AddPredicate.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ISystemControllerFacade.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/02/ffef2a5f/CreateDatabaseIfNotExists`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Item.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoreActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/ShoppingBag.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/LoggedBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DomainLayer/LocalPredicate.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/StoresPurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemActions.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditSalePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/PurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ItemReview.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/SearchItems.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2A987135-B09E-4E79-A1D3-224AFA7D6FCA/4/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/EditSalePredicates.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/AppointOfficials.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212-TESTS/UnitTests/ShoppingCartTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/ISystemController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/PurchaseHistory.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/HandlePurchases.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212-TESTS/AcceptanceTests/AuthenticationActionsTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/9B/Lazy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/bf/ba5589be/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5d/c5c23a33/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/917010EA-8F23-45DE-AD3D-F26FDF1EEBBA/8/ConcurrentDictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/534A917A-6AFF-4C8D-81E9-A50289A7632D/E/TagHelperContent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/ed/ec02ef85/InternalContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E9C16E5A-AB35-4EA0-A250-F795DCB57A83/8/LinkedList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/Store.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Logout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/ShoppingCart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/HandlePurchases.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/GuestBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Shared/_Layout.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/ServiceLayer/SystemController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/Views/Home/Privacy.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/GuestBuyerState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WebApplication/obj/Debug/net5.0/Razor/Views/Home/Login.cshtml.g.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/UserRepositoryTests.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliveryInterface.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAdapter.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentInterface.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentSystemAdapter.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchasePolicy/PurchasePolicyInterface.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchasePolicy/PurchasePolicy.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/StorePoliciesManagementTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTestsNegative.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreAcceptanceTests.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/PriceStatus.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/ItemPurchaseType.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/ItemImmediatePurchase.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ShoppingBagTests.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PurchaseTypes/ItemSubmitOfferPurchase.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreRepositoryTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/SaleTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/PurchaseTypeTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/PolicyPredicateTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ItemTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StorePoliciesAcceptanceTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SubmitOfferPurchaseTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/Item.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/StorePoliciesManagementTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/SubmitOfferPurchaseTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTests.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/UserStoreTestsNegative.cs" />
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/HandlePurchasesTests.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Login.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Logout.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/SearchItems.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoreActions.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StoresPurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/UsersPurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ViewOfficials.cshtml" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/ShoppingCartTests.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StorePoliciesAcceptanceTests.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/Store.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AddPredicate.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AddSale.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AddSaleCondition.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/AppointOfficials.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/BidsReview.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditPurchasePredicates.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/EditSalePredicates.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/Index.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemActions.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
+      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
+      <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ShoppingBag.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserState.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/User.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
-      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/OpenStore.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ItemReview.cshtml" />
-      <option value="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ShoppingCart.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" />
+      <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ExternalPaymentSystem/PaymentSystemAPI.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Models/ShoppingCartModel.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Views/Home/ShoppingCart.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/Publisher/ChartNotifications.cs" />
-      <option value="$PROJECT_DIR$/../WebApplication/Publisher/TimedHostedService.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/ExternalDeliverySystem/DeliverySystemAPI.cs" />
       <option value="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
+      <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -346,14 +170,14 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite&#10;azure" />
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35062242" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35074627" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="RiderIisExpressOptionsPageId" />
+    <property name="settings.editor.selected.configurable" value="RiderDotCoverPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.WebApplication: IIS Express">
@@ -399,7 +223,7 @@
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="SEND_DEBUG_REQUEST" value="0" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
       <method v="2">
         <option name="Build" />
@@ -412,7 +236,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue=".NET Launch Settings Profile.WebApplication" />
         <item itemvalue=".NET Launch Settings Profile.WebApplication" />
         <item itemvalue=".NET Launch Settings Profile.WebApplication" />
         <item itemvalue=".NET Launch Settings Profile.WebApplication" />
@@ -455,51 +278,13 @@
       <workItem from="1622476891645" duration="1305000" />
       <workItem from="1622485290854" duration="607000" />
       <workItem from="1622544047198" duration="9488000" />
-    </task>
-    <task id="LOCAL-00001" summary="save">
-      <created>1619199403309</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1619199403309</updated>
-    </task>
-    <task id="LOCAL-00002" summary="save">
-      <created>1619199419404</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1619199419404</updated>
-    </task>
-    <task id="LOCAL-00003" summary="fixed some tests">
-      <created>1620495529770</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1620495529770</updated>
-    </task>
-    <task id="LOCAL‎00004" summary="meantime">
-      <created>1621073204550</created>
-      <option name="number" value="LOCAL‎00004" />
-      <option name="presentableId" value="LOCAL‎00004" />
-      <updated>1621073204550</updated>
-    </task>
-    <task id="LOCAL‎00005" summary="added shopping cart DB">
-      <created>1621507637511</created>
-      <option name="number" value="LOCAL‎00005" />
-      <option name="presentableId" value="LOCAL‎00005" />
-      <updated>1621507637511</updated>
-    </task>
-    <task id="LOCAL‎00006" summary="DB without repos">
-      <created>1621525793176</created>
-      <option name="number" value="LOCAL‎00006" />
-      <option name="presentableId" value="LOCAL‎00006" />
-      <updated>1621525793176</updated>
-    </task>
-    <task id="LOCAL‎00007" summary="DB without repos">
-      <created>1621529996828</created>
-      <option name="number" value="LOCAL‎00007" />
-      <option name="presentableId" value="LOCAL‎00007" />
-      <updated>1621529996828</updated>
+      <workItem from="1622893075563" duration="18556000" />
+      <workItem from="1623071769722" duration="9266000" />
+      <workItem from="1623170405283" duration="6188000" />
+      <workItem from="1623318832083" duration="219000" />
+      <workItem from="1623319086343" duration="361000" />
+      <workItem from="1623319649595" duration="494000" />
+      <workItem from="1623320825035" duration="9839000" />
     </task>
     <task id="LOCAL‎00008" summary="changes revert">
       <created>1621861748913</created>
@@ -692,63 +477,115 @@
       <option name="project" value="LOCAL" />
       <updated>1622564770642</updated>
     </task>
-    <task id="LOCAL-00039" summary="save">
-      <created>1622882677046</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1622882677046</updated>
+    <task id="LOCAL‎00039" summary="added configuration file, fixed system manager">
+      <created>1622891630846</created>
+      <option name="number" value="LOCAL‎00039" />
+      <option name="presentableId" value="LOCAL‎00039" />
+      <updated>1622891630846</updated>
     </task>
-    <task id="LOCAL-00040" summary="fixed: stability issues, removed guest from db and added transactions">
-      <created>1622890805994</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1622890805994</updated>
+    <task id="LOCAL‎00040" summary="Merge remote-tracking branch 'origin/main' into bug_fixes_itay&#10;&#10;# Conflicts:&#10;#&#9;WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache&#10;#&#9;WSEP212-TESTS/obj/project.nuget.cache&#10;#&#9;WSEP212/.idea/.idea.WSEP212/.idea/workspace.xml&#10;#&#9;WSEP212/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache&#10;#&#9;WSEP212/obj/project.nuget.cache&#10;#&#9;WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache&#10;#&#9;WebApplication/obj/project.nuget.cache">
+      <created>1622892064574</created>
+      <option name="number" value="LOCAL‎00040" />
+      <option name="presentableId" value="LOCAL‎00040" />
+      <updated>1622892064574</updated>
     </task>
-    <task id="LOCAL-00041" summary="added try catch in external systems">
-      <created>1622892381695</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1622892381695</updated>
+    <task id="LOCAL‎00041" summary="fixed bugs">
+      <created>1622893726634</created>
+      <option name="number" value="LOCAL‎00041" />
+      <option name="presentableId" value="LOCAL‎00041" />
+      <updated>1622893726634</updated>
     </task>
-    <task id="LOCAL-00042" summary="added try catch in the home controller">
-      <created>1622895270733</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1622895270733</updated>
+    <task id="LOCAL‎00042" summary="fixed bugs">
+      <created>1622894042266</created>
+      <option name="number" value="LOCAL‎00042" />
+      <option name="presentableId" value="LOCAL‎00042" />
+      <updated>1622894042266</updated>
     </task>
-    <task id="LOCAL-00043" summary="save">
-      <created>1622984142041</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1622984142041</updated>
+    <task id="LOCAL‎00043" summary="very good">
+      <created>1622898314278</created>
+      <option name="number" value="LOCAL‎00043" />
+      <option name="presentableId" value="LOCAL‎00043" />
+      <updated>1622898314278</updated>
     </task>
-    <task id="LOCAL-00044" summary="fixed some tests">
-      <created>1623319973463</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1623319973463</updated>
+    <task id="LOCAL‎00044" summary="started branch">
+      <created>1622898491697</created>
+      <option name="number" value="LOCAL‎00044" />
+      <option name="presentableId" value="LOCAL‎00044" />
+      <updated>1622898491697</updated>
     </task>
-    <task id="LOCAL-00045" summary="save">
-      <created>1623320082451</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1623320082451</updated>
+    <task id="LOCAL‎00045" summary="started branch">
+      <created>1622898518747</created>
+      <option name="number" value="LOCAL‎00045" />
+      <option name="presentableId" value="LOCAL‎00045" />
+      <updated>1622898518747</updated>
     </task>
-    <task id="LOCAL-00046" summary="save">
-      <created>1623320147344</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1623320147344</updated>
+    <task id="LOCAL‎00046" summary="fixed so many tests!!">
+      <created>1622910199016</created>
+      <option name="number" value="LOCAL‎00046" />
+      <option name="presentableId" value="LOCAL‎00046" />
+      <updated>1622910199016</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL‎00047" summary="fixed many more tests!!">
+      <created>1622911296588</created>
+      <option name="number" value="LOCAL‎00047" />
+      <option name="presentableId" value="LOCAL‎00047" />
+      <updated>1622911296588</updated>
+    </task>
+    <task id="LOCAL‎00048" summary="fixed more tests!!">
+      <created>1622915089318</created>
+      <option name="number" value="LOCAL‎00048" />
+      <option name="presentableId" value="LOCAL‎00048" />
+      <updated>1622915089318</updated>
+    </task>
+    <task id="LOCAL‎00049" summary="fixed init file">
+      <created>1622975672526</created>
+      <option name="number" value="LOCAL‎00049" />
+      <option name="presentableId" value="LOCAL‎00049" />
+      <updated>1622975672526</updated>
+    </task>
+    <task id="LOCAL‎00050" summary="fixed and merged">
+      <created>1622975922506</created>
+      <option name="number" value="LOCAL‎00050" />
+      <option name="presentableId" value="LOCAL‎00050" />
+      <updated>1622975922507</updated>
+    </task>
+    <task id="LOCAL‎00051" summary="finished submit approved by all">
+      <created>1623076561839</created>
+      <option name="number" value="LOCAL‎00051" />
+      <option name="presentableId" value="LOCAL‎00051" />
+      <updated>1623076561840</updated>
+    </task>
+    <task id="LOCAL‎00052" summary="fixed unit and integration">
+      <created>1623081018906</created>
+      <option name="number" value="LOCAL‎00052" />
+      <option name="presentableId" value="LOCAL‎00052" />
+      <updated>1623081018906</updated>
+    </task>
+    <task id="LOCAL‎00053" summary="fixed tests and code">
+      <created>1623176085563</created>
+      <option name="number" value="LOCAL‎00053" />
+      <option name="presentableId" value="LOCAL‎00053" />
+      <updated>1623176085564</updated>
+    </task>
+    <task id="LOCAL‎00054" summary="fixed actions seen-ability">
+      <created>1623176639363</created>
+      <option name="number" value="LOCAL‎00054" />
+      <option name="presentableId" value="LOCAL‎00054" />
+      <updated>1623176639363</updated>
+    </task>
+    <task id="LOCAL‎00055" summary="fixed tests">
+      <created>1623325699372</created>
+      <option name="number" value="LOCAL‎00055" />
+      <option name="presentableId" value="LOCAL‎00055" />
+      <updated>1623325699372</updated>
+    </task>
+    <task id="LOCAL‎00056" summary="fixed tests">
+      <created>1623328054237</created>
+      <option name="number" value="LOCAL‎00056" />
+      <option name="presentableId" value="LOCAL‎00056" />
+      <updated>1623328054237</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -786,17 +623,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="abcdefg" />
-    <MESSAGE value="added purchase types edit" />
-    <MESSAGE value="half working code :)" />
-    <MESSAGE value="meanwhile" />
-    <MESSAGE value="almost everything work" />
-    <MESSAGE value="fixed shopping cart price" />
-    <MESSAGE value="added db mock" />
-    <MESSAGE value="made add item to shopping cart to return notifications DTO" />
-    <MESSAGE value="added offers for shopping carts" />
-    <MESSAGE value="bids in the meantime" />
-    <MESSAGE value="added bid object" />
     <MESSAGE value="added json" />
     <MESSAGE value="meantime" />
     <MESSAGE value="merged and kept changes" />
@@ -806,22 +632,27 @@
     <MESSAGE value="remove unused" />
     <MESSAGE value="fix remove of store" />
     <MESSAGE value="fix tests" />
-    <MESSAGE value="fixed: stability issues, removed guest from db and added transactions" />
-    <MESSAGE value="added try catch in external systems" />
-    <MESSAGE value="added try catch in the home controller" />
-    <MESSAGE value="fixed some tests" />
     <MESSAGE value="save" />
-    <option name="LAST_COMMIT_MESSAGE" value="save" />
+    <MESSAGE value="added configuration file, fixed system manager" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main' into bug_fixes_itay&#10;&#10;# Conflicts:&#10;#&#9;WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache&#10;#&#9;WSEP212-TESTS/obj/project.nuget.cache&#10;#&#9;WSEP212/.idea/.idea.WSEP212/.idea/workspace.xml&#10;#&#9;WSEP212/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache&#10;#&#9;WSEP212/obj/project.nuget.cache&#10;#&#9;WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache&#10;#&#9;WebApplication/obj/project.nuget.cache" />
+    <MESSAGE value="fixed bugs" />
+    <MESSAGE value="very good" />
+    <MESSAGE value="started branch" />
+    <MESSAGE value="fixed so many tests!!" />
+    <MESSAGE value="fixed many more tests!!" />
+    <MESSAGE value="fixed more tests!!" />
+    <MESSAGE value="fixed init file" />
+    <MESSAGE value="fixed and merged" />
+    <MESSAGE value="finished submit approved by all" />
+    <MESSAGE value="fixed unit and integration" />
+    <MESSAGE value="fixed tests and code" />
+    <MESSAGE value="fixed actions seen-ability" />
+    <MESSAGE value="fixed tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/SearchItems.cs</url>
-          <line>26</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\SearchItems.cs" initialLine="26" containingFunctionPresentation="method 'matchSearchSettings'" />
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/Authentication/Authentication.cs</url>
           <line>116</line>
@@ -830,13 +661,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>1209</line>
+          <line>1173</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="657" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>1218</line>
+          <line>1182</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="663" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="41" />
         </line-breakpoint>
@@ -847,104 +678,251 @@
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/SalePolicy/SaleOn/SaleOnItem.cs</url>
-          <line>21</line>
-          <properties documentPath="C:\Users\שגיב משיח\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\SalePolicy\SaleOn\SaleOnItem.cs" initialLine="21" containingFunctionPresentation="method 'shouldApplySale'" />
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StoreManagementTests.cs</url>
-          <line>127</line>
-          <properties documentPath="C:\Users\שגיב משיח\RiderProjects\WSEP212-18B\WSEP212-TESTS\AcceptanceTests\StoreManagementTests.cs" initialLine="130" containingFunctionPresentation="method 'appointStoreManagerNoPermissionTest'" />
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>106</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="81" containingFunctionPresentation="method 'itemReviewSuccessful'" />
-          <option name="timeStamp" value="120" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>107</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="82" containingFunctionPresentation="method 'itemReviewSuccessful'" />
-          <option name="timeStamp" value="121" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>76</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="51" containingFunctionPresentation="method 'createUserWithStore'" />
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
-          <line>225</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="230" containingFunctionPresentation="method 'itemReview'" />
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>156</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="131" containingFunctionPresentation="method 'removeManagerSuccessful'" />
-          <option name="timeStamp" value="125" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
-          <line>74</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="50" containingFunctionPresentation="method 'createUserWithStore'" />
-          <option name="timeStamp" value="126" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
-          <line>98</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="87" containingFunctionPresentation="method 'addStoreTest'">
+          <line>155</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="157" containingFunctionPresentation="method 'removeManagerSuccessful'">
             <startOffsets>
-              <option value="4444" />
+              <option value="7106" />
             </startOffsets>
             <endOffsets>
-              <option value="4486" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="138" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
-          <line>114</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="101" containingFunctionPresentation="method 'addItemToStorageTest'">
-            <startOffsets>
-              <option value="4991" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5031" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="142" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
-          <line>146</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="129" containingFunctionPresentation="method 'addCartTest'">
-            <startOffsets>
-              <option value="6067" />
-            </startOffsets>
-            <endOffsets>
-              <option value="6107" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="146" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs</url>
-          <line>170</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212-TESTS\AcceptanceTests\SystemDBTests.cs" initialLine="157" containingFunctionPresentation="method 'addSellerPermissionTest'">
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
+              <option value="7182" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/User.cs</url>
+          <line>553</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\User.cs" initialLine="553" containingFunctionPresentation="method 'removeStoreManager'">
+            <startOffsets>
+              <option value="20227" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20280" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
+          <line>420</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="420" containingFunctionPresentation="method 'removeStoreManager'">
+            <startOffsets>
+              <option value="19528" />
+            </startOffsets>
+            <endOffsets>
+              <option value="19616" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
+          <line>147</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="149" containingFunctionPresentation="method 'removeManagerInit'">
+            <startOffsets>
+              <option value="6879" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6892" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/NotificationsTest.cs</url>
+          <line>148</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\IntegrationTests\NotificationsTest.cs" initialLine="150" containingFunctionPresentation="method 'removeManagerInit'">
+            <startOffsets>
+              <option value="6905" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6972" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/User.cs</url>
+          <line>234</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\User.cs" initialLine="234" containingFunctionPresentation="method 'removeItemFromShoppingCart'">
+            <startOffsets>
+              <option value="8259" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8315" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="160" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
+          <line>272</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="272" containingFunctionPresentation="method 'logout'">
+            <startOffsets>
+              <option value="12829" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12883" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
+          <line>269</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="269" containingFunctionPresentation="method 'logout'">
+            <startOffsets>
+              <option value="12659" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12758" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreRepositoryTests.cs</url>
+          <line>90</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\UnitTests\StoreRepositoryTests.cs" initialLine="89" containingFunctionPresentation="method 'searchItemByNameTest'">
+            <startOffsets>
+              <option value="4128" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4246" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreRepositoryTests.cs</url>
+          <line>48</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\UnitTests\StoreRepositoryTests.cs" initialLine="48" containingFunctionPresentation="method 'SetupAuth'">
+            <startOffsets>
+              <option value="2226" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2366" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/PurchaseTypeTests.cs</url>
+          <line>129</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\UnitTests\PurchaseTypeTests.cs" initialLine="128" containingFunctionPresentation="method 'approveOfferSuccessfullyTest'">
+            <startOffsets>
+              <option value="5930" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6030" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/PurchaseTypes/ItemSubmitOfferPurchase.cs</url>
+          <line>52</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\PurchaseTypes\ItemSubmitOfferPurchase.cs" initialLine="52" containingFunctionPresentation="method 'changeItemPriceStatus'">
+            <startOffsets>
+              <option value="1785" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1817" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/PurchaseTypes/ItemSubmitOfferPurchase.cs</url>
+          <line>49</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\PurchaseTypes\ItemSubmitOfferPurchase.cs" initialLine="49" containingFunctionPresentation="method 'changeItemPriceStatus'">
+            <startOffsets>
+              <option value="1651" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1691" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/PolicyPredicate/ConditioningPredicate.cs</url>
+          <line>26</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\PolicyPredicate\ConditioningPredicate.cs" initialLine="26" containingFunctionPresentation="method 'applyPrediacte'">
+            <startOffsets>
+              <option value="1015" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1057" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/PolicyPredicate/ConditioningPredicate.cs</url>
+          <line>31</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\PolicyPredicate\ConditioningPredicate.cs" initialLine="31" containingFunctionPresentation="method 'applyPrediacte'">
+            <startOffsets>
+              <option value="1172" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1218" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DomainLayer/PurchasePolicy/PurchasePolicy.cs</url>
+          <line>155</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\PurchasePolicy\PurchasePolicy.cs" initialLine="155" containingFunctionPresentation="method 'approveByPurchasePolicy'">
+            <startOffsets>
+              <option value="6923" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6924" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/IntegrationTests/SubmitOfferPurchaseTests.cs</url>
+          <line>187</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\IntegrationTests\SubmitOfferPurchaseTests.cs" initialLine="187" containingFunctionPresentation="method 'complexPurchaseTest'">
+            <startOffsets>
+              <option value="8763" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8793" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StorePoliciesAcceptanceTests.cs</url>
+          <line>136</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\AcceptanceTests\StorePoliciesAcceptanceTests.cs" initialLine="136" containingFunctionPresentation="method 'rejectedByPurchasePolicyComplexTest'">
+            <startOffsets>
+              <option value="7685" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7823" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/MultiThreadedTests.cs</url>
+          <line>422</line>
+          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212-TESTS\AcceptanceTests\MultiThreadedTests.cs" initialLine="494" containingFunctionPresentation="method 'deleteItemAndTryToBuyItTest'">
+            <startOffsets>
+              <option value="16092" />
+            </startOffsets>
+            <endOffsets>
+              <option value="16121" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="221" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
