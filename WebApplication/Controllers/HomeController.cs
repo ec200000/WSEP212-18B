@@ -15,6 +15,7 @@ using WSEP212.ServiceLayer.Result;
 using Microsoft.AspNetCore.SignalR;
 using PostSharp.Aspects;
 using WebApplication.Communication;
+using WebApplication.Publisher;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchaseTypes;
 using WSEP212.DomainLayer.SalePolicy.SaleOn;
@@ -29,10 +30,12 @@ namespace WebApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHubContext<NotificationHub> _notificationUserHubContext;
-        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationUserHubContext)
+        private readonly IHubContext<ChartNotifications> _chartHubContext;
+        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> notificationUserHubContext, IHubContext<ChartNotifications> chartHubContext)
         {
             _logger = logger;
             _notificationUserHubContext = notificationUserHubContext;
+            _chartHubContext = chartHubContext;
         }
 
         const string SessionName = "_Name";  
@@ -1639,6 +1642,75 @@ namespace WebApplication.Controllers
                     TempData["alert"] = res.getMessage();
                     return View();
                 }
+            }
+            catch (SystemException e)
+            {
+                var m = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    m += inner.Message;
+                Logger.Instance.writeErrorEventToLog(m);
+                System.Environment.Exit(-1);
+            }
+
+            return null;
+        }
+        
+        public IActionResult DailyVisitors()
+        {
+            try
+            {
+                PieChart data = new PieChart();
+                //HttpContext.Session.SetObject("pieChartData", data.GetPieChartData());
+                TempData["data"] = data.GetPieChartData();
+                /**TempData["alert"] = null;
+                SystemController systemController = SystemController.Instance;
+                ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>> res = systemController.getStoresPurchaseHistory(HttpContext.Session.GetString(SessionName));
+                if (res.getTag())
+                {
+                    double totalIncome = 0;
+                    string value = "";
+                    foreach (KeyValuePair<int, ConcurrentDictionary<int, PurchaseInvoice>> invs in res.getValue())
+                    {
+                        foreach (PurchaseInvoice inv in invs.Value.Values)
+                        {
+                            value += inv.ToString() + "\n" + ";";
+                            if(inv.dateOfPurchase.Date.Equals(DateTime.Today))
+                                totalIncome += inv.getPurchaseTotalPrice();
+                        }
+                    }
+                    if(value!="")
+                        value = value.Substring(0, value.Length - 1);
+                    HttpContext.Session.SetString("Stores_history", value);
+                    HttpContext.Session.SetString("stores_income", totalIncome.ToString());
+                    return View();
+                }
+                else
+                {
+                    TempData["alert"] = res.getMessage();
+                    return View();
+                }**/
+                return View();
+            }
+            catch (SystemException e)
+            {
+                var m = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    m += inner.Message;
+                Logger.Instance.writeErrorEventToLog(m);
+                System.Environment.Exit(-1);
+            }
+
+            return null;
+        }
+        
+        public IActionResult TryDailyVisitors(PurchaseModel model)
+        {
+            try
+            {
+                TempData["alert"] = null;
+                return RedirectToAction("ItemReview", model);
             }
             catch (SystemException e)
             {

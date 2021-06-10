@@ -13,6 +13,7 @@
     <ItemGroup>
       <PackageReference Include="dotnet-restore-test" Version="1.0.3" />
       <PackageReference Include="EntityFramework" Version="6.4.4" />
+      <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.2" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.Internal" Version="5.0.5" />
       <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.5" />
       <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />

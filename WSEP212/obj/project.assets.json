@@ -76,6 +76,15 @@
           }
         }
       },
+      "Microsoft.AspNet.SignalR.Core/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Cryptography.Internal/5.0.5": {
         "type": "package",
         "compile": {
@@ -2454,6 +2463,21 @@
         "runtimes/win7-arm/native/libuv.dll",
         "runtimes/win7-x64/native/libuv.dll",
         "runtimes/win7-x86/native/libuv.dll"
+      ]
+    },
+    "Microsoft.AspNet.SignalR.Core/2.4.2": {
+      "sha512": "mpkCnN9sF4zBrE6Gkz7rmJL/as4JMGZDCV/dfcUh6mDwFdbGGYWBzchQOW1mWCx/3EBzHK+KkBr8+WGwTDejwg==",
+      "type": "package",
+      "path": "microsoft.aspnet.signalr.core/2.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.dll",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.pdb",
+        "lib/net45/Microsoft.AspNet.SignalR.Core.xml",
+        "microsoft.aspnet.signalr.core.2.4.2.nupkg.sha512",
+        "microsoft.aspnet.signalr.core.nuspec",
+        "packageIcon.png"
       ]
     },
     "Microsoft.AspNetCore.Cryptography.Internal/5.0.5": {
@@ -7850,6 +7874,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "EntityFramework >= 6.4.4",
+      "Microsoft.AspNet.SignalR.Core >= 2.4.2",
       "Microsoft.AspNetCore.Cryptography.Internal >= 5.0.5",
       "Microsoft.AspNetCore.Cryptography.KeyDerivation >= 5.0.5",
       "Newtonsoft.Json >= 11.0.2",
@@ -7861,19 +7886,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ec200\\.nuget\\packages\\": {}
+    "C:\\Users\\irisk\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
+      "projectUniqueName": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj",
       "projectName": "WSEP212",
-      "projectPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\WSEP212.csproj",
-      "packagesPath": "C:\\Users\\ec200\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ec200\\RiderProjects\\WSEP212-18B\\WSEP212\\obj\\",
+      "projectPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\WSEP212.csproj",
+      "packagesPath": "C:\\Users\\irisk\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\irisk\\OneDrive\\Documents\\university\\third year - second semester\\Sadna\\WSEP212\\WSEP212\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\ec200\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\irisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7902,6 +7932,10 @@
           "EntityFramework": {
             "target": "Package",
             "version": "[6.4.4, )"
+          },
+          "Microsoft.AspNet.SignalR.Core": {
+            "target": "Package",
+            "version": "[2.4.2, )"
           },
           "Microsoft.AspNetCore.Cryptography.Internal": {
             "target": "Package",
@@ -7954,5 +7988,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.SignalR.Core 2.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.SignalR.Core",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }
