@@ -104,13 +104,15 @@ namespace WSEP212.DomainLayer
             {
                 var storeToRemove = stores[storeID];
                 var pers = storeToRemove.storeSellersPermissions.Values;
+                SystemDBAccess.Instance.Stores.Remove(storeToRemove);
+                if(pers.Count!=0)
+                    SystemDBAccess.Instance.Permissions.RemoveRange(pers);
                 foreach (var name in storeToRemove.storeSellersPermissions)
                 {
                     UserRepository.Instance.findUserByUserName(name.Key).getValue().removeSellerPermissions(name.Value);
                 }
                 stores.TryRemove(storeID, out _);
-                SystemDBAccess.Instance.Stores.Remove(storeToRemove);
-                SystemDBAccess.Instance.Permissions.RemoveRange(pers);
+                
                 lock (SystemDBAccess.savelock)
                     SystemDBAccess.Instance.SaveChanges();
                 return new Ok("The Store Was Removed From The Store Repository Successfully");

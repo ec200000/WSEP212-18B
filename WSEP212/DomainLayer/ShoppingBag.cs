@@ -291,7 +291,8 @@ namespace WSEP212.DomainLayer
             if(itemsPrices.Count == itemsPurchaseTypes.Count)
             {
                 var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
-                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = store.purchaseItems(user, items, itemsPrices);
+                Store s = StoreRepository.Instance.stores[store.storeID];
+                ResultWithValue<ConcurrentDictionary<int, double>> purchaseItemsRes = s.purchaseItems(user, items, itemsPrices);
                 if(purchaseItemsRes.getTag())
                 {
                     // create purchase invoice

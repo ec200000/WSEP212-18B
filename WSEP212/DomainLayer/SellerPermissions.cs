@@ -106,9 +106,9 @@ namespace WSEP212.DomainLayer
             if (StoreRepository.Instance.getStore(StoreID).getTag())
             {
                 StoreRepository.Instance.getStore(StoreID).getValue().addNewStoreSeller(sellerPer);
-                if(sellerPer.SellerName!="")
-                    sellerPer.addToDB();
             }
+            if(sellerPer.SellerName!="")
+                sellerPer.addToDB();
                 
             return sellerPer;
         }
