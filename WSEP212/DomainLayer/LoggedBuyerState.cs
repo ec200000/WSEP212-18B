@@ -69,13 +69,15 @@ namespace WSEP212.DomainLayer
             RegularResult hasPermissionRes;
             if(appointeepermission.Equals(Permissions.AllPermissions))
                 hasPermissionRes = hasPermissionInStore(storeID, Permissions.AppointStoreOwner);
-           else
+            else
                 hasPermissionRes = hasPermissionInStore(storeID, Permissions.AppointStoreManager);
             if(hasPermissionRes.getTag())
             {
                 User grantor = this.user;
                 ConcurrentLinkedList<Permissions> pers = new ConcurrentLinkedList<Permissions>();
                 pers.TryAdd(appointeepermission);  // new seller permissions
+                if(storeRes.getValue().storeSellersPermissions.ContainsKey(sellerName))
+                    return new Failure("Could not add seller permission");
                 SellerPermissions permissions = SellerPermissions.getSellerPermissions(sellerRes.getValue().userName, storeRes.getValue().storeID, grantor.userName, pers);
                 if(sellerRes.getValue().addSellerPermissions(permissions))
                     return new Ok("The Appointment Of The New Seller To The Store Made Successfully");

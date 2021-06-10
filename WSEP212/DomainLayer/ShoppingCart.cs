@@ -99,19 +99,20 @@ namespace WSEP212.DomainLayer
                         removeShoppingBagIfEmpty(shoppingBagRes.getValue());
                         return addItemRes;
                     }
-
+                    ShoppingCart? result;
                     lock (SystemDBAccess.savelock)
                     {
-                        var result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
-                        if (result != null)
-                        {
-                            if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
-                                result.BagsAsJson = this.BagsAsJson;
-                       
-                            SystemDBAccess.Instance.SaveChanges();
-                        }  
+                        result = SystemDBAccess.Instance.Carts.SingleOrDefault(c => c.cartOwner.Equals(this.cartOwner));
                     }
-                    
+
+                    if (result != null)
+                    {
+                        if(!JToken.DeepEquals(result.BagsAsJson, this.BagsAsJson))
+                            result.BagsAsJson = this.BagsAsJson;
+                        lock (SystemDBAccess.savelock)
+                            SystemDBAccess.Instance.SaveChanges();
+                    }
+
                     return addItemRes;
                 }
                 return new Failure(shoppingBagRes.getMessage());

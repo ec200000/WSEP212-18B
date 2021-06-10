@@ -37,7 +37,7 @@ namespace WSEP212.DomainLayer.ExternalDeliverySystem
                 string responseString = await response.Content.ReadAsStringAsync();
                 return responseString.Equals("OK");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var msg = e.Message + " ";
                 var inner = e.InnerException;
