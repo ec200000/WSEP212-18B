@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WSEP212.DomainLayer;
+using WSEP212.DomainLayer.SystemLoggers;
 
 namespace WebApplication.Publisher
 {
@@ -31,19 +32,32 @@ namespace WebApplication.Publisher
 
         private void ChartTimerCallBack(object state)    
         {
-            if (_sendingChartData)    
-            {    
-                return;    
-            }    
-            lock (_chartUpateLock)    
-            {    
-                if (!_sendingChartData)    
+            try
+            {
+                if (_sendingChartData)    
                 {    
-                    _sendingChartData = true;
-                    pieChart.SetPieChartData();
-                    sendChartData(pieChart);    
-                    _sendingChartData = false;    
+                    return;    
                 }    
+                lock (_chartUpateLock)    
+                {    
+                    if (!_sendingChartData)    
+                    {    
+                        _sendingChartData = true;
+                        pieChart.SetPieChartData();
+                        sendChartData(pieChart);    
+                        _sendingChartData = false;    
+                    }    
+                }
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                {
+                    msg += inner.Message;
+                }
+                Logger.Instance.writeErrorEventToLog(msg);
             }
         }    
         

@@ -177,6 +177,34 @@ namespace WebApplication.Controllers
                 TryPriceAftereSale(model);
                 string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
                 HttpContext.Session.SetObject("purchasetypes", types);
+                //tryBidsInfo:
+                string userName = HttpContext.Session.GetString(SessionName);
+                ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> dict =
+                    systemController.offerItemsPricesAndStatus(userName).getValue();
+                if (dict == null || dict.IsEmpty || dict.Count == 0)
+                {
+                    HttpContext.Session.SetObject("bidsInfo", new string[] {" "});
+                    RedirectToAction("SearchItems");
+                }
+                else
+                {
+                    int size = dict.Count;
+                    string[] bidsInfo = new string[size];
+                    int i = 0;
+                    foreach (int itemID in dict.Keys)
+                    {
+                        foreach (KeyValuePair<double, PriceStatus> priceAndStatus in dict.Values)
+                        {
+                            bidsInfo[i] = bidsInfo[i] + "itemID: " + itemID + ", price: " + priceAndStatus.Key +
+                                          ", status: " + priceAndStatus.Value;
+                            i++;
+                        }
+                    }
+                    HttpContext.Session.SetObject("bidsInfo", bidsInfo);
+                    RedirectToAction("SearchItems");
+                }
+                
+                
                 return View();
             }
             catch (SystemException e)
@@ -189,6 +217,11 @@ namespace WebApplication.Controllers
                 System.Environment.Exit(-1);
             }
 
+            return null;
+        }
+
+        public IActionResult tryBidsInfo(ShoppingCartModel model)
+        {
             return null;
         }
 
@@ -3030,7 +3063,7 @@ namespace WebApplication.Controllers
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
                     string user = strs6[1];
-                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user,userName, (int) storeID, item, 2);
+                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(userName, user, (int) storeID, item, 2);
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
@@ -3073,7 +3106,7 @@ namespace WebApplication.Controllers
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
                     string user = strs6[1].TrimStart();
-                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(user, userName, (int) storeID, item, 0);
+                    ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus( userName, user, (int) storeID, item, 0);
                     if (res.getValue() != null)
                     {
                         systemController.removeBidOffer(userName, (int)storeID, item, user);

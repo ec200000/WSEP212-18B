@@ -17,7 +17,7 @@
             <label for="storesList">Items List</label>
             string[] ItemsListAndStores = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("shoppingCart");
             @Html.DropDownListFor(model => model.itemID, new SelectList(ItemsListAndStores.OfType<string>().ToList()), new {@class = "custom-select"});
-            <button style="margin-top: 20px" class="btn btn-outline-primary" type="submit">Remove Item From Shopping Cart</button>
+            <button class="btn btn-outline-primary" type="submit">Remove Item From Shopping Cart</button>
         
             @Html.TextBoxFor(model => model.newOffer,new { placeholder = "Change offer",@class="inputclassopenstore" })
 
@@ -31,49 +31,115 @@
     }
     catch (Exception e)
     {
-         var msg = e.Message + " ";
-         var inner = e.InnerException;
-         if (inner != null)
-         {
-             msg += inner.Message;
-         }
-         Logger.Instance.writeErrorEventToLog(msg);
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+        {
+            msg += inner.Message;
+        }
+        Logger.Instance.writeErrorEventToLog(msg);
     }
     
 </div>
 <div class="shoppingcartpurchasediv">
-    @using (Html.BeginForm("TryPriceAftereSale", "Home", FormMethod.Post))
+    @try
     {
-        <h3>Price Before sale:</h3>
-        string finalPriceBeforeSale = HttpContextAccessor.HttpContext.Session.GetString("finalPriceBeforeSale");
-        <h6>@finalPriceBeforeSale</h6>
+        @using (Html.BeginForm("tryBidsInfo", "Home", FormMethod.Post))
+        {
+            <h3>Info about bids:</h3>
+            string[] bidsInfoList = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("bidsInfo");
+            @Html.DropDownListFor(model => model.bidsInfo, new SelectList(bidsInfoList.OfType<string>().ToList()), new {@class = "custom-select"})
+            ;
+        }
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+        {
+            msg += inner.Message;
+        }
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
 <div class="shoppingcartpurchasediv">
-    @using (Html.BeginForm("TryPriceAftereSale", "Home", FormMethod.Post))
+    @try
     {
-        <h3>Price After sale:</h3>
-        string finalPriceAfterSale = HttpContextAccessor.HttpContext.Session.GetString("finalPriceAfterSale");
-        <h6>@finalPriceAfterSale</h6>
+        @using (Html.BeginForm("TryPriceAftereSale", "Home", FormMethod.Post))
+        {
+            <h3>Price Before sale:</h3>
+            string finalPriceBeforeSale = HttpContextAccessor.HttpContext.Session.GetString("finalPriceBeforeSale");
+            <h6>@finalPriceBeforeSale</h6>
+        }
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+        {
+            msg += inner.Message;
+        }
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+    
 </div>
 <div class="shoppingcartpurchasediv">
-    @using (Html.BeginForm("TrypurchaseItems", "Home", FormMethod.Post))
+    @try
     {
-        @Html.TextBoxFor(model => model.cardNumber,new { placeholder = "Card Number",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.month,new { placeholder = "Month",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.year,new { placeholder = "Year",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.holder,new { placeholder = "Card Holder",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.ccv,new { placeholder = "CCV",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.id,new { placeholder = "ID number",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.sendToName,new { placeholder = "Who to send",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.address,new { placeholder = "Address",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.city,new { placeholder = "City",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.country,new { placeholder = "Country",@class="inputclassindex" })
-        @Html.TextBoxFor(model => model.zip,new { placeholder = "Zip",@class="inputclassindex" })
+        @using (Html.BeginForm("TryPriceAftereSale", "Home", FormMethod.Post))
+        {
+            <h3>Price After sale:</h3>
+            string finalPriceAfterSale = HttpContextAccessor.HttpContext.Session.GetString("finalPriceAfterSale");
+            <h6>@finalPriceAfterSale</h6>
+        }
+    }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+        {
+            msg += inner.Message;
+        }
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
+</div>
+<div class="shoppingcartpurchasediv">
+    @try
+    {
+        @using (Html.BeginForm("TrypurchaseItems", "Home", FormMethod.Post))
+        {
+            @Html.TextBoxFor(model => model.cardNumber, new {placeholder = "Card Number", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.month, new {placeholder = "Month", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.year, new {placeholder = "Year", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.holder, new {placeholder = "Card Holder", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.ccv, new {placeholder = "CCV", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.id, new {placeholder = "ID number", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.sendToName, new {placeholder = "Who to send", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.address, new {placeholder = "Address", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.city, new {placeholder = "City", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.country, new {placeholder = "Country", @class = "inputclassindex"})
+            @Html.TextBoxFor(model => model.zip, new {placeholder = "Zip", @class = "inputclassindex"})
 
-        <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Purchase items</button>
+            <button style="margin-left: 15px" class="btn btn-outline-primary" type="submit">Purchase items</button>
+        }
     }
+    catch (Exception e)
+    {
+        var msg = e.Message + " ";
+        var inner = e.InnerException;
+        if (inner != null)
+        {
+            msg += inner.Message;
+        }
+        Logger.Instance.writeErrorEventToLog(msg);
+    }
+    
 </div>
     </body>
 </html>

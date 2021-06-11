@@ -24,5 +24,6 @@ namespace WebApplication.Models
         
         public double newOffer { get; set; }
         public string purchaseType { get; set; }
+        public string bidsInfo { get; set; }
     }
 }
