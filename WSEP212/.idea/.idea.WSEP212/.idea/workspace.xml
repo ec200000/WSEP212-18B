@@ -5,7 +5,16 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="add stress &amp; load tests" />
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/WSEP212-18B-Tests.jmx" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/WSEP212-18B-Tests.jmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/Debug/net5.0/WSEP212-TESTS.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WSEP212-TESTS/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WSEP212.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/configuration.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/configuration.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/rider.project.restore.info" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +51,10 @@
     <setting file="file://$PROJECT_DIR$/DomainLayer/LocalPredicate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/GetStoreInformation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/86B7B18F-4219-4E00-BDA9-F094D1F0F51B/1a/a1bdd2a0/IHtmlHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/86B7B18F-4219-4E00-BDA9-F094D1F0F51B/37/HtmlHelperFormExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/917010EA-8F23-45DE-AD3D-F26FDF1EEBBA/1/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../WebApplication/Views/Home/EditItemDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3D1FA16D-720B-4BFE-BF1A-30B2B689927C/8d/dea3086c/Executor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -102,7 +114,6 @@
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchasePredicate.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/PurchaseTypes.cshtml" />
       <option value="$PROJECT_DIR$/../WebApplication/Views/Home/StorePurchaseHistory.cshtml" />
-      <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
       <option value="$PROJECT_DIR$/DomainLayer/StoreRepository.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/SellerPermissions.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/ShoppingBag.cs" />
@@ -111,6 +122,7 @@
       <option value="$PROJECT_DIR$/DomainLayer/SystemControllerFacade.cs" />
       <option value="$PROJECT_DIR$/ServiceLayer/ISystemController.cs" />
       <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
+      <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -124,7 +136,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite&#10;azure" />
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35074627" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3508892" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -241,12 +253,8 @@
       <workItem from="1623319649595" duration="494000" />
       <workItem from="1623320825035" duration="4328000" />
       <workItem from="1623342485720" duration="3558000" />
-    </task>
-    <task id="LOCAL‎00008" summary="changes revert">
-      <created>1621861748913</created>
-      <option name="number" value="LOCAL‎00008" />
-      <option name="presentableId" value="LOCAL‎00008" />
-      <updated>1621861748913</updated>
+      <workItem from="1623354413500" duration="2939000" />
+      <workItem from="1623398462708" duration="11266000" />
     </task>
     <task id="LOCAL‎00009" summary="final">
       <created>1621881724870</created>
@@ -543,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623346570125</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="fix conflicts">
+      <created>1623346905166</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1623346905166</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -581,7 +596,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="meantime" />
     <MESSAGE value="merged and kept changes" />
     <MESSAGE value="fixed shopping bag tests" />
     <MESSAGE value="add to all tests clean of the db" />
@@ -606,7 +620,8 @@
     <MESSAGE value="fixed actions seen-ability" />
     <MESSAGE value="add price and status for offer items in service" />
     <MESSAGE value="add stress &amp; load tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="add stress &amp; load tests" />
+    <MESSAGE value="fix conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix conflicts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -619,13 +634,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>1173</line>
+          <line>1206</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="657" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs</url>
-          <line>1182</line>
+          <line>1215</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WebApplication\Controllers\HomeController.cs" initialLine="663" containingFunctionPresentation="method 'TryAddItemToShoppingCart'" />
           <option name="timeStamp" value="41" />
         </line-breakpoint>
@@ -649,7 +664,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
-          <line>420</line>
+          <line>422</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="420" containingFunctionPresentation="method 'removeStoreManager'" />
           <option name="timeStamp" value="152" />
         </line-breakpoint>
@@ -670,18 +685,6 @@
           <line>234</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\User.cs" initialLine="234" containingFunctionPresentation="method 'removeItemFromShoppingCart'" />
           <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
-          <line>272</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="272" containingFunctionPresentation="method 'logout'" />
-          <option name="timeStamp" value="167" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs</url>
-          <line>269</line>
-          <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\LoggedBuyerState.cs" initialLine="269" containingFunctionPresentation="method 'logout'" />
-          <option name="timeStamp" value="169" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/StoreRepositoryTests.cs</url>
@@ -751,7 +754,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DomainLayer/ShoppingCart.cs</url>
-          <line>244</line>
+          <line>245</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\ShoppingCart.cs" initialLine="244" containingFunctionPresentation="method 'purchaseItemsInCart'" />
           <option name="timeStamp" value="213" />
         </line-breakpoint>
@@ -769,7 +772,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ServiceLayer/SystemController.cs</url>
-          <line>256</line>
+          <line>266</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\ServiceLayer\SystemController.cs" initialLine="256" containingFunctionPresentation="method 'purchaseItems'" />
           <option name="timeStamp" value="216" />
         </line-breakpoint>
@@ -790,6 +793,32 @@
           <line>108</line>
           <properties documentPath="C:\Users\ec200\RiderProjects\WSEP212-18B\WSEP212\DomainLayer\UserState.cs" initialLine="108" containingFunctionPresentation="method 'purchaseItems'" />
           <option name="timeStamp" value="219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ServiceLayer/SystemController.cs</url>
+          <line>135</line>
+          <properties documentPath="C:\Users\שגיב משיח\RiderProjects\WSEP212-18B\WSEP212\ServiceLayer\SystemController.cs" initialLine="135" containingFunctionPresentation="method 'register'">
+            <startOffsets>
+              <option value="5411" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5431" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="220" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ServiceLayer/SystemController.cs</url>
+          <line>203</line>
+          <properties documentPath="C:\Users\שגיב משיח\RiderProjects\WSEP212-18B\WSEP212\ServiceLayer\SystemController.cs" initialLine="203" containingFunctionPresentation="method 'addItemToShoppingCart'">
+            <startOffsets>
+              <option value="7953" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7973" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="222" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
