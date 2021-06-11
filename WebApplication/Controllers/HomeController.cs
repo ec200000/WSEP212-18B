@@ -1168,7 +1168,6 @@ namespace WebApplication.Controllers
                 Logger.Instance.writeErrorEventToLog(m);
                 System.Environment.Exit(-1);
             }
-
             return -1;
         }
         
