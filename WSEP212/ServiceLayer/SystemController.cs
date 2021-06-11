@@ -44,7 +44,6 @@ namespace WSEP212.ServiceLayer
                 UserRepository.Instance.initRepo();
                 //UserRepository.Instance.createSystemManager();
                 UserRepository.Instance.Init();
-                //StoreRepository.Instance.Init();
                 SystemController.Instance.Init();
             }
             catch (Exception e)
