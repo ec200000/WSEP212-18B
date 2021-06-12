@@ -324,7 +324,7 @@ namespace WSEP212.DomainLayer
                 RegularResult res = findUserRes.getValue().shoppingCart.itemPriceStatusDecision(storeID, itemID, priceStatus, this.user.userName);
                 if(res.getTag())
                 {
-                    removeBid(storeID, itemID);
+                    //removeBid(storeID, itemID);
                     return new OkWithValue<string>(res.getMessage(), userName);
                 }
                 return new FailureWithValue<string>(res.getMessage(), userName);
