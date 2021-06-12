@@ -9,6 +9,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using WSEP212.DataAccessLayer;
 using WSEP212.ServiceLayer;
+using WSEP212.DomainLayer.SystemLoggers;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -97,17 +98,29 @@ namespace WSEP212.DomainLayer
         
         public RegularResult insertNewUser(User newUser, String password)
         {
-            lock (insertLock)
+            try
             {
-                if(checkIfUserExists(newUser.userName))
+                lock (insertLock)
                 {
-                    return new Failure("User Name Already Exists In The System");
+                    if(checkIfUserExists(newUser.userName))
+                    {
+                        return new Failure("User Name Already Exists In The System");
+                    }
+                    users.TryAdd(newUser, false);
+                    Authentication.Instance.insertUserInfo(newUser.userName, password);
+                    newUser.addToDB();
+                    return new Ok("Registration To The System Was Successful");
                 }
-                users.TryAdd(newUser, false);
-                Authentication.Instance.insertUserInfo(newUser.userName, password);
-                newUser.addToDB();
-                return new Ok("Registration To The System Was Successful");
             }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new Failure("failed in user repo");
         }
         
         public RegularResult addLoginUser(User newUser)
