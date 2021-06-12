@@ -17,7 +17,7 @@ namespace WSEP212.DomainLayer.PurchasePolicy
         public static bool mock = false;
         
         public String purchasePolicyName { get; set; }
-        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }//TODO: JSON
+        public LinkedList<PurchaseType> purchaseTypes { get; set; }//TODO: JSON
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; } //TODO: JSON
 
         public void supportPurchaseType(PurchaseType purchaseType);

@@ -53,9 +53,7 @@
       "appoint": "U4",
       "storeName": "S1",
       "storeID": "1",
-      "permissions": [
-        "AllPermissions"
-      ]
+      "permissions": "AllPermissions"
     }
   ]
 }

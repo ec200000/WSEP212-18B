@@ -197,8 +197,8 @@ namespace WebApplication.Controllers
                         {
                             bidsInfo[i] = bidsInfo[i] + "itemID: " + itemID + ", price: " + priceAndStatus.Key +
                                           ", status: " + priceAndStatus.Value;
-                            i++;
                         }
+                        i++;
                     }
                     HttpContext.Session.SetObject("bidsInfo", bidsInfo);
                     RedirectToAction("SearchItems");
@@ -377,6 +377,21 @@ namespace WebApplication.Controllers
 
             return null;
         }
+
+        private string[] toStringArray(PurchaseType[] arr)
+        {
+            string[] array = new string[arr.Length];
+            int i = 0;
+            foreach (var v in arr)
+            {
+                if (v == PurchaseType.ImmediatePurchase)
+                    array[i] = PurchaseType.ImmediatePurchase.ToString();
+                if (v == PurchaseType.SubmitOfferPurchase)
+                    array[i] = PurchaseType.SubmitOfferPurchase.ToString();
+                i++;
+            }
+            return array;
+        }
         
         public IActionResult PurchaseTypes(StoreModel model)
         {
@@ -391,8 +406,8 @@ namespace WebApplication.Controllers
                 string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
                 string userName = HttpContext.Session.GetString(SessionName);
                 int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
-                ConcurrentLinkedList<PurchaseType> lst = systemController.getStorePurchaseTypes(userName, storeID);
-                HttpContext.Session.SetObject("storepurchasetypes", listToArray(lst));
+                LinkedList<PurchaseType> lst = systemController.getStorePurchaseTypes(userName, storeID);
+                HttpContext.Session.SetObject("storepurchasetypes", toStringArray(lst.ToArray()));
                 HttpContext.Session.SetObject("purchasetypes", types);
                 return View();
             }
@@ -3061,15 +3076,22 @@ namespace WebApplication.Controllers
                     int item = int.Parse(strs2[1]);
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
-                    string user = strs6[1];
+                    string user = strs6[1].Trim();
                     ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus(userName, user, (int) storeID, item, 2);
                     if (res.getValue() != null)
                     {
+                        systemController.removeBidOffer(userName, (int)storeID, item, user);
+                        ConcurrentLinkedList<string> owners = StoreRepository.Instance.getStoreOwners((int) storeID);
                         Node<string> node = res.getValue().usersToSend.First;
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
-                            systemController.removeBidOffer(node.Value, (int)storeID, item, user);
+                            node = node.Next;
+                        }
+                        node = owners.First;
+                        while (node != null) 
+                        {
+                            systemController.removeBidOffer(node.Value, (int)storeID, item, user); 
                             node = node.Next;
                         }
                     }
@@ -3104,7 +3126,7 @@ namespace WebApplication.Controllers
                     int item = int.Parse(strs2[1]);
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
-                    string user = strs6[1].TrimStart();
+                    string user = strs6[1].Trim();
                     ResultWithValue<NotificationDTO> res = systemController.confirmPriceStatus( userName, user, (int) storeID, item, 0);
                     if (res.getValue() != null)
                     {
@@ -3113,7 +3135,6 @@ namespace WebApplication.Controllers
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
-                            //systemController.removeBidOffer(node.Value, (int)storeID, item, user); //TODO: CHANGE
                             node = node.Next;
                         }
                     }

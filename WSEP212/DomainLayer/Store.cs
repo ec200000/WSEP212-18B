@@ -326,11 +326,27 @@ namespace WSEP212.DomainLayer
         public void supportPurchaseType(PurchaseType purchaseType)
         {
             purchasePolicy.supportPurchaseType(purchaseType);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (result != null)
+            {
+                result.purchasePolicy = purchasePolicy;
+                //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
+            }
         }
 
         public void unsupportPurchaseType(PurchaseType purchaseType)
         {
             purchasePolicy.unsupportPurchaseType(purchaseType);
+            var result = SystemDBAccess.Instance.Stores.SingleOrDefault(s => s.storeID == this.storeID);
+            if (result != null)
+            {
+                result.purchasePolicy = purchasePolicy;
+                //result.PurchasePolicyAsJson = PurchasePolicyAsJson;
+                lock(SystemDBAccess.savelock)
+                    SystemDBAccess.Instance.SaveChanges();
+            }
         }
 
         public Boolean isStoreSupportPurchaseType(PurchaseType purchaseType)

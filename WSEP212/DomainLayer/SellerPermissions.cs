@@ -158,6 +158,7 @@ namespace WSEP212.DomainLayer
             var result = SystemDBAccess.Instance.Permissions.SingleOrDefault(i => i.GrantorName == this.GrantorName && i.SellerName == this.SellerName && i.StoreID == this.StoreID);
             if (result != null)
             {
+                //bidInfo.addToDB();
                 this.bids.TryAdd(bidInfo.bidID, bidInfo);
                 if(!JToken.DeepEquals(result.BidsAsJson, this.BidsAsJson))
                     result.BidsAsJson = this.BidsAsJson;
@@ -186,12 +187,11 @@ namespace WSEP212.DomainLayer
                 KeyValuePair<int,BidInfo> bidID = findBid(itemId, buyer);
                 if (bidID.Key != -1)
                 {
-                    result.bids.TryRemove(bidID);
+                    bids.TryRemove(bidID);
                     if(!JToken.DeepEquals(result.BidsAsJson, this.BidsAsJson))
                         result.BidsAsJson = this.BidsAsJson;
                     lock(SystemDBAccess.savelock)
                         SystemDBAccess.Instance.SaveChanges();
-                    this.bids = result.bids;
                     return new Ok("removed the bid");
                 }
             }

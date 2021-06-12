@@ -98,11 +98,12 @@ namespace WSEP212.DomainLayer
                 if(!items.ContainsKey(itemID))
                 {
                     // check if the item quantity available in storage
-                    RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, quantity);
+                    Store s = StoreRepository.Instance.stores[store.storeID];
+                    RegularResult itemAvailableRes = s.isAvailableInStorage(itemID, quantity);
                     if (itemAvailableRes.getTag())
                     {
                         // checks that the store support this purchase type
-                        if (store.isStoreSupportPurchaseType(purchaseType.getPurchaseType()))
+                        if (s.isStoreSupportPurchaseType(purchaseType.getPurchaseType()))
                         {
                             items.TryAdd(itemID, quantity);
                             itemsPurchaseTypes.TryAdd(itemID, purchaseType);
@@ -141,7 +142,8 @@ namespace WSEP212.DomainLayer
             { 
                 if (items.ContainsKey(itemID))  // check if item in the shopping bag
                 {
-                    RegularResult itemAvailableRes = store.isAvailableInStorage(itemID, updatedQuantity);
+                    Store s = StoreRepository.Instance.stores[store.storeID];
+                    RegularResult itemAvailableRes = s.isAvailableInStorage(itemID, updatedQuantity);
                     if (itemAvailableRes.getTag())   // check if item available in store
                     {
                         items[itemID] = updatedQuantity;
@@ -159,8 +161,9 @@ namespace WSEP212.DomainLayer
         {
             if(itemsPurchaseTypes.ContainsKey(itemID))
             {
+                Store s = StoreRepository.Instance.stores[store.storeID];
                 // checks that the store support this purchase type
-                if(store.isStoreSupportPurchaseType(itemPurchaseType.getPurchaseType()))
+                if(s.isStoreSupportPurchaseType(itemPurchaseType.getPurchaseType()))
                 {
                     itemsPurchaseTypes[itemID] = itemPurchaseType;
                     return new Ok("Change The Item Purchase Type Successfully");
@@ -315,7 +318,7 @@ namespace WSEP212.DomainLayer
                     // if the purchase will be canceled, roll back will clean this invoices
                     PurchaseInvoice purchaseInvoice = new PurchaseInvoice(store.storeID, bagOwner, items, purchaseItemsRes.getValue(), DateTime.Now);
                     purchaseInvoice.addToDB();
-                    store.addPurchaseInvoice(purchaseInvoice);
+                    s.addPurchaseInvoice(purchaseInvoice);
                     user.addPurchase(purchaseInvoice);
                     return new OkWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), purchaseInvoice);
                 }
@@ -327,9 +330,10 @@ namespace WSEP212.DomainLayer
         // roll back purchase - returns all the items in the bag to the store
         public void rollBackPurchase(int purchaseInvoiceID)
         {
+            Store s = StoreRepository.Instance.stores[store.storeID];
             var user = UserRepository.Instance.findUserByUserName(bagOwner).getValue();
-            store.rollBackPurchase(items);
-            store.removePurchaseInvoice(purchaseInvoiceID);
+            s.rollBackPurchase(items);
+            s.removePurchaseInvoice(purchaseInvoiceID);
             user.removePurchase(purchaseInvoiceID);
         }
 
