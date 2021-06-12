@@ -21,9 +21,12 @@ namespace WSEP212.DomainLayer
         [Key]
         public string delayedNotificationsLock
         {
-            get => string.Empty;
-            set => delayedNotificationsLock = value;
+            get;
+            set;
         }
+        
+        [NotMapped]
+        private static string delayedlock = string.Empty;
         
         public string DelayedNotificationsAsJson
         {
@@ -39,6 +42,7 @@ namespace WSEP212.DomainLayer
 
         private UserConnectionManager()
         {
+            delayedNotificationsLock = String.Empty;
             userConnectionMap = new Dictionary<string, List<string>>();
             delayedNotifications = new ConcurrentDictionary<string, List<string>>();
             List<UserConnectionManager> delayNot = new List<UserConnectionManager>();
@@ -99,7 +103,7 @@ namespace WSEP212.DomainLayer
 
         public void KeepNotification(string userName, string msg)
         {
-            lock (delayedNotificationsLock)
+            lock (delayedlock)
             {
                 if (!delayedNotifications.ContainsKey(userName))
                     delayedNotifications[userName] = new List<string>();
@@ -123,7 +127,7 @@ namespace WSEP212.DomainLayer
 
         public List<string> GetUserDelayedNotifications(string userName)
         {
-            lock (delayedNotificationsLock)
+            lock (delayedlock)
             {
                 if(delayedNotifications.ContainsKey(userName))
                     return delayedNotifications[userName];
