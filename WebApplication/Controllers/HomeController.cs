@@ -3081,11 +3081,17 @@ namespace WebApplication.Controllers
                     if (res.getValue() != null)
                     {
                         systemController.removeBidOffer(userName, (int)storeID, item, user);
+                        ConcurrentLinkedList<string> owners = StoreRepository.Instance.getStoreOwners((int) storeID);
                         Node<string> node = res.getValue().usersToSend.First;
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
-                            //systemController.removeBidOffer(node.Value, (int)storeID, item, user);
+                            node = node.Next;
+                        }
+                        node = owners.First;
+                        while (node != null) 
+                        {
+                            systemController.removeBidOffer(node.Value, (int)storeID, item, user); 
                             node = node.Next;
                         }
                     }
@@ -3129,7 +3135,6 @@ namespace WebApplication.Controllers
                         while (node.Next != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
-                            //systemController.removeBidOffer(node.Value, (int)storeID, item, user); //TODO: CHANGE
                             node = node.Next;
                         }
                     }
