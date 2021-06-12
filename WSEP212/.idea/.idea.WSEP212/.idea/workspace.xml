@@ -5,9 +5,7 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/Controllers/HomeController.cs" afterDir="false" />
-    </list>
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +38,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/9B/Lazy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F237A55A-B16D-4649-B961-70604924F6B9/bf/ba5589be/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ec200/RiderProjects/WSEP212-18B/WebApplication/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D32DB49E-5E34-4072-9DA3-1845C03DDC3A/7a/cc6caf3b/JsonSerializerInternalWriter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6F1631D8-2A7F-48D9-BC4B-E4DC1DB9C4CF/5d/c5c23a33/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6476FC3E-B436-4C36-896A-AB6F57E16ECC/00/42966789/MethodInfoExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -238,13 +237,7 @@
       <workItem from="1623319086343" duration="361000" />
       <workItem from="1623319649595" duration="494000" />
       <workItem from="1623320825035" duration="11883000" />
-      <workItem from="1623490926287" duration="13511000" />
-    </task>
-    <task id="LOCAL‎00010" summary="abcdefg">
-      <created>1621951356311</created>
-      <option name="number" value="LOCAL‎00010" />
-      <option name="presentableId" value="LOCAL‎00010" />
-      <updated>1621951356311</updated>
+      <workItem from="1623490926287" duration="13848000" />
     </task>
     <task id="LOCAL‎00011" summary="abcdefg">
       <created>1621951657907</created>
@@ -539,7 +532,13 @@
       <option name="presentableId" value="LOCAL‎00058" />
       <updated>1623506561447</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL‎00059" summary="fixed many bugs">
+      <created>1623507519172</created>
+      <option name="number" value="LOCAL‎00059" />
+      <option name="presentableId" value="LOCAL‎00059" />
+      <updated>1623507519172</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
