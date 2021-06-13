@@ -34,7 +34,7 @@ namespace WSEP212.ServiceLayer
         public ResultWithValue<int> openStore(String userName, String storeName, String storeAddress,
             String purchasePolicy, String salesPolicy); // USE CASE 3.2
 
-        public LinkedList<PurchaseType> getStorePurchaseTypes(String userName, int storeID); // USE CASE 4.2
+        public ConcurrentDictionary<PurchaseType, int> getStorePurchaseTypes(String userName, int storeID); // USE CASE 4.2
         public RegularResult supportPurchaseType(String userName, int storeID, Int32 purchaseType); // USE CASE 4.2
         public RegularResult unsupportPurchaseType(String userName, int storeID, Int32 purchaseType); // USE CASE 4.2
         public ResultWithValue<int> addPurchasePredicate(String userName, int storeID, LocalPredicate<PurchaseDetails> newPredicate, String predDescription); // USE CASE 4.2
