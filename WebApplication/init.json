@@ -1,50 +1,59 @@
 ﻿{
   "users": [
     {
-      "username": "u1",
+      "username": "A1",
       "userAge": "20",
       "isSystemManager": "true"
     },
     {
-      "username": "u2",
+      "username": "U1",
       "userAge": "20",
       "isSystemManager": "false"
     },
     {
-      "username": "u3",
+      "username": "U2",
+      "userAge": "20",
+      "isSystemManager": "false"
+    },
+    {
+      "username": "U3",
+      "userAge": "20",
+      "isSystemManager": "false"
+    },
+    {
+      "username": "U4",
       "userAge": "20",
       "isSystemManager": "false"
     }
+    
   ],
-  "loggedUser": "u2",
+  "loggedUser": "U1",
   "stores": [
     {
-      "storeOpener": "u2",
-      "storeName": "s1",
+      "storeOpener": "U1",
+      "storeName": "S1",
       "storeAddress": "Holon"
     }
   ],
   "items": [
     {
-      "userAdded": "u2",
-      "storeName": "s1",
+      "userAdded": "U1",
+      "storeName": "S1",
       "storeID": "1",
-      "description": "snack",
+      "description": "Drink",
       "category": "0",
-      "itemName": "Bamba",
-      "itemPrice": "30",
-      "itemQuantity": "20"
+      "itemName": "Wine",
+      "itemPrice": "35",
+      "itemQuantity": "40"
     }
   ],
   "appoints": [
     {
-      "manager": "u2",
-      "appoint": "u3",
-      "storeName": "s1",
+      "manager": "U1",
+      "appoint": "U4",
+      "storeName": "S1",
       "storeID": "1",
-      "permissions": [
-        "StorageManagment"
-      ]
+      "permissions": "AllPermissions"
     }
   ]
 }

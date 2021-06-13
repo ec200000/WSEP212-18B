@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using WSEP212.DataAccessLayer;
+using WSEP212.ServiceLayer;
+using WSEP212.DomainLayer.SystemLoggers;
 using WSEP212.ServiceLayer.Result;
 
 namespace WSEP212.DomainLayer
@@ -80,31 +82,45 @@ namespace WSEP212.DomainLayer
                 string isSystemManager = item.isSystemManager;
                 if (SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == username) == null)
                 {
-                    User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
+                    //User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
+                    SystemController.Instance.register(username, 18,"123456");
+                    User user = UserRepository.Instance.findUserByUserName(username).getValue();
                     if (isSystemManager.Equals("true"))
-                        user.changeState(new SystemManagerState(user));
+                        SystemController.Instance.loginAsSystemManager(username, "123456");
                     else if (loggedUser.Equals(username))
-                        user.changeState(new LoggedBuyerState(user));
+                        SystemController.Instance.login(username, "123456");
                     else
                         user.changeState(new GuestBuyerState(user));
-                    insertNewUser(user, "123456");
+                    
                 }
             }
         }
         
         public RegularResult insertNewUser(User newUser, String password)
         {
-            lock (insertLock)
+            try
             {
-                if(checkIfUserExists(newUser.userName))
+                lock (insertLock)
                 {
-                    return new Failure("User Name Already Exists In The System");
+                    if(checkIfUserExists(newUser.userName))
+                    {
+                        return new Failure("User Name Already Exists In The System");
+                    }
+                    users.TryAdd(newUser, false);
+                    Authentication.Instance.insertUserInfo(newUser.userName, password);
+                    newUser.addToDB();
+                    return new Ok("Registration To The System Was Successful");
                 }
-                users.TryAdd(newUser, false);
-                Authentication.Instance.insertUserInfo(newUser.userName, password);
-                newUser.addToDB();
-                return new Ok("Registration To The System Was Successful");
             }
+            catch (Exception e)
+            {
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+            return new Failure("failed in user repo");
         }
         
         public RegularResult addLoginUser(User newUser)

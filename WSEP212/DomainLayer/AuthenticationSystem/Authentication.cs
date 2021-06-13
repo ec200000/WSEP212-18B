@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Newtonsoft.Json;
 using WSEP212.DataAccessLayer;
+using WSEP212.DomainLayer.SystemLoggers;
 
 namespace WSEP212.DomainLayer.AuthenticationSystem
 {
@@ -120,19 +121,30 @@ namespace WSEP212.DomainLayer.AuthenticationSystem
         public void insertUserInfo(string userName, string password)
         {
             //var result = SystemDBAccess.Instance.UsersInfo.SingleOrDefault(a => a.usersInfo == this.usersInfo);
-            var result = SystemDBAccess.Instance.UsersInfo.Find("1");
-            if (result != null)
+            try
             {
-                usersInfo.TryAdd(userName, encryptPassword(password));
-                result.UserInfoJson = this.UserInfoJson;
-                lock(SystemDBAccess.savelock)
-                    SystemDBAccess.Instance.SaveChanges();
+                var result = SystemDBAccess.Instance.UsersInfo.Find("1");
+                if (result != null)
+                {
+                    usersInfo.TryAdd(userName, encryptPassword(password));
+                    result.UserInfoJson = this.UserInfoJson;
+                    lock(SystemDBAccess.savelock)
+                        SystemDBAccess.Instance.SaveChanges();
+                }
+                else //first time - no passwords are saved
+                {
+                    usersInfo.TryAdd(userName, encryptPassword(password));
+                    this.UserInfoJson = JsonConvert.SerializeObject(usersInfo);
+                    SystemDBAccess.Instance.UsersInfo.Add(this);
+                }
             }
-            else //first time - no passwords are saved
+            catch (Exception e)
             {
-                usersInfo.TryAdd(userName, encryptPassword(password));
-                this.UserInfoJson = JsonConvert.SerializeObject(usersInfo);
-                SystemDBAccess.Instance.UsersInfo.Add(this);
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
             }
         }
 

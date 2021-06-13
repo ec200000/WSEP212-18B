@@ -1496,7 +1496,7 @@ namespace WSEP212.DomainLayer
                 user = userRes.getValue();
                 SellerPermissions pers = null;
                 LinkedListNode<SellerPermissions> node = user.sellerPermissions.First;
-                while (node.Next != null)
+                while (node != null)
                 {
                     if (node.Value.SellerName.Equals(userName) && node.Value.StoreID == storeId)
                     {

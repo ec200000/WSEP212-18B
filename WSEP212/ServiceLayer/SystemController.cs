@@ -44,7 +44,6 @@ namespace WSEP212.ServiceLayer
                 UserRepository.Instance.initRepo();
                 //UserRepository.Instance.createSystemManager();
                 UserRepository.Instance.Init();
-                //StoreRepository.Instance.Init();
                 SystemController.Instance.Init();
             }
             catch (Exception e)
@@ -102,17 +101,20 @@ namespace WSEP212.ServiceLayer
                     string appoint = item.appoint;
                     string storeName = item.storeName;
                     string storeID = item.storeID;
+                    string per = item.permissions;
                     int id = int.Parse(storeID);
                     if (SystemDBAccess.Instance.Permissions.SingleOrDefault(p => p.SellerName == appoint && p.GrantorName == manager && p.StoreID == id) == null)
                     {
-                        appointStoreManager(manager, appoint, int.Parse(storeID));
+                        if(per.Equals("AllPermissions"))
+                            appointStoreOwner(manager, appoint, int.Parse(storeID));
                         ConcurrentLinkedList<int> perms = new ConcurrentLinkedList<int>();
-                        foreach (var perm in item.permissions)
+                        /*foreach (var perm in item.permissions)
                         {
                             if (perm.ToString().Equals("StorageManagment"))
                                 perms.TryAdd((int) Permissions.StorageManagment);
                         }
                         editManagerPermissions(manager, appoint, perms, int.Parse(storeID));
+                        */
                     }
                 }
                 
@@ -322,7 +324,7 @@ namespace WSEP212.ServiceLayer
             
         }
 
-        public ConcurrentLinkedList<PurchaseType> getStorePurchaseTypes(string userName, int storeID)
+        public ConcurrentDictionary<PurchaseType, int> getStorePurchaseTypes(string userName, int storeID)
         {
             try
             {

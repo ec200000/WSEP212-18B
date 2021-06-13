@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
@@ -15,14 +16,14 @@ namespace WSEP212.DomainLayer.PurchasePolicy
     public class PurchasePolicy : PurchasePolicyInterface
     {
         public String purchasePolicyName { get; set; }
-        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
+        public ConcurrentDictionary<PurchaseType, int> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
 
         public PurchasePolicy(String purchasePolicyName)
         {
             this.purchasePolicyName = purchasePolicyName;
-            this.purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
-            this.purchaseTypes.TryAdd(PurchaseType.ImmediatePurchase);
+            this.purchaseTypes = new ConcurrentDictionary<PurchaseType, int>();
+            this.purchaseTypes.TryAdd(PurchaseType.ImmediatePurchase, 0);
             this.purchasePredicates = new ConcurrentDictionary<int, PurchasePredicate>();
         }
         
@@ -45,31 +46,31 @@ namespace WSEP212.DomainLayer.PurchasePolicy
         // add support for new purchase type
         public void supportPurchaseType(PurchaseType purchaseType)
         {
-            var arr = listToArray(purchaseTypes);
-            if(!arr.Contains(purchaseType))
+            //var arr = listToArray(purchaseTypes);
+            if(!purchaseTypes.ContainsKey(purchaseType))
             {
-                purchaseTypes.TryAdd(purchaseType);
+                purchaseTypes.TryAdd(purchaseType, 0);
             }
         }
 
         // remove the purchase type from the store - not supporting it
         public void unsupportPurchaseType(PurchaseType purchaseType)
         {
-            var arr = listToArray(purchaseTypes);
-            if(arr.Contains(purchaseType))
+            //var arr = listToArray(purchaseTypes);
+            if(purchaseTypes.ContainsKey(purchaseType))
             {
-                if (purchaseTypes.size == 1)
-                    purchaseTypes = new ConcurrentLinkedList<PurchaseType>();
+                if (purchaseTypes.Count == 1)
+                    purchaseTypes = new ConcurrentDictionary<PurchaseType, int>();
                 else
-                    purchaseTypes.Remove(purchaseType, out _);
+                    purchaseTypes.TryRemove(new KeyValuePair<PurchaseType, int>(purchaseType,0));
             }
         }
 
         // return true only if the store support the purchase type
         public Boolean hasPurchaseTypeSupport(PurchaseType purchaseType)
         {
-            var arr = listToArray(purchaseTypes);
-            return arr.Contains(purchaseType);
+            //var arr = listToArray(purchaseTypes);
+            return purchaseTypes.ContainsKey(purchaseType);
         }
 
         // add new purchase predicate for the store purchase policy

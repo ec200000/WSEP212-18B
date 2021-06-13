@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.PolicyPredicate;
 using WSEP212.DomainLayer.PurchasePolicy;
@@ -18,7 +19,7 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
         
         public String purchasePolicyName { get; set; }
-        public ConcurrentLinkedList<PurchaseType> purchaseTypes { get; set; }
+        public ConcurrentDictionary<PurchaseType, int> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
 
         // there is no predicates in this policy

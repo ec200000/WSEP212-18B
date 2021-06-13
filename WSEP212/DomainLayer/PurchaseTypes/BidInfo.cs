@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Infrastructure.Design;
+using System.Data.Entity.Validation;
 using System.Linq;
 using WSEP212.DataAccessLayer;
 
@@ -28,6 +30,7 @@ namespace WSEP212.DomainLayer.PurchaseTypes
             this.itemPrice = price;
             this.bidID = SystemDBAccess.Instance.Bids.Count() + 1;
         }
+        
 
         public override string ToString()
         {
