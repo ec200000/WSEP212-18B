@@ -254,7 +254,7 @@ namespace WSEP212.DomainLayer
                                 result.StorageAsJson = this.StorageAsJson;
                             lock(SystemDBAccess.savelock)
                                 SystemDBAccess.Instance.SaveChanges();
-                            return new Ok("Item Was Successfully Removed From The Store's Storage");
+                            return new Ok("Item Was Successfully Removed From The Store Storage");
                         }
                         
                     }
@@ -282,11 +282,11 @@ namespace WSEP212.DomainLayer
                             result.StorageAsJson = this.StorageAsJson;
                         lock(SystemDBAccess.savelock)
                             SystemDBAccess.Instance.SaveChanges();
-                        return new Ok("Item Was Successfully Removed From The Store's Storage");
+                        return new Ok("Item Was Successfully Removed From The Store Storage");
                     }
-                    return new Ok("The Item Quantity In The Store's Storage Has Been Successfully Changed");
+                    return new Ok("The Item Quantity In The Store Storage Has Been Successfully Changed");
                 }
-                return new Failure("Item quantity can't be negative");
+                return new Failure("Item quantity can not be negative");
             }
             return new Failure("Item Is Not Exist In Storage");
         }
@@ -550,7 +550,7 @@ namespace WSEP212.DomainLayer
                         return new Failure("One Or More Of " + itemAvailableRes.getMessage());
                     }
                 }
-                return new Ok("All Items Are Available In The Store's Storage");
+                return new Ok("All Items Are Available In The Store Storage");
             }
         }
 

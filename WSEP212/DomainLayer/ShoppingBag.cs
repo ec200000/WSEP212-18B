@@ -109,7 +109,7 @@ namespace WSEP212.DomainLayer
                             itemsPurchaseTypes.TryAdd(itemID, purchaseType);
                             return new Ok("The Item Was Successfully Added To The Shopping Bag");
                         }
-                        return new Failure("Cannot Add Item Because The Store Doesn't Support Purchase Type");
+                        return new Failure("Cannot Add Item Because The Store Does not Support Purchase Type");
                     }
                     return itemAvailableRes;
                 }
@@ -168,7 +168,7 @@ namespace WSEP212.DomainLayer
                     itemsPurchaseTypes[itemID] = itemPurchaseType;
                     return new Ok("Change The Item Purchase Type Successfully");
                 }
-                return new Failure("Cannot Change Item Purchase Type Because The Store Doesn't Support It");
+                return new Failure("Cannot Change Item Purchase Type Because The Store Does not Support It");
             }
             return new Failure("The Item Not Exist In The Shopping Bag");
         }
@@ -263,7 +263,8 @@ namespace WSEP212.DomainLayer
                 approvedItems.TryAdd(itemID, items[itemID]);
             }
             // calculate the price after sale for approved items only
-            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = store.itemsAfterSalePrices(user, approvedItems, approvedItemsAndPrices);
+            Store s = StoreRepository.Instance.stores[store.storeID];
+            ResultWithValue<ConcurrentDictionary<int, double>> approvedAfterSale = s.itemsAfterSalePrices(user, approvedItems, approvedItemsAndPrices);
             if(approvedAfterSale.getTag())
             {
                 ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>> itemsPricesAndStatus = allItemsPricesAndStatus();
@@ -324,7 +325,7 @@ namespace WSEP212.DomainLayer
                 }
                 return new FailureWithValue<PurchaseInvoice>(purchaseItemsRes.getMessage(), null);
             }
-            return new FailureWithValue<PurchaseInvoice>("One Or More Of The Items Price Weren't Approved Yet", null);
+            return new FailureWithValue<PurchaseInvoice>("One Or More Of The Items Price Were not Approved Yet", null);
         }
 
         // roll back purchase - returns all the items in the bag to the store

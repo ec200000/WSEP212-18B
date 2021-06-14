@@ -36,7 +36,7 @@ namespace WSEP212.DomainLayer.SalePolicy
             if (storeSales.ContainsKey(saleID))
             {
                 storeSales.TryRemove(saleID, out _);
-                return new Ok("The Sale Was Removed To The Store's Sale Policy");
+                return new Ok("The Sale Was Removed To The Store Sale Policy");
             }
             return new Failure("The Sale Is Not Exist In This Store Sale Policy");
         }
@@ -50,7 +50,7 @@ namespace WSEP212.DomainLayer.SalePolicy
                 storeSales.TryRemove(saleID, out Sale sale);
                 ConditionalSale conditionalSale = sale.addSaleCondition(simplePredicate, compositionType);
                 storeSales.TryAdd(conditionalSale.saleID, conditionalSale);
-                return new OkWithValue<int>("The New Conditional Sale Added To The Store's Sale Policy", conditionalSale.saleID);
+                return new OkWithValue<int>("The New Conditional Sale Added To The Store Sale Policy", conditionalSale.saleID);
             }
             return new FailureWithValue<int>("The Sale Is Not Exist In This Store Sale Policy", -1);
         }
@@ -81,7 +81,7 @@ namespace WSEP212.DomainLayer.SalePolicy
                     break;
             }
             storeSales.TryAdd(composedSale.saleID, composedSale);
-            return new OkWithValue<int>("The Composed Sale Was Added To The Store's Sale Policy", composedSale.saleID);
+            return new OkWithValue<int>("The Composed Sale Was Added To The Store Sale Policy", composedSale.saleID);
         }
 
         // returns the descriptions of all sales for presenting them to the user

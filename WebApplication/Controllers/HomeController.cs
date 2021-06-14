@@ -3169,11 +3169,10 @@ namespace WebApplication.Controllers
                     int item = int.Parse(strs2[1]);
                     string[] strs3 = strs[1].Split("!");
                     string[] strs4 = strs3[0].Split(":");
-                    double price = double.Parse(strs4[1]);
                     string[] strs5 = strs[0].Split(",");
                     string[] strs6 = strs5[0].Split("-");
-                    string user = strs6[1];
-                    ResultWithValue<NotificationDTO> res = systemController.itemCounterOffer(user,userName, (int) storeID, item, price);
+                    string user = strs6[1].Trim();
+                    ResultWithValue<NotificationDTO> res = systemController.itemCounterOffer(userName,user, (int) storeID, item, Double.Parse(model.newBid));
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
