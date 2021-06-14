@@ -29,6 +29,37 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
 
         private SystemControllerFacade() { }
+        
+        public RegularResult registerAsSystemManager(string userName, int userAge, string password) //the result will be held in the ThreadParameters Object
+        {
+            try
+            {
+                ResultWithValue<User> userRes = UserRepository.Instance.findUserByUserName(userName);
+                if (userRes.getTag()) //found user
+                {
+                    return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
+                }
+
+                User newUser = new User(userName, userAge, true);
+                Object[] paramsList = { newUser, password };
+                ThreadParameters threadParameters = new ThreadParameters();
+                threadParameters.parameters = paramsList;
+                ThreadPool.QueueUserWorkItem(newUser.register, threadParameters); //creating the job
+                threadParameters.eventWaitHandle.WaitOne(); //after this line the result will be calculated in the ThreadParameters obj(waiting for the result)
+                if(threadParameters.result is NotImplementedException)
+                {
+                    String errorMsg = "The user " + userName + " cannot perform the register as system manager action!";
+                    Logger.Instance.writeWarningEventToLog(errorMsg);
+                    throw new NotImplementedException(); //there is no permission to perform this task
+                }
+                return (RegularResult)threadParameters.result;
+            }
+            catch (Exception e) when (!(e is NotImplementedException))
+            {
+                Logger.Instance.writeErrorEventToLog($"In Register as system manager function, the error is: {e.Message}");
+                return new Failure(e.Message);
+            }
+        }
 
         public RegularResult register(string userName, int userAge, string password) //the result will be held in the ThreadParameters Object
         {
@@ -40,7 +71,6 @@ namespace WSEP212.DomainLayer
                     return new Failure($"Cannot register with the user name: {userName}, it is already in the system!");
                 }
 
-                
                 User newUser = new User(userName, userAge);
                 Object[] paramsList = { newUser, password };
                 ThreadParameters threadParameters = new ThreadParameters();

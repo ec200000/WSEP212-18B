@@ -19,6 +19,8 @@ namespace WSEP212.DomainLayer
     public interface ISystemControllerFacade
     {
         public RegularResult register(String userName, int userAge, String password);
+        
+        public RegularResult registerAsSystemManager(String userName, int userAge, String password);
         public RegularResult login(String userName, String password);
 
         public RegularResult continueAsGuest(String userName);

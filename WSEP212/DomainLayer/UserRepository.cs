@@ -82,8 +82,13 @@ namespace WSEP212.DomainLayer
                 string isSystemManager = item.isSystemManager;
                 if (SystemDBAccess.Instance.Users.SingleOrDefault(u => u.userName == username) == null)
                 {
+                    if (isSystemManager.Equals("true"))
                     //User user = new User(username, int.Parse(userAge), isSystemManager.Equals("true"));
-                    SystemController.Instance.register(username, 18,"123456");
+                        SystemController.Instance.registerAsSystemManager(username, 18,"123456");
+                    else
+                    {
+                        SystemController.Instance.register(username, 18,"123456");
+                    }
                     User user = UserRepository.Instance.findUserByUserName(username).getValue();
                     if (isSystemManager.Equals("true"))
                         SystemController.Instance.loginAsSystemManager(username, "123456");
