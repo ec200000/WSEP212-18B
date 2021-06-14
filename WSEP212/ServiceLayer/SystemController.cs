@@ -132,6 +132,29 @@ namespace WSEP212.ServiceLayer
             }
             
         }
+        
+        public RegularResult registerAsSystemManager(String userName, int userAge, String password)
+        {
+            Exception exception;
+            try
+            {
+                String info = $"Register Event was triggered, with the parameters: " +
+                              $"user name: {userName}";
+                Logger.Instance.writeInformationEventToLog(info);
+                return SystemControllerFacade.Instance.registerAsSystemManager(userName, userAge, password);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+                var msg = e.Message + " ";
+                var inner = e.InnerException;
+                if (inner != null)
+                    msg += inner.Message;
+                Logger.Instance.writeErrorEventToLog(msg);
+            }
+
+            return new Failure(exception.Message);
+        }
 
         public RegularResult register(String userName, int userAge, String password)
         {
