@@ -19,7 +19,7 @@ namespace WSEP212.DomainLayer
             => lazy.Value;
         
         public String purchasePolicyName { get; set; }
-        public LinkedList<PurchaseType> purchaseTypes { get; set; }
+        public ConcurrentDictionary<PurchaseType, int> purchaseTypes { get; set; }
         public ConcurrentDictionary<int, PurchasePredicate> purchasePredicates { get; set; }
 
         // there is no predicates in this policy

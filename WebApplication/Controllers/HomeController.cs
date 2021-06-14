@@ -406,8 +406,8 @@ namespace WebApplication.Controllers
                 string[] types = {PurchaseType.ImmediatePurchase.ToString(), PurchaseType.SubmitOfferPurchase.ToString()};
                 string userName = HttpContext.Session.GetString(SessionName);
                 int storeID = (int)HttpContext.Session.GetInt32(SessionStoreID);
-                LinkedList<PurchaseType> lst = systemController.getStorePurchaseTypes(userName, storeID);
-                HttpContext.Session.SetObject("storepurchasetypes", toStringArray(lst.ToArray()));
+                ConcurrentDictionary<PurchaseType, int> lst = systemController.getStorePurchaseTypes(userName, storeID);
+                HttpContext.Session.SetObject("storepurchasetypes", toStringArray(lst.Keys.ToArray()));
                 HttpContext.Session.SetObject("purchasetypes", types);
                 return View();
             }

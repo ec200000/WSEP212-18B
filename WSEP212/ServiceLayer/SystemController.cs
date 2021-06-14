@@ -324,7 +324,7 @@ namespace WSEP212.ServiceLayer
             
         }
 
-        public LinkedList<PurchaseType> getStorePurchaseTypes(string userName, int storeID)
+        public ConcurrentDictionary<PurchaseType, int> getStorePurchaseTypes(string userName, int storeID)
         {
             try
             {
