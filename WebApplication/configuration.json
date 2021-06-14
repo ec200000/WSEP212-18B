@@ -1,5 +1,5 @@
 ﻿{
-  "tests": "true",
+  "tests": "false",
   "db": [
     {
       "database": "wsep212Dep",

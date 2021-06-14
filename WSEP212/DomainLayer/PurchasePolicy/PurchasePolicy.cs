@@ -89,7 +89,7 @@ namespace WSEP212.DomainLayer.PurchasePolicy
             if(purchasePredicates.ContainsKey(predicateID))
             {
                 purchasePredicates.TryRemove(predicateID, out _);
-                return new Ok("The Purchase Predicate Was Removed To The Store's Purchase Policy");
+                return new Ok("The Purchase Predicate Was Removed To The Store Purchase Policy");
             }
             return new Failure("The Predicate Is Not Exist In This Store Purchase Policy");
         }
@@ -119,7 +119,7 @@ namespace WSEP212.DomainLayer.PurchasePolicy
                     break;
             }
             purchasePredicates.TryAdd(composedPredicate.predicateID, composedPredicate);
-            return new OkWithValue<int>("The Composed Purchase Predicate Was Added To The Store's Purchase Policy", composedPredicate.predicateID);
+            return new OkWithValue<int>("The Composed Purchase Predicate Was Added To The Store Purchase Policy", composedPredicate.predicateID);
         }
 
         // returns the descriptions of all predicates for presenting them to the user
@@ -159,9 +159,9 @@ namespace WSEP212.DomainLayer.PurchasePolicy
             PurchasePredicate purchasePolicyPredicates = buildPurchasePolicy();
             if (purchasePolicyPredicates == null || purchasePolicyPredicates.applyPrediacte(purchaseDetails))
             {
-                return new Ok("The Purchase Was Approved By The Store's Purchase Policy");
+                return new Ok("The Purchase Was Approved By The Store Purchase Policy");
             }
-            return new Failure("The Purchase Was Not Approved By The Store's Purchase Policy");
+            return new Failure("The Purchase Was Not Approved By The Store Purchase Policy");
         }
     }
 }
