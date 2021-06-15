@@ -3,9 +3,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
 using WSEP212.ConcurrentLinkedList;
+using WSEP212.DataAccessLayer;
 using WSEP212.DomainLayer.AuthenticationSystem;
 using WSEP212.DomainLayer.ConcurrentLinkedList;
 using WSEP212.DomainLayer.SystemLoggers;
+using WSEP212.ServiceLayer;
 
 namespace WSEP212.DomainLayer
 {
@@ -32,14 +34,39 @@ namespace WSEP212.DomainLayer
         {
         }
 
+        private bool isConnectedToday(string username)
+        {
+            lock (SystemDBAccess.savelock)
+            {
+                var result = SystemDBAccess.Instance.UserConnection.SingleOrDefault(c => c.userName == username);
+                if (result != null)
+                {
+                    if (result.loggedIn.Date == DateTime.Now.Date)
+                    {
+                        SystemDBAccess.Instance.SaveChanges();
+                        return true;
+                    }
+                    SystemDBAccess.Instance.SaveChanges();
+                    return false;
+                }
+            }
+            return false;
+        }
+        
         private int GuestsCounter()
         {
             int counter = 0;
-            foreach (var userKey in UserRepository.Instance.users.Keys)
+            var temp = SystemDBAccess.Instance.UserConnection;
+            var users = temp.ToArray();
+            foreach (var log in users)
             {
-                if (!Authentication.Instance.usersInfo.ContainsKey(userKey.userName) && !userKey.sellerPermissions.Any())
+               
+                if (!Authentication.Instance.usersInfo.ContainsKey(log.userName) && log.loggedIn.Date == DateTime.Now.Date)
+                {
                     counter++;
+                }
             }
+
             return counter;
         }
         
@@ -48,7 +75,7 @@ namespace WSEP212.DomainLayer
             int counter = 0;
             foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (!userKey.isSystemManager && Authentication.Instance.usersInfo.ContainsKey(userKey.userName) && userKey.sellerPermissions.Count == 0)
+                if (isConnectedToday(userKey.userName) && !userKey.isSystemManager && Authentication.Instance.usersInfo.ContainsKey(userKey.userName) && userKey.sellerPermissions.Count == 0)
                     counter++;
             }
             return counter;
@@ -60,7 +87,7 @@ namespace WSEP212.DomainLayer
             bool flag = false;
             foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (Authentication.Instance.usersInfo.ContainsKey(userKey.userName))
+                if (isConnectedToday(userKey.userName) && Authentication.Instance.usersInfo.ContainsKey(userKey.userName))
                 {
                     foreach (var perm in userKey.sellerPermissions)
                     {
@@ -82,7 +109,7 @@ namespace WSEP212.DomainLayer
             int counter = 0; 
             foreach (var userKey in UserRepository.Instance.users.Keys)
             {
-                if (Authentication.Instance.usersInfo.ContainsKey(userKey.userName))
+                if (isConnectedToday(userKey.userName) && Authentication.Instance.usersInfo.ContainsKey(userKey.userName))
                 {
                     foreach (var perm in userKey.sellerPermissions)
                     {
@@ -103,7 +130,7 @@ namespace WSEP212.DomainLayer
             int counter = 0; 
             foreach (var userKey in UserRepository.Instance.users)
             {
-                if (userKey.Key.isSystemManager)
+                if (isConnectedToday(userKey.Key.userName) && userKey.Key.isSystemManager)
                 {
                     counter++;
                 }

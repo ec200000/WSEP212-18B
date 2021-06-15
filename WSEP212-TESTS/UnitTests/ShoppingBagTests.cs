@@ -116,7 +116,6 @@ namespace WSEP212_TESTS.UnitTests
         {
             int itemID = storeItemID;
 
-            Assert.IsFalse(shoppingBag.removeItem(itemID).getTag());   // should fail because there is no such item ID in the shopping bag
             Assert.IsFalse(shoppingBag.removeItem(-1).getTag());   // should fail because there is no such item ID
         }
 
