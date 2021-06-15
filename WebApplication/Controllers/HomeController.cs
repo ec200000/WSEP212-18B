@@ -417,7 +417,6 @@ namespace WebApplication.Controllers
                 Logger.Instance.writeErrorEventToLog(m);
                 
             }
-
             return RedirectToAction("StoreActions");
         }
         
