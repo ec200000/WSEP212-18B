@@ -781,7 +781,7 @@ namespace WSEP212.ServiceLayer
             try
             {
                 String info = $"LoginAsSystemManager Event was triggered, with the parameters: " +
-                              $"user name: {userName}, password: {password} ";
+                              $"user name: {userName}";
                 Logger.Instance.writeInformationEventToLog(info);
                 return SystemControllerFacade.Instance.loginAsSystemManager(userName, password);
             }
