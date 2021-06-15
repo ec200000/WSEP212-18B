@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using WebApplication;
 using WSEP212;
 using WSEP212.DataAccessLayer;
@@ -46,7 +47,7 @@ namespace WSEP212_TESTS.UnitTests
             User newUser = new User("iris");
             UserRepository.Instance.insertNewUser(newUser, "12345");
             UserRepository.Instance.users.TryGetValue(newUser, out var res);
-            Assert.IsFalse(res);
+            Assert.IsFalse(res.Key);
         }
 
         [TestMethod]
@@ -54,7 +55,7 @@ namespace WSEP212_TESTS.UnitTests
         {
             UserRepository.Instance.changeUserLoginStatus(user1.userName, true, "123456"); //register -> login
             User user = UserRepository.Instance.findUserByUserName(user1.userName).getValue();
-            Assert.IsTrue(UserRepository.Instance.users[user]);
+            Assert.IsTrue(UserRepository.Instance.users[user].Key);
             
             UserRepository.Instance.changeUserLoginStatus(user1.userName, false, "123456"); //login -> register
         }
@@ -65,11 +66,11 @@ namespace WSEP212_TESTS.UnitTests
             RegularResult res = UserRepository.Instance.changeUserLoginStatus(user1.userName, true, "123");
             User u1 = UserRepository.Instance.findUserByUserName(user1.userName).getValue();
             Console.WriteLine(res.getMessage());
-            Assert.IsFalse(UserRepository.Instance.users[u1]);
+            Assert.IsFalse(UserRepository.Instance.users[u1].Key);
             
             UserRepository.Instance.changeUserLoginStatus(user2.userName, false, null); //login -> logout
             User u2 = UserRepository.Instance.findUserByUserName(user2.userName).getValue();
-            Assert.IsFalse(UserRepository.Instance.users[u2]);
+            Assert.IsFalse(UserRepository.Instance.users[u2].Key);
         }
 
         [TestMethod]
@@ -111,7 +112,7 @@ namespace WSEP212_TESTS.UnitTests
             PurchaseInvoice purchaseInfo = new PurchaseInvoice(1, "a", null, itemsPrices, DateTime.Now);
             User user3 = new User("d");
             user3.purchases.TryAdd(purchaseInfo.purchaseInvoiceID, purchaseInfo);
-            UserRepository.Instance.users.TryAdd(user3, false);
+            UserRepository.Instance.users.TryAdd(user3, new KeyValuePair<bool, DateTime>(false,DateTime.MinValue));
             var res = UserRepository.Instance.getAllUsersPurchaseHistory();
             Assert.IsNotNull(res);
             Assert.AreEqual(4, res.Count); // 4 users

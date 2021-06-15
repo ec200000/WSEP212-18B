@@ -28,11 +28,11 @@ namespace WSEP212.DomainLayer
         {
             initRepo();
         }
-        public ConcurrentDictionary<User,bool> users { get; set; }
+        public ConcurrentDictionary<User,KeyValuePair<bool,DateTime>> users { get; set; }
 
         public void initRepo()
         {
-            users = new ConcurrentDictionary<User, bool>(); 
+            users = new ConcurrentDictionary<User, KeyValuePair<bool,DateTime>>(); 
             var usersList = SystemDBAccess.Instance.Users.ToList();
             var cartsList = SystemDBAccess.Instance.Carts.ToList();
             foreach (var user in usersList)
@@ -45,7 +45,7 @@ namespace WSEP212.DomainLayer
                         break;
                     }
                 }
-                users.TryAdd(user, false); //when the system is starting no user is logged in
+                users.TryAdd(user, new KeyValuePair<bool, DateTime>(false,DateTime.MinValue)); //when the system is starting no user is logged in
             }
         }
         public void createSystemManager()
@@ -111,7 +111,7 @@ namespace WSEP212.DomainLayer
                     {
                         return new Failure("User Name Already Exists In The System");
                     }
-                    users.TryAdd(newUser, false);
+                    users.TryAdd(newUser, new KeyValuePair<bool, DateTime>(false,DateTime.MinValue));
                     Authentication.Instance.insertUserInfo(newUser.userName, password);
                     newUser.addToDB();
                     return new Ok("Registration To The System Was Successful");
@@ -139,7 +139,7 @@ namespace WSEP212.DomainLayer
 
                 UserConnectionLog toAdd = new UserConnectionLog(newUser.userName, DateTime.Now);
                 toAdd.addToDB();
-                users.TryAdd(newUser, true);
+                users.TryAdd(newUser, new KeyValuePair<bool, DateTime>(true,toAdd.loggedIn));
                 return new Ok("Registration To The System Was Successful");
             }
         }
@@ -147,7 +147,7 @@ namespace WSEP212.DomainLayer
         //status is true: register -> login, otherwise: login -> logout
         public RegularResult changeUserLoginStatus(String userName, bool status, String passwordToValidate)
         {
-            bool oldStatus;
+            KeyValuePair<bool,DateTime> oldStatus;
             if(status) //need to verify it's password
             {
                 ResultWithValue<String> userPasswordRes = getUserPassword(userName);
@@ -168,14 +168,16 @@ namespace WSEP212.DomainLayer
                 {
                     if(users.TryGetValue(userRes.getValue(), out oldStatus))
                     {
-                        if(oldStatus != status)
+                        if(oldStatus.Key != status)
                         {
+                            DateTime date = DateTime.MinValue;
                             if (status)
                             {
-                                UserConnectionLog toAdd = new UserConnectionLog(userRes.getValue().userName, DateTime.Now);
+                                date = DateTime.Now;
+                                UserConnectionLog toAdd = new UserConnectionLog(userRes.getValue().userName, date);
                                 toAdd.addToDB();
                             }
-                            users.TryUpdate(userRes.getValue(), status, oldStatus);
+                            users.TryUpdate(userRes.getValue(), new KeyValuePair<bool, DateTime>(status,date), oldStatus);
                             return new Ok("User Change Login Status Successfully");
                         }
                         return new Failure("The User Is Already In The Same Login Status");
@@ -196,7 +198,7 @@ namespace WSEP212.DomainLayer
         //<returns>: If found -> user returned, otherwise null is returned
         public ResultWithValue<User> findUserByUserName(String userName)
         {
-            foreach (KeyValuePair<User,bool> user in users)
+            foreach (KeyValuePair<User,KeyValuePair<bool,DateTime>> user in users)
             {
                 if(user.Key.userName.Equals(userName))
                 {
@@ -216,7 +218,7 @@ namespace WSEP212.DomainLayer
 
         public bool checkIfUserExists(string userName)
         {
-            foreach( KeyValuePair<User,bool> pair in users)
+            foreach( KeyValuePair<User,KeyValuePair<bool,DateTime>> pair in users)
             {
                 if (pair.Key.userName.Equals(userName))
                     return true;
@@ -227,7 +229,7 @@ namespace WSEP212.DomainLayer
         public ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> getAllUsersPurchaseHistory()
         {
             ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>> purchaseHistory = new ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>>();
-            foreach(KeyValuePair<User,bool> user in users)
+            foreach(KeyValuePair<User,KeyValuePair<bool,DateTime>> user in users)
             {
                 if (!purchaseHistory.TryAdd(user.Key.userName, user.Key.purchases))
                     return null;

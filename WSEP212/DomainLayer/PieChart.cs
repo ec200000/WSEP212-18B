@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
@@ -16,6 +17,7 @@ namespace WSEP212.DomainLayer
         [JsonProperty("value")]    
         private int[] pieChartData;
 
+        private List<UserConnectionLog> logs;
         public int[] GetPieChartData()
         {
             return this.pieChartData;
@@ -32,22 +34,43 @@ namespace WSEP212.DomainLayer
         }
         public PieChart()
         {
+            logs = new List<UserConnectionLog>();
+            var temp = SystemDBAccess.Instance.UserConnection;
+            foreach(var a in temp.ToArray())
+            {
+                logs.Add(a);
+            }
         }
 
+        private UserConnectionLog contains(string username)
+        {
+            foreach (var log in logs)
+            {
+                if (log.userName.Equals(username))
+                    return log;
+            }
+
+            return null;
+        }
         private bool isConnectedToday(string username)
         {
-            lock (SystemDBAccess.savelock)
+            var l = contains(username);
+            if (l != null)
             {
-                var result = SystemDBAccess.Instance.UserConnection.SingleOrDefault(c => c.userName == username);
-                if (result != null)
+                if (l.loggedIn.Date == DateTime.Now.Date)
                 {
-                    if (result.loggedIn.Date == DateTime.Now.Date)
+                    return true;
+                }
+            }
+
+            foreach (var user in UserRepository.Instance.users)
+            {
+                if (user.Key.userName.Equals(username))
+                {
+                    if (user.Value.Value.Date == DateTime.Now.Date)
                     {
-                        SystemDBAccess.Instance.SaveChanges();
                         return true;
                     }
-                    SystemDBAccess.Instance.SaveChanges();
-                    return false;
                 }
             }
             return false;
@@ -56,17 +79,24 @@ namespace WSEP212.DomainLayer
         private int GuestsCounter()
         {
             int counter = 0;
-            var temp = SystemDBAccess.Instance.UserConnection;
-            var users = temp.ToArray();
-            foreach (var log in users)
+            List<string> names = new List<string>();
+            foreach (var log in logs)
             {
                
                 if (!Authentication.Instance.usersInfo.ContainsKey(log.userName) && log.loggedIn.Date == DateTime.Now.Date)
                 {
                     counter++;
+                    names.Add(log.userName); //to avoid duplications
                 }
             }
 
+            foreach (var user in UserRepository.Instance.users.Keys) //the guests are also stored there
+            {
+                if (!names.Contains(user.userName) && isConnectedToday(user.userName) && !Authentication.Instance.usersInfo.ContainsKey(user.userName))
+                {
+                    counter++;
+                }
+            }
             return counter;
         }
         
