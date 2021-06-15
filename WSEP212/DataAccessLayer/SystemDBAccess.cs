@@ -102,5 +102,6 @@ namespace WSEP212.DataAccessLayer
         public DbSet<SellerPermissions> Permissions { get; set; }
         public DbSet<UserConnectionManager> DelayedNotifications { get; set; }
         public DbSet<BidInfo> Bids { get; set; }
+        public DbSet<UserConnectionLog> UserConnection { get; set; }
     }
 }
