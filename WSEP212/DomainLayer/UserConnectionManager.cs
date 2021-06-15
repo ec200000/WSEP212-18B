@@ -85,7 +85,7 @@ namespace WSEP212.DomainLayer
         {
             lock (userConnectionMapLocker)
             {
-                if (userConnectionMap.ContainsKey(userName))
+                if (userName != null && userConnectionMap.ContainsKey(userName))
                     userConnectionMap.Remove(userName);
             }
         }

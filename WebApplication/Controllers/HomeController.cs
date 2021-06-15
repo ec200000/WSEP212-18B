@@ -70,7 +70,7 @@ namespace WebApplication.Controllers
                     UserConnectionManager.Instance.KeepNotification(userName,msg);
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
@@ -95,17 +95,17 @@ namespace WebApplication.Controllers
 
                 return RedirectToAction("PurchaseHistory");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("PurchaseHistory");
         }
         
         public IActionResult AppointOfficials()
@@ -116,17 +116,16 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("allUsers", users);
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
-
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult PurchaseHistory()
@@ -150,20 +149,20 @@ namespace WebApplication.Controllers
                 else
                 {
                     TempData["alert"] = res.getMessage();
-                    return View("Index");
+                    return RedirectToAction("SearchItems");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult ShoppingCart(ShoppingCartModel model)
@@ -207,22 +206,22 @@ namespace WebApplication.Controllers
                 
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult tryBidsInfo(ShoppingCartModel model)
         {
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         private void ShoppingCartItems(ShoppingCart shoppingCart)
@@ -252,14 +251,14 @@ namespace WebApplication.Controllers
                 string[] strs = storesAndItems.ToArray();
                 HttpContext.Session.SetObject("shoppingCart", strs);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
 
@@ -274,17 +273,17 @@ namespace WebApplication.Controllers
             
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult Login()
@@ -297,17 +296,16 @@ namespace WebApplication.Controllers
             
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
             }
 
-            return null;
+            return RedirectToAction("Index");
         }
         
         public IActionResult Logout()
@@ -316,17 +314,17 @@ namespace WebApplication.Controllers
             {
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult OpenStore()
@@ -335,17 +333,17 @@ namespace WebApplication.Controllers
             {
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         private string[] listToArray(ConcurrentLinkedList<PurchaseType> lst)
@@ -365,17 +363,16 @@ namespace WebApplication.Controllers
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
-
-            return null;
+            return new string[0];
         }
 
         private string[] toStringArray(PurchaseType[] arr)
@@ -411,17 +408,17 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("purchasetypes", types);
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult StoreActions()
@@ -442,17 +439,17 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("stores", storesValues);
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult ItemActions(StoreModel model)
@@ -470,17 +467,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("StoreActions");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult EditItemDetails(ItemModel model)
@@ -501,17 +498,17 @@ namespace WebApplication.Controllers
                 model.reviews = item.reviews;
                 return View(model);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult SearchItems(SearchModel model)
@@ -531,17 +528,17 @@ namespace WebApplication.Controllers
                 model.items = HttpContext.Session.GetObject<string[]>("allitemstrings");
                 return View(model);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult ShowReviews(ShowReviewsModel model)
@@ -561,17 +558,17 @@ namespace WebApplication.Controllers
                     model.reviewsStrings = "";
                 return View(model);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         private string reviewsToString(ConcurrentDictionary<String, ItemReview> reviews)
@@ -585,17 +582,17 @@ namespace WebApplication.Controllers
                 }
                 return reviewsStr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return "";
         }
         
         public IActionResult TryShowReviews(SearchModel model)
@@ -617,17 +614,17 @@ namespace WebApplication.Controllers
                     HttpContext.Session.SetInt32(SessionItemID, 0);
                 return RedirectToAction("ShowReviews");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult Subscribe(UserModel model)
@@ -650,17 +647,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("Index");
         }
         
         public IActionResult ContinueAsGuest(UserModel model)
@@ -682,17 +679,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("Index");
         }
         
         public IActionResult TryEditDetails(ItemModel model)
@@ -721,17 +718,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TrySearchItems(SearchModel model)
@@ -757,17 +754,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("SearchItems", model);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryReviewItem(ReviewModel model)
@@ -795,17 +792,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("ItemReview");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TryAppointManager(AppointModel model)
@@ -826,17 +823,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("AppointOfficials");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TryAppointOwner(AppointModel model)
@@ -857,17 +854,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("AppointOfficials");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryLogin(UserModel model)
@@ -891,17 +888,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Login");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult LoginAsSystemManager(UserModel model)
@@ -922,17 +919,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Login");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("Login");
         }
         
         public IActionResult TryLogout(UserModel model)
@@ -963,17 +960,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Logout");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
             
         }
         
@@ -996,17 +993,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         private int[] listToArray(ConcurrentLinkedList<int> lst)
@@ -1026,17 +1023,17 @@ namespace WebApplication.Controllers
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return new int[0];
         }
 
         public IActionResult TryAddItem(ItemModel model)
@@ -1061,17 +1058,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TryRemoveItem(ItemModel model)
@@ -1093,17 +1090,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         private Item[] itemListToArray2(ConcurrentLinkedList<Item> lst)
@@ -1123,17 +1120,17 @@ namespace WebApplication.Controllers
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return new Item[0];
         }
 
         private Item findThisItem(ConcurrentLinkedList<Item> items, int itemID)
@@ -1148,16 +1145,15 @@ namespace WebApplication.Controllers
                 }
                 return null;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
-
             return null;
         }
 
@@ -1174,14 +1170,14 @@ namespace WebApplication.Controllers
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
             return -1;
         }
@@ -1232,17 +1228,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("SearchItems");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryShowPurchaseHistory(PurchaseModel model)
@@ -1252,17 +1248,17 @@ namespace WebApplication.Controllers
                 TempData["alert"] = null;
                 return RedirectToAction("ItemReview", model);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryShowShoppingCart()
@@ -1275,7 +1271,7 @@ namespace WebApplication.Controllers
                 if (res.getTag())
                 {
                     HttpContext.Session.SetObject("shopping_cart", res.getValue());
-                    return null;
+                    return RedirectToAction("SearchItems");
                 }
                 else
                 {
@@ -1283,17 +1279,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("SearchItems");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         private int[] itemListToArray(ConcurrentLinkedList<Item> lst)
@@ -1313,17 +1309,17 @@ namespace WebApplication.Controllers
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return new int[0];
         }
         
         private void allStoresItems(ConcurrentDictionary<Store,ConcurrentLinkedList<Item>> dict)
@@ -1338,14 +1334,14 @@ namespace WebApplication.Controllers
                     HttpContext.Session.SetObject(itms, items);
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
         
@@ -1369,14 +1365,14 @@ namespace WebApplication.Controllers
                 int[] searches = itms.ToArray();
                 HttpContext.Session.SetObject("allitems", searches);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
         
@@ -1392,14 +1388,14 @@ namespace WebApplication.Controllers
                     HttpContext.Session.SetObject(itms, items);
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
         
@@ -1423,14 +1419,14 @@ namespace WebApplication.Controllers
                 string[] searches = itms.ToArray();
                 HttpContext.Session.SetObject("allitemstrings", searches);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
         
@@ -1447,14 +1443,14 @@ namespace WebApplication.Controllers
                 string[] searches = itms.ToArray();
                 HttpContext.Session.SetObject("allitemstrings", searches);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
         
@@ -1472,14 +1468,14 @@ namespace WebApplication.Controllers
                     }
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
         }
         
@@ -1500,17 +1496,17 @@ namespace WebApplication.Controllers
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return new string[0];
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -1520,17 +1516,17 @@ namespace WebApplication.Controllers
             {
                 return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         public IActionResult TryRemoveItemFromShoppingCart(ShoppingCartModel model)
         {
@@ -1564,17 +1560,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("ShoppingCart");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         public IActionResult TrypurchaseItems(ShoppingCartModel model)
         {
@@ -1604,17 +1600,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("ShoppingCart");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult UsersPurchaseHistory()
@@ -1645,17 +1641,17 @@ namespace WebApplication.Controllers
                     return View();
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult StoresPurchaseHistory()
@@ -1690,17 +1686,17 @@ namespace WebApplication.Controllers
                     return View();
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult DailyVisitors()
@@ -1739,17 +1735,17 @@ namespace WebApplication.Controllers
                 }**/
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TryDailyVisitors(PurchaseModel model)
@@ -1759,17 +1755,17 @@ namespace WebApplication.Controllers
                 TempData["alert"] = null;
                 return RedirectToAction("ItemReview", model);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult StorePurchaseHistory()
@@ -1801,17 +1797,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         private Permissions[] persListToArray(ConcurrentLinkedList<Permissions> lst)
@@ -1829,17 +1825,17 @@ namespace WebApplication.Controllers
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return new Permissions[0];
         }
         
         public IActionResult ViewOfficials()
@@ -1872,17 +1868,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult RemoveManager(OfficialsModel model)
@@ -1906,17 +1902,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("ViewOfficials");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult RemoveOwner(OfficialsModel model)
@@ -1940,17 +1936,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("ViewOfficials");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public ConcurrentLinkedList<int> changeListType(ConcurrentLinkedList<Permissions> pers)
@@ -1966,17 +1962,17 @@ namespace WebApplication.Controllers
                 }
                 return permissions;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return new ConcurrentLinkedList<int>();
         }
         
         public IActionResult AddManagerPermission(OfficialsModel model)
@@ -2003,17 +1999,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("ViewOfficials");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public int stringToEnum(string pred)
@@ -2043,14 +2039,14 @@ namespace WebApplication.Controllers
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
             return -1;
@@ -2086,17 +2082,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         public IActionResult AddSale()
         {
@@ -2134,17 +2130,17 @@ namespace WebApplication.Controllers
                 }
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         public int categorytoenum(string pred)
         {
@@ -2189,14 +2185,14 @@ namespace WebApplication.Controllers
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
             return -1;
@@ -2242,17 +2238,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("AddSale");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         private void TryAllSales()
         {
@@ -2274,14 +2270,14 @@ namespace WebApplication.Controllers
                     HttpContext.Session.SetObject("sales_info", saleidanddesc);
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
         }
@@ -2338,17 +2334,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("AddSale");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TryRemoveSalePredicate(SalesModel model)
@@ -2375,17 +2371,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public int saleStringToEnum(string pred)
@@ -2403,14 +2399,14 @@ namespace WebApplication.Controllers
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
             return -1;
@@ -2456,17 +2452,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public int stringToEnumPT(string pred)
@@ -2482,14 +2478,14 @@ namespace WebApplication.Controllers
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
             return -1;
@@ -2514,17 +2510,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult TryAddPurchaseType(PurchaseTypesModel model)
@@ -2546,17 +2542,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("StoreActions");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         public IActionResult PurchasePredicate(StoreModel model)
         {
@@ -2596,17 +2592,17 @@ namespace WebApplication.Controllers
                 }
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         public IActionResult TryRemovePurchasePredicate(PredicateModel model)
         {
@@ -2637,17 +2633,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("PurchasePredicate");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryAddPurchasePredicate(PredicateModel model)
@@ -2701,17 +2697,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("PurchasePredicate");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public int composePurchasePredicateStringToEnum(string pred)
@@ -2729,14 +2725,14 @@ namespace WebApplication.Controllers
                 }
                 return -1;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
             return -1;
@@ -2782,17 +2778,17 @@ namespace WebApplication.Controllers
                     return RedirectToAction("PurchasePredicate");
                 }
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryPriceAftereSale(ShoppingCartModel model)
@@ -2818,17 +2814,17 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("finalPriceAfterSale", finalPriceAfterSale);
                 return RedirectToAction("TryPriceAftereSale");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult TryPriceBeforeSale(ShoppingCartModel model)
@@ -2854,17 +2850,17 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("finalPriceBeforeSale", finalPriceBeforeSale);
                 return RedirectToAction("TryPriceBeforeSale");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult GetStoreInformation(StoreModel model)
@@ -2875,17 +2871,17 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetInt32(SessionStoreID, model.storeID);
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult AddPredicate()
@@ -2894,17 +2890,17 @@ namespace WebApplication.Controllers
             {
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult AddSaleCondition()
@@ -2944,17 +2940,17 @@ namespace WebApplication.Controllers
                 }
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult EditPurchasePredicates()
@@ -2963,17 +2959,17 @@ namespace WebApplication.Controllers
             {
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
 
         public IActionResult BidsReview(StoreModel model)
@@ -3008,17 +3004,17 @@ namespace WebApplication.Controllers
                 HttpContext.Session.SetObject("bids", bidsstr);
                 return View();
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult ChangeOffer(ShoppingCartModel model)
@@ -3048,17 +3044,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("StoreActions");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult DiclineBid(BidsModel model)
@@ -3098,17 +3094,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("StoreActions");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult ApproveBid(BidsModel model)
@@ -3141,17 +3137,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("StoreActions");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult CounterOffer(BidsModel model)
@@ -3192,17 +3188,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("StoreActions");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
         
         public IActionResult ChangePurchaseType(ShoppingCartModel model)
@@ -3227,17 +3223,17 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction("StoreActions");
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
+                
             }
 
-            return null;
+            return RedirectToAction("SearchItems");
         }
     }
 }

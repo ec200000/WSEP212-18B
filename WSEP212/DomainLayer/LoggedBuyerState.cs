@@ -160,7 +160,7 @@ namespace WSEP212.DomainLayer
                 {
                     var arrlist = listToArray(storeSellerRes.getValue().permissionsInStore);
                     if (arrlist.Contains(Permissions.AllPermissions))
-                        return new Failure("Can't edit store's owner permissions!");
+                        return new Failure("Can not edit store owner permissions!");
                     storeSellerRes.getValue().setPermissions(permissions);
                     return new Ok("Edit Manager Permissions Successfully");
                 }
@@ -436,7 +436,7 @@ namespace WSEP212.DomainLayer
                 {
                     var arrlist = listToArray(storeSellerRes.getValue().permissionsInStore);
                     if (arrlist.Contains(Permissions.AllPermissions))
-                        return new Failure("You can't remove a store owner!");
+                        return new Failure("You can not remove a store owner!");
                     if (!storeSellerRes.getValue().GrantorName.Equals(this.user.userName))
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
@@ -492,7 +492,7 @@ namespace WSEP212.DomainLayer
                 {
                     var arrList = listToArray(storeSellerRes.getValue().permissionsInStore);
                     if (!arrList.Contains(Permissions.AllPermissions))
-                        return new Failure("You can't remove a store manager!");
+                        return new Failure("You can not remove a store manager!");
                     if (!storeSellerRes.getValue().GrantorName.Equals(this.user.userName))
                         return new Failure("Only who appointed you, can remove you!");
                     // remove him from the store
@@ -526,7 +526,7 @@ namespace WSEP212.DomainLayer
             if (hasPermissionRes.getTag())
             {
                 int predicateID = storeRes.getValue().addPurchasePredicate(newPredicate, predDescription);
-                return new OkWithValue<int>("The Purchase Predicate Added To The Store's Purchase Policy", predicateID);
+                return new OkWithValue<int>("The Purchase Predicate Added To The Store Purchase Policy", predicateID);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
@@ -578,7 +578,7 @@ namespace WSEP212.DomainLayer
             if (hasPermissionRes.getTag())
             {
                 int saleID = storeRes.getValue().addSale(salePercentage, saleOn, saleDescription);
-                return new OkWithValue<int>("The Sale Added To The Store's Sale Policy", saleID);
+                return new OkWithValue<int>("The Sale Added To The Store Sale Policy", saleID);
             }
             return new FailureWithValue<int>(hasPermissionRes.getMessage(), -1);
         }
