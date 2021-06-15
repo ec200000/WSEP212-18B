@@ -160,7 +160,6 @@ namespace WSEP212.DomainLayer
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                System.Environment.Exit(-1);
             }
             return null;
         }

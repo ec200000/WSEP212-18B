@@ -153,7 +153,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("register As System Manager Failed, Please Try Again");
         }
 
         public RegularResult register(String userName, int userAge, String password)
@@ -176,7 +176,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("register Failed, Please Try Again");
         }
 
         public RegularResult login(String userName, String password)
@@ -198,7 +198,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("User Login Failed, Please Try Again");
         }
 
         public RegularResult logout(String userName)
@@ -219,8 +219,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
-            
+            return new Failure("logout Failed, Please Try Again");
         }
 
         public ResultWithValue<NotificationDTO> addItemToShoppingCart(String userName, int storeID, int itemID,
@@ -250,7 +249,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<NotificationDTO>(exception.Message, null);
+            return new FailureWithValue<NotificationDTO>("add Item To Shopping Cart Failed, Please Try Again", null);
             
         }
 
@@ -273,7 +272,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("remove Item from Shopping Cart Failed, Please Try Again");
         }
 
         public ResultWithValue<NotificationDTO> purchaseItems(String userName,
@@ -310,7 +309,7 @@ namespace WSEP212.ServiceLayer
                     //transaction.Rollback(); //deletes all the changes that were made in the db
                 }
             //}
-            return new FailureWithValue<NotificationDTO>(exception.Message,null);
+            return new FailureWithValue<NotificationDTO>("purchase items Failed, Please Try Again",null);
             
         }
 
@@ -343,7 +342,7 @@ namespace WSEP212.ServiceLayer
                     //transaction.Rollback();
                 }
             //}
-            return new FailureWithValue<int>(exception.Message,-1);
+            return new FailureWithValue<int>("Open Store Failed, Please Try Again",-1);
             
         }
 
@@ -389,7 +388,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<NotificationDTO>(exception.Message,null);
+            return new FailureWithValue<NotificationDTO>("Item Review Failed, Please Try Again",null);
             
         }
 
@@ -418,7 +417,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<int>(exception.Message,-1);
+            return new FailureWithValue<int>("add Item To Storage Failed, Please Try Again",-1);
             
         }
 
@@ -441,7 +440,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("remove Item From Storage Failed, Please Try Again");
             
         }
 
@@ -470,7 +469,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("edit Item Details Failed, Please Try Again");
             
         }
 
@@ -493,7 +492,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("appoint Store Manager Failed, Please Try Again");
             
         }
 
@@ -516,7 +515,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("appoint Store Owner Failed, Please Try Again");
             
         }
 
@@ -553,7 +552,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new Failure(exception.Message);
+            return new Failure("edit Manager Permissions Failed, Please Try Again");
             
         }
 
@@ -580,7 +579,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<NotificationDTO>(exception.Message, null);
+            return new FailureWithValue<NotificationDTO>("remove Store Manager Failed, Please Try Again", null);
             
         }
 
@@ -607,7 +606,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<NotificationDTO>(exception.Message, null);
+            return new FailureWithValue<NotificationDTO>("remove Store Owner Failed, Please Try Again", null);
             
         }
 
@@ -631,7 +630,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<String, ConcurrentLinkedList<Permissions>>>("Get Official Informations Failed, Please Try Again", null);
             
         }
 
@@ -655,7 +654,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("get Store Purchase History Failed, Please Try Again", null);
             
         }
 
@@ -679,7 +678,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<String, ConcurrentDictionary<int, PurchaseInvoice>>>("get users Purchases History Failed, Please Try Again", null);
             
         }
 
@@ -703,7 +702,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, PurchaseInvoice>>>("get Stores Purchase History Cart Failed, Please Try Again", null);
             
         }
 
@@ -726,7 +725,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, PurchaseInvoice>>("get User Purchase History Failed, Please Try Again", null);
             
         }
 
@@ -795,7 +794,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Login As System Manager Failed, Please Try Again");
             
         }
 
@@ -819,7 +818,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<ShoppingCart>(exception.Message, null);
+            return new FailureWithValue<ShoppingCart>("View Shopping Cart Failed, Please Try Again", null);
             
         }
 
@@ -843,7 +842,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("add Bid Offer Failed, Please Try Again");
             
         }
         
@@ -867,7 +866,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Remove Bid Offer Failed, Please Try Again");
             
         }
 
@@ -893,7 +892,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<int>(exception.Message, -1);
+            return new FailureWithValue<int>("add Purchase Predicate Failed, Please Try Again", -1);
 
         }
 
@@ -917,7 +916,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Remove Purchase Predicate Failed, Please Try Again");
             
         }
 
@@ -943,7 +942,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<int>(exception.Message, -1);
+            return new FailureWithValue<int>("Compose Purchase Predicates Failed, Please Try Again", -1);
             
         }
 
@@ -968,7 +967,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<int>(exception.Message, -1);
+            return new FailureWithValue<int>("add Sale Failed, Please Try Again", -1);
             
         }
 
@@ -992,7 +991,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Remove Sale Failed, Please Try Again");
             
         }
 
@@ -1018,7 +1017,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<int>(exception.Message, -1);
+            return new FailureWithValue<int>("add Sale Condition Failed, Please Try Again", -1);
             
         }
 
@@ -1044,7 +1043,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<int>(exception.Message, -1);
+            return new FailureWithValue<int>("Compose Sales Failed, Please Try Again", -1);
             
         }
 
@@ -1067,7 +1066,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<ConcurrentLinkedList<int>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentLinkedList<int>>("get Users Stores Failed, Please Try Again", null);
             
         }
 
@@ -1100,7 +1099,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Is Store Owner Failed, Please Try Again");
             
         }
 
@@ -1161,7 +1160,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Has Permission Failed, Please Try Again");
             
         }
         
@@ -1240,7 +1239,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Continue As Guest  Failed, Please Try Again");
             
         }
 
@@ -1264,7 +1263,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<ConcurrentDictionary<int, string>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, string>>("store Predicates Description Failed, Please Try Again", null);
             
         }
 
@@ -1288,7 +1287,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<ConcurrentDictionary<int, string>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, string>>("Store Sales Description Failed, Please Try Again", null);
             
         }
 
@@ -1312,7 +1311,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("change Item Quantity Failed, Please Try Again");
             
         }
 
@@ -1336,7 +1335,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("change Item Purchase Type Failed, Please Try Again");
             
         }
 
@@ -1363,7 +1362,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<NotificationDTO>(exception.Message, null);
+            return new FailureWithValue<NotificationDTO>("Submit Price Offer Failed, Please Try Again", null);
             
         }
 
@@ -1396,7 +1395,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<NotificationDTO>(exception.Message, null);
+            return new FailureWithValue<NotificationDTO>("Confirm Price Status Failed, Please Try Again", null);
             
         }
 
@@ -1428,7 +1427,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<NotificationDTO>(exception.Message, null);
+            return new FailureWithValue<NotificationDTO>("Item Counter Offer Failed, Please Try Again", null);
             
         }
 
@@ -1452,7 +1451,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Support Purchase Type Failed, Please Try Again");
             
         }
 
@@ -1476,7 +1475,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new Failure(exception.Message);
+            return new Failure("Unsupport Purchase Type Failed, Please Try Again");
             
         }
 
@@ -1499,7 +1498,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, int>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, int>>("Bag Items Quantities Failed, Please Try Again", null);
         }
 
         public ResultWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>> offerItemsPricesAndStatus(string userName)
@@ -1522,7 +1521,7 @@ namespace WSEP212.ServiceLayer
                 Logger.Instance.writeErrorEventToLog(msg);
             }
 
-            return new FailureWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>("offer Items Prices And Status Failed, Please Try Again", null);
         }
 
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsBeforeSalePrices(String userName)
@@ -1544,7 +1543,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("get Items Before Sale Prices Failed", null);
         }
 
         public ResultWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>> getItemsAfterSalePrices(String userName)
@@ -1566,7 +1565,7 @@ namespace WSEP212.ServiceLayer
                     msg += inner.Message;
                 Logger.Instance.writeErrorEventToLog(msg);
             }
-            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>(exception.Message, null);
+            return new FailureWithValue<ConcurrentDictionary<int, ConcurrentDictionary<int, KeyValuePair<double, PriceStatus>>>>("get Items After Sale Prices Failed", null);
         }
     }
 }

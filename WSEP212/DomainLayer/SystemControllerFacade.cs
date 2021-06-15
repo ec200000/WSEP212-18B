@@ -57,7 +57,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Register as system manager function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new Failure("register As System Manager Failed, Please Try Again");
             }
         }
 
@@ -88,7 +88,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Register function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new Failure("register Failed, Please Try Again");
             }
         }
 
@@ -120,7 +120,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Login function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new Failure("User Login Failed, Please Try Again");
             }
         }
 
@@ -153,7 +153,8 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In Logout function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new Failure("logout Failed, Please Try Again");
+
             }
         }
 
@@ -203,7 +204,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In AddItemToShoppingCart function, the error is: {e.Message}");
-                return new FailureWithValue<ConcurrentLinkedList<string>>(e.Message, null);
+                return new FailureWithValue<ConcurrentLinkedList<string>>("add item to shopping cart Failed", null);
             }
         }
 
@@ -1263,7 +1264,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In LoginAsSystemManager function, the error is: {e.Message}");
-                return new Failure(e.Message);
+                return new Failure("Login As System Manager Failed, Please Try Again");
             }
         }
 
@@ -1466,7 +1467,7 @@ namespace WSEP212.DomainLayer
             catch (Exception e) when (!(e is NotImplementedException))
             {
                 Logger.Instance.writeErrorEventToLog($"In ContinueAsGuest function, the error is: {e.Message}");
-                return new Failure("user couldn't perform action.");
+                return new Failure("user could not perform action.");
             }
         }
 

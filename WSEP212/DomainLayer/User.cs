@@ -307,6 +307,7 @@ namespace WSEP212.DomainLayer
 
         // params: int storeID, int itemID, double counterOffer
         // returns: bool
+        // returns: bool
         public void itemCounterOffer(Object list)
         {
             ThreadParameters param = (ThreadParameters)list;

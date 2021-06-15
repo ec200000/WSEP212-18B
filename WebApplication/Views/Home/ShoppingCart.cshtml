@@ -22,11 +22,6 @@
             @Html.TextBoxFor(model => model.newOffer,new { placeholder = "New offer",@class="inputclassopenstore" })
 
             <button class="btn btn-outline-primary" type="submit" formaction="ChangeOffer">Change Offer</button>
-                                                                                              
-            string[] types2 = HttpContextAccessor.HttpContext.Session.GetObject<string[]>("purchasetypes");
-            @Html.DropDownListFor(model => model.purchaseType, new SelectList(types2.OfType<string>().ToList()), new {@class = "custom-select"});
-
-            <button class="btn btn-outline-primary" type="submit" formaction="ChangePurchaseType">Change Purchase Type</button>
         }
     }
     catch (Exception e)
