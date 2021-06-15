@@ -418,7 +418,7 @@ namespace WebApplication.Controllers
                 
             }
 
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("StoreActions");
         }
         
         public IActionResult StoreActions()
@@ -446,7 +446,6 @@ namespace WebApplication.Controllers
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                
             }
 
             return RedirectToAction("SearchItems");
@@ -474,10 +473,8 @@ namespace WebApplication.Controllers
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                
             }
-
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("StoreActions");
         }
         
         public IActionResult EditItemDetails(ItemModel model)
@@ -990,7 +987,7 @@ namespace WebApplication.Controllers
                 else
                 {
                     TempData["alert"] = res.getMessage();
-                    return RedirectToAction("StoreActions");
+                    return RedirectToAction("OpenStore");
                 }
             }
             catch (Exception e)
@@ -2092,7 +2089,7 @@ namespace WebApplication.Controllers
                 
             }
 
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("StoreActions");
         }
         public IActionResult AddSale()
         {
@@ -2599,11 +2596,10 @@ namespace WebApplication.Controllers
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                
             }
-
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("StoreActions");
         }
+        
         public IActionResult TryRemovePurchasePredicate(PredicateModel model)
         {
             try
@@ -2880,8 +2876,7 @@ namespace WebApplication.Controllers
                 Logger.Instance.writeErrorEventToLog(m);
                 
             }
-
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("StoreActions");
         }
 
         public IActionResult AddPredicate()
@@ -3014,7 +3009,7 @@ namespace WebApplication.Controllers
                 
             }
 
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("StoreActions");
         }
         
         public IActionResult ChangeOffer(ShoppingCartModel model)
@@ -3042,7 +3037,7 @@ namespace WebApplication.Controllers
                         }
                     }
                 }
-                return RedirectToAction("StoreActions");
+                return RedirectToAction("ShoppingCart");
             }
             catch (Exception e)
             {
@@ -3051,10 +3046,8 @@ namespace WebApplication.Controllers
                 if (inner != null)
                     m += inner.Message;
                 Logger.Instance.writeErrorEventToLog(m);
-                
             }
-
-            return RedirectToAction("SearchItems");
+            return RedirectToAction("ShoppingCart");
         }
         
         public IActionResult DiclineBid(BidsModel model)
