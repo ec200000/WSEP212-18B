@@ -90,13 +90,13 @@ namespace WSEP212.DomainLayer
                         SystemController.Instance.register(username, 18,"123456");
                     }
                     User user = UserRepository.Instance.findUserByUserName(username).getValue();
-                    if (isSystemManager.Equals("true"))
-                        SystemController.Instance.loginAsSystemManager(username, "123456");
-                    else if (loggedUser.Equals(username))
-                        SystemController.Instance.login(username, "123456");
-                    else
-                        user.changeState(new GuestBuyerState(user));
-                    
+                    if (!user.isSystemManager)
+                    {
+                        if (loggedUser.Equals(username))
+                            SystemController.Instance.login(username, "123456");
+                        else
+                            user.changeState(new GuestBuyerState(user));
+                    }
                 }
             }
         }
@@ -136,6 +136,9 @@ namespace WSEP212.DomainLayer
                 {
                     return new Failure("User Name Already Exists In The System");
                 }
+
+                UserConnectionLog toAdd = new UserConnectionLog(newUser.userName, DateTime.Now);
+                toAdd.addToDB();
                 users.TryAdd(newUser, true);
                 return new Ok("Registration To The System Was Successful");
             }
@@ -167,6 +170,11 @@ namespace WSEP212.DomainLayer
                     {
                         if(oldStatus != status)
                         {
+                            if (status)
+                            {
+                                UserConnectionLog toAdd = new UserConnectionLog(userRes.getValue().userName, DateTime.Now);
+                                toAdd.addToDB();
+                            }
                             users.TryUpdate(userRes.getValue(), status, oldStatus);
                             return new Ok("User Change Login Status Successfully");
                         }
