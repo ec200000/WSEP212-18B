@@ -36,17 +36,17 @@ namespace WSEP212.DomainLayer
 
         private bool isConnectedToday(string username)
         {
-            lock (SystemDBAccess.savelock)
+            lock (LogDBAccess.savelock)
             {
-                var result = SystemDBAccess.Instance.UserConnection.SingleOrDefault(c => c.userName == username);
+                var result = LogDBAccess.Instance.UserConnection.SingleOrDefault(c => c.userName == username);
                 if (result != null)
                 {
                     if (result.loggedIn.Date == DateTime.Now.Date)
                     {
-                        SystemDBAccess.Instance.SaveChanges();
+                        LogDBAccess.Instance.SaveChanges();
                         return true;
                     }
-                    SystemDBAccess.Instance.SaveChanges();
+                    LogDBAccess.Instance.SaveChanges();
                     return false;
                 }
             }
@@ -56,17 +56,20 @@ namespace WSEP212.DomainLayer
         private int GuestsCounter()
         {
             int counter = 0;
-            var temp = SystemDBAccess.Instance.UserConnection;
-            var users = temp.ToArray();
-            foreach (var log in users)
+            var temp = LogDBAccess.Instance.UserConnection;
+            lock (LogDBAccess.savelock)
             {
-               
-                if (!Authentication.Instance.usersInfo.ContainsKey(log.userName) && log.loggedIn.Date == DateTime.Now.Date)
+                var users = temp.ToArray();
+                foreach (var log in users)
                 {
-                    counter++;
+
+                    if (!Authentication.Instance.usersInfo.ContainsKey(log.userName) &&
+                        log.loggedIn.Date == DateTime.Now.Date)
+                    {
+                        counter++;
+                    }
                 }
             }
-
             return counter;
         }
         
@@ -153,7 +156,7 @@ namespace WSEP212.DomainLayer
                 }
                 return arr;
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
                 var m = e.Message + " ";
                 var inner = e.InnerException;

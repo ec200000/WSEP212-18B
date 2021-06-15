@@ -775,7 +775,7 @@ namespace WebApplication.Controllers
                     Node<string> node = res.getValue().usersToSend.First; // going over the user's permissions to check if he is a store manager or owner
                     string userName = HttpContext.Session.GetString(SessionName);
                     int itemID= (int)HttpContext.Session.GetInt32("_ItemID");
-                    while (node.Next != null)
+                    while (node != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
                         node = node.Next;
@@ -1204,7 +1204,7 @@ namespace WebApplication.Controllers
                         if (res.getValue() != null && purchaseType == 1)
                         {
                             Node<string> node = res.getValue().usersToSend.First;
-                            while (node.Next != null)
+                            while (node != null)
                             {
                                 SendToSpecificUser(node.Value, res.getValue().msgToSend);
                                 systemController.addBidOffer(node.Value, (int) storeID, itemID, userName, price);
@@ -1583,7 +1583,7 @@ namespace WebApplication.Controllers
                 if (res.getTag())
                 {
                     Node<string> node = res.getValue().usersToSend.First;
-                    while (node.Next != null)
+                    while (node != null)
                     {
                         SendToSpecificUser(node.Value, res.getValue().msgToSend);
                         node = node.Next;
@@ -3028,7 +3028,7 @@ namespace WebApplication.Controllers
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
-                        while (node.Next != null)
+                        while (node != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
                             systemController.removeBidOffer(node.Value, (int)storeID, item, userName);
@@ -3072,7 +3072,7 @@ namespace WebApplication.Controllers
                         systemController.removeBidOffer(userName, (int)storeID, item, user);
                         ConcurrentLinkedList<string> owners = StoreRepository.Instance.getStoreOwners((int) storeID);
                         Node<string> node = res.getValue().usersToSend.First;
-                        while (node.Next != null)
+                        while (node != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
                             node = node.Next;
@@ -3121,7 +3121,7 @@ namespace WebApplication.Controllers
                     {
                         systemController.removeBidOffer(userName, (int)storeID, item, user);
                         Node<string> node = res.getValue().usersToSend.First;
-                        while (node.Next != null)
+                        while (node != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
                             node = node.Next;
@@ -3165,7 +3165,7 @@ namespace WebApplication.Controllers
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
-                        while (node.Next != null)
+                        while (node != null)
                         {
                             SendToSpecificUser(node.Value, res.getValue().msgToSend);
                             node = node.Next;

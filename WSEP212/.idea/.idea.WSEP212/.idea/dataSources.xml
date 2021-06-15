@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:sqlserver://wsep212b18.database.windows.net:1433;database=wsep212Dep</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="wsep212Log@wsep212b18.database.windows.net" uuid="5c70a7d8-cbe0-4bbd-ac41-607f7260a978">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://wsep212b18.database.windows.net:1434;database=wsep212Log</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

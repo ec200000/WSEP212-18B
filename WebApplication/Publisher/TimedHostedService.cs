@@ -25,7 +25,7 @@ namespace WebApplication.Publisher
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-            _timer = new Timer(ChartTimerCallBack, null, 1000,1000);
+            _timer = new Timer(ChartTimerCallBack, null, 3000,3000);
 
             return Task.CompletedTask;
         }
