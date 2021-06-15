@@ -54,7 +54,7 @@ namespace WSEP212.DomainLayer
             systemManager.changeState(new SystemManagerState(systemManager));
             RegularResult res = insertNewUser(systemManager, "123456");
             if (!res.getTag())
-                throw new SystemException("Couldn't create a system manager");
+                throw new SystemException("Could not create a system manager");
         }
         
         public class JsonUsers
