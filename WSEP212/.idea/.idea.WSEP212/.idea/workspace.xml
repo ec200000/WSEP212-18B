@@ -5,9 +5,10 @@
     <projectFile>WSEP212.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="fixed again">
+    <list default="true" id="79d8f585-3382-4010-b3d5-b7767ea482ba" name="Default Changelist" comment="save">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WSEP212/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DomainLayer/UserConnectionLog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserConnectionLog.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/PieChart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/PieChart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainLayer/UserConnectionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DomainLayer/UserConnectionManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/obj/Debug/net5.0/WebApplication.csprojAssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +67,7 @@
     <setting file="file://$PROJECT_DIR$/DomainLayer/LoggedBuyerState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/2C2/AsyncTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/40/String.Manipulation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/irisk/OneDrive/Documents/university/third year - second semester/Sadna/WSEP212/WSEP212/DomainLayer/UserConnectionLog.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2A987135-B09E-4E79-A1D3-224AFA7D6FCA/13/HubConnectionHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/61F5185B-E9CF-48B9-8487-181D7861EB9C/2C5/AsyncVoidMethodBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D32DB49E-5E34-4072-9DA3-1845C03DDC3A/33/8b995280/JsonSerializerInternalReader.cs" root0="SKIP_HIGHLIGHTING" />
@@ -92,7 +94,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/ItemTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SystemDBTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/StorePoliciesAcceptanceTests.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/AcceptanceTests/SubmitOfferPurchaseTests.cs" />
@@ -139,10 +140,11 @@
       <option value="$PROJECT_DIR$/../WebApplication/configuration.json" />
       <option value="$PROJECT_DIR$/ServiceLayer/SystemController.cs" />
       <option value="$PROJECT_DIR$/DataAccessLayer/SystemDBAccess.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
       <option value="$PROJECT_DIR$/../WSEP212-TESTS/UnitTests/UserRepositoryTests.cs" />
-      <option value="$PROJECT_DIR$/DomainLayer/PieChart.cs" />
       <option value="$PROJECT_DIR$/DomainLayer/UserConnectionLog.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserRepository.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/PieChart.cs" />
+      <option value="$PROJECT_DIR$/DomainLayer/UserConnectionManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rhYJ5cK9vwli3RnsRdMTAI8maM" />
@@ -572,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623779426020</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="save">
+      <created>1623781002218</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1623781002218</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -633,9 +642,9 @@
     <MESSAGE value="added try catch in external systems" />
     <MESSAGE value="added try catch in the home controller" />
     <MESSAGE value="fixed some tests" />
-    <MESSAGE value="save" />
     <MESSAGE value="fixed again" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed again" />
+    <MESSAGE value="save" />
+    <option name="LAST_COMMIT_MESSAGE" value="save" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -769,32 +778,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="150" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/UserConnectionLog.cs</url>
-          <line>38</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\UserConnectionLog.cs" initialLine="38" containingFunctionPresentation="method 'addToDB'">
-            <startOffsets>
-              <option value="1037" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1075" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="186" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DomainLayer/UserConnectionLog.cs</url>
-          <line>35</line>
-          <properties documentPath="C:\Users\irisk\OneDrive\Documents\university\third year - second semester\Sadna\WSEP212\WSEP212\DomainLayer\UserConnectionLog.cs" initialLine="35" containingFunctionPresentation="method 'addToDB'">
-            <startOffsets>
-              <option value="907" />
-            </startOffsets>
-            <endOffsets>
-              <option value="939" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="187" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

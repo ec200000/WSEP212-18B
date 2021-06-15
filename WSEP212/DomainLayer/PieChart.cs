@@ -36,7 +36,8 @@ namespace WSEP212.DomainLayer
         {
             logs = new List<UserConnectionLog>();
             var temp = SystemDBAccess.Instance.UserConnection;
-            foreach(var a in temp.ToArray())
+            var arr = temp.ToArray();
+            foreach(var a in arr)
             {
                 logs.Add(a);
             }
