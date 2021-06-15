@@ -21,25 +21,24 @@ namespace WSEP212.DomainLayer
             this.userName = username;
             this.loggedIn = date;
         }
-        
+
         public void addToDB()
         {
-            var result = SystemDBAccess.Instance.UserConnection.SingleOrDefault(c => c.userName == this.userName);
-            if (result != null)
+            lock (SystemDBAccess.savelock)
             {
-                result.loggedIn = this.loggedIn;
-                lock (SystemDBAccess.savelock)
+                var result = SystemDBAccess.Instance.UserConnection.SingleOrDefault(c => c.userName == this.userName);
+                if (result != null)
                 {
+                    result.loggedIn = this.loggedIn;
+                    SystemDBAccess.Instance.SaveChanges();
+                    
+                }
+                else
+                {
+                    SystemDBAccess.Instance.UserConnection.Add(this);
                     SystemDBAccess.Instance.SaveChanges();
                 }
-            }
-            else
-            {
-                SystemDBAccess.Instance.UserConnection.Add(this);
-                lock (SystemDBAccess.savelock)
-                {
-                    SystemDBAccess.Instance.SaveChanges();
-                }
+            
             }
         }
     }
