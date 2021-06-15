@@ -46,7 +46,7 @@ namespace WSEP212.DomainLayer
             userConnectionMap = new Dictionary<string, List<string>>();
             delayedNotifications = new ConcurrentDictionary<string, List<string>>();
             List<UserConnectionManager> delayNot = new List<UserConnectionManager>();
-            if (!SystemDBAccess.Instance.DelayedNotifications.Any())
+            if (SystemDBAccess.Instance.DelayedNotifications.Count() > 0)
                 delayNot = SystemDBAccess.Instance.DelayedNotifications.ToList();
             if (delayNot.Count > 0)
                 delayedNotifications = JsonConvert.DeserializeObject<ConcurrentDictionary<string, List<string>>>(delayNot[0].DelayedNotificationsAsJson);
