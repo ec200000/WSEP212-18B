@@ -3025,6 +3025,7 @@ namespace WebApplication.Controllers
                     string[] strs = itemID.Split(":");
                     int item = int.Parse(strs[strs.Length - 1]);
                     ResultWithValue<NotificationDTO> res = systemController.submitPriceOffer(userName, (int) storeID, item, model.newOffer);
+                    TempData["alert"] = res.getMessage();
                     if (res.getValue() != null)
                     {
                         Node<string> node = res.getValue().usersToSend.First;
