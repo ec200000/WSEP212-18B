@@ -486,8 +486,6 @@ namespace WebApplication.Controllers
                 Item item = pair.Key;
                 model.storeID = pair.Value;
                 model.itemName = item.itemName;
-                // !!! TODO: fix category to work with ItemCategory !!!
-                model.category = "";
                 model.description = item.description;
                 model.quantity = item.quantity;
                 model.price = item.price;
